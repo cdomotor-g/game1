@@ -1,0 +1,119 @@
+{
+  "$comment": "Tunable constants for the whole game. Every number here is a dial, not a law. The web prototype reads these directly, so changing a value here changes the digital game AND the printed reference sheet.",
+  "version": "0.1.0",
+  "currency": { "id": "coin", "name": "Coin", "symbol": "¤", "startingAmount": 60 },
+
+  "round": {
+    "phases": [
+      { "id": "upkeep-events", "name": "Events", "summary": "Reveal and resolve the round's event card(s) before anyone acts." },
+      { "id": "labour-roll", "name": "Labour Roll", "summary": "Each player rolls their effort dice: one die per worker. Pips = hours of effort available this round." },
+      { "id": "actions", "name": "Actions", "summary": "In turn order, players spend effort, coin and commodities: allocate, build, move, trade, forage, fight." },
+      { "id": "production-tick", "name": "Production Tick", "summary": "Advance every progress track: construction, crop growth, transport in transit, maturing goods." },
+      { "id": "feeding", "name": "Feeding", "summary": "Each town must pay food upkeep from stock held in or near that town. Shortfalls cause unrest." },
+      { "id": "market-turn", "name": "Market", "summary": "Market prices drift, demand cards flip, turn order passes to the left." }
+    ],
+    "turnOrder": "clockwise-rotating"
+  },
+
+  "effort": {
+    "unit": "hour",
+    "dieDefault": "d6",
+    "dieLadder": ["d4", "d6", "d8", "d10", "d12"],
+    "dicePerWorker": 1,
+    "pipsAreHours": true,
+    "unspentEffortCarriesOver": false,
+    "maxFlatBonusPerWorker": 3,
+    "notes": "Modifiers may (a) add flat hours, (b) step a worker's die up or down the ladder, or (c) grant extra dice. Resolve in that order: extra dice, then ladder steps, then flat bonuses."
+  },
+
+  "population": {
+    "foodPerWorkerPerRound": 1,
+    "foodVarietyBonus": {
+      "threshold": 3,
+      "effect": "+1 flat effort to every worker in that town next round",
+      "summary": "Feed a town from 3+ distinct food commodities in one Feeding phase to earn the variety bonus."
+    },
+    "starvation": {
+      "unrestPerUnfedWorker": 1,
+      "unrestToRiot": 3,
+      "riotEffect": "Workers in that town roll d4 instead of their normal die until unrest clears; one worker leaves the town at 5 unrest.",
+      "clearUnrest": "Feeding a town fully in a later round removes 1 unrest; a feast (2 food per worker) removes 2."
+    },
+    "specialistUpkeep": 1,
+    "notes": "Specialists eat like everyone else, but a town without a fed specialist cannot run recipes that require that profession."
+  },
+
+  "construction": {
+    "progressUnit": "build-point",
+    "buildPointsPerEffortHour": 1,
+    "materialsDueAt": "start",
+    "partialBuildDecays": false,
+    "workersPerSiteDefault": 3,
+    "notes": "Materials are paid when the site is founded. Build points accumulate on a progress track; a building only produces once its track is full."
+  },
+
+  "tools": {
+    "durabilityUnit": "wear-point",
+    "wearPerEffortHour": 1,
+    "brokenToolEffect": "Tool is removed from play. Effort already spent this round is not refunded.",
+    "repairCost": { "fractionOfBuildCost": 0.5, "effortHours": 2, "requires": "blacksmith" },
+    "sizes": [
+      { "id": "small", "tier": 1, "outputMultiplier": 1.0, "durabilityMultiplier": 1.0, "costMultiplier": 1.0 },
+      { "id": "medium", "tier": 2, "outputMultiplier": 1.5, "durabilityMultiplier": 1.5, "costMultiplier": 2.0 },
+      { "id": "large", "tier": 3, "outputMultiplier": 2.0, "durabilityMultiplier": 2.0, "costMultiplier": 3.5 }
+    ],
+    "notes": "Output multipliers round down, minimum 1. A size-3 tool never lets one worker exceed a site's worker cap - it just makes that worker's hours count for more."
+  },
+
+  "storage": {
+    "stockpileFreeSlotsPerTown": 10,
+    "warehouseSlotsEach": 12,
+    "granarySlotsEach": 10,
+    "granaryAcceptsOnly": ["food", "drink"],
+    "overflowRule": "Commodities above capacity spoil at the end of the Feeding phase: lose half, rounded up.",
+    "notes": "Bulk values on commodities are slot costs. One slot holds one bulk point."
+  },
+
+  "market": {
+    "priceBands": [0.5, 0.75, 1.0, 1.25, 1.5, 2.0],
+    "startingBandIndex": 2,
+    "buySpread": 0.15,
+    "sellSpread": -0.15,
+    "driftPerRound": "Each town shifts one random commodity family up or down one band.",
+    "playerTradeIsFree": true,
+    "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
+  },
+
+  "movement": {
+    "landMoveCostDefault": 1,
+    "figureMovePointsPerRound": 4,
+    "cargoRequiresRoute": true,
+    "notes": "Figures (prospectors, merchants, soldiers) use move points. Cargo uses transport modes with capacity and speed - see transport.json."
+  },
+
+  "exploration": {
+    "tilesFaceDownAtStart": true,
+    "revealCost": { "effortHours": 1, "figure": "prospector" },
+    "depositRevealDie": "d6",
+    "notes": "A prospector entering a face-down tile flips it. Flipping reveals terrain immediately; deposits need a survey roll on top of that."
+  },
+
+  "conflict": {
+    "combatDie": "d6",
+    "hitsOn": 4,
+    "roundsPerBattle": 1,
+    "retreatAllowed": true,
+    "lootFraction": 0.25,
+    "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour. Both sides apply hits simultaneously."
+  },
+
+  "victory": {
+    "gameLengthRounds": 24,
+    "conditions": [
+      { "id": "prosperity", "name": "Prosperity", "summary": "Points for fed population, completed buildings and luxury goods held at game end." },
+      { "id": "industry", "name": "Industry", "summary": "Points for the depth of your longest completed production chain and for each tier-3 good produced." },
+      { "id": "network", "name": "Network", "summary": "Points for towns connected by road, rail and sea routes you built." }
+    ],
+    "notes": "Scoring is deliberately plural so that a mining-and-rail strategy and a farming-and-trade strategy can both win."
+  }
+}

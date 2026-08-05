@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cdomotor-g/game1/data/schema/game.schema.json",
+  "title": "game1 data shapes",
+  "description": "Documentation and editor support for data/*.json. Referential integrity is checked by tools/validate-data.mjs, not here - JSON Schema cannot see across files. Point your editor at the matching $defs entry when writing a dataset.",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "kebab-case, unique within its collection, stable once published - other files reference it by this string."
+    },
+    "quantity": {
+      "type": "object",
+      "required": ["commodity", "qty"],
+      "properties": {
+        "commodity": { "$ref": "#/$defs/id" },
+        "qty": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "commodity": {
+      "type": "object",
+      "required": ["id", "name", "category", "unit", "bulk", "baseValue"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "category": { "$ref": "#/$defs/id", "description": "Must match an entry in commodities.categories." },
+        "unit": { "type": "string", "description": "What one point of this commodity looks like on the table: a sack, a barrel, a head." },
+        "bulk": { "type": "number", "description": "Storage slots consumed per unit. Also the capacity cost when shipped." },
+        "baseValue": { "type": "number", "description": "Coin value at price band 1.0, before the market spread." },
+        "perishRounds": { "type": "integer", "description": "Rounds before it spoils outside a granary. Omit for imperishable." },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "required": ["id", "name", "family", "madeAt", "craft", "baseDurability", "sizes", "enables"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "family": { "type": "string" },
+        "summary": { "type": "string" },
+        "madeAt": { "$ref": "#/$defs/id", "description": "Building id where this tool is crafted." },
+        "craft": {
+          "type": "object",
+          "required": ["inputs", "effortHours"],
+          "properties": {
+            "inputs": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
+            "effortHours": { "type": "number" }
+          }
+        },
+        "baseValue": { "type": "number" },
+        "baseDurability": { "type": "integer", "description": "Wear points at size 1. Multiplied by the size's durabilityMultiplier in rules.json." },
+        "sizes": { "type": "array", "items": { "enum": ["small", "medium", "large"] } },
+        "enables": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" },
+          "description": "Recipe ids this tool unlocks. Must agree with each recipe's own `tool` field - the validator enforces both directions."
+        }
+      }
+    },
+    "building": {
+      "type": "object",
+      "required": ["id", "name", "category", "cost", "buildPoints"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "category": { "$ref": "#/$defs/id" },
+        "tier": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "summary": { "type": "string" },
+        "cost": { "type": "array", "items": { "$ref": "#/$defs/quantity" }, "description": "Paid in full when the site is founded." },
+        "buildPoints": { "type": "integer", "description": "Effort hours of construction work needed to finish it." },
+        "minRounds": { "type": "integer", "description": "Floor on how fast it can be finished, however much effort is thrown at it." },
+        "workerSlots": { "type": "integer", "description": "Maximum workers allocatable here per round. 0 means it is not a work site." },
+        "housing": { "type": "integer" },
+        "specialistHousing": { "type": "integer" },
+        "storage": { "type": "integer" },
+        "storageFilter": { "type": "array", "items": { "type": "string" }, "description": "Commodity categories this storage accepts. Omit for anything." },
+        "fieldSlots": { "type": "integer" },
+        "livestockSlots": { "type": "integer" },
+        "garrison": { "type": "integer" },
+        "terrain": { "type": "array", "items": { "$ref": "#/$defs/id" }, "description": "Terrain ids it may be built on. Omit for anywhere buildable." },
+        "requiresBuilding": { "$ref": "#/$defs/id" },
+        "requiresDeposit": { "type": ["string", "null"] },
+        "requiresDepositAny": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "specialist": { "$ref": "#/$defs/id", "description": "Profession that must be present for this building's gated recipes." },
+        "perTile": { "type": "boolean", "description": "Infrastructure: built onto a tile rather than into a town." },
+        "terrainCostMultiplier": { "type": "boolean", "description": "buildPoints are multiplied by the tile's road/rail cost multiplier." },
+        "theftTarget": { "type": "boolean" },
+        "victoryPoints": { "type": "number" },
+        "unique": { "type": "string", "enum": ["per-town", "per-player", "per-game"] },
+        "notes": { "type": "string" }
+      }
+    },
+    "recipe": {
+      "type": "object",
+      "required": ["id", "name", "category", "site", "effortHours"],
+      "description": "One allocatable job. Inputs and effort in, outputs out. `effect` carries anything the effect vocabulary cannot express yet.",
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "category": { "$ref": "#/$defs/id" },
+        "site": {
+          "type": "object",
+          "description": "Where the job may be run. At least one of building / terrain / constructionSite / figure.",
+          "properties": {
+            "building": { "$ref": "#/$defs/id" },
+            "orBuilding": { "$ref": "#/$defs/id" },
+            "terrain": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "orTerrain": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "deposit": { "$ref": "#/$defs/id" },
+            "figure": { "$ref": "#/$defs/id" },
+            "fieldSlot": { "type": "boolean" },
+            "ripeCrop": { "$ref": "#/$defs/id" },
+            "livestock": { "$ref": "#/$defs/id" },
+            "constructionSite": { "type": "boolean" },
+            "materialTag": { "type": "string", "enum": ["timber", "masonry"] }
+          }
+        },
+        "tool": { "$ref": "#/$defs/id" },
+        "specialist": { "$ref": "#/$defs/id" },
+        "effortHours": { "type": "number", "description": "Hours for one batch. 0 means the cost comes from elsewhere - see `effect`." },
+        "fuel": { "type": "string", "description": "Name of a bundle in recipes.fuelOptions. The player pays any one option." },
+        "inputs": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
+        "outputs": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
+        "alternatives": {
+          "type": "array",
+          "description": "Other input/output pairs the same job accepts, e.g. spinning flax instead of wool.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "inputs": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
+              "outputs": { "type": "array", "items": { "$ref": "#/$defs/quantity" } }
+            }
+          }
+        },
+        "maturationRounds": { "type": "integer", "description": "Rounds between doing the work and collecting the result." },
+        "cropStage": { "$ref": "#/$defs/id" },
+        "depletesDeposit": { "type": "number" },
+        "buildPointsPerHour": { "type": "number" },
+        "rollTable": { "type": "string" },
+        "effect": { "type": "string", "description": "Prose for anything structured fields do not cover." },
+        "notes": { "type": "string" }
+      }
+    },
+    "terrain": {
+      "type": "object",
+      "required": ["id", "name", "family", "moveCost", "buildable"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "family": { "enum": ["land", "water"] },
+        "colour": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "moveCost": { "type": "number" },
+        "roadCostMultiplier": { "type": "number" },
+        "railCostMultiplier": { "type": "number" },
+        "buildable": { "type": "boolean" },
+        "features": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "deposits": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "effortPenalty": { "type": "number" }
+      }
+    },
+    "deposit": {
+      "type": "object",
+      "required": ["id", "name", "yields", "totalYield"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "requiresBuilding": { "type": ["string", "null"] },
+        "yields": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "totalYield": { "type": "integer", "description": "Units drawable before the deposit is exhausted." },
+        "tokensInSetup": { "type": "integer" },
+        "surveyDifficulty": { "type": "integer", "minimum": 1, "maximum": 6 }
+      }
+    },
+    "eventCard": {
+      "type": "object",
+      "required": ["id", "name", "category", "scope", "text", "effects"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "category": { "$ref": "#/$defs/id" },
+        "scope": { "enum": ["global", "local", "targeted", "offer"] },
+        "copies": { "type": "integer", "minimum": 1 },
+        "text": { "type": "string", "description": "The words printed on the card." },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type"],
+            "properties": { "type": { "type": "string", "description": "Must be a key of events.effectTypes." } }
+          }
+        },
+        "mitigations": { "type": "array", "items": { "type": "string" }, "description": "Every disaster should have at least one - see events.deck.designNotes." }
+      }
+    },
+    "item": {
+      "type": "object",
+      "required": ["id", "name", "class", "inputs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "class": { "enum": ["clothing", "armour", "weapon", "potion"] },
+        "slot": { "type": "string" },
+        "madeAt": { "$ref": "#/$defs/id" },
+        "inputs": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
+        "effortHours": { "type": "number" },
+        "baseValue": { "type": "number" },
+        "specialist": { "$ref": "#/$defs/id" },
+        "effects": { "type": "array", "items": { "type": "string" } },
+        "armourValue": { "type": "integer" },
+        "combatDice": { "type": "integer" },
+        "uses": { "type": "integer" }
+      }
+    }
+  }
+}

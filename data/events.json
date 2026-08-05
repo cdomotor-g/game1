@@ -1,0 +1,248 @@
+{
+  "$comment": "One card is drawn at the start of every round (two from round 13). Each card carries plain text for the tabletop game and a machine-readable effects array so the digital version can resolve it automatically.",
+  "version": "0.1.0",
+  "scopes": [
+    { "id": "global", "name": "Global", "summary": "Applies to every player." },
+    { "id": "local", "name": "Local", "summary": "Applies to one region of the board - roll for the region." },
+    { "id": "targeted", "name": "Targeted", "summary": "Applies to one player - usually the leader, or roll." },
+    { "id": "offer", "name": "Offer", "summary": "An opportunity any player may take, resolved in turn order." }
+  ],
+  "categories": [
+    { "id": "weather", "name": "Weather" },
+    { "id": "disaster", "name": "Natural Disaster" },
+    { "id": "crime", "name": "Crime" },
+    { "id": "wildlife", "name": "Wildlife" },
+    { "id": "conflict", "name": "Conflict" },
+    { "id": "social", "name": "People" },
+    { "id": "market", "name": "Market" },
+    { "id": "arcane", "name": "Arcane" }
+  ],
+  "effectTypes": {
+    "$comment": "The vocabulary the digital engine understands. Keep new cards inside it where you can.",
+    "effort": "Change effort dice or hours for matching workers.",
+    "commodity-loss": "Remove commodities from stockpiles.",
+    "commodity-gain": "Add commodities to stockpiles.",
+    "price": "Shift a commodity family's price band.",
+    "building": "Damage, destroy or halt a building.",
+    "tool": "Add wear to or break tools.",
+    "population": "Add or remove workers.",
+    "unrest": "Add or remove unrest.",
+    "movement": "Change movement or block routes.",
+    "cargo": "Affect goods in transit.",
+    "combat": "Spawn or resolve a fight.",
+    "crop": "Affect growing crops.",
+    "choice": "Player picks between listed branches."
+  },
+  "cards": [
+    { "id": "hard-frost", "name": "Hard Frost", "category": "weather", "scope": "global", "copies": 3,
+      "text": "A cold snap grips the map. Crops stall and outdoor work is miserable.",
+      "effects": [
+        { "type": "crop", "op": "pause", "target": "all-growing", "rounds": 1 },
+        { "type": "effort", "op": "flat", "value": -1, "target": "workers-on-terrain", "terrain": ["tundra", "mountain", "hills"] }
+      ],
+      "mitigations": ["Workers living in a brick house or manor are unaffected.", "A town with 2+ fuel in stock ignores the effort penalty."] },
+    { "id": "drought", "name": "Drought", "category": "weather", "scope": "local", "copies": 2,
+      "text": "The wells run low. Nothing green does well this year.",
+      "effects": [
+        { "type": "crop", "op": "yield-multiplier", "value": 0.5, "target": "region" },
+        { "type": "commodity-loss", "commodity": "water", "qty": 2, "target": "region-towns" }
+      ],
+      "mitigations": ["A town with a well loses no water.", "River-bank and lake-shore towns are unaffected."] },
+    { "id": "long-summer", "name": "Long Summer", "category": "weather", "scope": "global", "copies": 2,
+      "text": "A gift of a season.",
+      "effects": [
+        { "type": "crop", "op": "advance", "value": 1, "target": "all-growing" },
+        { "type": "effort", "op": "flat", "value": 1, "target": "all-workers" }
+      ] },
+    { "id": "storms", "name": "Storms at Sea", "category": "weather", "scope": "global", "copies": 2,
+      "text": "Nothing sails this round, and something already at sea does not arrive.",
+      "effects": [
+        { "type": "movement", "op": "block", "modes": ["ship", "barge"], "rounds": 1 },
+        { "type": "cargo", "op": "loss-fraction", "value": 0.5, "modes": ["ship"] }
+      ],
+      "mitigations": ["Cargo in a harbour tile is safe."] },
+    { "id": "flood", "name": "Flood", "category": "disaster", "scope": "local", "copies": 2,
+      "text": "The river takes back its floodplain.",
+      "effects": [
+        { "type": "crop", "op": "destroy", "target": "region-farms" },
+        { "type": "building", "op": "halt", "rounds": 1, "target": "region-riverbank" },
+        { "type": "commodity-gain", "commodity": "clay", "qty": 3, "target": "region-towns", "text": "Silt: a small consolation." }
+      ] },
+    { "id": "earthquake", "name": "Earthquake", "category": "disaster", "scope": "local", "copies": 1,
+      "text": "The hills shrug.",
+      "effects": [
+        { "type": "building", "op": "damage", "value": 0.5, "target": "region-mines-and-masonry", "text": "Halve the build track - the building stops until it is repaired." },
+        { "type": "movement", "op": "block", "terrain": ["mountain"], "rounds": 2 }
+      ] },
+    { "id": "wildfire", "name": "Wildfire", "category": "disaster", "scope": "local", "copies": 2,
+      "text": "Fire runs through the timber.",
+      "effects": [
+        { "type": "building", "op": "destroy", "target": "region-timber-buildings", "chance": "d6 4+" },
+        { "type": "commodity-loss", "commodity": "logs", "qty": 4, "target": "region-towns" }
+      ],
+      "mitigations": ["A town with a well or on a water-access tile rolls at 5+ instead."] },
+    { "id": "mine-collapse", "name": "Mine Collapse", "category": "disaster", "scope": "targeted", "copies": 2,
+      "text": "A gallery comes down.",
+      "effects": [
+        { "type": "building", "op": "halt", "rounds": 2, "target": "one-mine" },
+        { "type": "population", "op": "remove", "value": 1, "target": "mine-town", "text": "One worker is lost." }
+      ],
+      "mitigations": ["A dwarf player halts for 1 round and loses no worker."] },
+    { "id": "warehouse-heist", "name": "Warehouse Heist", "category": "crime", "scope": "targeted", "copies": 3,
+      "text": "Thieves empty a warehouse in the night.",
+      "effects": [
+        { "type": "commodity-loss", "op": "fraction-of-building", "value": 0.5, "building": "warehouse", "text": "Lose half the contents of one warehouse, owner's choice of which items." }
+      ],
+      "mitigations": ["A watchtower in that town cancels this card once per game.", "Soldiers garrisoned in the town halve the loss."] },
+    { "id": "caravan-robbery", "name": "Caravan Robbery", "category": "crime", "scope": "targeted", "copies": 2,
+      "text": "Bandits on the road.",
+      "effects": [
+        { "type": "cargo", "op": "steal", "value": 1.0, "modes": ["cart", "caravan", "porter"], "text": "The highest-value cargo token in transit by road is taken." }
+      ],
+      "mitigations": ["An escorting soldier rolls a combat die; on 4+ the robbery fails."] },
+    { "id": "train-heist", "name": "Train Heist", "category": "crime", "scope": "targeted", "copies": 1,
+      "text": "They knew the timetable.",
+      "effects": [
+        { "type": "cargo", "op": "steal", "value": 0.75, "modes": ["train"] },
+        { "type": "movement", "op": "block", "modes": ["train"], "rounds": 1 }
+      ] },
+    { "id": "piracy", "name": "Piracy", "category": "crime", "scope": "global", "copies": 1,
+      "text": "A sail on the horizon, and it is not a friendly one.",
+      "effects": [
+        { "type": "cargo", "op": "steal", "value": 0.5, "modes": ["ship", "barge"], "target": "all-players" }
+      ] },
+    { "id": "smuggling-ring", "name": "Smuggling Ring", "category": "crime", "scope": "offer", "copies": 2,
+      "text": "Someone offers to move goods without the market's cut - and without any guarantees.",
+      "effects": [
+        { "type": "choice", "branches": [
+          { "label": "Deal", "effects": [{ "type": "commodity-gain", "op": "sell-at-premium", "value": 1.5, "qty": 6, "text": "Sell up to 6 bulk at 150% of base value." }, { "type": "unrest", "op": "add", "value": 1 }] },
+          { "label": "Decline", "effects": [] }
+        ] }
+      ] },
+    { "id": "wolf-pack", "name": "Wolf Pack", "category": "wildlife", "scope": "local", "copies": 2,
+      "text": "Something is taking the livestock.",
+      "effects": [
+        { "type": "commodity-loss", "commodity": "sheep", "qty": 2, "target": "region-pastures" },
+        { "type": "combat", "op": "spawn", "enemy": "wolves", "strength": 2, "target": "region" }
+      ],
+      "mitigations": ["Any soldier or hero in the region may fight the pack instead of losing animals."] },
+    { "id": "boar-in-the-fields", "name": "Boar in the Fields", "category": "wildlife", "scope": "local", "copies": 2,
+      "text": "It has been in the crops for a week.",
+      "effects": [
+        { "type": "crop", "op": "destroy-one", "target": "region-farms" },
+        { "type": "choice", "branches": [
+          { "label": "Hunt it", "effects": [{ "type": "commodity-gain", "commodity": "meat", "qty": 3 }, { "type": "effort", "op": "spend", "value": 3 }] },
+          { "label": "Let it be", "effects": [] }
+        ] }
+      ] },
+    { "id": "dragon-sighting", "name": "Dragon Sighting", "category": "wildlife", "scope": "global", "copies": 1,
+      "text": "A shape passes over the mountains. Everyone finds somewhere else to be.",
+      "effects": [
+        { "type": "movement", "op": "block", "terrain": ["mountain"], "rounds": 2 },
+        { "type": "combat", "op": "spawn", "enemy": "dragon", "strength": 8, "target": "random-mountain" },
+        { "type": "price", "op": "shift", "family": "luxury", "value": 1, "text": "Panic buying of portable wealth." }
+      ] },
+    { "id": "raiders", "name": "Raiders", "category": "conflict", "scope": "targeted", "copies": 3,
+      "text": "An armed band comes over the border at whoever looks richest.",
+      "effects": [
+        { "type": "combat", "op": "attack", "enemy": "raiders", "strength": 3, "target": "leader-town" },
+        { "type": "commodity-loss", "op": "fraction", "value": 0.25, "condition": "if the defence fails" }
+      ],
+      "mitigations": ["Palisade grants +1 defence die. Garrisoned soldiers defend automatically."] },
+    { "id": "border-dispute", "name": "Border Dispute", "category": "conflict", "scope": "global", "copies": 2,
+      "text": "Two towns claim the same ground.",
+      "effects": [
+        { "type": "choice", "branches": [
+          { "label": "Concede", "effects": [{ "type": "commodity-loss", "op": "fraction", "value": 0.1 }] },
+          { "label": "Contest", "effects": [{ "type": "combat", "op": "duel", "text": "Both players roll 2 combat dice. The loser gives the winner one tile's worth of infrastructure." }] }
+        ] }
+      ] },
+    { "id": "mercenaries-for-hire", "name": "Mercenaries for Hire", "category": "conflict", "scope": "offer", "copies": 2,
+      "text": "Swords, cheap, for as long as the coin lasts.",
+      "effects": [
+        { "type": "choice", "branches": [
+          { "label": "Hire (50 coin)", "effects": [{ "type": "population", "op": "add-soldier", "value": 2, "rounds": 3 }] },
+          { "label": "Pass", "effects": [] }
+        ] }
+      ] },
+    { "id": "plague", "name": "Plague", "category": "social", "scope": "local", "copies": 1,
+      "text": "It moves faster than anyone can plan for.",
+      "effects": [
+        { "type": "population", "op": "remove-fraction", "value": 0.25, "target": "region-towns" },
+        { "type": "effort", "op": "die-step", "value": -1, "target": "region-workers", "rounds": 2 }
+      ],
+      "mitigations": ["A town holding a Healing Draught spends it to ignore this card entirely."] },
+    { "id": "migrants", "name": "Migrants", "category": "social", "scope": "offer", "copies": 3,
+      "text": "A column of families on the road, looking for somewhere with food.",
+      "effects": [
+        { "type": "choice", "branches": [
+          { "label": "Take them in", "effects": [{ "type": "population", "op": "add", "value": 2, "condition": "you must have housing and 4 food in that town" }] },
+          { "label": "Turn them away", "effects": [{ "type": "unrest", "op": "add", "value": 1 }] }
+        ] }
+      ] },
+    { "id": "strike", "name": "Strike", "category": "social", "scope": "targeted", "copies": 2,
+      "text": "They want feeding properly.",
+      "effects": [
+        { "type": "effort", "op": "multiplier", "value": 0.5, "target": "unrest-town", "rounds": 1, "condition": "any town with 1+ unrest" }
+      ],
+      "mitigations": ["Serve ale or wine at an inn to end the strike immediately."] },
+    { "id": "festival", "name": "Festival", "category": "social", "scope": "global", "copies": 2,
+      "text": "A week of noise and spending.",
+      "effects": [
+        { "type": "price", "op": "shift", "family": "drink", "value": 2 },
+        { "type": "price", "op": "shift", "family": "luxury", "value": 1 },
+        { "type": "unrest", "op": "remove", "value": 1, "target": "all-towns", "condition": "if the town serves any drink" }
+      ] },
+    { "id": "master-craftsman", "name": "Travelling Master", "category": "social", "scope": "offer", "copies": 2,
+      "text": "A master will take an apprentice, for a price.",
+      "effects": [
+        { "type": "choice", "branches": [
+          { "label": "Apprentice (30 coin)", "effects": [{ "type": "population", "op": "train-specialist", "value": 1, "text": "Train one specialist without a guildhall." }] },
+          { "label": "Pass", "effects": [] }
+        ] }
+      ] },
+    { "id": "iron-shortage", "name": "Iron Shortage", "category": "market", "scope": "global", "copies": 2,
+      "text": "Everyone wants metal and nobody has any.",
+      "effects": [{ "type": "price", "op": "shift", "family": "metal", "value": 2, "rounds": 3 }] },
+    { "id": "glut", "name": "Glut", "category": "market", "scope": "global", "copies": 2,
+      "text": "A bumper year somewhere else. Prices fall through the floor.",
+      "effects": [{ "type": "price", "op": "shift", "family": "food", "value": -2, "rounds": 2 }] },
+    { "id": "foreign-demand", "name": "Foreign Demand", "category": "market", "scope": "global", "copies": 3,
+      "text": "A distant city sends buyers. Roll to see what they want.",
+      "effects": [{ "type": "price", "op": "shift-random-family", "value": 2, "rounds": 2 }] },
+    { "id": "tax-levy", "name": "Tax Levy", "category": "market", "scope": "global", "copies": 2,
+      "text": "The crown remembers you exist.",
+      "effects": [{ "type": "commodity-loss", "op": "coin-per-building", "value": 3, "text": "Pay 3 coin per completed building. If you cannot pay, gain 1 unrest per unpaid building." }] },
+    { "id": "ley-surge", "name": "Ley Surge", "category": "arcane", "scope": "global", "copies": 1,
+      "text": "The ground hums for a week.",
+      "effects": [
+        { "type": "commodity-gain", "commodity": "mana-crystal", "qty": 1, "target": "towns-with-alchemist" },
+        { "type": "effort", "op": "die-step", "value": 1, "target": "all-workers", "rounds": 1 }
+      ] },
+    { "id": "curdled-brew", "name": "Curdled Brew", "category": "arcane", "scope": "targeted", "copies": 1,
+      "text": "Something went wrong in the alembic.",
+      "effects": [
+        { "type": "commodity-loss", "op": "all-of", "commodity": "arcane-herb", "target": "one-town" },
+        { "type": "tool", "op": "break", "tool": "alembic" }
+      ] },
+    { "id": "wandering-wizard", "name": "Wandering Wizard", "category": "arcane", "scope": "offer", "copies": 2,
+      "text": "He will trade knowledge for something shiny.",
+      "effects": [
+        { "type": "choice", "branches": [
+          { "label": "Trade a mana crystal", "effects": [{ "type": "commodity-gain", "op": "grant-potion", "value": 2, "text": "Take any 2 potions from items.json for free." }] },
+          { "label": "Pass", "effects": [] }
+        ] }
+      ] }
+  ],
+  "deck": {
+    "totalCards": 58,
+    "drawPerRound": 1,
+    "drawPerRoundFrom": { "round": 13, "count": 2 },
+    "reshuffle": "When the deck runs out, shuffle the discard pile and carry on.",
+    "designNotes": [
+      "Weather and market cards are the common ones - they should feel like the seasons turning, not like being punished.",
+      "Crime cards target the leader by default. That is the catch-up mechanism, and it is deliberate.",
+      "Every disaster card should have at least one mitigation a player could have bought in advance. Being wiped out should always be traceable to a decision."
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run.",
+  "version": "0.1.0",
+  "peoples": [
+    {
+      "id": "human", "name": "Humans", "effortDie": "d6", "startingWorkers": 2,
+      "summary": "No edges and no gaps. Cheapest buildings, widest recipe access.",
+      "traits": [
+        { "name": "Adaptable", "effect": "Ignore the first terrain effort penalty each round." },
+        { "name": "Builders", "effect": "All housing costs 1 less of its bulkiest material." }
+      ],
+      "foodPreference": [], "terrainComfort": ["grassland", "river-bank", "coast", "forest"]
+    },
+    {
+      "id": "dwarf", "name": "Dwarves", "effortDie": "d6", "startingWorkers": 2,
+      "summary": "Underground and metallurgy. Slow above ground, unmatched below it.",
+      "traits": [
+        { "name": "Deep Delvers", "effect": "Roll d8 instead of d6 for any worker allocated to a mine or quarry." },
+        { "name": "Smiths", "effect": "Forge Tool and Make Jewellery cost 1 fewer hour." },
+        { "name": "Surefooted", "effect": "Mountain and hills tiles cost 1 less to move through, minimum 1." },
+        { "name": "Thirsty", "effect": "A dwarf fed mead rolls one die size up next round." },
+        { "name": "Sun-shy", "effect": "-1 effort for any dwarf allocated to a farm, orchard or vineyard." }
+      ],
+      "foodPreference": ["mead", "meat", "mushrooms"], "terrainComfort": ["mountain", "hills", "tundra"]
+    },
+    {
+      "id": "elf", "name": "Elves", "effortDie": "d6", "startingWorkers": 2,
+      "summary": "Forest, textiles and the arcane. Terrible miners, superb weavers.",
+      "traits": [
+        { "name": "Woodwise", "effect": "Forage and Harvest Arcane Herbs yield double." },
+        { "name": "Fine Hands", "effect": "Weave Fine Cloth produces 2 instead of 1." },
+        { "name": "Longstriders", "effect": "Forest tiles cost 1 to move through." },
+        { "name": "Will Not Delve", "effect": "Elves cannot be allocated to a mana vein, and roll d4 in any other mine." }
+      ],
+      "foodPreference": ["berries", "wine", "vegetables"], "terrainComfort": ["forest", "hills", "river-bank"]
+    },
+    {
+      "id": "halfling", "name": "Halflings", "effortDie": "d6", "startingWorkers": 3,
+      "summary": "Numerous, agricultural, and permanently hungry.",
+      "traits": [
+        { "name": "Many Hands", "effect": "Start with one extra worker, and huts cost 1 log." },
+        { "name": "Green Fingers", "effect": "All crops mature one round faster, minimum 1." },
+        { "name": "Second Breakfast", "effect": "A halfling town pays 2 extra food every Feeding phase, however many halflings live in it." },
+        { "name": "Small", "effect": "-1 combat die per halfling unit." }
+      ],
+      "foodPreference": ["bread", "cheese", "ale", "apples"], "terrainComfort": ["grassland", "river-bank", "forest"]
+    },
+    {
+      "id": "orc", "name": "Orcs", "effortDie": "d8", "startingWorkers": 2,
+      "summary": "Enormous output, no patience. Built for a short, aggressive game.",
+      "traits": [
+        { "name": "Brutal Labour", "effect": "Roll d8 for every worker." },
+        { "name": "Hard on Tools", "effect": "Tools take 2 wear per effort hour instead of 1." },
+        { "name": "Raiders", "effect": "+1 combat die when attacking, and loot 40% instead of 25%." },
+        { "name": "Crude Craft", "effect": "Cannot build tier-3 or tier-4 buildings without capturing one first." }
+      ],
+      "foodPreference": ["meat", "salted-meat", "ale"], "terrainComfort": ["hills", "marsh", "tundra", "mountain"]
+    }
+  ],
+  "workerTypes": [
+    { "id": "worker", "name": "Worker", "summary": "The basic unit of labour. One effort die per round, one food per round.", "foodPerRound": 1, "dice": 1 },
+    { "id": "specialist", "name": "Specialist", "summary": "A worker trained in a profession. Same dice, but unlocks gated recipes and adds a bonus at its own building.", "foodPerRound": 1, "dice": 1 },
+    { "id": "soldier", "name": "Soldier", "summary": "A worker under arms. Produces no effort, eats normally, fights.", "foodPerRound": 1, "dice": 0 }
+  ],
+  "professions": [
+    { "id": "smith", "name": "Smith", "building": "blacksmith", "trainCost": { "coin": 40, "effortHours": 3 },
+      "unlocks": ["forge-tool", "make-jewellery"], "bonus": "+1 output on any recipe run at a blacksmith." },
+    { "id": "carpenter", "name": "Carpenter", "building": "carpenter", "trainCost": { "coin": 35, "effortHours": 3 },
+      "unlocks": [], "bonus": "Build-points from this worker count double on timber buildings." },
+    { "id": "weaver", "name": "Weaver", "building": "weaver", "trainCost": { "coin": 40, "effortHours": 3 },
+      "unlocks": ["weave-fine-cloth"], "bonus": "+1 yarn on every Spin Yarn." },
+    { "id": "tailor", "name": "Tailor", "building": "tailor", "trainCost": { "coin": 50, "effortHours": 3 },
+      "unlocks": ["sew-garment"], "bonus": "Garments cost 1 less cloth." },
+    { "id": "brewer", "name": "Brewer", "building": "brewery", "trainCost": { "coin": 45, "effortHours": 3 },
+      "unlocks": [], "bonus": "+1 barrel of output on Brew Ale, Brew Mead and Make Wine." },
+    { "id": "merchant", "name": "Merchant", "building": "trading-house", "trainCost": { "coin": 60, "effortHours": 2 },
+      "unlocks": [], "bonus": "Removes the market spread in this town, and may broker a trade between two other players for a 10% cut." },
+    { "id": "alchemist", "name": "Alchemist", "building": "alchemist", "trainCost": { "coin": 70, "effortHours": 4 },
+      "unlocks": ["brew-potion"], "bonus": "Potions brewed here last one extra round." },
+    { "id": "miner", "name": "Miner", "building": "mine", "trainCost": { "coin": 45, "effortHours": 3 },
+      "unlocks": [], "bonus": "+1 output on any mining recipe, and picks wear half as fast in this worker's hands." },
+    { "id": "farmer", "name": "Farmer", "building": "farm", "trainCost": { "coin": 35, "effortHours": 3 },
+      "unlocks": [], "bonus": "+2 output on every harvest recipe." },
+    { "id": "engineer", "name": "Engineer", "building": "rail-depot", "trainCost": { "coin": 80, "effortHours": 4 },
+      "unlocks": [], "bonus": "Lay Rail costs 1 less build-point per tile, and trains this player runs need 1 less coal per tile." }
+  ]
+}

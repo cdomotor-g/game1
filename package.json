@@ -1,0 +1,13 @@
+{
+  "name": "game1",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Design scaffold and digital prototype for an economy-and-settlement board game.",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build-data.mjs",
+    "validate": "node tools/validate-data.mjs",
+    "check": "node tools/validate-data.mjs && node tools/build-data.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

@@ -1,0 +1,128 @@
+{
+  "$comment": "Tools are equipment, not commodities: they are owned as individual pieces, they wear out on a durability track, and they gate which recipes a worker may perform. They can still be bought, sold and stolen.",
+  "version": "0.1.0",
+  "tools": [
+    {
+      "id": "axe", "name": "Axe", "family": "edged",
+      "summary": "Fells trees standing on forest tiles.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
+      "baseValue": 30, "baseDurability": 24, "sizes": ["small", "medium", "large"],
+      "enables": ["fell-timber", "clear-forest", "hew-timber"]
+    },
+    {
+      "id": "saw", "name": "Saw", "family": "edged",
+      "summary": "Turns logs into lumber at a sawmill.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
+      "baseValue": 32, "baseDurability": 26, "sizes": ["small", "medium", "large"],
+      "enables": ["saw-lumber", "build-timber-frame"]
+    },
+    {
+      "id": "pick", "name": "Pick", "family": "digging",
+      "summary": "Breaks rock. Required for coal, ore and stone.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 2 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 4 },
+      "baseValue": 42, "baseDurability": 20, "sizes": ["small", "medium", "large"],
+      "enables": ["mine-coal", "mine-iron-ore", "mine-copper-ore", "mine-gold-ore", "mine-gems", "mine-salt", "mine-mana-crystal", "quarry-stone"]
+    },
+    {
+      "id": "shovel", "name": "Shovel", "family": "digging",
+      "summary": "Moves loose ground: clay, sand, peat, earthworks.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
+      "baseValue": 28, "baseDurability": 22, "sizes": ["small", "medium", "large"],
+      "enables": ["dig-clay", "dig-sand", "cut-peat", "gather-stone", "lay-roadbed", "sink-mineshaft"]
+    },
+    {
+      "id": "hammer", "name": "Hammer", "family": "smithing",
+      "summary": "The general construction tool, and the smith's own tool.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 2 },
+      "baseValue": 24, "baseDurability": 30, "sizes": ["small", "medium", "large"],
+      "enables": ["forge-ironware", "forge-tool", "repair-tool", "build-generic", "lay-rail"]
+    },
+    {
+      "id": "knife", "name": "Knife", "family": "edged",
+      "summary": "Butchery, skinning and fine work.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }], "effortHours": 2 },
+      "baseValue": 18, "baseDurability": 18, "sizes": ["small", "medium"],
+      "enables": ["butcher-livestock", "hunt-game", "harvest-herbs"]
+    },
+    {
+      "id": "shears", "name": "Shears", "family": "edged",
+      "summary": "Takes fleece off a sheep without taking the sheep off the board.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }], "effortHours": 2 },
+      "baseValue": 20, "baseDurability": 20, "sizes": ["small", "medium"],
+      "enables": ["shear-sheep"]
+    },
+    {
+      "id": "scythe", "name": "Scythe", "family": "edged",
+      "summary": "Harvests ripe crops.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
+      "baseValue": 30, "baseDurability": 22, "sizes": ["small", "medium", "large"],
+      "enables": ["harvest-grain", "harvest-flax", "harvest-hops", "harvest-vegetables", "harvest-cotton"],
+      "optional": true, "optionalNote": "Harvesting is possible bare-handed; a scythe doubles the yield."
+    },
+    {
+      "id": "plough", "name": "Plough", "family": "farming",
+      "summary": "Breaks ground for sowing. A draught animal doubles its output.",
+      "madeAt": "carpenter",
+      "craft": { "inputs": [{ "commodity": "lumber", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "effortHours": 4 },
+      "baseValue": 55, "baseDurability": 28, "sizes": ["small", "medium", "large"],
+      "enables": ["sow-grain", "sow-flax", "sow-vegetables", "sow-hops", "sow-cotton"],
+      "optional": true, "optionalNote": "Sowing is possible bare-handed; a plough halves the hours."
+    },
+    {
+      "id": "fishing-net", "name": "Fishing Net", "family": "fishing",
+      "summary": "Worked from a dock or a boat on a water tile.",
+      "madeAt": "weaver",
+      "craft": { "inputs": [{ "commodity": "rope", "qty": 2 }], "effortHours": 3 },
+      "baseValue": 26, "baseDurability": 20, "sizes": ["small", "medium", "large"],
+      "enables": ["net-fish"]
+    },
+    {
+      "id": "spinning-wheel", "name": "Spinning Wheel", "family": "textile",
+      "summary": "Fibre into yarn.",
+      "madeAt": "carpenter",
+      "craft": { "inputs": [{ "commodity": "lumber", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "effortHours": 4 },
+      "baseValue": 48, "baseDurability": 30, "sizes": ["small", "medium"],
+      "enables": ["spin-yarn"]
+    },
+    {
+      "id": "loom", "name": "Loom", "family": "textile",
+      "summary": "Yarn into cloth. Bulky enough that it lives inside a weaver's shed.",
+      "madeAt": "carpenter",
+      "craft": { "inputs": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "rope", "qty": 1 }, { "commodity": "ironware", "qty": 1 }], "effortHours": 6 },
+      "baseValue": 70, "baseDurability": 34, "sizes": ["small", "medium", "large"],
+      "enables": ["weave-cloth", "weave-fine-cloth"]
+    },
+    {
+      "id": "trowel", "name": "Trowel", "family": "masonry",
+      "summary": "Bricklaying and stonework.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }], "effortHours": 2 },
+      "baseValue": 20, "baseDurability": 24, "sizes": ["small", "medium"],
+      "enables": ["build-masonry", "fire-bricks"]
+    },
+    {
+      "id": "surveyors-kit", "name": "Surveyor's Kit", "family": "survey",
+      "summary": "Carried by a prospector. Turns a hunch into a marked deposit.",
+      "madeAt": "carpenter",
+      "craft": { "inputs": [{ "commodity": "lumber", "qty": 1 }, { "commodity": "parchment", "qty": 1 }, { "commodity": "copper", "qty": 1 }], "effortHours": 4 },
+      "baseValue": 65, "baseDurability": 16, "sizes": ["small"],
+      "enables": ["survey-deposit", "plan-route"]
+    },
+    {
+      "id": "alembic", "name": "Alembic", "family": "arcane",
+      "summary": "Glass still for brewing potions at an alchemist's.",
+      "madeAt": "glassworks",
+      "craft": { "inputs": [{ "commodity": "glass", "qty": 2 }, { "commodity": "copper", "qty": 1 }], "effortHours": 5 },
+      "baseValue": 90, "baseDurability": 14, "sizes": ["small", "medium"],
+      "enables": ["brew-potion"]
+    }
+  ]
+}
