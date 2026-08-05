@@ -15,6 +15,11 @@ explain them, and a web build that lets you browse and play with them.
 
 ## Try it
 
+**[cdomotor-g.github.io/game1](https://cdomotor-g.github.io/game1/)** — the current `main`,
+rebuilt and published on every push.
+
+Or locally:
+
 ```bash
 node tools/build-data.mjs     # generate web/data/bundle.js from data/*.json
 open web/index.html           # or just double-click it
