@@ -37,7 +37,13 @@ jobs:
       - name: Build web bundle
         run: node tools/build-data.mjs
 
+      # enablement lets this workflow turn Pages on via the API using its own
+      # pages:write token, instead of the repo owner having to set
+      # Settings -> Pages -> Source: GitHub Actions by hand. It is a no-op once
+      # Pages is already enabled.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
