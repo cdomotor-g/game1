@@ -62,9 +62,13 @@ data/          the rules as data — the single source of truth
 docs/
   GLOSSARY.md        commodity vs effort vs deposit — read this first
   design/            twelve design documents, see docs/design/00-overview.md
+  art/               the visual style guide, see docs/art/README.md
+    palette.json       the palette as data — five inks, one black, one paper
+    examples/          worked examples of the two-plate system
 
 tools/
   validate-data.mjs  referential integrity and design smells
+  validate-art.mjs   palette conformance and the ink/wash layer contract
   build-data.mjs     data/*.json → web/data/bundle.js
   simulate.mjs       headless playthroughs, for balance
 
@@ -79,6 +83,7 @@ web/               the explorer and the sandbox
 node tools/validate-data.mjs   # check the data
 node tools/build-data.mjs      # rebuild the web bundle
 node tools/simulate.mjs        # see whether it still plays
+node tools/validate-art.mjs    # check art against the palette
 ```
 
 The validator does more than resolve ids. It flags commodities nothing produces,
@@ -119,6 +124,21 @@ fixed; the write-up is in
 tokens work physically; whether 24 rounds is right; how a second town gets founded. The
 full list is in
 [docs/design/10-open-questions.md](docs/design/10-open-questions.md).
+
+## What it looks like
+
+Everything is drawn on two printing plates. The **ink plate** carries all the information;
+the **wash plate** carries none. Black-and-white is the ink plate printed alone, and colour
+is the identical ink plate with the wash printed underneath — not a second version of the
+art, and never a desaturation of it.
+
+The register is a working settlement's trade almanac: woodcut line, five muted inks on
+unbleached paper, everything hand-made and worn from daily use. Magic is the one exception,
+and it is a printing error — arcane subjects print their colour fractionally out of
+register so it bleeds past the black line.
+
+The full guide, including the brief for generating art with a model, is in
+[docs/art/README.md](docs/art/README.md).
 
 ## Where to start reading
 

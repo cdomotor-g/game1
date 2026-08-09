@@ -76,6 +76,7 @@ printed — see [12-what-simulation-found.md](12-what-simulation-found.md).
 | [11-bootstrap.md](11-bootstrap.md) | Why the opening cannot deadlock |
 | [12-what-simulation-found.md](12-what-simulation-found.md) | Findings from the simulator |
 | [../GLOSSARY.md](../GLOSSARY.md) | Commodity vs effort vs deposit, and the rest |
+| [../art/README.md](../art/README.md) | What all of it looks like, in both editions |
 
 ## Status
 

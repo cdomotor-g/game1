@@ -1,0 +1,170 @@
+{
+  "$comment": "The visual palette as data. Same principle as data/*.json: anything a program or an agent should act on lives in a typed field, and prose lives in 'note'. This file is the source of truth for every colour in the game — printed components, the web build, and generated art. If a colour is not in here, it is not in the game. Rendered guidance lives in docs/art/.",
+  "version": "0.1.0",
+  "name": "game1 palette",
+
+  "system": {
+    "model": "two-plate",
+    "note": "Every image is separated into two plates. The INK plate carries all information and must be complete on its own. The WASH plate sits underneath and carries no information at all. Black-and-white mode is the ink plate printed alone; colour mode is the identical ink plate with the wash printed beneath it. The ink plate never changes between modes.",
+    "plates": [
+      {
+        "id": "ink",
+        "layer": "ink",
+        "z": 2,
+        "required": true,
+        "colours": ["ink.soot"],
+        "note": "Line, hatch, texture, type, and every icon. One colour only. Must be legible at 100% on bare paper, and must survive a monochrome photocopy."
+      },
+      {
+        "id": "wash",
+        "layer": "wash",
+        "z": 1,
+        "required": false,
+        "note": "Flat spot colour beneath the ink. Adds category, mood and faction. Removing it must never remove meaning."
+      },
+      {
+        "id": "slip",
+        "layer": "slip",
+        "z": 3,
+        "required": false,
+        "note": "The arcane exception. A deliberately mis-registered duplicate of part of the wash, offset past the ink line. Permitted only on arcane subjects. See rules.arcaneSlip."
+      }
+    ]
+  },
+
+  "paper": {
+    "tallow": { "hex": "#EDE4D1", "cmyk": [0, 4, 12, 7], "grey": 229, "note": "The ground. Unbleached, warm. Never pure white — white reads clinical and kills the rustic register." },
+    "foxing": { "hex": "#D9CBAF", "cmyk": [0, 6, 19, 15], "grey": 204, "note": "Aged paper. Edge staining, water rings, the darker half of a fold." },
+    "white": { "hex": "#FFFFFF", "cmyk": [0, 0, 0, 0], "grey": 255, "note": "Permitted only as a knock-out for reversed type on a dark field, and for the digital build's high-contrast mode." }
+  },
+
+  "ink": {
+    "soot": { "hex": "#1A1714", "cmyk": [0, 12, 23, 90], "grey": 23, "contrastOnPaper": 14.12, "note": "The one ink colour. A warm near-black, not #000 — pure black on warm paper reads as a sticker printed elsewhere and dropped on. Use #000 only for true 1-bit line art destined for a laser printer." },
+    "tints": {
+      "$comment": "Tints of soot on tallow paper. These are the only greys. They belong to the INK plate, not the wash — they survive black-and-white mode.",
+      "85": { "hex": "#3D3630", "grey": 55 },
+      "70": { "hex": "#5F564C", "grey": 88 },
+      "55": { "hex": "#7F7568", "grey": 121 },
+      "40": { "hex": "#A0968A", "grey": 154 },
+      "25": { "hex": "#C0B7A9", "grey": 186 },
+      "12": { "hex": "#D8CEBE", "grey": 210 }
+    }
+  },
+
+  "inks": {
+    "$comment": "Five chromatic inks. This is the entire colour vocabulary of the game — every wash colour anywhere is one of these five, tinted. Neutrals come from ink.tints, not from a sixth ink. Five plates plus key prints cheaply and reproduces predictably in four-colour process.",
+    "ochre": { "hex": "#C4882B", "cmyk": [0, 31, 78, 23], "grey": 148, "note": "Grain, hearth, lamplight, coin, halflings. The warm end of everything." },
+    "oxide": { "hex": "#A33B26", "cmyk": [0, 64, 77, 36], "grey": 93, "note": "Rust, fired brick, forge heat, blood, orcs. Industry and danger share a colour on purpose." },
+    "verdigris": { "hex": "#4C7A61", "cmyk": [38, 0, 20, 52], "grey": 112, "note": "Growth, pasture, forest, weathered copper, elves. Dusty and slightly poisoned — never a fresh spring green." },
+    "slate": { "hex": "#3C5A6E", "cmyk": [45, 18, 0, 57], "grey": 86, "note": "Stone, water, cold, night, dwarves. The only cold colour, so it does a lot of structural work." },
+    "bruise": { "hex": "#6B4C7D", "cmyk": [14, 39, 0, 51], "grey": 88, "note": "The arcane. Rationed — see rules.arcaneRation. Every other colour is something you could dig up, grow or forge. This one is not." }
+  },
+
+  "categories": {
+    "$comment": "The eleven commodity categories in data/commodities.json. Each gets a wash colour AND a hatch. The hatch is on the ink plate and is the real identifier; the wash is a convenience for players reading a table at a glance. Related categories deliberately share an ink — material and manufactured are both oxide, because one is made from the other.",
+    "raw": { "wash": "#8C857A", "ink": "soot", "tint": 45, "hatch": "plain", "grey": 134, "note": "Dug, cut and hauled. Deliberately the dullest thing on the table." },
+    "fuel": { "wash": "#463E36", "ink": "soot", "tint": 80, "hatch": "cross", "grey": 63, "underInk": "#91897C", "note": "Nearly black, but never as black as the line — fuel must not swallow its own linework." },
+    "material": { "wash": "#8A3222", "ink": "oxide", "tint": 100, "hatch": "vertical", "grey": 79, "underInk": "#B78271", "note": "Refined, forged, fired." },
+    "manufactured": { "wash": "#C4785E", "ink": "oxide", "tint": 55, "hatch": "vertical-wide", "grey": 139, "note": "Made from material. Same ink one step lighter, so the chain is visible in the palette itself." },
+    "textile": { "wash": "#8AAE98", "ink": "verdigris", "tint": 50, "hatch": "diagonal-wide", "grey": 166 },
+    "food": { "wash": "#C4882B", "ink": "ochre", "tint": 100, "hatch": "stipple", "grey": 148 },
+    "drink": { "wash": "#8A561C", "ink": "ochre", "tint": 100, "shade": 30, "hatch": "stipple-dense", "grey": 98, "underInk": "#B7966D" },
+    "livestock": { "wash": "#35594A", "ink": "verdigris", "tint": 100, "shade": 25, "hatch": "diagonal", "grey": 82, "underInk": "#889887" },
+    "container": { "wash": "#C6B79A", "ink": "soot", "tint": 22, "hatch": "basket", "grey": 184, "note": "Barrels, crates and sacks are packaging. They should recede." },
+    "luxury": { "wash": "#7C9AAD", "ink": "slate", "tint": 55, "hatch": "horizontal", "grey": 150 },
+    "arcane": { "wash": "#6B4C7D", "ink": "bruise", "tint": 100, "hatch": "diagonal-sinister", "grey": 88, "underInk": "#A690A3", "slip": true, "note": "The only category permitted the slip plate." }
+  },
+
+  "hatches": {
+    "$comment": "Ink-plate fill patterns that encode category without colour. Adapted from the Petra Sancta system printers have used since the 1630s to render heraldic tinctures in monochrome — a genuinely rustic solution to exactly our problem, and centuries out of copyright. Spacing is given at 100% print scale.",
+    "plain": { "pattern": "none", "note": "Bare paper inside the icon frame." },
+    "vertical": { "pattern": "lines", "angle": 90, "spacing": "0.6mm", "weight": "0.15mm" },
+    "vertical-wide": { "pattern": "lines", "angle": 90, "spacing": "1.2mm", "weight": "0.15mm" },
+    "horizontal": { "pattern": "lines", "angle": 0, "spacing": "0.6mm", "weight": "0.15mm" },
+    "diagonal": { "pattern": "lines", "angle": 45, "spacing": "0.6mm", "weight": "0.15mm" },
+    "diagonal-wide": { "pattern": "lines", "angle": 45, "spacing": "1.2mm", "weight": "0.15mm" },
+    "diagonal-sinister": { "pattern": "lines", "angle": -45, "spacing": "0.6mm", "weight": "0.15mm" },
+    "cross": { "pattern": "grid", "angle": 0, "spacing": "0.6mm", "weight": "0.15mm" },
+    "stipple": { "pattern": "dots", "spacing": "0.8mm", "radius": "0.13mm" },
+    "stipple-dense": { "pattern": "dots", "spacing": "0.5mm", "radius": "0.13mm" },
+    "basket": { "pattern": "weave", "spacing": "1.0mm", "weight": "0.15mm" }
+  },
+
+  "peoples": {
+    "$comment": "Player colours, matched to data/peoples.json. Each is one of the five inks at full strength, so a player's markers are literally a single plate. All five clear 2.4:1 on paper and all five carry a distinct hatch for the colour-blind and for the black-and-white print run.",
+    "human": { "wash": "#8A561C", "ink": "ochre", "shade": 30, "hatch": "stipple-dense", "contrastOnPaper": 4.85 },
+    "dwarf": { "wash": "#3C5A6E", "ink": "slate", "hatch": "horizontal", "contrastOnPaper": 5.77 },
+    "elf": { "wash": "#4C7A61", "ink": "verdigris", "hatch": "diagonal", "contrastOnPaper": 3.9 },
+    "halfling": { "wash": "#C4882B", "ink": "ochre", "hatch": "stipple", "contrastOnPaper": 2.41 },
+    "orc": { "wash": "#8A3222", "ink": "oxide", "hatch": "vertical", "contrastOnPaper": 6.49 }
+  },
+
+  "terrain": {
+    "$comment": "Matched to data/terrain.json. Terrain is the largest printed area in the game, so every wash here is a tint — a full-strength ink across a 60mm hex is both ugly and expensive.",
+    "grassland": { "wash": "#B9C9A8", "ink": "verdigris", "tint": 40 },
+    "forest": { "wash": "#7E9E84", "ink": "verdigris", "tint": 65 },
+    "hills": { "wash": "#C3AE8A", "ink": "ochre", "tint": 40 },
+    "mountain": { "wash": "#9AA3A8", "ink": "slate", "tint": 45 },
+    "marsh": { "wash": "#8E9478", "ink": "verdigris", "tint": 55, "shade": 25 },
+    "tundra": { "wash": "#D2D3CE", "ink": "slate", "tint": 18 },
+    "desert": { "wash": "#DCC79C", "ink": "ochre", "tint": 35 },
+    "river-bank": { "wash": "#A8BCC0", "ink": "slate", "tint": 35 },
+    "lake-shore": { "wash": "#9DB8C4", "ink": "slate", "tint": 45 },
+    "coast": { "wash": "#8FAEBF", "ink": "slate", "tint": 55 },
+    "shallow-water": { "wash": "#7BA0B5", "ink": "slate", "tint": 70 },
+    "deep-water": { "wash": "#4E7189", "ink": "slate", "tint": 90 }
+  },
+
+  "semantic": {
+    "$comment": "Meaning colours for the digital build and for card iconography. Each is paired with a mandatory ink-plate mark, because roughly one player in twelve cannot use the colour.",
+    "good": { "wash": "#4C7A61", "ink": "verdigris", "mark": "notch-up", "note": "Gain, surplus, success." },
+    "warn": { "wash": "#C4882B", "ink": "ochre", "mark": "notch-flat", "note": "Cost, wear, a clock running." },
+    "bad": { "wash": "#A33B26", "ink": "oxide", "mark": "notch-down", "note": "Loss, unrest, damage." },
+    "arcane": { "wash": "#6B4C7D", "ink": "bruise", "mark": "slip", "note": "Mana, potions, anything the economy cannot explain." }
+  },
+
+  "rules": {
+    "inkCarriesEverything": {
+      "rule": "Every piece of information a player needs must exist on the ink plate. Colour may repeat information; it may never introduce it.",
+      "test": "Delete the wash layer. If a rule becomes unreadable, the ink plate is unfinished — fix the ink, do not restore the colour."
+    },
+    "greyscaleCollapse": {
+      "rule": "Never distinguish two things by wash colour alone.",
+      "evidence": "Converted to greyscale, the eleven category washes collapse into five clusters. material/livestock/arcane all land within 9 of 255 levels of each other; food/luxury land within 2. This is why every category also carries a hatch.",
+      "measuredAt": "Rec.709 luminance, sRGB"
+    },
+    "underInk": {
+      "rule": "A wash darker than grey 110 prints at 55% tint wherever linework sits on top of it. Use the 'underInk' value given on the category.",
+      "evidence": "At full strength, soot line on fuel is 1.70:1 — effectively invisible. At 55% it is 5.16:1.",
+      "alternative": "Knock the line out to paper instead, but only for display type, never for icons."
+    },
+    "arcaneRation": {
+      "rule": "Bruise appears on arcane subjects only: mana crystals, mana veins, arcane herbs, potions, the two arcane buildings, and arcane event cards.",
+      "why": "There are two mana veins on the entire board. If the colour is everywhere, the scarcity is a number on a card instead of a thing you can see across the table.",
+      "budget": "No more than 3% of the inked area of any single component."
+    },
+    "arcaneSlip": {
+      "rule": "On arcane subjects only, duplicate the wash shape, offset it 0.6-1.2mm and let it bleed past the ink line. Never on anything else.",
+      "why": "In this world's fiction the presses could never get magic to sit still on the page. It gives the arcane a visual behaviour rather than just a hue — and it still degrades correctly, because in black-and-white mode there is no slip at all, and nothing is lost.",
+      "limit": "One direction per component. Keep it consistent within a card."
+    },
+    "noGradients": {
+      "rule": "No gradients, no soft airbrushed shading, no drop shadows, no glows.",
+      "why": "Volume comes from hatching on the ink plate. Gradients cost money in print, band badly on uncoated stock, and are the fastest way to make this look like generic digital fantasy art.",
+      "exception": "Paper texture and press grime, which are ink-plate texture rather than colour transitions."
+    },
+    "printSafety": {
+      "minLineWeight": "0.15mm at final print size",
+      "minTypeSize": "6pt for rules text, 5.5pt for legal and attribution",
+      "minTint": "12% — anything lighter drops out on uncoated stock",
+      "maxTotalInk": "260% TAC for uncoated, 300% for coated",
+      "bleed": "3mm",
+      "safeMargin": "4mm from trim on cards, 6mm on tiles",
+      "registrationTolerance": "0.3mm — never rely on two plates lining up more precisely than this, which is exactly why the ink plate is self-sufficient"
+    },
+    "photocopyTest": {
+      "rule": "Every component must survive being photocopied in black and white on a bad machine.",
+      "why": "The print-and-play edition is a real deliverable, and the people most likely to build one are printing on a home laser printer."
+    }
+  }
+}

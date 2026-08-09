@@ -1,0 +1,261 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 980" width="1240" height="980" font-family="Georgia, 'Iowan Old Style', 'Times New Roman', serif">
+<title>game1 — event card, both modes</title>
+<desc>Hard Frost, from data/events.json, laid out at 63x88mm with 3mm bleed. Left: the ink plate alone, which is the black-and-white edition. Right: the identical ink plate over the wash plate.</desc>
+
+<!-- ============================================================
+     Drawn at 8 units = 1mm.
+       bleed  552 x 752   (69 x 94 mm)
+       trim    24..528, 24..728   (63 x 88 mm)
+       safe    56..496, 56..696   (4mm inside trim)
+     Card content is defined once and used twice; the left card
+     simply has no wash content. See docs/art/01-two-plate-system.md
+     ============================================================ -->
+
+<defs>
+  <pattern id="h-horizontal" width="6" height="6" patternUnits="userSpaceOnUse">
+    <path d="M0,3 H6" stroke="#1A1714" stroke-width="1.1"/></pattern>
+
+  <clipPath id="art-window"><rect x="64" y="92" width="424" height="244"/></clipPath>
+
+  <!-- iron corner straps, filled shapes so both plates use the same geometry -->
+  <path id="strap-tl" d="M 44,44 H 120 V 58 H 58 V 120 H 44 Z"/>
+  <path id="strap-tr" d="M 508,44 H 432 V 58 H 494 V 120 H 508 Z"/>
+  <path id="strap-bl" d="M 44,708 H 120 V 694 H 58 V 632 H 44 Z"/>
+  <path id="strap-br" d="M 508,708 H 432 V 694 H 494 V 632 H 508 Z"/>
+
+  <!-- ---------------------------------------------------------- WASH -->
+  <g id="card-wash">
+    <rect x="64" y="92" width="424" height="158" fill="#D2D3CE"/>
+    <rect x="64" y="250" width="424" height="86" fill="#9AA3A8"/>
+    <g clip-path="url(#art-window)">
+      <path d="M 84,296 L 108,286 L 288,286 L 264,296 Z" fill="#7BA0B5"/>
+    </g>
+    <rect x="181" y="40" width="190" height="36" fill="#7C9AAD"/>
+    <g fill="#A0968A">
+      <use href="#strap-tl"/><use href="#strap-tr"/><use href="#strap-bl"/><use href="#strap-br"/>
+    </g>
+    <g fill="#3C5A6E">
+      <rect x="496" y="330" width="12" height="28"/><rect x="496" y="366" width="12" height="28"/>
+    </g>
+  </g>
+
+  <!-- ---------------------------------------------------------- INK -->
+  <g id="card-ink">
+    <!-- ===== timber-and-iron frame ===== -->
+    <g fill="none" stroke="#1A1714">
+      <rect x="40" y="40" width="472" height="672" stroke-width="4"/>
+      <rect x="48" y="48" width="456" height="656" stroke-width="1.2"/>
+      <g stroke-width="0.9" opacity="0.7">
+        <path d="M 44,160 V 590"/><path d="M 508,160 V 590"/>
+        <path d="M 390,44 H 470"/><path d="M 160,708 H 400"/>
+      </g>
+    </g>
+    <g fill="none" stroke="#1A1714" stroke-width="2">
+      <use href="#strap-tl"/><use href="#strap-tr"/><use href="#strap-bl"/><use href="#strap-br"/>
+    </g>
+    <g fill="#1A1714">
+      <circle cx="51" cy="51" r="3.6"/><circle cx="501" cy="51" r="3.6"/>
+      <circle cx="51" cy="701" r="3.6"/><circle cx="501" cy="701" r="3.6"/>
+      <circle cx="110" cy="51" r="2.8"/><circle cx="442" cy="51" r="2.8"/>
+      <circle cx="51" cy="110" r="2.8"/><circle cx="501" cy="110" r="2.8"/>
+      <circle cx="110" cy="701" r="2.8"/><circle cx="442" cy="701" r="2.8"/>
+      <circle cx="51" cy="642" r="2.8"/><circle cx="501" cy="642" r="2.8"/>
+    </g>
+
+    <!-- ===== category tab: the hatch is the identifier, not the colour ===== -->
+    <rect x="181" y="40" width="190" height="36" fill="url(#h-horizontal)"/>
+    <rect x="181" y="40" width="190" height="36" fill="none" stroke="#1A1714" stroke-width="2.4"/>
+    <rect x="187" y="46" width="178" height="24" fill="#EDE4D1"/>
+    <text x="276" y="65" font-size="19" text-anchor="middle" letter-spacing="1.6"
+          font-family="Helvetica, Arial, sans-serif">WEATHER</text>
+
+    <!-- ===== severity 2 of 3, on the frame edge, read from a fanned hand ===== -->
+    <g fill="none" stroke="#1A1714" stroke-width="2">
+      <rect x="496" y="330" width="12" height="28"/><rect x="496" y="366" width="12" height="28"/>
+      <rect x="496" y="402" width="12" height="28"/>
+    </g>
+    <g fill="#1A1714">
+      <rect x="496" y="330" width="12" height="28"/><rect x="496" y="366" width="12" height="28"/>
+    </g>
+
+    <!-- ===== the art ===== -->
+    <rect x="64" y="92" width="424" height="244" fill="none" stroke="#1A1714" stroke-width="2.6"/>
+    <g clip-path="url(#art-window)" fill="none" stroke="#1A1714" stroke-linecap="round" stroke-linejoin="round">
+      <!-- cold banded sky. Uneven lengths so it reads as drawn hatch, not ruled
+           paper, and it stops well short of the horizon: bare paper is the
+           brightest value available and winter light is the point. -->
+      <g stroke-width="1.2">
+        <path d="M 64,106 H 268 M 292,106 H 372"/>
+        <path d="M 150,121 H 344 M 366,120 H 488"/>
+        <path d="M 64,135 H 178 M 200,134 H 300"/>
+        <path d="M 258,149 H 460"/>
+      </g>
+
+      <!-- bare tree, frost-stripped -->
+      <g stroke-width="2.6">
+        <path d="M 428,252 C 425,222 427,196 431,158"/>
+        <path d="M 429,208 C 414,198 404,188 396,172"/>
+        <path d="M 429,192 C 444,182 452,174 458,158"/>
+        <path d="M 430,174 C 421,164 417,156 414,146"/>
+        <path d="M 431,166 C 439,158 445,152 449,142"/>
+        <path d="M 402,178 l -8,-5 M 456,166 l 8,-6"/>
+      </g>
+
+      <!-- horizon -->
+      <path d="M 64,250 H 488" stroke-width="2.4"/>
+
+      <!-- crop rows, stalled and stiff. Taller and further apart toward the front. -->
+      <g stroke-width="1.3">
+        <path d="M 72,262 l 1,-7 M 88,262 l -1,-9 M 103,261 l 1,-6 M 119,262 l -1,-8
+                 M 137,262 l 1,-7 M 151,261 l -1,-9 M 168,262 l 1,-6 M 184,262 l -1,-8
+                 M 199,261 l 1,-7 M 217,262 l -1,-9 M 232,262 l 1,-6 M 248,261 l -1,-8
+                 M 265,262 l 1,-7 M 280,262 l -1,-9 M 297,261 l 1,-6 M 313,262 l -1,-8
+                 M 330,262 l 1,-7 M 346,261 l -1,-9 M 363,262 l 1,-6 M 379,262 l -1,-8
+                 M 396,261 l 1,-7 M 464,262 l -1,-8 M 481,261 l 1,-6"/>
+      </g>
+      <g stroke-width="1.7">
+        <path d="M 306,284 l 2,-13 M 331,284 l -2,-11 M 357,284 l 2,-14 M 384,283 l -1,-12
+                 M 410,284 l 2,-13 M 437,284 l -2,-11 M 463,283 l 1,-14 M 481,284 l -2,-12"/>
+      </g>
+      <g stroke-width="2">
+        <path d="M 318,318 l 3,-16 M 349,318 l -2,-14 M 381,317 l 3,-18
+                 M 414,318 l -3,-15 M 446,318 l 2,-17 M 476,317 l -2,-14"/>
+        <!-- two stalks bent right over by the frost -->
+        <path d="M 334,318 c 1,-9 4,-13 11,-14"/>
+        <path d="M 430,318 c -1,-8 -4,-12 -10,-13"/>
+      </g>
+      <!-- hard ground -->
+      <g stroke-width="0.9" opacity="0.75">
+        <path d="M 300,296 H 488"/><path d="M 330,330 H 488"/><path d="M 64,338 H 200"/>
+      </g>
+
+      <!-- ===== the hero object: a trough frozen solid ===== -->
+      <g stroke-width="2.8">
+        <path d="M 84,296 L 108,286 L 288,286 L 264,296 Z"/>
+        <path d="M 84,296 L 264,296 L 264,332 L 84,332 Z"/>
+        <path d="M 264,296 L 288,286 L 288,322 L 264,332"/>
+      </g>
+      <!-- the ice, and the crack across it -->
+      <path d="M 96,294 L 114,289 L 278,289 L 258,294 Z" stroke-width="1.3"/>
+      <g stroke-width="1.5">
+        <path d="M 112,293 L 148,290 L 178,293 L 214,289 L 252,292"/>
+        <path d="M 148,290 L 144,294"/><path d="M 214,289 L 220,293"/>
+      </g>
+      <!-- staves, iron hoop, and the split plank -->
+      <g stroke-width="1.4">
+        <path d="M 116,296 V 332"/><path d="M 152,296 V 332"/><path d="M 188,296 V 332"/><path d="M 224,296 V 332"/>
+        <path d="M 84,310 H 264"/><path d="M 264,310 L 288,300"/>
+      </g>
+      <g fill="#1A1714" stroke="none">
+        <circle cx="100" cy="310" r="2"/><circle cx="170" cy="310" r="2"/><circle cx="246" cy="310" r="2"/>
+      </g>
+      <!-- contour hatch: shadow on the right, away from the light -->
+      <g stroke-width="1.3">
+        <path d="M 270,302 V 328"/><path d="M 276,300 V 326"/><path d="M 282,298 V 324"/>
+      </g>
+      <!-- frost, stippled -->
+      <g fill="#1A1714" stroke="none" opacity="0.9">
+        <circle cx="90" cy="316" r="1.2"/><circle cx="94" cy="325" r="1.1"/><circle cx="256" cy="318" r="1.2"/>
+        <circle cx="252" cy="327" r="1.1"/><circle cx="284" cy="314" r="1.1"/>
+      </g>
+
+      <!-- shovel left standing: the ground is too hard to dig -->
+      <g stroke-width="2.4">
+        <path d="M 318,196 L 332,290"/>
+        <path d="M 312,192 a 8,10 0 1 1 13,-2"/>
+        <path d="M 324,286 L 348,282 L 353,312 L 331,318 Z"/>
+      </g>
+      <path d="M 330,290 L 349,287" stroke-width="1.3"/>
+    </g>
+
+    <!-- ===== title block ===== -->
+    <text x="64" y="382" font-size="37">Hard Frost</text>
+    <text x="64" y="408" font-size="19" letter-spacing="1.5" fill="#5F564C"
+          font-family="Helvetica, Arial, sans-serif">GLOBAL · 3 COPIES</text>
+
+    <!-- ===== effects: the notch carries direction, never the colour ===== -->
+    <g transform="translate(70,442)">
+      <rect x="-6" y="-11" width="26" height="22" fill="none" stroke="#1A1714" stroke-width="2"/>
+      <rect x="-1" y="-3" width="16" height="6" fill="#1A1714"/>
+    </g>
+    <text x="106" y="450" font-size="22">Growing crops do not advance.</text>
+
+    <g transform="translate(70,488)">
+      <rect x="-6" y="-11" width="26" height="22" fill="none" stroke="#1A1714" stroke-width="2"/>
+      <path d="M -1,-4 H 15 L 7,7 Z" fill="#1A1714"/>
+    </g>
+    <text x="106" y="490" font-size="22">−1 effort to workers on tundra,</text>
+    <text x="106" y="516" font-size="22">mountain and hills.</text>
+
+    <!-- ===== mitigation, always ruled off — design pillar 4 ===== -->
+    <path d="M 64,546 H 488" stroke="#1A1714" stroke-width="1.4"/>
+    <path d="M 64,546 H 168" stroke="#1A1714" stroke-width="3.4"/>
+    <text x="64" y="570" font-size="17" letter-spacing="1.5" fill="#5F564C"
+          font-family="Helvetica, Arial, sans-serif">MITIGATION</text>
+    <g font-size="21">
+      <text x="64" y="598">Brick house or manor: unaffected.</text>
+      <text x="64" y="624">2+ fuel in stock: no effort penalty.</text>
+    </g>
+
+    <!-- ===== flavour ===== -->
+    <path d="M 64,648 H 488" stroke="#1A1714" stroke-width="0.9" opacity="0.5"/>
+    <text x="64" y="674" font-size="21" font-style="italic" fill="#3D3630">“A cold snap. Nothing green moves.”</text>
+
+    <!-- ===== the annotation: a previous owner has been in this book.
+               Reduced tint, off square, and it never carries a rule. ===== -->
+    <g transform="translate(300,694) rotate(-2.5)" opacity="0.5">
+      <text font-size="20" font-style="italic" fill="#1A1714"
+            font-family="'Segoe Script', 'Bradley Hand', 'Apple Chancery', cursive">we burned the fence</text>
+    </g>
+  </g>
+</defs>
+
+<!-- ============================================================ PAPER -->
+<rect width="1240" height="980" fill="#EDE4D1"/>
+
+<!-- ============================================================ WASH -->
+<g id="wash">
+  <!-- The left card deliberately has no wash content: it IS the mono edition. -->
+  <g transform="translate(644,128)"><use href="#card-wash"/></g>
+</g>
+
+<!-- ============================================================ INK -->
+<g id="ink" fill="#1A1714">
+  <text x="44" y="54" font-size="32">game1 — event card, both modes</text>
+  <text x="44" y="80" font-size="15" font-style="italic" fill="#5F564C">Hard Frost, straight out of data/events.json · 63 × 88 mm, 3 mm bleed · one layout, two print runs.</text>
+  <path d="M 44,94 H 1196" stroke="#1A1714" stroke-width="2"/>
+
+  <g font-size="11.5" letter-spacing="1.6" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">
+    <text x="44" y="120">INK PLATE ONLY — THE PRINT-AND-PLAY EDITION</text>
+    <text x="644" y="120">INK OVER WASH — THE RETAIL EDITION</text>
+  </g>
+
+  <!-- the same card ink, twice -->
+  <g transform="translate(44,128)"><use href="#card-ink"/></g>
+  <g transform="translate(644,128)"><use href="#card-ink"/></g>
+
+  <!-- trim marks on the left card -->
+  <g stroke="#1A1714" stroke-width="0.8" opacity="0.45">
+    <path d="M 44,152 H 22 M 68,128 V 106"/>
+    <path d="M 596,152 H 618 M 572,128 V 106"/>
+    <path d="M 44,856 H 22 M 68,880 V 902"/>
+    <path d="M 596,856 H 618 M 572,880 V 902"/>
+  </g>
+
+  <text x="44" y="944" font-size="13.5" font-style="italic" fill="#3D3630">Category is a hatched tab, not a colour. Severity is notches on the frame edge, readable in a fanned hand. Effect direction is a notch inside the glyph. Every one of those survives the left-hand column.</text>
+</g>
+
+<!-- ============================================================ GRIME -->
+<g id="grime">
+  <path d="M 0,0 H 130 Q 52,54 0,116 Z" fill="#1A1714" opacity="0.028"/>
+  <path d="M 1240,980 H 1120 Q 1186,936 1240,884 Z" fill="#1A1714" opacity="0.025"/>
+  <g fill="#1A1714" opacity="0.06">
+    <circle cx="330" cy="620" r="1.5"/><circle cx="880" cy="300" r="1.3"/><circle cx="1150" cy="700" r="1.4"/>
+    <circle cx="150" cy="880" r="1.2"/><circle cx="700" cy="820" r="1.3"/>
+  </g>
+  <!-- a thumbprint, once, in a corner, never on the subject -->
+  <g transform="translate(1158,178)" fill="none" stroke="#1A1714" opacity="0.07" stroke-width="1.5">
+    <path d="M 0,0 a 14,18 0 0 1 24,4"/><path d="M -2,9 a 18,22 0 0 1 30,5"/><path d="M -3,18 a 22,26 0 0 1 35,6"/>
+  </g>
+</g>
+</svg>
