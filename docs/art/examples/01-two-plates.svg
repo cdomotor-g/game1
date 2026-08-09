@@ -1,0 +1,346 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1090" width="1240" height="1090" font-family="Georgia, 'Iowan Old Style', 'Times New Roman', serif">
+<title>game1 — the two-plate system</title>
+<desc>Reference sheet. One drawing, separated into an ink plate and a wash plate. The ink plate printed alone is the black-and-white edition; the identical ink plate over the wash plate is the colour edition.</desc>
+
+<!-- ============================================================
+     Layer contract, per docs/art/01-two-plate-system.md:
+       #wash  flat colour, no strokes, palette values only
+       #slip  arcane mis-registration, arcane subjects only
+       #ink   all line work, #1A1714 only
+       #grime press artefacts, #1A1714 at low opacity
+     Black-and-white edition renders as:
+       doc.querySelectorAll('#wash, #slip').forEach(g => g.remove());
+     ============================================================ -->
+
+<defs>
+  <!-- ---------- the eleven category hatches ---------- -->
+  <!-- Adapted from Petra Sancta, in use by printers since the 1630s. -->
+  <pattern id="h-vertical" width="6" height="6" patternUnits="userSpaceOnUse">
+    <path d="M3,0 V6" stroke="#1A1714" stroke-width="1.1"/></pattern>
+  <pattern id="h-vertical-wide" width="12" height="6" patternUnits="userSpaceOnUse">
+    <path d="M6,0 V6" stroke="#1A1714" stroke-width="1.1"/></pattern>
+  <pattern id="h-horizontal" width="6" height="6" patternUnits="userSpaceOnUse">
+    <path d="M0,3 H6" stroke="#1A1714" stroke-width="1.1"/></pattern>
+  <pattern id="h-diagonal" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <path d="M3,0 V6" stroke="#1A1714" stroke-width="1.1"/></pattern>
+  <pattern id="h-diagonal-wide" width="12" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <path d="M6,0 V6" stroke="#1A1714" stroke-width="1.1"/></pattern>
+  <pattern id="h-diagonal-sinister" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+    <path d="M3,0 V6" stroke="#1A1714" stroke-width="1.1"/></pattern>
+  <pattern id="h-cross" width="6" height="6" patternUnits="userSpaceOnUse">
+    <path d="M3,0 V6 M0,3 H6" stroke="#1A1714" stroke-width="1"/></pattern>
+  <pattern id="h-stipple" width="8" height="8" patternUnits="userSpaceOnUse">
+    <circle cx="4" cy="4" r="1.4" fill="#1A1714"/></pattern>
+  <pattern id="h-stipple-dense" width="5" height="5" patternUnits="userSpaceOnUse">
+    <circle cx="2.5" cy="2.5" r="1.3" fill="#1A1714"/></pattern>
+  <pattern id="h-basket" width="10" height="10" patternUnits="userSpaceOnUse">
+    <g stroke="#1A1714" stroke-width="0.9" fill="none">
+      <path d="M0,1.5 H5 M0,3.5 H5"/><path d="M6.5,0 V5 M8.5,0 V5"/>
+      <path d="M1.5,5 V10 M3.5,5 V10"/><path d="M5,6.5 H10 M5,8.5 H10"/>
+    </g></pattern>
+
+  <!-- ---------- the barrel, drawn ONCE ---------- -->
+  <!-- Ale barrel. Category: drink. The whole point of this sheet is that the
+       ink group below is used identically in all three panels. -->
+
+  <path id="barrel-silhouette"
+        d="M -50,-85 A 50,14 0 0 1 50,-85 C 64,-55 65,55 50,85 A 50,14 0 0 1 -50,85 C -65,55 -64,-55 -50,-85 Z"/>
+  <path id="hoop-t" d="M -60,-53 A 60,16 0 0 0 60,-53 L 60,-37 A 60,16 0 0 1 -60,-37 Z"/>
+  <path id="hoop-b" d="M -60,37 A 60,16 0 0 0 60,37 L 60,53 A 60,16 0 0 1 -60,53 Z"/>
+  <path id="patch" d="M -34,18 L -8,14 L -5,44 L -31,48 Z"/>
+
+  <!-- body minus the iron hoops, so staves and hatch stop at the bands
+       without needing a paper knock-out — keeps the ink plate one colour -->
+  <mask id="barrel-body">
+    <use href="#barrel-silhouette" fill="#fff"/>
+    <use href="#hoop-t" fill="#000"/>
+    <use href="#hoop-b" fill="#000"/>
+  </mask>
+
+  <g id="barrel-wash">
+    <use href="#barrel-silhouette" fill="#B7966D"/>
+    <use href="#hoop-t" fill="#A0968A"/>
+    <use href="#hoop-b" fill="#A0968A"/>
+    <use href="#patch" fill="#A0968A"/>
+    <!-- cast shadow: full-strength drink wash, because no linework sits on it -->
+    <ellipse cx="6" cy="99" rx="72" ry="9" fill="#8A561C" opacity="0.55"/>
+  </g>
+
+  <g id="barrel-ink" fill="none" stroke="#1A1714" stroke-linejoin="round" stroke-linecap="round">
+    <g mask="url(#barrel-body)">
+      <!-- staves: detail weight -->
+      <g stroke-width="1.5">
+        <path d="M -30.5,-84 C -34,-70 -38,-30 -38,0 C -38,30 -34,70 -30.5,84"/>
+        <path d="M -10.4,-86 C -11.6,-70 -13.2,-30 -13.2,0 C -13.2,30 -11.6,70 -10.4,86"/>
+        <path d="M 10.4,-86 C 11.6,-70 13.2,-30 13.2,0 C 13.2,30 11.6,70 10.4,86"/>
+        <path d="M 30.5,-84 C 34,-70 38,-30 38,0 C 38,30 34,70 30.5,84"/>
+      </g>
+      <!-- contour hatch: light from upper left, so shadow gathers on the right.
+           Density steps rather than blends, and stops well short of the lit face. -->
+      <g stroke-width="1.5">
+        <path d="M 45,-74 C 52,-50 52,50 45,74"/>
+        <path d="M 50,-80 C 58,-54 58,54 50,80"/>
+        <path d="M 55,-80 C 63,-54 63,54 55,80"/>
+        <path d="M 59,-72 C 66,-50 66,50 59,72"/>
+        <path d="M 62,-58 C 68,-40 68,40 62,58"/>
+      </g>
+      <!-- core shadow on the far left edge -->
+      <path d="M -47,-64 C -53,-40 -53,40 -47,64" stroke-width="1.3"/>
+      <!-- the repair: a riveted patch over a split stave -->
+      <use href="#patch" stroke-width="2.4"/>
+      <g fill="#1A1714" stroke="none">
+        <circle cx="-30" cy="22" r="1.9"/><circle cx="-11" cy="19" r="1.9"/>
+        <circle cx="-27" cy="43" r="1.9"/><circle cx="-8" cy="40" r="1.9"/>
+      </g>
+    </g>
+
+    <!-- iron hoops: structure weight -->
+    <use href="#hoop-t" stroke-width="2.5"/>
+    <use href="#hoop-b" stroke-width="2.5"/>
+    <g stroke-width="1.1">
+      <path d="M 44,-50 C 46,-46 46,-44 44,-40"/><path d="M 52,-49 C 54,-45 54,-43 52,-39"/>
+      <path d="M 44,40 C 46,44 46,46 44,50"/><path d="M 52,41 C 54,45 54,47 52,51"/>
+    </g>
+    <g fill="#1A1714" stroke="none">
+      <circle cx="-38" cy="-45" r="2.4"/><circle cx="0" cy="-44" r="2.4"/><circle cx="38" cy="-45" r="2.4"/>
+      <circle cx="-38" cy="45" r="2.4"/><circle cx="0" cy="46" r="2.4"/><circle cx="38" cy="45" r="2.4"/>
+    </g>
+
+    <!-- body contour: the heaviest line on the drawing -->
+    <path d="M -50,-85 C -64,-55 -65,55 -50,85 A 50,14 0 0 0 50,85 C 65,55 64,-55 50,-85" stroke-width="4"/>
+    <!-- over-inked pooling where the contour meets the rim -->
+    <g fill="#1A1714" stroke="none">
+      <path d="M -50,-85 l 5,1 l -1,7 Z"/><path d="M 50,-85 l -5,1 l 1,7 Z"/>
+    </g>
+
+    <!-- the head -->
+    <ellipse cx="0" cy="-85" rx="50" ry="14" stroke-width="3.4"/>
+    <ellipse cx="0" cy="-85" rx="38" ry="10" stroke-width="1.4"/>
+    <circle cx="21" cy="-86" r="6" stroke-width="1.8"/>
+    <!-- chipped rim, upper left: wear where it is set down and knocked -->
+    <path d="M -41,-93 l 5,3 l -4,3" stroke-width="1.6"/>
+
+    <!-- maker's mark, struck slightly off square -->
+    <g transform="translate(-20,-14) rotate(-8)">
+      <circle r="10.5" stroke-width="1.5"/>
+      <path d="M -4.5,3.5 L 0,-4.5 L 4.5,3.5" stroke-width="1.5"/>
+      <path d="M -6,6.5 H 6" stroke-width="1.2"/>
+    </g>
+
+    <!-- ground line -->
+    <path d="M -88,101 L 92,101" stroke-width="2.4" stroke-linecap="butt"/>
+  </g>
+
+  <!-- ---------- mana crystal, for the arcane slip ---------- -->
+  <path id="crystal" d="M 0,-44 L 23,-12 L 14,36 L -14,36 L -23,-12 Z"/>
+  <g id="crystal-ink" fill="none" stroke="#1A1714" stroke-linejoin="round">
+    <g stroke-width="1.3">
+      <path d="M 8,-8 L 10,30"/><path d="M 13,-6 L 12,28"/><path d="M 17,-5 L 13,22"/>
+    </g>
+    <path d="M -23,-12 L 0,-2 L 23,-12" stroke-width="1.6"/>
+    <path d="M 0,-44 L 0,-2" stroke-width="1.6"/>
+    <use href="#crystal" stroke-width="3.6"/>
+    <path d="M -30,46 L 30,46" stroke-width="2" stroke-linecap="butt"/>
+  </g>
+</defs>
+
+<!-- ============================================================ PAPER -->
+<rect width="1240" height="1090" fill="#EDE4D1"/>
+
+<!-- ============================================================ WASH -->
+<g id="wash">
+  <!-- Panel 1 (ink plate alone) deliberately has NO wash content. -->
+
+  <!-- Panel 2 — wash plate alone -->
+  <g transform="translate(620,340)"><use href="#barrel-wash"/></g>
+  <!-- Panel 3 — registered -->
+  <g transform="translate(1020,340)"><use href="#barrel-wash"/></g>
+
+  <!-- arcane demo: under-ink tint, per the underInk rule -->
+  <g transform="translate(145,662)"><use href="#crystal" fill="#A690A3"/></g>
+  <g transform="translate(375,662)"><use href="#crystal" fill="#A690A3"/></g>
+
+  <!-- category swatches: left half washed, right half bare -->
+  <g>
+    <path d="M 92.7,829 A 33,33 0 0 0 92.7,895 Z" fill="#8C857A"/>
+    <path d="M 198.2,829 A 33,33 0 0 0 198.2,895 Z" fill="#463E36"/>
+    <path d="M 303.6,829 A 33,33 0 0 0 303.6,895 Z" fill="#8A3222"/>
+    <path d="M 409.1,829 A 33,33 0 0 0 409.1,895 Z" fill="#C4785E"/>
+    <path d="M 514.5,829 A 33,33 0 0 0 514.5,895 Z" fill="#8AAE98"/>
+    <path d="M 620.0,829 A 33,33 0 0 0 620.0,895 Z" fill="#C4882B"/>
+    <path d="M 725.4,829 A 33,33 0 0 0 725.4,895 Z" fill="#8A561C"/>
+    <path d="M 830.9,829 A 33,33 0 0 0 830.9,895 Z" fill="#35594A"/>
+    <path d="M 936.4,829 A 33,33 0 0 0 936.4,895 Z" fill="#C6B79A"/>
+    <path d="M 1041.8,829 A 33,33 0 0 0 1041.8,895 Z" fill="#7C9AAD"/>
+    <path d="M 1147.3,829 A 33,33 0 0 0 1147.3,895 Z" fill="#6B4C7D"/>
+  </g>
+
+  <!-- ink swatches -->
+  <g>
+    <rect x="40" y="984" width="150" height="52" fill="#EDE4D1"/>
+    <rect x="205.7" y="984" width="150" height="52" fill="#1A1714"/>
+    <rect x="371.4" y="984" width="150" height="52" fill="#C4882B"/>
+    <rect x="537.1" y="984" width="150" height="52" fill="#A33B26"/>
+    <rect x="702.9" y="984" width="150" height="52" fill="#4C7A61"/>
+    <rect x="868.6" y="984" width="150" height="52" fill="#3C5A6E"/>
+    <rect x="1034.3" y="984" width="150" height="52" fill="#6B4C7D"/>
+  </g>
+</g>
+
+<!-- ============================================================ SLIP -->
+<!-- Arcane only. The wash printed out of register, escaping the line. -->
+<g id="slip">
+  <g transform="translate(375,662)">
+    <use href="#crystal" fill="#6B4C7D" transform="translate(6,-5)" opacity="0.88"/>
+  </g>
+</g>
+
+<!-- ============================================================ INK -->
+<g id="ink" fill="#1A1714">
+
+  <!-- ---------- header ---------- -->
+  <text x="40" y="54" font-size="34">game1 — the two-plate system</text>
+  <text x="40" y="80" font-size="15" font-style="italic" fill="#5F564C">One drawing, two plates. Black-and-white is not a reduced colour edition; colour is an added wash edition.</text>
+  <path d="M 40,94 H 1200" stroke="#1A1714" stroke-width="2"/>
+
+  <!-- ---------- section A ---------- -->
+  <text x="40" y="122" font-size="11.5" letter-spacing="1.6" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">A · THE SAME DRAWING, THREE WAYS</text>
+
+  <g fill="none" stroke="#1A1714">
+    <rect x="40" y="138" width="360" height="340" stroke-width="1.6"/>
+    <rect x="440" y="138" width="360" height="340" stroke-width="1.6"/>
+    <rect x="840" y="138" width="360" height="340" stroke-width="1.6"/>
+  </g>
+  <!-- corner rivets: the timber-and-iron motif -->
+  <g fill="#1A1714">
+    <circle cx="50" cy="148" r="2.6"/><circle cx="390" cy="148" r="2.6"/><circle cx="50" cy="468" r="2.6"/><circle cx="390" cy="468" r="2.6"/>
+    <circle cx="450" cy="148" r="2.6"/><circle cx="790" cy="148" r="2.6"/><circle cx="450" cy="468" r="2.6"/><circle cx="790" cy="468" r="2.6"/>
+    <circle cx="850" cy="148" r="2.6"/><circle cx="1190" cy="148" r="2.6"/><circle cx="850" cy="468" r="2.6"/><circle cx="1190" cy="468" r="2.6"/>
+  </g>
+
+  <text x="220" y="172" font-size="15" text-anchor="middle">INK PLATE</text>
+  <text x="620" y="172" font-size="15" text-anchor="middle">WASH PLATE</text>
+  <text x="1020" y="172" font-size="15" text-anchor="middle">REGISTERED</text>
+  <g font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#5F564C" text-anchor="middle">
+    <text x="220" y="188">= the black-and-white edition</text>
+    <text x="620" y="188">carries no information at all</text>
+    <text x="1020" y="188">= the colour edition</text>
+  </g>
+
+  <!-- the identical ink group, used in panels 1 and 3 and omitted from 2 -->
+  <g transform="translate(220,340)"><use href="#barrel-ink"/></g>
+  <g transform="translate(1020,340)"><use href="#barrel-ink"/></g>
+
+  <g font-size="11.5" font-family="Helvetica, Arial, sans-serif" fill="#5F564C" text-anchor="middle">
+    <text x="220" y="456">complete on its own</text>
+    <text x="620" y="456">unreadable on its own</text>
+    <text x="1020" y="456">same ink, unchanged</text>
+  </g>
+
+  <text x="40" y="502" font-size="13.5" font-style="italic" fill="#3D3630">Ale barrel · drink · the middle panel is why colour may never carry a rule. The body wash is the 55% under-ink tint; only the cast shadow, which carries no linework, prints at full strength.</text>
+
+  <!-- ---------- section B ---------- -->
+  <text x="40" y="548" font-size="11.5" letter-spacing="1.6" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">B · THE ARCANE EXCEPTION — MAGIC IS A PRINTING ERROR</text>
+
+  <g fill="none" stroke="#1A1714" stroke-width="1.6">
+    <rect x="40" y="564" width="210" height="200"/>
+    <rect x="270" y="564" width="210" height="200"/>
+  </g>
+  <g transform="translate(145,662)"><use href="#crystal-ink"/></g>
+  <g transform="translate(375,662)"><use href="#crystal-ink"/></g>
+  <g font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="145" y="588" fill="#5F564C">without the slip</text>
+    <text x="375" y="588" fill="#5F564C">with the slip</text>
+  </g>
+
+  <g font-size="13.5" fill="#3D3630">
+    <text x="512" y="590" font-size="15" fill="#1A1714">Mana crystal · arcane</text>
+    <text x="512" y="618">On arcane subjects only, the violet prints 1mm out of register and</text>
+    <text x="512" y="638">bleeds past the black line — as though the press could never get</text>
+    <text x="512" y="658">magic to sit still on the page.</text>
+    <text x="512" y="690">No glow. No sparkle. No particles. There are two mana veins on the</text>
+    <text x="512" y="710">whole board, and this is what makes that scarcity visible across a</text>
+    <text x="512" y="730">table before anyone has read a number.</text>
+    <text x="512" y="756" font-style="italic" fill="#5F564C">In black-and-white there is no slip, because there is no wash — and nothing is lost.</text>
+  </g>
+
+  <!-- ---------- section C ---------- -->
+  <text x="40" y="808" font-size="11.5" letter-spacing="1.6" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">C · THE ELEVEN COMMODITY CATEGORIES — WASH LEFT, INK PLATE RIGHT</text>
+
+  <g>
+    <!-- hatch over both halves, then the frame -->
+    <circle cx="92.7"  cy="862" r="33" fill="none"/>
+    <circle cx="198.2" cy="862" r="33" fill="url(#h-cross)"/>
+    <circle cx="303.6" cy="862" r="33" fill="url(#h-vertical)"/>
+    <circle cx="409.1" cy="862" r="33" fill="url(#h-vertical-wide)"/>
+    <circle cx="514.5" cy="862" r="33" fill="url(#h-diagonal-wide)"/>
+    <circle cx="620.0" cy="862" r="33" fill="url(#h-stipple)"/>
+    <circle cx="725.4" cy="862" r="33" fill="url(#h-stipple-dense)"/>
+    <circle cx="830.9" cy="862" r="33" fill="url(#h-diagonal)"/>
+    <circle cx="936.4" cy="862" r="33" fill="url(#h-basket)"/>
+    <circle cx="1041.8" cy="862" r="33" fill="url(#h-horizontal)"/>
+    <circle cx="1147.3" cy="862" r="33" fill="url(#h-diagonal-sinister)"/>
+  </g>
+  <g fill="none" stroke="#1A1714" stroke-width="2.4">
+    <circle cx="92.7" cy="862" r="33"/><circle cx="198.2" cy="862" r="33"/><circle cx="303.6" cy="862" r="33"/>
+    <circle cx="409.1" cy="862" r="33"/><circle cx="514.5" cy="862" r="33"/><circle cx="620.0" cy="862" r="33"/>
+    <circle cx="725.4" cy="862" r="33"/><circle cx="830.9" cy="862" r="33"/><circle cx="936.4" cy="862" r="33"/>
+    <circle cx="1041.8" cy="862" r="33"/><circle cx="1147.3" cy="862" r="33"/>
+  </g>
+  <g stroke="#1A1714" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.55">
+    <path d="M92.7,829 V895"/><path d="M198.2,829 V895"/><path d="M303.6,829 V895"/><path d="M409.1,829 V895"/>
+    <path d="M514.5,829 V895"/><path d="M620,829 V895"/><path d="M725.4,829 V895"/><path d="M830.9,829 V895"/>
+    <path d="M936.4,829 V895"/><path d="M1041.8,829 V895"/><path d="M1147.3,829 V895"/>
+  </g>
+  <g font-size="12" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="92.7" y="918">raw</text><text x="198.2" y="918">fuel</text><text x="303.6" y="918">material</text>
+    <text x="409.1" y="918">manufact.</text><text x="514.5" y="918">textile</text><text x="620" y="918">food</text>
+    <text x="725.4" y="918">drink</text><text x="830.9" y="918">livestock</text><text x="936.4" y="918">container</text>
+    <text x="1041.8" y="918">luxury</text><text x="1147.3" y="918">arcane</text>
+  </g>
+  <g font-size="10" font-family="ui-monospace, Menlo, Consolas, monospace" text-anchor="middle" fill="#7F7568">
+    <text x="92.7" y="934">plain</text><text x="198.2" y="934">cross</text><text x="303.6" y="934">vertical</text>
+    <text x="409.1" y="934">vert. wide</text><text x="514.5" y="934">diag. wide</text><text x="620" y="934">stipple</text>
+    <text x="725.4" y="934">stipple ×</text><text x="830.9" y="934">diagonal</text><text x="936.4" y="934">basket</text>
+    <text x="1041.8" y="934">horizontal</text><text x="1147.3" y="934">diag. sin.</text>
+  </g>
+
+  <!-- ---------- section D ---------- -->
+  <text x="40" y="968" font-size="11.5" letter-spacing="1.6" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">D · THE WHOLE PALETTE — FIVE CHROMATIC INKS, ONE BLACK, ONE PAPER</text>
+
+  <g fill="none" stroke="#1A1714" stroke-width="1.4">
+    <rect x="40" y="984" width="150" height="52"/><rect x="205.7" y="984" width="150" height="52"/>
+    <rect x="371.4" y="984" width="150" height="52"/><rect x="537.1" y="984" width="150" height="52"/>
+    <rect x="702.9" y="984" width="150" height="52"/><rect x="868.6" y="984" width="150" height="52"/>
+    <rect x="1034.3" y="984" width="150" height="52"/>
+  </g>
+  <g font-size="13">
+    <text x="40" y="1054">Tallow</text><text x="205.7" y="1054">Soot</text><text x="371.4" y="1054">Ochre</text>
+    <text x="537.1" y="1054">Oxide</text><text x="702.9" y="1054">Verdigris</text><text x="868.6" y="1054">Slate</text>
+    <text x="1034.3" y="1054">Bruise</text>
+  </g>
+  <g font-size="10.5" font-family="ui-monospace, Menlo, Consolas, monospace" fill="#7F7568">
+    <text x="40" y="1070">#EDE4D1 · paper</text><text x="205.7" y="1070">#1A1714 · line</text><text x="371.4" y="1070">#C4882B · grain</text>
+    <text x="537.1" y="1070">#A33B26 · rust</text><text x="702.9" y="1070">#4C7A61 · growth</text><text x="868.6" y="1070">#3C5A6E · stone</text>
+    <text x="1034.3" y="1070">#6B4C7D · arcane</text>
+  </g>
+</g>
+
+<!-- ============================================================ GRIME -->
+<!-- On the paper and the press, never on the objects. One strength. -->
+<g id="grime" fill="none" stroke="#1A1714">
+  <!-- a ring where a cup sat, clear of anything that has to be read -->
+  <circle cx="1148" cy="46" r="44" stroke-width="4.5" opacity="0.055"/>
+  <circle cx="1148" cy="46" r="47" stroke-width="1.4" opacity="0.05"/>
+  <!-- over-inked corners, starved opposite corner: heaviest at the edges,
+       lightest through the middle where the information is -->
+  <path d="M 0,0 H 150 Q 60,60 0,132 Z" fill="#1A1714" stroke="none" opacity="0.028"/>
+  <path d="M 1240,1090 H 1090 Q 1170,1040 1240,980 Z" fill="#1A1714" stroke="none" opacity="0.025"/>
+  <!-- fibre flecks in the paper stock -->
+  <g fill="#1A1714" stroke="none" opacity="0.06">
+    <circle cx="118" cy="742" r="1.6"/><circle cx="640" cy="522" r="1.3"/><circle cx="884" cy="120" r="1.5"/>
+    <circle cx="452" cy="960" r="1.2"/><circle cx="1160" cy="600" r="1.4"/><circle cx="228" cy="316" r="1.2"/>
+    <circle cx="738" cy="800" r="1.3"/><circle cx="1052" cy="702" r="1.1"/>
+  </g>
+</g>
+</svg>

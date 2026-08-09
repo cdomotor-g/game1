@@ -120,3 +120,29 @@ Unresolved, and it changes everything about what gets built next. A companion ne
 reference views and a turn tracker. A replacement needs the board, multiplayer and an
 AI. The current build hedges by being neither, which is fine for now and will not be
 fine for long.
+
+## Presentation
+
+### 16. Is `halfling` the right name?
+
+Four of the five peoples are named with folklore terms in the public domain and used
+across hundreds of unrelated works. `halfling` is the exception worth a decision: the word
+appears in Tolkien and has been treated protectively by that estate, though it is also
+long-established as generic in tabletop games.
+
+The risk is low, and it is a naming question rather than a visual one — but it is cheap to
+change now and expensive to change after a print run, so it should be decided rather than
+assumed. Generic alternatives that lose nothing: *smallfolk*, *burrowfolk*, *hearthfolk*.
+
+Changing it touches `data/peoples.json` and every doc that names them. Nothing in
+[../art/](../art/) depends on the word — the art risk is the rendition, not the name, and
+that is handled in
+[../art/08-influences-and-distance.md](../art/08-influences-and-distance.md).
+
+### 17. Do commodity chits get individual art, or does the frame system carry it?
+
+The style guide gives every commodity a category frame, a category hatch and a drawing.
+The drawing is by far the most expensive part — 63 of them — and the frame plus hatch
+already identifies the category unaided. Whether an 18mm chit needs its own illustration,
+or whether a well-chosen frame and a numeral is enough, is a real question about where the
+art budget goes. It should be answered with a printed test sheet, not an opinion.

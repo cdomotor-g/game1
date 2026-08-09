@@ -45,6 +45,14 @@ for a 4-player game and are estimates, not a manufacturing spec.
   The digital prototype sidesteps this entirely, which is exactly why it should not be
   the thing that decides it. This needs a paper prototype before it needs an opinion.
 
+  One thing the style guide settles either way: **eleven distinguishable colours do not
+  exist** — not across colour-blindness, not across dye lots, and not in greyscale, where
+  the eleven collapse into five clusters. So each category also carries a hatch pattern,
+  which is what actually identifies it. Under option 1 the hatch moves to the
+  player-board grid cell, and the cube supplies only colour — which is a real argument in
+  favour of cubes, since it costs nothing to print a hatch into a cell.
+  See [../art/02-palette.md](../art/02-palette.md).
+
 - **~120 coins** in 1 / 5 / 20 denominations
 - **Price band markers** — 11, one per commodity category, on a shared market track
 - **Round marker**, turn order markers, first player token
@@ -60,3 +68,9 @@ for a 4-player game and are estimates, not a manufacturing spec.
 Everything above is derivable from `data/*.json`, so a generator that renders card
 fronts from the data is an obvious next tool — and it would keep the printed components
 honest against the rules automatically, in the same way the web explorer already is.
+
+The [two-plate system](../art/01-two-plate-system.md) is what makes that generator
+tractable: one layout pass emits a `#wash` group and an `#ink` group, the colour edition
+is both, and the print-and-play edition is the ink group alone. Not two design efforts —
+one layout and two print runs. The files in [../art/examples/](../art/examples/) are built
+to that contract and are the generator's target output.
