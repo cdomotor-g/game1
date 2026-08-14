@@ -8,7 +8,7 @@
   'use strict';
 
   const D = global.GAME_DATA;
-  if (!D) throw new Error('web/data/bundle.js is missing. Run: node tools/build-data.mjs');
+  if (!D) throw new Error('docs/data/bundle.js is missing. Run: node tools/build-data.mjs');
 
   const commodities = D.commodities.commodities;
   const tools = D.tools.tools;

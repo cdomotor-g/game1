@@ -40,7 +40,7 @@ for humans — it deliberately does not try to validate across files.
 
 ```bash
 node tools/validate-data.mjs   # referential integrity + design smells
-node tools/build-data.mjs      # regenerate web/data/bundle.js
+node tools/build-data.mjs      # regenerate docs/data/bundle.js
 ```
 
 The validator checks more than broken references. It also flags:

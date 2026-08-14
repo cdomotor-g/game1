@@ -1,0 +1,4 @@
+Publishing this folder must not run Jekyll. Without this file GitHub Pages hands
+docs/ to Jekyll, which rewrites the .md design documents into HTML and can fail the
+build outright on a code fence it decides is Liquid. The site is plain HTML, CSS and
+JS: it wants to be served exactly as committed. Do not delete this file.

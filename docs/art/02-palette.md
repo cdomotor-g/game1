@@ -187,7 +187,7 @@ fantasy art.
 
 ## The digital build
 
-`web/css/app.css` currently uses a warm neutral scheme that is already close in spirit.
+`docs/css/app.css` currently uses a warm neutral scheme that is already close in spirit.
 Aligning it to this palette is a small, contained change and an obvious follow-up — the
 custom properties map almost one to one:
 
