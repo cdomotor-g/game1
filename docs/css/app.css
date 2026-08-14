@@ -101,16 +101,60 @@ code { font-family: var(--mono); font-size: .9em; }
   border: 1px solid var(--line-strong);
 }
 
-.tabs { display: flex; gap: 2px; flex: 1; flex-wrap: wrap; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+/* ---------- burger + left navigation tray ---------- */
+
+.burger { display: grid; place-items: center; flex: none; }
+.burger-bars { position: relative; }
+.burger-bars, .burger-bars::before, .burger-bars::after {
+  display: block; width: 15px; height: 1.5px; border-radius: 1px; background: currentColor;
+}
+.burger-bars::before, .burger-bars::after { content: ""; position: absolute; left: 0; }
+.burger-bars::before { top: -5px; }
+.burger-bars::after { top: 5px; }
+
+.nav-scrim {
+  position: fixed; inset: 0; z-index: 55;
+  background: rgba(20, 16, 10, .34);
+  opacity: 0; visibility: hidden;
+  transition: opacity .18s ease, visibility 0s linear .18s;
+}
+.nav-scrim.open { opacity: 1; visibility: visible; transition: opacity .18s ease, visibility 0s; }
+
+.nav-tray {
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 60;
+  width: min(268px, 82vw);
+  display: flex; flex-direction: column;
+  background: var(--bg-raised); border-right: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  /* Hidden keeps the tabs out of the tab order; it flips back on open with no
+     delay so the focus() call in openTray() lands. */
+  transform: translateX(-100%); visibility: hidden;
+  transition: transform .18s ease, visibility 0s linear .18s;
+}
+.nav-tray.open { transform: none; visibility: visible; transition: transform .18s ease, visibility 0s; }
+
+.nav-tray-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 12px 12px 16px; border-bottom: 1px solid var(--line); flex: none;
+}
+.nav-tray-title {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-faint);
+}
+
+.tabs { display: flex; flex-direction: column; gap: 2px; padding: 10px; overflow-y: auto; }
 .tab {
   appearance: none; border: 1px solid transparent; background: transparent;
   color: var(--ink-soft); font: inherit; font-size: 13.5px;
-  padding: 6px 11px; border-radius: 7px; cursor: pointer;
+  padding: 8px 12px; border-radius: 7px; cursor: pointer; text-align: left;
 }
 .tab:hover { background: var(--bg-sunken); color: var(--ink); }
 .tab[aria-selected="true"] { background: var(--accent-soft); color: var(--ink); border-color: var(--line); font-weight: 600; }
 
-.topbar-actions { display: flex; align-items: center; gap: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .nav-tray, .nav-scrim { transition: none; }
+}
 
 input[type="search"], input[type="text"], input[type="number"], select {
   font: inherit; font-size: 13.5px;

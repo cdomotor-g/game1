@@ -54,15 +54,65 @@
 
   document.getElementById('drawer-close').addEventListener('click', closeDrawer);
   drawer.addEventListener('click', (e) => { if (e.target === drawer) closeDrawer(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !drawer.hidden) closeDrawer(); });
 
   Views.setOpener(openDetail);
+
+  /* ------------------------------------------------------------- nav tray */
+
+  const tray = document.getElementById('nav-tray');
+  const trayScrim = document.getElementById('nav-scrim');
+  const trayToggle = document.getElementById('nav-toggle');
+
+  function trayOpen() {
+    return tray.classList.contains('open');
+  }
+
+  function openTray() {
+    if (trayOpen()) return;
+    tray.classList.add('open');
+    trayScrim.classList.add('open');
+    trayToggle.setAttribute('aria-expanded', 'true');
+    trayToggle.setAttribute('aria-label', 'Close menu');
+    const selected = tray.querySelector('.tab[aria-selected="true"]') || tray.querySelector('.tab');
+    if (selected) selected.focus();
+  }
+
+  function closeTray(restoreFocus) {
+    if (!trayOpen()) return;
+    if (restoreFocus && tray.contains(document.activeElement)) trayToggle.focus();
+    tray.classList.remove('open');
+    trayScrim.classList.remove('open');
+    trayToggle.setAttribute('aria-expanded', 'false');
+    trayToggle.setAttribute('aria-label', 'Open menu');
+  }
+
+  trayToggle.addEventListener('click', () => { trayOpen() ? closeTray(true) : openTray(); });
+  document.getElementById('nav-close').addEventListener('click', () => closeTray(true));
+  trayScrim.addEventListener('click', () => closeTray(true));
+
+  /* Keep Tab cycling inside the tray while it is open. */
+  tray.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !trayOpen()) return;
+    const stops = tray.querySelectorAll('button, [href], input, select, textarea');
+    if (!stops.length) return;
+    const first = stops[0];
+    const last = stops[stops.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (trayOpen()) closeTray(true);      /* the tray sits above the drawer */
+    else if (!drawer.hidden) closeDrawer();
+  });
 
   /* -------------------------------------------------------------- routing */
 
   function go(tab) {
     app.tab = tab;
     if (location.hash.slice(1) !== tab) location.hash = tab;
+    closeTray(false);
     render();
     document.getElementById('view').focus();
   }
@@ -136,7 +186,7 @@
 
   window.addEventListener('hashchange', () => {
     const tab = location.hash.slice(1);
-    if (TABS.some(([id]) => id === tab)) { app.tab = tab; render(); }
+    if (TABS.some(([id]) => id === tab)) { app.tab = tab; closeTray(false); render(); }
   });
 
   document.getElementById('footer-stats').textContent =
