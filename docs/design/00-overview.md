@@ -52,7 +52,7 @@ farming-and-trade game can both end in a win.
 | Status | Primary design target | Prototype, and the design instrument |
 | Board | Hex tiles, face down until explored | Not yet — the sandbox is one town |
 | Players | 2–5 | 1 (sandbox) |
-| Rules source | `data/*.json` → printed sheets | `data/*.json` → `web/js/engine.js` |
+| Rules source | `data/*.json` → printed sheets | `data/*.json` → `docs/js/engine.js` |
 
 The digital side is not a stretch goal bolted on afterwards. It is how the numbers get
 tested: `tools/simulate.mjs` plays whole games headlessly and reports what the economy

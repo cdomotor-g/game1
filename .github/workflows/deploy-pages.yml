@@ -1,13 +1,26 @@
-name: Deploy web build to GitHub Pages
+name: Pages
 
-# The site is web/ served as-is: no framework, no npm install, all paths relative.
-# The only build step is regenerating web/data/bundle.js from data/*.json, so the
-# published explorer can never show stale numbers even if someone forgets to run
-# build-data.mjs before committing.
+# WHAT GETS PUBLISHED: docs/. Nothing else. See "Publishing" in README.md before
+# moving any of it.
+#
+# The site is docs/ served as-is: no framework, no npm install, all paths relative.
+# docs/data/bundle.js is generated from data/*.json and COMMITTED, because the same
+# files have to work three ways: double-clicked off disk, served by GitHub from the
+# branch, and uploaded by this workflow. The check job below is what stops the
+# committed copy from drifting away from data/*.json.
+#
+# GitHub Pages has two publishing modes and this workflow supports both:
+#   - "Deploy from a branch" (main / docs) — GitHub serves docs/ itself and the
+#     deploy job below deliberately does nothing.
+#   - "GitHub Actions" — the deploy job uploads docs/ and publishes it.
+# Either way the published tree is docs/, so the site is the same. The deploy job
+# asks the API which mode is active rather than assuming, so switching the setting
+# in Settings -> Pages never turns this workflow red.
 
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -15,14 +28,10 @@ permissions:
   pages: write
   id-token: write
 
-# Let a run in progress finish rather than cancelling it — a half-deployed site is
-# worse than a slightly late one.
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
-  build:
+  # Runs on every push and every PR. Bad data, or a stale committed bundle, fails
+  # here — before it can reach the published site.
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,27 +43,86 @@ jobs:
       - name: Validate data
         run: node tools/validate-data.mjs
 
-      - name: Build web bundle
+      - name: Rebuild the web bundle
         run: node tools/build-data.mjs
 
-      # enablement lets this workflow turn Pages on via the API using its own
-      # pages:write token, instead of the repo owner having to set
-      # Settings -> Pages -> Source: GitHub Actions by hand. It is a no-op once
-      # Pages is already enabled.
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: web
+      # In branch mode GitHub publishes the committed docs/data/bundle.js verbatim,
+      # so a stale commit means a site showing stale numbers. Rebuilding above and
+      # diffing here makes that a loud failure instead of a silent wrong answer.
+      - name: Fail if the committed bundle is stale
+        run: |
+          if ! git diff --quiet -- docs/data/bundle.js; then
+            echo "::error file=docs/data/bundle.js::docs/data/bundle.js does not match data/*.json. Run 'node tools/build-data.mjs' and commit the result."
+            git --no-pager diff --stat -- docs/data/bundle.js
+            exit 1
+          fi
+          echo "docs/data/bundle.js is up to date with data/*.json"
 
   deploy:
-    needs: build
+    needs: check
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    # Deployments serialise; a run in progress is allowed to finish rather than being
+    # cancelled, because a half-deployed site is worse than a slightly late one. This
+    # sits on the job and not on the workflow so that pull request checks are not
+    # queued behind a deploy.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Which mode is this repository in? build_type is "workflow" when Settings ->
+      # Pages -> Source is "GitHub Actions", and "legacy" when it is "Deploy from a
+      # branch". Anything else (404 = Pages not enabled yet, or no permission) is
+      # treated as "not ours to deploy", so this job stays out of the way instead of
+      # failing or flipping the owner's setting behind their back.
+      - name: Detect the Pages publishing mode
+        id: mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          body=$(curl -sS -o /tmp/pages.json -w '%{http_code}' \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pages") || body=000
+          if [ "$body" = "200" ]; then
+            build_type=$(jq -r '.build_type // "unknown"' /tmp/pages.json)
+          else
+            build_type="unavailable(http $body)"
+          fi
+          echo "build_type=$build_type" >> "$GITHUB_OUTPUT"
+          echo "Pages build_type: $build_type"
+          case "$build_type" in
+            workflow) ;;
+            legacy)
+              echo "::notice::Pages Source is 'Deploy from a branch', so GitHub publishes docs/ itself and this job has nothing to do. Check that the folder is set to /docs, not / (root)." ;;
+            *)
+              echo "::warning::Could not read the Pages configuration ($build_type), so nothing was deployed. If Settings -> Pages -> Source is 'GitHub Actions', the site will be stale until this is resolved." ;;
+          esac
+
+      - uses: actions/checkout@v4
+        if: steps.mode.outputs.build_type == 'workflow'
+
+      - uses: actions/setup-node@v4
+        if: steps.mode.outputs.build_type == 'workflow'
+        with:
+          node-version: 20
+
+      - name: Rebuild the web bundle
+        if: steps.mode.outputs.build_type == 'workflow'
+        run: node tools/build-data.mjs
+
+      - uses: actions/configure-pages@v5
+        if: steps.mode.outputs.build_type == 'workflow'
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.mode.outputs.build_type == 'workflow'
+        with:
+          path: docs
+
       - id: deployment
+        if: steps.mode.outputs.build_type == 'workflow'
         uses: actions/deploy-pages@v4

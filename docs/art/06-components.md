@@ -125,7 +125,7 @@ Not an afterthought — it is the mode the two-plate system exists for.
 
 ## The web build
 
-`web/css/app.css` is already close in spirit. See
+`docs/css/app.css` is already close in spirit. See
 [02-palette.md](02-palette.md#the-digital-build) for the variable mapping.
 
 Two carried-over rules, and one screen-only allowance:

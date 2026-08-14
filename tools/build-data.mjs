@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Bundles data/*.json into web/data/bundle.js as a plain global.
+ * Bundles data/*.json into docs/data/bundle.js as a plain global.
  *
- * Why: the explorer has to work when you double-click web/index.html straight off
+ * Why: the explorer has to work when you double-click docs/index.html straight off
  * disk, and browsers refuse to fetch() a local file. A generated script tag is the
  * only way to keep data/*.json as the single source of truth AND keep the page
  * openable with no server, no build step and no npm install.
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
-const OUT_DIR = join(ROOT, 'web', 'data');
+const OUT_DIR = join(ROOT, 'docs', 'data');
 const OUT = join(OUT_DIR, 'bundle.js');
 
 const manifest = JSON.parse(readFileSync(join(DATA, 'manifest.json'), 'utf8'));
@@ -34,4 +34,4 @@ writeFileSync(
 );
 
 const bytes = readFileSync(OUT).length;
-console.log(`wrote web/data/bundle.js (${(bytes / 1024).toFixed(1)} kB) from ${manifest.datasets.length} datasets`);
+console.log(`wrote docs/data/bundle.js (${(bytes / 1024).toFixed(1)} kB) from ${manifest.datasets.length} datasets`);

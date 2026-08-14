@@ -2,7 +2,7 @@
 
 ## What exists
 
-`web/index.html` is a single page with no build step, no dependencies and no network
+`docs/index.html` is a single page with no build step, no dependencies and no network
 requests. Open it from disk and it works.
 
 Two things live in it:
@@ -19,15 +19,15 @@ consequences.
 ## Architecture
 
 ```
-data/*.json                  the single source of truth
+data/*.json                   the single source of truth
   ↓  tools/build-data.mjs
-web/data/bundle.js           generated: window.GAME_DATA
+docs/data/bundle.js           generated: window.GAME_DATA
   ↓
-web/js/data.js               indexes and graph queries — no rules
-web/js/engine.js             the rules — no DOM
-web/js/views.js              the explorer
-web/js/sandbox.js            the sandbox UI
-web/js/app.js                tabs, search, drawer
+docs/js/data.js               indexes and graph queries — no rules
+docs/js/engine.js             the rules — no DOM
+docs/js/views.js              the explorer
+docs/js/sandbox.js            the sandbox UI
+docs/js/app.js                tabs, search, drawer
 ```
 
 The important line is between `engine.js` and everything above it. The engine takes a
