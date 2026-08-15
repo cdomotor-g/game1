@@ -7787,21 +7787,21 @@ window.GAME_DATA = {
       },
       "print": {
         "$comment": "Sheet layouts for printing the plate at table size. Each preset tiles the whole plate — decorative frame included, because the frame is part of the drawing — across a grid of A4 sheets with a margin every printer can manage, then scales it to the largest size that fits without cropping and without distorting it. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived from that and rewritten by tools/build-map.mjs; they are stored here so the numbers are greppable and so a change to the geometry shows up as a diff.",
-        "default": "six-sheet",
+        "default": "four-sheet",
         "presets": [
           {
-            "id": "six-sheet",
-            "name": "Six sheets, A2",
+            "id": "four-sheet",
+            "name": "Four sheets, A2",
             "sheet": "A4",
-            "orientation": "portrait",
-            "sheetCols": 3,
+            "orientation": "landscape",
+            "sheetCols": 2,
             "sheetRows": 2,
             "marginMm": 8,
             "overlapMm": 0,
-            "mapWidthMm": 582,
-            "mapHeightMm": 411.4,
-            "hexAcrossFlatsMm": 17.7,
-            "note": "Three sheets across, two down, printed portrait, trimmed on the crop marks and butted. 582 x 411 mm finished — A2, near enough — at 153 dpi, with 17.7 mm hexes. A4 is a root-two rectangle and so is this plate, which is why six A4 sheets cannot tile it without waste: the bottom row of sheets is only two thirds used, and that waste is what pays for the printer margins an exact 2x2 A2 tiling has no room for."
+            "mapWidthMm": 548.8,
+            "mapHeightMm": 388,
+            "hexAcrossFlatsMm": 16.7,
+            "note": "Two by two, printed landscape. 549 x 388 mm finished — A2, near enough — at 162 dpi, with 16.7 mm hexes. This replaced a 3 x 2 portrait layout on six sheets, which printed 6% bigger and left 83 mm of every page blank below the map: a landscape A4 inside an 8 mm margin is 281 x 194 mm, aspect 1.448, and the plate is 1.414, so the two nest almost exactly and any square grid of landscape sheets fills the paper. Three portrait sheets across is aspect 1.036 and does not. See the one- and nine-sheet presets: same window, same margins, 1, 2 and 3 sheets to a side."
           },
           {
             "id": "nine-sheet",

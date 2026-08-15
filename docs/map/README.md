@@ -78,18 +78,28 @@ marks and butt the sheets edge to edge.
 
 | Preset | Sheets | Finished | Hex | Resolution |
 | --- | --- | --- | --- | --- |
-| `six-sheet` | 6, A4 portrait, 3 × 2 | 582 × 411 mm (A2) | 17.7 mm | 153 dpi |
+| `four-sheet` | 4, A4 landscape, 2 × 2 | 549 × 388 mm (A2) | 16.7 mm | 162 dpi |
 | `nine-sheet` | 9, A4 landscape, 3 × 3 | 823 × 582 mm (A1) | 25.1 mm | 108 dpi |
 | `one-sheet` | 1, A4 landscape | 274 × 194 mm | 8.4 mm | 325 dpi |
 
-**Why six sheets do not give you six times the area.** A4 is a root-two rectangle and so
-is this plate. Six A4 sheets have six times the area of one, but they cannot be arranged
-into a root-two rectangle — the tilings that preserve the shape are 4 sheets (A2) and 8
-(A1). The 3 × 2 portrait layout is the best six-sheet fit: it prints 582 × 411 mm, which is
-A2 to within a few millimetres, and spends the leftover paper on the bottom row of sheets,
-where the last 75 mm of each is blank and gets trimmed away. That waste is not a loss — an
-exact 2 × 2 A2 tiling has no room for printer margins at all, and this one has 8 mm on
-every edge.
+**Why every preset is a square grid of landscape sheets.** A4 is a root-two rectangle and
+so is this plate, and the margin does not spoil it: an A4 printed landscape inside an 8 mm
+margin leaves a 281 × 194 mm window, aspect 1.448, against the plate's 1.414. Those two
+nest to within 2%, so a grid that is *n* sheets to a side reproduces the plate's shape at
+any *n* and fills the paper — 98% of it, with the 6.6 mm that is left over going to the
+right-hand margin. One, four and nine sheets are the same window repeated 1, 2 and 3 to a
+side; nothing about a sheet changes between presets except how many of them there are.
+
+Grids that are not square do not work, and six sheets has no square arrangement. A 3 × 2
+portrait block is 582 × 562 mm, aspect 1.036 — nothing like the plate — so the map is
+pinned by the width and only 73% of the paper carries any ink: 83 mm at the foot of all six
+pages is blank. The other six-sheet arrangements are worse (3 × 2 landscape 65%, 2 × 3
+landscape 68%, 2 × 3 portrait 33%). Six sheets did ship, printing 582 × 411 mm, and was
+replaced by `four-sheet`: 6% smaller, two fewer sheets, and the paper actually used.
+
+If four sheets is the size you want but you would rather have the extra 6%, eight sheets in
+a 4 × 2 *portrait* block is the other efficient shape — 776 × 549 mm at 98% — because 4/2
+is the ratio that makes a portrait block root-two the way 1/1 does for a landscape one.
 
 If you want it genuinely bigger, use `nine-sheet`. The limit there is the plate: 3508
 pixels across is 108 dpi at A1, which is soft up close and fine at arm's length on a table.
@@ -98,7 +108,7 @@ A plate drawn at 7000 px would print A1 at 210 dpi.
 A sheet is 297 mm wide printed landscape, which is 1123 CSS pixels and wider than a laptop
 window. The preview scales to fit and can be set to 100%, 50% or 25%; the scale is a screen
 affordance only, undone both by the print stylesheet and again on `beforeprint`, because a
-sheet that reached paper at 86% is six sheets that will not meet.
+sheet that reached paper at 86% is a set of sheets that will not meet.
 
 ---
 
