@@ -15,6 +15,14 @@
     { "key": "events", "file": "events.json", "collection": "cards", "idField": "id", "summary": "The event deck." },
     { "key": "items", "file": "items.json", "collection": "items", "idField": "id", "summary": "Clothing, armour, weapons and potions." }
   ],
+  "maps": {
+    "$comment": "Boards. Each file in data/maps/ is one drawn map hexed for play: a grid, one character per hex, plus the settlements, regions and routes on it. They live in a directory rather than in 'datasets' above because a map is a document, not a table, and because adding the next one should not mean editing this file. The bundler picks up everything in the directory; tools/validate-map.mjs checks them against terrain.json.",
+    "dir": "maps",
+    "key": "maps",
+    "idField": "id",
+    "validatedBy": "tools/validate-map.mjs"
+  },
+
   "references": {
     "$comment": "Cross-file references the validator checks. Path is a dotted path from the dataset root; [] means 'every element'.",
     "checks": [

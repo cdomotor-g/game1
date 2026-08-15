@@ -9,7 +9,7 @@
  *
  * Usage: node tools/build-data.mjs
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -25,6 +25,18 @@ for (const ds of manifest.datasets) {
   bundle[ds.key] = JSON.parse(readFileSync(join(DATA, ds.file), 'utf8'));
 }
 
+/* Maps are a directory rather than a manifest entry, so that adding the next board
+   is one new file and no edit anywhere else. Sorted by id so the bundle is stable. */
+if (manifest.maps) {
+  const dir = join(DATA, manifest.maps.dir);
+  bundle[manifest.maps.key] = existsSync(dir)
+    ? readdirSync(dir)
+        .filter((f) => f.endsWith('.json'))
+        .sort()
+        .map((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')))
+    : [];
+}
+
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(
   OUT,
@@ -34,4 +46,8 @@ writeFileSync(
 );
 
 const bytes = readFileSync(OUT).length;
-console.log(`wrote docs/data/bundle.js (${(bytes / 1024).toFixed(1)} kB) from ${manifest.datasets.length} datasets`);
+const maps = bundle[manifest.maps?.key]?.length ?? 0;
+console.log(
+  `wrote docs/data/bundle.js (${(bytes / 1024).toFixed(1)} kB) from ` +
+    `${manifest.datasets.length} datasets and ${maps} map(s)`
+);

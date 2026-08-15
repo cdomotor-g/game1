@@ -43,6 +43,16 @@ jobs:
       - name: Validate data
         run: node tools/validate-data.mjs
 
+      # Boards are checked against terrain.json and against themselves: a coastline
+      # with deep water against the beach, or a harbour standing inland, fails here.
+      - name: Validate maps
+        run: node tools/validate-map.mjs
+
+      # --check recomputes every print preset from the plate geometry and fails if
+      # the stored millimetres have drifted away from it.
+      - name: Check the map print sizes
+        run: node tools/build-map.mjs --check
+
       - name: Rebuild the web bundle
         run: node tools/build-data.mjs
 

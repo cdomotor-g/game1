@@ -18,10 +18,20 @@ touching the layout.
 `docs/data/bundle.js` is generated from it and committed. After editing anything in
 `data/`, run `node tools/build-data.mjs` and commit the regenerated bundle, or CI fails.
 
+## The map artwork is never edited by a tool
+
+`docs/map/*.png` is a plate: committed as supplied, never re-encoded, never repainted.
+Everything the game knows about what is on it lives in `data/maps/*.json`, and the hex
+grid is an overlay drawn on top at read time. If a map says something the game's terrain
+vocabulary cannot express, **change the map, not `data/terrain.json`** — the reasoning and
+the whole pipeline are in `docs/map/README.md`.
+
 ## Before pushing
 
 ```bash
 node tools/validate-data.mjs   # referential integrity and design smells
+node tools/validate-map.mjs    # boards against terrain.json and against themselves
+node tools/build-map.mjs       # map proof sheets, and the derived print sizes
 node tools/build-data.mjs      # rebuild the web bundle
 node tools/simulate.mjs        # check it still plays
 node tools/validate-art.mjs    # palette and layer contract

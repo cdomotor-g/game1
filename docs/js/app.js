@@ -14,6 +14,7 @@
     ['buildings', 'Buildings'],
     ['tools', 'Tools'],
     ['terrain', 'Terrain'],
+    ['maps', 'Maps'],
     ['transport', 'Transport'],
     ['events', 'Events'],
     ['items', 'Equipment'],

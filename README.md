@@ -30,13 +30,15 @@ No install, no dependencies, no server. The page works straight off disk.
 The site lives in `docs/` because that is the only folder besides the repository root
 that GitHub Pages will publish. Read [Publishing](#publishing) before moving it.
 
-You get two things:
+You get three things:
 
 - **The explorer** — every commodity, recipe, building, tool, event card and terrain
   type, cross-linked. Click steel to see the whole chain behind it, the effort per unit,
   and everything it goes on to make.
 - **The sandbox** — a playable single-town slice using the real rules. Roll effort,
   allocate it, put up buildings, forge tools, feed your people, live with the event deck.
+- **The map** — a drawn continent with the hex board read off it, and a print page that
+  tiles it across six sheets of A4 for the table. See [Maps](#maps).
 
 And a third, in the terminal:
 
@@ -55,6 +57,7 @@ data/          the rules as data — the single source of truth
   tools.json         15 tools, with durability
   terrain.json       12 tile types, movement and build costs
   deposits.json      what is buried under the map
+  maps/              boards: a hex grid read off a drawn map, one file per map
   transport.json     cargo modes, routes, figures
   peoples.json       5 playable peoples, 10 professions
   events.json        the 58-card event deck
@@ -68,6 +71,8 @@ docs/          the published website AND the design documents — see Publishing
                      js/data.js is indexes and graph queries with no rules in it
   data/bundle.js     generated from data/*.json, and committed
   .nojekyll          serve docs/ as-is instead of running it through Jekyll
+  map/               the map: the plate, an interactive viewer, and print sheets
+                     see docs/map/README.md for the whole pipeline
   GLOSSARY.md        commodity vs effort vs deposit — read this first
   design/            twelve design documents, see docs/design/00-overview.md
   art/               the visual style guide, see docs/art/README.md
@@ -77,8 +82,12 @@ docs/          the published website AND the design documents — see Publishing
 tools/
   validate-data.mjs  referential integrity and design smells
   validate-art.mjs   palette conformance and the ink/wash layer contract
+  validate-map.mjs   boards against terrain.json, and against themselves
   build-data.mjs     data/*.json → docs/data/bundle.js
+  build-map.mjs      map proof sheets, and the derived print sizes
+  trace-map.mjs      reads a drawn map and proposes a hex grid for it
   simulate.mjs       headless playthroughs, for balance
+  lib/               a dependency-free PNG reader/writer, hex geometry, a 3x5 font
 ```
 
 ## Publishing
@@ -156,6 +165,8 @@ And unless you are moving it to the repository root, the Pages source has to bec
 
 ```bash
 node tools/validate-data.mjs   # check the data
+node tools/validate-map.mjs    # check the boards
+node tools/build-map.mjs       # map proof sheets and print sizes
 node tools/build-data.mjs      # rebuild the web bundle
 node tools/simulate.mjs        # see whether it still plays
 node tools/validate-art.mjs    # check art against the palette
@@ -185,9 +196,10 @@ and deposits, the event deck, peoples and professions, transport modes, equipmen
 potions. A browsable explorer over all of it. A playable single-town sandbox. A headless
 simulator.
 
-**Not done:** the board itself — no map, no movement, no transport in play, no second
-town, no other players, no combat resolution. Worker slots are defined but not enforced.
-Most of the peoples' traits are approximated. Nothing is balanced.
+**Not done:** movement, transport in play, a second town, other players, combat
+resolution. Worker slots are defined but not enforced. Most of the peoples' traits are
+approximated. Nothing is balanced. There is a board now — The Korvane Reach — but nothing
+plays on it yet.
 
 **Found so far:** the simulator caught two circular dependencies that made the economy
 literally unstartable, a farming chain gated behind heavy industry, a starting position
@@ -215,6 +227,45 @@ register so it bleeds past the black line.
 The full guide, including the brief for generating art with a model, is in
 [docs/art/README.md](docs/art/README.md).
 
+## Maps
+
+**[docs/map/](docs/map/README.md)** — the plate, the board, and the pipeline between them.
+
+A map is two things kept apart on purpose: the **plate**, a drawn map committed as
+artwork and never edited by any tool here, and the **board**, `data/maps/<id>.json`, which
+says what is on that artwork hex by hex. The grid is an overlay drawn at read time, so a
+mistake about the terrain is a one-character edit rather than a repaint.
+
+The board is one character per hex and one string per row, decoded through a legend:
+
+```json
+"rows": [ "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+          "~~~~~~~~~~~~-----~~~~~--tttt----", ... ]
+```
+
+That is not a compression trick. It means the board is a picture of itself in a text
+editor, and a change to a coastline is a diff you can read.
+
+The first map is **The Korvane Reach**: 32 × 26 hexes, 429 of them land, nineteen
+settlements, two rail lines. `tools/trace-map.mjs` proposed the grid by sampling the
+artwork; the rest was hand-corrected against the proof sheet `tools/build-map.mjs`
+generates — the plate with every hex tinted and lettered, which is how you check 832 hexes
+without trusting a tally.
+
+**Printing it.** `docs/map/print.html` tiles the plate across A4 sheets with trim marks
+and per-sheet stamps. Six sheets, 3 × 2 portrait, gives 582 × 411 mm — A2, near enough —
+with 17.7 mm hexes. Nine sheets gives A1 with 25 mm hexes. Print at 100%, cut on the
+marks, butt the pieces.
+
+**The twelve terrains are the vocabulary and a map does not get to add to it.** Drawn maps
+name their country *steppe*, *highlands*, *fens*, *dunes*; when those collide with
+`data/terrain.json`, the map changes and the rules do not. The Varl Highlands are drawn as
+flat steppe and named a highland, so the board reads them as `hills`; the Mirewash Fens are
+painted the same ochre as the desert next to them, so the board reads the name and not the
+paint. Every such call is written down in that region's summary. The full rule, and the
+brief for generating a new plate that traces cleanly, is in
+[docs/map/README.md](docs/map/README.md).
+
 ## Where to start reading
 
 1. [docs/GLOSSARY.md](docs/GLOSSARY.md) — the vocabulary, especially commodity vs effort
@@ -222,3 +273,4 @@ The full guide, including the brief for generating art with a model, is in
 3. [docs/design/01-core-loop.md](docs/design/01-core-loop.md) — the round and the dice
 4. [docs/design/11-bootstrap.md](docs/design/11-bootstrap.md) — the one rule not to
    "tidy up" without reading why it exists
+5. [docs/map/README.md](docs/map/README.md) — the map pipeline, and how to make another
