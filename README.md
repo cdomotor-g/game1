@@ -38,7 +38,7 @@ You get three things:
 - **The sandbox** — a playable single-town slice using the real rules. Roll effort,
   allocate it, put up buildings, forge tools, feed your people, live with the event deck.
 - **The map** — a drawn continent with the hex board read off it, and a print page that
-  tiles it across six sheets of A4 for the table. See [Maps](#maps).
+  tiles it across four sheets of A4 for the table. See [Maps](#maps).
 
 And a third, in the terminal:
 
@@ -253,8 +253,8 @@ generates — the plate with every hex tinted and lettered, which is how you che
 without trusting a tally.
 
 **Printing it.** `docs/map/print.html` tiles the plate across A4 sheets with trim marks
-and per-sheet stamps. Six sheets, 3 × 2 portrait, gives 582 × 411 mm — A2, near enough —
-with 17.7 mm hexes. Nine sheets gives A1 with 25 mm hexes. Print at 100%, cut on the
+and per-sheet stamps. Four sheets, 2 × 2 landscape, gives 549 × 388 mm — A2, near enough —
+with 16.7 mm hexes. Nine sheets gives A1 with 25 mm hexes. Print at 100%, cut on the
 marks, butt the pieces. Printing and choosing *Save as PDF* gives the same thing as a file:
 the page sizes are set per preset, so the PDF is at true size.
 
