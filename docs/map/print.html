@@ -9,25 +9,46 @@
   /* Screen: a control bar and a stack of sheet previews.
      Print: one sheet per page, at true size, and nothing else. */
 
-  .bar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px 18px;
-         align-items: center; padding: 11px 18px; background: var(--bg-raised);
-         border-bottom: 1px solid var(--line); }
-  .bar h1 { font-size: .95rem; margin: 0; }
-  .bar .spacer { flex: 1; }
-  .bar label { font-size: .78rem; color: var(--ink-soft); display: flex; gap: 5px; align-items: center; }
-  .bar select, .bar button { font: inherit; font-size: .8rem; padding: 4px 9px; border-radius: 7px;
-                             border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
-  .bar button { cursor: pointer; }
-  .bar button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
-  .bar a { color: var(--accent); font-size: .78rem; }
+  /* `printbar`, not `bar`. app.css already owns `.bar` — it is the 7 px progress
+     meter the sandbox draws — and a page-local rule that only sets the
+     properties it cares about inherits the rest from whatever else claims the
+     name. This control bar spent a while 7 px tall with `overflow: hidden`,
+     which sliced every control on it, the Print button included, in half.
+     Anything defined here is prefixed for that reason. */
+  .printbar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px 18px;
+              align-items: center; padding: 11px 18px; background: var(--bg-raised);
+              border-bottom: 1px solid var(--line); }
+  .printbar h1 { font-size: .95rem; margin: 0; }
+  .printbar .spacer { flex: 1; }
+  .printbar label { font-size: .78rem; color: var(--ink-soft); display: flex; gap: 5px; align-items: center; }
+  .printbar select, .printbar button { font: inherit; font-size: .8rem; padding: 4px 9px; border-radius: 7px;
+                                       border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+  .printbar button { cursor: pointer; }
+  .printbar button:hover:not(:disabled) { border-color: var(--accent); }
+  .printbar button:disabled { opacity: .5; cursor: progress; }
+  .printbar button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .printbar a { color: var(--accent); font-size: .78rem; }
 
   .note { max-width: 62ch; margin: 18px auto 8px; padding: 0 18px; color: var(--ink-soft); font-size: .85rem; }
+  .note p { margin: 0; }
   .note strong { color: var(--ink); }
+  .note .said { display: block; margin-top: 6px; color: var(--ink-faint); font-size: .8rem; min-height: 1.1em; }
+  .note .said.bad { color: var(--bad); }
 
-  .sheets { padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  /* A sheet is a fixed number of millimetres wide — 297 of them, 1123 px, for
+     anything landscape — and that is wider than a laptop window. Centring the
+     stack with `align-items: center` pushed the overflow out of both sides, and
+     a browser will only ever scroll towards the end of a block, so the left
+     edge of every sheet, trim marks and all, was unreachable. A block that
+     scrolls sideways, with auto margins on the frames, centres a sheet that
+     fits and flushes one that does not hard against the left. The preview
+     scale below then means it usually does fit. */
+  .sheets { padding: 18px; overflow-x: auto; }
+  .sheet-frame { width: max-content; margin: 0 auto 22px; }
+  .sheet-frame:last-child { margin-bottom: 0; }
 
   .sheet { position: relative; background: #fff; box-shadow: var(--shadow); overflow: hidden;
-           color: #1A1714; }
+           color: #1A1714; transform-origin: top left; }
   .win { position: absolute; overflow: hidden; }
   .win .plate { position: absolute; top: 0; left: 0; }
   .win .plate img { display: block; width: 100%; height: auto; }
@@ -49,17 +70,24 @@
   .stamp { position: absolute; font: 600 9px/1.2 var(--mono, monospace); color: #555;
            letter-spacing: .05em; }
 
+  /* Nothing that is only there to make the preview readable may survive into
+     print: this page's whole promise is that what comes out of the printer is
+     the map at exactly the size the note claims. The preview scale is undone
+     here, and again from JavaScript on `beforeprint`, because a sheet printed
+     at 86% is six sheets of paper that will not meet. */
   @media print {
-    .bar, .note { display: none !important; }
-    .sheets { padding: 0; gap: 0; display: block; }
-    .sheet { box-shadow: none; break-after: page; page-break-after: always; margin: 0; }
-    .sheet:last-child { break-after: auto; page-break-after: auto; }
+    .printbar, .note { display: none !important; }
+    .sheets { padding: 0; overflow: visible; }
+    .sheet-frame { width: auto !important; height: auto !important; margin: 0 !important;
+                   break-after: page; page-break-after: always; }
+    .sheet-frame:last-child { break-after: auto; page-break-after: auto; }
+    .sheet { box-shadow: none; margin: 0; transform: none !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="bar">
+<div class="printbar">
   <h1 id="maptitle">…</h1>
   <label>layout
     <select id="preset"></select>
@@ -68,16 +96,29 @@
   <label><input type="checkbox" id="opt-labels" checked> coords</label>
   <label><input type="checkbox" id="opt-wash"> terrain</label>
   <label><input type="checkbox" id="opt-routes"> routes</label>
+  <label>preview
+    <select id="zoom">
+      <option value="fit">fit the window</option>
+      <option value="1">100%</option>
+      <option value="0.5">50%</option>
+      <option value="0.25">25%</option>
+    </select>
+  </label>
   <span class="spacer"></span>
   <a href="index.html">← map</a>
-  <button class="primary" onclick="window.print()">Print</button>
+  <button type="button" id="dl-png">Download PNG</button>
+  <button type="button" class="primary" id="go-print">Print / save as PDF…</button>
 </div>
 
-<p class="note" id="note"></p>
+<div class="note">
+  <p id="note"></p>
+  <span class="said" id="said" role="status"></span>
+</div>
 <div class="sheets" id="sheets"></div>
 
 <script src="../data/bundle.js"></script>
 <script src="map.js"></script>
+<script src="export.js"></script>
 <script>
 (function () {
   'use strict';
@@ -115,8 +156,17 @@
     document.getElementById(id).addEventListener('change', render);
   });
 
+  function presetNow() {
+    return map.print.presets.filter(function (p) { return p.id === select.value; })[0];
+  }
+
+  /* What render() last put on screen, for the preview scale and the download to
+     work from without rebuilding it. */
+  var current = null;
+  var built = null;
+
   function render() {
-    var preset = map.print.presets.filter(function (p) { return p.id === select.value; })[0];
+    var preset = presetNow();
     var size = SHEETS[preset.sheet] || SHEETS.A4;
     var sheetW = preset.orientation === 'landscape' ? size[1] : size[0];
     var sheetH = preset.orientation === 'landscape' ? size[0] : size[1];
@@ -132,12 +182,14 @@
       'Print at 100% — no “fit to page”, no scaling — then trim every sheet along its four corner ' +
       'marks and butt the pieces edge to edge. Finished size ' + preset.mapWidthMm + ' × ' +
       preset.mapHeightMm + ' mm, hexes ' + preset.hexAcrossFlatsMm + ' mm across the flats. ' +
-      'Each sheet is stamped with its own row and column in the bottom margin.';
+      'Each sheet is stamped with its own row and column in the bottom margin. ' +
+      'For a file rather than paper, print and choose <strong>Save as PDF</strong> — the page ' +
+      'sizes are already set, so the PDF comes out at the same true size.';
 
     /* Build the overlay once, then clone it into each sheet. */
     /* Coordinates are set small for print: they are a reference you look up, not
        something that should compete with the drawing. */
-    var built = MapKit.buildOverlay(map, palette, { labelScale: 0.3, terrains: terrains });
+    built = MapKit.buildOverlay(map, palette, { labelScale: 0.3, terrains: terrains });
     var wantGrid = document.getElementById('opt-grid').checked;
     var wantLabels = document.getElementById('opt-labels').checked;
     var wantWash = document.getElementById('opt-wash').checked;
@@ -228,10 +280,97 @@
           '  ·  ' + preset.mapWidthMm + '×' + preset.mapHeightMm + 'MM AT 100%';
         sheet.appendChild(stamp);
 
-        host.appendChild(sheet);
+        /* The frame is what the page lays out and centres; the sheet inside it
+           is what gets scaled for the preview. Keeping them apart is what lets
+           the scale be undone for print without touching the layout. */
+        var frame = document.createElement('div');
+        frame.className = 'sheet-frame';
+        frame.appendChild(sheet);
+        host.appendChild(frame);
       }
     }
+
+    current = { preset: preset, sheetW: sheetW, sheetH: sheetH };
+    applyScale();
   }
+
+  /* ------------------------------------------------------------ preview scale */
+
+  /* CSS fixes the millimetre at exactly 96/25.4 px, so this needs no measuring. */
+  var MM = 96 / 25.4;
+  var zoom = document.getElementById('zoom');
+
+  function applyScale(force) {
+    if (!current) return;
+    var host = document.getElementById('sheets');
+    var wanted = force === undefined ? zoom.value : force;
+    var wpx = current.sheetW * MM;
+    var hpx = current.sheetH * MM;
+    var room = host.clientWidth - 36;                 /* the 18 px of padding either side */
+    var scale = wanted === 'fit' ? Math.min(1, room / wpx) : parseFloat(wanted) || 1;
+
+    Array.prototype.forEach.call(host.children, function (frame) {
+      var sheet = frame.firstElementChild;
+      if (scale >= 1) {
+        sheet.style.transform = '';
+        frame.style.width = '';
+        frame.style.height = '';
+      } else {
+        sheet.style.transform = 'scale(' + scale + ')';
+        frame.style.width = Math.round(wpx * scale) + 'px';
+        frame.style.height = Math.round(hpx * scale) + 'px';
+      }
+    });
+  }
+
+  zoom.addEventListener('change', function () { applyScale(); });
+  window.addEventListener('resize', function () { applyScale(); });
+
+  /* The @media print rules undo the preview scale on their own. This is the
+     belt to that pair of braces: a sheet must never reach paper at 86%. */
+  window.addEventListener('beforeprint', function () { applyScale(1); });
+  window.addEventListener('afterprint', function () { applyScale(); });
+
+  /* ------------------------------------------------------------- taking it away */
+
+  var said = document.getElementById('said');
+  function say(text, bad) {
+    said.textContent = text;
+    said.classList.toggle('bad', !!bad);
+  }
+
+  document.getElementById('go-print').addEventListener('click', function () { window.print(); });
+
+  /* One image of the whole map rather than one per sheet. A PNG carries no
+     paper size with it, so a per-sheet PNG would be a tile that nothing can
+     print at a known scale — the thing this page exists to guarantee. The
+     sheets are for paper and for PDF; the PNG is for a screen, a virtual
+     tabletop, or a print shop that will scale it themselves. */
+  var dl = document.getElementById('dl-png');
+  dl.addEventListener('click', function () {
+    var preset = presetNow();
+    var layers = [];
+    if (document.getElementById('opt-wash').checked) layers.push(built.layers.wash);
+    if (document.getElementById('opt-grid').checked) layers.push(built.layers.grid);
+    if (document.getElementById('opt-routes').checked) layers.push(built.layers.routes);
+    if (document.getElementById('opt-labels').checked) layers.push(built.layers.labels);
+    if (built.layers.legend) layers.push(built.layers.legend);
+
+    var name = MapExport.slug(map.name) + '-' +
+      Math.round(preset.mapWidthMm) + 'x' + Math.round(preset.mapHeightMm) + 'mm.png';
+    var dpi = Math.round(map.plate.width / (preset.mapWidthMm / 25.4));
+
+    dl.disabled = true;
+    say('Building the PNG…');
+    MapExport.png(map, layers).then(function (blob) {
+      MapExport.save(blob, name);
+      say('Saved ' + name + ' — the whole map at ' + map.plate.width + ' × ' + map.plate.height +
+          ' px, which is ' + dpi + ' dpi printed at ' + preset.mapWidthMm + ' × ' +
+          preset.mapHeightMm + ' mm. ' + MapExport.humanSize(blob.size) + '.');
+    }, function (err) {
+      say(MapExport.explain(err), true);
+    }).then(function () { dl.disabled = false; });
+  });
 
   render();
 })();

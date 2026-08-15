@@ -60,6 +60,14 @@
   .info dd { margin: 0; }
   .back { display: inline-block; font-size: .78rem; color: var(--accent); text-decoration: none; margin-bottom: 10px; }
   .back:hover { text-decoration: underline; }
+
+  /* Taking the map away with you. High in the panel and before the layer
+     toggles, because "how do I get a copy of this" is the second thing anyone
+     asks of a map and it used to be answered by three links below the fold. */
+  .actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
+  .actions a.btn { text-decoration: none; display: inline-block; }
+  .status { font-size: .74rem; color: var(--ink-faint); margin: 7px 0 0; min-height: 1.1em; }
+  .status.bad { color: var(--bad); }
 </style>
 </head>
 <body>
@@ -77,6 +85,14 @@
     <h1 id="title">…</h1>
     <p class="sub" id="subtitle"></p>
 
+    <h2>Take it with you</h2>
+    <div class="actions">
+      <button class="btn small primary" type="button" id="dl-png">Download PNG</button>
+      <button class="btn small" type="button" id="dl-svg">Overlay SVG</button>
+      <a class="btn small" href="print.html">Print…</a>
+    </div>
+    <p class="status" id="status"></p>
+
     <h2>Layers</h2>
     <div class="toggles" id="toggles"></div>
     <div class="zoombar">
@@ -92,13 +108,15 @@
     <h2>Terrain</h2>
     <div id="key"></div>
 
-    <h2>Print</h2>
+    <h2>Print layouts</h2>
     <div id="print"></div>
+    <p class="status">Each one opens the sheets ready to print or save as a PDF.</p>
   </aside>
 </div>
 
 <script src="../data/bundle.js"></script>
 <script src="map.js"></script>
+<script src="export.js"></script>
 <script>
 (function () {
   'use strict';
@@ -155,6 +173,44 @@
     toggles.appendChild(b);
   });
   built.layers.labels.style.display = 'none';
+
+  /* ---------------------------------------------------------- taking it away */
+
+  /* A download is the whole plate, not the visible rectangle: the view is where
+     you happen to be looking, and nobody wants a map that stops at the edge of
+     somebody else's window. What the toggles do decide is which layers ride
+     along, so the PNG is the map as you have it set up. */
+
+  var status = document.getElementById('status');
+  function say(text, bad) {
+    status.textContent = text;
+    status.classList.toggle('bad', !!bad);
+  }
+  say('The PNG is the whole plate at ' + map.plate.width + ' × ' + map.plate.height +
+      ' px, with the layers you have switched on.');
+
+  function chosenLayers() {
+    return order.filter(function (k) { return state[k]; })
+      .map(function (k) { return built.layers[k]; });
+  }
+
+  function offer(id, make, filename, describe) {
+    var button = document.getElementById(id);
+    button.addEventListener('click', function () {
+      button.disabled = true;
+      say('Building ' + filename + '…');
+      make(map, chosenLayers()).then(function (blob) {
+        MapExport.save(blob, filename);
+        say('Saved ' + filename + ' — ' + describe + ', ' + MapExport.humanSize(blob.size) + '.');
+      }, function (err) {
+        say(MapExport.explain(err), true);
+      }).then(function () { button.disabled = false; });
+    });
+  }
+
+  var stem = MapExport.slug(map.name);
+  offer('dl-png', MapExport.png, stem + '.png', map.plate.width + ' × ' + map.plate.height + ' px');
+  offer('dl-svg', MapExport.svg, stem + '-overlay.svg', 'vector, no plate');
 
   /* -------------------------------------------------------- pan and zoom */
 
