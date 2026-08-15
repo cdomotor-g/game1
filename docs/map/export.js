@@ -21,7 +21,7 @@
 
      Three differences from the screen are deliberate. `vector-effect:
      non-scaling-stroke` is dropped: a hairline that ignores zoom is a screen
-     affordance, and at 3508 px it would come out as a thread. `var(--mono)`
+     affordance, and at plate resolution it would come out as a thread. `var(--mono)`
      and the rest of the custom properties are spelled out, because nothing
      defines them outside the page. And the selection highlight is dropped,
      because which hex you last clicked is not part of the map. */

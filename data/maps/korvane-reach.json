@@ -4,43 +4,43 @@
   "id": "korvane-reach",
   "name": "The Korvane Reach",
   "subtitle": "a true charting of the free lands, the ember coast & the rimeward marches",
-  "summary": "A north-facing continent map: an ice waste along the top edge, a temperate wooded west, a dry ochre south, and a mountain spine running south-east from the middle of the landmass to the eastern sea.",
+  "summary": "A north-facing continent map: an ice waste along the top edge and a second one across the northern bay, a temperate wooded west, a dry ochre south, and a mountain spine running south-east from the western sea to the eastern shore.",
   "plate": {
     "file": "korvane-reach.png",
     "$fileNote": "Relative to docs/map/. The artwork is committed as supplied and is never re-encoded by any tool here — the hex grid is an overlay drawn on top of it, not a change to it.",
-    "width": 3508,
-    "height": 2480,
+    "width": 1491,
+    "height": 1055,
     "field": {
-      "x": 44,
-      "y": 44,
-      "width": 3421,
-      "height": 2393
+      "x": 19,
+      "y": 17,
+      "width": 1454,
+      "height": 1020
     },
     "$fieldNote": "The drawn map inside the printed frame, in plate pixels. Measured from the inner frame rule. Everything else in this file that talks about position is a fraction of this rectangle, so the data survives the plate being redrawn at another resolution.",
     "occlusions": [
       {
         "id": "title",
         "name": "Title cartouche",
-        "x": 0.01,
-        "y": 0.77,
-        "width": 0.335,
-        "height": 0.2
+        "x": 0.013,
+        "y": 0.769,
+        "width": 0.305,
+        "height": 0.189
       },
       {
         "id": "legend",
         "name": "Legend panel",
-        "x": 0.686,
-        "y": 0.766,
-        "width": 0.314,
-        "height": 0.218
+        "x": 0.771,
+        "y": 0.741,
+        "width": 0.221,
+        "height": 0.237
       },
       {
         "id": "compass",
         "name": "Compass rose",
-        "x": 0.036,
-        "y": 0.404,
-        "width": 0.104,
-        "height": 0.128
+        "x": 0.009,
+        "y": 0.389,
+        "width": 0.123,
+        "height": 0.196
       }
     ],
     "$occlusionNote": "Map furniture drawn over the map field. Hexes under these take their terrain from their unoccluded neighbours rather than from the pixels, because the pixels are cartouche, not country."
@@ -54,7 +54,7 @@
     "fit": "field-width",
     "$fitNote": "The flat-to-flat width of a hex is exactly field.width / cols, and the grid is centred on the field, so it overhangs the top and bottom edges by about half a percent. Choosing 32 columns is the one real judgement call on this map: it puts every named settlement in a hex of its own, which 15 columns did not, and keeps a hex at roughly two mountain glyphs across so the ranges survive as ranges instead of collapsing to a single tile.",
     "leaguesAcrossFlats": 22,
-    "$leagueNote": "Read off the plate's scale bar to the nearest league. Fiction, not a rule — nothing in data/rules.json is denominated in leagues."
+    "$leagueNote": "Fiction, not a rule — nothing in data/rules.json is denominated in leagues. The plate this figure was read off carried a scale bar; the plate now in docs/map does not, so the number is inherited rather than measured and can be reset the day a plate draws a bar again."
   },
   "print": {
     "$comment": "Sheet layouts for printing the plate at table size. Each preset tiles the whole plate — decorative frame included, because the frame is part of the drawing — across a grid of A4 sheets with a margin every printer can manage, then scales it to the largest size that fits without cropping and without distorting it. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived from that and rewritten by tools/build-map.mjs; they are stored here so the numbers are greppable and so a change to the geometry shows up as a diff.",
@@ -69,10 +69,10 @@
         "sheetRows": 2,
         "marginMm": 8,
         "overlapMm": 0,
-        "mapWidthMm": 548.8,
+        "mapWidthMm": 548.3,
         "mapHeightMm": 388,
         "hexAcrossFlatsMm": 16.7,
-        "note": "Two by two, printed landscape. 549 x 388 mm finished — A2, near enough — at 162 dpi, with 16.7 mm hexes. This replaced a 3 x 2 portrait layout on six sheets, which printed 6% bigger and left 83 mm of every page blank below the map: a landscape A4 inside an 8 mm margin is 281 x 194 mm, aspect 1.448, and the plate is 1.414, so the two nest almost exactly and any square grid of landscape sheets fills the paper. Three portrait sheets across is aspect 1.036 and does not. See the one- and nine-sheet presets: same window, same margins, 1, 2 and 3 sheets to a side."
+        "note": "Two by two, printed landscape. 548 x 388 mm finished — A2, near enough — with 16.7 mm hexes. This replaced a 3 x 2 portrait layout on six sheets, which printed 6% bigger and left 83 mm of every page blank below the map: a landscape A4 inside an 8 mm margin is 281 x 194 mm, aspect 1.448, and the plate is 1.414, so the two nest almost exactly and any square grid of landscape sheets fills the paper. Three portrait sheets across is aspect 1.036 and does not. See the one- and nine-sheet presets: same window, same margins, 1, 2 and 3 sheets to a side."
       },
       {
         "id": "nine-sheet",
@@ -83,10 +83,10 @@
         "sheetRows": 3,
         "marginMm": 8,
         "overlapMm": 0,
-        "mapWidthMm": 823.2,
+        "mapWidthMm": 822.5,
         "mapHeightMm": 582,
         "hexAcrossFlatsMm": 25.1,
-        "note": "Three by three, printed landscape. 823 x 582 mm — A1, near enough — with 25 mm hexes you can stand a figure in. The plate only holds 3508 pixels across, so this prints at 108 dpi and is visibly softer up close; it is the layout for a map you play on rather than one you read."
+        "note": "Three by three, printed landscape. 822 x 582 mm — A1, near enough — with 25 mm hexes you can stand a figure in. The plate holds 1491 pixels across, so this prints at 46 dpi: the geometry is right and the artwork is not there to fill it. Treat it as a layout waiting on a larger plate rather than one to send to paper today."
       },
       {
         "id": "one-sheet",
@@ -97,10 +97,10 @@
         "sheetRows": 1,
         "marginMm": 8,
         "overlapMm": 0,
-        "mapWidthMm": 274.4,
+        "mapWidthMm": 274.2,
         "mapHeightMm": 194,
         "hexAcrossFlatsMm": 8.4,
-        "note": "The whole plate on one page at 325 dpi. 8.4 mm hexes are too small to play on and perfectly good for the ring binder."
+        "note": "The whole plate on one page at 138 dpi, which is the only preset the current artwork has the pixels for. 8.4 mm hexes are too small to play on and perfectly good for the ring binder."
       }
     ]
   },
@@ -121,31 +121,31 @@
   },
   "rows": [
     "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-    "~~~~~~~~~~~~~~~~~~~~~~~-----~~~~",
-    "~~~~~~~~~~~~-----~~~~~--tttt----",
-    "~~----------tttt--~~~--ttttttttt",
-    "~~-chhttcttttttttt----ttttttttt-",
-    "~~-chfttttttttttttt----tttttttt-",
-    "~~~--ctttttttttt.r.r----ctttttt-",
-    "~~~~---tfft^ttttr.r..c-cr...hh..",
-    "~~~~~~-ffff^^ttt......ccrrhhrh^f",
-    "~~~~~~-cff.^^^^t........rrllhh--",
-    "~~~~~--cffff..^^^.........l-lh-~",
-    "~~~~-fcrf.ffff^^.^hhhh....llh--~",
-    "~~~~-f.rrrrrfff.^...^^......^^c-",
-    "~~~~-f....rffrfff...^^^....^^hc-",
-    "~~~~-cff..fffcrrrf...^^^^^^^^h^c",
-    "~~~--ccfffff--ffrrr....^^^^^^h..",
-    "--~~----------cf.mmmmmmdddd^^h.c",
-    "c---~~~~~~~~~-c.mmmmmmmlldd^^dc-",
-    "---c-~~~~~~~~-crmmmmmmrl-ld^^dc-",
-    "~~---~~~~~~~-c.dmmmmrddlld^^---~",
-    "~~~~~~~~~~~~-ddddddddddddd^hc---",
-    "~~~~~~~~~~~-cddddddddddddc---~~~",
-    "~~~~~~~~~~~~-cddddddddddc--~~~~~",
-    "~~~~~--~~~----cccccccc---~~~~~~~",
-    "~~~~~-c-~~-c-----------~~~~~~~~~",
-    "~~~~~--~~~--~~~~~~~~~~~~~~~~~~~~"
+    "~~~~~~~~~~~~~---~~~~~~---------~",
+    "~~~---~--~~---cc--~~~~-tttttttt-",
+    "~~-^t--c---tttttt---~-tttttttttt",
+    "~~-^^^ttttttttttttcc-~-ttttttttt",
+    "~~--cc^tttttttttt..c---tfttttt^^",
+    "~~~~---cttttttttt...cc--f.ttt.^^",
+    "~~~~~-fftt^^ttt.......cc.hhhh^^-",
+    "~~~~~~-fff^^^^^t..........llh^^-",
+    "~~~~~-cffff^^^^..........l-lhf-~",
+    "~~~~~-cfffffff^^^t........llh--~",
+    "~~~~-cfffffffff^^^^^........c--~",
+    "~~~~-f....fffffff..^^^^....^^^c-",
+    "~~~-fff...fffffff...^^^....^^^c-",
+    "~~~~-ffffcfffcffff.....^^^^^^..c",
+    "~~~~----------ff..m....^^^^^^..f",
+    "--~~~~~~--~~~-ffmmmmmmddddd^^^.c",
+    "c----~~~~~~~~-fmmmmmdddlldd^^cc-",
+    "---f-~~~~~~~~-crrrrlllll-ld^^c--",
+    "~~---~~~~~~~-cddddl---lllddc--~~",
+    "~~~~~~~~~~~~-cdddddllllddddc--~~",
+    "~~~~~~~~~~~-ddddddddddddddc--~~~",
+    "~~~~~~~~~~~-cdddddddddddddc-~~~~",
+    "~~~~~~~~~~~--cdddccccddddc--~~~~",
+    "~~~~~---~~-----------cc----~~~~~",
+    "~~~~~-c-~~-c-~~~~~~~----~~~~~~~~"
   ],
   "regions": [
     {
@@ -153,10 +153,10 @@
       "name": "The Rimewaste",
       "terrain": "tundra",
       "labelAt": [
-        10,
+        12,
         4
       ],
-      "summary": "The ice waste along the north edge, and the frozen sea beyond it. Nothing is built here."
+      "summary": "The ice waste along the north edge, and the frozen sea beyond it. Nothing is built here but Coldwater, on its shore."
     },
     {
       "id": "hollowfrost",
@@ -166,7 +166,7 @@
         27,
         4
       ],
-      "summary": "The north-eastern tundra, held from Oldkeep and Kestrel Rock."
+      "summary": "The north-eastern tundra, reached over the neck at Kestrel Rock and held from Oldkeep."
     },
     {
       "id": "bramblehold",
@@ -176,15 +176,15 @@
         10,
         7
       ],
-      "summary": "Thin northern woodland on the edge of the ice, above Duskmere."
+      "summary": "Thin northern woodland on the edge of the ice. The plate letters the name across the tundra above the trees; the wood itself is the belt running down to Duskmere."
     },
     {
       "id": "duskmere-wood",
       "name": "Duskmere Wood",
       "terrain": "forest",
       "labelAt": [
-        10,
-        13
+        11,
+        12
       ],
       "summary": "The great temperate forest of the west, and the timber behind Saltreach and Port Malchior."
     },
@@ -193,17 +193,17 @@
       "name": "The Ironspine Mountains",
       "terrain": "mountain",
       "labelAt": [
-        18,
+        19,
         12
       ],
-      "summary": "The range that splits the continent, running south-east from the Rimewaste to the Cragmaw. The Reach Line crosses it east of Vossgard."
+      "summary": "The range that splits the continent, running south-east from the western sea to the eastern shore above Brassford. The Reach Line crosses it at the pass south of Vossgard."
     },
     {
       "id": "amber-steppe",
       "name": "The Amber Steppe",
       "terrain": "grassland",
       "labelAt": [
-        21,
+        20,
         8
       ],
       "summary": "Open grass from Vossgard to the Varl Highlands. The only ground on the map a railway crosses cheaply."
@@ -216,17 +216,7 @@
         27,
         8
       ],
-      "summary": "Upland between the steppe and the eastern sea. The plate draws it as steppe and names it a highland; the hexes follow the name."
-    },
-    {
-      "id": "cragmaw",
-      "name": "Cragmaw Furnaces",
-      "terrain": "mountain",
-      "labelAt": [
-        28,
-        15
-      ],
-      "summary": "The eastern spurs above Brassford and Thorngate."
+      "summary": "Upland between the steppe and the eastern sea, around the lake the Steppe Line skirts. The plate draws it as steppe and names it a highland; the hexes follow the name."
     },
     {
       "id": "mirewash",
@@ -236,7 +226,7 @@
         18,
         17
       ],
-      "summary": "Wetland fed by the Vayne, the Skarn and the Mirewash. The plate draws it with the dune glyph and names it a fen; the hexes follow the name."
+      "summary": "Wetland below the Ironspine, drained by the river that runs out past Umber Hollow. The plate paints it the same ochre as the desert beside it and draws it with the same glyph, and names it a fen; the hexes follow the name."
     },
     {
       "id": "ochre-waste",
@@ -254,19 +244,9 @@
       "terrain": "desert",
       "labelAt": [
         18,
-        22
+        21
       ],
       "summary": "The southern sand sea, with Dry Wells at its heart and Dunhaven on its shore."
-    },
-    {
-      "id": "sable-sea",
-      "name": "The Sable Sea",
-      "terrain": "deep-water",
-      "labelAt": [
-        7,
-        15
-      ],
-      "summary": "The western ocean. Shipping runs from here to the Free Ports and the Far Shores."
     },
     {
       "id": "gulf-of-thallow",
@@ -279,14 +259,14 @@
       "summary": "The southern gulf between Port Malchior and Kholvar."
     },
     {
-      "id": "coldmere",
-      "name": "Coldmere",
+      "id": "goldmere",
+      "name": "Goldmere",
       "terrain": "deep-water",
       "labelAt": [
         20,
-        3
+        4
       ],
-      "summary": "The northern bay between the Rimewaste and the Hollowfrost."
+      "summary": "The northern bay between the Rimewaste and the Hollowfrost, with Rimegate on its southern shore."
     },
     {
       "id": "splinter-isles",
@@ -296,22 +276,22 @@
         3,
         18
       ],
-      "summary": "Four islets in the Sable Sea, each a single hex of shore."
+      "summary": "Four islets scattered across the western sea, each a single hex."
     }
   ],
   "settlements": [
     {
       "id": "vossgard",
       "name": "Vossgard",
-      "col": 17,
-      "row": 8,
+      "col": 16,
+      "row": 7,
       "rank": "seat",
       "note": "Seat of the Reach. Both rail lines meet here."
     },
     {
       "id": "saltreach",
       "name": "Saltreach",
-      "col": 7,
+      "col": 6,
       "row": 9,
       "rank": "city",
       "harbour": true
@@ -329,42 +309,44 @@
       "id": "coldwater",
       "name": "Coldwater",
       "col": 14,
-      "row": 3,
+      "row": 2,
       "rank": "town"
     },
     {
       "id": "duskmere",
       "name": "Duskmere",
       "col": 9,
-      "row": 9,
+      "row": 8,
       "rank": "town"
     },
     {
       "id": "rimegate",
       "name": "Rimegate",
       "col": 19,
-      "row": 6,
-      "rank": "town"
+      "row": 5,
+      "rank": "town",
+      "note": "On the south shore of the Goldmere."
     },
     {
       "id": "oldkeep",
       "name": "Oldkeep",
       "col": 23,
-      "row": 3,
+      "row": 2,
       "rank": "town"
     },
     {
       "id": "kestrel-rock",
       "name": "Kestrel Rock",
       "col": 24,
-      "row": 6,
-      "rank": "town"
+      "row": 5,
+      "rank": "town",
+      "note": "At the neck between the steppe and the Hollowfrost, in the only wood north of the Ironspine."
     },
     {
       "id": "ironwick",
       "name": "Ironwick",
       "col": 23,
-      "row": 10,
+      "row": 9,
       "rank": "town"
     },
     {
@@ -384,7 +366,7 @@
     {
       "id": "stagmoor",
       "name": "Stagmoor",
-      "col": 17,
+      "col": 16,
       "row": 15,
       "rank": "town"
     },
@@ -398,24 +380,24 @@
     {
       "id": "dunhaven",
       "name": "Dunhaven",
-      "col": 21,
-      "row": 23,
+      "col": 22,
+      "row": 24,
       "rank": "town",
       "harbour": true
     },
     {
-      "id": "tallowick",
-      "name": "Tallowick",
+      "id": "taleowick",
+      "name": "Taleowick",
       "col": 5,
-      "row": 6,
+      "row": 5,
       "rank": "village",
       "harbour": true
     },
     {
       "id": "fens-end",
       "name": "Fen's End",
-      "col": 8,
-      "row": 4,
+      "col": 7,
+      "row": 3,
       "rank": "village"
     },
     {
@@ -428,8 +410,8 @@
     {
       "id": "dry-wells",
       "name": "Dry Wells",
-      "col": 17,
-      "row": 21,
+      "col": 18,
+      "row": 22,
       "rank": "village"
     },
     {
@@ -448,24 +430,28 @@
         "name": "The Steppe Line",
         "hexes": [
           [
+            16,
+            7
+          ],
+          [
             17,
-            8
+            7
           ],
           [
             18,
-            8
+            7
           ],
           [
             19,
-            8
+            7
           ],
           [
             20,
-            8
+            7
           ],
           [
             21,
-            8
+            7
           ],
           [
             22,
@@ -477,23 +463,23 @@
           ],
           [
             23,
-            10
+            9
           ],
           [
             24,
-            10
+            9
           ],
           [
             25,
-            10
+            9
           ],
           [
             26,
             10
           ],
           [
-            26,
-            11
+            27,
+            10
           ],
           [
             27,
@@ -504,16 +490,24 @@
             11
           ],
           [
-            28,
-            12
-          ],
-          [
             29,
             12
           ],
           [
             30,
             12
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            30,
+            14
+          ],
+          [
+            29,
+            15
           ]
         ]
       },
@@ -521,6 +515,10 @@
         "id": "reach-line",
         "name": "The Reach Line",
         "hexes": [
+          [
+            16,
+            7
+          ],
           [
             17,
             8
@@ -534,24 +532,20 @@
             10
           ],
           [
-            17,
+            16,
             11
           ],
           [
-            17,
-            12
-          ],
-          [
             16,
-            13
+            12
           ],
           [
             15,
             13
           ],
           [
-            14,
-            13
+            15,
+            14
           ],
           [
             14,
@@ -566,7 +560,7 @@
     ],
     "road": [
       {
-        "from": "tallowick",
+        "from": "taleowick",
         "to": "fens-end"
       },
       {
@@ -575,15 +569,11 @@
       },
       {
         "from": "fens-end",
-        "to": "saltreach"
+        "to": "duskmere"
       },
       {
         "from": "saltreach",
         "to": "duskmere"
-      },
-      {
-        "from": "duskmere",
-        "to": "vossgard"
       },
       {
         "from": "duskmere",
@@ -599,7 +589,7 @@
       },
       {
         "from": "kestrel-rock",
-        "to": "rimegate"
+        "to": "ironwick"
       },
       {
         "from": "vossgard",
@@ -644,11 +634,11 @@
     ],
     "shipping": [
       {
-        "id": "free-ports",
-        "name": "To the Free Ports",
+        "id": "coldwater-run",
+        "name": "Sea Route to Coldwater",
         "hexes": [
           [
-            6,
+            5,
             10
           ],
           [
@@ -669,11 +659,7 @@
           ],
           [
             3,
-            6
-          ],
-          [
-            2,
-            6
+            5
           ],
           [
             2,
@@ -682,42 +668,66 @@
           [
             2,
             4
-          ]
-        ]
-      },
-      {
-        "id": "far-shores",
-        "name": "To the Far Shores",
-        "hexes": [
-          [
-            6,
-            17
-          ],
-          [
-            5,
-            17
-          ],
-          [
-            4,
-            17
-          ],
-          [
-            3,
-            17
           ],
           [
             2,
-            17
+            3
           ],
           [
-            1,
-            17
+            3,
+            2
           ]
         ]
       },
       {
-        "id": "southern-isles",
-        "name": "To the Southern Isles",
+        "id": "gulf-crossing",
+        "name": "The Gulf Crossing",
+        "hexes": [
+          [
+            12,
+            16
+          ],
+          [
+            11,
+            16
+          ],
+          [
+            10,
+            17
+          ],
+          [
+            9,
+            17
+          ],
+          [
+            8,
+            17
+          ],
+          [
+            8,
+            18
+          ],
+          [
+            7,
+            18
+          ],
+          [
+            6,
+            18
+          ],
+          [
+            5,
+            18
+          ],
+          [
+            4,
+            18
+          ]
+        ]
+      },
+      {
+        "id": "kholvar-run",
+        "name": "The Kholvar Coast Run",
         "hexes": [
           [
             13,
@@ -746,6 +756,14 @@
           [
             11,
             22
+          ],
+          [
+            11,
+            23
+          ],
+          [
+            11,
+            24
           ]
         ]
       }

@@ -83,10 +83,6 @@ function sample(col, row) {
   if (offField > pattern.length * 0.45 || points.length < 8) return null;
   points.sort((a, b) => a.lum - b.lum);
 
-  /* Black glyph coverage. Mountains are drawn as dense hatched peaks and nothing
-     else on this plate is anywhere near as dark across as much of a hex. */
-  const ink = points.filter((s) => s.lum < 75).length / points.length;
-
   /* Drop the darkest third — that is the linework — and the top twentieth, which
      is paper texture and the highlight side of a fold. What is left is the wash. */
   const wash = points.slice(Math.floor(points.length * 0.35), Math.ceil(points.length * 0.95));
@@ -103,33 +99,60 @@ function sample(col, row) {
   b /= wash.length;
   const [h, s, l] = rgbToHsl(r, g, b);
 
-  /* Rivers are one or two pixels of a specific cold blue on a warm ground, so
-     they need a denser sweep than the wash does or they fall between samples. */
+  /* The glyphs are drawn a pixel or two wide, so they need a denser sweep than
+     the wash does or they fall between samples. Three things are counted here:
+     the cold blue of a drawn river, the green of a drawn tree, and how much of
+     the hex is covered by ink of any colour. */
   let riverHits = 0;
-  let riverTotal = 0;
+  let greenHits = 0;
+  let inkHits = 0;
+  let total = 0;
   const step = Math.max(1, Math.round(radius / 26));
   for (let y = c.y - radius * 0.8; y <= c.y + radius * 0.8; y += step) {
     for (let x = c.x - radius * 0.8; x <= c.x + radius * 0.8; x += step) {
       if (!insideField(x, y)) continue;
       const [pr, pg, pb] = pixel(plate, x, y);
-      riverTotal++;
+      total++;
       const lum = luminance(pr, pg, pb);
-      if (pb > pr + 12 && pb > pg + 4 && lum > 90 && lum < 200) riverHits++;
+      const [ph, ps, pl] = rgbToHsl(pr, pg, pb);
+      if (pb > pr + 10 && pb > pg + 2 && lum > 90 && lum < 200) riverHits++;
+      if (ph >= 60 && ph <= 165 && ps >= 0.12 && pl <= 0.66) greenHits++;
+      if (lum < 130) inkHits++;
     }
   }
 
-  return { r, g, b, h, s, l, ink, river: riverHits / Math.max(1, riverTotal) };
+  return {
+    r, g, b, h, s, l,
+    ink: inkHits / Math.max(1, total),
+    green: greenHits / Math.max(1, total),
+    river: riverHits / Math.max(1, total),
+  };
 }
 
 /* ---------------------------------------------------------- classification */
 
+/**
+ * The plate prints its own key of twelve colour swatches, one per terrain, and
+ * the thresholds below are read off them. Two groups separate cleanly and the
+ * rest do not:
+ *
+ *   water   every water swatch is desaturated (s <= 0.09) and neutral-to-cold;
+ *           every land swatch is warm and saturated (s >= 0.26). Nothing else on
+ *           the plate crosses that gap, which makes it the one test that never
+ *           misfires.
+ *   wood    trees are the only green ink on an otherwise ochre map.
+ *
+ * Ice and sand are then the extremes of the land wash — the lightest and the
+ * strongest — and everything between them is called grass, to be corrected by
+ * hand. Hills and marsh are deliberately not guessed: the plate paints the
+ * Mirewash Fens the same ochre as the desert beside it and draws the Varl
+ * Highlands as flat steppe, so both are placed from the labels, not the pixels.
+ */
 function baseTerrain(st) {
-  /* Water first. Every land wash on this plate is warm — red beats blue by a wide
-     margin — and every water wash is neutral-to-cold. */
-  if (st.b > st.r - 8 && st.s < 0.22) return 'deep-water';
-  if (st.l >= 0.74 && st.s <= 0.33) return 'tundra';
-  if (st.h >= 62) return 'forest';
-  if (st.h <= 46 && st.s >= 0.42) return 'desert';
+  if (st.s < 0.30 && st.b > st.r - 32) return 'deep-water';
+  if (st.green >= 0.02) return 'forest';
+  if (st.l >= 0.83 && st.s < 0.52) return 'tundra';
+  if (st.s >= 0.52) return 'desert';
   return 'grassland';
 }
 
@@ -165,12 +188,12 @@ for (let row = 0; row < rowCount; row++) {
    a hex only has to be a bit inky to join a range that already has a solid peak in
    it, which keeps the Ironspine a continuous spine instead of a dotted line of
    whichever hexes happened to centre on a drawn peak. */
-const MOUNTAIN_SEED = 0.15;
-const MOUNTAIN_GROW = 0.06;
+const MOUNTAIN_SEED = 0.18;
+const MOUNTAIN_GROW = 0.1;
 for (let row = 0; row < rowCount; row++) {
   for (let col = 0; col < cols; col++) {
     const st = stats[row][col];
-    if (st && !occluded[row][col] && st.ink >= MOUNTAIN_SEED && st.l < 0.82) {
+    if (st && !occluded[row][col] && st.ink >= MOUNTAIN_SEED && st.green < 0.05) {
       terrain[row][col] = 'mountain';
     }
   }
@@ -182,7 +205,8 @@ for (let pass = 0; pass < 6; pass++) {
     for (let col = 0; col < cols; col++) {
       const st = stats[row][col];
       if (!st || occluded[row][col] || before[row][col] === 'mountain') continue;
-      if (st.ink < MOUNTAIN_GROW || st.b > st.r - 8) continue;
+      if (st.ink < MOUNTAIN_GROW || st.green >= 0.05) continue;
+      if (st.s < 0.30 && st.b > st.r - 32) continue;
       if (!neighbours(col, row).some((n) => inBounds(n.col, n.row) && before[n.row][n.col] === 'mountain')) continue;
       terrain[row][col] = 'mountain';
       changed = true;
@@ -201,22 +225,30 @@ const occludedCount = occluded.flat().filter(Boolean).length;
 for (let pass = 0; pass < cols + rowCount; pass++) {
   let changed = false;
   const before = terrain.map((r) => r.slice());
+  /* Both the terrain and the mask are frozen for the length of a pass. Clearing
+     the mask as we go would let a hex filled earlier in this same pass count as
+     a voter while `before` still held its furniture colour, and the cartouche
+     would then propagate its own cream inwards a ring at a time instead of being
+     replaced by the country around it. */
+  const wasOccluded = occluded.map((r) => r.slice());
+  const filled = [];
   for (let row = 0; row < rowCount; row++) {
     for (let col = 0; col < cols; col++) {
-      if (!occluded[row][col]) continue;
+      if (!wasOccluded[row][col]) continue;
       const votes = {};
       for (const n of neighbours(col, row)) {
         if (n.col < 0 || n.row < 0 || n.col >= cols || n.row >= rowCount) continue;
-        if (occluded[n.row][n.col]) continue;
+        if (wasOccluded[n.row][n.col]) continue;
         votes[before[n.row][n.col]] = (votes[before[n.row][n.col]] ?? 0) + 1;
       }
       const best = Object.entries(votes).sort((a, b) => b[1] - a[1])[0];
       if (!best) continue;
       terrain[row][col] = best[0];
-      occluded[row][col] = false;
+      filled.push([col, row]);
       changed = true;
     }
   }
+  for (const [col, row] of filled) occluded[row][col] = false;
   if (!changed) break;
 }
 /* Anything still walled in by other occluded hexes is open sea by elimination. */

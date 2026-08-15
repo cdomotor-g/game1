@@ -78,9 +78,16 @@ marks and butt the sheets edge to edge.
 
 | Preset | Sheets | Finished | Hex | Resolution |
 | --- | --- | --- | --- | --- |
-| `four-sheet` | 4, A4 landscape, 2 × 2 | 549 × 388 mm (A2) | 16.7 mm | 162 dpi |
-| `nine-sheet` | 9, A4 landscape, 3 × 3 | 823 × 582 mm (A1) | 25.1 mm | 108 dpi |
-| `one-sheet` | 1, A4 landscape | 274 × 194 mm | 8.4 mm | 325 dpi |
+| `four-sheet` | 4, A4 landscape, 2 × 2 | 548 × 388 mm (A2) | 16.7 mm | 69 dpi |
+| `nine-sheet` | 9, A4 landscape, 3 × 3 | 822 × 582 mm (A1) | 25.1 mm | 46 dpi |
+| `one-sheet` | 1, A4 landscape | 274 × 194 mm | 8.4 mm | 138 dpi |
+
+**Those dpi figures are the current plate's, and only the one-sheet preset is worth
+printing.** The geometry below is a property of A4 and of the root-two frame, and does not
+change; the resolution is a property of the artwork, and `korvane-reach.png` is 1491 px
+across. Every figure in the table scales straight off that, so a plate redrawn at 4000 px
+would print the same sizes at 185, 124 and 371 dpi with nothing else in the repository
+touched.
 
 **Why every preset is a square grid of landscape sheets.** A4 is a root-two rectangle and
 so is this plate, and the margin does not spoil it: an A4 printed landscape inside an 8 mm
@@ -101,9 +108,10 @@ If four sheets is the size you want but you would rather have the extra 6%, eigh
 a 4 × 2 *portrait* block is the other efficient shape — 776 × 549 mm at 98% — because 4/2
 is the ratio that makes a portrait block root-two the way 1/1 does for a landscape one.
 
-If you want it genuinely bigger, use `nine-sheet`. The limit there is the plate: 3508
-pixels across is 108 dpi at A1, which is soft up close and fine at arm's length on a table.
-A plate drawn at 7000 px would print A1 at 210 dpi.
+If you want it genuinely bigger, use `nine-sheet`. The limit there is the plate: 1491
+pixels across is 46 dpi at A1, which is not a print, it is a projection. A plate drawn at
+3508 px would put A1 back to 108 dpi — soft up close, fine at arm's length on a table — and
+one at 7000 px would print it at 210 dpi.
 
 A sheet is 297 mm wide printed landscape, which is 1123 CSS pixels and wider than a laptop
 window. The preview scales to fit and can be set to 100%, 50% or 25%; the scale is a screen
@@ -120,7 +128,7 @@ paper or a screen.
 | | |
 | --- | --- |
 | **PDF** | print from `print.html` and choose *Save as PDF*. The `@page` size is already set per preset, so the PDF is at true size and the trim marks are where they say they are. |
-| **PNG** | *Download PNG*, on either page. The plate at its own 3508 × 2480, with whatever layers are switched on drawn over it. |
+| **PNG** | *Download PNG*, on either page. The plate at its own 1491 × 1055, with whatever layers are switched on drawn over it. |
 | **SVG** | *Overlay SVG*, on the viewer. The grid, routes, places and replacement legend as vector, at plate coordinates, without the plate — a few hundred kilobytes rather than ten megabytes, and the thing to edit if you want to redraw part of the overlay. |
 
 **There is deliberately no per-sheet PNG.** A PNG carries no paper size with it, so a tile
@@ -138,16 +146,22 @@ The exported look is defined once, in `export.js`, so a file saved from the view
 saved from the print sheets are the same picture. It has to be stated there in full because
 a file that has left the browser carries no stylesheet with it: the custom properties are
 spelled out, `vector-effect` is dropped — a hairline that ignores zoom is a screen
-affordance and would come out as a thread at 3508 px — and the selection highlight is
-dropped, because which hex you last clicked is not part of the map.
+affordance and would come out as a thread at plate resolution — and the selection highlight
+is dropped, because which hex you last clicked is not part of the map.
 
 ### The legend is replaced, not reprinted
 
-The plate's own key names four things this game has no terrain for — *tundra & steppe* is
-two terrains, *desert & dunes* is two more, and hills and marsh do not appear on it at all.
-So the overlay covers that one panel and prints the twelve real terrains in the same space,
-with their move costs, alongside every mark from the original key. The artwork is not
-edited; the panel is simply drawn over.
+The overlay covers the plate's legend panel and prints the twelve terrains in the same
+space, with their move costs, alongside every mark from the original key. The artwork is
+not edited; the panel is simply drawn over.
+
+The plate this was written for named four things the game had no terrain for — *tundra &
+steppe* was two terrains, *desert & dunes* two more, and hills and marsh did not appear on
+it at all — so the replacement was a correction. **The current plate's key is already the
+game's twelve, in the game's own order**, which makes the override a smaller thing than it
+was: it now adds the move costs and nothing else. It is kept because the move cost is the
+number a player actually reaches for, and because the panel still has to be occluded for
+the tracer either way. A plate that printed the costs itself would be reason to drop it.
 
 ---
 
@@ -161,6 +175,15 @@ Commission or generate the artwork. The brief is at the end of this document. Sa
 `docs/map/<id>.png`. Landscape, and as many pixels as you can get — the plate's width is
 the hard limit on print quality, and 7000 px is the difference between a map you can read
 at A1 and one you cannot.
+
+**Ask for the width before you ask for anything else.** It is the one property of a plate
+that cannot be recovered later: a coastline can be re-traced, a legend can be drawn over, a
+label can be argued with, but pixels that were never drawn are gone. The Korvane Reach is
+on its second plate and the second is the better drawing by a distance — truer washes, a
+key that matches the game's terrain exactly — and it arrived at 1491 px, which cost the two
+larger print presets. Everything in `data/maps/*.json` is a fraction of `plate.field`
+precisely so that a third plate at 4000 px would be a one-file change; nothing else here
+protects you from a small one.
 
 ### 2. Measure it
 
@@ -183,18 +206,30 @@ node tools/trace-map.mjs <id>            # print the proposed rows
 node tools/trace-map.mjs <id> --write    # write them into the board
 ```
 
-The tracer samples the artwork under every hex. It can honestly separate five things by
-colour — water, snow, grass, wood and sand — finds mountains by how much black ink is in
-the hex, and finds rivers by looking for the drawn river blue. Then it applies the rules
-that are true of any map: the sea is flooded in from the border so that inland water comes
-out as lake rather than ocean, deep water beside land becomes shallow, and open ground
-against the sea becomes coast.
+The tracer samples the artwork under every hex and proposes four things honestly: **water**
+by colour, **wood** by the green of a drawn tree, **ice** and **sand** as the lightest and
+the strongest of the land washes. Mountains come from how much of a hex is covered in ink,
+grown outwards from a solid peak so a range stays a range. Rivers come from looking for the
+drawn river blue. Everything left over is called grass, to be corrected by hand.
+
+Then it applies the rules that are true of any map: the sea is flooded in from the border so
+that inland water comes out as lake rather than ocean, deep water beside land becomes
+shallow, and open ground against the sea becomes coast.
+
+**Hills and marsh are deliberately never proposed.** On a drawn map they are a label, not a
+colour, and guessing them wastes more of step 4 than it saves.
+
+The thresholds are per-plate and live in `baseTerrain`. Retuning them when the artwork
+changes is expected, not a hack: the current set is read off the swatches the plate prints
+in its own legend, which is the most reliable calibration a plate can offer. What survives
+across plates is the *shape* of the test — water is the desaturated end of the palette and
+land the saturated end — because that is the one separation a painted map never blurs.
 
 It will get things wrong, and the two ways it goes wrong are worth knowing in advance:
 
-- **Display lettering reads as mountains.** Black serif capitals a centimetre tall are, to
-  a sampler, exactly as inky as a hatched peak. `THE AMBER STEPPE` grew a mountain range
-  across flat grassland.
+- **Display lettering reads as mountains.** Serif capitals a centimetre tall are, to a
+  sampler, about as inky as a hatched peak. `THE AMBER STEPPE` grew a mountain range across
+  flat grassland.
 - **Two terrains can share a colour.** On this plate a fen and a desert are painted the
   same ochre and drawn with the same glyph. Nothing in the pixels can separate them; only
   the label can, and the label is prose.

@@ -259,7 +259,7 @@ marks, butt the pieces. Printing and choosing *Save as PDF* gives the same thing
 the page sizes are set per preset, so the PDF is at true size.
 
 **Taking a copy away.** Both map pages have a **Download PNG** button — the plate at its
-own 3508 × 2480 with whatever layers are switched on — and the viewer also offers the
+own 1491 × 1055 with whatever layers are switched on — and the viewer also offers the
 overlay alone as SVG, for editing. There is no per-sheet PNG on purpose: a PNG carries no
 paper size, so a tile out of one is an image nothing can print at a known scale. Downloads
 read pixels back out of a canvas, which a browser forbids when the page was opened off
