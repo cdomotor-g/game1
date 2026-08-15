@@ -255,7 +255,15 @@ without trusting a tally.
 **Printing it.** `docs/map/print.html` tiles the plate across A4 sheets with trim marks
 and per-sheet stamps. Six sheets, 3 × 2 portrait, gives 582 × 411 mm — A2, near enough —
 with 17.7 mm hexes. Nine sheets gives A1 with 25 mm hexes. Print at 100%, cut on the
-marks, butt the pieces.
+marks, butt the pieces. Printing and choosing *Save as PDF* gives the same thing as a file:
+the page sizes are set per preset, so the PDF is at true size.
+
+**Taking a copy away.** Both map pages have a **Download PNG** button — the plate at its
+own 3508 × 2480 with whatever layers are switched on — and the viewer also offers the
+overlay alone as SVG, for editing. There is no per-sheet PNG on purpose: a PNG carries no
+paper size, so a tile out of one is an image nothing can print at a known scale. Downloads
+read pixels back out of a canvas, which a browser forbids when the page was opened off
+disk, so they need the site served rather than double-clicked.
 
 **The twelve terrains are the vocabulary and a map does not get to add to it.** Drawn maps
 name their country *steppe*, *highlands*, *fens*, *dunes*; when those collide with
