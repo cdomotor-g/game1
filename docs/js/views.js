@@ -384,6 +384,63 @@
     ]);
   };
 
+  /* ------------------------------------------------------------------ maps */
+
+  views.maps = function () {
+    const maps = D.raw.maps || [];
+    if (!maps.length) return el('div', [pageHead('Maps', 'No maps in data/maps/ yet.')]);
+
+    return el('div', [
+      pageHead('Maps', 'A drawn map and the hex board read off it. The artwork is committed as it was supplied; the grid is an overlay, so a mistake about the terrain is a one-character edit and never a repaint.'),
+      maps.map((m) => {
+        const tally = {};
+        for (const line of m.rows) for (const ch of line) tally[m.legend[ch]] = (tally[m.legend[ch]] || 0) + 1;
+        const water = (tally['deep-water'] || 0) + (tally['shallow-water'] || 0);
+        const total = m.grid.cols * m.grid.rows;
+
+        return el('div.panel', [
+          el('h3', m.name, el('span.count', `${total} hexes`)),
+          el('p.prose', m.summary || ''),
+          el('div.card-meta', [
+            pill(`${m.grid.cols} × ${m.grid.rows}`),
+            pill(`${total - water} land`),
+            pill(`${water} water`),
+            pill(`${(m.settlements || []).length} settlements`),
+            pill(`${m.grid.leaguesAcrossFlats} leagues a hex`),
+          ]),
+          el('div.flow', { style: 'margin-top:12px' }, [
+            el('a.btn', { href: 'map/index.html' }, 'Open the map'),
+            el('a.btn.small', { href: 'map/print.html' }, 'Print it'),
+          ]),
+          el('h4', { style: 'margin-top:16px' }, 'Terrain'),
+          el('div.grid.wide', D.terrains.filter((t) => tally[t.id]).map((t) =>
+            el('button.card', { type: 'button', onclick: () => open('terrain', t.id) }, [
+              el('div.card-head', [
+                el('span.card-title', [
+                  el('span', { style: `display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;background:${t.colour || '#888'}` }),
+                  t.name,
+                ]),
+                pill(`${tally[t.id]}`),
+              ]),
+              el('div.card-sub', `${((100 * tally[t.id]) / total).toFixed(1)}% of the board`),
+            ])
+          )),
+          el('h4', { style: 'margin-top:16px' }, 'Regions'),
+          el('div.linklist', (m.regions || []).map((rg) =>
+            el('div.linkrow', { style: 'cursor:default' }, [
+              el('strong', rg.name),
+              el('div.lr-sub', rg.summary || ''),
+            ])
+          )),
+          el('h4', { style: 'margin-top:16px' }, 'Settlements'),
+          el('div.flow', (m.settlements || []).map((st) =>
+            el('span.token', `${st.name} · ${st.rank}${st.harbour ? ' · harbour' : ''}`)
+          )),
+        ]);
+      }),
+    ]);
+  };
+
   views.rules = function () {
     const section = (title, obj) => el('div.panel', [
       el('h3', title),

@@ -1,0 +1,754 @@
+{
+  "$comment": "The Korvane Reach: a drawn map, hexed. The artwork in docs/map/korvane-reach.png is the plate; everything a program needs to know about what is ON that plate is in this file. 'rows' is the board — one string per grid row, one character per hex, decoded through 'legend'. Edit it by hand: it is a picture of the map you can read in a text editor, and it diffs like one. tools/trace-map.mjs proposes rows by sampling the plate; it never rewrites them unless asked.",
+  "version": "0.1.0",
+  "id": "korvane-reach",
+  "name": "The Korvane Reach",
+  "subtitle": "a true charting of the free lands, the ember coast & the rimeward marches",
+  "summary": "A north-facing continent map: an ice waste along the top edge, a temperate wooded west, a dry ochre south, and a mountain spine running south-east from the middle of the landmass to the eastern sea.",
+  "plate": {
+    "file": "korvane-reach.png",
+    "$fileNote": "Relative to docs/map/. The artwork is committed as supplied and is never re-encoded by any tool here — the hex grid is an overlay drawn on top of it, not a change to it.",
+    "width": 3508,
+    "height": 2480,
+    "field": {
+      "x": 44,
+      "y": 44,
+      "width": 3421,
+      "height": 2393
+    },
+    "$fieldNote": "The drawn map inside the printed frame, in plate pixels. Measured from the inner frame rule. Everything else in this file that talks about position is a fraction of this rectangle, so the data survives the plate being redrawn at another resolution.",
+    "occlusions": [
+      {
+        "id": "title",
+        "name": "Title cartouche",
+        "x": 0.01,
+        "y": 0.77,
+        "width": 0.335,
+        "height": 0.2
+      },
+      {
+        "id": "legend",
+        "name": "Legend panel",
+        "x": 0.686,
+        "y": 0.766,
+        "width": 0.314,
+        "height": 0.218
+      },
+      {
+        "id": "compass",
+        "name": "Compass rose",
+        "x": 0.036,
+        "y": 0.404,
+        "width": 0.104,
+        "height": 0.128
+      }
+    ],
+    "$occlusionNote": "Map furniture drawn over the map field. Hexes under these take their terrain from their unoccluded neighbours rather than from the pixels, because the pixels are cartouche, not country."
+  },
+  "grid": {
+    "shape": "hex",
+    "orientation": "pointy",
+    "offset": "odd-r",
+    "cols": 32,
+    "rows": 26,
+    "fit": "field-width",
+    "$fitNote": "The flat-to-flat width of a hex is exactly field.width / cols, and the grid is centred on the field, so it overhangs the top and bottom edges by about half a percent. Choosing 32 columns is the one real judgement call on this map: it puts every named settlement in a hex of its own, which 15 columns did not, and keeps a hex at roughly two mountain glyphs across so the ranges survive as ranges instead of collapsing to a single tile.",
+    "leaguesAcrossFlats": 22,
+    "$leagueNote": "Read off the plate's scale bar to the nearest league. Fiction, not a rule — nothing in data/rules.json is denominated in leagues."
+  },
+  "print": {
+    "$comment": "Sheet layouts for printing the plate at table size. Each preset tiles the whole plate — decorative frame included, because the frame is part of the drawing — across a grid of A4 sheets with a margin every printer can manage, then scales it to the largest size that fits without cropping and without distorting it. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived from that and rewritten by tools/build-map.mjs; they are stored here so the numbers are greppable and so a change to the geometry shows up as a diff.",
+    "default": "six-sheet",
+    "presets": [
+      {
+        "id": "six-sheet",
+        "name": "Six sheets, A2",
+        "sheet": "A4",
+        "orientation": "portrait",
+        "sheetCols": 3,
+        "sheetRows": 2,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "mapWidthMm": 582,
+        "mapHeightMm": 411.4,
+        "hexAcrossFlatsMm": 17.7,
+        "note": "Three sheets across, two down, printed portrait, trimmed on the crop marks and butted. 582 x 411 mm finished — A2, near enough — at 153 dpi, with 17.7 mm hexes. A4 is a root-two rectangle and so is this plate, which is why six A4 sheets cannot tile it without waste: the bottom row of sheets is only two thirds used, and that waste is what pays for the printer margins an exact 2x2 A2 tiling has no room for."
+      },
+      {
+        "id": "nine-sheet",
+        "name": "Nine sheets, A1",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 3,
+        "sheetRows": 3,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "mapWidthMm": 823.2,
+        "mapHeightMm": 582,
+        "hexAcrossFlatsMm": 25.1,
+        "note": "Three by three, printed landscape. 823 x 582 mm — A1, near enough — with 25 mm hexes you can stand a figure in. The plate only holds 3508 pixels across, so this prints at 108 dpi and is visibly softer up close; it is the layout for a map you play on rather than one you read."
+      },
+      {
+        "id": "one-sheet",
+        "name": "One sheet, reference",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 1,
+        "sheetRows": 1,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "mapWidthMm": 274.4,
+        "mapHeightMm": 194,
+        "hexAcrossFlatsMm": 8.4,
+        "note": "The whole plate on one page at 325 dpi. 8.4 mm hexes are too small to play on and perfectly good for the ring binder."
+      }
+    ]
+  },
+  "legend": {
+    "$comment": "Character to terrain id, for the 'rows' block. Every id here must exist in data/terrain.json — that is checked by tools/validate-map.mjs. The characters are chosen to look like the thing at a glance so an unfamiliar reader can read the board out of the text.",
+    "~": "deep-water",
+    "-": "shallow-water",
+    "c": "coast",
+    "l": "lake-shore",
+    "r": "river-bank",
+    ".": "grassland",
+    "f": "forest",
+    "h": "hills",
+    "^": "mountain",
+    "m": "marsh",
+    "t": "tundra",
+    "d": "desert"
+  },
+  "rows": [
+    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~~~~-----~~~~",
+    "~~~~~~~~~~~~-----~~~~~--tttt----",
+    "~~----------tttt--~~~--ttttttttt",
+    "~~-chhttcttttttttt----ttttttttt-",
+    "~~-chfttttttttttttt----tttttttt-",
+    "~~~--ctttttttttt.r.r----ctttttt-",
+    "~~~~---tfft^ttttr.r..c-cr...hh..",
+    "~~~~~~-ffff^^ttt......ccrrhhrh^f",
+    "~~~~~~-cff.^^^^t........rrllhh--",
+    "~~~~~--cffff..^^^.........l-lh-~",
+    "~~~~-fcrf.ffff^^.^hhhh....llh--~",
+    "~~~~-f.rrrrrfff.^...^^......^^c-",
+    "~~~~-f....rffrfff...^^^....^^hc-",
+    "~~~~-cff..fffcrrrf...^^^^^^^^h^c",
+    "~~~--ccfffff--ffrrr....^^^^^^h..",
+    "--~~----------cf.mmmmmmdddd^^h.c",
+    "c---~~~~~~~~~-c.mmmmmmmlldd^^dc-",
+    "---c-~~~~~~~~-crmmmmmmrl-ld^^dc-",
+    "~~---~~~~~~~-c.dmmmmrddlld^^---~",
+    "~~~~~~~~~~~~-ddddddddddddd^hc---",
+    "~~~~~~~~~~~-cddddddddddddc---~~~",
+    "~~~~~~~~~~~~-cddddddddddc--~~~~~",
+    "~~~~~--~~~----cccccccc---~~~~~~~",
+    "~~~~~-c-~~-c-----------~~~~~~~~~",
+    "~~~~~--~~~--~~~~~~~~~~~~~~~~~~~~"
+  ],
+  "regions": [
+    {
+      "id": "rimewaste",
+      "name": "The Rimewaste",
+      "terrain": "tundra",
+      "labelAt": [
+        10,
+        4
+      ],
+      "summary": "The ice waste along the north edge, and the frozen sea beyond it. Nothing is built here."
+    },
+    {
+      "id": "hollowfrost",
+      "name": "Hollowfrost Tundra",
+      "terrain": "tundra",
+      "labelAt": [
+        27,
+        4
+      ],
+      "summary": "The north-eastern tundra, held from Oldkeep and Kestrel Rock."
+    },
+    {
+      "id": "bramblehold",
+      "name": "Bramblehold Wood",
+      "terrain": "forest",
+      "labelAt": [
+        10,
+        7
+      ],
+      "summary": "Thin northern woodland on the edge of the ice, above Duskmere."
+    },
+    {
+      "id": "duskmere-wood",
+      "name": "Duskmere Wood",
+      "terrain": "forest",
+      "labelAt": [
+        10,
+        13
+      ],
+      "summary": "The great temperate forest of the west, and the timber behind Saltreach and Port Malchior."
+    },
+    {
+      "id": "ironspine",
+      "name": "The Ironspine Mountains",
+      "terrain": "mountain",
+      "labelAt": [
+        18,
+        12
+      ],
+      "summary": "The range that splits the continent, running south-east from the Rimewaste to the Cragmaw. The Reach Line crosses it east of Vossgard."
+    },
+    {
+      "id": "amber-steppe",
+      "name": "The Amber Steppe",
+      "terrain": "grassland",
+      "labelAt": [
+        21,
+        8
+      ],
+      "summary": "Open grass from Vossgard to the Varl Highlands. The only ground on the map a railway crosses cheaply."
+    },
+    {
+      "id": "varl-highlands",
+      "name": "Varl Highlands",
+      "terrain": "hills",
+      "labelAt": [
+        27,
+        8
+      ],
+      "summary": "Upland between the steppe and the eastern sea. The plate draws it as steppe and names it a highland; the hexes follow the name."
+    },
+    {
+      "id": "cragmaw",
+      "name": "Cragmaw Furnaces",
+      "terrain": "mountain",
+      "labelAt": [
+        28,
+        15
+      ],
+      "summary": "The eastern spurs above Brassford and Thorngate."
+    },
+    {
+      "id": "mirewash",
+      "name": "The Mirewash Fens",
+      "terrain": "marsh",
+      "labelAt": [
+        18,
+        17
+      ],
+      "summary": "Wetland fed by the Vayne, the Skarn and the Mirewash. The plate draws it with the dune glyph and names it a fen; the hexes follow the name."
+    },
+    {
+      "id": "ochre-waste",
+      "name": "The Ochre Waste",
+      "terrain": "desert",
+      "labelAt": [
+        24,
+        18
+      ],
+      "summary": "Dry country east of the fens, broken by the Mirewash lakes."
+    },
+    {
+      "id": "kholvar",
+      "name": "Sands of Kholvar",
+      "terrain": "desert",
+      "labelAt": [
+        18,
+        22
+      ],
+      "summary": "The southern sand sea, with Dry Wells at its heart and Dunhaven on its shore."
+    },
+    {
+      "id": "sable-sea",
+      "name": "The Sable Sea",
+      "terrain": "deep-water",
+      "labelAt": [
+        7,
+        15
+      ],
+      "summary": "The western ocean. Shipping runs from here to the Free Ports and the Far Shores."
+    },
+    {
+      "id": "gulf-of-thallow",
+      "name": "Gulf of Thallow",
+      "terrain": "deep-water",
+      "labelAt": [
+        9,
+        18
+      ],
+      "summary": "The southern gulf between Port Malchior and Kholvar."
+    },
+    {
+      "id": "coldmere",
+      "name": "Coldmere",
+      "terrain": "deep-water",
+      "labelAt": [
+        20,
+        3
+      ],
+      "summary": "The northern bay between the Rimewaste and the Hollowfrost."
+    },
+    {
+      "id": "splinter-isles",
+      "name": "The Splinter Isles",
+      "terrain": "coast",
+      "labelAt": [
+        3,
+        18
+      ],
+      "summary": "Four islets in the Sable Sea, each a single hex of shore."
+    }
+  ],
+  "settlements": [
+    {
+      "id": "vossgard",
+      "name": "Vossgard",
+      "col": 17,
+      "row": 8,
+      "rank": "seat",
+      "note": "Seat of the Reach. Both rail lines meet here."
+    },
+    {
+      "id": "saltreach",
+      "name": "Saltreach",
+      "col": 7,
+      "row": 9,
+      "rank": "city",
+      "harbour": true
+    },
+    {
+      "id": "port-malchior",
+      "name": "Port Malchior",
+      "col": 13,
+      "row": 14,
+      "rank": "city",
+      "harbour": true,
+      "note": "The southern rail head, at the mouth of the Duskmere river."
+    },
+    {
+      "id": "coldwater",
+      "name": "Coldwater",
+      "col": 14,
+      "row": 3,
+      "rank": "town"
+    },
+    {
+      "id": "duskmere",
+      "name": "Duskmere",
+      "col": 9,
+      "row": 9,
+      "rank": "town"
+    },
+    {
+      "id": "rimegate",
+      "name": "Rimegate",
+      "col": 19,
+      "row": 6,
+      "rank": "town"
+    },
+    {
+      "id": "oldkeep",
+      "name": "Oldkeep",
+      "col": 23,
+      "row": 3,
+      "rank": "town"
+    },
+    {
+      "id": "kestrel-rock",
+      "name": "Kestrel Rock",
+      "col": 24,
+      "row": 6,
+      "rank": "town"
+    },
+    {
+      "id": "ironwick",
+      "name": "Ironwick",
+      "col": 23,
+      "row": 10,
+      "rank": "town"
+    },
+    {
+      "id": "thorngate",
+      "name": "Thorngate",
+      "col": 30,
+      "row": 12,
+      "rank": "town"
+    },
+    {
+      "id": "brassford",
+      "name": "Brassford",
+      "col": 29,
+      "row": 15,
+      "rank": "town"
+    },
+    {
+      "id": "stagmoor",
+      "name": "Stagmoor",
+      "col": 17,
+      "row": 15,
+      "rank": "town"
+    },
+    {
+      "id": "umber-hollow",
+      "name": "Umber Hollow",
+      "col": 15,
+      "row": 18,
+      "rank": "town"
+    },
+    {
+      "id": "dunhaven",
+      "name": "Dunhaven",
+      "col": 21,
+      "row": 23,
+      "rank": "town",
+      "harbour": true
+    },
+    {
+      "id": "tallowick",
+      "name": "Tallowick",
+      "col": 5,
+      "row": 6,
+      "rank": "village",
+      "harbour": true
+    },
+    {
+      "id": "fens-end",
+      "name": "Fen's End",
+      "col": 8,
+      "row": 4,
+      "rank": "village"
+    },
+    {
+      "id": "grist",
+      "name": "Grist",
+      "col": 14,
+      "row": 16,
+      "rank": "village"
+    },
+    {
+      "id": "dry-wells",
+      "name": "Dry Wells",
+      "col": 17,
+      "row": 21,
+      "rank": "village"
+    },
+    {
+      "id": "redmare",
+      "name": "Redmare",
+      "col": 30,
+      "row": 17,
+      "rank": "village"
+    }
+  ],
+  "routes": {
+    "$comment": "Rail and shipping are recorded hex by hex because they are infrastructure the rules price per tile. Roads are recorded as links between settlements: the plate draws them as connections rather than as a surveyed line, and inventing a hex path for each one would be putting detail into the data that is not on the map.",
+    "rail": [
+      {
+        "id": "steppe-line",
+        "name": "The Steppe Line",
+        "hexes": [
+          [
+            17,
+            8
+          ],
+          [
+            18,
+            8
+          ],
+          [
+            19,
+            8
+          ],
+          [
+            20,
+            8
+          ],
+          [
+            21,
+            8
+          ],
+          [
+            22,
+            8
+          ],
+          [
+            22,
+            9
+          ],
+          [
+            23,
+            10
+          ],
+          [
+            24,
+            10
+          ],
+          [
+            25,
+            10
+          ],
+          [
+            26,
+            10
+          ],
+          [
+            26,
+            11
+          ],
+          [
+            27,
+            11
+          ],
+          [
+            28,
+            11
+          ],
+          [
+            28,
+            12
+          ],
+          [
+            29,
+            12
+          ],
+          [
+            30,
+            12
+          ]
+        ]
+      },
+      {
+        "id": "reach-line",
+        "name": "The Reach Line",
+        "hexes": [
+          [
+            17,
+            8
+          ],
+          [
+            17,
+            9
+          ],
+          [
+            17,
+            10
+          ],
+          [
+            17,
+            11
+          ],
+          [
+            17,
+            12
+          ],
+          [
+            16,
+            13
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            14,
+            13
+          ],
+          [
+            14,
+            14
+          ],
+          [
+            13,
+            14
+          ]
+        ]
+      }
+    ],
+    "road": [
+      {
+        "from": "tallowick",
+        "to": "fens-end"
+      },
+      {
+        "from": "fens-end",
+        "to": "coldwater"
+      },
+      {
+        "from": "fens-end",
+        "to": "saltreach"
+      },
+      {
+        "from": "saltreach",
+        "to": "duskmere"
+      },
+      {
+        "from": "duskmere",
+        "to": "vossgard"
+      },
+      {
+        "from": "duskmere",
+        "to": "port-malchior"
+      },
+      {
+        "from": "rimegate",
+        "to": "vossgard"
+      },
+      {
+        "from": "oldkeep",
+        "to": "kestrel-rock"
+      },
+      {
+        "from": "kestrel-rock",
+        "to": "rimegate"
+      },
+      {
+        "from": "vossgard",
+        "to": "ironwick"
+      },
+      {
+        "from": "ironwick",
+        "to": "thorngate"
+      },
+      {
+        "from": "thorngate",
+        "to": "brassford"
+      },
+      {
+        "from": "brassford",
+        "to": "redmare"
+      },
+      {
+        "from": "port-malchior",
+        "to": "grist"
+      },
+      {
+        "from": "grist",
+        "to": "umber-hollow"
+      },
+      {
+        "from": "port-malchior",
+        "to": "stagmoor"
+      },
+      {
+        "from": "stagmoor",
+        "to": "umber-hollow"
+      },
+      {
+        "from": "umber-hollow",
+        "to": "dry-wells"
+      },
+      {
+        "from": "dry-wells",
+        "to": "dunhaven"
+      }
+    ],
+    "shipping": [
+      {
+        "id": "free-ports",
+        "name": "To the Free Ports",
+        "hexes": [
+          [
+            6,
+            10
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      },
+      {
+        "id": "far-shores",
+        "name": "To the Far Shores",
+        "hexes": [
+          [
+            6,
+            17
+          ],
+          [
+            5,
+            17
+          ],
+          [
+            4,
+            17
+          ],
+          [
+            3,
+            17
+          ],
+          [
+            2,
+            17
+          ],
+          [
+            1,
+            17
+          ]
+        ]
+      },
+      {
+        "id": "southern-isles",
+        "name": "To the Southern Isles",
+        "hexes": [
+          [
+            13,
+            16
+          ],
+          [
+            13,
+            17
+          ],
+          [
+            13,
+            18
+          ],
+          [
+            12,
+            19
+          ],
+          [
+            12,
+            20
+          ],
+          [
+            11,
+            21
+          ],
+          [
+            11,
+            22
+          ]
+        ]
+      }
+    ]
+  }
+}

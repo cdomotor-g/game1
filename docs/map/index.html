@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Korvane Reach — game1</title>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+  .maproot { display: grid; grid-template-columns: 1fr 300px; gap: 0; height: 100vh; }
+  @media (max-width: 900px) { .maproot { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } }
+
+  .stage { position: relative; overflow: hidden; background: var(--bg-sunken); cursor: grab; }
+  .stage.dragging { cursor: grabbing; }
+  .stage-inner { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+  .stage-inner img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+  .stage-inner svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .layer-wash polygon { opacity: .38; }
+  .layer-grid polygon { fill: none; opacity: .38; vector-effect: non-scaling-stroke; }
+  .layer-labels text { fill: #1A1714; opacity: .5; font-family: var(--mono); }
+  .layer-places circle { fill: #EDE4D1; stroke: #A33B26; stroke-width: 3; }
+  /* The plate engraves every place name already; a second set on top of it is
+     just noise. The ring says which hex, and the inspector says which town. */
+  .layer-places text { display: none; }
+  .route { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .route.rail { stroke: #1A1714; opacity: .75; }
+  .route.road { stroke: #8A561C; opacity: .6; }
+  .route.shipping { stroke: #3C5A6E; opacity: .6; }
+  .hex.sel { stroke: #A33B26 !important; opacity: 1 !important; stroke-width: 4px; }
+  .layer-legend .legend-title { font-family: Georgia, "Times New Roman", serif; }
+  .layer-legend .legend-item { font-family: Georgia, "Times New Roman", serif; }
+
+  .side { border-left: 1px solid var(--line); background: var(--bg-raised);
+          overflow-y: auto; padding: 14px 16px 40px; }
+  @media (max-width: 900px) { .side { border-left: none; border-top: 1px solid var(--line); max-height: 45vh; } }
+  .side h1 { font-size: 1.15rem; margin: 0 0 2px; }
+  .side .sub { color: var(--ink-soft); font-size: .8rem; margin: 0 0 14px; font-style: italic; }
+  .side h2 { font-size: .72rem; text-transform: uppercase; letter-spacing: .09em;
+             color: var(--ink-faint); margin: 18px 0 7px; }
+  .toggles { display: flex; flex-wrap: wrap; gap: 5px; }
+  .toggles button { font: inherit; font-size: .74rem; padding: 4px 9px; border-radius: 999px;
+                    border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink-soft); cursor: pointer; }
+  .toggles button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); border-color: var(--accent); }
+  .zoombar { display: flex; gap: 5px; align-items: center; margin-top: 8px; }
+  .zoombar button { font: inherit; width: 30px; height: 28px; border-radius: 7px;
+                    border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); cursor: pointer; }
+  .zoombar span { font-family: var(--mono); font-size: .74rem; color: var(--ink-soft); }
+
+  .keyrow { display: flex; align-items: center; gap: 8px; padding: 2px 0; font-size: .8rem; }
+  .keyrow i { width: 15px; height: 15px; border-radius: 3px; display: inline-block; flex: none;
+              border: 1px solid rgba(0,0,0,.22); }
+  .keyrow code { font-family: var(--mono); font-size: .72rem; color: var(--ink-faint); margin-left: auto; }
+
+  .info { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; background: var(--bg); }
+  .info .coord { font-family: var(--mono); font-size: .74rem; color: var(--ink-faint); }
+  .info .name { font-weight: 600; margin: 2px 0 4px; }
+  .info p { margin: 0 0 6px; font-size: .82rem; color: var(--ink-soft); }
+  .info dl { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; margin: 0; font-size: .78rem; }
+  .info dt { color: var(--ink-faint); }
+  .info dd { margin: 0; }
+  .back { display: inline-block; font-size: .78rem; color: var(--accent); text-decoration: none; margin-bottom: 10px; }
+  .back:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="maproot">
+  <div class="stage" id="stage">
+    <div class="stage-inner" id="inner">
+      <img id="plate" alt="The Korvane Reach" draggable="false">
+      <svg id="overlay" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"></svg>
+    </div>
+  </div>
+
+  <aside class="side">
+    <a class="back" href="../index.html">← explorer</a>
+    <h1 id="title">…</h1>
+    <p class="sub" id="subtitle"></p>
+
+    <h2>Layers</h2>
+    <div class="toggles" id="toggles"></div>
+    <div class="zoombar">
+      <button id="zoom-out" title="Zoom out">−</button>
+      <button id="zoom-in" title="Zoom in">+</button>
+      <button id="zoom-fit" title="Fit" style="width:auto;padding:0 9px">fit</button>
+      <span id="zoom-label"></span>
+    </div>
+
+    <h2>Hex</h2>
+    <div class="info" id="info"><p>Click a hex.</p></div>
+
+    <h2>Terrain</h2>
+    <div id="key"></div>
+
+    <h2>Print</h2>
+    <div id="print"></div>
+  </aside>
+</div>
+
+<script src="../data/bundle.js"></script>
+<script src="map.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = window.GAME_DATA;
+  var map = (D.maps || [])[0];
+  var palette = null;
+
+  /* The palette is a doc file rather than a dataset, so its colours are inlined
+     here from docs/art/palette.json. tools/validate-map.mjs is what checks that
+     every terrain in the legend has a colour there. */
+  palette = {
+    ink: { soot: { hex: '#1A1714' } },
+    terrain: {
+      grassland: { wash: '#B9C9A8' }, forest: { wash: '#7E9E84' }, hills: { wash: '#C3AE8A' },
+      mountain: { wash: '#9AA3A8' }, marsh: { wash: '#8E9478' }, tundra: { wash: '#D2D3CE' },
+      desert: { wash: '#DCC79C' }, 'river-bank': { wash: '#A8BCC0' }, 'lake-shore': { wash: '#9DB8C4' },
+      coast: { wash: '#8FAEBF' }, 'shallow-water': { wash: '#7BA0B5' }, 'deep-water': { wash: '#4E7189' },
+    },
+  };
+
+  var terrains = {};
+  (D.terrain.terrains || []).forEach(function (t) { terrains[t.id] = t; });
+
+  document.getElementById('title').textContent = map.name;
+  document.getElementById('subtitle').textContent = map.subtitle || '';
+  document.title = map.name + ' — game1';
+
+  var plate = document.getElementById('plate');
+  plate.src = map.plate.file;
+
+  var overlay = document.getElementById('overlay');
+  overlay.setAttribute('viewBox', '0 0 ' + map.plate.width + ' ' + map.plate.height);
+
+  var built = MapKit.buildOverlay(map, palette, { terrains: terrains });
+  var L = built.layout;
+  var order = ['wash', 'grid', 'routes', 'labels', 'places', 'legend'];
+  order.forEach(function (k) { overlay.appendChild(built.layers[k]); });
+
+  /* ------------------------------------------------------------- layers */
+
+  var state = { wash: true, grid: true, routes: true, labels: false, places: true, legend: true };
+  var LABELS = { wash: 'terrain', grid: 'grid', routes: 'routes', labels: 'coords', places: 'places', legend: 'key' };
+  var toggles = document.getElementById('toggles');
+  Object.keys(state).forEach(function (key) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = LABELS[key];
+    b.setAttribute('aria-pressed', String(state[key]));
+    b.onclick = function () {
+      state[key] = !state[key];
+      b.setAttribute('aria-pressed', String(state[key]));
+      built.layers[key].style.display = state[key] ? '' : 'none';
+    };
+    toggles.appendChild(b);
+  });
+  built.layers.labels.style.display = 'none';
+
+  /* -------------------------------------------------------- pan and zoom */
+
+  var stage = document.getElementById('stage');
+  var inner = document.getElementById('inner');
+  var view = { scale: 1, x: 0, y: 0, base: 1 };
+
+  function apply() {
+    inner.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.scale + ')';
+    document.getElementById('zoom-label').textContent = Math.round(view.scale * 100) + '%';
+  }
+  function fit() {
+    var r = stage.getBoundingClientRect();
+    view.base = r.width / map.plate.width;
+    inner.style.width = map.plate.width + 'px';
+    inner.style.height = map.plate.height + 'px';
+    view.scale = Math.min(r.width / map.plate.width, r.height / map.plate.height);
+    view.x = (r.width - map.plate.width * view.scale) / 2;
+    view.y = (r.height - map.plate.height * view.scale) / 2;
+    apply();
+  }
+  function zoomAt(factor, cx, cy) {
+    var next = Math.min(12, Math.max(0.05, view.scale * factor));
+    var k = next / view.scale;
+    view.x = cx - (cx - view.x) * k;
+    view.y = cy - (cy - view.y) * k;
+    view.scale = next;
+    apply();
+  }
+
+  stage.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    var r = stage.getBoundingClientRect();
+    zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top);
+  }, { passive: false });
+
+  var drag = null;
+  stage.addEventListener('pointerdown', function (e) {
+    drag = { x: e.clientX, y: e.clientY, ox: view.x, oy: view.y, moved: false };
+    stage.setPointerCapture(e.pointerId);
+    stage.classList.add('dragging');
+  });
+  stage.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x;
+    var dy = e.clientY - drag.y;
+    if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
+    view.x = drag.ox + dx;
+    view.y = drag.oy + dy;
+    apply();
+  });
+  stage.addEventListener('pointerup', function (e) {
+    var wasDrag = drag && drag.moved;
+    drag = null;
+    stage.classList.remove('dragging');
+    if (wasDrag) return;
+    var r = stage.getBoundingClientRect();
+    select(
+      ((e.clientX - r.left) - view.x) / view.scale,
+      ((e.clientY - r.top) - view.y) / view.scale
+    );
+  });
+
+  document.getElementById('zoom-in').onclick = function () {
+    var r = stage.getBoundingClientRect();
+    zoomAt(1.35, r.width / 2, r.height / 2);
+  };
+  document.getElementById('zoom-out').onclick = function () {
+    var r = stage.getBoundingClientRect();
+    zoomAt(1 / 1.35, r.width / 2, r.height / 2);
+  };
+  document.getElementById('zoom-fit').onclick = fit;
+  window.addEventListener('resize', fit);
+
+  /* ------------------------------------------------------------ inspector */
+
+  var selected = null;
+  var placeAt = {};
+  (map.settlements || []).forEach(function (s) { placeAt[s.col + ',' + s.row] = s; });
+  var regionAt = {};
+  (map.regions || []).forEach(function (rg) { if (rg.labelAt) regionAt[rg.labelAt.join(',')] = rg; });
+
+  function select(px, py) {
+    var hex = L.at(px, py);
+    var info = document.getElementById('info');
+    if (selected) selected.classList.remove('sel');
+    if (!hex) { info.innerHTML = '<p>Click a hex.</p>'; return; }
+
+    var node = built.layers.grid.querySelector('polygon[data-col="' + hex.col + '"][data-row="' + hex.row + '"]');
+    if (node) { node.classList.add('sel'); selected = node; }
+
+    var id = MapKit.terrainAt(map, hex.col, hex.row);
+    var t = terrains[id] || {};
+    var place = placeAt[hex.col + ',' + hex.row];
+    var html = '<div class="coord">col ' + hex.col + ', row ' + hex.row + '</div>';
+    if (place) html += '<div class="name">' + place.name + ' <span class="coord">' + place.rank + (place.harbour ? ', harbour' : '') + '</span></div>';
+    html += '<div class="name">' + (t.name || id) + '</div>';
+    if (t.summary) html += '<p>' + t.summary + '</p>';
+    html += '<dl>';
+    html += '<dt>move</dt><dd>' + t.moveCost + '</dd>';
+    html += '<dt>road ×</dt><dd>' + t.roadCostMultiplier + '</dd>';
+    html += '<dt>rail ×</dt><dd>' + t.railCostMultiplier + '</dd>';
+    html += '<dt>build</dt><dd>' + (t.buildable ? 'yes' : 'no') + '</dd>';
+    if (t.features && t.features.length) html += '<dt>features</dt><dd>' + t.features.join(', ') + '</dd>';
+    if (t.deposits && t.deposits.length) html += '<dt>deposits</dt><dd>' + t.deposits.join(', ') + '</dd>';
+    html += '</dl>';
+    info.innerHTML = html;
+  }
+
+  /* ----------------------------------------------------------------- key */
+
+  var tally = {};
+  map.rows.forEach(function (line) {
+    for (var i = 0; i < line.length; i++) {
+      var id = map.legend[line[i]];
+      tally[id] = (tally[id] || 0) + 1;
+    }
+  });
+  var key = document.getElementById('key');
+  Object.keys(map.legend).filter(function (c) { return c.charAt(0) !== '$'; }).forEach(function (ch) {
+    var id = map.legend[ch];
+    var row = document.createElement('div');
+    row.className = 'keyrow';
+    row.innerHTML =
+      '<i style="background:' + palette.terrain[id].wash + '"></i>' +
+      '<span>' + ((terrains[id] || {}).name || id) + '</span>' +
+      '<code>' + ch + ' · ' + (tally[id] || 0) + '</code>';
+    key.appendChild(row);
+  });
+
+  var printBox = document.getElementById('print');
+  (map.print.presets || []).forEach(function (p) {
+    var a = document.createElement('div');
+    a.className = 'keyrow';
+    a.innerHTML =
+      '<a href="print.html?preset=' + p.id + '" style="color:var(--accent)">' + p.name + '</a>' +
+      '<code>' + p.mapWidthMm + '×' + p.mapHeightMm + 'mm · ' + p.hexAcrossFlatsMm + 'mm hex</code>';
+    printBox.appendChild(a);
+  });
+
+  if (plate.complete) fit(); else plate.onload = fit;
+  fit();
+})();
+</script>
+</body>
+</html>

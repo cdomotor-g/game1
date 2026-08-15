@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Print the map — game1</title>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+  /* Screen: a control bar and a stack of sheet previews.
+     Print: one sheet per page, at true size, and nothing else. */
+
+  .bar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px 18px;
+         align-items: center; padding: 11px 18px; background: var(--bg-raised);
+         border-bottom: 1px solid var(--line); }
+  .bar h1 { font-size: .95rem; margin: 0; }
+  .bar .spacer { flex: 1; }
+  .bar label { font-size: .78rem; color: var(--ink-soft); display: flex; gap: 5px; align-items: center; }
+  .bar select, .bar button { font: inherit; font-size: .8rem; padding: 4px 9px; border-radius: 7px;
+                             border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+  .bar button { cursor: pointer; }
+  .bar button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .bar a { color: var(--accent); font-size: .78rem; }
+
+  .note { max-width: 62ch; margin: 18px auto 8px; padding: 0 18px; color: var(--ink-soft); font-size: .85rem; }
+  .note strong { color: var(--ink); }
+
+  .sheets { padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+
+  .sheet { position: relative; background: #fff; box-shadow: var(--shadow); overflow: hidden;
+           color: #1A1714; }
+  .win { position: absolute; overflow: hidden; }
+  .win .plate { position: absolute; top: 0; left: 0; }
+  .win .plate img { display: block; width: 100%; height: auto; }
+  .win .plate svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .layer-wash polygon { opacity: .3; }
+  .layer-grid polygon { fill: none; opacity: .45; }
+  .layer-labels text { fill: #1A1714; opacity: .5; font-family: var(--mono); }
+  .layer-places circle { fill: none; stroke: #A33B26; stroke-width: 2; }
+  .layer-places text { display: none; }
+  .route { fill: none; }
+  .route.rail { stroke: #1A1714; opacity: .8; }
+  .route.road { stroke: #8A561C; opacity: .6; }
+  .route.shipping { stroke: #3C5A6E; opacity: .55; }
+  .layer-legend .legend-title, .layer-legend .legend-item { font-family: Georgia, "Times New Roman", serif; }
+
+  /* Trim marks sit exactly on the window corners. Cut on them and the sheets butt. */
+  .mark { position: absolute; background: #1A1714; }
+  .stamp { position: absolute; font: 600 9px/1.2 var(--mono, monospace); color: #555;
+           letter-spacing: .05em; }
+
+  @media print {
+    .bar, .note { display: none !important; }
+    .sheets { padding: 0; gap: 0; display: block; }
+    .sheet { box-shadow: none; break-after: page; page-break-after: always; margin: 0; }
+    .sheet:last-child { break-after: auto; page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <h1 id="maptitle">…</h1>
+  <label>layout
+    <select id="preset"></select>
+  </label>
+  <label><input type="checkbox" id="opt-grid" checked> grid</label>
+  <label><input type="checkbox" id="opt-labels" checked> coords</label>
+  <label><input type="checkbox" id="opt-wash"> terrain</label>
+  <label><input type="checkbox" id="opt-routes"> routes</label>
+  <span class="spacer"></span>
+  <a href="index.html">← map</a>
+  <button class="primary" onclick="window.print()">Print</button>
+</div>
+
+<p class="note" id="note"></p>
+<div class="sheets" id="sheets"></div>
+
+<script src="../data/bundle.js"></script>
+<script src="map.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = window.GAME_DATA;
+  var map = (D.maps || [])[0];
+
+  var palette = {
+    ink: { soot: { hex: '#1A1714' } },
+    terrain: {
+      grassland: { wash: '#B9C9A8' }, forest: { wash: '#7E9E84' }, hills: { wash: '#C3AE8A' },
+      mountain: { wash: '#9AA3A8' }, marsh: { wash: '#8E9478' }, tundra: { wash: '#D2D3CE' },
+      desert: { wash: '#DCC79C' }, 'river-bank': { wash: '#A8BCC0' }, 'lake-shore': { wash: '#9DB8C4' },
+      coast: { wash: '#8FAEBF' }, 'shallow-water': { wash: '#7BA0B5' }, 'deep-water': { wash: '#4E7189' },
+    },
+  };
+
+  var SHEETS = { A4: [210, 297], A3: [297, 420], A5: [148, 210] };
+
+  var terrains = {};
+  (D.terrain.terrains || []).forEach(function (t) { terrains[t.id] = t; });
+
+  document.getElementById('maptitle').textContent = map.name;
+
+  var select = document.getElementById('preset');
+  map.print.presets.forEach(function (p) {
+    var o = document.createElement('option');
+    o.value = p.id;
+    o.textContent = p.name + ' — ' + p.mapWidthMm + '×' + p.mapHeightMm + 'mm';
+    select.appendChild(o);
+  });
+  var wanted = new URLSearchParams(location.search).get('preset') || map.print.default;
+  select.value = map.print.presets.some(function (p) { return p.id === wanted; }) ? wanted : map.print.presets[0].id;
+
+  ['preset', 'opt-grid', 'opt-labels', 'opt-wash', 'opt-routes'].forEach(function (id) {
+    document.getElementById(id).addEventListener('change', render);
+  });
+
+  function render() {
+    var preset = map.print.presets.filter(function (p) { return p.id === select.value; })[0];
+    var size = SHEETS[preset.sheet] || SHEETS.A4;
+    var sheetW = preset.orientation === 'landscape' ? size[1] : size[0];
+    var sheetH = preset.orientation === 'landscape' ? size[0] : size[1];
+
+    /* The window each sheet shows, in millimetres of finished map. */
+    var winW = preset.mapWidthMm / preset.sheetCols;
+    var winH = preset.mapHeightMm / preset.sheetRows;
+
+    var sheetCount = preset.sheetCols * preset.sheetRows;
+    document.getElementById('note').innerHTML =
+      '<strong>' + sheetCount + ' sheets of ' + preset.sheet + ', ' + preset.orientation + ', ' +
+      preset.sheetCols + ' across by ' + preset.sheetRows + ' down.</strong> ' +
+      'Print at 100% — no “fit to page”, no scaling — then trim every sheet along its four corner ' +
+      'marks and butt the pieces edge to edge. Finished size ' + preset.mapWidthMm + ' × ' +
+      preset.mapHeightMm + ' mm, hexes ' + preset.hexAcrossFlatsMm + ' mm across the flats. ' +
+      'Each sheet is stamped with its own row and column in the bottom margin.';
+
+    /* Build the overlay once, then clone it into each sheet. */
+    /* Coordinates are set small for print: they are a reference you look up, not
+       something that should compete with the drawing. */
+    var built = MapKit.buildOverlay(map, palette, { labelScale: 0.3, terrains: terrains });
+    var wantGrid = document.getElementById('opt-grid').checked;
+    var wantLabels = document.getElementById('opt-labels').checked;
+    var wantWash = document.getElementById('opt-wash').checked;
+    var wantRoutes = document.getElementById('opt-routes').checked;
+
+    var host = document.getElementById('sheets');
+    host.innerHTML = '';
+
+    var style = document.createElement('style');
+    style.textContent = '@page { size: ' + sheetW + 'mm ' + sheetH + 'mm; margin: 0; }';
+    var old = document.getElementById('pagesize');
+    if (old) old.remove();
+    style.id = 'pagesize';
+    document.head.appendChild(style);
+
+    for (var r = 0; r < preset.sheetRows; r++) {
+      for (var c = 0; c < preset.sheetCols; c++) {
+        var sheet = document.createElement('div');
+        sheet.className = 'sheet';
+        sheet.style.width = sheetW + 'mm';
+        sheet.style.height = sheetH + 'mm';
+
+        var win = document.createElement('div');
+        win.className = 'win';
+        win.style.left = preset.marginMm + 'mm';
+        win.style.top = preset.marginMm + 'mm';
+        win.style.width = winW + 'mm';
+        win.style.height = winH + 'mm';
+
+        var plate = document.createElement('div');
+        plate.className = 'plate';
+        plate.style.width = preset.mapWidthMm + 'mm';
+        plate.style.height = preset.mapHeightMm + 'mm';
+        plate.style.left = '-' + (c * winW) + 'mm';
+        plate.style.top = '-' + (r * winH) + 'mm';
+
+        var img = document.createElement('img');
+        img.src = map.plate.file;
+        img.alt = '';
+        plate.appendChild(img);
+
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 ' + map.plate.width + ' ' + map.plate.height);
+        svg.setAttribute('preserveAspectRatio', 'none');
+        if (wantWash) svg.appendChild(built.layers.wash.cloneNode(true));
+        if (wantGrid) svg.appendChild(built.layers.grid.cloneNode(true));
+        if (wantRoutes) svg.appendChild(built.layers.routes.cloneNode(true));
+        if (wantLabels) svg.appendChild(built.layers.labels.cloneNode(true));
+        /* The replacement key always prints: the plate's own names four terrains
+           this game does not have. */
+        if (built.layers.legend) svg.appendChild(built.layers.legend.cloneNode(true));
+        plate.appendChild(svg);
+
+        win.appendChild(plate);
+        sheet.appendChild(win);
+
+        /* Corner marks: two short rules meeting at each window corner, drawn out
+           into the margin so the blade never crosses the map. */
+        var m = preset.marginMm;
+        var len = Math.min(6, m - 1);
+        [[m, m, -1, -1], [m + winW, m, 1, -1], [m, m + winH, -1, 1], [m + winW, m + winH, 1, 1]]
+          .forEach(function (corner) {
+            var x = corner[0], y = corner[1], sx = corner[2], sy = corner[3];
+            var h = document.createElement('div');
+            h.className = 'mark';
+            h.style.left = (sx < 0 ? x - len : x) + 'mm';
+            h.style.top = y + 'mm';
+            h.style.width = len + 'mm';
+            h.style.height = '0.25mm';
+            sheet.appendChild(h);
+            var v = document.createElement('div');
+            v.className = 'mark';
+            v.style.left = x + 'mm';
+            v.style.top = (sy < 0 ? y - len : y) + 'mm';
+            v.style.width = '0.25mm';
+            v.style.height = len + 'mm';
+            sheet.appendChild(v);
+          });
+
+        var stamp = document.createElement('div');
+        stamp.className = 'stamp';
+        stamp.style.left = m + 'mm';
+        stamp.style.top = (m + winH + 3) + 'mm';
+        stamp.textContent =
+          map.name.toUpperCase() + '  ·  SHEET ' + String.fromCharCode(65 + r) + (c + 1) +
+          ' OF ' + sheetCount + '  ·  ROW ' + (r + 1) + ' OF ' + preset.sheetRows +
+          ', COLUMN ' + (c + 1) + ' OF ' + preset.sheetCols +
+          '  ·  ' + preset.mapWidthMm + '×' + preset.mapHeightMm + 'MM AT 100%';
+        sheet.appendChild(stamp);
+
+        host.appendChild(sheet);
+      }
+    }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
