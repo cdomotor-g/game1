@@ -1,63 +1,112 @@
 /* game1 explorer — no framework, no build step, no external requests. */
 
+/* The palette, stated verbatim from docs/art/palette.json. Nothing below this
+   block invents a colour: every theme token is one of these hexes, or a mix of
+   two of them. Keep this list in step with the JSON — it is the source of truth
+   and this is only a transcription of it. */
 :root {
-  --bg: #f6f4ef;
-  --bg-raised: #fffdf9;
-  --bg-sunken: #ece8e0;
-  --ink: #22201c;
-  --ink-soft: #6b6559;
-  --ink-faint: #97907f;
-  --line: #ddd7cb;
-  --line-strong: #c3bbab;
-  --accent: #7a5c2e;
-  --accent-soft: #efe4cf;
-  --good: #3f7a45;
-  --warn: #9a6b1c;
-  --bad: #9c3b31;
-  --radius: 10px;
-  --shadow: 0 1px 2px rgba(30, 24, 12, .06), 0 8px 24px rgba(30, 24, 12, .06);
-  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --p-tallow: #EDE4D1;          /* paper.tallow  — the ground */
+  --p-foxing: #D9CBAF;          /* paper.foxing  — aged paper, stains, recesses */
+  --p-soot: #1A1714;            /* ink.soot      — the one ink colour */
+  --p-t85: #3D3630;             /* ink.tints.85 */
+  --p-t70: #5F564C;             /* ink.tints.70 */
+  --p-t40: #A0968A;             /* ink.tints.40 */
+  --p-t25: #C0B7A9;             /* ink.tints.25 */
+  --p-ochre: #C4882B;           /* inks.ochre           — also semantic.warn */
+  --p-ochre-shade: #8A561C;     /* ochre shaded 30      — categories.drink */
+  --p-ochre-t35: #DCC79C;       /* ochre tint 35        — terrain.desert */
+  --p-oxide: #A33B26;           /* inks.oxide           — also semantic.bad */
+  --p-oxide-shade: #8A3222;     /* categories.material */
+  --p-verdigris: #4C7A61;       /* inks.verdigris       — also semantic.good */
+  --p-verdigris-shade: #35594A; /* categories.livestock */
 }
 
-:root[data-theme="dark"], :root:not([data-theme="light"]) {
+/* Light: paper is tallow, ink is soot.
+
+   Two places where the mapping in docs/art/02-palette.md needs a decision the
+   table does not make:
+
+   --bg-raised is tallow, the same stock as the page, because the palette permits
+   white only for reversed type and the high-contrast mode — so there is no paper
+   lighter than the ground to raise a card onto. A card is separated by its rule
+   and its shadow instead, which is what a card is on real paper anyway.
+
+   --good/--warn/--bad are the semantic washes exactly as declared, but they are
+   washes, not type: ochre measures 2.41:1 on tallow and is unreadable as text.
+   Semantic *text* therefore uses the darker declared member of the same ink —
+   the -text tokens — while the wash itself stays on marks, rules and fills. */
+:root {
+  --bg: var(--p-tallow);
+  --bg-raised: var(--p-tallow);
+  --bg-sunken: var(--p-foxing);
+  --ink: var(--p-soot);
+  --ink-soft: var(--p-t85);
+  --ink-faint: var(--p-t70);
+  --line: var(--p-t25);
+  --line-strong: var(--p-t40);
+  --accent: var(--p-ochre-shade);
+  --accent-soft: var(--p-ochre-t35);
+  --good: var(--p-verdigris);
+  --warn: var(--p-ochre);
+  --bad: var(--p-oxide);
+  --good-text: var(--p-verdigris-shade);
+  --warn-text: var(--p-ochre-shade);
+  --bad-text: var(--p-oxide-shade);
+  --scrim: color-mix(in srgb, var(--p-soot) 38%, transparent);
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(26, 23, 20, .06), 0 8px 24px rgba(26, 23, 20, .06);
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color-scheme: light;
 }
 
+/* Dark is the one place the system inverts rather than extends: paper becomes
+   soot, ink becomes tallow, and the five inks lighten to hold contrast against
+   it. It is a screen mode with no print equivalent, so it is not bound by the
+   two-plate laws — but it still carries the marks. Every value is a mix of two
+   declared colours, so the inversion cannot drift off-palette. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #17161a;
-    --bg-raised: #1f1e23;
-    --bg-sunken: #121114;
-    --ink: #eae7e0;
-    --ink-soft: #a29c92;
-    --ink-faint: #736d64;
-    --line: #302e35;
-    --line-strong: #45424b;
-    --accent: #d3ae6e;
-    --accent-soft: #332c1e;
-    --good: #74b479;
-    --warn: #d3a34f;
-    --bad: #d9736a;
+    --bg: var(--p-soot);
+    --bg-raised: color-mix(in srgb, var(--p-soot) 90%, var(--p-tallow));
+    --bg-sunken: color-mix(in srgb, var(--p-soot) 96%, #000);
+    --ink: var(--p-tallow);
+    --ink-soft: color-mix(in srgb, var(--p-tallow) 74%, var(--p-soot));
+    --ink-faint: color-mix(in srgb, var(--p-tallow) 54%, var(--p-soot));
+    --line: color-mix(in srgb, var(--p-tallow) 16%, var(--p-soot));
+    --line-strong: color-mix(in srgb, var(--p-tallow) 30%, var(--p-soot));
+    --accent: color-mix(in srgb, var(--p-ochre) 82%, var(--p-tallow));
+    --accent-soft: color-mix(in srgb, var(--p-ochre) 20%, var(--p-soot));
+    --good: color-mix(in srgb, var(--p-verdigris) 60%, var(--p-tallow));
+    --warn: color-mix(in srgb, var(--p-ochre) 84%, var(--p-tallow));
+    --bad: color-mix(in srgb, var(--p-oxide) 52%, var(--p-tallow));
+    --good-text: var(--good);
+    --warn-text: var(--warn);
+    --bad-text: var(--bad);
+    --scrim: color-mix(in srgb, #000 58%, transparent);
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #17161a;
-  --bg-raised: #1f1e23;
-  --bg-sunken: #121114;
-  --ink: #eae7e0;
-  --ink-soft: #a29c92;
-  --ink-faint: #736d64;
-  --line: #302e35;
-  --line-strong: #45424b;
-  --accent: #d3ae6e;
-  --accent-soft: #332c1e;
-  --good: #74b479;
-  --warn: #d3a34f;
-  --bad: #d9736a;
+  --bg: var(--p-soot);
+  --bg-raised: color-mix(in srgb, var(--p-soot) 90%, var(--p-tallow));
+  --bg-sunken: color-mix(in srgb, var(--p-soot) 96%, #000);
+  --ink: var(--p-tallow);
+  --ink-soft: color-mix(in srgb, var(--p-tallow) 74%, var(--p-soot));
+  --ink-faint: color-mix(in srgb, var(--p-tallow) 54%, var(--p-soot));
+  --line: color-mix(in srgb, var(--p-tallow) 16%, var(--p-soot));
+  --line-strong: color-mix(in srgb, var(--p-tallow) 30%, var(--p-soot));
+  --accent: color-mix(in srgb, var(--p-ochre) 82%, var(--p-tallow));
+  --accent-soft: color-mix(in srgb, var(--p-ochre) 20%, var(--p-soot));
+  --good: color-mix(in srgb, var(--p-verdigris) 60%, var(--p-tallow));
+  --warn: color-mix(in srgb, var(--p-ochre) 84%, var(--p-tallow));
+  --bad: color-mix(in srgb, var(--p-oxide) 52%, var(--p-tallow));
+  --good-text: var(--good);
+  --warn-text: var(--warn);
+  --bad-text: var(--bad);
+  --scrim: color-mix(in srgb, #000 58%, transparent);
   --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
   color-scheme: dark;
 }
@@ -116,7 +165,7 @@ code { font-family: var(--mono); font-size: .9em; }
 
 .nav-scrim {
   position: fixed; inset: 0; z-index: 55;
-  background: rgba(20, 16, 10, .34);
+  background: var(--scrim);
   opacity: 0; visibility: hidden;
   transition: opacity .18s ease, visibility 0s linear .18s;
 }
@@ -212,10 +261,57 @@ input:focus-visible, select:focus-visible, button:focus-visible {
   white-space: nowrap;
 }
 .pill.accent { background: var(--accent-soft); color: var(--ink); border-color: var(--line-strong); }
-.pill.good { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, var(--line)); }
-.pill.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
-.pill.bad  { color: var(--bad);  border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
+.pill.good { color: var(--good-text); border-color: color-mix(in srgb, var(--good) 40%, var(--line)); }
+.pill.warn { color: var(--warn-text); border-color: color-mix(in srgb, var(--warn) 40%, var(--line)); }
+.pill.bad  { color: var(--bad-text);  border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
 .pill.mono { font-family: var(--mono); }
+
+/* ---------- semantic marks ---------- */
+
+/* palette.json, semantic.*: "Each is paired with a mandatory ink-plate mark,
+   because roughly one player in twelve cannot use the colour." The same rule is
+   carried over to the screen unchanged — a log line that is only green is a log
+   line one player in twelve cannot read — so the notch is attached here to the
+   semantic classes themselves rather than to a marked-up glyph. Nothing can
+   render a semantic state without also rendering its mark.
+
+   The shapes are the three declared marks: notch-up for good, notch-flat for
+   warn, notch-down for bad. They are drawn with clip-path rather than a glyph so
+   they carry no text for a screen reader to announce, and take their size from
+   the type they sit against. */
+.pill.good::before, .pill.warn::before, .pill.bad::before,
+.log-line.good::before, .log-line.bad::before,
+.stat-value.good::before, .stat-value.bad::before, .stat.alert .stat-value::before,
+.job-why::before, .hint.bad::before, .stock-item.low::before,
+.status.bad::before, .said.bad::before {
+  content: "";
+  display: inline-block;
+  flex: none;
+  width: .6em; height: .6em;
+  margin-right: .38em;
+  background: var(--notch);
+  clip-path: var(--notch-shape);
+}
+
+.pill.good, .log-line.good, .stat-value.good {
+  --notch: var(--good);
+  --notch-shape: polygon(50% 0%, 100% 100%, 0% 100%);          /* notch-up */
+}
+.pill.warn {
+  --notch: var(--warn);
+  --notch-shape: polygon(0% 30%, 100% 30%, 100% 70%, 0% 70%);  /* notch-flat */
+}
+.pill.bad, .log-line.bad, .stat-value.bad, .stat.alert .stat-value,
+.job-why, .hint.bad, .stock-item.low, .status.bad, .said.bad {
+  --notch: var(--bad);
+  --notch-shape: polygon(0% 0%, 100% 0%, 50% 100%);            /* notch-down */
+}
+
+/* The readable member of each ink, for semantic text. Anything that states a
+   semantic in words belongs here rather than in an inline style, so that it
+   cannot pick up the colour without also picking up the mark. */
+.stat-value.good { color: var(--good-text); }
+.stat-value.bad, .hint.bad { color: var(--bad-text); }
 
 .panel {
   background: var(--bg-raised); border: 1px solid var(--line);
@@ -266,7 +362,7 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
 
 .drawer {
   position: fixed; inset: 0; z-index: 50;
-  background: rgba(20, 16, 10, .34);
+  background: var(--scrim);
   display: flex; justify-content: flex-end;
 }
 .drawer[hidden] { display: none; }
@@ -312,7 +408,7 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
 }
 .stat .stat-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-faint); }
 .stat .stat-value { font-family: var(--mono); font-size: 19px; font-weight: 600; }
-.stat.alert .stat-value { color: var(--bad); }
+.stat.alert .stat-value { color: var(--bad-text); }
 
 .btn {
   appearance: none; cursor: pointer; font: inherit; font-size: 13.5px;
@@ -321,9 +417,10 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
 }
 .btn:hover:not(:disabled) { border-color: var(--accent); }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
+/* Reversed type on the accent. This needs no per-theme override any more: the
+   accent and the raised paper invert together, so the knock-out stays legible
+   whichever way round the theme is. */
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg-raised); font-weight: 600; }
-:root[data-theme="dark"] .btn.primary { color: #1a1712; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #1a1712; } }
 .btn.small { padding: 3px 9px; font-size: 12.5px; border-radius: 6px; }
 
 .dice { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 2px; }
@@ -344,25 +441,40 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
 .job.blocked { opacity: .55; }
 .job-main { min-width: 0; }
 .job-title { font-weight: 600; font-size: 13.5px; }
-.job-why { font-size: 12px; color: var(--bad); }
+.job-why { font-size: 12px; color: var(--bad-text); }
 
 .stock { display: flex; flex-wrap: wrap; gap: 5px; }
 .stock-item {
   font-size: 12.5px; padding: 2px 8px; border-radius: 6px;
   background: var(--bg-sunken); border: 1px solid var(--line); font-family: var(--mono);
 }
-.stock-item.low { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); }
+.stock-item.low { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); color: var(--bad-text); }
 
 .bar { height: 7px; border-radius: 4px; background: var(--bg-sunken); overflow: hidden; border: 1px solid var(--line); }
 .bar > span { display: block; height: 100%; background: var(--accent); }
+
+/* A bar has no room for a notch, so the three wear states are separated by hatch
+   as well as by colour — the same trick the ink plate uses, and for the same
+   reason. These are hard-stop repeats, i.e. ruled lines, not the soft shading
+   rules.noGradients forbids: fresh is a flat fill, worn is hatched diagonal, and
+   spent is hatched diagonal-sinister at half the spacing. Printed greyscale or
+   read by someone who cannot use the colour, the three still separate. */
 .bar.wear > span { background: var(--good); }
-.bar.wear.mid > span { background: var(--warn); }
-.bar.wear.low > span { background: var(--bad); }
+.bar.wear.mid > span {
+  background-color: var(--warn);
+  background-image: repeating-linear-gradient(45deg,
+    color-mix(in srgb, var(--p-soot) 50%, transparent) 0 1px, transparent 1px 4px);
+}
+.bar.wear.low > span {
+  background-color: var(--bad);
+  background-image: repeating-linear-gradient(-45deg,
+    color-mix(in srgb, var(--p-soot) 50%, transparent) 0 1px, transparent 1px 3px);
+}
 
 .log { font-family: var(--mono); font-size: 12px; max-height: 320px; overflow-y: auto; display: flex; flex-direction: column-reverse; gap: 3px; }
 .log-line { padding: 2px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); }
-.log-line.good { color: var(--good); }
-.log-line.bad { color: var(--bad); }
+.log-line.good { color: var(--good-text); }
+.log-line.bad { color: var(--bad-text); }
 .log-line.head { color: var(--ink); font-weight: 700; }
 
 .footer {

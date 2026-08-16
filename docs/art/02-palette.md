@@ -187,9 +187,10 @@ fantasy art.
 
 ## The digital build
 
-`docs/css/app.css` currently uses a warm neutral scheme that is already close in spirit.
-Aligning it to this palette is a small, contained change and an obvious follow-up — the
-custom properties map almost one to one:
+`docs/css/app.css` is aligned to this palette. It opens by transcribing the colours it
+uses out of `palette.json` into `--p-*` custom properties, and every theme token below
+that is one of them or a mix of two of them, so the stylesheet cannot drift off-palette
+without the transcription block being edited first:
 
 | CSS variable | Palette value |
 |---|---|
@@ -200,13 +201,39 @@ custom properties map almost one to one:
 | `--warn` | `semantic.warn` `#C4882B` |
 | `--bad` | `semantic.bad` `#A33B26` |
 
+The mapping needed two decisions this table does not make.
+
+**There is no paper to raise a card onto.** White is permitted only for reversed type and
+the high-contrast mode, so there is nothing lighter than tallow to lift a card above the
+page. `--bg-raised` is therefore tallow as well — the same stock as the page — and a card
+is separated by its rule and its shadow instead, which is what a card is on real paper.
+Recesses go the other way, to `paper.foxing`.
+
+**The semantic washes are washes, not type.** Ochre measures 2.41:1 on tallow and is
+illegible as text. The three tokens hold the declared wash and are used for marks, rules
+and fills; semantic *text* uses `--good-text` / `--warn-text` / `--bad-text`, which are the
+darker declared member of the same ink — `categories.livestock`, ochre shaded, and
+`categories.material`. Every semantic surface then measures between 4.85:1 and 6.49:1 in
+light and between 4.95:1 and 5.34:1 in dark.
+
 Two rules carry over to the screen unchanged:
 
 - **Semantic colour always pairs with a mark.** `good`, `warn` and `bad` each carry a
   notch glyph in `palette.json`. A log line that is only green is a log line one player in
-  twelve cannot read.
+  twelve cannot read. The notch is attached in CSS to the semantic classes themselves —
+  `.pill.good`, `.log-line.bad`, `.stat-value.good` and the rest — rather than to a glyph
+  someone has to remember to mark up, so nothing can render a semantic state without also
+  rendering its mark. It is drawn with `clip-path` rather than as a character, so it
+  carries no text for a screen reader to announce. The corollary is that a semantic must
+  never be applied as an inline `style="color:var(--bad)"`: that takes the colour and
+  skips the mark, which is the one thing this rule exists to prevent.
 - **Category colour never carries category.** The explorer must label a category, not
   merely tint it.
+
+A bar has no room for a notch, so the sandbox's tool-wear bar separates its three states
+by hatch instead: fresh is a flat fill, worn is ruled diagonal, and spent is ruled
+diagonal-sinister at half the spacing. Those are hard-stop repeats — ruled lines, the same
+device the ink plate uses — and not the soft shading `rules.noGradients` forbids.
 
 The dark theme is the one place the system inverts rather than extends: paper becomes
 soot, ink becomes tallow, and the five inks lighten to hold contrast. It is a screen mode

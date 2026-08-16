@@ -26,14 +26,14 @@
   .printbar button { cursor: pointer; }
   .printbar button:hover:not(:disabled) { border-color: var(--accent); }
   .printbar button:disabled { opacity: .5; cursor: progress; }
-  .printbar button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .printbar button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg-raised); font-weight: 600; }
   .printbar a { color: var(--accent); font-size: .78rem; }
 
   .note { max-width: 62ch; margin: 18px auto 8px; padding: 0 18px; color: var(--ink-soft); font-size: .85rem; }
   .note p { margin: 0; }
   .note strong { color: var(--ink); }
   .note .said { display: block; margin-top: 6px; color: var(--ink-faint); font-size: .8rem; min-height: 1.1em; }
-  .note .said.bad { color: var(--bad); }
+  .note .said.bad { color: var(--bad-text); }   /* the notch comes from app.css */
 
   /* A sheet is a fixed number of millimetres wide — 297 of them, 1123 px, for
      anything landscape — and that is wider than a laptop window. Centring the

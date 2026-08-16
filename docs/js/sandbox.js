@@ -293,10 +293,10 @@
       el('div.panel', [
         el('h3', 'Feeding', el('span.count', 'end of round')),
         el('div', { style: 'display:flex;gap:8px;align-items:baseline' }, [
-          el('span.stat-value', { style: `color:${foodHeld >= foodNeed ? 'var(--good)' : 'var(--bad)'}` }, `${foodHeld}`),
+          el('span.stat-value' + (foodHeld >= foodNeed ? '.good' : '.bad'), `${foodHeld}`),
           el('span.hint', `of ${foodNeed} needed`),
         ]),
-        foodHeld < foodNeed ? el('p.hint', { style: 'color:var(--bad)' }, `${foodNeed - foodHeld} short — that is ${foodNeed - foodHeld} unrest.`) : null,
+        foodHeld < foodNeed ? el('p.hint.bad', `${foodNeed - foodHeld} short — that is ${foodNeed - foodHeld} unrest.`) : null,
       ]),
       el('div.panel', [
         el('h3', 'Stockpile', el('span.count', `${Math.round(Engine.usedSlots(s))}/${Engine.capacity(s)} slots`)),
