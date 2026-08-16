@@ -6,6 +6,14 @@ A settlement-and-economy game where you turn worker-hours into buildings, buildi
 into production chains, and production chains into food, wealth and the ability to
 survive whatever the event deck does to you next.
 
+Around that economic core an **open world** has grown: a drawn continent to travel
+by day and night, discovery rolls that fill the map in as it is walked, monsters to
+slay or befriend, mana and talismans, quests you may accept or decline, and named
+vehicles and characters. The register it aims for is a tabletop cross of a
+city-builder, a trading-tycoon game and an open-world adventure — the economy is
+the progression system, and the adventure layer is a new set of ways to spend hours
+and new things the hours can buy. See [13-adventure.md](13-adventure.md).
+
 It is designed as a **board game first**, with a **digital twin** built from the same
 data. Neither is a port of the other: they read the same `data/*.json` files, so a
 change to a recipe changes the printed reference sheet and the web prototype at once.
@@ -75,6 +83,8 @@ printed — see [12-what-simulation-found.md](12-what-simulation-found.md).
 | [10-open-questions.md](10-open-questions.md) | What is still undecided |
 | [11-bootstrap.md](11-bootstrap.md) | Why the opening cannot deadlock |
 | [12-what-simulation-found.md](12-what-simulation-found.md) | Findings from the simulator |
+| [13-adventure.md](13-adventure.md) | Travel, discovery, monsters, mana, quests — the open world |
+| [14-annex.md](14-annex.md) | Every reference table, generated from the data |
 | [../GLOSSARY.md](../GLOSSARY.md) | Commodity vs effort vs deposit, and the rest |
 | [../art/README.md](../art/README.md) | What all of it looks like, in both editions |
 

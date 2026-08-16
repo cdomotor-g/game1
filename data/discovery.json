@@ -1,0 +1,168 @@
+{
+  "$comment": "Discovery rolls: what the land does back. When a figure, party or vehicle ENDS a movement leg, roll a d20 once on the table for the hex it stopped in - one roll per leg, never one per hex crossed. Tables are keyed by terrain (the letter codes in terrain.json); a road or rail on the hex overrides its terrain table. Bands are deliberately skewed: roads grow merchants and bandits, deserts and mountains grow monsters, and commodity traces are rare everywhere because discovery is what you find when you are NOT looking - surveying and foraging are jobs, with their own recipes.",
+  "version": "0.1.0",
+  "die": "d20",
+
+  "results": [
+    { "id": "nothing", "name": "Nothing", "summary": "The country is long and empty. Move on." },
+    { "id": "merchant", "name": "Travelling Merchant", "summary": "Deal item cards face up per rules.json market.merchantStock (roadside stock, 2 cards). Buy at base value +10%. He has heard prices: learn the current band of one commodity family in the nearest settlement." },
+    { "id": "traveller", "name": "Traveller", "summary": "News on the road. Look at the top card of the event deck and put it back, or look at the top card of the quest deck." },
+    { "id": "bandits", "name": "Bandits", "summary": "Strength 2, +1 per full 20 bulk of cargo in the party. Fight them, or pay a toll of a quarter of the carried value. An escort (soldier or hireling) rolls first." },
+    { "id": "monster", "name": "Monster", "summary": "Draw from the monster deck until the drawn monster's terrain list includes this hex's terrain; shuffle the rest back. Resolve the encounter - see monsters.json encounterOptions." },
+    { "id": "commodity-trace", "name": "Trace", "summary": "Something worth digging showed in a cutting or a stream bed. Place a trace tile: a survey on this hex is at +2 until the deposit is found or ruled out." },
+    { "id": "cave-mouth", "name": "Cave Mouth", "summary": "Place a cave tile on the hex. A party with a lit torch or lantern may enter, now or any later visit - entering resolves one draw on the cave table." },
+    { "id": "quest-omen", "name": "Omen", "summary": "Something stranger than the road. Draw the top card of the quest deck; accept it or put it on the bottom." },
+    { "id": "hazard", "name": "Hazard", "summary": "A washed-out track, a sand-slip, rotten ice. The leg ends here. Each character takes 1 damage unless the party discards a rope or lets a tool take 4 wear." },
+    { "id": "pirates", "name": "Pirates", "summary": "Strength 3. Fight, pay 30% of cargo value, or run - lose half speed on your next leg." },
+    { "id": "flotsam", "name": "Flotsam", "summary": "A wreck, or the leavings of one. Gain 2 bulk of a random commodity - roll on the commodity reference, rerolling livestock." },
+    { "id": "hoard", "name": "Hoard", "summary": "Something laired here once, and left in a hurry. Gain 20 coin and one item card dealt from the item deck." }
+  ],
+
+  "tables": [
+    { "id": "grassland", "name": "Grassland (G)", "terrain": "grassland", "code": "G",
+      "entries": [
+        { "roll": "1", "result": "bandits" },
+        { "roll": "2-4", "result": "traveller" },
+        { "roll": "5-14", "result": "nothing" },
+        { "roll": "15-16", "result": "commodity-trace" },
+        { "roll": "17-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "earth": 2, "air": 2, "fire": 1, "water": 1 } },
+    { "id": "forest", "name": "Forest (F)", "terrain": "forest", "code": "F",
+      "entries": [
+        { "roll": "1", "result": "bandits" },
+        { "roll": "2-3", "result": "traveller" },
+        { "roll": "4-11", "result": "nothing" },
+        { "roll": "12-14", "result": "commodity-trace" },
+        { "roll": "15-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "earth": 3, "air": 1, "fire": 1, "water": 1 } },
+    { "id": "hills", "name": "Hills (H)", "terrain": "hills", "code": "H",
+      "entries": [
+        { "roll": "1", "result": "bandits" },
+        { "roll": "2-3", "result": "traveller" },
+        { "roll": "4-10", "result": "nothing" },
+        { "roll": "11-13", "result": "commodity-trace" },
+        { "roll": "14-15", "result": "cave-mouth" },
+        { "roll": "16-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "earth": 3, "fire": 2, "air": 1, "water": 0 } },
+    { "id": "mountain", "name": "Mountain (M)", "terrain": "mountain", "code": "M",
+      "entries": [
+        { "roll": "1", "result": "hazard" },
+        { "roll": "2", "result": "traveller" },
+        { "roll": "3-8", "result": "nothing" },
+        { "roll": "9-11", "result": "commodity-trace" },
+        { "roll": "12-14", "result": "cave-mouth" },
+        { "roll": "15-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "earth": 2, "fire": 2, "air": 2, "water": 0 } },
+    { "id": "marsh", "name": "Marsh (B)", "terrain": "marsh", "code": "B",
+      "entries": [
+        { "roll": "1", "result": "hazard" },
+        { "roll": "2", "result": "traveller" },
+        { "roll": "3-10", "result": "nothing" },
+        { "roll": "11-12", "result": "commodity-trace" },
+        { "roll": "13-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "water": 3, "earth": 2, "fire": 0, "air": 1 } },
+    { "id": "tundra", "name": "Tundra (T)", "terrain": "tundra", "code": "T",
+      "entries": [
+        { "roll": "1-2", "result": "hazard" },
+        { "roll": "3", "result": "traveller" },
+        { "roll": "4-11", "result": "nothing" },
+        { "roll": "12-13", "result": "commodity-trace" },
+        { "roll": "14-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "air": 3, "water": 2, "earth": 1, "fire": 0 } },
+    { "id": "desert", "name": "Desert (D)", "terrain": "desert", "code": "D",
+      "entries": [
+        { "roll": "1-2", "result": "hazard" },
+        { "roll": "3", "result": "traveller" },
+        { "roll": "4-9", "result": "nothing" },
+        { "roll": "10-11", "result": "commodity-trace" },
+        { "roll": "12-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "fire": 3, "earth": 2, "air": 2, "water": 0 } },
+    { "id": "coast", "name": "Coast (C)", "terrain": "coast", "code": "C",
+      "entries": [
+        { "roll": "1", "result": "hazard" },
+        { "roll": "2-4", "result": "traveller" },
+        { "roll": "5-12", "result": "nothing" },
+        { "roll": "13-14", "result": "flotsam" },
+        { "roll": "15", "result": "merchant" },
+        { "roll": "16-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "water": 3, "air": 2, "earth": 1, "fire": 0 } },
+    { "id": "shallow-water", "name": "Shallow Water (S)", "terrain": "shallow-water", "code": "S",
+      "entries": [
+        { "roll": "1", "result": "hazard" },
+        { "roll": "2-3", "result": "flotsam" },
+        { "roll": "4-13", "result": "nothing" },
+        { "roll": "14-15", "result": "pirates" },
+        { "roll": "16-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "water": 4, "air": 1, "earth": 0, "fire": 0 } },
+    { "id": "deep-water", "name": "Deep Water (O)", "terrain": "deep-water", "code": "O",
+      "entries": [
+        { "roll": "1-2", "result": "hazard" },
+        { "roll": "3", "result": "flotsam" },
+        { "roll": "4-12", "result": "nothing" },
+        { "roll": "13-15", "result": "pirates" },
+        { "roll": "16-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "water": 4, "air": 1, "earth": 0, "fire": 0 } },
+
+    { "id": "road", "name": "On a Road", "terrain": null, "overlay": "road",
+      "$comment": "A road on the hex replaces its terrain table. Merchants live here; monsters mostly do not; bandits know exactly where the cargo goes.",
+      "entries": [
+        { "roll": "1-2", "result": "bandits" },
+        { "roll": "3-7", "result": "merchant" },
+        { "roll": "8-10", "result": "traveller" },
+        { "roll": "11-17", "result": "nothing" },
+        { "roll": "18-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "earth": 2, "air": 1, "fire": 1, "water": 1 } },
+    { "id": "rail", "name": "On the Rail", "terrain": null, "overlay": "rail",
+      "$comment": "Rolled only when the train halts - at a depot, or when the line is blocked. Never a commodity trace: the ground either side of the line was picked clean while it was being laid. Fewer stops, fewer rolls: the train is the safe way across the map, and that is intended.",
+      "entries": [
+        { "roll": "1-2", "result": "bandits" },
+        { "roll": "3-5", "result": "merchant" },
+        { "roll": "6-7", "result": "traveller" },
+        { "roll": "8-17", "result": "nothing" },
+        { "roll": "18-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "earth": 2, "fire": 1, "air": 1, "water": 0 } },
+    { "id": "cave", "name": "Inside a Cave", "terrain": null, "overlay": "cave",
+      "$comment": "Drawn once per entry into a placed cave, by a party carrying light - see travel.json caves.",
+      "entries": [
+        { "roll": "1-2", "result": "hazard" },
+        { "roll": "3-8", "result": "nothing" },
+        { "roll": "9-12", "result": "commodity-trace" },
+        { "roll": "13-16", "result": "monster" },
+        { "roll": "17-19", "result": "hoard" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "elementWeights": { "earth": 3, "fire": 2, "air": 0, "water": 1 } }
+  ],
+
+  "modifiers": {
+    "$comment": "How the bands move. A band 'widens by N' by claiming N rolls below its printed bottom; it never claims 1, and never claims 20 (the omen keeps the top). Multiple modifiers stack.",
+    "events": "Event cards with a discovery effect shift the monster band: Blood Moon widens it by 3, The Quiet Season shrinks it by 2.",
+    "night": "The discovery roll after a night leg widens the monster band by 1.",
+    "settlementShadow": "Within 1 hex of any settlement, the monster band shrinks by 2 - the land is walked, hunted and lit.",
+    "shrunkPast": "A band shrunk past its own top row simply does not occur."
+  }
+}

@@ -28,7 +28,7 @@
       "capacity": 30, "speed": 3, "requires": "dock", "buyCost": 110, "effortToLoad": 2,
       "packaging": [{ "commodity": "crate", "qty": 8 }],
       "craft": { "building": "dock", "inputs": [{ "commodity": "lumber", "qty": 6 }, { "commodity": "rope", "qty": 2 }], "effortHours": 6 },
-      "upkeep": 1, "theftRisk": 2, "waterCapable": true, "waters": ["shallow-water", "river-bank", "lake-shore"] },
+      "upkeep": 1, "theftRisk": 2, "waterCapable": true, "waters": ["shallow-water", "coast"] },
     { "id": "ship", "name": "Ship", "tier": 3,
       "summary": "Sea freight between harbours. The cheapest bulk movement in the game once the harbours exist.",
       "capacity": 60, "speed": 4, "requires": "harbour", "buyCost": 280, "effortToLoad": 4,
@@ -63,6 +63,6 @@
     { "id": "soldier", "name": "Soldier", "movePoints": 3, "cost": 30,
       "summary": "Fights, escorts caravans, garrisons towns. Eats 1 food per round whether it fights or not.", "carries": 2 },
     { "id": "hero", "name": "Hero", "movePoints": 5, "cost": 0,
-      "summary": "One per player, free at setup. Carries potions and equipment, rolls an extra combat die, and never starves.", "carries": 3, "unique": true }
+      "summary": "One per player, free at setup. Carries potions and equipment, rolls an extra combat die, and never starves. A character card from data/characters.json gives the hero a name, a face, a health bar and sometimes mana.", "carries": 3, "unique": true }
   ]
 }

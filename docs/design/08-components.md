@@ -25,12 +25,26 @@ for a 4-player game and are estimates, not a manufacturing spec.
 
 ## Cards
 
-- **58 event cards** — the deck in `data/events.json`
-- **63 commodity reference cards** — one per commodity, showing value, bulk, and what
+- **69 event cards** — the deck in `data/events.json`
+- **66 commodity reference cards** — one per commodity, showing value, bulk, and what
   makes it. These double as the market price reference.
-- **83 recipe cards** — or, more likely, 8 double-sided player reference sheets grouped
-  by category. 83 cards is a lot of shuffling for something nobody shuffles.
-- **26 equipment cards** — clothing, armour, weapons, potions
+- **87 recipe cards** — or, more likely, 8 double-sided player reference sheets grouped
+  by category. 87 cards is a lot of shuffling for something nobody shuffles.
+- **37 item cards** — clothing, armour, weapons, potions, lights and talismans
+- **12 monster cards**, **12 vehicle cards**, **8 character cards**, **8 quest cards** —
+  the adventure decks, in `data/monsters.json`, `vehicles.json`, `characters.json` and
+  `quests.json`, all built to grow
+
+**Card codes.** Every card carries a deck prefix and a two-digit sequence — `VEH-03`,
+`MON-09`, `QST-07` — with a `v2` suffix if a card is ever reprinted changed. The scheme
+is data (`vehicles.json → cardIdScheme`), the numbering is this repository's own, and a
+fork is free to renumber.
+
+**The bar convention.** Any card that tracks a quantity does it with a **vertical
+numbered bar**, numbered from the bottom, walked by a token: **harm on the left edge**
+(a vehicle's damage, a monster's or character's health), **capacity on the right edge**
+(a vehicle's cargo, a talisman's or character's mana). One convention, every deck, so a
+bar never needs explaining twice.
 
 ## Tokens and bits
 
@@ -57,9 +71,19 @@ for a 4-player game and are estimates, not a manufacturing spec.
 - **Price band markers** — 11, one per commodity category, on a shared market track
 - **Round marker**, turn order markers, first player token
 
+## Mini-maps
+
+Thirty-two A4 landscape sheets, each one large hexagon subdivided into 61 cells — the
+inside of a single campaign-map cell, for battles and for building. Four **Holdings**
+sheets (one per player), nine **Grounds** sheets (one per land terrain plus the
+shallows) and nineteen **Places** sheets (one per named Korvane Reach settlement).
+The spec and the art briefs are in [`docs/minimaps/`](../minimaps/README.md).
+
 ## Player aids
 
 - **Turn reference** — the six phases, and the legality checklist for allocating effort
+- **Travel & discovery reference** — the speed table and the d20 tables, straight from
+  the [annex](14-annex.md)
 - **Production chain poster** — the tier-0-to-tier-4 spine on one sheet. The Chains view
   in the web explorer is the working draft of this.
 

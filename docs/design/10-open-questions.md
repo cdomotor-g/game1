@@ -105,6 +105,36 @@ Nothing yet. Losing all your workers is possible and there is no floor under it.
 player knocked out at round 8 has a bad evening. Needs either a hard floor (you always
 keep one worker and one hut) or a comeback mechanism.
 
+## The adventure layer
+
+### 18. Does per-player event drawing scale?
+
+Each player now turns a card in the Events phase, so a five-player round is five or
+six events. That is a lot of weather. It makes every player own a piece of the round
+and it feeds the discovery-band cards nicely — but if a round drowns in card
+resolution, the fallback is one shared card plus one per player *cap of three*, and
+the data already carries copies to support either.
+
+### 19. How does character death actually play?
+
+**[working answer]** A character at 0 health is carried to the nearest settlement,
+rests to half, loses carried cargo. No permadeath — a player's hero card is theirs
+for the game. The open part: whether losing a campaign stage to a wipe should discard
+the campaign for everyone (currently: only if abandoned).
+
+### 20. Is mana too slow to matter?
+
+Twelve monsters yielding 1–4 mana each, spells costing 1–5, and monsters must be
+*found*. If a whole game yields a player 6 mana, spells need to be strong; if the
+Blood Moon floods the map, they need to be weak. The dial is `manaYield` on the
+monster cards, and it needs plays, not opinions.
+
+### 21. Do enslaved monsters break the labour economy?
+
+A Barrow Troll is a d8 worker for 3 food and 1 unrest. Compare a real worker: d6 for
+1 food. Probably fine — the troll had to be beaten by 2+ hits without killing it
+first — but the exchange rate is untested.
+
 ## Digital
 
 ### 14. How much of the board game should the digital version enforce?

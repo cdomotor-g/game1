@@ -68,6 +68,11 @@ jobs:
           fi
           echo "docs/data/bundle.js is up to date with data/*.json"
 
+      # The annex is the printed rulebook's reference tables, generated from the same
+      # data. Same reasoning as the bundle: committed, so it must not drift.
+      - name: Fail if the committed annex is stale
+        run: node tools/build-annex.mjs --check
+
   deploy:
     needs: check
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

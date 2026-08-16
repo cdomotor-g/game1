@@ -52,15 +52,15 @@
     },
     {
       "id": "clay-pit", "name": "Clay Pit", "category": "extraction", "tier": 1,
-      "summary": "Digs clay from river banks and marshes.",
+      "summary": "Digs clay from marshes, shores and wet ground.",
       "cost": [{ "commodity": "logs", "qty": 2 }], "buildPoints": 5, "minRounds": 1,
-      "workerSlots": 3, "terrain": ["marsh", "river-bank", "grassland"], "requiresDeposit": "clay-bed"
+      "workerSlots": 3, "terrain": ["marsh", "grassland", "coast"], "requiresDeposit": "clay-bed"
     },
     {
       "id": "sand-pit", "name": "Sand Pit", "category": "extraction", "tier": 1,
       "summary": "Sand for glass.",
       "cost": [{ "commodity": "logs", "qty": 2 }], "buildPoints": 5, "minRounds": 1,
-      "workerSlots": 3, "terrain": ["desert", "coast", "river-bank"]
+      "workerSlots": 3, "terrain": ["desert", "coast"]
     },
     {
       "id": "mine", "name": "Mine", "category": "extraction", "tier": 2,
@@ -79,13 +79,13 @@
       "id": "well", "name": "Well", "category": "extraction", "tier": 1,
       "summary": "A town without a well or adjacent water cannot draw water at all.",
       "cost": [{ "commodity": "stone", "qty": 3 }], "buildPoints": 6, "minRounds": 1,
-      "workerSlots": 1, "terrain": ["grassland", "forest", "hills", "desert", "tundra", "marsh", "river-bank"]
+      "workerSlots": 1, "terrain": ["grassland", "forest", "hills", "desert", "tundra", "marsh"]
     },
     {
       "id": "farm", "name": "Farm", "category": "extraction", "tier": 1,
       "summary": "Four field slots. Each slot holds one sown crop through its growth track.",
       "cost": [{ "commodity": "logs", "qty": 3 }], "buildPoints": 8, "minRounds": 2,
-      "workerSlots": 4, "fieldSlots": 4, "terrain": ["grassland", "river-bank"]
+      "workerSlots": 4, "fieldSlots": 4, "terrain": ["grassland", "coast"]
     },
     {
       "id": "pasture", "name": "Pasture", "category": "extraction", "tier": 1,
@@ -97,7 +97,7 @@
       "id": "orchard", "name": "Orchard", "category": "extraction", "tier": 2,
       "summary": "Takes three rounds to establish, then yields every round without re-sowing.",
       "cost": [{ "commodity": "logs", "qty": 2 }, { "commodity": "water", "qty": 2 }], "buildPoints": 10, "minRounds": 3,
-      "workerSlots": 2, "terrain": ["grassland", "river-bank", "hills"]
+      "workerSlots": 2, "terrain": ["grassland", "hills"]
     },
     {
       "id": "vineyard", "name": "Vineyard", "category": "extraction", "tier": 2,
@@ -115,14 +115,14 @@
       "id": "dock", "name": "Dock", "category": "extraction", "tier": 1,
       "summary": "Fishing, and the cheap end of water transport.",
       "cost": [{ "commodity": "logs", "qty": 4 }, { "commodity": "rope", "qty": 1 }], "buildPoints": 8, "minRounds": 2,
-      "workerSlots": 3, "terrain": ["coast", "river-bank", "lake-shore"]
+      "workerSlots": 3, "terrain": ["coast"]
     },
 
     {
       "id": "sawmill", "name": "Sawmill", "category": "production", "tier": 1,
-      "summary": "Logs into lumber. Doubles its rate if built on a river-bank tile.",
+      "summary": "Logs into lumber. Doubles its rate on a coast tile - water drives the saw.",
       "cost": [{ "commodity": "logs", "qty": 4 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 10, "minRounds": 2,
-      "workerSlots": 3, "terrain": ["forest", "grassland", "river-bank", "hills"]
+      "workerSlots": 3, "terrain": ["forest", "grassland", "hills", "coast"]
     },
     {
       "id": "charcoal-kiln", "name": "Charcoal Kiln", "category": "production", "tier": 1,
@@ -146,7 +146,7 @@
       "id": "brickworks", "name": "Brickworks", "category": "production", "tier": 2,
       "summary": "Clay plus fuel into brick.",
       "cost": [{ "commodity": "stone", "qty": 4 }, { "commodity": "clay", "qty": 4 }, { "commodity": "lumber", "qty": 2 }], "buildPoints": 14, "minRounds": 3,
-      "workerSlots": 3, "terrain": ["grassland", "hills", "river-bank", "marsh"]
+      "workerSlots": 3, "terrain": ["grassland", "hills", "marsh"]
     },
     {
       "id": "glassworks", "name": "Glassworks", "category": "production", "tier": 3,
@@ -176,7 +176,7 @@
       "id": "tannery", "name": "Tannery", "category": "production", "tier": 2,
       "summary": "Hide plus water into leather. Nobody wants it upwind of the town.",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 11, "minRounds": 2,
-      "workerSlots": 2, "terrain": ["river-bank", "grassland", "marsh", "coast"]
+      "workerSlots": 2, "terrain": ["grassland", "marsh", "coast"]
     },
     {
       "id": "tailor", "name": "Tailor", "category": "production", "tier": 3,
@@ -186,9 +186,9 @@
     },
     {
       "id": "mill", "name": "Mill", "category": "production", "tier": 1,
-      "summary": "Grain into flour. Free extra output on a hills or river-bank tile (wind and water).",
+      "summary": "Grain into flour. Free extra output on a hills or coast tile (wind and water).",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 3 }], "buildPoints": 10, "minRounds": 2,
-      "workerSlots": 2, "terrain": ["grassland", "hills", "river-bank"]
+      "workerSlots": 2, "terrain": ["grassland", "hills", "coast"]
     },
     {
       "id": "bakery", "name": "Bakery", "category": "production", "tier": 2,
@@ -262,9 +262,16 @@
     },
     {
       "id": "inn", "name": "Inn", "category": "civic", "tier": 2,
-      "summary": "Serve ale or wine here to clear 1 unrest and buy back a little goodwill.",
+      "summary": "Rest, rumour and hired muscle. Serve ale or wine to clear 1 unrest; travellers rest here to heal; escorts are hired here; quests are heard here.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 12, "minRounds": 2,
-      "workerSlots": 2
+      "workerSlots": 2,
+      "notes": "Resting, hireling costs and rumours are in rules.json under rest and hirelings. Every settlement printed on a map is assumed to contain an inn of its rank."
+    },
+    {
+      "id": "infirmary", "name": "Infirmary", "category": "civic", "tier": 2,
+      "summary": "Where the sick are tended and healers are trained. A town with a fed healer weathers illness cards that empty other towns.",
+      "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 2 }, { "commodity": "parchment", "qty": 1 }], "buildPoints": 12, "minRounds": 2,
+      "workerSlots": 1, "specialist": "healer"
     },
 
     {
@@ -313,9 +320,9 @@
     },
     {
       "id": "bridge", "name": "Bridge", "category": "infrastructure", "tier": 2,
-      "summary": "Carries a road or rail across one water tile or river edge.",
+      "summary": "Carries a road or rail across one water tile.",
       "cost": [{ "commodity": "stone", "qty": 4 }, { "commodity": "lumber", "qty": 4 }, { "commodity": "ironware", "qty": 1 }], "buildPoints": 16, "minRounds": 2, "perTile": true,
-      "terrain": ["river-bank", "lake-shore", "shallow-water"]
+      "terrain": ["shallow-water"]
     },
     {
       "id": "harbour", "name": "Harbour", "category": "infrastructure", "tier": 3,

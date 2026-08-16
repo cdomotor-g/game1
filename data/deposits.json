@@ -4,7 +4,7 @@
   "deposits": [
     { "id": "clay-bed", "name": "Clay Bed", "requiresBuilding": "clay-pit", "yields": ["clay"],
       "totalYield": 40, "tokensInSetup": 8, "surveyDifficulty": 2,
-      "summary": "Common and shallow. Often visible without a survey on river-bank tiles." },
+      "summary": "Common and shallow. Often visible without a survey on marsh and coast tiles." },
     { "id": "sand-bar", "name": "Sand Bar", "requiresBuilding": "sand-pit", "yields": ["sand"],
       "totalYield": 40, "tokensInSetup": 6, "surveyDifficulty": 2 },
     { "id": "peat-bog", "name": "Peat Bog", "requiresBuilding": null, "yields": ["peat"],

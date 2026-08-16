@@ -1,11 +1,11 @@
 {
-  "$comment": "One card is drawn at the start of every round (two from round 13). Each card carries plain text for the tabletop game and a machine-readable effects array so the digital version can resolve it automatically.",
-  "version": "0.1.0",
+  "$comment": "During the Events phase each player, in turn order, reveals one card and resolves it (see deck below). The card's scope decides who it hits: a global card the third player draws still hits everyone. Each card carries plain text for the tabletop game and a machine-readable effects array so the digital version can resolve it automatically.",
+  "version": "0.2.0",
   "scopes": [
-    { "id": "global", "name": "Global", "summary": "Applies to every player." },
+    { "id": "global", "name": "Global", "summary": "Applies to every player, whoever drew it." },
     { "id": "local", "name": "Local", "summary": "Applies to one region of the board - roll for the region." },
-    { "id": "targeted", "name": "Targeted", "summary": "Applies to one player - usually the leader, or roll." },
-    { "id": "offer", "name": "Offer", "summary": "An opportunity any player may take, resolved in turn order." }
+    { "id": "targeted", "name": "Targeted", "summary": "Applies to the player who drew it - except crime cards, which target the leader." },
+    { "id": "offer", "name": "Offer", "summary": "An opportunity. The drawer decides first; if they pass, it goes round in turn order." }
   ],
   "categories": [
     { "id": "weather", "name": "Weather" },
@@ -15,6 +15,7 @@
     { "id": "conflict", "name": "Conflict" },
     { "id": "social", "name": "People" },
     { "id": "market", "name": "Market" },
+    { "id": "industry", "name": "Industry" },
     { "id": "arcane", "name": "Arcane" }
   ],
   "effectTypes": {
@@ -31,7 +32,9 @@
     "cargo": "Affect goods in transit.",
     "combat": "Spawn or resolve a fight.",
     "crop": "Affect growing crops.",
-    "choice": "Player picks between listed branches."
+    "choice": "Player picks between listed branches.",
+    "health": "Damage or heal characters and travelling figures.",
+    "discovery": "Widen or shrink a result band on the discovery tables - see data/discovery.json."
   },
   "cards": [
     { "id": "hard-frost", "name": "Hard Frost", "category": "weather", "scope": "global", "copies": 3,
@@ -47,7 +50,7 @@
         { "type": "crop", "op": "yield-multiplier", "value": 0.5, "target": "region" },
         { "type": "commodity-loss", "commodity": "water", "qty": 2, "target": "region-towns" }
       ],
-      "mitigations": ["A town with a well loses no water.", "River-bank and lake-shore towns are unaffected."] },
+      "mitigations": ["A town with a well loses no water.", "Towns on a coast or marsh tile - anywhere with fresh water - are unaffected."] },
     { "id": "long-summer", "name": "Long Summer", "category": "weather", "scope": "global", "copies": 2,
       "text": "A gift of a season.",
       "effects": [
@@ -232,17 +235,64 @@
           { "label": "Trade a mana crystal", "effects": [{ "type": "commodity-gain", "op": "grant-potion", "value": 2, "text": "Take any 2 potions from items.json for free." }] },
           { "label": "Pass", "effects": [] }
         ] }
+      ] },
+
+    { "id": "camp-fever", "name": "Camp Fever", "category": "social", "scope": "targeted", "copies": 2,
+      "text": "Something in the water at last night's camp. Your travelling party wakes shivering.",
+      "effects": [
+        { "type": "health", "op": "damage", "value": 2, "target": "one-party", "text": "Every figure and character in one of your travelling parties takes 2 damage." },
+        { "type": "movement", "op": "multiplier", "value": 0.5, "target": "same-party", "rounds": 1 }
+      ],
+      "mitigations": ["A healer character in the party shrugs it off: no damage, full speed.", "Spend a Healing Draught or Physic Tonic to cancel the card."] },
+    { "id": "marsh-ague", "name": "Marsh Ague", "category": "social", "scope": "local", "copies": 2,
+      "text": "The ague drifts out of the fens with the evening mist, and the village bell rings thin all week.",
+      "effects": [
+        { "type": "effort", "op": "die-step", "value": -1, "target": "region-workers", "rounds": 2 },
+        { "type": "population", "op": "remove", "value": 1, "target": "region-towns", "condition": "only towns on or adjacent to a marsh tile" }
+      ],
+      "mitigations": ["A town with an infirmary and a fed healer loses no worker.", "A Physic Tonic cancels the card for one town."] },
+    { "id": "grey-pox", "name": "The Grey Pox", "category": "social", "scope": "global", "copies": 1,
+      "text": "It starts in one market square and is everywhere by week's end. Whole streets shutter; the carts stop coming.",
+      "effects": [
+        { "type": "population", "op": "remove", "value": 1, "target": "all-towns", "condition": "every town with 4 or more workers loses one" },
+        { "type": "effort", "op": "die-step", "value": -1, "target": "all-workers", "rounds": 1 }
+      ],
+      "mitigations": ["A town with an infirmary and a fed healer loses no worker.", "A Healing Draught spent by a town cancels its loss.", "This is the card that makes the infirmary worth its parchment."] },
+
+    { "id": "impure-smelt", "name": "Impure Smelt", "category": "industry", "scope": "global", "copies": 2,
+      "text": "A bad seam of flux stone in every furnace this week. The metal pours grey and snaps like slate.",
+      "effects": [
+        { "type": "tool", "op": "wear-multiplier", "value": 2, "rounds": 1, "text": "Every tool used this round takes double wear." },
+        { "type": "tool", "op": "brittle-forge", "rounds": 1, "text": "Any tool forged this round is marked brittle: it breaks when its durability track reaches half, not zero." }
+      ],
+      "mitigations": ["A smelter or blacksmith burning coal this round is unaffected - coal runs hot enough to burn the impurities out. Peat and charcoal do not.", "A smith specialist may spend 2 hours re-tempering to clear one brittle mark."] },
+
+    { "id": "blood-moon", "name": "Blood Moon", "category": "arcane", "scope": "global", "copies": 1,
+      "text": "The moon rises rust-red and the wild things move under it.",
+      "effects": [
+        { "type": "discovery", "op": "band", "target": "monster", "value": 3, "rounds": 2, "text": "Monster bands on every discovery table widen by 3 for two rounds." }
+      ],
+      "mitigations": ["A party carrying a lit lantern is never surprised: it may always choose to withdraw before a monster encounter begins."] },
+    { "id": "quiet-season", "name": "The Quiet Season", "category": "wildlife", "scope": "global", "copies": 1,
+      "text": "The wild goes still. Hunters come home early, and nothing follows them home.",
+      "effects": [
+        { "type": "discovery", "op": "band", "target": "monster", "value": -2, "rounds": 2, "text": "Monster bands on every discovery table shrink by 2 for two rounds." }
       ] }
   ],
   "deck": {
-    "totalCards": 58,
-    "drawPerRound": 1,
-    "drawPerRoundFrom": { "round": 13, "count": 2 },
+    "totalCards": 69,
+    "$totalNote": "Sum of every card's copies. The previous figure of 58 had drifted from the data - which is exactly why the annex is generated now.",
+    "drawPerPlayerPerRound": 1,
+    "drawnBy": "each-player",
+    "when": "In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.",
+    "lateGame": { "round": 13, "extra": "From round 13, the first player each round reveals and resolves a second card." },
     "reshuffle": "When the deck runs out, shuffle the discard pile and carry on.",
     "designNotes": [
+      "Every player turning a card means every player owns a piece of the round's weather. A global card is global whoever drew it; a targeted card is the drawer's problem.",
       "Weather and market cards are the common ones - they should feel like the seasons turning, not like being punished.",
       "Crime cards target the leader by default. That is the catch-up mechanism, and it is deliberate.",
-      "Every disaster card should have at least one mitigation a player could have bought in advance. Being wiped out should always be traceable to a decision."
+      "Every disaster card should have at least one mitigation a player could have bought in advance. Being wiped out should always be traceable to a decision.",
+      "Discovery-band cards (Blood Moon, The Quiet Season) are the dial on how dangerous the wild feels. Add copies to taste."
     ]
   }
 }

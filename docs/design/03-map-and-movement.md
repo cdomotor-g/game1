@@ -5,13 +5,24 @@
 The board is hex tiles, each one terrain type. 37 tiles for two players up to 75 for
 five. Everything beyond each player's starting cluster of three starts **face down**.
 
-Twelve terrains, ten land and two water. Each carries:
+Ten terrains, eight land and two water — riverbanks and lake shores were folded into
+grassland and coast, because two extra tile types bought complexity and paid nothing.
+Each terrain carries a **single-letter code**, printed in the bottom corner of every
+hex on every map, so there is never an argument about what a cell is when the artwork
+underneath straddles a grid line. The letter is the ruling.
 
-- **moveCost** — hours or move points to cross
-- **roadCostMultiplier / railCostMultiplier** — what infrastructure costs here
-- **buildable** — whether anything can go on it
-- **features** — trees, exposed stone, fresh water, game, herbs
-- **deposits** — what might be buried underneath
+| Code | Terrain | Move | Rail × | | Code | Terrain | Move | Rail × |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **G** | Grassland | 1 | 1 | | **T** | Tundra | 2 | 2 |
+| **F** | Forest | 2 | 2 | | **D** | Desert | 2 | 2 |
+| **H** | Hills | 2 | 3 | | **C** | Coast | 1 | 2 |
+| **M** | Mountain | 4 | 6 | | **S** | Shallows | boat | — |
+| **B** | Marsh | 3 | 4 | | **O** | Deep water | boat | — |
+
+Each terrain also carries road multipliers, buildability, **features** (trees, stone,
+fresh water, game, herbs, caves) and **deposits** — the full table is in the
+[annex](14-annex.md), and the letter codes key the travel-speed and discovery tables
+in [13-adventure.md](13-adventure.md).
 
 The rail multipliers are the ones to look at. Flat grassland is ×1. Hills are ×3.
 Mountains are ×6. A railroad through a mountain range costs 48 build-points a tile and
@@ -47,7 +58,17 @@ coal seam is in trouble around round 15 if they have not found the second.
 
 **Figures** — prospector, merchant, soldier, hero — have move points and spend terrain
 move cost. Four points crosses four tiles of grassland, one tile of mountain, or two of
-forest.
+forest. The printed form of the same arithmetic is the travel-speed table in
+`data/travel.json`: hexes per day leg, by mode and terrain letter code.
+
+**Days and nights.** Each round gives a moving figure or vehicle one day leg; pushing
+on into a night leg needs a lit torch or lantern and is slower — the full rules,
+including what each light allows and why the night discovery roll is nastier, are in
+[13-adventure.md](13-adventure.md).
+
+**Discovery.** Ending a leg triggers one d20 discovery roll on the landed hex's table —
+merchants on roads, monsters in the waste, and very occasionally something worth
+surveying. Also in [13-adventure.md](13-adventure.md).
 
 **Cargo** does not use move points. It uses transport modes with capacity and speed,
 covered in [04-trade.md](04-trade.md).
@@ -65,14 +86,14 @@ costs entirely and carries 80 bulk at 6 tiles a round. It is the biggest capital
 project in the game and it scores a victory point per tile, because the alternative is
 that nobody ever builds it.
 
-**Bridges** (16 points) carry a road or rail across one water tile or river edge. River
-banks are good land — fresh water, clay, powered mills — but a river edge must be
-bridged to cross, so a river is both a gift and a wall.
+**Bridges** (16 points) carry a road or rail across one shallow-water tile. Deep water
+cannot be bridged by anyone, ever, and that is what makes the sea lanes matter.
 
 ## Water
 
 Shallow water takes barges and ships; deep water takes ships only and cannot be
-bridged. Coast tiles are the only place a harbour can go.
+bridged. Coast tiles — any shore: sea, lake or river mouth — are the only place a
+harbour can go.
 
 Sea freight is slow to set up — a harbour is 22 build-points on top of a dock, and a
 ship is 280 coin or fourteen hours of shipwrighting — and then it is the cheapest bulk

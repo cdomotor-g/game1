@@ -16,6 +16,12 @@ per unit all the way to the ground.
 effort, allocate it, found buildings, forge tools, trade, feed everyone, take the
 consequences.
 
+**What the explorer does not render yet:** the adventure decks — monsters, vehicles,
+characters, quests, spells, the travel and discovery tables. Their data ships in the
+bundle (anything in `manifest.json` does), so the explorer's views are the gap, not the
+pipeline. The sandbox likewise plays the single-town economy only; nothing digital
+moves a party across the board yet.
+
 ## Architecture
 
 ```

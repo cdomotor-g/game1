@@ -80,7 +80,55 @@ window.GAME_DATA = {
         "file": "items.json",
         "collection": "items",
         "idField": "id",
-        "summary": "Clothing, armour, weapons and potions."
+        "summary": "Clothing, armour, weapons, potions, lights and talismans."
+      },
+      {
+        "key": "travel",
+        "file": "travel.json",
+        "collection": null,
+        "summary": "Travel speeds by mode, terrain code and time of day; night, light and cave rules."
+      },
+      {
+        "key": "discovery",
+        "file": "discovery.json",
+        "collection": "tables",
+        "idField": "id",
+        "summary": "Discovery roll tables: one d20 column per terrain code, plus road, rail and cave."
+      },
+      {
+        "key": "arcana",
+        "file": "arcana.json",
+        "collection": "spells",
+        "idField": "id",
+        "summary": "Elements, mana storage and the spell list."
+      },
+      {
+        "key": "monsters",
+        "file": "monsters.json",
+        "collection": "monsters",
+        "idField": "id",
+        "summary": "The monster deck, three per element, with encounter options."
+      },
+      {
+        "key": "vehicles",
+        "file": "vehicles.json",
+        "collection": "vehicles",
+        "idField": "id",
+        "summary": "The vehicle deck: named trains, ships, caravans and horses, with damage and cargo bars."
+      },
+      {
+        "key": "characters",
+        "file": "characters.json",
+        "collection": "characters",
+        "idField": "id",
+        "summary": "The character deck: named heroes with health and mana bars."
+      },
+      {
+        "key": "quests",
+        "file": "quests.json",
+        "collection": "quests",
+        "idField": "id",
+        "summary": "The quest deck: mini-quests and campaigns, accept or decline."
       }
     ],
     "maps": {
@@ -307,6 +355,59 @@ window.GAME_DATA = {
           "from": "events",
           "path": "cards[].scope",
           "to": "events.scopes"
+        },
+        {
+          "from": "discovery",
+          "path": "tables[].terrain",
+          "to": "terrain"
+        },
+        {
+          "from": "discovery",
+          "path": "tables[].entries[].result",
+          "to": "discovery.results"
+        },
+        {
+          "from": "arcana",
+          "path": "spells[].element",
+          "to": "arcana.elements"
+        },
+        {
+          "from": "monsters",
+          "path": "monsters[].element",
+          "to": "arcana.elements"
+        },
+        {
+          "from": "monsters",
+          "path": "monsters[].terrains[]",
+          "to": "terrain"
+        },
+        {
+          "from": "vehicles",
+          "path": "vehicles[].mode",
+          "to": "transport",
+          "allow": [
+            "mounted"
+          ]
+        },
+        {
+          "from": "characters",
+          "path": "characters[].people",
+          "to": "peoples"
+        },
+        {
+          "from": "characters",
+          "path": "characters[].startsWith[]",
+          "to": "items"
+        },
+        {
+          "from": "quests",
+          "path": "quests[].reward.items[]",
+          "to": "items"
+        },
+        {
+          "from": "quests",
+          "path": "quests[].stages[].reward.items[]",
+          "to": "items"
         }
       ]
     }
@@ -325,7 +426,7 @@ window.GAME_DATA = {
         {
           "id": "upkeep-events",
           "name": "Events",
-          "summary": "Reveal and resolve the round's event card(s) before anyone acts."
+          "summary": "In turn order, each player reveals one event card and resolves it. A card's scope decides who it hits: global cards hit everyone, whoever drew them."
         },
         {
           "id": "labour-roll",
@@ -454,13 +555,27 @@ window.GAME_DATA = {
       "sellSpread": -0.15,
       "driftPerRound": "Each town shifts one random commodity family up or down one band.",
       "playerTradeIsFree": true,
+      "merchantStock": {
+        "$comment": "When a player meets a merchant - on the road via a discovery roll, or by visiting a settlement - shuffle the item deck and deal this many cards face up. That is what is for sale this visit, at base value +10%. Bigger places carry deeper stock.",
+        "roadside": 2,
+        "village": 3,
+        "town": 5,
+        "city": 7,
+        "seat": 9,
+        "notes": "Tools may be bought the same way at any settlement with a blacksmith rank town or better: deal from the tool list instead."
+      },
       "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
     },
     "movement": {
       "landMoveCostDefault": 1,
       "figureMovePointsPerRound": 4,
       "cargoRequiresRoute": true,
-      "notes": "Figures (prospectors, merchants, soldiers) use move points. Cargo uses transport modes with capacity and speed - see transport.json."
+      "legs": {
+        "day": "Every moving figure, party or vehicle gets one day leg per round, at the speed in data/travel.json for its mode and the terrain letter codes it crosses.",
+        "night": "After its day leg a party may push on into the dark - but only with a lit torch or lantern, and slower. Night speeds, and what each light allows, are in data/travel.json.",
+        "nightRisk": "A party that travels a night leg makes a second discovery roll where it stops, with the monster band widened by 1. The dark is not neutral."
+      },
+      "notes": "Figures (prospectors, merchants, soldiers, characters) use move points. Cargo uses transport modes with capacity and speed - see transport.json. The printed speed table by mode, terrain code and time of day is data/travel.json."
     },
     "exploration": {
       "tilesFaceDownAtStart": true,
@@ -469,7 +584,52 @@ window.GAME_DATA = {
         "figure": "prospector"
       },
       "depositRevealDie": "d6",
+      "discovery": {
+        "die": "d20",
+        "when": "When a figure, party or vehicle ends its movement leg, roll once on the discovery table for the hex it stopped in - one roll for the leg, not one per hex crossed.",
+        "tables": "data/discovery.json, one column per terrain letter code, with road and rail overrides",
+        "placement": "Any result that persists - a monster, a trace, a cave, a quest site - is marked on the hex with a tile or figure so the whole table can see it.",
+        "notes": "Discovery is what you find when you are NOT looking. Prospecting, foraging and hunting have their own recipes and roll tables, and a discovery roll never replaces a survey."
+      },
       "notes": "A prospector entering a face-down tile flips it. Flipping reveals terrain immediately; deposits need a survey roll on top of that."
+    },
+    "rest": {
+      "where": "Any settlement with an inn - every printed settlement has one; a player-built town needs the inn building.",
+      "healthPerRound": 2,
+      "healthPerRoundWithHealer": 3,
+      "cost": {
+        "coin": 5,
+        "note": "Waived in your own town, and at any inn a quest reward names."
+      },
+      "notes": "A resting character does nothing else that round. Vehicle damage is repaired separately - 1 box per round in any settlement of town rank or better, paying 5 coin per box."
+    },
+    "hirelings": {
+      "where": "Hired at any inn, in any settlement of village rank or better.",
+      "options": [
+        {
+          "id": "thug",
+          "name": "Thug",
+          "coinPerJourney": 20,
+          "combatDice": 1,
+          "note": "Refuses to fight monsters of strength 4 or more. Counts as a soldier for escort purposes."
+        },
+        {
+          "id": "militia",
+          "name": "Militiaman",
+          "coinPerJourney": 35,
+          "combatDice": 1,
+          "armourValue": 1,
+          "note": "Steady. Fights anything."
+        },
+        {
+          "id": "blade",
+          "name": "Hired Blade",
+          "coinPerJourney": 60,
+          "combatDice": 2,
+          "note": "Fights anything, and rolls first like a bow."
+        }
+      ],
+      "notes": "A hireling escorts one journey - a travelling party or a cargo in transit - then goes home. Hirelings eat no food; the fee is everything. An escorted cargo drops its theft risk to 0, same as a soldier escort."
     },
     "conflict": {
       "combatDie": "d6",
@@ -1254,6 +1414,46 @@ window.GAME_DATA = {
           "potion-ingredient",
           "theft-target"
         ]
+      },
+      {
+        "id": "moon-blossom",
+        "name": "Moon Blossom",
+        "category": "arcane",
+        "unit": "posy",
+        "bulk": 0.5,
+        "baseValue": 14,
+        "perishRounds": 2,
+        "tags": [
+          "foraged",
+          "potion-ingredient"
+        ],
+        "notes": "Opens only after dark. Picked on a night leg - see travel.json."
+      },
+      {
+        "id": "ember-root",
+        "name": "Ember Root",
+        "category": "arcane",
+        "unit": "bundle",
+        "bulk": 0.5,
+        "baseValue": 16,
+        "tags": [
+          "foraged",
+          "potion-ingredient"
+        ],
+        "notes": "Dug from dry ground. Warm to the touch."
+      },
+      {
+        "id": "frost-lichen",
+        "name": "Frost Lichen",
+        "category": "arcane",
+        "unit": "pouch",
+        "bulk": 0.5,
+        "baseValue": 12,
+        "tags": [
+          "foraged",
+          "potion-ingredient"
+        ],
+        "notes": "Scraped off cold stone. The base of every physician's tonic."
       }
     ]
   },
@@ -1393,7 +1593,8 @@ window.GAME_DATA = {
           "cut-peat",
           "gather-stone",
           "lay-roadbed",
-          "sink-mineshaft"
+          "sink-mineshaft",
+          "dig-ember-root"
         ]
       },
       {
@@ -1454,7 +1655,8 @@ window.GAME_DATA = {
         "enables": [
           "butcher-livestock",
           "hunt-game",
-          "harvest-herbs"
+          "harvest-herbs",
+          "scrape-frost-lichen"
         ]
       },
       {
@@ -1943,7 +2145,7 @@ window.GAME_DATA = {
         "name": "Clay Pit",
         "category": "extraction",
         "tier": 1,
-        "summary": "Digs clay from river banks and marshes.",
+        "summary": "Digs clay from marshes, shores and wet ground.",
         "cost": [
           {
             "commodity": "logs",
@@ -1955,8 +2157,8 @@ window.GAME_DATA = {
         "workerSlots": 3,
         "terrain": [
           "marsh",
-          "river-bank",
-          "grassland"
+          "grassland",
+          "coast"
         ],
         "requiresDeposit": "clay-bed"
       },
@@ -1977,8 +2179,7 @@ window.GAME_DATA = {
         "workerSlots": 3,
         "terrain": [
           "desert",
-          "coast",
-          "river-bank"
+          "coast"
         ]
       },
       {
@@ -2063,8 +2264,7 @@ window.GAME_DATA = {
           "hills",
           "desert",
           "tundra",
-          "marsh",
-          "river-bank"
+          "marsh"
         ]
       },
       {
@@ -2085,7 +2285,7 @@ window.GAME_DATA = {
         "fieldSlots": 4,
         "terrain": [
           "grassland",
-          "river-bank"
+          "coast"
         ]
       },
       {
@@ -2135,7 +2335,6 @@ window.GAME_DATA = {
         "workerSlots": 2,
         "terrain": [
           "grassland",
-          "river-bank",
           "hills"
         ]
       },
@@ -2204,9 +2403,7 @@ window.GAME_DATA = {
         "minRounds": 2,
         "workerSlots": 3,
         "terrain": [
-          "coast",
-          "river-bank",
-          "lake-shore"
+          "coast"
         ]
       },
       {
@@ -2214,7 +2411,7 @@ window.GAME_DATA = {
         "name": "Sawmill",
         "category": "production",
         "tier": 1,
-        "summary": "Logs into lumber. Doubles its rate if built on a river-bank tile.",
+        "summary": "Logs into lumber. Doubles its rate on a coast tile - water drives the saw.",
         "cost": [
           {
             "commodity": "logs",
@@ -2231,8 +2428,8 @@ window.GAME_DATA = {
         "terrain": [
           "forest",
           "grassland",
-          "river-bank",
-          "hills"
+          "hills",
+          "coast"
         ]
       },
       {
@@ -2344,7 +2541,6 @@ window.GAME_DATA = {
         "terrain": [
           "grassland",
           "hills",
-          "river-bank",
           "marsh"
         ]
       },
@@ -2484,7 +2680,6 @@ window.GAME_DATA = {
         "minRounds": 2,
         "workerSlots": 2,
         "terrain": [
-          "river-bank",
           "grassland",
           "marsh",
           "coast"
@@ -2517,7 +2712,7 @@ window.GAME_DATA = {
         "name": "Mill",
         "category": "production",
         "tier": 1,
-        "summary": "Grain into flour. Free extra output on a hills or river-bank tile (wind and water).",
+        "summary": "Grain into flour. Free extra output on a hills or coast tile (wind and water).",
         "cost": [
           {
             "commodity": "lumber",
@@ -2534,7 +2729,7 @@ window.GAME_DATA = {
         "terrain": [
           "grassland",
           "hills",
-          "river-bank"
+          "coast"
         ]
       },
       {
@@ -2791,7 +2986,7 @@ window.GAME_DATA = {
         "name": "Inn",
         "category": "civic",
         "tier": 2,
-        "summary": "Serve ale or wine here to clear 1 unrest and buy back a little goodwill.",
+        "summary": "Rest, rumour and hired muscle. Serve ale or wine to clear 1 unrest; travellers rest here to heal; escorts are hired here; quests are heard here.",
         "cost": [
           {
             "commodity": "lumber",
@@ -2804,7 +2999,33 @@ window.GAME_DATA = {
         ],
         "buildPoints": 12,
         "minRounds": 2,
-        "workerSlots": 2
+        "workerSlots": 2,
+        "notes": "Resting, hireling costs and rumours are in rules.json under rest and hirelings. Every settlement printed on a map is assumed to contain an inn of its rank."
+      },
+      {
+        "id": "infirmary",
+        "name": "Infirmary",
+        "category": "civic",
+        "tier": 2,
+        "summary": "Where the sick are tended and healers are trained. A town with a fed healer weathers illness cards that empty other towns.",
+        "cost": [
+          {
+            "commodity": "lumber",
+            "qty": 3
+          },
+          {
+            "commodity": "stone",
+            "qty": 2
+          },
+          {
+            "commodity": "parchment",
+            "qty": 1
+          }
+        ],
+        "buildPoints": 12,
+        "minRounds": 2,
+        "workerSlots": 1,
+        "specialist": "healer"
       },
       {
         "id": "barracks",
@@ -2954,7 +3175,7 @@ window.GAME_DATA = {
         "name": "Bridge",
         "category": "infrastructure",
         "tier": 2,
-        "summary": "Carries a road or rail across one water tile or river edge.",
+        "summary": "Carries a road or rail across one water tile.",
         "cost": [
           {
             "commodity": "stone",
@@ -2973,8 +3194,6 @@ window.GAME_DATA = {
         "minRounds": 2,
         "perTile": true,
         "terrain": [
-          "river-bank",
-          "lake-shore",
           "shallow-water"
         ]
       },
@@ -3241,8 +3460,8 @@ window.GAME_DATA = {
           "terrain": [
             "hills",
             "mountain",
-            "river-bank",
-            "tundra"
+            "tundra",
+            "coast"
           ]
         },
         "tool": "shovel",
@@ -3501,8 +3720,8 @@ window.GAME_DATA = {
         "site": {
           "building": "well",
           "orTerrain": [
-            "river-bank",
-            "lake-shore"
+            "coast",
+            "marsh"
           ]
         },
         "effortHours": 1,
@@ -3705,8 +3924,7 @@ window.GAME_DATA = {
           "fieldSlot": true,
           "terrain": [
             "grassland",
-            "desert",
-            "river-bank"
+            "desert"
           ]
         },
         "toolBonus": {
@@ -4132,7 +4350,7 @@ window.GAME_DATA = {
             "qty": 3
           }
         ],
-        "notes": "+1 lumber if the sawmill is on a river-bank tile."
+        "notes": "+1 lumber if the sawmill is on a coast tile."
       },
       {
         "id": "burn-charcoal",
@@ -4827,6 +5045,68 @@ window.GAME_DATA = {
         "notes": "Elves take 2."
       },
       {
+        "id": "pick-moon-blossom",
+        "name": "Pick Moon Blossom",
+        "category": "arcane",
+        "site": {
+          "terrain": [
+            "grassland",
+            "forest"
+          ]
+        },
+        "effortHours": 2,
+        "inputs": [],
+        "outputs": [
+          {
+            "commodity": "moon-blossom",
+            "qty": 1
+          }
+        ],
+        "notes": "Only during a night leg - the flowers close at dawn. A lit torch or lantern is enough light to work by. See travel.json for the night rules."
+      },
+      {
+        "id": "dig-ember-root",
+        "name": "Dig Ember Root",
+        "category": "arcane",
+        "site": {
+          "terrain": [
+            "desert",
+            "hills"
+          ]
+        },
+        "tool": "shovel",
+        "effortHours": 2,
+        "inputs": [],
+        "outputs": [
+          {
+            "commodity": "ember-root",
+            "qty": 1
+          }
+        ],
+        "notes": "Warm to the touch when it comes out of the ground."
+      },
+      {
+        "id": "scrape-frost-lichen",
+        "name": "Scrape Frost Lichen",
+        "category": "arcane",
+        "site": {
+          "terrain": [
+            "tundra",
+            "mountain"
+          ]
+        },
+        "tool": "knife",
+        "effortHours": 2,
+        "inputs": [],
+        "outputs": [
+          {
+            "commodity": "frost-lichen",
+            "qty": 1
+          }
+        ],
+        "notes": "Grows on the shaded side of standing stones. Physicians pay well for it."
+      },
+      {
         "id": "brew-potion",
         "name": "Brew Potion",
         "category": "arcane",
@@ -4918,6 +5198,24 @@ window.GAME_DATA = {
           }
         ],
         "effect": "Remove 1 unrest from this town and end any Strike affecting it. Wine removes 2."
+      },
+      {
+        "id": "tend-the-sick",
+        "name": "Tend the Sick",
+        "category": "civic",
+        "site": {
+          "building": "infirmary"
+        },
+        "specialist": "healer",
+        "effortHours": 2,
+        "inputs": [
+          {
+            "commodity": "water",
+            "qty": 1
+          }
+        ],
+        "outputs": [],
+        "effect": "Cure one illness marker on a worker, character or figure in this town, or restore 2 health to one character resting here. Spending a Physic Tonic as well cures every illness marker in the town."
       },
       {
         "id": "load-cargo",
@@ -5152,8 +5450,8 @@ window.GAME_DATA = {
     }
   },
   "terrain": {
-    "$comment": "The board is a grid of tiles. Each tile has one terrain type, which decides what can be built there, what it costs to cross, and what deposits can hide underneath it.",
-    "version": "0.1.0",
+    "$comment": "The board is a grid of tiles. Each tile has one terrain type, which decides what can be built there, what it costs to cross, what deposits can hide underneath it, and what a discovery roll there can turn up. Every terrain carries a single-letter CODE: it is printed in the bottom corner of every hex on every map overlay, so there is never an argument about what a cell is when the artwork underneath straddles the grid line. The codes key the travel-speed table in travel.json and the discovery tables in discovery.json.",
+    "version": "0.2.0",
     "tileShape": "hex",
     "tileShapeAlternatives": [
       "square"
@@ -5162,9 +5460,10 @@ window.GAME_DATA = {
       {
         "id": "grassland",
         "name": "Grassland",
+        "code": "G",
         "family": "land",
         "colour": "#8fae5d",
-        "summary": "Flat, open, dull and valuable. The default good ground.",
+        "summary": "Flat, open, dull and valuable. The default good ground, riverlands included.",
         "moveCost": 1,
         "roadCostMultiplier": 1,
         "railCostMultiplier": 1,
@@ -5177,13 +5476,15 @@ window.GAME_DATA = {
           "coal-seam",
           "iron-deposit",
           "salt-dome",
-          "oil-field"
+          "oil-field",
+          "gold-deposit"
         ],
         "startTile": true
       },
       {
         "id": "forest",
         "name": "Forest",
+        "code": "F",
         "family": "land",
         "colour": "#3f6b3a",
         "summary": "Carries tree tokens. Fell them for logs; when the last one goes, the tile becomes grassland.",
@@ -5207,6 +5508,7 @@ window.GAME_DATA = {
       {
         "id": "hills",
         "name": "Hills",
+        "code": "H",
         "family": "land",
         "colour": "#a08b5c",
         "summary": "Where the ore usually is, and where a mill or vineyard does best.",
@@ -5216,7 +5518,8 @@ window.GAME_DATA = {
         "buildable": true,
         "features": [
           "stone",
-          "game"
+          "game",
+          "caves"
         ],
         "deposits": [
           "coal-seam",
@@ -5230,6 +5533,7 @@ window.GAME_DATA = {
       {
         "id": "mountain",
         "name": "Mountain",
+        "code": "M",
         "family": "land",
         "colour": "#7d7d86",
         "summary": "The richest ground and the most expensive to cross. Rail through a mountain is a statement.",
@@ -5240,7 +5544,8 @@ window.GAME_DATA = {
         "housingAllowed": false,
         "features": [
           "stone",
-          "herbs"
+          "herbs",
+          "caves"
         ],
         "deposits": [
           "coal-seam",
@@ -5254,16 +5559,18 @@ window.GAME_DATA = {
       {
         "id": "marsh",
         "name": "Marsh",
+        "code": "B",
         "family": "land",
         "colour": "#5f7360",
-        "summary": "Peat and clay for anyone patient enough to live here.",
+        "summary": "Peat, clay and fresh water for anyone patient enough to live here. B for bog.",
         "moveCost": 3,
         "roadCostMultiplier": 3,
         "railCostMultiplier": 4,
         "buildable": true,
         "features": [
           "reeds",
-          "herbs"
+          "herbs",
+          "fresh-water"
         ],
         "deposits": [
           "clay-bed",
@@ -5274,6 +5581,7 @@ window.GAME_DATA = {
       {
         "id": "tundra",
         "name": "Tundra",
+        "code": "T",
         "family": "land",
         "colour": "#b7c2c4",
         "summary": "Cold and thin. Cold Snap events hit here first and hardest.",
@@ -5295,9 +5603,10 @@ window.GAME_DATA = {
       {
         "id": "desert",
         "name": "Desert",
+        "code": "D",
         "family": "land",
         "colour": "#d6c08a",
-        "summary": "Sand and salt. Nothing grows without a well.",
+        "summary": "Sand and salt. Nothing grows without a well, and the discovery table is not your friend.",
         "moveCost": 2,
         "roadCostMultiplier": 2,
         "railCostMultiplier": 2,
@@ -5313,54 +5622,12 @@ window.GAME_DATA = {
         "requiresWaterForFarming": true
       },
       {
-        "id": "river-bank",
-        "name": "River Bank",
-        "family": "land",
-        "colour": "#6f9d7f",
-        "summary": "Fresh water, good clay, powered mills - and a river edge that must be bridged to cross.",
-        "moveCost": 1,
-        "roadCostMultiplier": 1,
-        "railCostMultiplier": 2,
-        "buildable": true,
-        "waterAccess": true,
-        "features": [
-          "fresh-water",
-          "clay"
-        ],
-        "deposits": [
-          "clay-bed",
-          "sand-bar",
-          "gold-deposit"
-        ],
-        "bridgeRequiredToCross": true,
-        "startTile": true
-      },
-      {
-        "id": "lake-shore",
-        "name": "Lake Shore",
-        "family": "land",
-        "colour": "#78a7b0",
-        "summary": "Fishing and fresh water without the sea.",
-        "moveCost": 1,
-        "roadCostMultiplier": 1,
-        "railCostMultiplier": 2,
-        "buildable": true,
-        "waterAccess": true,
-        "features": [
-          "fresh-water",
-          "fish"
-        ],
-        "deposits": [
-          "clay-bed",
-          "sand-bar"
-        ]
-      },
-      {
         "id": "coast",
         "name": "Coast",
+        "code": "C",
         "family": "land",
         "colour": "#c9c193",
-        "summary": "The only place a harbour can go.",
+        "summary": "Any shore - sea, lake or river mouth. The only place a harbour can go.",
         "moveCost": 1,
         "roadCostMultiplier": 1,
         "railCostMultiplier": 2,
@@ -5369,20 +5636,24 @@ window.GAME_DATA = {
         "features": [
           "fish",
           "sand",
-          "salt"
+          "salt",
+          "fresh-water"
         ],
         "deposits": [
           "salt-dome",
-          "sand-bar"
+          "sand-bar",
+          "clay-bed",
+          "gold-deposit"
         ],
         "startTile": true
       },
       {
         "id": "shallow-water",
         "name": "Shallow Water",
+        "code": "S",
         "family": "water",
         "colour": "#7fb6cf",
-        "summary": "Crossable by bridge, navigable by barge.",
+        "summary": "Lakes, straits and inshore sea. Crossable by bridge, navigable by barge.",
         "moveCost": 99,
         "roadCostMultiplier": 0,
         "railCostMultiplier": 0,
@@ -5399,9 +5670,10 @@ window.GAME_DATA = {
       {
         "id": "deep-water",
         "name": "Deep Water",
+        "code": "O",
         "family": "water",
         "colour": "#3f7ba0",
-        "summary": "Ships only. No bridge will ever cross it.",
+        "summary": "Open sea. Ships only, and no bridge will ever cross it. O for ocean.",
         "moveCost": 99,
         "roadCostMultiplier": 0,
         "railCostMultiplier": 0,
@@ -5470,6 +5742,11 @@ window.GAME_DATA = {
         "id": "clay",
         "name": "Clay Bank",
         "summary": "A clay pit may be built here."
+      },
+      {
+        "id": "caves",
+        "name": "Caves",
+        "summary": "Discovery rolls here can reveal a cave mouth. Entering a cave needs a lit torch or lantern - see travel.json and discovery.json."
       }
     ],
     "boardSetup": {
@@ -5482,16 +5759,14 @@ window.GAME_DATA = {
       "faceDownAtStart": "All tiles beyond each player's starting cluster of 3.",
       "startingCluster": "Each player places a town hall on a face-up start tile plus its two neighbours, at least 3 tiles from any other player.",
       "terrainMix": {
-        "grassland": 0.24,
+        "grassland": 0.3,
         "forest": 0.2,
         "hills": 0.14,
         "mountain": 0.08,
-        "marsh": 0.05,
+        "marsh": 0.06,
         "tundra": 0.04,
         "desert": 0.04,
-        "river-bank": 0.07,
-        "lake-shore": 0.03,
-        "coast": 0.05,
+        "coast": 0.08,
         "shallow-water": 0.04,
         "deep-water": 0.02
       }
@@ -5511,7 +5786,7 @@ window.GAME_DATA = {
         "totalYield": 40,
         "tokensInSetup": 8,
         "surveyDifficulty": 2,
-        "summary": "Common and shallow. Often visible without a survey on river-bank tiles."
+        "summary": "Common and shallow. Often visible without a survey on marsh and coast tiles."
       },
       {
         "id": "sand-bar",
@@ -5767,8 +6042,7 @@ window.GAME_DATA = {
         "waterCapable": true,
         "waters": [
           "shallow-water",
-          "river-bank",
-          "lake-shore"
+          "coast"
         ]
       },
       {
@@ -5905,15 +6179,15 @@ window.GAME_DATA = {
         "name": "Hero",
         "movePoints": 5,
         "cost": 0,
-        "summary": "One per player, free at setup. Carries potions and equipment, rolls an extra combat die, and never starves.",
+        "summary": "One per player, free at setup. Carries potions and equipment, rolls an extra combat die, and never starves. A character card from data/characters.json gives the hero a name, a face, a health bar and sometimes mana.",
         "carries": 3,
         "unique": true
       }
     ]
   },
   "peoples": {
-    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run.",
-    "version": "0.1.0",
+    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman).",
+    "version": "0.2.0",
     "peoples": [
       {
         "id": "human",
@@ -5934,10 +6208,13 @@ window.GAME_DATA = {
         "foodPreference": [],
         "terrainComfort": [
           "grassland",
-          "river-bank",
           "coast",
           "forest"
-        ]
+        ],
+        "manaStorage": {
+          "innate": 0,
+          "note": "A human body holds no mana. Every drop lives in a talisman."
+        }
       },
       {
         "id": "dwarf",
@@ -5976,7 +6253,11 @@ window.GAME_DATA = {
           "mountain",
           "hills",
           "tundra"
-        ]
+        ],
+        "manaStorage": {
+          "innate": 0,
+          "note": "Dwarves distrust mana in the flesh and keep it in worked metal, where it belongs."
+        }
       },
       {
         "id": "elf",
@@ -6010,8 +6291,12 @@ window.GAME_DATA = {
         "terrainComfort": [
           "forest",
           "hills",
-          "river-bank"
-        ]
+          "grassland"
+        ],
+        "manaStorage": {
+          "innate": 3,
+          "note": "An elf may hold up to 3 mana in the body; anything beyond that needs a talisman like everyone else."
+        }
       },
       {
         "id": "halfling",
@@ -6045,9 +6330,13 @@ window.GAME_DATA = {
         ],
         "terrainComfort": [
           "grassland",
-          "river-bank",
-          "forest"
-        ]
+          "forest",
+          "coast"
+        ],
+        "manaStorage": {
+          "innate": 0,
+          "note": "Halflings hold no mana and are privately relieved about it."
+        }
       },
       {
         "id": "orc",
@@ -6083,7 +6372,11 @@ window.GAME_DATA = {
           "marsh",
           "tundra",
           "mountain"
-        ]
+        ],
+        "manaStorage": {
+          "innate": 0,
+          "note": "An orc who wants mana takes a talisman from someone who had one."
+        }
       }
     ],
     "workerTypes": [
@@ -6197,6 +6490,20 @@ window.GAME_DATA = {
         "bonus": "Potions brewed here last one extra round."
       },
       {
+        "id": "healer",
+        "name": "Healer",
+        "building": "infirmary",
+        "trainCost": {
+          "coin": 50,
+          "effortHours": 3
+        },
+        "unlocks": [
+          "tend-the-sick"
+        ],
+        "bonus": "Illness event cards cost this healer's town one worker fewer, and characters resting at this town's inn heal +1 per round.",
+        "notes": "Physician, medic, hedge-witch, bone-setter - the title varies by people, the profession is the same. The character deck carries named examples."
+      },
+      {
         "id": "miner",
         "name": "Miner",
         "building": "mine",
@@ -6232,13 +6539,13 @@ window.GAME_DATA = {
     ]
   },
   "events": {
-    "$comment": "One card is drawn at the start of every round (two from round 13). Each card carries plain text for the tabletop game and a machine-readable effects array so the digital version can resolve it automatically.",
-    "version": "0.1.0",
+    "$comment": "During the Events phase each player, in turn order, reveals one card and resolves it (see deck below). The card's scope decides who it hits: a global card the third player draws still hits everyone. Each card carries plain text for the tabletop game and a machine-readable effects array so the digital version can resolve it automatically.",
+    "version": "0.2.0",
     "scopes": [
       {
         "id": "global",
         "name": "Global",
-        "summary": "Applies to every player."
+        "summary": "Applies to every player, whoever drew it."
       },
       {
         "id": "local",
@@ -6248,12 +6555,12 @@ window.GAME_DATA = {
       {
         "id": "targeted",
         "name": "Targeted",
-        "summary": "Applies to one player - usually the leader, or roll."
+        "summary": "Applies to the player who drew it - except crime cards, which target the leader."
       },
       {
         "id": "offer",
         "name": "Offer",
-        "summary": "An opportunity any player may take, resolved in turn order."
+        "summary": "An opportunity. The drawer decides first; if they pass, it goes round in turn order."
       }
     ],
     "categories": [
@@ -6286,6 +6593,10 @@ window.GAME_DATA = {
         "name": "Market"
       },
       {
+        "id": "industry",
+        "name": "Industry"
+      },
+      {
         "id": "arcane",
         "name": "Arcane"
       }
@@ -6304,7 +6615,9 @@ window.GAME_DATA = {
       "cargo": "Affect goods in transit.",
       "combat": "Spawn or resolve a fight.",
       "crop": "Affect growing crops.",
-      "choice": "Player picks between listed branches."
+      "choice": "Player picks between listed branches.",
+      "health": "Damage or heal characters and travelling figures.",
+      "discovery": "Widen or shrink a result band on the discovery tables - see data/discovery.json."
     },
     "cards": [
       {
@@ -6361,7 +6674,7 @@ window.GAME_DATA = {
         ],
         "mitigations": [
           "A town with a well loses no water.",
-          "River-bank and lake-shore towns are unaffected."
+          "Towns on a coast or marsh tile - anywhere with fresh water - are unaffected."
         ]
       },
       {
@@ -7116,26 +7429,182 @@ window.GAME_DATA = {
             ]
           }
         ]
+      },
+      {
+        "id": "camp-fever",
+        "name": "Camp Fever",
+        "category": "social",
+        "scope": "targeted",
+        "copies": 2,
+        "text": "Something in the water at last night's camp. Your travelling party wakes shivering.",
+        "effects": [
+          {
+            "type": "health",
+            "op": "damage",
+            "value": 2,
+            "target": "one-party",
+            "text": "Every figure and character in one of your travelling parties takes 2 damage."
+          },
+          {
+            "type": "movement",
+            "op": "multiplier",
+            "value": 0.5,
+            "target": "same-party",
+            "rounds": 1
+          }
+        ],
+        "mitigations": [
+          "A healer character in the party shrugs it off: no damage, full speed.",
+          "Spend a Healing Draught or Physic Tonic to cancel the card."
+        ]
+      },
+      {
+        "id": "marsh-ague",
+        "name": "Marsh Ague",
+        "category": "social",
+        "scope": "local",
+        "copies": 2,
+        "text": "The ague drifts out of the fens with the evening mist, and the village bell rings thin all week.",
+        "effects": [
+          {
+            "type": "effort",
+            "op": "die-step",
+            "value": -1,
+            "target": "region-workers",
+            "rounds": 2
+          },
+          {
+            "type": "population",
+            "op": "remove",
+            "value": 1,
+            "target": "region-towns",
+            "condition": "only towns on or adjacent to a marsh tile"
+          }
+        ],
+        "mitigations": [
+          "A town with an infirmary and a fed healer loses no worker.",
+          "A Physic Tonic cancels the card for one town."
+        ]
+      },
+      {
+        "id": "grey-pox",
+        "name": "The Grey Pox",
+        "category": "social",
+        "scope": "global",
+        "copies": 1,
+        "text": "It starts in one market square and is everywhere by week's end. Whole streets shutter; the carts stop coming.",
+        "effects": [
+          {
+            "type": "population",
+            "op": "remove",
+            "value": 1,
+            "target": "all-towns",
+            "condition": "every town with 4 or more workers loses one"
+          },
+          {
+            "type": "effort",
+            "op": "die-step",
+            "value": -1,
+            "target": "all-workers",
+            "rounds": 1
+          }
+        ],
+        "mitigations": [
+          "A town with an infirmary and a fed healer loses no worker.",
+          "A Healing Draught spent by a town cancels its loss.",
+          "This is the card that makes the infirmary worth its parchment."
+        ]
+      },
+      {
+        "id": "impure-smelt",
+        "name": "Impure Smelt",
+        "category": "industry",
+        "scope": "global",
+        "copies": 2,
+        "text": "A bad seam of flux stone in every furnace this week. The metal pours grey and snaps like slate.",
+        "effects": [
+          {
+            "type": "tool",
+            "op": "wear-multiplier",
+            "value": 2,
+            "rounds": 1,
+            "text": "Every tool used this round takes double wear."
+          },
+          {
+            "type": "tool",
+            "op": "brittle-forge",
+            "rounds": 1,
+            "text": "Any tool forged this round is marked brittle: it breaks when its durability track reaches half, not zero."
+          }
+        ],
+        "mitigations": [
+          "A smelter or blacksmith burning coal this round is unaffected - coal runs hot enough to burn the impurities out. Peat and charcoal do not.",
+          "A smith specialist may spend 2 hours re-tempering to clear one brittle mark."
+        ]
+      },
+      {
+        "id": "blood-moon",
+        "name": "Blood Moon",
+        "category": "arcane",
+        "scope": "global",
+        "copies": 1,
+        "text": "The moon rises rust-red and the wild things move under it.",
+        "effects": [
+          {
+            "type": "discovery",
+            "op": "band",
+            "target": "monster",
+            "value": 3,
+            "rounds": 2,
+            "text": "Monster bands on every discovery table widen by 3 for two rounds."
+          }
+        ],
+        "mitigations": [
+          "A party carrying a lit lantern is never surprised: it may always choose to withdraw before a monster encounter begins."
+        ]
+      },
+      {
+        "id": "quiet-season",
+        "name": "The Quiet Season",
+        "category": "wildlife",
+        "scope": "global",
+        "copies": 1,
+        "text": "The wild goes still. Hunters come home early, and nothing follows them home.",
+        "effects": [
+          {
+            "type": "discovery",
+            "op": "band",
+            "target": "monster",
+            "value": -2,
+            "rounds": 2,
+            "text": "Monster bands on every discovery table shrink by 2 for two rounds."
+          }
+        ]
       }
     ],
     "deck": {
-      "totalCards": 58,
-      "drawPerRound": 1,
-      "drawPerRoundFrom": {
+      "totalCards": 69,
+      "$totalNote": "Sum of every card's copies. The previous figure of 58 had drifted from the data - which is exactly why the annex is generated now.",
+      "drawPerPlayerPerRound": 1,
+      "drawnBy": "each-player",
+      "when": "In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.",
+      "lateGame": {
         "round": 13,
-        "count": 2
+        "extra": "From round 13, the first player each round reveals and resolves a second card."
       },
       "reshuffle": "When the deck runs out, shuffle the discard pile and carry on.",
       "designNotes": [
+        "Every player turning a card means every player owns a piece of the round's weather. A global card is global whoever drew it; a targeted card is the drawer's problem.",
         "Weather and market cards are the common ones - they should feel like the seasons turning, not like being punished.",
         "Crime cards target the leader by default. That is the catch-up mechanism, and it is deliberate.",
-        "Every disaster card should have at least one mitigation a player could have bought in advance. Being wiped out should always be traceable to a decision."
+        "Every disaster card should have at least one mitigation a player could have bought in advance. Being wiped out should always be traceable to a decision.",
+        "Discovery-band cards (Blood Moon, The Quiet Season) are the dial on how dangerous the wild feels. Add copies to taste."
       ]
     }
   },
   "items": {
-    "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use.",
-    "version": "0.1.0",
+    "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use. Talisman cards carry a vertical numbered mana bar on the RIGHT edge (capacity bars always sit right; harm bars always sit left - the convention is stated in docs/art/06-components.md).",
+    "version": "0.2.0",
     "classes": [
       {
         "id": "clothing",
@@ -7156,6 +7625,16 @@ window.GAME_DATA = {
         "id": "potion",
         "name": "Potion",
         "summary": "One-shot consumable, usually spent during the Labour Roll or a battle."
+      },
+      {
+        "id": "light",
+        "name": "Light",
+        "summary": "Lets a party travel at night and enter caves. See travel.json."
+      },
+      {
+        "id": "talisman",
+        "name": "Talisman",
+        "summary": "Stores mana. Most peoples cannot hold mana in the body at all - see peoples.json manaStorage. Track stored mana with a token on the card's mana bar."
       }
     ],
     "items": [
@@ -7637,7 +8116,8 @@ window.GAME_DATA = {
         "effortHours": 3,
         "baseValue": 85,
         "effects": [
-          "Cancel one worker loss, or ignore one Plague card."
+          "Cancel one worker loss, or ignore one Plague card.",
+          "Or restore 3 health to one character."
         ]
       },
       {
@@ -7723,6 +8203,1814 @@ window.GAME_DATA = {
         "effects": [
           "Shift one commodity family's price band two steps in your favour for your next sale only."
         ]
+      },
+      {
+        "id": "potion-nightsight",
+        "name": "Owl's Eye",
+        "class": "potion",
+        "madeAt": "alchemist",
+        "inputs": [
+          {
+            "commodity": "moon-blossom",
+            "qty": 2
+          },
+          {
+            "commodity": "arcane-herb",
+            "qty": 1
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 90,
+        "effects": [
+          "One figure or party travels night legs this round as if carrying a lantern."
+        ]
+      },
+      {
+        "id": "potion-physic",
+        "name": "Physic Tonic",
+        "class": "potion",
+        "madeAt": "alchemist",
+        "inputs": [
+          {
+            "commodity": "frost-lichen",
+            "qty": 2
+          },
+          {
+            "commodity": "honey",
+            "qty": 1
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 95,
+        "effects": [
+          "Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card.",
+          "In a healer's hands at an infirmary it cures the whole town - see Tend the Sick."
+        ]
+      },
+      {
+        "id": "potion-emberguard",
+        "name": "Emberguard Salve",
+        "class": "potion",
+        "madeAt": "alchemist",
+        "inputs": [
+          {
+            "commodity": "ember-root",
+            "qty": 2
+          },
+          {
+            "commodity": "honey",
+            "qty": 1
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 100,
+        "effects": [
+          "One unit or character ignores every hit from a fire-element monster in one battle."
+        ]
+      },
+      {
+        "id": "torch",
+        "name": "Torch",
+        "class": "light",
+        "madeAt": "carpenter",
+        "inputs": [
+          {
+            "commodity": "lumber",
+            "qty": 1
+          },
+          {
+            "commodity": "cloth",
+            "qty": 1
+          }
+        ],
+        "effortHours": 1,
+        "baseValue": 10,
+        "uses": 2,
+        "effects": [
+          "Travel one night leg at torch speed - see travel.json.",
+          "Enter a cave.",
+          "Each night leg or cave visit spends one use; at zero it is gone."
+        ]
+      },
+      {
+        "id": "lantern",
+        "name": "Lantern",
+        "class": "light",
+        "madeAt": "blacksmith",
+        "inputs": [
+          {
+            "commodity": "ironware",
+            "qty": 1
+          },
+          {
+            "commodity": "glass",
+            "qty": 1
+          }
+        ],
+        "effortHours": 2,
+        "baseValue": 55,
+        "effects": [
+          "Travel night legs at lantern speed - see travel.json.",
+          "Explore caves without spending uses.",
+          "Does not wear out, but it can be lost, sold or stolen like any item."
+        ]
+      },
+      {
+        "id": "talisman-bone-charm",
+        "name": "Bone Charm",
+        "class": "talisman",
+        "cardCode": "TAL-01",
+        "madeAt": "carpenter",
+        "manaCapacity": 2,
+        "inputs": [
+          {
+            "commodity": "lumber",
+            "qty": 1
+          },
+          {
+            "commodity": "leather",
+            "qty": 1
+          }
+        ],
+        "effortHours": 2,
+        "baseValue": 30,
+        "story": "Knucklebones and a thong of hide, carved by someone's grandmother against the dark. It works, which is more than can be said for most of what grandmothers carve.",
+        "effects": [
+          "Stores up to 2 mana. Track with a token on the mana bar."
+        ]
+      },
+      {
+        "id": "talisman-weavers-knot",
+        "name": "Weaver's Knot",
+        "class": "talisman",
+        "cardCode": "TAL-02",
+        "madeAt": "weaver",
+        "manaCapacity": 3,
+        "inputs": [
+          {
+            "commodity": "yarn",
+            "qty": 2
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 45,
+        "story": "A cord tied in a knot with no beginning. Weavers make them in the winter and do not discuss the pattern.",
+        "effects": [
+          "Stores up to 3 mana."
+        ]
+      },
+      {
+        "id": "talisman-copper-amulet",
+        "name": "Copper Amulet",
+        "class": "talisman",
+        "cardCode": "TAL-03",
+        "madeAt": "blacksmith",
+        "manaCapacity": 4,
+        "inputs": [
+          {
+            "commodity": "copper",
+            "qty": 1
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 60,
+        "story": "Copper takes a charge the way dry grass takes a spark. Miners wear them green with age and swear the green is where the mana sits.",
+        "effects": [
+          "Stores up to 4 mana."
+        ]
+      },
+      {
+        "id": "talisman-gold-locket",
+        "name": "Gold Locket",
+        "class": "talisman",
+        "cardCode": "TAL-04",
+        "madeAt": "blacksmith",
+        "manaCapacity": 6,
+        "specialist": "smith",
+        "inputs": [
+          {
+            "commodity": "gold",
+            "qty": 1
+          }
+        ],
+        "effortHours": 4,
+        "baseValue": 120,
+        "story": "Gold never tarnishes and never forgets. A locket holds a portrait on one side and six charges of something else on the other.",
+        "effects": [
+          "Stores up to 6 mana."
+        ]
+      },
+      {
+        "id": "talisman-gemfire-pendant",
+        "name": "Gemfire Pendant",
+        "class": "talisman",
+        "cardCode": "TAL-05",
+        "madeAt": "blacksmith",
+        "manaCapacity": 8,
+        "specialist": "smith",
+        "inputs": [
+          {
+            "commodity": "gems",
+            "qty": 1
+          },
+          {
+            "commodity": "copper",
+            "qty": 1
+          }
+        ],
+        "effortHours": 5,
+        "baseValue": 190,
+        "story": "A cut stone in a copper claw. Hold it to the light and something at the centre of it holds still, watching you back.",
+        "effects": [
+          "Stores up to 8 mana."
+        ]
+      },
+      {
+        "id": "talisman-crystal-phylactery",
+        "name": "Crystal Phylactery",
+        "class": "talisman",
+        "cardCode": "TAL-06",
+        "madeAt": "alchemist",
+        "manaCapacity": 10,
+        "specialist": "alchemist",
+        "inputs": [
+          {
+            "commodity": "mana-crystal",
+            "qty": 1
+          },
+          {
+            "commodity": "glass",
+            "qty": 1
+          },
+          {
+            "commodity": "gold",
+            "qty": 1
+          }
+        ],
+        "effortHours": 6,
+        "baseValue": 320,
+        "story": "A mana crystal sealed in blown glass and bound in gold wire. The pinnacle of the jeweller's and the alchemist's arts together, and the reason both of them lock their doors.",
+        "effects": [
+          "Stores up to 10 mana.",
+          "Worth 1 victory point at game end."
+        ]
+      }
+    ]
+  },
+  "travel": {
+    "$comment": "The travel-speed table: hexes per leg, by mode of travel, terrain letter code and time of day. This is the printed table a player reads at the table - one row per mode, one column per terrain code from terrain.json. It is hand-tuned rather than derived, because 'a horse is fast on grass and useless on a scree slope' is a judgement, not an equation. A speed of 0 means that mode cannot cross that terrain at all without a road.",
+    "version": "0.1.0",
+    "legs": {
+      "$comment": "A round gives every moving figure, party or vehicle one DAY leg. A NIGHT leg is optional extra movement immediately after, and it needs light. rules.json movement.legs states when; this file states how fast.",
+      "day": "Move up to the listed speed, hex by hex; each hex entered must have a listed speed above 0 for your mode (or a road/rail).",
+      "night": "Only with a lit torch or lantern. Speeds below. A night leg triggers a second discovery roll with the monster band widened by 1."
+    },
+    "terrainCodes": [
+      "G",
+      "F",
+      "H",
+      "M",
+      "B",
+      "T",
+      "D",
+      "C",
+      "S",
+      "O"
+    ],
+    "speeds": {
+      "$comment": "Hexes per day leg. Columns follow terrainCodes: G grassland, F forest, H hills, M mountain, B marsh, T tundra, D desert, C coast, S shallow water, O deep water. The road and rail rows override the terrain underneath: on a road use the road number whatever the ground; on rail a train moves at the rail number and nothing else moves at all.",
+      "modes": [
+        {
+          "id": "on-foot",
+          "name": "On Foot",
+          "hexesPerDayLeg": {
+            "G": 4,
+            "F": 2,
+            "H": 2,
+            "M": 1,
+            "B": 1,
+            "T": 2,
+            "D": 2,
+            "C": 4,
+            "S": 0,
+            "O": 0
+          }
+        },
+        {
+          "id": "mounted",
+          "name": "Mounted",
+          "hexesPerDayLeg": {
+            "G": 6,
+            "F": 2,
+            "H": 3,
+            "M": 1,
+            "B": 1,
+            "T": 3,
+            "D": 3,
+            "C": 6,
+            "S": 0,
+            "O": 0
+          },
+          "note": "Requires a horse - a horse commodity ridden, or a horse vehicle card."
+        },
+        {
+          "id": "cart",
+          "name": "Cart",
+          "hexesPerDayLeg": {
+            "G": 3,
+            "F": 1,
+            "H": 1,
+            "M": 0,
+            "B": 0,
+            "T": 1,
+            "D": 2,
+            "C": 3,
+            "S": 0,
+            "O": 0
+          }
+        },
+        {
+          "id": "caravan",
+          "name": "Caravan",
+          "hexesPerDayLeg": {
+            "G": 2,
+            "F": 1,
+            "H": 1,
+            "M": 0,
+            "B": 0,
+            "T": 1,
+            "D": 2,
+            "C": 2,
+            "S": 0,
+            "O": 0
+          }
+        },
+        {
+          "id": "barge",
+          "name": "Barge",
+          "hexesPerDayLeg": {
+            "G": 0,
+            "F": 0,
+            "H": 0,
+            "M": 0,
+            "B": 0,
+            "T": 0,
+            "D": 0,
+            "C": 3,
+            "S": 3,
+            "O": 0
+          }
+        },
+        {
+          "id": "ship",
+          "name": "Ship",
+          "hexesPerDayLeg": {
+            "G": 0,
+            "F": 0,
+            "H": 0,
+            "M": 0,
+            "B": 0,
+            "T": 0,
+            "D": 0,
+            "C": 2,
+            "S": 3,
+            "O": 5
+          }
+        }
+      ],
+      "overrides": [
+        {
+          "id": "road",
+          "name": "On a Road",
+          "hexesPerDayLeg": {
+            "on-foot": 5,
+            "mounted": 8,
+            "cart": 6,
+            "caravan": 4
+          },
+          "note": "Whatever the terrain under the road. This is what a road is for."
+        },
+        {
+          "id": "rail",
+          "name": "On Rail",
+          "hexesPerDayLeg": {
+            "train": 6
+          },
+          "note": "Trains only, depot to depot, whatever the terrain. Trains stop rarely - see discovery.json railNote - which quietly makes the train the safest way to cross the map."
+        }
+      ]
+    },
+    "night": {
+      "$comment": "What each light source allows after dark. No light, no travel - the dark in the Reach is genuinely dark.",
+      "noLight": {
+        "hexesPerNightLeg": 0,
+        "note": "No travel at all. Even on a road."
+      },
+      "torch": {
+        "hexesPerNightLeg": 1,
+        "hexesOnRoad": 2,
+        "note": "One hex, two on a road, whatever the mode. Spends one use of the torch."
+      },
+      "lantern": {
+        "rule": "half day speed, rounded up",
+        "note": "A lantern-lit party moves at half its day speed for the terrain, rounded up. Nothing to spend."
+      },
+      "trains": {
+        "rule": "trains run at night at full rail speed if the engine carries a lantern",
+        "note": "Fitted as cargo of 0 bulk. Some vehicle cards carry one already."
+      },
+      "ships": {
+        "rule": "no night sailing without a lantern rigged; with one, half speed",
+        "note": null
+      },
+      "potions": {
+        "rule": "Owl's Eye (items.json) counts as a lantern for one round",
+        "note": null
+      }
+    },
+    "caves": {
+      "$comment": "Cave mouths are placed by discovery rolls on terrain with the caves feature (hills, mountain). What is inside is worth the oil.",
+      "entry": "A party may enter a cave on its hex only with a lit torch or lantern. A torch spends one use per visit; a lantern spends nothing.",
+      "inside": "Entering resolves one draw on the cave column in discovery.json. A cave, once emptied, is marked spent - it becomes a known camp: resting in it counts as an inn with no coin cost.",
+      "why": "Caves are where the earth and fire monsters keep what they have taken, and where more than one campaign stage leads."
+    }
+  },
+  "discovery": {
+    "$comment": "Discovery rolls: what the land does back. When a figure, party or vehicle ENDS a movement leg, roll a d20 once on the table for the hex it stopped in - one roll per leg, never one per hex crossed. Tables are keyed by terrain (the letter codes in terrain.json); a road or rail on the hex overrides its terrain table. Bands are deliberately skewed: roads grow merchants and bandits, deserts and mountains grow monsters, and commodity traces are rare everywhere because discovery is what you find when you are NOT looking - surveying and foraging are jobs, with their own recipes.",
+    "version": "0.1.0",
+    "die": "d20",
+    "results": [
+      {
+        "id": "nothing",
+        "name": "Nothing",
+        "summary": "The country is long and empty. Move on."
+      },
+      {
+        "id": "merchant",
+        "name": "Travelling Merchant",
+        "summary": "Deal item cards face up per rules.json market.merchantStock (roadside stock, 2 cards). Buy at base value +10%. He has heard prices: learn the current band of one commodity family in the nearest settlement."
+      },
+      {
+        "id": "traveller",
+        "name": "Traveller",
+        "summary": "News on the road. Look at the top card of the event deck and put it back, or look at the top card of the quest deck."
+      },
+      {
+        "id": "bandits",
+        "name": "Bandits",
+        "summary": "Strength 2, +1 per full 20 bulk of cargo in the party. Fight them, or pay a toll of a quarter of the carried value. An escort (soldier or hireling) rolls first."
+      },
+      {
+        "id": "monster",
+        "name": "Monster",
+        "summary": "Draw from the monster deck until the drawn monster's terrain list includes this hex's terrain; shuffle the rest back. Resolve the encounter - see monsters.json encounterOptions."
+      },
+      {
+        "id": "commodity-trace",
+        "name": "Trace",
+        "summary": "Something worth digging showed in a cutting or a stream bed. Place a trace tile: a survey on this hex is at +2 until the deposit is found or ruled out."
+      },
+      {
+        "id": "cave-mouth",
+        "name": "Cave Mouth",
+        "summary": "Place a cave tile on the hex. A party with a lit torch or lantern may enter, now or any later visit - entering resolves one draw on the cave table."
+      },
+      {
+        "id": "quest-omen",
+        "name": "Omen",
+        "summary": "Something stranger than the road. Draw the top card of the quest deck; accept it or put it on the bottom."
+      },
+      {
+        "id": "hazard",
+        "name": "Hazard",
+        "summary": "A washed-out track, a sand-slip, rotten ice. The leg ends here. Each character takes 1 damage unless the party discards a rope or lets a tool take 4 wear."
+      },
+      {
+        "id": "pirates",
+        "name": "Pirates",
+        "summary": "Strength 3. Fight, pay 30% of cargo value, or run - lose half speed on your next leg."
+      },
+      {
+        "id": "flotsam",
+        "name": "Flotsam",
+        "summary": "A wreck, or the leavings of one. Gain 2 bulk of a random commodity - roll on the commodity reference, rerolling livestock."
+      },
+      {
+        "id": "hoard",
+        "name": "Hoard",
+        "summary": "Something laired here once, and left in a hurry. Gain 20 coin and one item card dealt from the item deck."
+      }
+    ],
+    "tables": [
+      {
+        "id": "grassland",
+        "name": "Grassland (G)",
+        "terrain": "grassland",
+        "code": "G",
+        "entries": [
+          {
+            "roll": "1",
+            "result": "bandits"
+          },
+          {
+            "roll": "2-4",
+            "result": "traveller"
+          },
+          {
+            "roll": "5-14",
+            "result": "nothing"
+          },
+          {
+            "roll": "15-16",
+            "result": "commodity-trace"
+          },
+          {
+            "roll": "17-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "earth": 2,
+          "air": 2,
+          "fire": 1,
+          "water": 1
+        }
+      },
+      {
+        "id": "forest",
+        "name": "Forest (F)",
+        "terrain": "forest",
+        "code": "F",
+        "entries": [
+          {
+            "roll": "1",
+            "result": "bandits"
+          },
+          {
+            "roll": "2-3",
+            "result": "traveller"
+          },
+          {
+            "roll": "4-11",
+            "result": "nothing"
+          },
+          {
+            "roll": "12-14",
+            "result": "commodity-trace"
+          },
+          {
+            "roll": "15-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "earth": 3,
+          "air": 1,
+          "fire": 1,
+          "water": 1
+        }
+      },
+      {
+        "id": "hills",
+        "name": "Hills (H)",
+        "terrain": "hills",
+        "code": "H",
+        "entries": [
+          {
+            "roll": "1",
+            "result": "bandits"
+          },
+          {
+            "roll": "2-3",
+            "result": "traveller"
+          },
+          {
+            "roll": "4-10",
+            "result": "nothing"
+          },
+          {
+            "roll": "11-13",
+            "result": "commodity-trace"
+          },
+          {
+            "roll": "14-15",
+            "result": "cave-mouth"
+          },
+          {
+            "roll": "16-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "earth": 3,
+          "fire": 2,
+          "air": 1,
+          "water": 0
+        }
+      },
+      {
+        "id": "mountain",
+        "name": "Mountain (M)",
+        "terrain": "mountain",
+        "code": "M",
+        "entries": [
+          {
+            "roll": "1",
+            "result": "hazard"
+          },
+          {
+            "roll": "2",
+            "result": "traveller"
+          },
+          {
+            "roll": "3-8",
+            "result": "nothing"
+          },
+          {
+            "roll": "9-11",
+            "result": "commodity-trace"
+          },
+          {
+            "roll": "12-14",
+            "result": "cave-mouth"
+          },
+          {
+            "roll": "15-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "earth": 2,
+          "fire": 2,
+          "air": 2,
+          "water": 0
+        }
+      },
+      {
+        "id": "marsh",
+        "name": "Marsh (B)",
+        "terrain": "marsh",
+        "code": "B",
+        "entries": [
+          {
+            "roll": "1",
+            "result": "hazard"
+          },
+          {
+            "roll": "2",
+            "result": "traveller"
+          },
+          {
+            "roll": "3-10",
+            "result": "nothing"
+          },
+          {
+            "roll": "11-12",
+            "result": "commodity-trace"
+          },
+          {
+            "roll": "13-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "water": 3,
+          "earth": 2,
+          "fire": 0,
+          "air": 1
+        }
+      },
+      {
+        "id": "tundra",
+        "name": "Tundra (T)",
+        "terrain": "tundra",
+        "code": "T",
+        "entries": [
+          {
+            "roll": "1-2",
+            "result": "hazard"
+          },
+          {
+            "roll": "3",
+            "result": "traveller"
+          },
+          {
+            "roll": "4-11",
+            "result": "nothing"
+          },
+          {
+            "roll": "12-13",
+            "result": "commodity-trace"
+          },
+          {
+            "roll": "14-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "air": 3,
+          "water": 2,
+          "earth": 1,
+          "fire": 0
+        }
+      },
+      {
+        "id": "desert",
+        "name": "Desert (D)",
+        "terrain": "desert",
+        "code": "D",
+        "entries": [
+          {
+            "roll": "1-2",
+            "result": "hazard"
+          },
+          {
+            "roll": "3",
+            "result": "traveller"
+          },
+          {
+            "roll": "4-9",
+            "result": "nothing"
+          },
+          {
+            "roll": "10-11",
+            "result": "commodity-trace"
+          },
+          {
+            "roll": "12-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "fire": 3,
+          "earth": 2,
+          "air": 2,
+          "water": 0
+        }
+      },
+      {
+        "id": "coast",
+        "name": "Coast (C)",
+        "terrain": "coast",
+        "code": "C",
+        "entries": [
+          {
+            "roll": "1",
+            "result": "hazard"
+          },
+          {
+            "roll": "2-4",
+            "result": "traveller"
+          },
+          {
+            "roll": "5-12",
+            "result": "nothing"
+          },
+          {
+            "roll": "13-14",
+            "result": "flotsam"
+          },
+          {
+            "roll": "15",
+            "result": "merchant"
+          },
+          {
+            "roll": "16-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "water": 3,
+          "air": 2,
+          "earth": 1,
+          "fire": 0
+        }
+      },
+      {
+        "id": "shallow-water",
+        "name": "Shallow Water (S)",
+        "terrain": "shallow-water",
+        "code": "S",
+        "entries": [
+          {
+            "roll": "1",
+            "result": "hazard"
+          },
+          {
+            "roll": "2-3",
+            "result": "flotsam"
+          },
+          {
+            "roll": "4-13",
+            "result": "nothing"
+          },
+          {
+            "roll": "14-15",
+            "result": "pirates"
+          },
+          {
+            "roll": "16-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "water": 4,
+          "air": 1,
+          "earth": 0,
+          "fire": 0
+        }
+      },
+      {
+        "id": "deep-water",
+        "name": "Deep Water (O)",
+        "terrain": "deep-water",
+        "code": "O",
+        "entries": [
+          {
+            "roll": "1-2",
+            "result": "hazard"
+          },
+          {
+            "roll": "3",
+            "result": "flotsam"
+          },
+          {
+            "roll": "4-12",
+            "result": "nothing"
+          },
+          {
+            "roll": "13-15",
+            "result": "pirates"
+          },
+          {
+            "roll": "16-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "water": 4,
+          "air": 1,
+          "earth": 0,
+          "fire": 0
+        }
+      },
+      {
+        "id": "road",
+        "name": "On a Road",
+        "terrain": null,
+        "overlay": "road",
+        "$comment": "A road on the hex replaces its terrain table. Merchants live here; monsters mostly do not; bandits know exactly where the cargo goes.",
+        "entries": [
+          {
+            "roll": "1-2",
+            "result": "bandits"
+          },
+          {
+            "roll": "3-7",
+            "result": "merchant"
+          },
+          {
+            "roll": "8-10",
+            "result": "traveller"
+          },
+          {
+            "roll": "11-17",
+            "result": "nothing"
+          },
+          {
+            "roll": "18-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "earth": 2,
+          "air": 1,
+          "fire": 1,
+          "water": 1
+        }
+      },
+      {
+        "id": "rail",
+        "name": "On the Rail",
+        "terrain": null,
+        "overlay": "rail",
+        "$comment": "Rolled only when the train halts - at a depot, or when the line is blocked. Never a commodity trace: the ground either side of the line was picked clean while it was being laid. Fewer stops, fewer rolls: the train is the safe way across the map, and that is intended.",
+        "entries": [
+          {
+            "roll": "1-2",
+            "result": "bandits"
+          },
+          {
+            "roll": "3-5",
+            "result": "merchant"
+          },
+          {
+            "roll": "6-7",
+            "result": "traveller"
+          },
+          {
+            "roll": "8-17",
+            "result": "nothing"
+          },
+          {
+            "roll": "18-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "earth": 2,
+          "fire": 1,
+          "air": 1,
+          "water": 0
+        }
+      },
+      {
+        "id": "cave",
+        "name": "Inside a Cave",
+        "terrain": null,
+        "overlay": "cave",
+        "$comment": "Drawn once per entry into a placed cave, by a party carrying light - see travel.json caves.",
+        "entries": [
+          {
+            "roll": "1-2",
+            "result": "hazard"
+          },
+          {
+            "roll": "3-8",
+            "result": "nothing"
+          },
+          {
+            "roll": "9-12",
+            "result": "commodity-trace"
+          },
+          {
+            "roll": "13-16",
+            "result": "monster"
+          },
+          {
+            "roll": "17-19",
+            "result": "hoard"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "elementWeights": {
+          "earth": 3,
+          "fire": 2,
+          "air": 0,
+          "water": 1
+        }
+      }
+    ],
+    "modifiers": {
+      "$comment": "How the bands move. A band 'widens by N' by claiming N rolls below its printed bottom; it never claims 1, and never claims 20 (the omen keeps the top). Multiple modifiers stack.",
+      "events": "Event cards with a discovery effect shift the monster band: Blood Moon widens it by 3, The Quiet Season shrinks it by 2.",
+      "night": "The discovery roll after a night leg widens the monster band by 1.",
+      "settlementShadow": "Within 1 hex of any settlement, the monster band shrinks by 2 - the land is walked, hunted and lit.",
+      "shrunkPast": "A band shrunk past its own top row simply does not occur."
+    }
+  },
+  "arcana": {
+    "$comment": "Mana, elements and spells. Mana is NOT a commodity: it has no bulk, sits in no stockpile, and cannot be crated. It lives in bodies (rarely - see peoples.json manaStorage) and in talismans (items.json, class talisman), tracked with a token on the talisman's mana bar. Mana crystals in commodities.json are a different thing: frozen mana as a trade good and potion ingredient - a crystal can be shattered by its holder to yield 2 mana of any one element, but mana can never be pressed back into a crystal.",
+    "version": "0.1.0",
+    "elements": [
+      {
+        "id": "fire",
+        "name": "Fire",
+        "ink": "oxide",
+        "summary": "Heat, forge-work, hunger. At home in the desert and under the mountains."
+      },
+      {
+        "id": "earth",
+        "name": "Earth",
+        "ink": "verdigris",
+        "summary": "Stone, root, patience. At home in hills, barrows and old woods."
+      },
+      {
+        "id": "water",
+        "name": "Water",
+        "ink": "slate",
+        "summary": "Current, mist, depth. At home in marsh, shore and open sea."
+      },
+      {
+        "id": "air",
+        "name": "Air",
+        "ink": "soot-tint-40",
+        "summary": "Wind, cold, distance. At home on the tundra and the high passes."
+      }
+    ],
+    "mana": {
+      "gained": "Slaying a monster yields its manaYield in mana of its element, to the characters who fought it. Some quests and hoards yield mana directly.",
+      "stored": "Mana must be held: in a body with innate capacity (elves, up to 3) or in a talisman. Mana gained with nowhere to hold it blows away at the end of the round.",
+      "element": "Stored mana keeps its element. A talisman can hold a mix - note each element's share beside the bar.",
+      "traded": "Characters in the same hex may pass mana freely between talismans. Mana in a talisman is stolen with the talisman.",
+      "spent": "On spells, below. Spells state their element; mana of the wrong element does not cast them."
+    },
+    "spells": [
+      {
+        "id": "kindle",
+        "name": "Kindle",
+        "element": "fire",
+        "cost": 1,
+        "effect": "Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel."
+      },
+      {
+        "id": "ember-lash",
+        "name": "Ember Lash",
+        "element": "fire",
+        "cost": 3,
+        "effect": "+2 combat dice to one unit or character for one battle."
+      },
+      {
+        "id": "mend-stone",
+        "name": "Mend Stone",
+        "element": "earth",
+        "cost": 2,
+        "effect": "Repair 2 damage on one building or vehicle, or restore 4 wear to one tool."
+      },
+      {
+        "id": "bulwark",
+        "name": "Bulwark",
+        "element": "earth",
+        "cost": 4,
+        "effect": "One unit or character ignores 2 hits in one battle."
+      },
+      {
+        "id": "cleanse",
+        "name": "Cleanse",
+        "element": "water",
+        "cost": 2,
+        "effect": "Cure one illness marker, or restore 2 health to one character."
+      },
+      {
+        "id": "mist-veil",
+        "name": "Mist Veil",
+        "element": "water",
+        "cost": 4,
+        "effect": "Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll."
+      },
+      {
+        "id": "fair-wind",
+        "name": "Fair Wind",
+        "element": "air",
+        "cost": 2,
+        "effect": "+2 hexes on one leg, any mode. A ship gets +3."
+      },
+      {
+        "id": "stormcall",
+        "name": "Stormcall",
+        "element": "air",
+        "cost": 5,
+        "effect": "One party, vehicle or cargo you can see loses its next leg entirely."
+      }
+    ],
+    "casting": {
+      "who": "Any character holding the mana - innately or in a carried talisman. Workers and soldiers do not cast.",
+      "when": "Any time its effect makes sense; combat spells before hits are applied, Mist Veil after the discovery roll.",
+      "limit": "One spell per character per round.",
+      "notes": "The spell list is deliberately short and economic, like the potion list: hours, movement, safety, repair. When the list grows, it grows here - and it should probably become a deck."
+    }
+  },
+  "monsters": {
+    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element for now - the deck is built to grow. Card layout: portrait, name and element badge at the top, story text low, vertical numbered HEALTH bar on the LEFT edge (harm bars always sit left, capacity bars always sit right - the convention is in docs/art/06-components.md), strength and mana yield as fixed stats. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
+    "version": "0.1.0",
+    "encounterOptions": {
+      "$comment": "Meeting a monster is a choice, and the choice is the player's unless the card says otherwise. The card lists which of the four options it allows; slay is always allowed.",
+      "slay": "Fight it, per the conflict rules in rules.json. Slaying yields the monster's manaYield in mana of its element, split among the characters who fought.",
+      "enslave": "Win the fight by 2 or more net hits WITHOUT killing it (declare before rolling). An enslaved monster works as a d4 worker in one of your towns, eats 1 food per round, and adds 1 unrest to that town while it lives there. It yields no mana.",
+      "befriend": "Offer the gift named on its card and roll d6: on 4+ it is befriended - it guards its hex for you, or travels with your party as a strength-equal escort. It leaves the first round you cannot feed it. No mana.",
+      "domesticate": "Befriend it first, or win without killing, then spend 2 consecutive rounds with it at a pasture. A domesticated monster is livestock with the benefit on its card. No mana.",
+      "flee": "Any party may instead withdraw the way it came, ending its movement. A party that fled rolls no discovery this leg. Monsters of strength 4+ get one free round of hits against fleeing cargo vehicles.",
+      "lair": "An unresolved monster stays on its hex as a figure. It attacks any party that ends a leg there, and event cards may move it."
+    },
+    "monsters": [
+      {
+        "id": "cinder-wolf",
+        "cardCode": "MON-01",
+        "name": "Cinder Wolf",
+        "element": "fire",
+        "strength": 2,
+        "health": 4,
+        "manaYield": 1,
+        "terrains": [
+          "desert",
+          "hills",
+          "grassland"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": true,
+          "domesticate": true
+        },
+        "gift": "2 meat, laid down and stepped away from",
+        "domesticated": "Runs with one travelling party: +1 hex on day legs, and bandits demand no toll.",
+        "story": "A lean grey wolf with coals banked behind its ribs. Where the pack sleeps, the grass wears away in rings of ash, and shepherds learn to count their flock twice."
+      },
+      {
+        "id": "ash-drake",
+        "cardCode": "MON-02",
+        "name": "Ash Drake",
+        "element": "fire",
+        "strength": 4,
+        "health": 8,
+        "manaYield": 3,
+        "terrains": [
+          "mountain",
+          "desert"
+        ],
+        "options": {
+          "enslave": true,
+          "befriend": false,
+          "domesticate": false
+        },
+        "story": "Not the dragon of the sighting cards - a smaller, meaner cousin, wingless, that swims through scree the way an eel swims a weir. Chained beside a smelter it earns its keep: the forge it sleeps under never wants for heat. It is not grateful.",
+        "enslaved": "Instead of working as a d4 worker, an enslaved drake may serve as a furnace: one smelter or kiln in its town pays no fuel."
+      },
+      {
+        "id": "forge-wight",
+        "cardCode": "MON-03",
+        "name": "Forge Wight",
+        "element": "fire",
+        "strength": 3,
+        "health": 6,
+        "manaYield": 2,
+        "terrains": [
+          "mountain",
+          "hills"
+        ],
+        "options": {
+          "enslave": true,
+          "befriend": true,
+          "domesticate": false
+        },
+        "gift": "1 coal, freely given - it can tell coal that was stolen",
+        "story": "The shape of a smith, in iron nobody forged, warm as a banked fire. It haunts old workings and finished tunnels, mending what it finds there. Befriended, it mends for you; enslaved, it hates you carefully and forever.",
+        "befriended": "While it guards a hex of yours, tools in that town take half wear."
+      },
+      {
+        "id": "barrow-troll",
+        "cardCode": "MON-04",
+        "name": "Barrow Troll",
+        "element": "earth",
+        "strength": 4,
+        "health": 10,
+        "manaYield": 3,
+        "terrains": [
+          "hills",
+          "grassland"
+        ],
+        "options": {
+          "enslave": true,
+          "befriend": false,
+          "domesticate": false
+        },
+        "story": "It was buried with honours under the hill, by people who are not remembered either. It digs like six men and sleeps like a landslide, and it is always, always hungry.",
+        "enslaved": "Works as a d8 worker at any mine, quarry or construction site - but eats 3 food per round, not 1."
+      },
+      {
+        "id": "stone-boar",
+        "cardCode": "MON-05",
+        "name": "Stone Boar",
+        "element": "earth",
+        "strength": 2,
+        "health": 6,
+        "manaYield": 1,
+        "terrains": [
+          "forest",
+          "hills"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": true,
+          "domesticate": true
+        },
+        "gift": "2 vegetables, or any 1 mushroom",
+        "domesticated": "Kept at a pasture it ploughs like two oxen: sowing recipes in that town cost half hours, and it never needs a plough.",
+        "story": "A boar the colour and apparent hardness of a river boulder. It is placid until it is not, and what it was rooting for turns out, more often than chance allows, to be worth surveying."
+      },
+      {
+        "id": "gravel-wyrm",
+        "cardCode": "MON-06",
+        "name": "Gravel Wyrm",
+        "element": "earth",
+        "strength": 3,
+        "health": 8,
+        "manaYield": 2,
+        "terrains": [
+          "mountain",
+          "desert"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "story": "A blind, legless thing of plated shale that eats stone and passes ore. Miners who find its castings sing on the way home; miners who find the wyrm do not sing at all. It cannot be reasoned with, because it cannot tell a person from a pillar."
+      },
+      {
+        "id": "mire-strangler",
+        "cardCode": "MON-07",
+        "name": "Mire Strangler",
+        "element": "water",
+        "strength": 3,
+        "health": 6,
+        "manaYield": 2,
+        "terrains": [
+          "marsh"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "story": "Where the fen path forks and one fork is dry, the dry fork is the Strangler. It is patient the way water is patient, and it has been fed by three generations of shortcuts."
+      },
+      {
+        "id": "reef-serpent",
+        "cardCode": "MON-08",
+        "name": "Reef Serpent",
+        "element": "water",
+        "strength": 3,
+        "health": 7,
+        "manaYield": 2,
+        "terrains": [
+          "coast",
+          "shallow-water"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": true,
+          "domesticate": false
+        },
+        "gift": "2 fish, tipped over the gunwale at dusk",
+        "befriended": "While it patrols a shore hex of yours, pirates never trouble barges or ships that start or end there.",
+        "story": "Fishing villages paint its coils on their boats and spill it a share of every catch. Skippers who call the custom superstition are welcome to sail without it."
+      },
+      {
+        "id": "deepwater-maw",
+        "cardCode": "MON-09",
+        "name": "The Deepwater Maw",
+        "element": "water",
+        "strength": 5,
+        "health": 12,
+        "manaYield": 4,
+        "unique": true,
+        "terrains": [
+          "deep-water"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "story": "There is one, it is old, and every drowned bell and broken keel in the gulf is somewhere in it. Ships that sight it log a heading and a prayer. It is the end of one campaign and the reason harbour insurance exists."
+      },
+      {
+        "id": "rime-harpy",
+        "cardCode": "MON-10",
+        "name": "Rime Harpy",
+        "element": "air",
+        "strength": 2,
+        "health": 5,
+        "manaYield": 1,
+        "terrains": [
+          "tundra",
+          "mountain"
+        ],
+        "options": {
+          "enslave": true,
+          "befriend": true,
+          "domesticate": false
+        },
+        "gift": "any 1 luxury commodity - it likes what glitters",
+        "story": "It nests in the wind-hollowed ice and collects what shines: coins, gems, buckles, once famously an entire surveyor's kit. Its voice is a dead friend's, badly rehearsed.",
+        "befriended": "Once per round it flies a message or 0.5 bulk between any two of your towns, instantly."
+      },
+      {
+        "id": "dust-devil",
+        "cardCode": "MON-11",
+        "name": "Dust Devil",
+        "element": "air",
+        "strength": 2,
+        "health": 4,
+        "manaYield": 2,
+        "terrains": [
+          "desert",
+          "grassland"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "story": "A standing twist of wind and grit with something like intent in it. You cannot chain the wind, feed it, or pen it - you can only take its mana off it, or take a different road. Slain, it drops whatever it was carrying: also gain 1d6 coin in scoured-clean scrap."
+      },
+      {
+        "id": "storm-roc",
+        "cardCode": "MON-12",
+        "name": "Storm Roc",
+        "element": "air",
+        "strength": 4,
+        "health": 9,
+        "manaYield": 3,
+        "terrains": [
+          "mountain",
+          "coast"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": true
+        },
+        "domesticated": "The grandest mount in the game: one character may ride it - day legs of 8 in any terrain, ignoring ground entirely. It eats 2 meat per round and will not enter a battle.",
+        "story": "Its wingbeats are the weather two valleys over. Nobody has befriended one - the roc does not take gifts - but a bird beaten fairly and fed patiently has, three times in recorded history, decided a rider was worth carrying."
+      }
+    ]
+  },
+  "vehicles": {
+    "$comment": "The vehicle deck: named, individual vehicles as cards, twelve for now, three of each kind. A vehicle card is a specific machine with a history; transport.json modes are the generic rules it runs on (mode names which). Card layout: picture across the middle, name and card code at the top, story text low; a vertical numbered DAMAGE bar up the LEFT edge and a vertical numbered CARGO bar up the RIGHT edge, both numbered from the bottom - harm left, capacity right, the same convention as every other deck (docs/art/06-components.md). Track damage and loaded bulk with tokens on the bars. A vehicle whose damage bar fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first. Art prompts in docs/art/prompts/vehicles.md.",
+    "version": "0.1.0",
+    "cardIdScheme": {
+      "$comment": "Every card in every deck carries a code: a deck prefix, a dash, a two-digit sequence. VEH vehicles, MON monsters, CHR characters, QST quests, TAL talismans, EVT events, ITM items, SPL spells. A revision suffix (VEH-03 v2) marks a reprinted card; unrevised cards carry no suffix. The numbering is this repository's own - anyone forking the game is free to renumber, which is why the code is data, not identity: the id field is the identity.",
+      "prefixes": {
+        "VEH": "vehicles",
+        "MON": "monsters",
+        "CHR": "characters",
+        "QST": "quests",
+        "TAL": "items (talismans)",
+        "EVT": "events",
+        "ITM": "items",
+        "SPL": "arcana (spells)"
+      }
+    },
+    "vehicles": [
+      {
+        "id": "reach-flyer",
+        "cardCode": "VEH-01",
+        "name": "The Reach Flyer",
+        "mode": "train",
+        "cargoCapacity": 40,
+        "damageBoxes": 8,
+        "quirk": "+1 hex per leg, and she carries 4 passengers (figures or characters) free among the mail sacks.",
+        "story": "The pride of the Steppe Line, polished brass and impatience. She has made Vossgard to Brassford in a day and a night, and the fireman has the burns to prove it."
+      },
+      {
+        "id": "steppe-hauler",
+        "cardCode": "VEH-02",
+        "name": "Steppe Hauler",
+        "mode": "train",
+        "cargoCapacity": 100,
+        "damageBoxes": 10,
+        "quirk": "Burns 1 extra coal per leg. Nothing else on rails carries close to her hundred bulk.",
+        "story": "Twelve trucks and a boiler like a chapel. When the Hauler passes a village, the village comes out to watch; when she is late, the ironworks stand idle and everybody knows why."
+      },
+      {
+        "id": "old-smoke",
+        "cardCode": "VEH-03",
+        "name": "Old Smoke",
+        "mode": "train",
+        "cargoCapacity": 60,
+        "damageBoxes": 6,
+        "quirk": "Costs half a train's price to buy. Each journey, roll a d6: on a 1 she limps, and the journey takes twice as long.",
+        "story": "The first engine ever to cross the pass, sold on, patched, sold again. Every engineer in the Reach has driven her once and speaks of her the way you speak of a difficult grandmother."
+      },
+      {
+        "id": "gullwing",
+        "cardCode": "VEH-04",
+        "name": "Gullwing",
+        "mode": "ship",
+        "cargoCapacity": 30,
+        "damageBoxes": 8,
+        "quirk": "+1 hex per leg, and she carries a rigged lantern: she may sail night legs at half speed.",
+        "story": "A courier sloop built for the packet run, all sail and no patience. She has outrun two storms and one embargo, and her skipper mentions all three before you have sat down."
+      },
+      {
+        "id": "saltreach-pride",
+        "cardCode": "VEH-05",
+        "name": "Saltreach Pride",
+        "mode": "ship",
+        "cargoCapacity": 80,
+        "damageBoxes": 12,
+        "quirk": "Takes the first 2 hits of any battle or storm on her oak sides without marking damage.",
+        "story": "The great trader of the western run, oak-ribbed and stubborn. She has been dismasted twice and come home twice, and Saltreach's harbour rates are set to whatever her master will pay."
+      },
+      {
+        "id": "ember-coast-trader",
+        "cardCode": "VEH-06",
+        "name": "Ember Coast Trader",
+        "mode": "ship",
+        "cargoCapacity": 55,
+        "damageBoxes": 10,
+        "quirk": "Sells at +10% at any harbour on the southern coast - Dunhaven and Port Malchior know her flag and clear her berth.",
+        "story": "A fat, cheerful coaster that has worked the southern run so long the reef serpents recognise her hull. Her hold smells of salt, spice and forty years of honest smuggling."
+      },
+      {
+        "id": "dunhaven-column",
+        "cardCode": "VEH-07",
+        "name": "The Dunhaven Column",
+        "mode": "caravan",
+        "cargoCapacity": 28,
+        "damageBoxes": 8,
+        "quirk": "Desert-wise: crosses desert at 2 hexes per leg, and hazard results in desert cost her nothing.",
+        "story": "Forty years of the Kholvar crossing, water butts strapped three deep. The Column has never lost a wagon to the sand, and its masters intend to be buried saying so."
+      },
+      {
+        "id": "fenway-wagons",
+        "cardCode": "VEH-08",
+        "name": "The Fenway Wagons",
+        "mode": "caravan",
+        "cargoCapacity": 20,
+        "damageBoxes": 6,
+        "quirk": "Broad marsh-rigged wheels: may cross marsh at 1 hex per leg, which no other wheeled thing can do at all.",
+        "story": "Wide-wheeled, willow-sprung, waterproofed with fen pitch. The Fenway crews sell the safe road through the Mirewash, and the toll is knowing which tussocks are lying."
+      },
+      {
+        "id": "varl-wagonrow",
+        "cardCode": "VEH-09",
+        "name": "The Varl Wagonrow",
+        "mode": "caravan",
+        "cargoCapacity": 24,
+        "damageBoxes": 7,
+        "quirk": "Hill-country teams: crosses hills at 2 hexes per leg.",
+        "story": "Ox-teams bred in the highlands, drivers born in the wagons. The Wagonrow takes the upland road the maps advise against and arrives, insufferably, early."
+      },
+      {
+        "id": "bay-courser",
+        "cardCode": "VEH-10",
+        "name": "Bay Courser",
+        "mode": "mounted",
+        "cargoCapacity": 2,
+        "damageBoxes": 4,
+        "quirk": "+1 hex on grassland legs. The fastest honest thing on four legs in the Reach.",
+        "story": "A racing bay out of the Vossgard studs, all nerves and speed. She has carried three riders to fame and thrown two of them at the finish."
+      },
+      {
+        "id": "steppe-pony",
+        "cardCode": "VEH-11",
+        "name": "Steppe Pony",
+        "mode": "mounted",
+        "cargoCapacity": 3,
+        "damageBoxes": 5,
+        "quirk": "Ignores tundra penalties and forages for herself: no feed, ever.",
+        "story": "Shaggy, short-legged, unimpressed. The steppe pony has carried the mail through three winters that killed better-looking horses, and her opinion of better-looking horses is on record."
+      },
+      {
+        "id": "black-malchior",
+        "cardCode": "VEH-12",
+        "name": "Black Malchior",
+        "mode": "mounted",
+        "cargoCapacity": 2,
+        "damageBoxes": 4,
+        "quirk": "Night-eyed: may travel one night leg per journey with no light at all.",
+        "story": "A tall black gelding the port is named after, or the other way round - the ostlers argue. He walks the dark road at an even pace, and riders swear he sees the ruts before the moon does."
+      }
+    ]
+  },
+  "characters": {
+    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a health track and sometimes mana. Card layout: portrait across the middle, name and code at the top, story low; a vertical numbered HEALTH bar up the LEFT edge, and - only where the character has mana capacity - a vertical numbered MANA bar up the RIGHT edge. Harm left, capacity right, same as every deck (docs/art/06-components.md). A character at 0 health is carried to the nearest settlement and rests until healed to half; they lose any carried cargo on the way. Art prompts in docs/art/prompts/characters.md.",
+    "version": "0.1.0",
+    "characters": [
+      {
+        "id": "corin-vale",
+        "cardCode": "CHR-01",
+        "name": "Corin Vale",
+        "people": "human",
+        "calling": "Wayfarer",
+        "health": 10,
+        "manaCapacity": 0,
+        "traits": [
+          "Wayfinder: +1 hex on any day leg that starts on a road.",
+          "Knows the inns: resting costs Corin no coin, anywhere."
+        ],
+        "startsWith": [
+          "travelling-cloak"
+        ],
+        "story": "Corin has walked every road on the map and several the map declines to show. They carry other people's letters, other people's debts, and a cloak that has been to more funerals than most priests."
+      },
+      {
+        "id": "berga-understone",
+        "cardCode": "CHR-02",
+        "name": "Berga Understone",
+        "people": "dwarf",
+        "calling": "Prospector",
+        "health": 12,
+        "manaCapacity": 0,
+        "traits": [
+          "Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party.",
+          "Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1."
+        ],
+        "startsWith": [
+          "boots"
+        ],
+        "story": "Berga can taste iron in spring water and hear a hollow under a hillside. She left the deep halls over a matter of principle - the principle being that the seam she found was hers."
+      },
+      {
+        "id": "sylvae-of-the-duskmere",
+        "cardCode": "CHR-03",
+        "name": "Sylvae of the Duskmere",
+        "people": "elf",
+        "calling": "Herbalist",
+        "health": 8,
+        "manaCapacity": 3,
+        "manaNote": "Innate - no talisman needed for the first 3.",
+        "traits": [
+          "Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife.",
+          "The wood remembers her: forest costs her party 1 to cross."
+        ],
+        "startsWith": [],
+        "story": "Sylvae has catalogued four hundred growing things and personally argued with perhaps a dozen. Her satchel is worth more than most warehouses, and smells considerably better."
+      },
+      {
+        "id": "tilly-goodbarrel",
+        "cardCode": "CHR-04",
+        "name": "Tilly Goodbarrel",
+        "people": "halfling",
+        "calling": "Provisioner",
+        "health": 8,
+        "manaCapacity": 0,
+        "traits": [
+          "Iron Stomach: Tilly and her party ignore illness event cards.",
+          "Quartermaster: food carried by her party never perishes."
+        ],
+        "startsWith": [],
+        "story": "Tilly has fed harvest crews, armies and one very confused troll, and holds that there is no crisis a proper breakfast does not shrink. Her wagon's pantry defies several natural laws."
+      },
+      {
+        "id": "ruk-of-the-red-road",
+        "cardCode": "CHR-05",
+        "name": "Ruk of the Red Road",
+        "people": "orc",
+        "calling": "Caravan Guard",
+        "health": 13,
+        "manaCapacity": 0,
+        "traits": [
+          "Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave.",
+          "+1 combat die in any battle protecting cargo."
+        ],
+        "startsWith": [
+          "war-axe"
+        ],
+        "story": "Ruk guarded the Kholvar crossing for twenty years and the scars are a map of every ambush that failed. The axe is for emphasis. Mostly."
+      },
+      {
+        "id": "elspeth-marrow",
+        "cardCode": "CHR-06",
+        "name": "Doctor Elspeth Marrow",
+        "people": "human",
+        "calling": "Physician",
+        "health": 9,
+        "manaCapacity": 0,
+        "traits": [
+          "Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed.",
+          "Her party ignores Camp Fever."
+        ],
+        "startsWith": [
+          "potion-physic"
+        ],
+        "story": "Trained at the Saltreach college, thrown out of it over a disagreement about leeches - she was against them. Her bag is oiled leather; her ledger lists every patient, and the margins list every fee still owed."
+      },
+      {
+        "id": "havik-coalbrand",
+        "cardCode": "CHR-07",
+        "name": "Havik Coalbrand",
+        "people": "dwarf",
+        "calling": "Engineer",
+        "health": 10,
+        "manaCapacity": 0,
+        "traits": [
+          "Linesman: a train Havik rides spends 1 less coal per leg.",
+          "Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands."
+        ],
+        "startsWith": [],
+        "story": "Havik walked the whole Reach Line before it was laid, driving in the survey pegs by hand. He talks to engines in Old Dwarfish and maintains, with evidence, that they run better for it."
+      },
+      {
+        "id": "mother-keswick",
+        "cardCode": "CHR-08",
+        "name": "Old Mother Keswick",
+        "people": "human",
+        "calling": "Hedge-Witch",
+        "health": 7,
+        "manaCapacity": 0,
+        "manaNote": "Human - every drop she holds lives in a talisman, and she holds plenty.",
+        "traits": [
+          "Hedge Magic: spells cost Keswick 1 less mana, minimum 1.",
+          "Second Sight: once per round she may look at the top card of the event deck."
+        ],
+        "startsWith": [
+          "talisman-bone-charm"
+        ],
+        "story": "Every fen village has a Mother Keswick and this is the one the others were named after. She trades in warts cursed, weather guessed and truths nobody thanked her for, and her bone charm was old when the Reach was young."
+      }
+    ]
+  },
+  "quests": {
+    "$comment": "The quest deck: mini-quests and campaigns. A quest reaches a player through a quest-omen discovery result, or by paying 5 coin at any inn to hear a rumour (draw one). The player reads it and ACCEPTS or DECLINES on the spot; declined cards go to the bottom of the deck for someone else. An accepted quest sits face up by the player's board until completed or abandoned - abandoning is free but the card is discarded from the game, and some campaigns say otherwise. Complexity runs 1 (an errand) to 5 (a campaign that shapes a whole game); the deck is meant to grow at every complexity. Settlement names refer to the Korvane Reach board; a future map brings its own quest cards. Card codes QST-nn.",
+    "version": "0.1.0",
+    "quests": [
+      {
+        "id": "millers-debt",
+        "cardCode": "QST-01",
+        "type": "mini",
+        "complexity": 1,
+        "name": "The Miller's Debt",
+        "hook": "The miller at Grist ground a season's flour on credit, and the credit was grain that never came.",
+        "task": "Deliver 3 grain to Grist.",
+        "reward": {
+          "coin": 25,
+          "note": "And goodwill: your next purchase in Grist is at -10%."
+        }
+      },
+      {
+        "id": "lanterns-for-coldwater",
+        "cardCode": "QST-02",
+        "type": "mini",
+        "complexity": 1,
+        "name": "Lanterns for Coldwater",
+        "hook": "The northern nights run eighteen hours in winter, and Coldwater's last lantern went through the harbour ice with the boat it was rigged to.",
+        "task": "Deliver a lantern (the item) to Coldwater.",
+        "reward": {
+          "coin": 40,
+          "note": "And a bed by the stove: resting at Coldwater is free for you, all game."
+        }
+      },
+      {
+        "id": "boar-of-bramblehold",
+        "cardCode": "QST-03",
+        "type": "mini",
+        "complexity": 2,
+        "name": "The Boar of Bramblehold",
+        "hook": "Something is rooting up the Bramblehold coppices by night, and the woodcutters have opinions about its size.",
+        "task": "Travel to any Bramblehold Wood hex and resolve a Stone Boar encounter there - slay it, or better, keep it.",
+        "reward": {
+          "note": "If domesticated: keep the boar, and score 1 victory point. If slain: gain 4 meat, 2 hide and its earth mana."
+        }
+      },
+      {
+        "id": "word-to-dry-wells",
+        "cardCode": "QST-04",
+        "type": "mini",
+        "complexity": 2,
+        "name": "Word to Dry Wells",
+        "hook": "A sealed letter, a worried clerk, and a settlement three days into the sand. Nobody says what is in the letter. The seal is the Seat's.",
+        "task": "Carry the letter from Vossgard to Dry Wells within 4 rounds of accepting.",
+        "reward": {
+          "coin": 60,
+          "note": "And the well-keeper's gratitude: one free automatic survey success on any desert hex, once."
+        }
+      },
+      {
+        "id": "strangler-in-the-mire",
+        "cardCode": "QST-05",
+        "type": "mini",
+        "complexity": 3,
+        "name": "The Strangler in the Mire",
+        "hook": "Umber Hollow has stopped counting its missing in ones. The fen path is closed, the peat is cut short, and the inn is full of people who will not walk home.",
+        "task": "Slay the Mire Strangler within 2 hexes of Umber Hollow. If no Strangler is on the board, travelling those marsh hexes finds it on any discovery monster result, automatically.",
+        "reward": {
+          "coin": 80,
+          "mana": {
+            "element": "water",
+            "qty": 2
+          },
+          "note": "And Umber Hollow's freedom of the house: its inn is free to you, all game."
+        }
+      },
+      {
+        "id": "draught-for-fens-end",
+        "cardCode": "QST-06",
+        "type": "mini",
+        "complexity": 3,
+        "name": "A Draught for Fen's End",
+        "hook": "The sisters who keep the Fen's End sickhouse sent a list: one draught, properly brewed, before the ague season. The list is dated. The date is close.",
+        "task": "Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count.",
+        "reward": {
+          "coin": 70,
+          "note": "And word spreads of it: score 1 victory point."
+        }
+      },
+      {
+        "id": "ironspine-road",
+        "cardCode": "QST-07",
+        "type": "campaign",
+        "complexity": 4,
+        "name": "The Ironspine Road",
+        "hook": "There is one pass over the Ironspine worth a rail bed, and three interests that would rather there were none. The Seat wants a road first, to prove the line can live.",
+        "stages": [
+          {
+            "name": "Survey the Pass",
+            "task": "End a leg on 2 different mountain hexes between Vossgard and Port Malchior and succeed at a survey on each.",
+            "reward": {
+              "note": "The Seat's cartographers share their notes: Plan Route costs you no effort, all game."
+            }
+          },
+          {
+            "name": "Prove the Road",
+            "task": "Escort a caravan (yours or a hired one) from Vossgard to Port Malchior without losing any cargo to any event, bandit or monster.",
+            "reward": {
+              "coin": 100
+            }
+          },
+          {
+            "name": "The Thing in the Tunnel",
+            "task": "The old bore under the pass is not empty. Enter with light and resolve a Forge Wight encounter - slay it, befriend it, or enslave it.",
+            "reward": {
+              "vp": 2,
+              "note": "And the pass is yours by use and custom: rail you lay on mountain hexes costs half build-points, all game."
+            }
+          }
+        ],
+        "notes": "Stages in order. Abandoning this campaign discards it for every player - the pass stays shut."
+      },
+      {
+        "id": "drowned-bell",
+        "cardCode": "QST-08",
+        "type": "campaign",
+        "complexity": 5,
+        "name": "The Drowned Bell of Taleowick",
+        "hook": "Taleowick's chapel bell went into the bay a lifetime ago, boat and bellringer with it, and on flat calm nights the village swears it still rings the hour. Lately it has been ringing the wrong one.",
+        "stages": [
+          {
+            "name": "The Tale at the Inn",
+            "task": "Rest a round at Taleowick and pay 10 coin for the whole story.",
+            "reward": {
+              "note": "The sexton's map of the old channel: your ships and barges treat the four Splinter Isles hexes as home water - no discovery rolls there."
+            }
+          },
+          {
+            "name": "The Sounding",
+            "task": "End a ship or barge leg on 3 different shallow-water hexes within 2 hexes of Taleowick. Each triggers its discovery roll as normal; survive whatever answers.",
+            "reward": {
+              "note": "The bell-clapper, hauled up in a net: counts as 1 gold, but keep it - it is the campaign's key."
+            }
+          },
+          {
+            "name": "What Rings It",
+            "task": "The Deepwater Maw has been using the bell as a lure. It rises against the ship carrying the clapper: fight and slay it. Strength 5, health 12, and it strikes first unless a character aboard has water mana stored.",
+            "reward": {
+              "vp": 3,
+              "mana": {
+                "element": "water",
+                "qty": 4
+              },
+              "items": [
+                "talisman-crystal-phylactery"
+              ],
+              "note": "The phylactery is found inside the bell, which the village lets you keep the story of."
+            }
+          }
+        ],
+        "notes": "Stages in order. If the Maw is slain by anyone else first, stage 3 completes at the Maw's hex with the clapper aboard - the bell falls silent either way."
       }
     ]
   },
@@ -7838,8 +10126,6 @@ window.GAME_DATA = {
         "~": "deep-water",
         "-": "shallow-water",
         "c": "coast",
-        "l": "lake-shore",
-        "r": "river-bank",
         ".": "grassland",
         "f": "forest",
         "h": "hills",
@@ -7857,19 +10143,19 @@ window.GAME_DATA = {
         "~~--cc^tttttttttt..c---tfttttt^^",
         "~~~~---cttttttttt...cc--f.ttt.^^",
         "~~~~~-fftt^^ttt.......cc.hhhh^^-",
-        "~~~~~~-fff^^^^^t..........llh^^-",
-        "~~~~~-cffff^^^^..........l-lhf-~",
-        "~~~~~-cfffffff^^^t........llh--~",
+        "~~~~~~-fff^^^^^t..........cch^^-",
+        "~~~~~-cffff^^^^..........c-chf-~",
+        "~~~~~-cfffffff^^^t........cch--~",
         "~~~~-cfffffffff^^^^^........c--~",
         "~~~~-f....fffffff..^^^^....^^^c-",
         "~~~-fff...fffffff...^^^....^^^c-",
         "~~~~-ffffcfffcffff.....^^^^^^..c",
         "~~~~----------ff..m....^^^^^^..f",
         "--~~~~~~--~~~-ffmmmmmmddddd^^^.c",
-        "c----~~~~~~~~-fmmmmmdddlldd^^cc-",
-        "---f-~~~~~~~~-crrrrlllll-ld^^c--",
-        "~~---~~~~~~~-cddddl---lllddc--~~",
-        "~~~~~~~~~~~~-cdddddllllddddc--~~",
+        "c----~~~~~~~~-fmmmmmdddccdd^^cc-",
+        "---f-~~~~~~~~-cmmmmccccc-cd^^c--",
+        "~~---~~~~~~~-cddddc---cccddc--~~",
+        "~~~~~~~~~~~~-cdddddccccddddc--~~",
         "~~~~~~~~~~~-ddddddddddddddc--~~~",
         "~~~~~~~~~~~-cdddddddddddddc-~~~~",
         "~~~~~~~~~~~--cdddccccddddc--~~~~",

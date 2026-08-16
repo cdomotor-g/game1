@@ -1,0 +1,48 @@
+{
+  "$comment": "The travel-speed table: hexes per leg, by mode of travel, terrain letter code and time of day. This is the printed table a player reads at the table - one row per mode, one column per terrain code from terrain.json. It is hand-tuned rather than derived, because 'a horse is fast on grass and useless on a scree slope' is a judgement, not an equation. A speed of 0 means that mode cannot cross that terrain at all without a road.",
+  "version": "0.1.0",
+
+  "legs": {
+    "$comment": "A round gives every moving figure, party or vehicle one DAY leg. A NIGHT leg is optional extra movement immediately after, and it needs light. rules.json movement.legs states when; this file states how fast.",
+    "day": "Move up to the listed speed, hex by hex; each hex entered must have a listed speed above 0 for your mode (or a road/rail).",
+    "night": "Only with a lit torch or lantern. Speeds below. A night leg triggers a second discovery roll with the monster band widened by 1."
+  },
+
+  "terrainCodes": ["G", "F", "H", "M", "B", "T", "D", "C", "S", "O"],
+
+  "speeds": {
+    "$comment": "Hexes per day leg. Columns follow terrainCodes: G grassland, F forest, H hills, M mountain, B marsh, T tundra, D desert, C coast, S shallow water, O deep water. The road and rail rows override the terrain underneath: on a road use the road number whatever the ground; on rail a train moves at the rail number and nothing else moves at all.",
+    "modes": [
+      { "id": "on-foot", "name": "On Foot", "hexesPerDayLeg": { "G": 4, "F": 2, "H": 2, "M": 1, "B": 1, "T": 2, "D": 2, "C": 4, "S": 0, "O": 0 } },
+      { "id": "mounted", "name": "Mounted", "hexesPerDayLeg": { "G": 6, "F": 2, "H": 3, "M": 1, "B": 1, "T": 3, "D": 3, "C": 6, "S": 0, "O": 0 },
+        "note": "Requires a horse - a horse commodity ridden, or a horse vehicle card." },
+      { "id": "cart", "name": "Cart", "hexesPerDayLeg": { "G": 3, "F": 1, "H": 1, "M": 0, "B": 0, "T": 1, "D": 2, "C": 3, "S": 0, "O": 0 } },
+      { "id": "caravan", "name": "Caravan", "hexesPerDayLeg": { "G": 2, "F": 1, "H": 1, "M": 0, "B": 0, "T": 1, "D": 2, "C": 2, "S": 0, "O": 0 } },
+      { "id": "barge", "name": "Barge", "hexesPerDayLeg": { "G": 0, "F": 0, "H": 0, "M": 0, "B": 0, "T": 0, "D": 0, "C": 3, "S": 3, "O": 0 } },
+      { "id": "ship", "name": "Ship", "hexesPerDayLeg": { "G": 0, "F": 0, "H": 0, "M": 0, "B": 0, "T": 0, "D": 0, "C": 2, "S": 3, "O": 5 } }
+    ],
+    "overrides": [
+      { "id": "road", "name": "On a Road", "hexesPerDayLeg": { "on-foot": 5, "mounted": 8, "cart": 6, "caravan": 4 },
+        "note": "Whatever the terrain under the road. This is what a road is for." },
+      { "id": "rail", "name": "On Rail", "hexesPerDayLeg": { "train": 6 },
+        "note": "Trains only, depot to depot, whatever the terrain. Trains stop rarely - see discovery.json railNote - which quietly makes the train the safest way to cross the map." }
+    ]
+  },
+
+  "night": {
+    "$comment": "What each light source allows after dark. No light, no travel - the dark in the Reach is genuinely dark.",
+    "noLight": { "hexesPerNightLeg": 0, "note": "No travel at all. Even on a road." },
+    "torch": { "hexesPerNightLeg": 1, "hexesOnRoad": 2, "note": "One hex, two on a road, whatever the mode. Spends one use of the torch." },
+    "lantern": { "rule": "half day speed, rounded up", "note": "A lantern-lit party moves at half its day speed for the terrain, rounded up. Nothing to spend." },
+    "trains": { "rule": "trains run at night at full rail speed if the engine carries a lantern", "note": "Fitted as cargo of 0 bulk. Some vehicle cards carry one already." },
+    "ships": { "rule": "no night sailing without a lantern rigged; with one, half speed", "note": null },
+    "potions": { "rule": "Owl's Eye (items.json) counts as a lantern for one round", "note": null }
+  },
+
+  "caves": {
+    "$comment": "Cave mouths are placed by discovery rolls on terrain with the caves feature (hills, mountain). What is inside is worth the oil.",
+    "entry": "A party may enter a cave on its hex only with a lit torch or lantern. A torch spends one use per visit; a lantern spends nothing.",
+    "inside": "Entering resolves one draw on the cave column in discovery.json. A cave, once emptied, is marked spent - it becomes a known camp: resting in it counts as an inn with no coin cost.",
+    "why": "Caves are where the earth and fire monsters keep what they have taken, and where more than one campaign stage leads."
+  }
+}

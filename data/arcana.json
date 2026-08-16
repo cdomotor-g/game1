@@ -1,0 +1,45 @@
+{
+  "$comment": "Mana, elements and spells. Mana is NOT a commodity: it has no bulk, sits in no stockpile, and cannot be crated. It lives in bodies (rarely - see peoples.json manaStorage) and in talismans (items.json, class talisman), tracked with a token on the talisman's mana bar. Mana crystals in commodities.json are a different thing: frozen mana as a trade good and potion ingredient - a crystal can be shattered by its holder to yield 2 mana of any one element, but mana can never be pressed back into a crystal.",
+  "version": "0.1.0",
+
+  "elements": [
+    { "id": "fire", "name": "Fire", "ink": "oxide", "summary": "Heat, forge-work, hunger. At home in the desert and under the mountains." },
+    { "id": "earth", "name": "Earth", "ink": "verdigris", "summary": "Stone, root, patience. At home in hills, barrows and old woods." },
+    { "id": "water", "name": "Water", "ink": "slate", "summary": "Current, mist, depth. At home in marsh, shore and open sea." },
+    { "id": "air", "name": "Air", "ink": "soot-tint-40", "summary": "Wind, cold, distance. At home on the tundra and the high passes." }
+  ],
+
+  "mana": {
+    "gained": "Slaying a monster yields its manaYield in mana of its element, to the characters who fought it. Some quests and hoards yield mana directly.",
+    "stored": "Mana must be held: in a body with innate capacity (elves, up to 3) or in a talisman. Mana gained with nowhere to hold it blows away at the end of the round.",
+    "element": "Stored mana keeps its element. A talisman can hold a mix - note each element's share beside the bar.",
+    "traded": "Characters in the same hex may pass mana freely between talismans. Mana in a talisman is stolen with the talisman.",
+    "spent": "On spells, below. Spells state their element; mana of the wrong element does not cast them."
+  },
+
+  "spells": [
+    { "id": "kindle", "name": "Kindle", "element": "fire", "cost": 1,
+      "effect": "Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel." },
+    { "id": "ember-lash", "name": "Ember Lash", "element": "fire", "cost": 3,
+      "effect": "+2 combat dice to one unit or character for one battle." },
+    { "id": "mend-stone", "name": "Mend Stone", "element": "earth", "cost": 2,
+      "effect": "Repair 2 damage on one building or vehicle, or restore 4 wear to one tool." },
+    { "id": "bulwark", "name": "Bulwark", "element": "earth", "cost": 4,
+      "effect": "One unit or character ignores 2 hits in one battle." },
+    { "id": "cleanse", "name": "Cleanse", "element": "water", "cost": 2,
+      "effect": "Cure one illness marker, or restore 2 health to one character." },
+    { "id": "mist-veil", "name": "Mist Veil", "element": "water", "cost": 4,
+      "effect": "Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll." },
+    { "id": "fair-wind", "name": "Fair Wind", "element": "air", "cost": 2,
+      "effect": "+2 hexes on one leg, any mode. A ship gets +3." },
+    { "id": "stormcall", "name": "Stormcall", "element": "air", "cost": 5,
+      "effect": "One party, vehicle or cargo you can see loses its next leg entirely." }
+  ],
+
+  "casting": {
+    "who": "Any character holding the mana - innately or in a carried talisman. Workers and soldiers do not cast.",
+    "when": "Any time its effect makes sense; combat spells before hits are applied, Mist Veil after the discovery roll.",
+    "limit": "One spell per character per round.",
+    "notes": "The spell list is deliberately short and economic, like the potion list: hours, movement, safety, repair. When the list grows, it grows here - and it should probably become a deck."
+  }
+}

@@ -64,6 +64,7 @@ plain workers cannot run, and adds a bonus at their own building.
 | Weaver | Fine cloth; +1 yarn per spin |
 | Merchant | No spread in town; may broker other players' deals for 10% |
 | Alchemist | Potions |
+| Healer | Tend the Sick; illness cards cost the town one worker fewer |
 | Miner | +1 on mining; picks wear half as fast |
 | Farmer | +2 on every harvest |
 | Engineer | Cheaper rail; trains burn less coal |
@@ -71,6 +72,12 @@ plain workers cannot run, and adds a bonus at their own building.
 Specialists are the mid-game power spike. They cost coin, a training slot and a worker
 you were using for something else, and a town that cannot feed its specialist cannot
 run the recipes that specialist unlocks.
+
+**Illness** is the pressure the healer answers. The event deck now carries Camp Fever,
+Marsh Ague and the Grey Pox alongside the Plague — see
+[06-events.md](06-events.md#illness) — and a town with an infirmary and a fed healer
+loses no worker to any of them. The healer is deliberately the first specialist whose
+absence has a body count rather than a slower economy.
 
 ## Soldiers
 

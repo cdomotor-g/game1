@@ -77,6 +77,9 @@
     { "id": "gems", "name": "Gems", "category": "luxury", "unit": "pouch", "bulk": 0.5, "baseValue": 60, "tags": ["trade-good", "theft-target"] },
     { "id": "jewellery", "name": "Jewellery", "category": "luxury", "unit": "case", "bulk": 0.5, "baseValue": 110, "tags": ["trade-good", "theft-target", "tier3"] },
     { "id": "arcane-herb", "name": "Arcane Herb", "category": "arcane", "unit": "bundle", "bulk": 0.5, "baseValue": 20, "tags": ["foraged", "potion-ingredient"] },
-    { "id": "mana-crystal", "name": "Mana Crystal", "category": "arcane", "unit": "shard", "bulk": 0.5, "baseValue": 55, "tags": ["potion-ingredient", "theft-target"] }
+    { "id": "mana-crystal", "name": "Mana Crystal", "category": "arcane", "unit": "shard", "bulk": 0.5, "baseValue": 55, "tags": ["potion-ingredient", "theft-target"] },
+    { "id": "moon-blossom", "name": "Moon Blossom", "category": "arcane", "unit": "posy", "bulk": 0.5, "baseValue": 14, "perishRounds": 2, "tags": ["foraged", "potion-ingredient"], "notes": "Opens only after dark. Picked on a night leg - see travel.json." },
+    { "id": "ember-root", "name": "Ember Root", "category": "arcane", "unit": "bundle", "bulk": 0.5, "baseValue": 16, "tags": ["foraged", "potion-ingredient"], "notes": "Dug from dry ground. Warm to the touch." },
+    { "id": "frost-lichen", "name": "Frost Lichen", "category": "arcane", "unit": "pouch", "bulk": 0.5, "baseValue": 12, "tags": ["foraged", "potion-ingredient"], "notes": "Scraped off cold stone. The base of every physician's tonic." }
   ]
 }

@@ -4,9 +4,10 @@
 
 Six phases, in this order. All of it lives in `data/rules.json` under `round.phases`.
 
-**1. Events.** Reveal the round's event card and resolve it before anyone acts. From
-round 13, draw two. Resolving first means the card shapes your plan rather than
-punishing a plan you already committed to.
+**1. Events.** In turn order, each player reveals one event card and resolves it —
+the card's scope decides who it hits, so a global card is everyone's problem whoever
+drew it. From round 13 the first player draws a second card. Resolving first means
+the cards shape your plan rather than punishing a plan you already committed to.
 
 **2. Labour Roll.** Every player rolls one die per worker. Pips are hours. This is
 public — everyone sees how good everyone else's round is going to be, which matters
