@@ -38,6 +38,33 @@ between two *other* players and take 10% of the coin. That is the one mechanism 
 rewards a player for other people's trade, and it should make the trading-house player
 the centre of every negotiation.
 
+## Shopping: merchants met and visited
+
+Items are bought from **merchants** — met on the road through a discovery roll, or
+visited in any settlement. Either way the procedure is the same: shuffle the item
+deck and deal cards face up. What is dealt is the stock, this visit, at base value
++10%. The stock scales with the place:
+
+| Where | Cards dealt |
+| --- | --- |
+| Roadside pedlar (discovery result) | 2 |
+| Village | 3 |
+| Town | 5 |
+| City | 7 |
+| The Seat | 9 |
+
+A roadside merchant may have nothing you want — or exactly the lantern you were
+three hexes short of. A city is a real shop. The numbers live in
+`rules.json → market.merchantStock`.
+
+## Inns
+
+Every printed settlement keeps an inn, and a player town can build one. Four jobs:
+**rest** (heal 2 a round, 3 with a healer in town), **hirelings** (escorts for one
+journey, flat fee, no food), **rumours** (5 coin, draw a quest card), and the old one —
+**drinks**, clearing unrest by the recipe. The inn is where the adventure layer and
+the economy shake hands.
+
 Brokering, minding a market and loading a caravan all cost effort. Trade competes with
 production for the same scarce hours, which is what stops a pure-trading strategy from
 being free money.

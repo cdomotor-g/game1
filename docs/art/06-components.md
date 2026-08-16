@@ -99,6 +99,23 @@ Durability is **notches along the haft**, filled as they are spent. Combined wit
 marker this gives a readout that works even when the marker is knocked off — which it will
 be. It is also the [tally motif](00-art-direction.md#motifs) doing component duty.
 
+## The adventure decks — vehicles, monsters, characters, talismans
+
+Four decks share one anatomy, so a bar never needs explaining twice:
+
+- **Vertical numbered bars**, numbered from the bottom, walked by a token.
+- **Harm on the LEFT edge** — a vehicle's damage, a monster's or character's health.
+  Bar rules in oxide; the ink-plate mark is the notch-down.
+- **Capacity on the RIGHT edge** — a vehicle's cargo, a talisman's or character's mana.
+  Cargo bars rule in slate; mana bars in bruise (talismans and mana are arcane subjects,
+  and the only cards in these decks permitted the slip).
+- **Portrait across the middle, name and card code at the top, story text low.** The
+  card code (`VEH-03`, `MON-09`) sets in the same small caps as a maker's mark.
+
+A card with no bar on an edge leaves the edge quiet — the frame does not print an empty
+track. In black-and-white the bars survive as ruled, numbered ladders; the wash only
+ever repeats what the numbering already says.
+
 ## Tokens, cubes and meeples
 
 - **Commodity chits:** 18mm, category hatch fills the frame, icon on top, value numeral in

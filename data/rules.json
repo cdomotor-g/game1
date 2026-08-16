@@ -5,7 +5,7 @@
 
   "round": {
     "phases": [
-      { "id": "upkeep-events", "name": "Events", "summary": "Reveal and resolve the round's event card(s) before anyone acts." },
+      { "id": "upkeep-events", "name": "Events", "summary": "In turn order, each player reveals one event card and resolves it. A card's scope decides who it hits: global cards hit everyone, whoever drew them." },
       { "id": "labour-roll", "name": "Labour Roll", "summary": "Each player rolls their effort dice: one die per worker. Pips = hours of effort available this round." },
       { "id": "actions", "name": "Actions", "summary": "In turn order, players spend effort, coin and commodities: allocate, build, move, trade, forage, fight." },
       { "id": "production-tick", "name": "Production Tick", "summary": "Advance every progress track: construction, crop growth, transport in transit, maturing goods." },
@@ -81,6 +81,11 @@
     "sellSpread": -0.15,
     "driftPerRound": "Each town shifts one random commodity family up or down one band.",
     "playerTradeIsFree": true,
+    "merchantStock": {
+      "$comment": "When a player meets a merchant - on the road via a discovery roll, or by visiting a settlement - shuffle the item deck and deal this many cards face up. That is what is for sale this visit, at base value +10%. Bigger places carry deeper stock.",
+      "roadside": 2, "village": 3, "town": 5, "city": 7, "seat": 9,
+      "notes": "Tools may be bought the same way at any settlement with a blacksmith rank town or better: deal from the tool list instead."
+    },
     "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
   },
 
@@ -88,14 +93,44 @@
     "landMoveCostDefault": 1,
     "figureMovePointsPerRound": 4,
     "cargoRequiresRoute": true,
-    "notes": "Figures (prospectors, merchants, soldiers) use move points. Cargo uses transport modes with capacity and speed - see transport.json."
+    "legs": {
+      "day": "Every moving figure, party or vehicle gets one day leg per round, at the speed in data/travel.json for its mode and the terrain letter codes it crosses.",
+      "night": "After its day leg a party may push on into the dark - but only with a lit torch or lantern, and slower. Night speeds, and what each light allows, are in data/travel.json.",
+      "nightRisk": "A party that travels a night leg makes a second discovery roll where it stops, with the monster band widened by 1. The dark is not neutral."
+    },
+    "notes": "Figures (prospectors, merchants, soldiers, characters) use move points. Cargo uses transport modes with capacity and speed - see transport.json. The printed speed table by mode, terrain code and time of day is data/travel.json."
   },
 
   "exploration": {
     "tilesFaceDownAtStart": true,
     "revealCost": { "effortHours": 1, "figure": "prospector" },
     "depositRevealDie": "d6",
+    "discovery": {
+      "die": "d20",
+      "when": "When a figure, party or vehicle ends its movement leg, roll once on the discovery table for the hex it stopped in - one roll for the leg, not one per hex crossed.",
+      "tables": "data/discovery.json, one column per terrain letter code, with road and rail overrides",
+      "placement": "Any result that persists - a monster, a trace, a cave, a quest site - is marked on the hex with a tile or figure so the whole table can see it.",
+      "notes": "Discovery is what you find when you are NOT looking. Prospecting, foraging and hunting have their own recipes and roll tables, and a discovery roll never replaces a survey."
+    },
     "notes": "A prospector entering a face-down tile flips it. Flipping reveals terrain immediately; deposits need a survey roll on top of that."
+  },
+
+  "rest": {
+    "where": "Any settlement with an inn - every printed settlement has one; a player-built town needs the inn building.",
+    "healthPerRound": 2,
+    "healthPerRoundWithHealer": 3,
+    "cost": { "coin": 5, "note": "Waived in your own town, and at any inn a quest reward names." },
+    "notes": "A resting character does nothing else that round. Vehicle damage is repaired separately - 1 box per round in any settlement of town rank or better, paying 5 coin per box."
+  },
+
+  "hirelings": {
+    "where": "Hired at any inn, in any settlement of village rank or better.",
+    "options": [
+      { "id": "thug", "name": "Thug", "coinPerJourney": 20, "combatDice": 1, "note": "Refuses to fight monsters of strength 4 or more. Counts as a soldier for escort purposes." },
+      { "id": "militia", "name": "Militiaman", "coinPerJourney": 35, "combatDice": 1, "armourValue": 1, "note": "Steady. Fights anything." },
+      { "id": "blade", "name": "Hired Blade", "coinPerJourney": 60, "combatDice": 2, "note": "Fights anything, and rolls first like a bow." }
+    ],
+    "notes": "A hireling escorts one journey - a travelling party or a cargo in transit - then goes home. Hirelings eat no food; the fee is everything. An escorted cargo drops its theft risk to 0, same as a soldier escort."
   },
 
   "conflict": {

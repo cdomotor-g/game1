@@ -15,8 +15,15 @@ touching the layout.
 
 ## `data/*.json` is the single source of truth
 
-`docs/data/bundle.js` is generated from it and committed. After editing anything in
-`data/`, run `node tools/build-data.mjs` and commit the regenerated bundle, or CI fails.
+`docs/data/bundle.js` AND `docs/design/14-annex.md` are generated from it and
+committed. After editing anything in `data/`, run `node tools/build-data.mjs` (or CI
+fails) and `node tools/build-annex.mjs` (or the printed rulebook lies) and commit the
+regenerated files.
+
+The data is one file per system on purpose — travel, discovery, monsters, quests,
+arcana and the decks are separate files so no task needs the whole ruleset in context.
+Add a new system as a new file plus a `manifest.json` entry, never as a new wing on an
+existing file.
 
 ## The map artwork is never edited by a tool
 
@@ -33,6 +40,7 @@ node tools/validate-data.mjs   # referential integrity and design smells
 node tools/validate-map.mjs    # boards against terrain.json and against themselves
 node tools/build-map.mjs       # map proof sheets, and the derived print sizes
 node tools/build-data.mjs      # rebuild the web bundle
+node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/simulate.mjs        # check it still plays
 node tools/validate-art.mjs    # palette and layer contract
 ```

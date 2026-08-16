@@ -28,6 +28,8 @@
   var EXPORT_CSS = [
     '.layer-wash polygon { opacity: .38 }',
     '.layer-grid polygon { fill: none; opacity: .4 }',
+    '.layer-codes text { fill: #1A1714; opacity: .72;',
+    '  font-family: Georgia, "Times New Roman", serif; font-weight: bold }',
     '.layer-labels text { fill: #1A1714; opacity: .5;',
     '  font-family: ui-monospace, Menlo, Consolas, monospace }',
     '.layer-places circle { fill: #EDE4D1; stroke: #A33B26; stroke-width: 3 }',

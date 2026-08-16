@@ -111,6 +111,7 @@
     const layers = {
       wash: svg('g', { class: 'layer-wash' }),
       grid: svg('g', { class: 'layer-grid' }),
+      codes: svg('g', { class: 'layer-codes' }),
       labels: svg('g', { class: 'layer-labels' }),
       routes: svg('g', { class: 'layer-routes' }),
       places: svg('g', { class: 'layer-places' }),
@@ -131,6 +132,25 @@
             'data-col': col, 'data-row': row, class: 'hex',
           })
         );
+        /* The terrain letter code, in the bottom corner of every cell. This is
+           the ruling when the artwork under a hex straddles the grid line: the
+           letter is the terrain, whatever the paint suggests. */
+        if (opts.codes !== false) {
+          const c = L.centre(col, row);
+          const t = (opts.terrains || {})[id] || {};
+          if (t.code) {
+            /* Kept inside the lower-right slant: at baseline offset 0.62r the edge
+               is 1.732 * (r - 0.62r) = 0.66r from centre, so a wide glyph centred
+               at 0.22 * width = 0.38r with half-width ~0.19r stays clear of the
+               grid line it exists to adjudicate. */
+            const codeText = svg('text', {
+              x: (c.x + L.width * 0.22).toFixed(1), y: (c.y + L.radius * 0.62).toFixed(1),
+              'font-size': (L.radius * 0.38).toFixed(1), 'text-anchor': 'middle',
+            });
+            codeText.textContent = t.code;
+            layers.codes.appendChild(codeText);
+          }
+        }
         if (opts.labels !== false) {
           const c = L.centre(col, row);
           const size = L.radius * (opts.labelScale || 0.55);
@@ -205,13 +225,12 @@
   /**
    * A replacement legend, drawn over the one printed on the plate.
    *
-   * The plate's key names four things this game has no terrain for — "tundra &
-   * steppe" is two terrains, "desert & dunes" is two more, and hills and marsh do
-   * not appear at all — so a player reading the printed key would be looking for
-   * tiles that do not exist. Rather than repaint the artwork, the overlay covers
-   * that one panel and prints the twelve real terrains in the same space, along
-   * with the marks the plate does get right. Nothing is lost: every symbol from
-   * the original key is reprinted here.
+   * Plates key their own vocabulary, which never quite matches the game's, so
+   * rather than repaint the artwork the overlay covers that one panel and prints
+   * the real terrains in the same space, along with the marks the plate does get
+   * right. Each terrain's swatch is a hexagon — the shape the player is actually
+   * matching against the board — with the terrain's letter code inside it, the
+   * same letter printed in the bottom corner of every cell.
    */
   function buildLegend(map, palette, terrains) {
     const box = (map.plate.occlusions || []).filter((o) => o.id === 'legend')[0];
@@ -238,8 +257,10 @@
     title.textContent = 'LEGEND';
     g.appendChild(title);
 
+    const order = Object.keys(map.legend).filter((c) => c.charAt(0) !== '$');
     const top = y + pad * 2.3;
-    const rowH = (h - (top - y) - pad * 1.1) / 12;
+    const legendRows = Math.max(order.length, 11);
+    const rowH = (h - (top - y) - pad * 1.1) / legendRows;
     const size = rowH * 0.62;
     const colW = (w - pad * 2) / 2;
 
@@ -250,17 +271,38 @@
       return t;
     };
 
-    /* Left column: the twelve terrains, in the order data/terrain.json lists them. */
-    const order = Object.keys(map.legend).filter((c) => c.charAt(0) !== '$');
+    /* A small pointy-top hexagon, the shape the player is matching on the board. */
+    const hexPoints = (cx, cy, r) => {
+      const pts = [];
+      for (let i = 0; i < 6; i++) {
+        const a = ((60 * i - 90) * Math.PI) / 180;
+        pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`);
+      }
+      return pts.join(' ');
+    };
+
+    /* Left column: the terrains, in the order data/terrain.json lists them.
+       Hexagon swatch, letter code inside, move cost at the column's right edge. */
     order.forEach((ch, i) => {
       const id = map.legend[ch];
       const ty = top + rowH * i;
       const sx = x + pad;
-      g.appendChild(svg('rect', {
-        x: sx, y: ty, width: size * 1.5, height: size,
+      const t = terrains[id] || {};
+      const hcx = sx + size * 0.75;
+      const hcy = ty + size * 0.5;
+      const hr = size * 0.62;
+      g.appendChild(svg('polygon', {
+        points: hexPoints(hcx, hcy, hr),
         fill: (palette.terrain[id] || {}).wash || '#fff', stroke: ink, 'stroke-width': size * 0.05,
       }));
-      const t = terrains[id] || {};
+      if (t.code) {
+        const codeLabel = svg('text', {
+          x: hcx, y: hcy + size * 0.28, 'text-anchor': 'middle',
+          'font-size': size * 0.72, fill: ink, class: 'legend-item', 'font-weight': 'bold',
+        });
+        codeLabel.textContent = t.code;
+        g.appendChild(codeLabel);
+      }
       g.appendChild(label(sx + size * 1.9, ty + size * 0.82, t.name || id));
       const cost = svg('text', {
         x: x + colW - pad * 0.4, y: ty + size * 0.82, 'text-anchor': 'end',
@@ -312,14 +354,16 @@
       g.appendChild(label(mx + size * 1.9, ty + size * 0.82, text));
     });
 
-    const note = svg('text', {
-      x: mx, y: top + rowH * 10.6, 'font-size': size * 0.66, fill: ink, opacity: 0.65, class: 'legend-item',
+    /* End-anchored on the panel's inner edge, so however the row height works out
+       for a given terrain count the notes can never run past the border. */
+    const noteAttrs = (row) => ({
+      x: x + w - pad, y: top + rowH * row, 'text-anchor': 'end',
+      'font-size': size * 0.6, fill: ink, opacity: 0.65, class: 'legend-item',
     });
+    const note = svg('text', noteAttrs(legendRows - 1.4));
     note.textContent = `Hexes ${map.grid.cols} x ${map.grid.rows}, numbered column,row`;
     g.appendChild(note);
-    const note2 = svg('text', {
-      x: mx, y: top + rowH * 11.4, 'font-size': size * 0.66, fill: ink, opacity: 0.65, class: 'legend-item',
-    });
+    const note2 = svg('text', noteAttrs(legendRows - 0.6));
     note2.textContent = `from 0,0 at the top left. ${map.grid.leaguesAcrossFlats} leagues across a hex.`;
     g.appendChild(note2);
 

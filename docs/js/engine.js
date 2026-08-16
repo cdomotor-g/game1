@@ -39,7 +39,7 @@
 
   /* ----------------------------------------------------------------- setup */
 
-  const STARTING_TERRAIN = ['grassland', 'forest', 'hills', 'river-bank'];
+  const STARTING_TERRAIN = ['grassland', 'forest', 'hills', 'coast'];
   const STARTING_DEPOSITS = ['clay-bed', 'coal-seam', 'iron-deposit'];
 
   function newGame(options) {

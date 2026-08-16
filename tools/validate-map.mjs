@@ -96,7 +96,6 @@ function checkMap(file) {
 
   let deepTouchingLand = 0;
   let coastWithoutWater = 0;
-  let shoreWithoutLake = 0;
   for (let row = 0; row < rowCount; row++) {
     for (let col = 0; col < cols; col++) {
       const id = at(col, row);
@@ -112,16 +111,11 @@ function checkMap(file) {
         coastWithoutWater++;
         if (coastWithoutWater <= 8) errors.push(`${where}: ${hexId(col, row)} is coast with no water beside it`);
       }
-      if (id === 'lake-shore' && !ring.some(isWater)) {
-        shoreWithoutLake++;
-        if (shoreWithoutLake <= 8) errors.push(`${where}: ${hexId(col, row)} is lake shore with no water beside it`);
-      }
     }
   }
   for (const [label, n] of [
     ['deep water touching land', deepTouchingLand],
     ['coast with no water', coastWithoutWater],
-    ['lake shore with no water', shoreWithoutLake],
   ]) {
     if (n > 8) errors.push(`${where}: ...and ${n - 8} more hexes are ${label}`);
   }
@@ -161,8 +155,8 @@ function checkMap(file) {
       errors.push(`${where}: "${s.name}" and "${occupied.get(key)}" are both on ${key}`);
     }
     occupied.set(key, s.name);
-    if (s.harbour && id !== 'coast' && id !== 'lake-shore') {
-      errors.push(`${where}: "${s.name}" has a harbour but stands on ${id}, not a shore`);
+    if (s.harbour && id !== 'coast') {
+      errors.push(`${where}: "${s.name}" has a harbour but stands on ${id}, not a coast`);
     }
     if (terrainById.get(id)?.housingAllowed === false) {
       errors.push(`${where}: "${s.name}" is on ${id}, which does not allow housing`);

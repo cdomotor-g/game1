@@ -44,6 +44,10 @@ verb of a player's turn.
 **Batch** — one execution of a recipe: its full effort cost, its full inputs, its full
 outputs. You cannot run half a batch.
 
+**Character** — a named adventurer card that a player's hero figure takes on: a face,
+a health bar, sometimes mana. Defined in `data/characters.json`. A character is not a
+worker and rolls no effort die.
+
 **Build-point** — one hour of construction work banked on a building's progress track.
 A building is finished when its track is full *and* its minimum-rounds floor has
 passed, so no amount of effort finishes a manor in one round.
@@ -51,6 +55,14 @@ passed, so no amount of effort finishes a manor in one round.
 **Bulk** — the storage slot cost of one unit of a commodity, and the capacity it eats
 when shipped. Logs are bulk 2, gems are bulk 0.5. Bulk is why raw materials are worth
 processing before moving them.
+
+**Day leg / night leg** — one round's movement for a figure, party or vehicle. The
+day leg is free; the night leg needs a lit torch or lantern, is slower, and makes the
+discovery roll nastier. Speeds in `data/travel.json`.
+
+**Discovery roll** — the d20 rolled when a movement leg ends, on the table for the hex
+it stopped in. One roll per leg, never one per hex. What you find when you are *not*
+looking; surveys and foraging are jobs. Tables in `data/discovery.json`.
 
 **Effort die** — the die a worker rolls each round. Pips are hours. The ladder runs
 d4 · d6 · d8 · d10 · d12; most workers sit at d6.
@@ -64,8 +76,17 @@ merchant, soldier, hero.
 **Job** — a runnable instance of a recipe. The recipe is the rule; the job is you,
 this round, at this site, with these tools.
 
+**Mana** — the arcane charge a slain monster yields, element-matched. Not a commodity:
+no bulk, no stockpile, no crate. It lives in bodies (rarely) and in talismans, and it
+is spent on spells. Defined in `data/arcana.json`. A *mana crystal* is a different
+thing — frozen mana as a tradeable commodity.
+
 **Maturation** — the wait between doing work and collecting the result. Crops grow,
 wine ages, livestock breeds.
+
+**Mini-map** — an A4 sheet holding one large hexagon of 61 cells: the inside of a
+single campaign-map hex, opened out for a battle or a growing settlement. See
+`docs/minimaps/`.
 
 **Price band** — the multiplier applied to a commodity's base value in a given town.
 Bands drift each round and events shove them around.
@@ -86,6 +107,14 @@ plain workers cannot run.
 another player. A trading house or a merchant removes it.
 
 **Stockpile** — a town's held commodities, limited by storage slots.
+
+**Talisman** — an item that stores mana, tracked with a token on the card's vertical
+mana bar. Most peoples cannot hold mana any other way. Defined in `data/items.json`,
+class `talisman`.
+
+**Terrain code** — the single letter printed in the bottom corner of every hex: G, F,
+H, M, B, T, D, C, S, O. The ruling when the artwork straddles a grid line, and the key
+into the travel and discovery tables.
 
 **Tier** — how deep a commodity sits in the production graph. Logs are tier 0; steel
 is tier 3. Computed, not authored — the explorer derives it from the recipe graph.

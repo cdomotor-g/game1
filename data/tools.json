@@ -32,7 +32,7 @@
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
       "baseValue": 28, "baseDurability": 22, "sizes": ["small", "medium", "large"],
-      "enables": ["dig-clay", "dig-sand", "cut-peat", "gather-stone", "lay-roadbed", "sink-mineshaft"]
+      "enables": ["dig-clay", "dig-sand", "cut-peat", "gather-stone", "lay-roadbed", "sink-mineshaft", "dig-ember-root"]
     },
     {
       "id": "hammer", "name": "Hammer", "family": "smithing",
@@ -48,7 +48,7 @@
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }], "effortHours": 2 },
       "baseValue": 18, "baseDurability": 18, "sizes": ["small", "medium"],
-      "enables": ["butcher-livestock", "hunt-game", "harvest-herbs"]
+      "enables": ["butcher-livestock", "hunt-game", "harvest-herbs", "scrape-frost-lichen"]
     },
     {
       "id": "shears", "name": "Shears", "family": "edged",

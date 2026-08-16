@@ -11,10 +11,10 @@
  * without the other.
  *
  * The sampler can honestly separate five things by colour: water, snow, grass,
- * wood and sand. It finds mountains by how much black ink is in the hex, and
- * rivers by looking for the drawn river blue. Everything else — which sand is a
- * fen, which grass is a highland, where a coastline should become a beach rather
- * than a cliff — is a judgement, and judgements live in the data file.
+ * wood and sand. It finds mountains by how much black ink is in the hex, and it
+ * measures the drawn river blue as a statistic. Everything else — which sand is
+ * a fen, which grass is a highland, where a coastline should become a beach
+ * rather than a cliff — is a judgement, and judgements live in the data file.
  *
  * Usage:
  *   node tools/trace-map.mjs [map-id]            # print the proposed rows
@@ -132,7 +132,7 @@ function sample(col, row) {
 /* ---------------------------------------------------------- classification */
 
 /**
- * The plate prints its own key of twelve colour swatches, one per terrain, and
+ * The plate prints its own key of colour swatches, one per terrain, and
  * the thresholds below are read off them. Two groups separate cleanly and the
  * rest do not:
  *
@@ -261,8 +261,9 @@ const guessed = stats.flat().filter((s) => !s).length + occludedCount;
 
 const isWater = (t) => t === 'deep-water' || t === 'shallow-water';
 
-/* Flood the sea in from the border. Whatever water it cannot reach is a lake, and
-   a lake shore is a different tile to a sea coast in this game. */
+/* Flood the sea in from the border. Whatever water it cannot reach is a lake, so
+   inland water can be forced shallow - a lake on a plate this size is never a
+   shipping lane. */
 const sea = terrain.map((r) => r.map(() => false));
 const queue = [];
 for (let col = 0; col < cols; col++) {
@@ -291,21 +292,17 @@ for (let row = 0; row < rowCount; row++) {
       continue;
     }
 
-    const touchesSea = ns.some((n) => isWater(base[n.row][n.col]) && sea[n.row][n.col]);
-    const touchesLake = ns.some((n) => isWater(base[n.row][n.col]) && !sea[n.row][n.col]);
+    const touchesWater = ns.some((n) => isWater(base[n.row][n.col]));
 
-    /* Only open ground becomes a beach, and only where the plate shows open
+    /* Only open ground becomes a shore, and only where the plate shows open
        ground. An ice shelf, a dune field or a wooded shore keeps its own terrain:
        this map's coastline is long and convoluted, and converting every hex that
        touches the sea would repaint a fifth of the continent one colour and throw
        away the thing the drawing is being read for. Harbours on an ice or dune
-       coast are placed by hand afterwards, where the plate actually draws one. */
-    if (touchesSea && t === 'grassland') {
+       coast are placed by hand afterwards, where the plate actually draws one.
+       Coast covers every kind of shore - sea, lake and river mouth alike. */
+    if (touchesWater && t === 'grassland') {
       terrain[row][col] = 'coast';
-    } else if (touchesLake && (t === 'grassland' || t === 'desert' || t === 'tundra')) {
-      terrain[row][col] = 'lake-shore';
-    } else if (stats[row][col]?.river >= 0.02 && (t === 'grassland' || t === 'forest')) {
-      terrain[row][col] = 'river-bank';
     }
   }
 }

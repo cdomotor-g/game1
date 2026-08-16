@@ -1,6 +1,6 @@
 {
-  "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run.",
-  "version": "0.1.0",
+  "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman).",
+  "version": "0.2.0",
   "peoples": [
     {
       "id": "human", "name": "Humans", "effortDie": "d6", "startingWorkers": 2,
@@ -9,7 +9,8 @@
         { "name": "Adaptable", "effect": "Ignore the first terrain effort penalty each round." },
         { "name": "Builders", "effect": "All housing costs 1 less of its bulkiest material." }
       ],
-      "foodPreference": [], "terrainComfort": ["grassland", "river-bank", "coast", "forest"]
+      "foodPreference": [], "terrainComfort": ["grassland", "coast", "forest"],
+      "manaStorage": { "innate": 0, "note": "A human body holds no mana. Every drop lives in a talisman." }
     },
     {
       "id": "dwarf", "name": "Dwarves", "effortDie": "d6", "startingWorkers": 2,
@@ -21,7 +22,8 @@
         { "name": "Thirsty", "effect": "A dwarf fed mead rolls one die size up next round." },
         { "name": "Sun-shy", "effect": "-1 effort for any dwarf allocated to a farm, orchard or vineyard." }
       ],
-      "foodPreference": ["mead", "meat", "mushrooms"], "terrainComfort": ["mountain", "hills", "tundra"]
+      "foodPreference": ["mead", "meat", "mushrooms"], "terrainComfort": ["mountain", "hills", "tundra"],
+      "manaStorage": { "innate": 0, "note": "Dwarves distrust mana in the flesh and keep it in worked metal, where it belongs." }
     },
     {
       "id": "elf", "name": "Elves", "effortDie": "d6", "startingWorkers": 2,
@@ -32,7 +34,8 @@
         { "name": "Longstriders", "effect": "Forest tiles cost 1 to move through." },
         { "name": "Will Not Delve", "effect": "Elves cannot be allocated to a mana vein, and roll d4 in any other mine." }
       ],
-      "foodPreference": ["berries", "wine", "vegetables"], "terrainComfort": ["forest", "hills", "river-bank"]
+      "foodPreference": ["berries", "wine", "vegetables"], "terrainComfort": ["forest", "hills", "grassland"],
+      "manaStorage": { "innate": 3, "note": "An elf may hold up to 3 mana in the body; anything beyond that needs a talisman like everyone else." }
     },
     {
       "id": "halfling", "name": "Halflings", "effortDie": "d6", "startingWorkers": 3,
@@ -43,7 +46,8 @@
         { "name": "Second Breakfast", "effect": "A halfling town pays 2 extra food every Feeding phase, however many halflings live in it." },
         { "name": "Small", "effect": "-1 combat die per halfling unit." }
       ],
-      "foodPreference": ["bread", "cheese", "ale", "apples"], "terrainComfort": ["grassland", "river-bank", "forest"]
+      "foodPreference": ["bread", "cheese", "ale", "apples"], "terrainComfort": ["grassland", "forest", "coast"],
+      "manaStorage": { "innate": 0, "note": "Halflings hold no mana and are privately relieved about it." }
     },
     {
       "id": "orc", "name": "Orcs", "effortDie": "d8", "startingWorkers": 2,
@@ -54,7 +58,8 @@
         { "name": "Raiders", "effect": "+1 combat die when attacking, and loot 40% instead of 25%." },
         { "name": "Crude Craft", "effect": "Cannot build tier-3 or tier-4 buildings without capturing one first." }
       ],
-      "foodPreference": ["meat", "salted-meat", "ale"], "terrainComfort": ["hills", "marsh", "tundra", "mountain"]
+      "foodPreference": ["meat", "salted-meat", "ale"], "terrainComfort": ["hills", "marsh", "tundra", "mountain"],
+      "manaStorage": { "innate": 0, "note": "An orc who wants mana takes a talisman from someone who had one." }
     }
   ],
   "workerTypes": [
@@ -77,6 +82,9 @@
       "unlocks": [], "bonus": "Removes the market spread in this town, and may broker a trade between two other players for a 10% cut." },
     { "id": "alchemist", "name": "Alchemist", "building": "alchemist", "trainCost": { "coin": 70, "effortHours": 4 },
       "unlocks": ["brew-potion"], "bonus": "Potions brewed here last one extra round." },
+    { "id": "healer", "name": "Healer", "building": "infirmary", "trainCost": { "coin": 50, "effortHours": 3 },
+      "unlocks": ["tend-the-sick"], "bonus": "Illness event cards cost this healer's town one worker fewer, and characters resting at this town's inn heal +1 per round.",
+      "notes": "Physician, medic, hedge-witch, bone-setter - the title varies by people, the profession is the same. The character deck carries named examples." },
     { "id": "miner", "name": "Miner", "building": "mine", "trainCost": { "coin": 45, "effortHours": 3 },
       "unlocks": [], "bonus": "+1 output on any mining recipe, and picks wear half as fast in this worker's hands." },
     { "id": "farmer", "name": "Farmer", "building": "farm", "trainCost": { "coin": 35, "effortHours": 3 },

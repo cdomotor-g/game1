@@ -17,6 +17,7 @@
 
   .layer-wash polygon { opacity: .38; }
   .layer-grid polygon { fill: none; opacity: .38; vector-effect: non-scaling-stroke; }
+  .layer-codes text { fill: #1A1714; opacity: .72; font-family: Georgia, "Times New Roman", serif; font-weight: bold; }
   .layer-labels text { fill: #1A1714; opacity: .5; font-family: var(--mono); }
   .layer-places circle { fill: #EDE4D1; stroke: #A33B26; stroke-width: 3; }
   /* The plate engraves every place name already; a second set on top of it is
@@ -132,7 +133,7 @@
     terrain: {
       grassland: { wash: '#B9C9A8' }, forest: { wash: '#7E9E84' }, hills: { wash: '#C3AE8A' },
       mountain: { wash: '#9AA3A8' }, marsh: { wash: '#8E9478' }, tundra: { wash: '#D2D3CE' },
-      desert: { wash: '#DCC79C' }, 'river-bank': { wash: '#A8BCC0' }, 'lake-shore': { wash: '#9DB8C4' },
+      desert: { wash: '#DCC79C' },
       coast: { wash: '#8FAEBF' }, 'shallow-water': { wash: '#7BA0B5' }, 'deep-water': { wash: '#4E7189' },
     },
   };
@@ -152,13 +153,13 @@
 
   var built = MapKit.buildOverlay(map, palette, { terrains: terrains });
   var L = built.layout;
-  var order = ['wash', 'grid', 'routes', 'labels', 'places', 'legend'];
+  var order = ['wash', 'grid', 'codes', 'routes', 'labels', 'places', 'legend'];
   order.forEach(function (k) { overlay.appendChild(built.layers[k]); });
 
   /* ------------------------------------------------------------- layers */
 
-  var state = { wash: true, grid: true, routes: true, labels: false, places: true, legend: true };
-  var LABELS = { wash: 'terrain', grid: 'grid', routes: 'routes', labels: 'coords', places: 'places', legend: 'key' };
+  var state = { wash: true, grid: true, codes: true, routes: true, labels: false, places: true, legend: true };
+  var LABELS = { wash: 'terrain', grid: 'grid', codes: 'letters', routes: 'routes', labels: 'coords', places: 'places', legend: 'key' };
   var toggles = document.getElementById('toggles');
   Object.keys(state).forEach(function (key) {
     var b = document.createElement('button');
@@ -307,7 +308,7 @@
     var place = placeAt[hex.col + ',' + hex.row];
     var html = '<div class="coord">col ' + hex.col + ', row ' + hex.row + '</div>';
     if (place) html += '<div class="name">' + place.name + ' <span class="coord">' + place.rank + (place.harbour ? ', harbour' : '') + '</span></div>';
-    html += '<div class="name">' + (t.name || id) + '</div>';
+    html += '<div class="name">' + (t.name || id) + (t.code ? ' <span class="coord">' + t.code + '</span>' : '') + '</div>';
     if (t.summary) html += '<p>' + t.summary + '</p>';
     html += '<dl>';
     html += '<dt>move</dt><dd>' + t.moveCost + '</dd>';
@@ -337,7 +338,7 @@
     row.innerHTML =
       '<i style="background:' + palette.terrain[id].wash + '"></i>' +
       '<span>' + ((terrains[id] || {}).name || id) + '</span>' +
-      '<code>' + ch + ' · ' + (tally[id] || 0) + '</code>';
+      '<code>' + ((terrains[id] || {}).code || ch) + ' · ' + (tally[id] || 0) + '</code>';
     key.appendChild(row);
   });
 

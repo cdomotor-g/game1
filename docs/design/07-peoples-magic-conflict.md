@@ -4,27 +4,23 @@
 
 Five, each with a distinct economic shape rather than a stat block.
 
-**Humans** — d6, 2 workers. No edges and no gaps. Housing costs 1 less of its bulkiest
-material, which compounds quietly into more workers than anyone else.
-
-**Dwarves** — d6, 2 workers. d8 in any mine or quarry, cheaper smithing and jewellery,
-and −1 effort on any farm. They are meant to be a player who buys their food and sells
-their metal, which forces them into the trade game whether they like it or not.
-
-**Elves** — d6, 2 workers. Double yield on foraging and arcane herbs, 2 fine cloth
-instead of 1, and near-useless underground. They will not touch a mana vein at all,
-which is interesting mostly because it makes a mana vein on an elf's doorstep a thing
-they have to trade away.
-
-**Halflings** — d6, 3 workers. Crops ripen a round faster and huts cost 1 log, against
-a flat 2 extra food per town per round. Widest and hungriest.
-
-**Orcs** — d8 for every worker, but tools take 2 wear per hour instead of 1, and they
-cannot build tier-3 or tier-4 buildings without capturing one. Enormous early output
-that runs into a wall — designed for a short aggressive game.
+| People | Die | Workers | The shape | The catch |
+| --- | --- | --- | --- | --- |
+| Humans | d6 | 2 | Cheap housing compounds into more workers than anyone | Never exceptional at anything |
+| Dwarves | d6 | 2 | d8 underground, cheap smithing | −1 on any farm: they must buy food |
+| Elves | d6 | 2 | Double foraging and herbs, 2 fine cloth for 1 | Near-useless underground; won't touch a mana vein |
+| Halflings | d6 | 3 | Crops ripen a round faster, huts cost 1 log | 2 extra food per town, every round |
+| Orcs | d8 | 2 | Enormous output, +1 die raiding | Double tool wear; can't build tier 3+ without capturing it |
 
 The trade-offs are real: dwarves can't farm, elves can't mine, orcs can't refine,
-halflings are always hungry, humans are never exceptional.
+halflings are always hungry, humans are never exceptional. The full trait list is in
+the [annex](14-annex.md).
+
+**Healers.** A new profession alongside the smiths and brewers: trained at the
+**infirmary**, unlocked recipe *Tend the Sick*, and the difference between an illness
+card being a story and being a body count. Physician, medic, witch doctor, bone-setter
+— the title varies by people; the profession is the same, and the character deck
+carries named examples of two of them.
 
 ## Magic
 
@@ -34,24 +30,37 @@ Deliberately small and economic rather than a second system bolted on.
 tokens on the whole board. They are the scarcest thing in the game.
 
 **Arcane herbs** are foraged, which means a player with nothing but hands and a forest
-has a route into the arcane economy.
+has a route into the arcane economy. The ingredient list has grown three entries —
+moon blossom (picked only at night), ember root (dug from dry ground) and frost
+lichen (scraped off cold stone) — each with a potion that wants it.
 
 **Potions** are brewed at an alchemist with an alembic, and they are one-shot effects on
-the thing the game actually cares about — hours:
+the things the game actually cares about — hours, movement, safety:
 
 | Potion | Effect |
 | --- | --- |
 | Draught of Vigour | One worker's die up two sizes for a round |
 | Tireless Toil | Re-roll a worker's effort, keep the better |
 | Brewmaster's Round | +1 effort to every worker in a town |
-| Healing Draught | Cancel a worker loss, or ignore a Plague card |
+| Healing Draught | Cancel a worker loss, ignore a Plague card, or heal a character 3 |
 | Swiftfoot | Double a figure's movement, or re-move a cargo |
 | Stonehide | One unit ignores all hits in a battle |
 | Prospector's Clarity | Auto-succeed a survey, reveal adjacent deposits |
 | Merchant's Fortune | Shift a price band two steps for one sale |
+| Owl's Eye | Travel tonight as if carrying a lantern |
+| Physic Tonic | Cure one illness, anywhere |
+| Emberguard Salve | Ignore every hit from a fire monster, one battle |
 
 Every one of them buys hours, movement, safety or information. None of them break the
 economy, and all of them are made of things the economy produces.
+
+**Mana and talismans.** Slaying a monster yields mana of its element — and mana must
+be *held*. Elves carry up to 3 in the body; everyone else carries none, and stores it
+in a **talisman**: six cards from a 2-capacity bone charm to a 10-capacity crystal
+phylactery, each an item that is made, sold and stolen like any other. Mana is spent
+on **spells** — eight, two per element, minor and major, listed in the
+[annex](14-annex.md) — one cast per character per round. The whole system is defined
+in `data/arcana.json` and reasoned through in [13-adventure.md](13-adventure.md).
 
 ## Conflict
 
@@ -80,3 +89,14 @@ and make the player who wars constantly lose on points to the one who farmed.
 
 The event deck also brings unaligned enemies — raiders, wolves, a dragon — so a player
 with no soldiers at all is taking a real risk rather than a safe one.
+
+**Monsters.** The discovery tables bring twelve more, three per element, and meeting
+one is a decision, not just a fight: slay it for its mana, or — where the card allows —
+enslave it, befriend it with the gift it names, or domesticate it into the strangest
+livestock you own. Not everything can be tamed, and the ones that cannot are the ones
+the campaigns are built around. The deck and the option rules live in
+`data/monsters.json`; the reasoning is in [13-adventure.md](13-adventure.md).
+
+**Hired muscle.** Between a soldier's standing cost and a war's, there is the inn:
+thugs, militiamen and hired blades escort one journey for a flat fee and eat nothing.
+Costs in `rules.json → hirelings`.

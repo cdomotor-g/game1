@@ -56,6 +56,7 @@
 
   .layer-wash polygon { opacity: .3; }
   .layer-grid polygon { fill: none; opacity: .45; }
+  .layer-codes text { fill: #1A1714; opacity: .72; font-family: Georgia, "Times New Roman", serif; font-weight: bold; }
   .layer-labels text { fill: #1A1714; opacity: .5; font-family: var(--mono); }
   .layer-places circle { fill: none; stroke: #A33B26; stroke-width: 2; }
   .layer-places text { display: none; }
@@ -93,6 +94,7 @@
     <select id="preset"></select>
   </label>
   <label><input type="checkbox" id="opt-grid" checked> grid</label>
+  <label><input type="checkbox" id="opt-codes" checked> letters</label>
   <label><input type="checkbox" id="opt-labels" checked> coords</label>
   <label><input type="checkbox" id="opt-wash"> terrain</label>
   <label><input type="checkbox" id="opt-routes"> routes</label>
@@ -130,7 +132,7 @@
     terrain: {
       grassland: { wash: '#B9C9A8' }, forest: { wash: '#7E9E84' }, hills: { wash: '#C3AE8A' },
       mountain: { wash: '#9AA3A8' }, marsh: { wash: '#8E9478' }, tundra: { wash: '#D2D3CE' },
-      desert: { wash: '#DCC79C' }, 'river-bank': { wash: '#A8BCC0' }, 'lake-shore': { wash: '#9DB8C4' },
+      desert: { wash: '#DCC79C' },
       coast: { wash: '#8FAEBF' }, 'shallow-water': { wash: '#7BA0B5' }, 'deep-water': { wash: '#4E7189' },
     },
   };
@@ -152,7 +154,7 @@
   var wanted = new URLSearchParams(location.search).get('preset') || map.print.default;
   select.value = map.print.presets.some(function (p) { return p.id === wanted; }) ? wanted : map.print.presets[0].id;
 
-  ['preset', 'opt-grid', 'opt-labels', 'opt-wash', 'opt-routes'].forEach(function (id) {
+  ['preset', 'opt-grid', 'opt-codes', 'opt-labels', 'opt-wash', 'opt-routes'].forEach(function (id) {
     document.getElementById(id).addEventListener('change', render);
   });
 
@@ -191,6 +193,7 @@
        something that should compete with the drawing. */
     built = MapKit.buildOverlay(map, palette, { labelScale: 0.3, terrains: terrains });
     var wantGrid = document.getElementById('opt-grid').checked;
+    var wantCodes = document.getElementById('opt-codes').checked;
     var wantLabels = document.getElementById('opt-labels').checked;
     var wantWash = document.getElementById('opt-wash').checked;
     var wantRoutes = document.getElementById('opt-routes').checked;
@@ -236,6 +239,7 @@
         svg.setAttribute('preserveAspectRatio', 'none');
         if (wantWash) svg.appendChild(built.layers.wash.cloneNode(true));
         if (wantGrid) svg.appendChild(built.layers.grid.cloneNode(true));
+        if (wantCodes) svg.appendChild(built.layers.codes.cloneNode(true));
         if (wantRoutes) svg.appendChild(built.layers.routes.cloneNode(true));
         if (wantLabels) svg.appendChild(built.layers.labels.cloneNode(true));
         /* The replacement key always prints: the plate's own names four terrains
@@ -352,6 +356,7 @@
     var layers = [];
     if (document.getElementById('opt-wash').checked) layers.push(built.layers.wash);
     if (document.getElementById('opt-grid').checked) layers.push(built.layers.grid);
+    if (document.getElementById('opt-codes').checked) layers.push(built.layers.codes);
     if (document.getElementById('opt-routes').checked) layers.push(built.layers.routes);
     if (document.getElementById('opt-labels').checked) layers.push(built.layers.labels);
     if (built.layers.legend) layers.push(built.layers.legend);

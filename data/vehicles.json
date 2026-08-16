@@ -1,0 +1,63 @@
+{
+  "$comment": "The vehicle deck: named, individual vehicles as cards, twelve for now, three of each kind. A vehicle card is a specific machine with a history; transport.json modes are the generic rules it runs on (mode names which). Card layout: picture across the middle, name and card code at the top, story text low; a vertical numbered DAMAGE bar up the LEFT edge and a vertical numbered CARGO bar up the RIGHT edge, both numbered from the bottom - harm left, capacity right, the same convention as every other deck (docs/art/06-components.md). Track damage and loaded bulk with tokens on the bars. A vehicle whose damage bar fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first. Art prompts in docs/art/prompts/vehicles.md.",
+  "version": "0.1.0",
+
+  "cardIdScheme": {
+    "$comment": "Every card in every deck carries a code: a deck prefix, a dash, a two-digit sequence. VEH vehicles, MON monsters, CHR characters, QST quests, TAL talismans, EVT events, ITM items, SPL spells. A revision suffix (VEH-03 v2) marks a reprinted card; unrevised cards carry no suffix. The numbering is this repository's own - anyone forking the game is free to renumber, which is why the code is data, not identity: the id field is the identity.",
+    "prefixes": { "VEH": "vehicles", "MON": "monsters", "CHR": "characters", "QST": "quests", "TAL": "items (talismans)", "EVT": "events", "ITM": "items", "SPL": "arcana (spells)" }
+  },
+
+  "vehicles": [
+    { "id": "reach-flyer", "cardCode": "VEH-01", "name": "The Reach Flyer", "mode": "train",
+      "cargoCapacity": 40, "damageBoxes": 8,
+      "quirk": "+1 hex per leg, and she carries 4 passengers (figures or characters) free among the mail sacks.",
+      "story": "The pride of the Steppe Line, polished brass and impatience. She has made Vossgard to Brassford in a day and a night, and the fireman has the burns to prove it." },
+    { "id": "steppe-hauler", "cardCode": "VEH-02", "name": "Steppe Hauler", "mode": "train",
+      "cargoCapacity": 100, "damageBoxes": 10,
+      "quirk": "Burns 1 extra coal per leg. Nothing else on rails carries close to her hundred bulk.",
+      "story": "Twelve trucks and a boiler like a chapel. When the Hauler passes a village, the village comes out to watch; when she is late, the ironworks stand idle and everybody knows why." },
+    { "id": "old-smoke", "cardCode": "VEH-03", "name": "Old Smoke", "mode": "train",
+      "cargoCapacity": 60, "damageBoxes": 6,
+      "quirk": "Costs half a train's price to buy. Each journey, roll a d6: on a 1 she limps, and the journey takes twice as long.",
+      "story": "The first engine ever to cross the pass, sold on, patched, sold again. Every engineer in the Reach has driven her once and speaks of her the way you speak of a difficult grandmother." },
+
+    { "id": "gullwing", "cardCode": "VEH-04", "name": "Gullwing", "mode": "ship",
+      "cargoCapacity": 30, "damageBoxes": 8,
+      "quirk": "+1 hex per leg, and she carries a rigged lantern: she may sail night legs at half speed.",
+      "story": "A courier sloop built for the packet run, all sail and no patience. She has outrun two storms and one embargo, and her skipper mentions all three before you have sat down." },
+    { "id": "saltreach-pride", "cardCode": "VEH-05", "name": "Saltreach Pride", "mode": "ship",
+      "cargoCapacity": 80, "damageBoxes": 12,
+      "quirk": "Takes the first 2 hits of any battle or storm on her oak sides without marking damage.",
+      "story": "The great trader of the western run, oak-ribbed and stubborn. She has been dismasted twice and come home twice, and Saltreach's harbour rates are set to whatever her master will pay." },
+    { "id": "ember-coast-trader", "cardCode": "VEH-06", "name": "Ember Coast Trader", "mode": "ship",
+      "cargoCapacity": 55, "damageBoxes": 10,
+      "quirk": "Sells at +10% at any harbour on the southern coast - Dunhaven and Port Malchior know her flag and clear her berth.",
+      "story": "A fat, cheerful coaster that has worked the southern run so long the reef serpents recognise her hull. Her hold smells of salt, spice and forty years of honest smuggling." },
+
+    { "id": "dunhaven-column", "cardCode": "VEH-07", "name": "The Dunhaven Column", "mode": "caravan",
+      "cargoCapacity": 28, "damageBoxes": 8,
+      "quirk": "Desert-wise: crosses desert at 2 hexes per leg, and hazard results in desert cost her nothing.",
+      "story": "Forty years of the Kholvar crossing, water butts strapped three deep. The Column has never lost a wagon to the sand, and its masters intend to be buried saying so." },
+    { "id": "fenway-wagons", "cardCode": "VEH-08", "name": "The Fenway Wagons", "mode": "caravan",
+      "cargoCapacity": 20, "damageBoxes": 6,
+      "quirk": "Broad marsh-rigged wheels: may cross marsh at 1 hex per leg, which no other wheeled thing can do at all.",
+      "story": "Wide-wheeled, willow-sprung, waterproofed with fen pitch. The Fenway crews sell the safe road through the Mirewash, and the toll is knowing which tussocks are lying." },
+    { "id": "varl-wagonrow", "cardCode": "VEH-09", "name": "The Varl Wagonrow", "mode": "caravan",
+      "cargoCapacity": 24, "damageBoxes": 7,
+      "quirk": "Hill-country teams: crosses hills at 2 hexes per leg.",
+      "story": "Ox-teams bred in the highlands, drivers born in the wagons. The Wagonrow takes the upland road the maps advise against and arrives, insufferably, early." },
+
+    { "id": "bay-courser", "cardCode": "VEH-10", "name": "Bay Courser", "mode": "mounted",
+      "cargoCapacity": 2, "damageBoxes": 4,
+      "quirk": "+1 hex on grassland legs. The fastest honest thing on four legs in the Reach.",
+      "story": "A racing bay out of the Vossgard studs, all nerves and speed. She has carried three riders to fame and thrown two of them at the finish." },
+    { "id": "steppe-pony", "cardCode": "VEH-11", "name": "Steppe Pony", "mode": "mounted",
+      "cargoCapacity": 3, "damageBoxes": 5,
+      "quirk": "Ignores tundra penalties and forages for herself: no feed, ever.",
+      "story": "Shaggy, short-legged, unimpressed. The steppe pony has carried the mail through three winters that killed better-looking horses, and her opinion of better-looking horses is on record." },
+    { "id": "black-malchior", "cardCode": "VEH-12", "name": "Black Malchior", "mode": "mounted",
+      "cargoCapacity": 2, "damageBoxes": 4,
+      "quirk": "Night-eyed: may travel one night leg per journey with no light at all.",
+      "story": "A tall black gelding the port is named after, or the other way round - the ostlers argue. He walks the dark road at an even pace, and riders swear he sees the ruts before the moon does." }
+  ]
+}

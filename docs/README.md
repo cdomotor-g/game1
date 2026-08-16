@@ -16,8 +16,12 @@ css/ js/          the app; every path in it is relative, so it works off disk to
 data/bundle.js    GENERATED from data/*.json by tools/build-data.mjs, and committed
 .nojekyll         serve these files as-is; do not run Jekyll over the design docs
 GLOSSARY.md       commodity vs effort vs deposit
-design/           the twelve design documents
-art/              the visual style guide
+design/           the fifteen design documents; 14-annex.md is GENERATED
+                  by tools/build-annex.mjs from data/*.json
+map/              the campaign map: plate, viewer, print sheets
+minimaps/         the zoom-in sheets: spec and generation briefs
+art/              the visual style guide, and prompts/ — the commissioning
+                  briefs for card and plate art
 ```
 
 ## Before you move anything in here

@@ -145,10 +145,11 @@
     },
     "terrain": {
       "type": "object",
-      "required": ["id", "name", "family", "moveCost", "buildable"],
+      "required": ["id", "name", "code", "family", "moveCost", "buildable"],
       "properties": {
         "id": { "$ref": "#/$defs/id" },
         "name": { "type": "string" },
+        "code": { "type": "string", "pattern": "^[A-Z]$", "description": "Single-letter code, unique across terrains. Printed in the bottom corner of every hex; keys travel.json and discovery.json." },
         "family": { "enum": ["land", "water"] },
         "colour": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
         "moveCost": { "type": "number" },
@@ -200,7 +201,7 @@
       "properties": {
         "id": { "$ref": "#/$defs/id" },
         "name": { "type": "string" },
-        "class": { "enum": ["clothing", "armour", "weapon", "potion"] },
+        "class": { "enum": ["clothing", "armour", "weapon", "potion", "light", "talisman"] },
         "slot": { "type": "string" },
         "madeAt": { "$ref": "#/$defs/id" },
         "inputs": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
@@ -210,7 +211,158 @@
         "effects": { "type": "array", "items": { "type": "string" } },
         "armourValue": { "type": "integer" },
         "combatDice": { "type": "integer" },
-        "uses": { "type": "integer" }
+        "uses": { "type": "integer" },
+        "manaCapacity": { "type": "integer", "description": "Talismans only. Height of the card's mana bar." },
+        "cardCode": { "$ref": "#/$defs/cardCode" },
+        "story": { "type": "string" }
+      }
+    },
+    "cardCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}-[0-9]{2}( v[0-9]+)?$",
+      "description": "Printed deck code: prefix, dash, two-digit sequence, optional revision (VEH-03 v2). Print identity only - the id field is the identity. Scheme defined in vehicles.json cardIdScheme."
+    },
+    "monster": {
+      "type": "object",
+      "required": ["id", "cardCode", "name", "element", "strength", "health", "manaYield", "terrains", "options", "story"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "cardCode": { "$ref": "#/$defs/cardCode" },
+        "name": { "type": "string" },
+        "element": { "enum": ["fire", "earth", "water", "air"] },
+        "strength": { "type": "integer", "description": "Combat dice it rolls." },
+        "health": { "type": "integer", "description": "Height of the card's health bar (left edge)." },
+        "manaYield": { "type": "integer", "description": "Mana of its element granted when slain." },
+        "terrains": { "type": "array", "items": { "$ref": "#/$defs/id" }, "description": "Where it is at home. Drawn elsewhere, it is shuffled back." },
+        "options": {
+          "type": "object",
+          "description": "Slay is always allowed; these three are per-card.",
+          "properties": {
+            "enslave": { "type": "boolean" },
+            "befriend": { "type": "boolean" },
+            "domesticate": { "type": "boolean" }
+          }
+        },
+        "gift": { "type": "string", "description": "What befriending costs, if befriend is true." },
+        "befriended": { "type": "string" },
+        "enslaved": { "type": "string" },
+        "domesticated": { "type": "string" },
+        "unique": { "type": "boolean" },
+        "story": { "type": "string" }
+      }
+    },
+    "vehicle": {
+      "type": "object",
+      "required": ["id", "cardCode", "name", "mode", "cargoCapacity", "damageBoxes", "quirk", "story"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "cardCode": { "$ref": "#/$defs/cardCode" },
+        "name": { "type": "string" },
+        "mode": { "type": "string", "description": "A transport.json mode id, or 'mounted' for horses." },
+        "cargoCapacity": { "type": "integer", "description": "Height of the cargo bar (right edge), in bulk." },
+        "damageBoxes": { "type": "integer", "description": "Height of the damage bar (left edge). Full = wrecked, cargo spills." },
+        "quirk": { "type": "string", "description": "The one rule that makes this vehicle itself." },
+        "story": { "type": "string" }
+      }
+    },
+    "character": {
+      "type": "object",
+      "required": ["id", "cardCode", "name", "people", "calling", "health", "traits", "story"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "cardCode": { "$ref": "#/$defs/cardCode" },
+        "name": { "type": "string" },
+        "people": { "$ref": "#/$defs/id" },
+        "calling": { "type": "string" },
+        "health": { "type": "integer", "description": "Height of the health bar (left edge)." },
+        "manaCapacity": { "type": "integer", "description": "Innate mana bar (right edge). 0 or absent = talisman only." },
+        "manaNote": { "type": "string" },
+        "traits": { "type": "array", "items": { "type": "string" } },
+        "startsWith": { "type": "array", "items": { "$ref": "#/$defs/id" }, "description": "Item ids dealt with the card." },
+        "story": { "type": "string" }
+      }
+    },
+    "quest": {
+      "type": "object",
+      "required": ["id", "cardCode", "type", "complexity", "name", "hook"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "cardCode": { "$ref": "#/$defs/cardCode" },
+        "type": { "enum": ["mini", "campaign"] },
+        "complexity": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "name": { "type": "string" },
+        "hook": { "type": "string", "description": "The story read aloud before accept/decline." },
+        "task": { "type": "string", "description": "Mini-quests: the one thing to do." },
+        "reward": { "$ref": "#/$defs/questReward" },
+        "stages": {
+          "type": "array",
+          "description": "Campaigns: completed in order, each with its own reward.",
+          "items": {
+            "type": "object",
+            "required": ["name", "task"],
+            "properties": {
+              "name": { "type": "string" },
+              "task": { "type": "string" },
+              "reward": { "$ref": "#/$defs/questReward" }
+            }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "questReward": {
+      "type": "object",
+      "properties": {
+        "coin": { "type": "number" },
+        "vp": { "type": "integer" },
+        "mana": {
+          "type": "object",
+          "properties": { "element": { "enum": ["fire", "earth", "water", "air"] }, "qty": { "type": "integer" } }
+        },
+        "items": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "note": { "type": "string" }
+      }
+    },
+    "spell": {
+      "type": "object",
+      "required": ["id", "name", "element", "cost", "effect"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "element": { "enum": ["fire", "earth", "water", "air"] },
+        "cost": { "type": "integer", "description": "Mana of the spell's element." },
+        "effect": { "type": "string" }
+      }
+    },
+    "discoveryTable": {
+      "type": "object",
+      "required": ["id", "name", "entries"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "terrain": { "type": ["string", "null"], "description": "The terrain this table serves, or null for overlays (road, rail, cave)." },
+        "code": { "type": "string" },
+        "overlay": { "type": "string" },
+        "entries": {
+          "type": "array",
+          "description": "d20 bands, in order, covering 1-20 with no gaps.",
+          "items": {
+            "type": "object",
+            "required": ["roll", "result"],
+            "properties": {
+              "roll": { "type": "string", "pattern": "^[0-9]+(-[0-9]+)?$" },
+              "result": { "$ref": "#/$defs/id" }
+            }
+          }
+        },
+        "elementWeights": {
+          "type": "object",
+          "description": "Relative weights for which element's monster turns up here.",
+          "properties": {
+            "fire": { "type": "integer" }, "earth": { "type": "integer" },
+            "water": { "type": "integer" }, "air": { "type": "integer" }
+          }
+        }
       }
     }
   }
