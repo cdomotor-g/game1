@@ -61,6 +61,26 @@
     ]);
   }
 
+  /** A rendered plate as a thumbnail, or nothing if the plate is not drawn yet. */
+  function plateThumb(path, alt) {
+    return path ? el('img.card-art', { src: path, alt: alt || '', loading: 'lazy' }) : null;
+  }
+
+  /** The plate at drawer size. */
+  function plateFull(path, alt) {
+    return path ? el('img.plate', { src: path, alt: alt || '', loading: 'lazy' }) : null;
+  }
+
+  /** A deck card: plate on top, then title, sub and pills. */
+  function deckCard(kind, entity, subtitle, pills) {
+    return el('button.card.deck-card', { type: 'button', onclick: () => open(kind, entity.id) }, [
+      plateThumb(D.art(kind, entity), entity.name),
+      el('div.card-head', [el('span.card-title', entity.name), el('span.card-code', entity.cardCode)]),
+      subtitle ? el('div.card-sub', subtitle) : null,
+      pills && pills.length ? el('div.card-meta', pills.filter(Boolean)) : null,
+    ]);
+  }
+
   function filterBar(key, options, onChange, current) {
     return el('div.toolbar', options.map((opt) =>
       el('button.chip', {
@@ -328,6 +348,7 @@
       pageHead('Peoples & professions', 'A people sets your baseline. Professions are individual workers trained at a guildhall.'),
       el('div.grid.wide', D.peoples.map((p) =>
         el('div.card', { style: 'cursor:default' }, [
+          plateThumb(D.art('people', p), p.name),
           el('div.card-head', [el('span.card-title', p.name), pill(p.effortDie, 'accent')]),
           el('div.card-sub', p.summary),
           el('ul', { style: 'margin:6px 0 0;padding-left:18px;font-size:13px' }, p.traits.map((t) =>
@@ -384,6 +405,57 @@
     ]);
   };
 
+  /* ------------------------------------------------------------- adventure */
+
+  const ELEMENT_PILL = { fire: 'bad', earth: 'good', water: '', air: '' };
+
+  views.adventure = function (query) {
+    const q = (list) => list.filter((x) => UI.matches(x, query));
+
+    const section = (title, blurb, nodes) => (nodes.length ? [
+      el('div.page-head.section-head', [el('h3', title), blurb ? el('p', blurb) : null]),
+      el('div.grid.deck-grid', nodes),
+    ] : []);
+
+    return el('div', [
+      pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. Harm bars sit on a card’s left edge, capacity bars on its right, on every deck in the game. Plates are the accepted renders from docs/art/prompts.'),
+      ...section('Characters', 'Each player’s hero figure takes one at setup.', q(D.characters).map((c) =>
+        deckCard('character', c, `${D.name('people', c.people)} · ${c.calling}`, [
+          pill(`health ${c.health}`, 'bad'),
+          c.manaCapacity ? pill(`mana ${c.manaCapacity}`, 'accent') : null,
+        ])
+      )),
+      ...section('Vehicles', 'Specific machines with a history; transport modes are the generic rules they run on.', q(D.vehicles).map((v) =>
+        deckCard('vehicle', v, v.quirk, [
+          pill(D.name('mode', v.mode) || UI.titleize(v.mode)),
+          pill(`cargo ${v.cargoCapacity}`),
+          pill(`damage ${v.damageBoxes}`, 'bad'),
+        ])
+      )),
+      ...section('Monsters', 'Drawn when a discovery roll says monster and the card’s terrain list includes the hex.', q(D.monsters).map((m) =>
+        deckCard('monster', m, m.story, [
+          pill(m.element, ELEMENT_PILL[m.element]),
+          pill(`str ${m.strength}`),
+          pill(`health ${m.health}`, 'bad'),
+          pill(`mana ${m.manaYield}`, 'accent'),
+        ])
+      )),
+      ...section('Talismans', 'The only vessel most peoples have for mana — made, bought, sold and stolen.', q(D.talismans).map((t) =>
+        deckCard('item', t, (t.effects || [])[0], [
+          pill(`mana ${t.manaCapacity}`, 'accent'),
+          pill(`${t.baseValue}${R.currency.symbol}`),
+        ])
+      )),
+      ...section('Quests', 'Arrive through omens and inn rumours; accepted or declined on the spot.', q(D.quests).map((qc) =>
+        el('button.card', { type: 'button', onclick: () => open('quest', qc.id) }, [
+          el('div.card-head', [el('span.card-title', qc.name), el('span.card-code', qc.cardCode)]),
+          el('div.card-sub', qc.task || (qc.stages ? `${qc.stages.length} stages: ${qc.stages.map((s) => s.name).join(' → ')}` : '')),
+          el('div.card-meta', [pill(qc.type), pill(`complexity ${qc.complexity}`)]),
+        ])
+      )),
+    ]);
+  };
+
   /* ------------------------------------------------------------------ maps */
 
   views.maps = function () {
@@ -436,10 +508,32 @@
           el('div.flow', (m.settlements || []).map((st) =>
             el('span.token', `${st.name} · ${st.rank}${st.harbour ? ' · harbour' : ''}`)
           )),
+          sheetGallery('Places — the settlement sheets', 'One mini-map per named settlement, for play inside its walls.',
+            (m.settlements || []).map((st) => [D.placeSheet(m, st.id), `${st.name} — ${st.rank}${st.harbour ? ', harbour' : ''}`])),
         ]);
       }),
+      sheetGallery('Grounds — the battle sheets', 'One sheet per land terrain, plus the shallows for boarding actions. Out for the fight, then away.',
+        D.terrains.map((t) => [D.groundSheet(t.id), t.name])),
+      sheetGallery('Holdings — the player sheets', 'A near-empty stretch of good ground a settlement could grow on. One per player, possibly out all game.',
+        D.holdingSheets().map((p, i) => [p, `Sheet ${i + 1}`])),
     ]);
   };
+
+  /** A panel of mini-map sheets: [path, caption] pairs, missing sheets skipped. */
+  function sheetGallery(title, blurb, pairs) {
+    const have = pairs.filter(([p]) => p);
+    if (!have.length) return null;
+    return el('div.panel', [
+      el('h3', title, el('span.count', String(have.length))),
+      el('p.prose', blurb),
+      el('div.sheet-grid', have.map(([path, caption]) =>
+        el('a.sheet', { href: path, target: '_blank', rel: 'noopener' }, [
+          el('img', { src: path, alt: caption, loading: 'lazy' }),
+          el('span.sheet-caption', caption),
+        ])
+      )),
+    ]);
+  }
 
   views.rules = function () {
     const section = (title, obj) => el('div.panel', [
@@ -721,7 +815,9 @@
   detail.item = function (i) {
     return [
       el('span.kicker', i.class),
-      el('h2', i.name),
+      el('h2', [i.name, i.cardCode ? ' ' : null, i.cardCode ? el('span.card-code', i.cardCode) : null]),
+      plateFull(D.art('item', i), i.name),
+      i.story ? el('p.prose', i.story) : null,
       el('section', [
         el('h4', 'Making one'),
         el('div.flow', [...i.inputs.map((x) => token(x.commodity, x.qty)), el('span.token.effort', `${i.effortHours}h`), el('span.arrow', '→'), el('span.token.out', i.name)]),
@@ -729,6 +825,102 @@
       ]),
       el('section', [el('h4', 'Effects'), el('ul', { style: 'padding-left:18px;font-size:13.5px' }, (i.effects || []).map((e) => el('li', e)))]),
       el('section', [el('h4', 'Value'), el('div.deflist', [el('dt', 'Base'), el('dd', `${i.baseValue}${R.currency.symbol}`)])]),
+    ];
+  };
+
+  detail.monster = function (m) {
+    const opts = [['Slay', true], ['Enslave', m.options.enslave], ['Befriend', m.options.befriend], ['Domesticate', m.options.domesticate]];
+    return [
+      el('span.kicker', `monster · ${m.element}${m.unique ? ' · unique' : ''}`),
+      el('h2', [m.name, ' ', el('span.card-code', m.cardCode)]),
+      plateFull(D.art('monster', m), m.name),
+      el('p.prose', m.story),
+      el('section', [
+        el('h4', 'Numbers'),
+        el('div.deflist', [
+          el('dt', 'Strength'), el('dd', String(m.strength)),
+          el('dt', 'Health'), el('dd', `${m.health} — harm bar, left edge`),
+          el('dt', 'Mana yield'), el('dd', `${m.manaYield} ${m.element} mana, split among the slayers`),
+          el('dt', 'Home ground'), el('dd', m.terrains.map((t) => D.name('terrain', t)).join(', ')),
+        ]),
+      ]),
+      el('section', [
+        el('h4', 'Options'),
+        el('div.card-meta', opts.map(([label, ok]) => pill(label, ok ? 'good' : 'bad'))),
+        m.gift ? el('p.prose', `Gift to befriend: ${m.gift}.`) : null,
+        m.befriended ? el('p.prose', `Befriended: ${m.befriended}`) : null,
+        m.enslaved ? el('p.prose', `Enslaved: ${m.enslaved}`) : null,
+        m.domesticated ? el('p.prose', `Domesticated: ${m.domesticated}`) : null,
+      ]),
+    ];
+  };
+
+  detail.vehicle = function (v) {
+    return [
+      el('span.kicker', `vehicle · ${D.name('mode', v.mode) || v.mode}`),
+      el('h2', [v.name, ' ', el('span.card-code', v.cardCode)]),
+      plateFull(D.art('vehicle', v), v.name),
+      el('p.prose', v.story),
+      el('section', [
+        el('h4', 'The card'),
+        el('div.deflist', [
+          el('dt', 'Damage'), el('dd', `${v.damageBoxes} boxes — harm bar, left edge`),
+          el('dt', 'Cargo'), el('dd', `${v.cargoCapacity} bulk — capacity bar, right edge`),
+        ]),
+        el('p.prose', `A vehicle whose damage bar fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first.`),
+      ]),
+      el('section', [el('h4', 'Quirk'), el('p.prose', v.quirk)]),
+    ];
+  };
+
+  detail.character = function (c) {
+    return [
+      el('span.kicker', `character · ${D.name('people', c.people)} ${c.calling}`),
+      el('h2', [c.name, ' ', el('span.card-code', c.cardCode)]),
+      plateFull(D.art('character', c), c.name),
+      el('p.prose', c.story),
+      el('section', [
+        el('h4', 'The card'),
+        el('div.deflist', [
+          el('dt', 'Health'), el('dd', `${c.health} — harm bar, left edge`),
+          el('dt', 'Mana'), el('dd', c.manaCapacity ? `${c.manaCapacity} — capacity bar, right edge` : 'none held in the body — talismans only'),
+          ...(c.manaNote ? [el('dt', 'Note'), el('dd', c.manaNote)] : []),
+        ]),
+      ]),
+      el('section', [el('h4', 'Traits'), el('ul', { style: 'padding-left:18px;font-size:13.5px' }, c.traits.map((t) => el('li', t)))]),
+      c.startsWith && c.startsWith.length
+        ? linkSection('Starts with', c.startsWith.map((id) => ['item', id, D.name('item', id), '']))
+        : null,
+    ];
+  };
+
+  detail.quest = function (q) {
+    const reward = (r) => [
+      r.coin ? `${r.coin}${R.currency.symbol}` : null,
+      r.mana ? `${r.mana.qty} ${r.mana.element} mana` : null,
+      r.note,
+    ].filter(Boolean).join(' · ');
+    return [
+      el('span.kicker', `quest · ${q.type} · complexity ${q.complexity}`),
+      el('h2', [q.name, ' ', el('span.card-code', q.cardCode)]),
+      q.hook ? el('p.prose', q.hook) : null,
+      q.task ? el('section', [el('h4', 'Task'), el('p.prose', q.task)]) : null,
+      q.stages ? el('section', [
+        el('h4', 'Stages'),
+        el('ol', { style: 'padding-left:18px;font-size:13.5px' }, q.stages.map((s) =>
+          el('li', [el('strong', s.name), s.task ? ` — ${s.task}` : '', s.reward ? el('div.lr-sub', reward(s.reward)) : null]))),
+      ]) : null,
+      q.reward ? el('section', [el('h4', 'Reward'), el('p.prose', reward(q.reward))]) : null,
+      q.notes ? el('section', [el('h4', 'Notes'), el('p.prose', q.notes)]) : null,
+    ];
+  };
+
+  detail.spell = function (s) {
+    return [
+      el('span.kicker', `spell · ${s.element}`),
+      el('h2', s.name),
+      el('section', [el('h4', 'Cost'), el('p.prose', `${s.cost} ${s.element} mana`)]),
+      el('section', [el('h4', 'Effect'), el('p.prose', s.effect)]),
     ];
   };
 

@@ -16,6 +16,7 @@
     ['terrain', 'Terrain'],
     ['maps', 'Maps'],
     ['transport', 'Transport'],
+    ['adventure', 'Adventure'],
     ['events', 'Events'],
     ['items', 'Equipment'],
     ['peoples', 'Peoples'],

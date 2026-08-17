@@ -22,6 +22,12 @@
   const professions = D.peoples.professions;
   const cards = D.events.cards;
   const items = D.items.items;
+  const monsters = D.monsters.monsters;
+  const vehicles = D.vehicles.vehicles;
+  const characters = D.characters.characters;
+  const quests = D.quests.quests;
+  const spells = D.arcana.spells;
+  const talismans = items.filter((i) => i.class === 'talisman');
 
   const index = (arr) => new Map(arr.map((x) => [x.id, x]));
 
@@ -38,7 +44,48 @@
     profession: index(professions),
     card: index(cards),
     item: index(items),
+    monster: index(monsters),
+    vehicle: index(vehicles),
+    character: index(characters),
+    quest: index(quests),
+    spell: index(spells),
   };
+
+  /* ------------------------------------------------------------------- art */
+
+  const artFiles = D.art || { renders: {}, minimaps: {} };
+
+  /** Path (relative to docs/) of an entity's plate, or null if not rendered yet.
+      The render ids are the prompt headings in docs/art/prompts/: the deck code
+      decks use their card code, monsters and peoples use their data id. */
+  function art(kind, entity) {
+    if (!entity) return null;
+    const renderId =
+      kind === 'monster' ? `monster-${entity.id}` :
+      kind === 'people' ? `people-${entity.id}` :
+      kind === 'character' ? `character-${entity.cardCode.toLowerCase()}` :
+      kind === 'vehicle' ? `vehicle-${entity.cardCode.toLowerCase()}` :
+      kind === 'item' && entity.class === 'talisman' ? `talisman-${entity.cardCode.toLowerCase()}` :
+      null;
+    return renderId ? artFiles.renders[renderId] || null : null;
+  }
+
+  /* The sheet codes are positional by design: SET-NN is the Nth settlement of the
+     board, TBM-NN the Nth land terrain - the orders are fixed in
+     docs/minimaps/prompts/korvane-settlements.md and terrain-sheets.md. */
+  const TBM_TERRAINS = ['grassland', 'forest', 'hills', 'mountain', 'marsh', 'tundra', 'desert', 'coast', 'shallow-water'];
+  const nn = (n) => String(n).padStart(2, '0');
+
+  function placeSheet(map, settlementId) {
+    const i = (map.settlements || []).findIndex((s) => s.id === settlementId);
+    return i === -1 ? null : artFiles.minimaps[`SET-${nn(i + 1)}`] || null;
+  }
+  const groundSheet = (terrainId) => {
+    const i = TBM_TERRAINS.indexOf(terrainId);
+    return i === -1 ? null : artFiles.minimaps[`TBM-${nn(i + 1)}`] || null;
+  };
+  const holdingSheets = () =>
+    [1, 2, 3, 4].map((n) => artFiles.minimaps[`PSM-${nn(n)}`]).filter(Boolean);
 
   /** All input/output pairs a recipe supports, primary first. */
   function variants(recipe) {
@@ -186,6 +233,11 @@
       ['card', 'Events', cards],
       ['people', 'Peoples', peoples],
       ['mode', 'Transport', modes],
+      ['monster', 'Monsters', monsters],
+      ['vehicle', 'Vehicles', vehicles],
+      ['character', 'Characters', characters],
+      ['quest', 'Quests', quests],
+      ['spell', 'Spells', spells],
     ];
     const out = [];
     for (const [kind, label, list] of groups) {
@@ -200,6 +252,8 @@
     rules: D.rules,
     commodities, tools, buildings, recipes, terrains, deposits,
     modes, figures, peoples, professions, cards, items,
+    monsters, vehicles, characters, quests, spells, talismans,
+    art, placeSheet, groundSheet, holdingSheets,
     categories: {
       commodity: D.commodities.categories,
       building: D.buildings.categories,
