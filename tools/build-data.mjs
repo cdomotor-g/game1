@@ -37,6 +37,21 @@ if (manifest.maps) {
     : [];
 }
 
+/* Art is files, not data, so its index is derived by looking: whatever plates are
+   actually committed under docs/ is what the explorer offers to show. Paths are
+   relative to docs/ because that is where index.html lives. */
+const art = { $comment: 'derived from the committed PNGs - see docs/art/prompts/ and docs/minimaps/prompts/', renders: {}, minimaps: {} };
+const scanPngs = (dir, into) => {
+  const abs = join(ROOT, 'docs', dir);
+  if (!existsSync(abs)) return;
+  for (const f of readdirSync(abs).sort()) {
+    if (f.endsWith('.png')) into[f.slice(0, -4)] = `${dir}/${f}`;
+  }
+};
+scanPngs('art/renders', art.renders);
+scanPngs('minimaps/img', art.minimaps);
+bundle.art = art;
+
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(
   OUT,

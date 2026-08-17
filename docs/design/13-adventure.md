@@ -92,6 +92,18 @@ Gravel Wyrm, the Mire Strangler and the Deepwater Maw allow none of them. The
 trade is deliberate — slaying pays mana now, the other three turn mana away for
 a living asset that eats.
 
+Seven of the twelve bestiary plates are accepted
+([`docs/art/prompts/monsters.md`](../art/prompts/monsters.md) is the brief);
+the three fire monsters, the Barrow Troll and the Stone Boar are still to be
+drawn:
+
+| | | | |
+| --- | --- | --- | --- |
+| ![Gravel Wyrm](../art/renders/monster-gravel-wyrm.png) | ![Mire Strangler](../art/renders/monster-mire-strangler.png) | ![Reef Serpent](../art/renders/monster-reef-serpent.png) | ![The Deepwater Maw](../art/renders/monster-deepwater-maw.png) |
+| *Gravel Wyrm (MON-06)* | *Mire Strangler (MON-07)* | *Reef Serpent (MON-08)* | *The Deepwater Maw (MON-09)* |
+| ![Rime Harpy](../art/renders/monster-rime-harpy.png) | ![Dust Devil](../art/renders/monster-dust-devil.png) | ![Storm Roc](../art/renders/monster-storm-roc.png) | |
+| *Rime Harpy (MON-10)* | *Dust Devil (MON-11)* | *Storm Roc (MON-12)* | |
+
 An unresolved monster stays on its hex as a figure and attacks whoever ends a
 leg there. The wild accumulates.
 
@@ -105,6 +117,17 @@ orcs carry none at all. Everyone else's mana lives in a **talisman**
 crystal phylactery 10. Talismans are items — made, bought from merchants, sold,
 and stolen with everything that implies. The card carries a vertical numbered
 mana bar; a token on the bar tracks the charge.
+
+All six talisman studies are accepted — the only deck that gets the violet, and
+the violet is a printing error, exactly as
+[`docs/art/prompts/talismans.md`](../art/prompts/talismans.md) demands:
+
+| | | |
+| --- | --- | --- |
+| ![Bone Charm](../art/renders/talisman-tal-01.png) | ![Weaver's Knot](../art/renders/talisman-tal-02.png) | ![Copper Amulet](../art/renders/talisman-tal-03.png) |
+| *Bone Charm (TAL-01) — holds 2* | *Weaver's Knot (TAL-02) — holds 3* | *Copper Amulet (TAL-03) — holds 4* |
+| ![Gold Locket](../art/renders/talisman-tal-04.png) | ![Gemfire Pendant](../art/renders/talisman-tal-05.png) | ![Crystal Phylactery](../art/renders/talisman-tal-06.png) |
+| *Gold Locket (TAL-04) — holds 6* | *Gemfire Pendant (TAL-05) — holds 8* | *Crystal Phylactery (TAL-06) — holds 10* |
 
 Mana is spent on **spells** (`arcana.json`): eight for now, two per element, a
 minor and a major. Like the potions, every one buys the things the game actually
@@ -174,16 +197,47 @@ carries a vertical **damage bar up the left edge** and a **cargo bar up the
 right**, numbered from the bottom, tracked with tokens. A wrecked vehicle spills
 its cargo on the hex, and salvage is whoever reaches it first.
 
+Eleven of the twelve catalogue plates are accepted
+([`docs/art/prompts/vehicles.md`](../art/prompts/vehicles.md)); the Varl
+Wagonrow (VEH-09) is still to be drawn:
+
+| | | |
+| --- | --- | --- |
+| ![The Reach Flyer](../art/renders/vehicle-veh-01.png) | ![Steppe Hauler](../art/renders/vehicle-veh-02.png) | ![Old Smoke](../art/renders/vehicle-veh-03.png) |
+| *The Reach Flyer (VEH-01)* | *Steppe Hauler (VEH-02)* | *Old Smoke (VEH-03)* |
+| ![Gullwing](../art/renders/vehicle-veh-04.png) | ![Saltreach Pride](../art/renders/vehicle-veh-05.png) | ![Ember Coast Trader](../art/renders/vehicle-veh-06.png) |
+| *Gullwing (VEH-04)* | *Saltreach Pride (VEH-05)* | *Ember Coast Trader (VEH-06)* |
+| ![The Dunhaven Column](../art/renders/vehicle-veh-07.png) | ![The Fenway Wagons](../art/renders/vehicle-veh-08.png) | ![Bay Courser](../art/renders/vehicle-veh-10.png) |
+| *The Dunhaven Column (VEH-07)* | *The Fenway Wagons (VEH-08)* | *Bay Courser (VEH-10)* |
+| ![Steppe Pony](../art/renders/vehicle-veh-11.png) | ![Black Malchior](../art/renders/vehicle-veh-12.png) | |
+| *Steppe Pony (VEH-11)* | *Black Malchior (VEH-12)* | |
+
 **Characters** (`characters.json`) — eight named adventurers; each player's hero
 figure takes one at setup for a face, a **health bar (left edge)** and, where
 the card has it, a **mana bar (right edge)**. Same convention on every deck in
 the game: *harm left, capacity right.*
+
+All eight character plates are accepted
+([`docs/art/prompts/characters.md`](../art/prompts/characters.md)):
+
+| | | | |
+| --- | --- | --- | --- |
+| ![Corin Vale](../art/renders/character-chr-01.png) | ![Berga Understone](../art/renders/character-chr-02.png) | ![Sylvae of the Duskmere](../art/renders/character-chr-03.png) | ![Tilly Goodbarrel](../art/renders/character-chr-04.png) |
+| *Corin Vale (CHR-01)* | *Berga Understone (CHR-02)* | *Sylvae of the Duskmere (CHR-03)* | *Tilly Goodbarrel (CHR-04)* |
+| ![Ruk of the Red Road](../art/renders/character-chr-05.png) | ![Doctor Elspeth Marrow](../art/renders/character-chr-06.png) | ![Havik Coalbrand](../art/renders/character-chr-07.png) | ![Old Mother Keswick](../art/renders/character-chr-08.png) |
+| *Ruk of the Red Road (CHR-05)* | *Doctor Elspeth Marrow (CHR-06)* | *Havik Coalbrand (CHR-07)* | *Old Mother Keswick (CHR-08)* |
 
 **Card codes.** Every card carries a deck prefix and sequence — `VEH-03`,
 `MON-09`, `QST-07`, `TAL-06`, `CHR-01` — with a `v2` suffix if a card is ever
 reprinted changed. The scheme is defined in `vehicles.json → cardIdScheme`. The
 code is print identity, not data identity: the `id` field is the identity, and
 anyone forking the game is free to renumber.
+
+**Card fronts.** `tools/build-cards.mjs` renders the fronts for these four
+decks — characters, vehicles, monsters and talismans — from `data/*.json` and
+the accepted plates, into [`docs/cards/`](../cards/index.html), to the two-plate
+layer contract. Only a card whose plate has been accepted is rendered; edit the
+data or the renders, re-run the tool, and never the SVGs.
 
 ## Mini-maps
 
@@ -206,6 +260,14 @@ is the encounter tracker** (initiative, round, morale), the **right panel is the
 holdings ledger** (buildings, garrison, stores). A battle sheet uses the left;
 a settlement sheet mostly the right; both are printed on every sheet so no sheet
 is ever the wrong sheet.
+
+All thirty-two sheet artworks are accepted and live in
+[`docs/minimaps/img/`](../minimaps/img/) — one of each series:
+
+| | | |
+| --- | --- | --- |
+| ![PSM-01 — The River Meadow](../minimaps/img/PSM-01.png) | ![TBM-05 — the marsh ground](../minimaps/img/TBM-05.png) | ![SET-01 — Vossgard](../minimaps/img/SET-01.png) |
+| *Holdings: The River Meadow (PSM-01)* | *Grounds: marsh (TBM-05)* | *Places: Vossgard (SET-01)* |
 
 ## What this layer deliberately does not do
 

@@ -16,6 +16,15 @@ The trade-offs are real: dwarves can't farm, elves can't mine, orcs can't refine
 halflings are always hungry, humans are never exceptional. The full trait list is in
 the [annex](14-annex.md).
 
+The folio plates show each people doing what their rules say they are good at —
+the accepted renders from [`docs/art/prompts/peoples.md`](../art/prompts/peoples.md);
+the orc plate is still to be drawn:
+
+| | | | |
+| --- | --- | --- | --- |
+| ![The human builder](../art/renders/people-human.png) | ![The dwarf miner](../art/renders/people-dwarf.png) | ![The elf weaver-forager](../art/renders/people-elf.png) | ![The halfling farmer](../art/renders/people-halfling.png) |
+| *Humans — the builder* | *Dwarves — the miner* | *Elves — the weaver-forager* | *Halflings — the farmer* |
+
 **Healers.** A new profession alongside the smiths and brewers: trained at the
 **infirmary**, unlocked recipe *Tend the Sick*, and the difference between an illness
 card being a story and being a body count. Physician, medic, witch doctor, bone-setter

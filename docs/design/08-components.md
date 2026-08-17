@@ -77,7 +77,9 @@ Thirty-two A4 landscape sheets, each one large hexagon subdivided into 61 cells 
 inside of a single campaign-map cell, for battles and for building. Four **Holdings**
 sheets (one per player), nine **Grounds** sheets (one per land terrain plus the
 shallows) and nineteen **Places** sheets (one per named Korvane Reach settlement).
-The spec and the art briefs are in [`docs/minimaps/`](../minimaps/README.md).
+The spec and the art briefs are in [`docs/minimaps/`](../minimaps/README.md), and
+all thirty-two accepted artworks are committed at
+[`docs/minimaps/img/`](../minimaps/img/).
 
 ## Player aids
 
@@ -92,6 +94,10 @@ The spec and the art briefs are in [`docs/minimaps/`](../minimaps/README.md).
 Everything above is derivable from `data/*.json`, so a generator that renders card
 fronts from the data is an obvious next tool — and it would keep the printed components
 honest against the rules automatically, in the same way the web explorer already is.
+The first slice of it exists: `tools/build-cards.mjs` renders the adventure decks —
+characters, vehicles, monsters and talismans — into [`docs/cards/`](../cards/index.html)
+from the data and the accepted plates in `docs/art/renders/`, one card per accepted
+render, print page included.
 
 The [two-plate system](../art/01-two-plate-system.md) is what makes that generator
 tractable: one layout pass emits a `#wash` group and an `#ink` group, the colour edition
