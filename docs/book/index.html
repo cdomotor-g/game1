@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>game1 — the design book</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #EDE4D1; color: #1A1714;
+    font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    font-size: 16px; line-height: 1.55;
+  }
+  .bar {
+    position: sticky; top: 0; z-index: 3; display: flex; gap: 14px; align-items: baseline;
+    padding: 10px 18px; background: #EDE4D1; border-bottom: 1px solid #C0B7A9;
+    font-family: Helvetica, Arial, sans-serif; font-size: 13.5px;
+  }
+  .bar strong { font-size: 15px; margin-right: auto; }
+  .bar a, .bar button {
+    color: #8A561C; text-decoration: none; background: none; border: none;
+    font: inherit; cursor: pointer; padding: 0;
+  }
+  .bar a:hover, .bar button:hover { text-decoration: underline; }
+  .wrap { display: flex; gap: 34px; max-width: 1180px; margin: 0 auto; padding: 26px 18px 80px; }
+  nav.toc {
+    flex: 0 0 230px; position: sticky; top: 58px; align-self: flex-start;
+    display: flex; flex-direction: column; gap: 6px;
+    font-family: Helvetica, Arial, sans-serif; font-size: 13px;
+    max-height: calc(100vh - 80px); overflow-y: auto; padding-right: 8px;
+  }
+  nav.toc a { color: #3D3630; text-decoration: none; }
+  nav.toc a:hover { color: #1A1714; text-decoration: underline; }
+  main { flex: 1; min-width: 0; }
+  .chapter { border-top: 1px solid #C0B7A9; padding-top: 26px; margin-top: 26px; }
+  .chapter:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  h1 { font-size: 27px; line-height: 1.2; }
+  h2 { font-size: 21px; margin-top: 1.6em; }
+  h3 { font-size: 17px; margin-top: 1.4em; }
+  h4 { font-size: 15px; margin-top: 1.2em; }
+  a { color: #8A561C; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.86em; background: #D9CBAF; padding: 1px 4px; border-radius: 4px;
+  }
+  pre { background: #D9CBAF; padding: 12px 14px; border-radius: 6px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  blockquote { margin: 1em 0; padding: 2px 16px; border-left: 3px solid #C0B7A9; color: #5F564C; }
+  .table-wrap { overflow-x: auto; margin: 1em 0; }
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { border: 1px solid #C0B7A9; padding: 6px 10px; text-align: left; vertical-align: top; }
+  th { background: #D9CBAF; font-family: Helvetica, Arial, sans-serif; font-size: 12.5px; }
+  img { max-width: 100%; height: auto; }
+  .gallery table { width: 100%; }
+  .gallery th, .gallery td { border: none; padding: 4px 6px; }
+  .gallery td { font-style: italic; font-size: 13px; color: #5F564C; text-align: center; }
+  .gallery img { display: block; margin: 0 auto; border: 1px solid #C0B7A9; }
+  @media (max-width: 900px) {
+    .wrap { flex-direction: column; }
+    nav.toc { position: static; flex-basis: auto; max-height: none; }
+  }
+  @media print {
+    .bar, nav.toc { display: none; }
+    .wrap { display: block; padding: 0; max-width: none; }
+    body { font-size: 11pt; background: white; }
+    .chapter { border-top: none; break-before: page; padding-top: 0; margin-top: 0; }
+    .chapter:first-child { break-before: auto; }
+    a { color: inherit; text-decoration: none; }
+    pre, blockquote, .table-wrap, img { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <strong>game1 — the design book</strong>
+  <a href="../index.html">Explorer</a>
+  <a href="../cards/index.html">Card fronts</a>
+  <a href="../map/index.html">Map</a>
+  <button type="button" onclick="window.print()">Print the book</button>
+</div>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Chapters">
+      <a href="#c-00-overview">00 — Overview</a>
+      <a href="#c-01-core-loop">01 — The core loop</a>
+      <a href="#c-02-economy">02 — The economy</a>
+      <a href="#c-03-map-and-movement">03 — The map, terrain and movement</a>
+      <a href="#c-04-trade">04 — Trade, markets and moving goods</a>
+      <a href="#c-05-people-and-food">05 — People, food and unrest</a>
+      <a href="#c-06-events">06 — Events</a>
+      <a href="#c-07-peoples-magic-conflict">07 — Peoples, magic and conflict</a>
+      <a href="#c-08-components">08 — What is in the box</a>
+      <a href="#c-09-digital">09 — The digital build</a>
+      <a href="#c-10-open-questions">10 — Open questions</a>
+      <a href="#c-11-bootstrap">11 — Why the opening cannot deadlock</a>
+      <a href="#c-12-what-simulation-found">12 — What the simulator found</a>
+      <a href="#c-13-adventure">13 — The adventure layer</a>
+      <a href="#c-14-annex">14 — Annex: the reference tables</a>
+  </nav>
+  <main>
+<section class="chapter" id="c-00-overview">
+<h1>00 — Overview</h1>
+<h2>What this is</h2>
+<p>A settlement-and-economy game where you turn worker-hours into buildings, buildings into production chains, and production chains into food, wealth and the ability to survive whatever the event deck does to you next.</p>
+<p>Around that economic core an <strong>open world</strong> has grown: a drawn continent to travel by day and night, discovery rolls that fill the map in as it is walked, monsters to slay or befriend, mana and talismans, quests you may accept or decline, and named vehicles and characters. The register it aims for is a tabletop cross of a city-builder, a trading-tycoon game and an open-world adventure — the economy is the progression system, and the adventure layer is a new set of ways to spend hours and new things the hours can buy. See <a href="#c-13-adventure">13-adventure.md</a>.</p>
+<p>It is designed as a <strong>board game first</strong>, with a <strong>digital twin</strong> built from the same data. Neither is a port of the other: they read the same <code>data/*.json</code> files, so a change to a recipe changes the printed reference sheet and the web prototype at once.</p>
+<h2>The one-paragraph pitch</h2>
+<p>Workers live in houses. Each round every worker rolls a die, and the pips are hours of effort. You spend those hours on jobs — felling trees, digging clay, minding a furnace, raising a wall. Jobs need a place, usually a tool, and usually something to work on. At the end of the round everybody has to eat, and whatever you could not feed turns into unrest. Everything else in the game — trade, rail, magic, war — is a way of getting more hours, better hours, or more out of each hour.</p>
+<h2>Design pillars</h2>
+<p><strong>1. Effort is the real currency, not coin.</strong> Coin is useful. Hours are scarce. Every interesting decision in the game is &quot;what do I do with these eleven hours?&quot; — and the answer changes when a die comes up 2.</p>
+<p><strong>2. Everything is a chain, and you can always see the whole chain.</strong> Steel is coal plus iron plus a smelter plus a steelworks plus four hours. That should be legible at a glance, which is what the explorer's Chains view is for. Depth should feel like an achievement, not like homework.</p>
+<p><strong>3. Hand labour is always possible; tools multiply it.</strong> You can gather deadwood with your hands and pick field stone off a hillside. You cannot mine coal without a pick. The line is drawn so that a player who loses everything can always claw back to a market — see <a href="#c-11-bootstrap">11-bootstrap.md</a> — while tools still feel like the thing that changes your life.</p>
+<p><strong>4. Every disaster should be traceable to a decision.</strong> Event cards hit hard. Each one carries at least one mitigation a player could have bought in advance: a watchtower, a granary, a soldier escorting the caravan. Being wiped out by bad luck alone is a design failure.</p>
+<p><strong>5. Several ways to win.</strong> Prosperity, industry and network score separately, so a mining-and-rail game and a farming-and-trade game can both end in a win.</p>
+<h2>Scope: board and digital</h2>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>Board game</th><th>Digital</th></tr></thead>
+<tbody><tr><td>Status</td><td>Primary design target</td><td>Prototype, and the design instrument</td></tr>
+<tr><td>Board</td><td>Hex tiles, face down until explored</td><td>Not yet — the sandbox is one town</td></tr>
+<tr><td>Players</td><td>2–5</td><td>1 (sandbox)</td></tr>
+<tr><td>Rules source</td><td><code>data/*.json</code> → printed sheets</td><td><code>data/*.json</code> → <code>docs/js/engine.js</code></td></tr></tbody></table></div>
+<p>The digital side is not a stretch goal bolted on afterwards. It is how the numbers get tested: <code>tools/simulate.mjs</code> plays whole games headlessly and reports what the economy actually did. Three genuine design faults were found that way before a single card was printed — see <a href="#c-12-what-simulation-found">12-what-simulation-found.md</a>.</p>
+<h2>Reading order</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Doc</th><th>What it covers</th></tr></thead>
+<tbody><tr><td><a href="#c-01-core-loop">01-core-loop.md</a></td><td>The round, effort dice, allocation</td></tr>
+<tr><td><a href="#c-02-economy">02-economy.md</a></td><td>Commodities, recipes, tools, buildings</td></tr>
+<tr><td><a href="#c-03-map-and-movement">03-map-and-movement.md</a></td><td>Tiles, terrain, exploration, rail</td></tr>
+<tr><td><a href="#c-04-trade">04-trade.md</a></td><td>Markets, merchants, moving goods between towns</td></tr>
+<tr><td><a href="#c-05-people-and-food">05-people-and-food.md</a></td><td>Population, feeding, unrest, specialists</td></tr>
+<tr><td><a href="#c-06-events">06-events.md</a></td><td>The event deck and its effect vocabulary</td></tr>
+<tr><td><a href="#c-07-peoples-magic-conflict">07-peoples-magic-conflict.md</a></td><td>Peoples, potions, war</td></tr>
+<tr><td><a href="#c-08-components">08-components.md</a></td><td>What is in the physical box</td></tr>
+<tr><td><a href="#c-09-digital">09-digital.md</a></td><td>The web build and where it simplifies</td></tr>
+<tr><td><a href="#c-10-open-questions">10-open-questions.md</a></td><td>What is still undecided</td></tr>
+<tr><td><a href="#c-11-bootstrap">11-bootstrap.md</a></td><td>Why the opening cannot deadlock</td></tr>
+<tr><td><a href="#c-12-what-simulation-found">12-what-simulation-found.md</a></td><td>Findings from the simulator</td></tr>
+<tr><td><a href="#c-13-adventure">13-adventure.md</a></td><td>Travel, discovery, monsters, mana, quests — the open world</td></tr>
+<tr><td><a href="#c-14-annex">14-annex.md</a></td><td>Every reference table, generated from the data</td></tr>
+<tr><td><a href="../GLOSSARY.md">../GLOSSARY.md</a></td><td>Commodity vs effort vs deposit, and the rest</td></tr>
+<tr><td><a href="../art/README.md">../art/README.md</a></td><td>What all of it looks like, in both editions</td></tr></tbody></table></div>
+<h2>Status</h2>
+<p>Early. The data is complete enough to explore and to play a single-town sandbox; none of the numbers are balanced, and the board layer does not exist yet. See <a href="#c-10-open-questions">10-open-questions.md</a> for the honest list.</p>
+</section>
+
+<section class="chapter" id="c-01-core-loop">
+<h1>01 — The core loop</h1>
+<h2>The round</h2>
+<p>Six phases, in this order. All of it lives in <code>data/rules.json</code> under <code>round.phases</code>.</p>
+<p><strong>1. Events.</strong> In turn order, each player reveals one event card and resolves it — the card's scope decides who it hits, so a global card is everyone's problem whoever drew it. From round 13 the first player draws a second card. Resolving first means the cards shape your plan rather than punishing a plan you already committed to.</p>
+<p><strong>2. Labour Roll.</strong> Every player rolls one die per worker. Pips are hours. This is public — everyone sees how good everyone else's round is going to be, which matters for trade negotiation.</p>
+<p><strong>3. Actions.</strong> In turn order, players spend their hours. This is the whole game.</p>
+<p><strong>4. Production Tick.</strong> Advance every progress track at once: construction, crop growth, wine ageing, cargo in transit, livestock breeding.</p>
+<p><strong>5. Feeding.</strong> Every town pays food upkeep from stock held in that town. Shortfalls become unrest.</p>
+<p><strong>6. Market.</strong> Price bands drift, and turn order passes to the left.</p>
+<h2>Effort</h2>
+<p>One d6 per worker, by default. The pips are hours; a 6 is a good day and a 1 is a bad one. A three-worker town rolls 3d6 and gets somewhere between 3 and 18 hours, usually about 10.</p>
+<p>That variance is the point. It is small enough to plan around and large enough that you cannot cut your margins to zero.</p>
+<h3>Modifiers, in resolution order</h3>
+<ol><li><strong>Extra dice</strong> — a rare, powerful effect.</li>
+<li><strong>Die ladder steps</strong> — d4 · d6 · d8 · d10 · d12. A potion of vigour steps a worker up two; a riot steps everyone down two.</li>
+<li><strong>Flat bonuses</strong> — +1 per worker from a varied table, from ale, from a shrine.</li></ol>
+<p>Capped at +3 flat per worker, so bonuses stack into something noticeable without becoming the only thing that matters.</p>
+<h3>Effort does not carry over</h3>
+<p>Unspent hours are gone at the end of the round. There is no banking a quiet round to fund a loud one, which keeps every round tactically live and stops a player from disappearing for three rounds and returning with a war chest of labour.</p>
+<h2>Allocation</h2>
+<p>Spending hours means picking a <strong>job</strong>: a recipe you can legally run right now. A job is legal when all of these hold:</p>
+<ul><li><strong>Site</strong> — you have the building, or the terrain, or the deposit, or a construction site, that the recipe names.</li>
+<li><strong>Tool</strong> — you hold an unbroken tool of the required type, if it requires one.</li>
+<li><strong>Specialist</strong> — a trained profession is present, if the recipe is gated on one.</li>
+<li><strong>Inputs</strong> — the commodities are in that town's stockpile.</li>
+<li><strong>Fuel</strong> — for recipes that burn something, you can pay one of the listed options.</li>
+<li><strong>Hours</strong> — you have the batch's effort cost left.</li></ul>
+<p>Run the batch and everything happens at once: inputs are consumed, the tool takes one wear point per hour, and outputs arrive — immediately, or after a maturation wait.</p>
+<p>The web sandbox shows you exactly this list, including everything you <em>cannot</em> do and the first reason why. That &quot;out of reach, and why&quot; panel is the most useful teaching tool in the build.</p>
+<h3>Worker slots</h3>
+<p>Each building caps how many workers can be allocated to it in one round. Four workers at a farm, two at a bakery. This is what stops a player from dumping an entire round's labour into one lucrative recipe, and it is the main reason to build a second of anything.</p>
+<h2>Tools wear out</h2>
+<p>A tool has a durability track. Each hour worked with it costs one wear point. When the track empties, the tool is gone — the effort already spent is not refunded.</p>
+<p>On the table this is a little progress bar with a sliding marker, one per tool. In the digital build it is a bar that turns amber and then red.</p>
+<p>Tool size multiplies output rather than hours: a large axe does not let one worker work faster, it means the hours they do work count for more. Sizes are ×1, ×1.5 and ×2 output for ×1, ×1.5 and ×2 durability.</p>
+<p><strong>Required vs optional tools.</strong> Most tools gate their recipes: no pick, no coal. Farm tools do not. Sowing and harvesting can be done by hand; a plough halves the hours and a scythe doubles the yield. The difference is deliberate and is explained in <a href="#c-11-bootstrap">11-bootstrap.md</a>.</p>
+<h2>Building takes time</h2>
+<p>Founding a site pays the full material cost up front. After that the building needs <strong>build-points</strong> — one per hour of construction labour, two per hour if you are using the right specialised tool for its material — and it also has a <strong>minimum rounds</strong> floor. A manor is 30 build-points and at least 4 rounds; you cannot buy your way past the calendar.</p>
+<p>Materials are paid at the start rather than the end so that a half-built building is a real commitment, and so that a thief who empties your warehouse cannot also un-build your foundations.</p>
+<h2>Why the feeding phase is last</h2>
+<p>Because it turns every other decision into a question with a deadline. You can spend the whole round building a steelworks — but nine workers still want feeding on Friday, and the grain you were counting on is three rounds from ripe.</p>
+</section>
+
+<section class="chapter" id="c-02-economy">
+<h1>02 — The economy</h1>
+<h2>Commodities</h2>
+<p>63 of them, in eleven categories. Every commodity carries four numbers that matter:</p>
+<ul><li><strong>bulk</strong> — storage slots per unit, and capacity cost when shipped</li>
+<li><strong>baseValue</strong> — coin at price band 1.0</li>
+<li><strong>perishRounds</strong> — how long it keeps outside a granary, if it perishes at all</li>
+<li><strong>category</strong> — which price band it moves with</li></ul>
+<p>The interesting derived number is <strong>value per slot</strong>: <code>baseValue / bulk</code>. Logs are 2 coin per slot; jewellery is 220. That ratio is the entire logistics game. Nobody ships raw logs across the map; everybody ships jewellery.</p>
+<h2>Recipes</h2>
+<p>83 recipes. The shape is always the same:</p>
+<pre><code>site + tool + effort hours + input commodities  →  output commodities</code></pre>
+<p>Categories: extraction, agriculture, husbandry, processing, crafting, brewing, arcane, civic, works. Construction labour is a recipe like any other — it just outputs build-points instead of goods, which keeps one vocabulary for everything a worker can be told to do.</p>
+<h3>Variants</h3>
+<p>Some jobs accept different inputs for different results. Spinning takes wool, flax or cotton; butchery takes cattle, pigs, sheep or chickens. These are <code>alternatives</code> on the recipe rather than separate recipes, because they are one job at one site — the player just decides what goes in.</p>
+<h3>Fuel</h3>
+<p>Furnace recipes name a fuel <em>bundle</em> rather than a specific fuel, and the player pays any one option:</p>
+<ul><li><strong>standard</strong> — 1 coal, or 2 charcoal, or 3 logs (−1 output), or 3 peat (−1 output)</li>
+<li><strong>hot</strong> — 2 coal, or 3 charcoal (−1 output), or 1 crude oil (+1 output, steelworks only)</li></ul>
+<p>This is what makes coal strategically valuable without making it mandatory. You can run a brickworks on peat forever; you will just always be one brick behind the player who found a coal seam.</p>
+<h2>The tiers</h2>
+<p>Tier is computed from the recipe graph, not authored. It is the depth of the tree behind one unit.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tier</th><th>Examples</th><th>What it takes</th></tr></thead>
+<tbody><tr><td>0</td><td>logs, stone, clay, grain, water</td><td>Terrain and a tool</td></tr>
+<tr><td>1</td><td>lumber, charcoal, flour, brick, wool</td><td>One building</td></tr>
+<tr><td>2</td><td>pig-iron, cloth, bread, leather, ale</td><td>A building fed by another building</td></tr>
+<tr><td>3</td><td>steel, glass, fine cloth, ironware</td><td>A chain three deep, and usually fuel</td></tr>
+<tr><td>4</td><td>jewellery, plate harness, potions</td><td>Everything above, plus a specialist</td></tr></tbody></table></div>
+<p>The Chains view in the explorer draws this tree for any commodity, and reports the total effort hours per unit all the way down.</p>
+<h2>Buildings</h2>
+<p>51 of them, in eight categories. The ones that shape the game most:</p>
+<p><strong>Housing</strong> is how you get workers: hut 1, timber house 2, brick house 3, manor 4. Every worker is a die every round forever, which makes housing the strongest compounding investment in the game and the reason the first thing anyone builds is a hut.</p>
+<p><strong>Storage</strong> is the quiet constraint. A town starts with 10 free slots plus 6 from its town hall. Logs are bulk 2. You will hit the cap sooner than you expect, and overflow spoils half. Warehouses hold 12 of anything; granaries hold 10 of food and drink and stop it perishing.</p>
+<p><strong>Extraction</strong> sits on terrain or on a deposit. Mines are the gate to the industrial half of the game, and they exhaust: a coal seam holds 30 coal and then it is done.</p>
+<p><strong>Production</strong> turns things into other things. The dependency spine is:</p>
+<pre><code>quarry/clay-pit ─┐
+lumber-camp ─→ sawmill ─→ [lumber] ─┬─→ blacksmith ─→ [tools, ironware]
+                                     └─→ carpenter  ─→ [ploughs, looms, barrels]
+mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [steel] ─→ rail</code></pre>
+<p><strong>Civic</strong> buildings cost effort like anything else: minding a market is a job, brokering a trade is a job, training a specialist is a job. This keeps trade competing with production for the same scarce hours instead of being free.</p>
+<h2>Where the money is</h2>
+<p>Three broad strategies fall out of the numbers, and they are meant to:</p>
+<p><strong>Food and drink.</strong> Bread feeds two workers per unit; ale and wine are worth 24–40 coin a barrel and buy morale. Cheap to start, and the only strategy that solves feeding permanently rather than round by round.</p>
+<p><strong>Metal.</strong> Coal plus iron plus two buildings gets you steel at 26 coin an ingot, and steel is the only route to rail. High capital cost, and it depends on a deposit you have to find first.</p>
+<p><strong>Luxury.</strong> Gold plus gems plus a smith gets jewellery at 110 coin and bulk 0.5 — 220 coin per storage slot, the densest value in the game. Slow, deposit-dependent, and the single most attractive thing on the board for a thief.</p>
+<h2>Balancing status</h2>
+<p>Nothing here is balanced. What the simulator can currently say is in <a href="#c-12-what-simulation-found">12-what-simulation-found.md</a>; the short version is that a competent single town reaches about ten buildings and five workers in 24 rounds without starving, and the deep chains are reachable but rarely worth it yet at that pace.</p>
+</section>
+
+<section class="chapter" id="c-03-map-and-movement">
+<h1>03 — The map, terrain and movement</h1>
+<h2>Tiles</h2>
+<p>The board is hex tiles, each one terrain type. 37 tiles for two players up to 75 for five. Everything beyond each player's starting cluster of three starts <strong>face down</strong>.</p>
+<p>Ten terrains, eight land and two water — riverbanks and lake shores were folded into grassland and coast, because two extra tile types bought complexity and paid nothing. Each terrain carries a <strong>single-letter code</strong>, printed in the bottom corner of every hex on every map, so there is never an argument about what a cell is when the artwork underneath straddles a grid line. The letter is the ruling.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Terrain</th><th>Move</th><th>Rail ×</th><th></th><th>Code</th><th>Terrain</th><th>Move</th><th>Rail ×</th></tr></thead>
+<tbody><tr><td><strong>G</strong></td><td>Grassland</td><td>1</td><td>1</td><td></td><td><strong>T</strong></td><td>Tundra</td><td>2</td><td>2</td></tr>
+<tr><td><strong>F</strong></td><td>Forest</td><td>2</td><td>2</td><td></td><td><strong>D</strong></td><td>Desert</td><td>2</td><td>2</td></tr>
+<tr><td><strong>H</strong></td><td>Hills</td><td>2</td><td>3</td><td></td><td><strong>C</strong></td><td>Coast</td><td>1</td><td>2</td></tr>
+<tr><td><strong>M</strong></td><td>Mountain</td><td>4</td><td>6</td><td></td><td><strong>S</strong></td><td>Shallows</td><td>boat</td><td>—</td></tr>
+<tr><td><strong>B</strong></td><td>Marsh</td><td>3</td><td>4</td><td></td><td><strong>O</strong></td><td>Deep water</td><td>boat</td><td>—</td></tr></tbody></table></div>
+<p>Each terrain also carries road multipliers, buildability, <strong>features</strong> (trees, stone, fresh water, game, herbs, caves) and <strong>deposits</strong> — the full table is in the <a href="#c-14-annex">annex</a>, and the letter codes key the travel-speed and discovery tables in <a href="#c-13-adventure">13-adventure.md</a>.</p>
+<p>The rail multipliers are the ones to look at. Flat grassland is ×1. Hills are ×3. Mountains are ×6. A railroad through a mountain range costs 48 build-points a tile and is meant to be the kind of thing another player watches you attempt with interest.</p>
+<h2>Exploration and fog</h2>
+<p>Face-down tiles are the fog. A <strong>prospector</strong> figure moving onto one flips it, which reveals the terrain immediately. What is <em>under</em> it takes more work.</p>
+<p>Deposits are separate face-down tokens placed at setup. Revealing one needs a survey: the prospector spends an hour with a surveyor's kit and rolls a d6 against the deposit's difficulty. Clay is difficulty 2 and practically visible; a mana vein is 6 and mostly luck. Mountains and hills give +1 to the roll, and so does being a dwarf.</p>
+<p>Two-stage reveal — terrain first, deposit second — is deliberate. It means exploring tells you where to look without telling you what you will find, and a rival watching your prospector learns less than they would like.</p>
+<p>A deposit revealed by you is not owned by you. It belongs to whoever builds the mine. Racing someone to a coal seam you found is a real and intended situation.</p>
+<h2>Deposits are finite</h2>
+<p>A coal seam holds 30 coal. An iron deposit holds 28. A gold deposit holds 10, a gem vein 8, a mana vein 6. When the total is drawn the token flips and the mine is a shed.</p>
+<p>This is what stops a good early roll from deciding the game, and what turns the map into something that changes shape over 24 rounds. The player who built on the first coal seam is in trouble around round 15 if they have not found the second.</p>
+<h2>Movement</h2>
+<p><strong>Figures</strong> — prospector, merchant, soldier, hero — have move points and spend terrain move cost. Four points crosses four tiles of grassland, one tile of mountain, or two of forest. The printed form of the same arithmetic is the travel-speed table in <code>data/travel.json</code>: hexes per day leg, by mode and terrain letter code.</p>
+<p><strong>Days and nights.</strong> Each round gives a moving figure or vehicle one day leg; pushing on into a night leg needs a lit torch or lantern and is slower — the full rules, including what each light allows and why the night discovery roll is nastier, are in <a href="#c-13-adventure">13-adventure.md</a>.</p>
+<p><strong>Discovery.</strong> Ending a leg triggers one d20 discovery roll on the landed hex's table — merchants on roads, monsters in the waste, and very occasionally something worth surveying. Also in <a href="#c-13-adventure">13-adventure.md</a>.</p>
+<p><strong>Cargo</strong> does not use move points. It uses transport modes with capacity and speed, covered in <a href="#c-04-trade">04-trade.md</a>.</p>
+<h2>Roads, rail, bridges</h2>
+<p>All three are <strong>infrastructure</strong>: built onto a tile rather than into a town, and their build-point cost is multiplied by the terrain.</p>
+<p><strong>Roads</strong> (3 base points) halve land movement and let carts run at double speed. Cheap enough to be an obvious early buy on the routes you use twice.</p>
+<p><strong>Rail</strong> (8 base points, plus a steelworks and 2 steel per tile) ignores terrain move costs entirely and carries 80 bulk at 6 tiles a round. It is the biggest capital project in the game and it scores a victory point per tile, because the alternative is that nobody ever builds it.</p>
+<p><strong>Bridges</strong> (16 points) carry a road or rail across one shallow-water tile. Deep water cannot be bridged by anyone, ever, and that is what makes the sea lanes matter.</p>
+<h2>Water</h2>
+<p>Shallow water takes barges and ships; deep water takes ships only and cannot be bridged. Coast tiles — any shore: sea, lake or river mouth — are the only place a harbour can go.</p>
+<p>Sea freight is slow to set up — a harbour is 22 build-points on top of a dock, and a ship is 280 coin or fourteen hours of shipwrighting — and then it is the cheapest bulk movement in the game at 60 capacity. It is the long-game infrastructure play for anyone who started on the coast, and storms can sink the whole thing.</p>
+</section>
+
+<section class="chapter" id="c-04-trade">
+<h1>04 — Trade, markets and moving goods</h1>
+<h2>Two kinds of trade</h2>
+<p><strong>With the board</strong> — buying and selling at a market at the current price band, paying a 15% spread each way. Always available, never a good deal, and the reason nobody ever gets truly stuck.</p>
+<p><strong>With other players</strong> — any goods, any coin, any price the two of you agree. No spread, no limit, and no enforcement beyond the table. This is where the game should get loud.</p>
+<h2>Price bands</h2>
+<p>Every commodity category sits on a band: ×0.5, ×0.75, ×1.0, ×1.25, ×1.5 or ×2.0 of base value. Bands start at ×1.0 and drift one step each round for one random family. Event cards shove them harder — an iron shortage moves metals two bands for three rounds.</p>
+<p>Bands are per family, not per commodity, so a shortage is a <em>market</em> event you can plan around, not a lookup table you have to memorise.</p>
+<h2>Who may trade with whom</h2>
+<p>This was an open question in the brief — merchant figure, trading house, or both. The answer is both, doing different jobs:</p>
+<p><strong>Merchant figure.</strong> Moves on the board, 4 move points, carries 4 bulk. Wherever it stands, its owner trades at that town without the spread, and may deal with any player whose merchant or trading house is in or adjacent to the same town. The merchant is <em>reach</em>: it goes to where the deal is.</p>
+<p><strong>Trading house.</strong> A tier-3 building. Removes the spread permanently in its town, and connects to any other player's trading house or merchant along a built route, at any distance. The trading house is <em>infrastructure</em>: it makes one town permanently good at trade instead of chasing deals around the map.</p>
+<p>A <strong>merchant specialist</strong> trained at a trading house can additionally broker a deal between two <em>other</em> players and take 10% of the coin. That is the one mechanism that rewards a player for other people's trade, and it should make the trading-house player the centre of every negotiation.</p>
+<h2>Shopping: merchants met and visited</h2>
+<p>Items are bought from <strong>merchants</strong> — met on the road through a discovery roll, or visited in any settlement. Either way the procedure is the same: shuffle the item deck and deal cards face up. What is dealt is the stock, this visit, at base value +10%. The stock scales with the place:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Where</th><th>Cards dealt</th></tr></thead>
+<tbody><tr><td>Roadside pedlar (discovery result)</td><td>2</td></tr>
+<tr><td>Village</td><td>3</td></tr>
+<tr><td>Town</td><td>5</td></tr>
+<tr><td>City</td><td>7</td></tr>
+<tr><td>The Seat</td><td>9</td></tr></tbody></table></div>
+<p>A roadside merchant may have nothing you want — or exactly the lantern you were three hexes short of. A city is a real shop. The numbers live in <code>rules.json → market.merchantStock</code>.</p>
+<h2>Inns</h2>
+<p>Every printed settlement keeps an inn, and a player town can build one. Four jobs: <strong>rest</strong> (heal 2 a round, 3 with a healer in town), <strong>hirelings</strong> (escorts for one journey, flat fee, no food), <strong>rumours</strong> (5 coin, draw a quest card), and the old one — <strong>drinks</strong>, clearing unrest by the recipe. The inn is where the adventure layer and the economy shake hands.</p>
+<p>Brokering, minding a market and loading a caravan all cost effort. Trade competes with production for the same scarce hours, which is what stops a pure-trading strategy from being free money.</p>
+<h2>Moving commodities</h2>
+<p>Six modes, in <code>data/transport.json</code>. Capacity is bulk, speed is tiles per round.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Mode</th><th>Capacity</th><th>Speed</th><th>Needs</th><th>Theft risk</th></tr></thead>
+<tbody><tr><td>Porter</td><td>3</td><td>2</td><td>—</td><td>★</td></tr>
+<tr><td>Cart</td><td>8</td><td>2 (4 on road)</td><td>—</td><td>★★</td></tr>
+<tr><td>Caravan</td><td>24</td><td>2 (3 on road)</td><td>Road</td><td>★</td></tr>
+<tr><td>Barge</td><td>30</td><td>3</td><td>Dock</td><td>★★</td></tr>
+<tr><td>Ship</td><td>60</td><td>4</td><td>Harbour</td><td>★★★</td></tr>
+<tr><td>Train</td><td>80</td><td>6</td><td>Rail depot</td><td>★★</td></tr></tbody></table></div>
+<p>A porter is a worker who is gone for the whole journey — they do not roll a die for you while they are walking, which makes the cheapest transport in the game quietly the most expensive.</p>
+<p><strong>Packaging.</strong> Every mode needs crates and sacks, which travel with the cargo and come back with the empty vehicle. This is what gives containers a job and is a small, constant reason to keep a carpenter busy.</p>
+<p><strong>Cargo in transit is a token on the board.</strong> Everybody can see it. It can be robbed by event cards and raided by players. A caravan with a soldier escorting it drops to zero theft risk — and the soldier eats every round whether anything happens or not.</p>
+<h2>Why moving things matters</h2>
+<p>Because prices differ by town and bulk differs by commodity. The whole logistics puzzle is the interaction of three numbers:</p>
+<ul><li><strong>value per slot</strong> — is this worth the capacity it eats?</li>
+<li><strong>speed</strong> — will the price still be good when it arrives?</li>
+<li><strong>perishability</strong> — will it still be food when it arrives?</li></ul>
+<p>Salted meat is the clearest example in the data. Meat is 10 coin and perishes in 2 rounds; salt it and it is 18 coin and never perishes. That single recipe is what makes long caravans and sea voyages possible at all, and it is why a salt dome is worth more than its face value suggests.</p>
+</section>
+
+<section class="chapter" id="c-05-people-and-food">
+<h1>05 — People, food and unrest</h1>
+<h2>Getting workers</h2>
+<p>Workers come from housing, and only from housing:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Building</th><th>Workers</th><th>Cost</th></tr></thead>
+<tbody><tr><td>Hut</td><td>1</td><td>2 logs</td></tr>
+<tr><td>Timber House</td><td>2</td><td>4 lumber, 1 stone</td></tr>
+<tr><td>Brick House</td><td>3</td><td>6 brick, 2 lumber, 1 ironware</td></tr>
+<tr><td>Manor</td><td>4 + 1 specialist</td><td>brick, stone, glass, fine cloth</td></tr></tbody></table></div>
+<p>A worker is a die every round for the rest of the game, so housing compounds harder than anything else you can build. It is also a permanent food bill, which is the brake.</p>
+<p>Migrant event cards offer more workers if you have the housing <em>and</em> the food to take them in. Turning them away costs a point of unrest, which is a small, sharp decision.</p>
+<h2>Feeding</h2>
+<p>At the end of every round, each town pays <strong>1 food per worker</strong> from stock held in that town. Specialists eat too.</p>
+<p>Food held elsewhere does not count. This is the rule that makes the map matter: a granary full of grain three tiles away is not dinner. Moving food between towns is one of the main reasons transport exists.</p>
+<p><strong>Bread feeds two per unit.</strong> Flour to bread is the single best conversion in the food chain, and it is why a bakery is worth its brick.</p>
+<p><strong>Variety bonus.</strong> Feed a town from three or more distinct food commodities in one Feeding phase and every worker in it gets +1 flat effort next round. This exists to stop the optimal strategy from being &quot;grow only grain forever&quot;, and it rewards the player whose economy has breadth over the one with a single deep silo.</p>
+<p><strong>Spoilage.</strong> Perishable food outside a granary goes off. Meat and fish keep two rounds; bread three. A granary stops perishing entirely for what it holds, which is most of what a granary is for.</p>
+<h2>Unrest</h2>
+<p>Every mouth you cannot feed is 1 unrest.</p>
+<ul><li><strong>3 unrest</strong> — the town riots. Workers roll d4 until it settles.</li>
+<li><strong>5 unrest</strong> — a worker leaves. Permanently.</li></ul>
+<p>Unrest clears slowly: 1 per fully-fed round, 2 for a feast (2 food per worker), or 1 from serving drinks at an inn. A Strike card halves the effort of any town with unrest on it, and drinks at an inn end it immediately.</p>
+<p>This is the game's failure spiral, and it is meant to be recoverable but expensive. The distance from &quot;one bad round&quot; to &quot;losing a worker&quot; is five rounds of neglect, which is enough time to notice and do something.</p>
+<h2>Specialists</h2>
+<p>A worker trained at a guildhall becomes a specialist: same die, but unlocks recipes plain workers cannot run, and adds a bonus at their own building.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Profession</th><th>Unlocks / bonus</th></tr></thead>
+<tbody><tr><td>Smith</td><td>Forging tools and jewellery; +1 output at a blacksmith</td></tr>
+<tr><td>Weaver</td><td>Fine cloth; +1 yarn per spin</td></tr>
+<tr><td>Merchant</td><td>No spread in town; may broker other players' deals for 10%</td></tr>
+<tr><td>Alchemist</td><td>Potions</td></tr>
+<tr><td>Healer</td><td>Tend the Sick; illness cards cost the town one worker fewer</td></tr>
+<tr><td>Miner</td><td>+1 on mining; picks wear half as fast</td></tr>
+<tr><td>Farmer</td><td>+2 on every harvest</td></tr>
+<tr><td>Engineer</td><td>Cheaper rail; trains burn less coal</td></tr></tbody></table></div>
+<p>Specialists are the mid-game power spike. They cost coin, a training slot and a worker you were using for something else, and a town that cannot feed its specialist cannot run the recipes that specialist unlocks.</p>
+<p><strong>Illness</strong> is the pressure the healer answers. The event deck now carries Camp Fever, Marsh Ague and the Grey Pox alongside the Plague — see <a href="#c-06-events">06-events.md</a> — and a town with an infirmary and a fed healer loses no worker to any of them. The healer is deliberately the first specialist whose absence has a body count rather than a slower economy.</p>
+<h2>Soldiers</h2>
+<p>A worker under arms. Produces no effort, eats normally, fights. A barracks holds four without them costing you a housing slot.</p>
+<p>Soldiers are pure insurance: they contribute nothing to the economy and they eat. That is the correct price for the ability to survive a raid with your warehouse intact, and it is why a player who over-invests in them falls behind.</p>
+</section>
+
+<section class="chapter" id="c-06-events">
+<h1>06 — Events</h1>
+<p>69 cards, 37 distinct. <strong>Each player turns one over</strong> in the Events phase, in turn order, and the first player draws a second from round 13 — so a four-player round is four or five cards of weather, and the back half of the game is noticeably rougher than the front.</p>
+<h2>Scopes</h2>
+<ul><li><strong>Global</strong> — everyone, whoever drew it. Weather and market cards mostly.</li>
+<li><strong>Local</strong> — one region; roll for which.</li>
+<li><strong>Targeted</strong> — the player who drew it. Except crime, which targets the leader.</li>
+<li><strong>Offer</strong> — an opportunity. The drawer decides first; if they pass, it goes round.</li></ul>
+<p>Crime cards target the leader whoever draws them. That is the catch-up mechanism and it is deliberate: being ahead should mean being worth robbing.</p>
+<h2>Categories</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Category</th><th>Cards</th><th>What it brings</th></tr></thead>
+<tbody><tr><td>Weather</td><td>9</td><td>Hard frost, drought, long summer, storms at sea — the seasons turning</td></tr>
+<tr><td>Natural Disaster</td><td>7</td><td>Flood, earthquake, wildfire, mine collapse</td></tr>
+<tr><td>Crime</td><td>9</td><td>Heists, robbery on road and rail, piracy, a smuggling offer</td></tr>
+<tr><td>Wildlife</td><td>6</td><td>Wolves, a boar in the crops, one dragon, and the Quiet Season</td></tr>
+<tr><td>Conflict</td><td>7</td><td>Raiders, border disputes, mercenaries for hire</td></tr>
+<tr><td>People</td><td>15</td><td>Plague, migrants, strikes, festivals — and now illness: Camp Fever, Marsh Ague, the Grey Pox</td></tr>
+<tr><td>Market</td><td>9</td><td>Shortages, gluts, foreign demand, a tax levy</td></tr>
+<tr><td>Industry</td><td>2</td><td>Impure Smelt: the metal pours grey and tools snap like slate</td></tr>
+<tr><td>Arcane</td><td>5</td><td>Ley surges, a curdled brew, a wandering wizard, the Blood Moon</td></tr></tbody></table></div>
+<h2>Illness</h2>
+<p>The illness cards scale by blast radius: <strong>Camp Fever</strong> hits one travelling party, <strong>Marsh Ague</strong> one region, <strong>The Grey Pox</strong> every sizeable town on the map, and the old <strong>Plague</strong> still stalks regions. Every one of them is cancelled or blunted by the same three purchases — a Healing Draught or Physic Tonic in stock, an infirmary with a fed healer, or the right character in the party — which makes the healer the first specialist whose absence has a body count.</p>
+<h2>The wild, dialled</h2>
+<p>Two cards move the discovery tables themselves: <strong>Blood Moon</strong> widens every monster band by 3 for two rounds, <strong>The Quiet Season</strong> shrinks it by 2. They are the volume knob on how dangerous travel feels, and adding copies of either re-tunes the whole map without touching a table.</p>
+<h2>Every disaster has a mitigation</h2>
+<p>This is the rule that keeps the deck from feeling arbitrary. Each disaster card lists at least one thing a player could have bought in advance:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Card</th><th>Mitigation</th></tr></thead>
+<tbody><tr><td>Hard Frost</td><td>Brick houses ignore it; 2 fuel in stock cancels the effort penalty</td></tr>
+<tr><td>Drought</td><td>A well, or a town beside fresh water</td></tr>
+<tr><td>Wildfire</td><td>Water access improves the save roll</td></tr>
+<tr><td>Warehouse Heist</td><td>A watchtower cancels it once per game; soldiers halve it</td></tr>
+<tr><td>Caravan Robbery</td><td>An escorting soldier rolls to stop it</td></tr>
+<tr><td>Mine Collapse</td><td>Dwarves lose no worker</td></tr>
+<tr><td>Plague</td><td>A Healing Draught cancels the card outright</td></tr>
+<tr><td>Raiders</td><td>A palisade grants a defence die; garrisons defend automatically</td></tr></tbody></table></div>
+<p>If you get wiped out, you should be able to name the building you did not put up.</p>
+<h2>Structured effects</h2>
+<p>Cards carry both the printed text and a machine-readable <code>effects</code> array, so the digital build can resolve what it can and hand the rest to the player. The vocabulary:</p>
+<p><code>effort</code> · <code>commodity-loss</code> · <code>commodity-gain</code> · <code>price</code> · <code>building</code> · <code>tool</code> · <code>population</code> · <code>unrest</code> · <code>movement</code> · <code>cargo</code> · <code>combat</code> · <code>crop</code> · <code>choice</code> · <code>health</code> · <code>discovery</code></p>
+<p>New cards should stay inside that vocabulary where possible. When a card needs something the vocabulary cannot express, that is a signal to add a verb rather than to write another paragraph of prose the engine cannot read.</p>
+<p>The sandbox currently auto-resolves effort modifiers, crop advances and pauses, and price shifts. Anything targeted, local, or offering a choice is logged and left to the player — the single-town prototype has no board to apply &quot;one region&quot; to.</p>
+<h2>Deck feel</h2>
+<p>Weather and market cards are the most common because they should be the texture of the game, not its drama. Disasters and crime are rarer and land harder. Offers exist so that at least some cards are a decision rather than a result — a card you have to think about is worth three you merely suffer.</p>
+</section>
+
+<section class="chapter" id="c-07-peoples-magic-conflict">
+<h1>07 — Peoples, magic and conflict</h1>
+<h2>Peoples</h2>
+<p>Five, each with a distinct economic shape rather than a stat block.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>People</th><th>Die</th><th>Workers</th><th>The shape</th><th>The catch</th></tr></thead>
+<tbody><tr><td>Humans</td><td>d6</td><td>2</td><td>Cheap housing compounds into more workers than anyone</td><td>Never exceptional at anything</td></tr>
+<tr><td>Dwarves</td><td>d6</td><td>2</td><td>d8 underground, cheap smithing</td><td>−1 on any farm: they must buy food</td></tr>
+<tr><td>Elves</td><td>d6</td><td>2</td><td>Double foraging and herbs, 2 fine cloth for 1</td><td>Near-useless underground; won't touch a mana vein</td></tr>
+<tr><td>Halflings</td><td>d6</td><td>3</td><td>Crops ripen a round faster, huts cost 1 log</td><td>2 extra food per town, every round</td></tr>
+<tr><td>Orcs</td><td>d8</td><td>2</td><td>Enormous output, +1 die raiding</td><td>Double tool wear; can't build tier 3+ without capturing it</td></tr></tbody></table></div>
+<p>The trade-offs are real: dwarves can't farm, elves can't mine, orcs can't refine, halflings are always hungry, humans are never exceptional. The full trait list is in the <a href="#c-14-annex">annex</a>.</p>
+<p>The folio plates show each people doing what their rules say they are good at — the accepted renders from <a href="../art/prompts/peoples.md"><code>docs/art/prompts/peoples.md</code></a>; the orc plate is still to be drawn:</p>
+<div class="table-wrap gallery"><table>
+<tbody><tr><td><img src="../art/renders/people-human.png" alt="The human builder" loading="lazy"></td><td><img src="../art/renders/people-dwarf.png" alt="The dwarf miner" loading="lazy"></td><td><img src="../art/renders/people-elf.png" alt="The elf weaver-forager" loading="lazy"></td><td><img src="../art/renders/people-halfling.png" alt="The halfling farmer" loading="lazy"></td></tr>
+<tr><td><em>Humans — the builder</em></td><td><em>Dwarves — the miner</em></td><td><em>Elves — the weaver-forager</em></td><td><em>Halflings — the farmer</em></td></tr></tbody></table></div>
+<p><strong>Healers.</strong> A new profession alongside the smiths and brewers: trained at the <strong>infirmary</strong>, unlocked recipe <em>Tend the Sick</em>, and the difference between an illness card being a story and being a body count. Physician, medic, witch doctor, bone-setter — the title varies by people; the profession is the same, and the character deck carries named examples of two of them.</p>
+<h2>Magic</h2>
+<p>Deliberately small and economic rather than a second system bolted on.</p>
+<p><strong>Mana crystals</strong> come from mana veins — six per vein, difficulty 6 to survey, two tokens on the whole board. They are the scarcest thing in the game.</p>
+<p><strong>Arcane herbs</strong> are foraged, which means a player with nothing but hands and a forest has a route into the arcane economy. The ingredient list has grown three entries — moon blossom (picked only at night), ember root (dug from dry ground) and frost lichen (scraped off cold stone) — each with a potion that wants it.</p>
+<p><strong>Potions</strong> are brewed at an alchemist with an alembic, and they are one-shot effects on the things the game actually cares about — hours, movement, safety:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Potion</th><th>Effect</th></tr></thead>
+<tbody><tr><td>Draught of Vigour</td><td>One worker's die up two sizes for a round</td></tr>
+<tr><td>Tireless Toil</td><td>Re-roll a worker's effort, keep the better</td></tr>
+<tr><td>Brewmaster's Round</td><td>+1 effort to every worker in a town</td></tr>
+<tr><td>Healing Draught</td><td>Cancel a worker loss, ignore a Plague card, or heal a character 3</td></tr>
+<tr><td>Swiftfoot</td><td>Double a figure's movement, or re-move a cargo</td></tr>
+<tr><td>Stonehide</td><td>One unit ignores all hits in a battle</td></tr>
+<tr><td>Prospector's Clarity</td><td>Auto-succeed a survey, reveal adjacent deposits</td></tr>
+<tr><td>Merchant's Fortune</td><td>Shift a price band two steps for one sale</td></tr>
+<tr><td>Owl's Eye</td><td>Travel tonight as if carrying a lantern</td></tr>
+<tr><td>Physic Tonic</td><td>Cure one illness, anywhere</td></tr>
+<tr><td>Emberguard Salve</td><td>Ignore every hit from a fire monster, one battle</td></tr></tbody></table></div>
+<p>Every one of them buys hours, movement, safety or information. None of them break the economy, and all of them are made of things the economy produces.</p>
+<p><strong>Mana and talismans.</strong> Slaying a monster yields mana of its element — and mana must be <em>held</em>. Elves carry up to 3 in the body; everyone else carries none, and stores it in a <strong>talisman</strong>: six cards from a 2-capacity bone charm to a 10-capacity crystal phylactery, each an item that is made, sold and stolen like any other. Mana is spent on <strong>spells</strong> — eight, two per element, minor and major, listed in the <a href="#c-14-annex">annex</a> — one cast per character per round. The whole system is defined in <code>data/arcana.json</code> and reasoned through in <a href="#c-13-adventure">13-adventure.md</a>.</p>
+<h2>Conflict</h2>
+<p><strong>Combat.</strong> Each side rolls a die per unit and hits on 4+. Weapons add dice; armour cancels hits. Both sides apply hits at once, so attacking is never free. One round per battle, with retreat allowed — the intent is a sharp exchange, not a wargame inside a economy game.</p>
+<p><strong>Equipment.</strong> A sword is +1 die. Steel doubles that and hits on 3+. A bow rolls before the enemy does but needs arrows. A war hammer ignores armour entirely. Plate harness absorbs three hits and costs you a move point.</p>
+<p>Every weapon runs through the same production chains as everything else: a steel sword is two steel and a leather, which is a mine, a smelter, a steelworks, a pasture and a tannery. Arming yourself properly means having built an economy first, which is the point.</p>
+<p><strong>Raiding.</strong> Players may attack each other's towns and cargo. The winner loots 25% of the loser's stockpile (40% for orcs). Palisades give defenders an extra die; garrisoned soldiers defend automatically; a watchtower cancels one raid per game.</p>
+<p><strong>Why war is expensive.</strong> Soldiers produce nothing and eat every round. A player who builds an army has spent hours, food and housing on something that does not compound. That should make war a considered choice against a specific rival at a specific moment, and make the player who wars constantly lose on points to the one who farmed.</p>
+<p>The event deck also brings unaligned enemies — raiders, wolves, a dragon — so a player with no soldiers at all is taking a real risk rather than a safe one.</p>
+<p><strong>Monsters.</strong> The discovery tables bring twelve more, three per element, and meeting one is a decision, not just a fight: slay it for its mana, or — where the card allows — enslave it, befriend it with the gift it names, or domesticate it into the strangest livestock you own. Not everything can be tamed, and the ones that cannot are the ones the campaigns are built around. The deck and the option rules live in <code>data/monsters.json</code>; the reasoning is in <a href="#c-13-adventure">13-adventure.md</a>.</p>
+<p><strong>Hired muscle.</strong> Between a soldier's standing cost and a war's, there is the inn: thugs, militiamen and hired blades escort one journey for a flat fee and eat nothing. Costs in <code>rules.json → hirelings</code>.</p>
+</section>
+
+<section class="chapter" id="c-08-components">
+<h1>08 — What is in the box</h1>
+<p>A first pass at the physical bill of materials, generated from the data. Quantities are for a 4-player game and are estimates, not a manufacturing spec.</p>
+<h2>Board</h2>
+<ul><li><strong>61 hex tiles</strong> — double-sided, terrain printed on the face, a neutral &quot;unexplored&quot; pattern on the back. Terrain mix in <code>data/terrain.json</code> under <code>boardSetup.terrainMix</code>.</li>
+<li><strong>45 deposit tokens</strong> — placed face down under tiles at setup, flipped when surveyed. Counts per type in <code>data/deposits.json</code> (<code>tokensInSetup</code>).</li>
+<li><strong>~40 tree tokens</strong> — forest tiles carry 6 each; removed as they are felled.</li></ul>
+<h2>Per player (×4)</h2>
+<ul><li><strong>1 player board</strong> — stockpile track, effort pool, unrest track, turn reference</li>
+<li><strong>20 building markers</strong> in the player colour</li>
+<li><strong>12 worker meeples</strong>, 4 specialist meeples (distinct shape), 6 soldier meeples</li>
+<li><strong>4 figures</strong> — prospector, merchant, hero, and a spare</li>
+<li><strong>6 tool cards</strong> with sliding durability markers — the fiddliest component, and the one most worth prototyping early</li>
+<li><strong>30 road segments</strong>, 20 rail segments, 4 bridges</li>
+<li><strong>6 effort dice</strong> — d6 standard, plus a d4/d8/d10/d12 set shared between players for ladder effects</li></ul>
+<h2>Cards</h2>
+<ul><li><strong>69 event cards</strong> — the deck in <code>data/events.json</code></li>
+<li><strong>66 commodity reference cards</strong> — one per commodity, showing value, bulk, and what makes it. These double as the market price reference.</li>
+<li><strong>87 recipe cards</strong> — or, more likely, 8 double-sided player reference sheets grouped by category. 87 cards is a lot of shuffling for something nobody shuffles.</li>
+<li><strong>37 item cards</strong> — clothing, armour, weapons, potions, lights and talismans</li>
+<li><strong>12 monster cards</strong>, <strong>12 vehicle cards</strong>, <strong>8 character cards</strong>, <strong>8 quest cards</strong> — the adventure decks, in <code>data/monsters.json</code>, <code>vehicles.json</code>, <code>characters.json</code> and <code>quests.json</code>, all built to grow</li></ul>
+<p><strong>Card codes.</strong> Every card carries a deck prefix and a two-digit sequence — <code>VEH-03</code>, <code>MON-09</code>, <code>QST-07</code> — with a <code>v2</code> suffix if a card is ever reprinted changed. The scheme is data (<code>vehicles.json → cardIdScheme</code>), the numbering is this repository's own, and a fork is free to renumber.</p>
+<p><strong>The bar convention.</strong> Any card that tracks a quantity does it with a <strong>vertical numbered bar</strong>, numbered from the bottom, walked by a token: <strong>harm on the left edge</strong> (a vehicle's damage, a monster's or character's health), <strong>capacity on the right edge</strong> (a vehicle's cargo, a talisman's or character's mana). One convention, every deck, so a bar never needs explaining twice.</p>
+<h2>Tokens and bits</h2>
+<ul><li><strong>Commodity tokens</strong> — the big question. 63 commodities is far too many to give each its own wooden bit. Two candidate approaches: 1. <strong>Generic cubes in 11 category colours</strong>, with the specific commodity tracked on a player-board grid. Cheap, compact, and it makes a stockpile hard to read at a glance from across the table. 2. <strong>Printed cardboard chits per commodity</strong>, ~20 of the common ones and ~8 of the rare. Readable, thematic, and a genuinely large amount of punchboard.</li></ul>
+<p>  The digital prototype sidesteps this entirely, which is exactly why it should not be   the thing that decides it. This needs a paper prototype before it needs an opinion.</p>
+<p>  One thing the style guide settles either way: <strong>eleven distinguishable colours do not   exist</strong> — not across colour-blindness, not across dye lots, and not in greyscale, where   the eleven collapse into five clusters. So each category also carries a hatch pattern,   which is what actually identifies it. Under option 1 the hatch moves to the   player-board grid cell, and the cube supplies only colour — which is a real argument in   favour of cubes, since it costs nothing to print a hatch into a cell.   See <a href="../art/02-palette.md">../art/02-palette.md</a>.</p>
+<ul><li><strong>~120 coins</strong> in 1 / 5 / 20 denominations</li>
+<li><strong>Price band markers</strong> — 11, one per commodity category, on a shared market track</li>
+<li><strong>Round marker</strong>, turn order markers, first player token</li></ul>
+<h2>Mini-maps</h2>
+<p>Thirty-two A4 landscape sheets, each one large hexagon subdivided into 61 cells — the inside of a single campaign-map cell, for battles and for building. Four <strong>Holdings</strong> sheets (one per player), nine <strong>Grounds</strong> sheets (one per land terrain plus the shallows) and nineteen <strong>Places</strong> sheets (one per named Korvane Reach settlement). The spec and the art briefs are in <a href="../minimaps/README.md"><code>docs/minimaps/</code></a>, and all thirty-two accepted artworks are committed at <a href="../minimaps/img/"><code>docs/minimaps/img/</code></a>.</p>
+<h2>Player aids</h2>
+<ul><li><strong>Turn reference</strong> — the six phases, and the legality checklist for allocating effort</li>
+<li><strong>Travel &amp; discovery reference</strong> — the speed table and the d20 tables, straight from the <a href="#c-14-annex">annex</a></li>
+<li><strong>Production chain poster</strong> — the tier-0-to-tier-4 spine on one sheet. The Chains view in the web explorer is the working draft of this.</li></ul>
+<h2>Print-and-play</h2>
+<p>Everything above is derivable from <code>data/*.json</code>, so a generator that renders card fronts from the data is an obvious next tool — and it would keep the printed components honest against the rules automatically, in the same way the web explorer already is. The first slice of it exists: <code>tools/build-cards.mjs</code> renders the adventure decks — characters, vehicles, monsters and talismans — into <a href="../cards/index.html"><code>docs/cards/</code></a> from the data and the accepted plates in <code>docs/art/renders/</code>, one card per accepted render, print page included.</p>
+<p>The <a href="../art/01-two-plate-system.md">two-plate system</a> is what makes that generator tractable: one layout pass emits a <code>#wash</code> group and an <code>#ink</code> group, the colour edition is both, and the print-and-play edition is the ink group alone. Not two design efforts — one layout and two print runs. The files in <a href="../art/examples/">../art/examples/</a> are built to that contract and are the generator's target output.</p>
+</section>
+
+<section class="chapter" id="c-09-digital">
+<h1>09 — The digital build</h1>
+<h2>What exists</h2>
+<p><code>docs/index.html</code> is a single page with no build step, no dependencies and no network requests. Open it from disk and it works.</p>
+<p>Two things live in it:</p>
+<p><strong>The explorer</strong> — browsable views of every dataset, cross-linked. Click a commodity to see everything that makes it, everything that consumes it, everything it builds. The <strong>Chains</strong> view draws the full production tree for anything and reports the effort hours per unit all the way to the ground.</p>
+<p><strong>The sandbox</strong> — a playable single-town, single-player slice using the real rules. Roll effort, allocate it, found buildings, forge tools, trade, feed everyone, take the consequences.</p>
+<p><strong>What the explorer does not render yet:</strong> the adventure decks — monsters, vehicles, characters, quests, spells, the travel and discovery tables. Their data ships in the bundle (anything in <code>manifest.json</code> does), so the explorer's views are the gap, not the pipeline. The sandbox likewise plays the single-town economy only; nothing digital moves a party across the board yet.</p>
+<h2>Architecture</h2>
+<pre><code>data/*.json                   the single source of truth
+  ↓  tools/build-data.mjs
+docs/data/bundle.js           generated: window.GAME_DATA
+  ↓
+docs/js/data.js               indexes and graph queries — no rules
+docs/js/engine.js             the rules — no DOM
+docs/js/views.js              the explorer
+docs/js/sandbox.js            the sandbox UI
+docs/js/app.js                tabs, search, drawer</code></pre>
+<p>The important line is between <code>engine.js</code> and everything above it. The engine takes a state object and returns a state object; it does not know what a button is. That is what lets <code>tools/simulate.mjs</code> load the same engine in Node and play thousands of rounds headlessly, and it is what a future multiplayer board layer would build on.</p>
+<h3>Why a generated bundle instead of <code>fetch</code></h3>
+<p>Browsers refuse to <code>fetch()</code> a local file, and <code>&lt;script type=&quot;module&quot;&gt;</code> has the same problem over <code>file://</code>. A generated <code>bundle.js</code> loaded by a plain <code>&lt;script&gt;</code> tag is the only way to keep <code>data/*.json</code> as the single source of truth <em>and</em> keep the page openable by double-clicking it with no server and no install. Run <code>node tools/build-data.mjs</code> after editing any data file.</p>
+<h2>What the sandbox implements faithfully</h2>
+<p>Effort dice and the modifier ladder · tool durability and breakage · recipe inputs, outputs and variants · fuel bundles with output penalties · maturation waits · crop sowing, growth and harvest · construction with build-points and a minimum-rounds floor · storage caps and overflow · feeding, unrest and the variety bonus · market price bands and the spread · specialist training · the event deck.</p>
+<h2>What it simplifies, and where the table rule differs</h2>
+<p>Each of these is marked <code>SIMPLIFIED</code> in <code>engine.js</code>.</p>
+<p><strong>Spoilage.</strong> The tabletop rule ages each batch and loses it after <code>perishRounds</code>. The sandbox has nowhere to track batch ages, so what is left after the meal loses a quarter of its stack per round unless a granary shelters it. Feeding happens before spoilage — you eat the fresh food first.</p>
+<p><strong>Peoples' traits.</strong> Several are written as die-size changes for workers at a particular site (&quot;dwarves roll d8 in a mine&quot;). The sandbox rolls one pool of hours for the whole town, so there is no per-site die to step; those traits are approximated as output multipliers. This is a genuine design tension, not just an implementation gap — see <a href="#c-10-open-questions">10-open-questions.md</a>.</p>
+<p><strong>One town, no board.</strong> There is no map, no movement, no transport, no other players. Terrain and deposits are a fixed list the town simply has. Everything in <a href="#c-03-map-and-movement">03-map-and-movement.md</a> and <a href="#c-04-trade">04-trade.md</a> is designed but not implemented.</p>
+<p><strong>Events.</strong> Effort modifiers, crop advances/pauses and price shifts resolve automatically. Anything targeted, local, or offering a choice is logged for the player to resolve, because a single-town prototype has no &quot;one region&quot; to apply.</p>
+<p><strong>Worker slots</strong> are defined on every building but not yet enforced in the sandbox — the effort pool is town-wide rather than per-site.</p>
+<h2>The simulator</h2>
+<pre><code>node tools/simulate.mjs                        # one game, printed round by round
+node tools/simulate.mjs --people dwarf --seed 7
+node tools/simulate.mjs --games 20             # aggregate across seeds</code></pre>
+<p>It plays with a simple policy: sow before eating the seed, feed the town, replace broken tools, sell the surplus, build the next thing on a wish list, then whatever pays best per hour. It is a balance instrument, not a test — if it reports that a competent opening starves in round 4, the numbers are wrong, not the bot.</p>
+<p>It has already earned its keep: see <a href="#c-12-what-simulation-found">12-what-simulation-found.md</a>.</p>
+<h2>Where this goes next</h2>
+<p>The natural order, in rising cost:</p>
+<ol><li><strong>Enforce worker slots</strong> — needs allocation per site rather than a town pool.</li>
+<li><strong>The board</strong> — hex grid, tiles, figures, fog. The largest single piece.</li>
+<li><strong>Multiple towns</strong> — stockpiles per town, and food that has to be <em>where</em> the people are, which is what makes transport matter.</li>
+<li><strong>Transport and routes</strong> — cargo tokens moving over rounds.</li>
+<li><strong>Multiplayer</strong> — hot-seat first. The engine is already shaped for it: state in, state out, no hidden globals.</li>
+<li><strong>A card generator</strong> — render printable components from the same data, so the physical game cannot drift from the digital one.</li></ol>
+</section>
+
+<section class="chapter" id="c-10-open-questions">
+<h1>10 — Open questions</h1>
+<p>Things that are genuinely undecided, roughly in order of how much they would change the game. Where a decision has been provisionally made, the provisional answer is marked <strong>[working answer]</strong> — it is in the data, and it is not settled.</p>
+<h2>Structural</h2>
+<h3>1. Is effort a town-wide pool or a per-worker assignment?</h3>
+<p>The brief says each worker rolls a die and the player allocates that effort. The prototype pools all the hours, which is much easier to play — but it makes several designed traits inexpressible. &quot;Dwarves roll d8 in a mine&quot; needs to know <em>which worker</em> is in the mine, and a pool does not.</p>
+<p>The trade-off:</p>
+<ul><li><strong>Pool</strong> — fast, flexible, hides the workers. Bonuses have to become flat output multipliers, which is a real loss of texture.</li>
+<li><strong>Per-worker</strong> — each die stays with a meeple you place at a site. Slower, fiddlier, and it makes worker slots, terrain penalties and racial traits all work properly.</li></ul>
+<p><strong>[working answer]</strong> Pool in the prototype, per-worker on the table. That split is not sustainable — the two versions would diverge — and it needs resolving before the board layer is built. My inclination is per-worker with dice physically placed on buildings, because placing a die on a mine is a better game than subtracting 3 from a number.</p>
+<h3>2. How are commodity tokens handled physically?</h3>
+<p>63 commodities is far too many for one bit each. Generic coloured cubes plus a player board grid, or printed chits per commodity? See <a href="#c-08-components">08-components.md</a>. This needs a paper prototype, not an argument.</p>
+<h3>3. Is 24 rounds right?</h3>
+<p>The simulator gets one town to ten buildings in 24 rounds. Tier-3 chains are reachable but rarely worth it. Either the game is longer, buildings are cheaper, or the deep chains need to pay much better. Unresolved and important.</p>
+<h2>Economy</h2>
+<h3>4. Should storage be per-town or per-building?</h3>
+<p>Currently a town has one pool of slots and warehouses add to it. The alternative — goods live <em>in</em> a specific warehouse — makes theft cards much more interesting (which warehouse?) and bookkeeping much worse.</p>
+<h3>5. Does anything stop a player hoarding one commodity?</h3>
+<p>Right now, nothing except bulk. A player can sit on 40 grain. The variety bonus nudges against monoculture but only by one effort point. Options: rising storage cost, a diminishing market price for repeated sales, or nothing at all — hoarding may be a fine strategy that other players are free to punish.</p>
+<h3>6. Are the spread numbers right?</h3>
+<p>15% each way, removed by a trading house or a merchant. That is a 30% round trip, which makes player-to-player trade obviously better than the board. Probably correct — the board should be the fallback, not the plan — but the gap may be too wide to leave any reason to build a market at all beyond the safety net.</p>
+<h2>Map and movement</h2>
+<h3>7. Hex or square tiles?</h3>
+<p>Hexes are in the data (<code>terrain.tileShape</code>), squares are listed as an alternative. Hexes are better for movement and worse for rail networks, which want to branch orthogonally.</p>
+<h3>8. How does a player found a second town?</h3>
+<p>Not designed. A town hall is &quot;one per town&quot;, but nothing says what a town <em>is</em>, how far apart they must be, or what it costs to start one. This is a significant gap: the whole transport and food-distribution design assumes multiple towns exist.</p>
+<h3>9. Who owns a revealed deposit?</h3>
+<p>Currently: whoever builds the mine, not whoever surveyed it. That makes prospecting risky in a way I like, but it may be too punishing — you can hand a rival a coal seam by finding it. Options: a short claim window, or a claim marker the surveyor may place.</p>
+<h2>People</h2>
+<h3>10. Can workers be moved between towns?</h3>
+<p>The brief says yes, and it is not designed. If workers move freely, feeding pressure becomes trivially solvable by walking people to the food. If they cannot, a town whose farm fails is dead. Probably: workers move slowly and one at a time.</p>
+<h3>11. Should specialists be losable?</h3>
+<p>Currently a specialist is permanent once trained. Plague removes workers — should it be able to take your only smith? Dramatic, and possibly infuriating.</p>
+<h2>Conflict</h2>
+<h3>12. Is one round of combat enough?</h3>
+<p>One exchange, hits on 4+, both sides simultaneous. It is fast and it keeps war from swallowing the game, but it may make outcomes too swingy to justify the investment in soldiers.</p>
+<h3>13. What stops a player from being eliminated early?</h3>
+<p>Nothing yet. Losing all your workers is possible and there is no floor under it. A player knocked out at round 8 has a bad evening. Needs either a hard floor (you always keep one worker and one hut) or a comeback mechanism.</p>
+<h2>The adventure layer</h2>
+<h3>18. Does per-player event drawing scale?</h3>
+<p>Each player now turns a card in the Events phase, so a five-player round is five or six events. That is a lot of weather. It makes every player own a piece of the round and it feeds the discovery-band cards nicely — but if a round drowns in card resolution, the fallback is one shared card plus one per player <em>cap of three</em>, and the data already carries copies to support either.</p>
+<h3>19. How does character death actually play?</h3>
+<p><strong>[working answer]</strong> A character at 0 health is carried to the nearest settlement, rests to half, loses carried cargo. No permadeath — a player's hero card is theirs for the game. The open part: whether losing a campaign stage to a wipe should discard the campaign for everyone (currently: only if abandoned).</p>
+<h3>20. Is mana too slow to matter?</h3>
+<p>Twelve monsters yielding 1–4 mana each, spells costing 1–5, and monsters must be <em>found</em>. If a whole game yields a player 6 mana, spells need to be strong; if the Blood Moon floods the map, they need to be weak. The dial is <code>manaYield</code> on the monster cards, and it needs plays, not opinions.</p>
+<h3>21. Do enslaved monsters break the labour economy?</h3>
+<p>A Barrow Troll is a d8 worker for 3 food and 1 unrest. Compare a real worker: d6 for 1 food. Probably fine — the troll had to be beaten by 2+ hits without killing it first — but the exchange rate is untested.</p>
+<h2>Digital</h2>
+<h3>14. How much of the board game should the digital version enforce?</h3>
+<p>A strict digital version cannot express the negotiation, table talk and improvised deals that make the board version good. A loose one is a spreadsheet. The current sandbox resolves what it can and logs the rest for the player — that split feels right for a companion tool and wrong for a standalone game.</p>
+<h3>15. Is the web version a companion or a replacement?</h3>
+<p>Unresolved, and it changes everything about what gets built next. A companion needs the reference views and a turn tracker. A replacement needs the board, multiplayer and an AI. The current build hedges by being neither, which is fine for now and will not be fine for long.</p>
+<h2>Presentation</h2>
+<h3>16. Is <code>halfling</code> the right name?</h3>
+<p>Four of the five peoples are named with folklore terms in the public domain and used across hundreds of unrelated works. <code>halfling</code> is the exception worth a decision: the word appears in Tolkien and has been treated protectively by that estate, though it is also long-established as generic in tabletop games.</p>
+<p>The risk is low, and it is a naming question rather than a visual one — but it is cheap to change now and expensive to change after a print run, so it should be decided rather than assumed. Generic alternatives that lose nothing: <em>smallfolk</em>, <em>burrowfolk</em>, <em>hearthfolk</em>.</p>
+<p>Changing it touches <code>data/peoples.json</code> and every doc that names them. Nothing in <a href="../art/">../art/</a> depends on the word — the art risk is the rendition, not the name, and that is handled in <a href="../art/08-influences-and-distance.md">../art/08-influences-and-distance.md</a>.</p>
+<h3>17. Do commodity chits get individual art, or does the frame system carry it?</h3>
+<p>The style guide gives every commodity a category frame, a category hatch and a drawing. The drawing is by far the most expensive part — 63 of them — and the frame plus hatch already identifies the category unaided. Whether an 18mm chit needs its own illustration, or whether a well-chosen frame and a numeral is enough, is a real question about where the art budget goes. It should be answered with a printed test sheet, not an opinion.</p>
+</section>
+
+<section class="chapter" id="c-11-bootstrap">
+<h1>11 — Why the opening cannot deadlock</h1>
+<p>This is a short doc about one rule, because that rule was arrived at the hard way and it is the kind of thing that gets &quot;tidied up&quot; by someone who does not know why it is there.</p>
+<h2>The problem</h2>
+<p>An economy where every tool needs a building and every building needs a processed material will deadlock. The first version of this data did exactly that, in two places at once:</p>
+<p><strong>The stone loop.</strong> Stone came from a quarry. A quarry cost ironware. Ironware needed a blacksmith. A blacksmith cost stone. Nobody could ever build the first one of anything.</p>
+<p><strong>The lumber loop.</strong> Lumber came from a sawmill, which needed a saw, which was forged at a blacksmith, which cost lumber.</p>
+<p><strong>The plough gate.</strong> Sowing required a plough. A plough needed ironware, which needed a blacksmith, which needed a mine, a smelter and a pick. So a player could not plant a field until they had built an industrial base — while eating one food per worker per round from round one.</p>
+<p>None of these were visible by reading the files. All three fell out of the first headless simulation, which reported a town that starved in round 2 and never built its fourth building.</p>
+<h2>The rule</h2>
+<p><strong>Hand labour is always possible. Tools multiply it.</strong></p>
+<p>Concretely, three toolless or near-toolless jobs form the floor of the economy:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Job</th><th>Site</th><th>Tool</th><th>Yield</th></tr></thead>
+<tbody><tr><td>Gather Deadwood</td><td>forest, grassland, hills, marsh</td><td>none</td><td>1 log / 3h</td></tr>
+<tr><td>Gather Field Stone</td><td>hills, mountain, river bank, tundra</td><td>shovel</td><td>1 stone / 3h</td></tr>
+<tr><td>Forage</td><td>most wilderness</td><td>none</td><td>~1.2 food / 2h</td></tr></tbody></table></div>
+<p>Against the tooled versions — 2 logs per 2h with an axe, 2 stone per 3h at a quarry — they are bad. That is the design: they are not a strategy, they are a floor.</p>
+<p>And farm tools became <strong>optional multipliers</strong> rather than gates:</p>
+<ul><li>Sowing takes 4 hours by hand, 2 with a plough.</li>
+<li>Harvesting yields 6 by hand, 12 with a scythe.</li></ul>
+<p>Mining kept its hard gate. You cannot break rock with your hands, and coal should stay behind a real investment.</p>
+<h2>The safety net</h2>
+<p>The floor guarantees a player can always gather <em>something</em>. The market turns that into a recovery:</p>
+<ul><li>A <strong>Market</strong> costs 4 logs and nothing else — reachable by hand in two or three rounds from absolutely nothing.</li>
+<li>Tools can be <strong>bought</strong> there for coin.</li></ul>
+<p>So the worst case in the game — every tool broken, empty stockpile — is: gather deadwood by hand, put up a stall, buy an axe, carry on. Slow and humiliating, but never dead.</p>
+<p>This is also why the market's cost was changed from <code>3 logs + 1 cloth</code>. Cloth is four steps into the textile chain; requiring it made the safety net unreachable by exactly the player who needed it.</p>
+<h2>The starting position</h2>
+<p>A new town gets 2 logs, 8 grain, 1 water, 1 barrel, an axe and a shovel.</p>
+<p>The grain is the load-bearing number. A town of 2–3 workers eats 2–3 per round, and the path to the first harvest is: build a farm (2 rounds), sow (1 round), wait 3 rounds, harvest. Eight grain bridges that gap with a little to spare. Start with four — as the first version did — and the opening is unwinnable no matter how well it is played.</p>
+<p>The starting stock also sits deliberately <strong>under</strong> the storage cap. A town that begins in overflow bleeds goods before the player has made a single decision, which is a terrible first impression of a rule that is otherwise fine.</p>
+<h2>If you change these numbers</h2>
+<p>Run the simulator. It takes two seconds and it will tell you.</p>
+<pre><code>node tools/simulate.mjs --games 20</code></pre>
+<p>If <code>games with unrest</code> climbs or <code>buildings</code> falls, something in the floor has been broken.</p>
+</section>
+
+<section class="chapter" id="c-12-what-simulation-found">
+<h1>12 — What the simulator found</h1>
+<p>A record of design faults caught by <code>tools/simulate.mjs</code> before anyone played a game, kept because the <em>kind</em> of fault is more useful than the fix.</p>
+<h2>Faults found and fixed</h2>
+<h3>1. Two circular dependencies made the economy unstartable</h3>
+<p>Stone needed a quarry, which needed ironware, which needed a blacksmith, which needed stone. Lumber needed a saw, which was forged at a blacksmith, which was built of lumber.</p>
+<p>Neither was visible reading the JSON — each file looked reasonable on its own. The simulator found them in one run, as a town that never built its fourth building.</p>
+<p>Fixed with a toolless floor and by removing ironware from the quarry cost. See <a href="#c-11-bootstrap">11-bootstrap.md</a>.</p>
+<p><strong>The general lesson:</strong> referential integrity checking is not enough. Every id resolved correctly the whole time. What was broken was the <em>graph</em>, and only playing it found that.</p>
+<h3>2. Farming was gated behind heavy industry</h3>
+<p>Sowing required a plough; a plough required ironware, a blacksmith, a smelter, a mine and a pick. Meanwhile the town ate from round one. Fixed by making farm tools optional multipliers rather than gates.</p>
+<h3>3. The town started in storage overflow</h3>
+<p>Starting stock came to 24 bulk against a 12-slot cap, so the first Feeding phase destroyed half of it before the player had made a decision. Fixed by raising the free stockpile to 10 slots and trimming the starting goods to sit comfortably under the cap.</p>
+<h3>4. Losing your last axe was unrecoverable</h3>
+<p>No axe means no logs; no logs means no lumber, no blacksmith and no new axe. Fixed by adding toolless deadwood gathering and making the market cheap enough to be a genuine safety net — 4 logs, no cloth.</p>
+<h3>5. Sowing was misclassified as un-automatable</h3>
+<p>An engine bug rather than a data one: any recipe with no immediate outputs was flagged &quot;resolve this at the table&quot;. Sowing has no immediate output — it puts a crop marker on a field — so the digital game could never plant anything. Found by tracing why the bot would not farm.</p>
+<h3>6. Halflings only had their penalty implemented</h3>
+<p>&quot;Second Breakfast&quot; doubled their food bill; &quot;Many Hands&quot; and &quot;Green Fingers&quot; were prose the engine never read. They starved in 12 games out of 12. Second Breakfast became a flat 2 food per town per round, which scales sanely, and their farming got a multiplier.</p>
+<h2>Current state</h2>
+<p>20 games per people, 24 rounds, one town, the standard bot policy:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>People</th><th>Score</th><th>Workers</th><th>Buildings</th><th>Coin</th><th>Games with unrest</th></tr></thead>
+<tbody><tr><td>Elves</td><td>21.0</td><td>5.0</td><td>10.0</td><td>24</td><td>7/20</td></tr>
+<tr><td>Humans</td><td>20.7</td><td>5.0</td><td>9.7</td><td>18</td><td>10/20</td></tr>
+<tr><td>Orcs</td><td>18.6</td><td>5.0</td><td>7.6</td><td>22</td><td>3/20</td></tr>
+<tr><td>Dwarves</td><td>18.2</td><td>5.0</td><td>7.4</td><td>36</td><td>19/20</td></tr>
+<tr><td>Halflings</td><td>−14.6</td><td>6.0</td><td>6.6</td><td>101</td><td>18/20</td></tr></tbody></table></div>
+<p>Reproduce with <code>node tools/simulate.mjs --games 20 --people &lt;id&gt;</code>.</p>
+<h2>Known problems these numbers show</h2>
+<p><strong>Halflings are still the worst by a mile.</strong> They end with the most workers and the most coin and still score −15, because unrest costs 2 points each and they carry ~18 of it. Their flat food surcharge is still not paid for by anything the engine implements.</p>
+<p><strong>Dwarves hit unrest in 19 games out of 20.</strong> Their −50% farming penalty bites in a single-town sandbox with no one to buy food from. That may be correct — dwarves are <em>supposed</em> to be a trading people — but it cannot be confirmed until there is more than one town. Treat it as unproven rather than as a fault.</p>
+<p><strong>Human, elf and orc cluster at 18–21.</strong> Close enough to be encouraging, and far too crude a test to mean anything yet.</p>
+<p><strong>The overall pace is slow.</strong> Ten buildings and five workers in 24 rounds means the tier-3 chains — steel, glass, fine cloth — are reachable but rarely worth reaching. The levers are build-point costs, the length of the game, or the rate of housing. This is the biggest open balance question and it needs human playtesting, not more bot runs.</p>
+<h2>What the bot cannot tell you</h2>
+<p>It plays one town with no opponents, no board, no trade and no war. It cannot say anything about the parts of the game that are about other people — which is most of what makes a board game good. It is a check that the economy <em>functions</em>, not that the game is <em>fun</em>.</p>
+</section>
+
+<section class="chapter" id="c-13-adventure">
+<h1>13 — The adventure layer</h1>
+<p>The game began as a settlement economy. It has grown an open world around it: travel with day and night, discovery rolls, monsters, mana, quests and named vehicles. The design intent is that the adventure layer <strong>hangs off the economy rather than floating beside it</strong> — every sword is still a production chain, every quest reward is still coin, goods or hours, and the fastest way across the map is still the railway somebody had to build.</p>
+<p>The data lives in five files, one system each: <code>travel.json</code>, <code>discovery.json</code>, <code>monsters.json</code>, <code>quests.json</code>, <code>arcana.json</code> — with the decks in <code>vehicles.json</code> and <code>characters.json</code> and the talismans in <code>items.json</code>. Prose here, numbers there.</p>
+<h2>Days, nights and light</h2>
+<p>Every moving figure, party or vehicle gets one <strong>day leg</strong> per round, at the speed in <code>travel.json</code> for its mode and the terrain letter codes it crosses. The letter in the bottom corner of every hex is the ruling: G4 means a walker crosses four grassland hexes in a day.</p>
+<p>After the day leg a party may push on into a <strong>night leg</strong> — but the dark in the Reach is genuinely dark:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Light</th><th>Night speed</th></tr></thead>
+<tbody><tr><td>None</td><td>No travel. Even on a road.</td></tr>
+<tr><td>Torch</td><td>1 hex (2 on a road); spends one of the torch's uses</td></tr>
+<tr><td>Lantern</td><td>Half day speed, rounded up; spends nothing</td></tr>
+<tr><td>Owl's Eye potion</td><td>As a lantern, for one round</td></tr></tbody></table></div>
+<p>A night leg is never free: it triggers a second discovery roll where the party stops, with the monster band widened by 1. Trains run at night at full speed with a lantern fitted; ships need one rigged and sail at half speed. Torches burn out; lanterns are capital. That is the whole economy of light, and it makes a lantern one of the best-value items in the game — which is why one is a quest delivery.</p>
+<p><strong>Caves</strong> appear through discovery rolls on hills and mountains (the <code>caves</code> terrain feature). A party may enter only with a lit torch or lantern; inside is one draw on the cave column — hazard, trace, monster, or hoard. An emptied cave becomes a known camp: resting there is free.</p>
+<h2>Discovery rolls</h2>
+<p>When a figure, party or vehicle <strong>ends</strong> a movement leg, it rolls a d20 on the discovery table for the hex it stopped in — one roll per leg, never one per hex crossed. A road or rail on the hex overrides its terrain table.</p>
+<p>The tables (in <code>discovery.json</code>, printed in the annex) are skewed on purpose:</p>
+<ul><li><strong>Roads</strong> grow merchants, travellers and bandits; monsters mostly keep clear.</li>
+<li><strong>Rail</strong> rolls only at the stops — and never yields a commodity trace, because the ground either side of the line was picked clean while it was laid. Fewer stops, fewer rolls: the train is quietly the safest way across the map, and that is intended.</li>
+<li><strong>Desert, mountain, marsh</strong> are monster country, exactly as the fiction says.</li>
+<li><strong>Commodity traces are rare everywhere.</strong> Discovery is what you find when you are <em>not</em> looking. Prospecting, foraging and hunting are jobs with their own recipes and roll tables, and a discovery roll never replaces a survey — it just tells you where surveying might pay.</li></ul>
+<p>Any result that persists — a monster, a trace, a cave, a quest site — is marked on the hex with a tile or figure, so the whole table can see the world filling in as it is walked.</p>
+<p>Event cards can move the odds: <strong>Blood Moon</strong> widens every monster band by 3, <strong>The Quiet Season</strong> shrinks it by 2, and within one hex of a settlement the band always shrinks by 2 — the land there is walked, hunted and lit. Bands widen downward from their printed bottom and never claim 1 or 20.</p>
+<h2>Monsters</h2>
+<p>Twelve for now, three per element — fire, earth, water, air — in <code>monsters.json</code>, drawn when a discovery roll says <strong>monster</strong> and the drawn card's terrain list includes the hex. Water monsters do not occur in the desert because the deck itself refuses the draw.</p>
+<p>Meeting one is a choice, and the choice is the player's unless the card says otherwise:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>How</th><th>What you get</th></tr></thead>
+<tbody><tr><td><strong>Slay</strong></td><td>Fight, per the conflict rules</td><td>The monster's mana, in its element</td></tr>
+<tr><td><strong>Enslave</strong></td><td>Win by 2+ net hits without killing</td><td>A d4 worker that eats and breeds unrest</td></tr>
+<tr><td><strong>Befriend</strong></td><td>The gift on its card, then 4+ on a d6</td><td>A guard for a hex, or an escort</td></tr>
+<tr><td><strong>Domesticate</strong></td><td>Befriend or subdue, then 2 rounds at a pasture</td><td>The benefit on its card</td></tr>
+<tr><td><strong>Flee</strong></td><td>Withdraw the way you came</td><td>Nothing, and nothing rolls</td></tr></tbody></table></div>
+<p>Not everything can be tamed: the card lists which options it allows, and the Gravel Wyrm, the Mire Strangler and the Deepwater Maw allow none of them. The trade is deliberate — slaying pays mana now, the other three turn mana away for a living asset that eats.</p>
+<p>Seven of the twelve bestiary plates are accepted (<a href="../art/prompts/monsters.md"><code>docs/art/prompts/monsters.md</code></a> is the brief); the three fire monsters, the Barrow Troll and the Stone Boar are still to be drawn:</p>
+<div class="table-wrap gallery"><table>
+<tbody><tr><td><img src="../art/renders/monster-gravel-wyrm.png" alt="Gravel Wyrm" loading="lazy"></td><td><img src="../art/renders/monster-mire-strangler.png" alt="Mire Strangler" loading="lazy"></td><td><img src="../art/renders/monster-reef-serpent.png" alt="Reef Serpent" loading="lazy"></td><td><img src="../art/renders/monster-deepwater-maw.png" alt="The Deepwater Maw" loading="lazy"></td></tr>
+<tr><td><em>Gravel Wyrm (MON-06)</em></td><td><em>Mire Strangler (MON-07)</em></td><td><em>Reef Serpent (MON-08)</em></td><td><em>The Deepwater Maw (MON-09)</em></td></tr>
+<tr><td><img src="../art/renders/monster-rime-harpy.png" alt="Rime Harpy" loading="lazy"></td><td><img src="../art/renders/monster-dust-devil.png" alt="Dust Devil" loading="lazy"></td><td><img src="../art/renders/monster-storm-roc.png" alt="Storm Roc" loading="lazy"></td><td></td></tr>
+<tr><td><em>Rime Harpy (MON-10)</em></td><td><em>Dust Devil (MON-11)</em></td><td><em>Storm Roc (MON-12)</em></td><td></td></tr></tbody></table></div>
+<p>An unresolved monster stays on its hex as a figure and attacks whoever ends a leg there. The wild accumulates.</p>
+<h2>Mana, talismans and spells</h2>
+<p>Slaying a monster yields its <strong>mana</strong>, element-matched. Mana is not a commodity: no bulk, no stockpile, no crate. It must be <em>held</em> — and almost nobody can hold it in the body. Elves carry up to 3 innately; humans, dwarves, halflings and orcs carry none at all. Everyone else's mana lives in a <strong>talisman</strong> (<code>items.json</code>, class <code>talisman</code>): a bone charm holds 2, a copper amulet 4, a crystal phylactery 10. Talismans are items — made, bought from merchants, sold, and stolen with everything that implies. The card carries a vertical numbered mana bar; a token on the bar tracks the charge.</p>
+<p>All six talisman studies are accepted — the only deck that gets the violet, and the violet is a printing error, exactly as <a href="../art/prompts/talismans.md"><code>docs/art/prompts/talismans.md</code></a> demands:</p>
+<div class="table-wrap gallery"><table>
+<tbody><tr><td><img src="../art/renders/talisman-tal-01.png" alt="Bone Charm" loading="lazy"></td><td><img src="../art/renders/talisman-tal-02.png" alt="Weaver's Knot" loading="lazy"></td><td><img src="../art/renders/talisman-tal-03.png" alt="Copper Amulet" loading="lazy"></td></tr>
+<tr><td><em>Bone Charm (TAL-01) — holds 2</em></td><td><em>Weaver's Knot (TAL-02) — holds 3</em></td><td><em>Copper Amulet (TAL-03) — holds 4</em></td></tr>
+<tr><td><img src="../art/renders/talisman-tal-04.png" alt="Gold Locket" loading="lazy"></td><td><img src="../art/renders/talisman-tal-05.png" alt="Gemfire Pendant" loading="lazy"></td><td><img src="../art/renders/talisman-tal-06.png" alt="Crystal Phylactery" loading="lazy"></td></tr>
+<tr><td><em>Gold Locket (TAL-04) — holds 6</em></td><td><em>Gemfire Pendant (TAL-05) — holds 8</em></td><td><em>Crystal Phylactery (TAL-06) — holds 10</em></td></tr></tbody></table></div>
+<p>Mana is spent on <strong>spells</strong> (<code>arcana.json</code>): eight for now, two per element, a minor and a major. Like the potions, every one buys the things the game actually cares about — hours, movement, safety, repair — and none of them break the economy. Casting is one spell per character per round, and only characters cast.</p>
+<p>Mana crystals (the commodity) are frozen mana: shatter one for 2 mana of any element, but mana never freezes back.</p>
+<h2>Merchants, inns and hired muscle</h2>
+<p><strong>Merchants</strong> are met on the road (a discovery result) or visited in any settlement. Either way: shuffle the item deck and deal cards face up per <code>rules.json → market.merchantStock</code> — 2 for a roadside pedlar, 3 in a village, 5 in a town, 7 in a city, 9 at the Seat. That is the stock, this visit, at base value +10%. A bigger place is genuinely a better place to shop, and a roadside merchant with exactly the lantern you need is a small story the dice wrote.</p>
+<p><strong>Inns</strong> do four jobs, and every printed settlement has one:</p>
+<ul><li><strong>Rest</strong> — 2 health per round (3 with a healer in town), 5 coin, free at home.</li>
+<li><strong>Hirelings</strong> — a thug (20/journey), a militiaman (35) or a hired blade (60) escorts one journey or one cargo. They eat nothing; the fee is everything. A thug will not face a monster of strength 4+.</li>
+<li><strong>Rumours</strong> — pay 5 coin, draw a quest card, accept or decline.</li>
+<li><strong>Drinks</strong> — the old job: serve ale to clear unrest, per the recipe.</li></ul>
+<h2>Illness and healers</h2>
+<p>Illness arrived in the event deck: <strong>Camp Fever</strong> hits a travelling party, <strong>Marsh Ague</strong> hits a region, <strong>The Grey Pox</strong> hits every town of four or more workers, and the old <strong>Plague</strong> still stalks regions. The counters, in order of cost: a <strong>Healing Draught</strong> or <strong>Physic Tonic</strong> spent (potions), a <strong>healer</strong> specialist trained at the <strong>infirmary</strong> (a town with a fed healer loses no worker to any illness card), and Doctor Marrow or Tilly Goodbarrel in the character deck, who each ignore parts of it outright.</p>
+<p>The pattern matches the rest of the deck: every illness card has a mitigation you could have bought in advance, and the infirmary is the building whose absence you get to regret by name.</p>
+<h2>Quests and campaigns</h2>
+<p>The quest deck (<code>quests.json</code>) is the choose-your-own layer: cards that arrive through discovery <strong>omens</strong> or inn rumours, are read aloud, and are <strong>accepted or declined</strong> on the spot. Declined cards go to the bottom for someone else.</p>
+<p>They run a deliberate range of complexity, 1 to 5: from <em>deliver 3 grain to Grist</em> (an errand with a wage) through <em>slay the thing behind Umber Hollow's missing-persons ledger</em>, up to two staged <strong>campaigns</strong> — the Ironspine Road, which ends with cheap rail through the pass for whoever proved it, and the Drowned Bell of Taleowick, which ends with the Deepwater Maw. Campaign stages complete in order and pay per stage.</p>
+<p>This is the part of the game designed to grow fattest over time. New quests are new cards; a new map brings its own; nothing else has to change.</p>
+<h2>Vehicles and characters</h2>
+<p>Two more decks give the moving pieces names:</p>
+<p><strong>Vehicles</strong> (<code>vehicles.json</code>) — twelve named machines, three each of train, ship, caravan and horse. A card is a specific vehicle with a story and a quirk: the Reach Flyer is fast and takes passengers, Old Smoke is cheap and limps, the Fenway Wagons cross marsh that stops everything else on wheels. Each card carries a vertical <strong>damage bar up the left edge</strong> and a <strong>cargo bar up the right</strong>, numbered from the bottom, tracked with tokens. A wrecked vehicle spills its cargo on the hex, and salvage is whoever reaches it first.</p>
+<p>Eleven of the twelve catalogue plates are accepted (<a href="../art/prompts/vehicles.md"><code>docs/art/prompts/vehicles.md</code></a>); the Varl Wagonrow (VEH-09) is still to be drawn:</p>
+<div class="table-wrap gallery"><table>
+<tbody><tr><td><img src="../art/renders/vehicle-veh-01.png" alt="The Reach Flyer" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-02.png" alt="Steppe Hauler" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-03.png" alt="Old Smoke" loading="lazy"></td></tr>
+<tr><td><em>The Reach Flyer (VEH-01)</em></td><td><em>Steppe Hauler (VEH-02)</em></td><td><em>Old Smoke (VEH-03)</em></td></tr>
+<tr><td><img src="../art/renders/vehicle-veh-04.png" alt="Gullwing" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-05.png" alt="Saltreach Pride" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-06.png" alt="Ember Coast Trader" loading="lazy"></td></tr>
+<tr><td><em>Gullwing (VEH-04)</em></td><td><em>Saltreach Pride (VEH-05)</em></td><td><em>Ember Coast Trader (VEH-06)</em></td></tr>
+<tr><td><img src="../art/renders/vehicle-veh-07.png" alt="The Dunhaven Column" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-08.png" alt="The Fenway Wagons" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-10.png" alt="Bay Courser" loading="lazy"></td></tr>
+<tr><td><em>The Dunhaven Column (VEH-07)</em></td><td><em>The Fenway Wagons (VEH-08)</em></td><td><em>Bay Courser (VEH-10)</em></td></tr>
+<tr><td><img src="../art/renders/vehicle-veh-11.png" alt="Steppe Pony" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-12.png" alt="Black Malchior" loading="lazy"></td><td></td></tr>
+<tr><td><em>Steppe Pony (VEH-11)</em></td><td><em>Black Malchior (VEH-12)</em></td><td></td></tr></tbody></table></div>
+<p><strong>Characters</strong> (<code>characters.json</code>) — eight named adventurers; each player's hero figure takes one at setup for a face, a <strong>health bar (left edge)</strong> and, where the card has it, a <strong>mana bar (right edge)</strong>. Same convention on every deck in the game: <em>harm left, capacity right.</em></p>
+<p>All eight character plates are accepted (<a href="../art/prompts/characters.md"><code>docs/art/prompts/characters.md</code></a>):</p>
+<div class="table-wrap gallery"><table>
+<tbody><tr><td><img src="../art/renders/character-chr-01.png" alt="Corin Vale" loading="lazy"></td><td><img src="../art/renders/character-chr-02.png" alt="Berga Understone" loading="lazy"></td><td><img src="../art/renders/character-chr-03.png" alt="Sylvae of the Duskmere" loading="lazy"></td><td><img src="../art/renders/character-chr-04.png" alt="Tilly Goodbarrel" loading="lazy"></td></tr>
+<tr><td><em>Corin Vale (CHR-01)</em></td><td><em>Berga Understone (CHR-02)</em></td><td><em>Sylvae of the Duskmere (CHR-03)</em></td><td><em>Tilly Goodbarrel (CHR-04)</em></td></tr>
+<tr><td><img src="../art/renders/character-chr-05.png" alt="Ruk of the Red Road" loading="lazy"></td><td><img src="../art/renders/character-chr-06.png" alt="Doctor Elspeth Marrow" loading="lazy"></td><td><img src="../art/renders/character-chr-07.png" alt="Havik Coalbrand" loading="lazy"></td><td><img src="../art/renders/character-chr-08.png" alt="Old Mother Keswick" loading="lazy"></td></tr>
+<tr><td><em>Ruk of the Red Road (CHR-05)</em></td><td><em>Doctor Elspeth Marrow (CHR-06)</em></td><td><em>Havik Coalbrand (CHR-07)</em></td><td><em>Old Mother Keswick (CHR-08)</em></td></tr></tbody></table></div>
+<p><strong>Card codes.</strong> Every card carries a deck prefix and sequence — <code>VEH-03</code>, <code>MON-09</code>, <code>QST-07</code>, <code>TAL-06</code>, <code>CHR-01</code> — with a <code>v2</code> suffix if a card is ever reprinted changed. The scheme is defined in <code>vehicles.json → cardIdScheme</code>. The code is print identity, not data identity: the <code>id</code> field is the identity, and anyone forking the game is free to renumber.</p>
+<p><strong>Card fronts.</strong> <code>tools/build-cards.mjs</code> renders the fronts for these four decks — characters, vehicles, monsters and talismans — from <code>data/*.json</code> and the accepted plates, into <a href="../cards/index.html"><code>docs/cards/</code></a>, to the two-plate layer contract. Only a card whose plate has been accepted is rendered; edit the data or the renders, re-run the tool, and never the SVGs.</p>
+<h2>Mini-maps</h2>
+<p>Some moments need more board than a single hex: a battle, a boarding action, a farm becoming a village becoming a walled town. These resolve on <strong>mini-maps</strong> — A4 landscape sheets, each dominated by one large hexagon subdivided into small hexes, representing the inside of a single cell of the campaign map.</p>
+<p>Three series, specified in <a href="../minimaps/README.md"><code>docs/minimaps/</code></a>:</p>
+<ul><li><strong>Holdings</strong> — four blank settlement sheets, one per player, kept in front of you for as long as your farm, village or town stands on the big map.</li>
+<li><strong>Grounds</strong> — one battle sheet per land terrain plus the shallows, pulled out when an encounter needs positioning and put away when it is done.</li>
+<li><strong>Places</strong> — one sheet per named settlement on the Korvane Reach, used when play goes inside Vossgard or Dunhaven or Fen's End.</li></ul>
+<p>The side panels either side of the hexagon are working space: the <strong>left panel is the encounter tracker</strong> (initiative, round, morale), the <strong>right panel is the holdings ledger</strong> (buildings, garrison, stores). A battle sheet uses the left; a settlement sheet mostly the right; both are printed on every sheet so no sheet is ever the wrong sheet.</p>
+<p>All thirty-two sheet artworks are accepted and live in <a href="../minimaps/img/"><code>docs/minimaps/img/</code></a> — one of each series:</p>
+<div class="table-wrap gallery"><table>
+<tbody><tr><td><img src="../minimaps/img/PSM-01.png" alt="PSM-01 — The River Meadow" loading="lazy"></td><td><img src="../minimaps/img/TBM-05.png" alt="TBM-05 — the marsh ground" loading="lazy"></td><td><img src="../minimaps/img/SET-01.png" alt="SET-01 — Vossgard" loading="lazy"></td></tr>
+<tr><td><em>Holdings: The River Meadow (PSM-01)</em></td><td><em>Grounds: marsh (TBM-05)</em></td><td><em>Places: Vossgard (SET-01)</em></td></tr></tbody></table></div>
+<h2>What this layer deliberately does not do</h2>
+<p>No experience points, no levels, no skill trees. A character gets better the way a town does: by owning better things and standing nearer the railway. The economy remains the progression system — the adventure layer is a new set of ways to spend hours and a new set of things the hours can buy.</p>
+</section>
+
+<section class="chapter" id="c-14-annex">
+<h1>14 — Annex: the reference tables</h1>
+<blockquote><p><strong>Generated by <code>tools/build-annex.mjs</code> — do not edit by hand.</strong> Edit the data in <code>data/*.json</code>, run the tool, and commit both. Every number here is the same number the explorer and the simulator read.</p></blockquote>
+<h2>Terrain</h2>
+<p>The letter code is printed in the bottom corner of every hex on every map. It is the ruling when the artwork straddles a grid line, and it keys the travel and discovery tables below.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Terrain</th><th>Move</th><th>Road ×</th><th>Rail ×</th><th>Features</th><th>Deposits</th></tr></thead>
+<tbody><tr><td><strong>G</strong></td><td>Grassland</td><td>1</td><td>1</td><td>1</td><td>trees-sparse</td><td>clay-bed, coal-seam, iron-deposit, salt-dome, oil-field, gold-deposit</td></tr>
+<tr><td><strong>F</strong></td><td>Forest</td><td>2</td><td>2</td><td>2</td><td>trees-dense, game, herbs</td><td>clay-bed, iron-deposit, mana-vein</td></tr>
+<tr><td><strong>H</strong></td><td>Hills</td><td>2</td><td>2</td><td>3</td><td>stone, game, caves</td><td>coal-seam, iron-deposit, copper-deposit, gold-deposit, gem-vein, mana-vein</td></tr>
+<tr><td><strong>M</strong></td><td>Mountain</td><td>4</td><td>4</td><td>6</td><td>stone, herbs, caves</td><td>coal-seam, iron-deposit, copper-deposit, gold-deposit, gem-vein, mana-vein</td></tr>
+<tr><td><strong>B</strong></td><td>Marsh</td><td>3</td><td>3</td><td>4</td><td>reeds, herbs, fresh-water</td><td>clay-bed, peat-bog, oil-field</td></tr>
+<tr><td><strong>T</strong></td><td>Tundra</td><td>2</td><td>2</td><td>2</td><td>game</td><td>coal-seam, iron-deposit, oil-field, peat-bog</td></tr>
+<tr><td><strong>D</strong></td><td>Desert</td><td>2</td><td>2</td><td>2</td><td>sand</td><td>salt-dome, oil-field, gem-vein</td></tr>
+<tr><td><strong>C</strong></td><td>Coast</td><td>1</td><td>1</td><td>2</td><td>fish, sand, salt, fresh-water</td><td>salt-dome, sand-bar, clay-bed, gold-deposit</td></tr>
+<tr><td><strong>S</strong></td><td>Shallow Water</td><td>boat</td><td>—</td><td>—</td><td>fish</td><td>—</td></tr>
+<tr><td><strong>O</strong></td><td>Deep Water</td><td>boat</td><td>—</td><td>—</td><td>fish</td><td>—</td></tr></tbody></table></div>
+<h2>Travel speeds — hexes per day leg</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Mode</th><th><strong>G</strong></th><th><strong>F</strong></th><th><strong>H</strong></th><th><strong>M</strong></th><th><strong>B</strong></th><th><strong>T</strong></th><th><strong>D</strong></th><th><strong>C</strong></th><th><strong>S</strong></th><th><strong>O</strong></th></tr></thead>
+<tbody><tr><td>On Foot</td><td>4</td><td>2</td><td>2</td><td>1</td><td>1</td><td>2</td><td>2</td><td>4</td><td>—</td><td>—</td></tr>
+<tr><td>Mounted</td><td>6</td><td>2</td><td>3</td><td>1</td><td>1</td><td>3</td><td>3</td><td>6</td><td>—</td><td>—</td></tr>
+<tr><td>Cart</td><td>3</td><td>1</td><td>1</td><td>—</td><td>—</td><td>1</td><td>2</td><td>3</td><td>—</td><td>—</td></tr>
+<tr><td>Caravan</td><td>2</td><td>1</td><td>1</td><td>—</td><td>—</td><td>1</td><td>2</td><td>2</td><td>—</td><td>—</td></tr>
+<tr><td>Barge</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>3</td><td>3</td><td>—</td></tr>
+<tr><td>Ship</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>2</td><td>3</td><td>5</td></tr></tbody></table></div>
+<p>Overrides: <strong>On a Road</strong> — on-foot 5, mounted 8, cart 6, caravan 4; <strong>On Rail</strong> — train 6.</p>
+<h2>Night legs</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Light</th><th>Night speed</th></tr></thead>
+<tbody><tr><td>None</td><td>No travel at all, even on a road</td></tr>
+<tr><td>Torch</td><td>1 hex (2 on a road); spends one use</td></tr>
+<tr><td>Lantern</td><td>Half day speed, rounded up</td></tr>
+<tr><td>Owl’s Eye potion</td><td>As a lantern, for one round</td></tr></tbody></table></div>
+<p>A night leg triggers a second discovery roll with the monster band widened by 1. Trains run at night at full speed with a lantern fitted; ships sail at half speed with one rigged. Caves can only be entered with a lit torch or lantern.</p>
+<h2>Discovery tables — d20, roll where the leg ends</h2>
+<p>One roll per movement leg, on the table for the hex you <strong>stopped</strong> in. A road or rail on the hex overrides its terrain. Persistent results are marked on the hex with a tile or figure.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Table</th><th>Bands</th></tr></thead>
+<tbody><tr><td>Grassland (G)</td><td>1 bandits · 2-4 traveller · 5-14 nothing · 15-16 commodity-trace · 17-19 monster · 20 quest-omen</td></tr>
+<tr><td>Forest (F)</td><td>1 bandits · 2-3 traveller · 4-11 nothing · 12-14 commodity-trace · 15-19 monster · 20 quest-omen</td></tr>
+<tr><td>Hills (H)</td><td>1 bandits · 2-3 traveller · 4-10 nothing · 11-13 commodity-trace · 14-15 cave-mouth · 16-19 monster · 20 quest-omen</td></tr>
+<tr><td>Mountain (M)</td><td>1 hazard · 2 traveller · 3-8 nothing · 9-11 commodity-trace · 12-14 cave-mouth · 15-19 monster · 20 quest-omen</td></tr>
+<tr><td>Marsh (B)</td><td>1 hazard · 2 traveller · 3-10 nothing · 11-12 commodity-trace · 13-19 monster · 20 quest-omen</td></tr>
+<tr><td>Tundra (T)</td><td>1-2 hazard · 3 traveller · 4-11 nothing · 12-13 commodity-trace · 14-19 monster · 20 quest-omen</td></tr>
+<tr><td>Desert (D)</td><td>1-2 hazard · 3 traveller · 4-9 nothing · 10-11 commodity-trace · 12-19 monster · 20 quest-omen</td></tr>
+<tr><td>Coast (C)</td><td>1 hazard · 2-4 traveller · 5-12 nothing · 13-14 flotsam · 15 merchant · 16-19 monster · 20 quest-omen</td></tr>
+<tr><td>Shallow Water (S)</td><td>1 hazard · 2-3 flotsam · 4-13 nothing · 14-15 pirates · 16-19 monster · 20 quest-omen</td></tr>
+<tr><td>Deep Water (O)</td><td>1-2 hazard · 3 flotsam · 4-12 nothing · 13-15 pirates · 16-19 monster · 20 quest-omen</td></tr>
+<tr><td>On a Road</td><td>1-2 bandits · 3-7 merchant · 8-10 traveller · 11-17 nothing · 18-19 monster · 20 quest-omen</td></tr>
+<tr><td>On the Rail</td><td>1-2 bandits · 3-5 merchant · 6-7 traveller · 8-17 nothing · 18-19 monster · 20 quest-omen</td></tr>
+<tr><td>Inside a Cave</td><td>1-2 hazard · 3-8 nothing · 9-12 commodity-trace · 13-16 monster · 17-19 hoard · 20 quest-omen</td></tr></tbody></table></div>
+<p>Monster element weights by table:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Table</th><th>Fire</th><th>Earth</th><th>Water</th><th>Air</th></tr></thead>
+<tbody><tr><td>Grassland (G)</td><td>1</td><td>2</td><td>1</td><td>2</td></tr>
+<tr><td>Forest (F)</td><td>1</td><td>3</td><td>1</td><td>1</td></tr>
+<tr><td>Hills (H)</td><td>2</td><td>3</td><td>0</td><td>1</td></tr>
+<tr><td>Mountain (M)</td><td>2</td><td>2</td><td>0</td><td>2</td></tr>
+<tr><td>Marsh (B)</td><td>0</td><td>2</td><td>3</td><td>1</td></tr>
+<tr><td>Tundra (T)</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+<tr><td>Desert (D)</td><td>3</td><td>2</td><td>0</td><td>2</td></tr>
+<tr><td>Coast (C)</td><td>0</td><td>1</td><td>3</td><td>2</td></tr>
+<tr><td>Shallow Water (S)</td><td>0</td><td>0</td><td>4</td><td>1</td></tr>
+<tr><td>Deep Water (O)</td><td>0</td><td>0</td><td>4</td><td>1</td></tr>
+<tr><td>On a Road</td><td>1</td><td>2</td><td>1</td><td>1</td></tr>
+<tr><td>On the Rail</td><td>1</td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td>Inside a Cave</td><td>2</td><td>3</td><td>1</td><td>0</td></tr></tbody></table></div>
+<h2>Commodities</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Commodity</th><th>Category</th><th>Bulk</th><th>Value</th><th>Perishes</th><th>Tags</th></tr></thead>
+<tbody><tr><td>Logs</td><td>raw</td><td>2</td><td>4</td><td>—</td><td>bulky</td></tr>
+<tr><td>Stone</td><td>raw</td><td>2</td><td>5</td><td>—</td><td>bulky</td></tr>
+<tr><td>Clay</td><td>raw</td><td>2</td><td>3</td><td>—</td><td>bulky</td></tr>
+<tr><td>Sand</td><td>raw</td><td>2</td><td>2</td><td>—</td><td>bulky</td></tr>
+<tr><td>Iron Ore</td><td>raw</td><td>2</td><td>6</td><td>—</td><td>bulky, ore</td></tr>
+<tr><td>Copper Ore</td><td>raw</td><td>2</td><td>7</td><td>—</td><td>bulky, ore</td></tr>
+<tr><td>Gold Ore</td><td>raw</td><td>2</td><td>14</td><td>—</td><td>bulky, ore</td></tr>
+<tr><td>Salt</td><td>raw</td><td>1</td><td>6</td><td>—</td><td>preservative</td></tr>
+<tr><td>Water</td><td>raw</td><td>1</td><td>1</td><td>—</td><td>liquid</td></tr>
+<tr><td>Coal</td><td>fuel</td><td>2</td><td>8</td><td>—</td><td>bulky, fuel</td></tr>
+<tr><td>Peat</td><td>fuel</td><td>2</td><td>3</td><td>—</td><td>bulky, fuel</td></tr>
+<tr><td>Charcoal</td><td>fuel</td><td>1</td><td>7</td><td>—</td><td>fuel</td></tr>
+<tr><td>Crude Oil</td><td>fuel</td><td>2</td><td>16</td><td>—</td><td>liquid, fuel, late-game</td></tr>
+<tr><td>Lumber</td><td>material</td><td>1</td><td>9</td><td>—</td><td>building-material</td></tr>
+<tr><td>Brick</td><td>material</td><td>2</td><td>12</td><td>—</td><td>building-material</td></tr>
+<tr><td>Pig Iron</td><td>material</td><td>1</td><td>14</td><td>—</td><td>metal</td></tr>
+<tr><td>Steel</td><td>material</td><td>1</td><td>26</td><td>—</td><td>metal, tier3</td></tr>
+<tr><td>Copper</td><td>material</td><td>1</td><td>18</td><td>—</td><td>metal</td></tr>
+<tr><td>Gold</td><td>material</td><td>1</td><td>40</td><td>—</td><td>metal, precious</td></tr>
+<tr><td>Glass</td><td>material</td><td>1</td><td>20</td><td>—</td><td>fragile</td></tr>
+<tr><td>Rope</td><td>material</td><td>1</td><td>8</td><td>—</td><td>—</td></tr>
+<tr><td>Leather</td><td>material</td><td>1</td><td>11</td><td>—</td><td>—</td></tr>
+<tr><td>Ironware</td><td>manufactured</td><td>1</td><td>22</td><td>—</td><td>fittings</td></tr>
+<tr><td>Parchment</td><td>manufactured</td><td>1</td><td>15</td><td>—</td><td>—</td></tr>
+<tr><td>Wool</td><td>textile</td><td>1</td><td>6</td><td>—</td><td>—</td></tr>
+<tr><td>Flax</td><td>textile</td><td>1</td><td>5</td><td>—</td><td>—</td></tr>
+<tr><td>Cotton</td><td>textile</td><td>1</td><td>7</td><td>—</td><td>—</td></tr>
+<tr><td>Yarn</td><td>textile</td><td>1</td><td>12</td><td>—</td><td>—</td></tr>
+<tr><td>Cloth</td><td>textile</td><td>1</td><td>20</td><td>—</td><td>—</td></tr>
+<tr><td>Fine Cloth</td><td>textile</td><td>1</td><td>38</td><td>—</td><td>tier3</td></tr>
+<tr><td>Hide</td><td>textile</td><td>1</td><td>6</td><td>—</td><td>—</td></tr>
+<tr><td>Grain</td><td>food</td><td>1</td><td>5</td><td>—</td><td>staple, seed</td></tr>
+<tr><td>Flour</td><td>food</td><td>1</td><td>9</td><td>—</td><td>—</td></tr>
+<tr><td>Bread</td><td>food</td><td>1</td><td>14</td><td>3 rounds</td><td>staple</td></tr>
+<tr><td>Vegetables</td><td>food</td><td>1</td><td>6</td><td>3 rounds</td><td>—</td></tr>
+<tr><td>Mushrooms</td><td>food</td><td>1</td><td>7</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Berries</td><td>food</td><td>1</td><td>5</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Apples</td><td>food</td><td>1</td><td>6</td><td>4 rounds</td><td>—</td></tr>
+<tr><td>Fish</td><td>food</td><td>1</td><td>7</td><td>2 rounds</td><td>—</td></tr>
+<tr><td>Meat</td><td>food</td><td>1</td><td>10</td><td>2 rounds</td><td>—</td></tr>
+<tr><td>Salted Meat</td><td>food</td><td>1</td><td>18</td><td>—</td><td>preserved</td></tr>
+<tr><td>Milk</td><td>food</td><td>1</td><td>4</td><td>1 rounds</td><td>liquid</td></tr>
+<tr><td>Cheese</td><td>food</td><td>1</td><td>16</td><td>—</td><td>preserved</td></tr>
+<tr><td>Honey</td><td>food</td><td>1</td><td>12</td><td>—</td><td>potion-ingredient</td></tr>
+<tr><td>Eggs</td><td>food</td><td>1</td><td>5</td><td>2 rounds</td><td>—</td></tr>
+<tr><td>Grapes</td><td>food</td><td>1</td><td>8</td><td>2 rounds</td><td>—</td></tr>
+<tr><td>Hops</td><td>food</td><td>1</td><td>7</td><td>—</td><td>—</td></tr>
+<tr><td>Ale</td><td>drink</td><td>2</td><td>24</td><td>—</td><td>liquid, morale</td></tr>
+<tr><td>Mead</td><td>drink</td><td>2</td><td>32</td><td>—</td><td>liquid, morale</td></tr>
+<tr><td>Wine</td><td>drink</td><td>2</td><td>40</td><td>—</td><td>liquid, morale, luxury-adjacent</td></tr>
+<tr><td>Sheep</td><td>livestock</td><td>2</td><td>18</td><td>—</td><td>breeds, eats</td></tr>
+<tr><td>Cattle</td><td>livestock</td><td>3</td><td>30</td><td>—</td><td>breeds, eats</td></tr>
+<tr><td>Pig</td><td>livestock</td><td>2</td><td>20</td><td>—</td><td>breeds, eats</td></tr>
+<tr><td>Chickens</td><td>livestock</td><td>1</td><td>9</td><td>—</td><td>breeds, eats</td></tr>
+<tr><td>Horse</td><td>livestock</td><td>3</td><td>45</td><td>—</td><td>breeds, eats, draught</td></tr>
+<tr><td>Barrel</td><td>container</td><td>1</td><td>8</td><td>—</td><td>reusable</td></tr>
+<tr><td>Crate</td><td>container</td><td>1</td><td>6</td><td>—</td><td>reusable</td></tr>
+<tr><td>Sack</td><td>container</td><td>0.5</td><td>3</td><td>—</td><td>reusable</td></tr>
+<tr><td>Spices</td><td>luxury</td><td>0.5</td><td>45</td><td>—</td><td>trade-good, import-only</td></tr>
+<tr><td>Gems</td><td>luxury</td><td>0.5</td><td>60</td><td>—</td><td>trade-good, theft-target</td></tr>
+<tr><td>Jewellery</td><td>luxury</td><td>0.5</td><td>110</td><td>—</td><td>trade-good, theft-target, tier3</td></tr>
+<tr><td>Arcane Herb</td><td>arcane</td><td>0.5</td><td>20</td><td>—</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Mana Crystal</td><td>arcane</td><td>0.5</td><td>55</td><td>—</td><td>potion-ingredient, theft-target</td></tr>
+<tr><td>Moon Blossom</td><td>arcane</td><td>0.5</td><td>14</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Ember Root</td><td>arcane</td><td>0.5</td><td>16</td><td>—</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Frost Lichen</td><td>arcane</td><td>0.5</td><td>12</td><td>—</td><td>foraged, potion-ingredient</td></tr></tbody></table></div>
+<h2>Tools</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tool</th><th>Made at</th><th>Craft</th><th>Hours</th><th>Value</th><th>Durability</th></tr></thead>
+<tbody><tr><td>Axe</td><td>blacksmith</td><td>1 pig-iron + 1 lumber</td><td>3</td><td>30</td><td>24</td></tr>
+<tr><td>Saw</td><td>blacksmith</td><td>1 pig-iron + 1 lumber</td><td>3</td><td>32</td><td>26</td></tr>
+<tr><td>Pick</td><td>blacksmith</td><td>2 pig-iron + 1 lumber</td><td>4</td><td>42</td><td>20</td></tr>
+<tr><td>Shovel</td><td>blacksmith</td><td>1 pig-iron + 1 lumber</td><td>3</td><td>28</td><td>22</td></tr>
+<tr><td>Hammer</td><td>blacksmith</td><td>1 pig-iron + 1 lumber</td><td>2</td><td>24</td><td>30</td></tr>
+<tr><td>Knife</td><td>blacksmith</td><td>1 pig-iron</td><td>2</td><td>18</td><td>18</td></tr>
+<tr><td>Shears</td><td>blacksmith</td><td>1 pig-iron</td><td>2</td><td>20</td><td>20</td></tr>
+<tr><td>Scythe</td><td>blacksmith</td><td>1 pig-iron + 1 lumber</td><td>3</td><td>30</td><td>22 (optional)</td></tr>
+<tr><td>Plough</td><td>carpenter</td><td>2 lumber + 1 ironware</td><td>4</td><td>55</td><td>28 (optional)</td></tr>
+<tr><td>Fishing Net</td><td>weaver</td><td>2 rope</td><td>3</td><td>26</td><td>20</td></tr>
+<tr><td>Spinning Wheel</td><td>carpenter</td><td>2 lumber + 1 ironware</td><td>4</td><td>48</td><td>30</td></tr>
+<tr><td>Loom</td><td>carpenter</td><td>3 lumber + 1 rope + 1 ironware</td><td>6</td><td>70</td><td>34</td></tr>
+<tr><td>Trowel</td><td>blacksmith</td><td>1 pig-iron</td><td>2</td><td>20</td><td>24</td></tr>
+<tr><td>Surveyor's Kit</td><td>carpenter</td><td>1 lumber + 1 parchment + 1 copper</td><td>4</td><td>65</td><td>16</td></tr>
+<tr><td>Alembic</td><td>glassworks</td><td>2 glass + 1 copper</td><td>5</td><td>90</td><td>14</td></tr></tbody></table></div>
+<h2>Buildings</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Building</th><th>Category</th><th>Tier</th><th>Cost</th><th>Points</th><th>Terrain</th></tr></thead>
+<tbody><tr><td>Hut</td><td>housing</td><td>1</td><td>2 logs</td><td>4</td><td>grassland, forest, hills, marsh, tundra</td></tr>
+<tr><td>Timber House</td><td>housing</td><td>2</td><td>4 lumber + 1 stone</td><td>10</td><td>grassland, forest, hills, tundra</td></tr>
+<tr><td>Brick House</td><td>housing</td><td>3</td><td>6 brick + 2 lumber + 1 ironware</td><td>18</td><td>grassland, hills, tundra, desert</td></tr>
+<tr><td>Manor</td><td>housing</td><td>4</td><td>8 brick + 4 stone + 2 glass + 1 fine-cloth</td><td>30</td><td>grassland, hills</td></tr>
+<tr><td>Lumber Camp</td><td>extraction</td><td>1</td><td>3 logs</td><td>6</td><td>forest</td></tr>
+<tr><td>Quarry</td><td>extraction</td><td>1</td><td>3 logs</td><td>8</td><td>hills, mountain</td></tr>
+<tr><td>Clay Pit</td><td>extraction</td><td>1</td><td>2 logs</td><td>5</td><td>marsh, grassland, coast</td></tr>
+<tr><td>Sand Pit</td><td>extraction</td><td>1</td><td>2 logs</td><td>5</td><td>desert, coast</td></tr>
+<tr><td>Mine</td><td>extraction</td><td>2</td><td>4 lumber + 1 ironware</td><td>14</td><td>hills, mountain, tundra, desert, grassland</td></tr>
+<tr><td>Oil Derrick</td><td>extraction</td><td>4</td><td>4 steel + 4 lumber + 2 ironware</td><td>26</td><td>—</td></tr>
+<tr><td>Well</td><td>extraction</td><td>1</td><td>3 stone</td><td>6</td><td>grassland, forest, hills, desert, tundra, marsh</td></tr>
+<tr><td>Farm</td><td>extraction</td><td>1</td><td>3 logs</td><td>8</td><td>grassland, coast</td></tr>
+<tr><td>Pasture</td><td>extraction</td><td>1</td><td>3 logs + 1 rope</td><td>7</td><td>grassland, hills, tundra</td></tr>
+<tr><td>Orchard</td><td>extraction</td><td>2</td><td>2 logs + 2 water</td><td>10</td><td>grassland, hills</td></tr>
+<tr><td>Vineyard</td><td>extraction</td><td>2</td><td>3 logs + 2 water</td><td>12</td><td>hills, grassland</td></tr>
+<tr><td>Apiary</td><td>extraction</td><td>1</td><td>2 lumber</td><td>5</td><td>grassland, forest, hills</td></tr>
+<tr><td>Dock</td><td>extraction</td><td>1</td><td>4 logs + 1 rope</td><td>8</td><td>coast</td></tr>
+<tr><td>Sawmill</td><td>production</td><td>1</td><td>4 logs + 2 stone</td><td>10</td><td>forest, grassland, hills, coast</td></tr>
+<tr><td>Charcoal Kiln</td><td>production</td><td>1</td><td>3 clay + 2 stone</td><td>8</td><td>forest, grassland, hills</td></tr>
+<tr><td>Smelter</td><td>production</td><td>2</td><td>6 stone + 2 clay + 2 lumber</td><td>16</td><td>hills, grassland, mountain</td></tr>
+<tr><td>Steelworks</td><td>production</td><td>3</td><td>8 brick + 4 stone + 2 ironware</td><td>26</td><td>hills, grassland</td></tr>
+<tr><td>Brickworks</td><td>production</td><td>2</td><td>4 stone + 4 clay + 2 lumber</td><td>14</td><td>grassland, hills, marsh</td></tr>
+<tr><td>Glassworks</td><td>production</td><td>3</td><td>6 brick + 2 stone + 1 ironware</td><td>22</td><td>grassland, hills, desert, coast</td></tr>
+<tr><td>Blacksmith</td><td>production</td><td>2</td><td>4 stone + 3 lumber + 1 clay</td><td>14</td><td>grassland, forest, hills, tundra, desert, marsh</td></tr>
+<tr><td>Carpenter's Shop</td><td>production</td><td>2</td><td>4 lumber + 1 stone</td><td>12</td><td>grassland, forest, hills</td></tr>
+<tr><td>Weaver's Shed</td><td>production</td><td>2</td><td>4 lumber + 1 stone</td><td>12</td><td>grassland, forest, hills, coast</td></tr>
+<tr><td>Tannery</td><td>production</td><td>2</td><td>3 lumber + 2 stone</td><td>11</td><td>grassland, marsh, coast</td></tr>
+<tr><td>Tailor</td><td>production</td><td>3</td><td>3 lumber + 2 brick</td><td>14</td><td>—</td></tr>
+<tr><td>Mill</td><td>production</td><td>1</td><td>3 lumber + 3 stone</td><td>10</td><td>grassland, hills, coast</td></tr>
+<tr><td>Bakery</td><td>production</td><td>2</td><td>4 brick + 1 lumber</td><td>12</td><td>—</td></tr>
+<tr><td>Butcher</td><td>production</td><td>1</td><td>3 lumber + 1 stone</td><td>9</td><td>—</td></tr>
+<tr><td>Dairy</td><td>production</td><td>2</td><td>3 lumber + 2 stone</td><td>11</td><td>—</td></tr>
+<tr><td>Brewery</td><td>production</td><td>2</td><td>4 lumber + 2 stone + 1 ironware</td><td>15</td><td>—</td></tr>
+<tr><td>Winery</td><td>production</td><td>3</td><td>4 stone + 3 lumber + 2 brick</td><td>18</td><td>—</td></tr>
+<tr><td>Warehouse</td><td>storage</td><td>2</td><td>5 lumber + 2 stone</td><td>12</td><td>—</td></tr>
+<tr><td>Granary</td><td>storage</td><td>1</td><td>4 lumber + 1 stone</td><td>10</td><td>—</td></tr>
+<tr><td>Market</td><td>civic</td><td>1</td><td>4 logs</td><td>8</td><td>—</td></tr>
+<tr><td>Trading House</td><td>civic</td><td>3</td><td>5 brick + 3 lumber + 2 parchment</td><td>20</td><td>—</td></tr>
+<tr><td>Town Hall</td><td>civic</td><td>2</td><td>4 logs + 2 stone</td><td>10</td><td>—</td></tr>
+<tr><td>Guildhall</td><td>civic</td><td>3</td><td>4 brick + 4 lumber + 1 parchment</td><td>18</td><td>—</td></tr>
+<tr><td>Inn</td><td>civic</td><td>2</td><td>4 lumber + 2 stone</td><td>12</td><td>—</td></tr>
+<tr><td>Infirmary</td><td>civic</td><td>2</td><td>3 lumber + 2 stone + 1 parchment</td><td>12</td><td>—</td></tr>
+<tr><td>Barracks</td><td>military</td><td>2</td><td>5 lumber + 3 stone</td><td>16</td><td>—</td></tr>
+<tr><td>Watchtower</td><td>military</td><td>2</td><td>5 stone + 2 lumber</td><td>14</td><td>—</td></tr>
+<tr><td>Palisade</td><td>military</td><td>1</td><td>6 logs</td><td>10</td><td>—</td></tr>
+<tr><td>Alchemist</td><td>arcane</td><td>3</td><td>3 brick + 2 glass + 2 parchment</td><td>18</td><td>—</td></tr>
+<tr><td>Shrine</td><td>arcane</td><td>2</td><td>4 stone + 1 lumber</td><td>10</td><td>—</td></tr>
+<tr><td>Road</td><td>infrastructure</td><td>1</td><td>1 stone</td><td>3</td><td>—</td></tr>
+<tr><td>Railroad</td><td>infrastructure</td><td>3</td><td>2 steel + 2 lumber</td><td>8</td><td>—</td></tr>
+<tr><td>Bridge</td><td>infrastructure</td><td>2</td><td>4 stone + 4 lumber + 1 ironware</td><td>16</td><td>shallow-water</td></tr>
+<tr><td>Harbour</td><td>infrastructure</td><td>3</td><td>6 stone + 6 lumber + 2 rope</td><td>22</td><td>coast</td></tr>
+<tr><td>Rail Depot</td><td>infrastructure</td><td>3</td><td>4 brick + 2 steel + 2 lumber</td><td>18</td><td>—</td></tr></tbody></table></div>
+<h2>Peoples</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>People</th><th>Die</th><th>Workers</th><th>Terrain comfort</th><th>Mana</th></tr></thead>
+<tbody><tr><td>Humans</td><td>d6</td><td>2</td><td>grassland, coast, forest</td><td>talisman only</td></tr>
+<tr><td>Dwarves</td><td>d6</td><td>2</td><td>mountain, hills, tundra</td><td>talisman only</td></tr>
+<tr><td>Elves</td><td>d6</td><td>2</td><td>forest, hills, grassland</td><td>3 innate</td></tr>
+<tr><td>Halflings</td><td>d6</td><td>3</td><td>grassland, forest, coast</td><td>talisman only</td></tr>
+<tr><td>Orcs</td><td>d8</td><td>2</td><td>hills, marsh, tundra, mountain</td><td>talisman only</td></tr></tbody></table></div>
+<h3>Traits</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>People</th><th>Trait</th><th>Effect</th></tr></thead>
+<tbody><tr><td>Humans</td><td>Adaptable</td><td>Ignore the first terrain effort penalty each round.</td></tr>
+<tr><td>Humans</td><td>Builders</td><td>All housing costs 1 less of its bulkiest material.</td></tr>
+<tr><td>Dwarves</td><td>Deep Delvers</td><td>Roll d8 instead of d6 for any worker allocated to a mine or quarry.</td></tr>
+<tr><td>Dwarves</td><td>Smiths</td><td>Forge Tool and Make Jewellery cost 1 fewer hour.</td></tr>
+<tr><td>Dwarves</td><td>Surefooted</td><td>Mountain and hills tiles cost 1 less to move through, minimum 1.</td></tr>
+<tr><td>Dwarves</td><td>Thirsty</td><td>A dwarf fed mead rolls one die size up next round.</td></tr>
+<tr><td>Dwarves</td><td>Sun-shy</td><td>-1 effort for any dwarf allocated to a farm, orchard or vineyard.</td></tr>
+<tr><td>Elves</td><td>Woodwise</td><td>Forage and Harvest Arcane Herbs yield double.</td></tr>
+<tr><td>Elves</td><td>Fine Hands</td><td>Weave Fine Cloth produces 2 instead of 1.</td></tr>
+<tr><td>Elves</td><td>Longstriders</td><td>Forest tiles cost 1 to move through.</td></tr>
+<tr><td>Elves</td><td>Will Not Delve</td><td>Elves cannot be allocated to a mana vein, and roll d4 in any other mine.</td></tr>
+<tr><td>Halflings</td><td>Many Hands</td><td>Start with one extra worker, and huts cost 1 log.</td></tr>
+<tr><td>Halflings</td><td>Green Fingers</td><td>All crops mature one round faster, minimum 1.</td></tr>
+<tr><td>Halflings</td><td>Second Breakfast</td><td>A halfling town pays 2 extra food every Feeding phase, however many halflings live in it.</td></tr>
+<tr><td>Halflings</td><td>Small</td><td>-1 combat die per halfling unit.</td></tr>
+<tr><td>Orcs</td><td>Brutal Labour</td><td>Roll d8 for every worker.</td></tr>
+<tr><td>Orcs</td><td>Hard on Tools</td><td>Tools take 2 wear per effort hour instead of 1.</td></tr>
+<tr><td>Orcs</td><td>Raiders</td><td>+1 combat die when attacking, and loot 40% instead of 25%.</td></tr>
+<tr><td>Orcs</td><td>Crude Craft</td><td>Cannot build tier-3 or tier-4 buildings without capturing one first.</td></tr></tbody></table></div>
+<h3>Professions</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Profession</th><th>Trained at</th><th>Coin</th><th>Hours</th><th>Bonus</th></tr></thead>
+<tbody><tr><td>Smith</td><td>blacksmith</td><td>40</td><td>3</td><td>+1 output on any recipe run at a blacksmith.</td></tr>
+<tr><td>Carpenter</td><td>carpenter</td><td>35</td><td>3</td><td>Build-points from this worker count double on timber buildings.</td></tr>
+<tr><td>Weaver</td><td>weaver</td><td>40</td><td>3</td><td>+1 yarn on every Spin Yarn.</td></tr>
+<tr><td>Tailor</td><td>tailor</td><td>50</td><td>3</td><td>Garments cost 1 less cloth.</td></tr>
+<tr><td>Brewer</td><td>brewery</td><td>45</td><td>3</td><td>+1 barrel of output on Brew Ale, Brew Mead and Make Wine.</td></tr>
+<tr><td>Merchant</td><td>trading-house</td><td>60</td><td>2</td><td>Removes the market spread in this town, and may broker a trade between two other players for a 10% cut.</td></tr>
+<tr><td>Alchemist</td><td>alchemist</td><td>70</td><td>4</td><td>Potions brewed here last one extra round.</td></tr>
+<tr><td>Healer</td><td>infirmary</td><td>50</td><td>3</td><td>Illness event cards cost this healer's town one worker fewer, and characters resting at this town's inn heal +1 per round.</td></tr>
+<tr><td>Miner</td><td>mine</td><td>45</td><td>3</td><td>+1 output on any mining recipe, and picks wear half as fast in this worker's hands.</td></tr>
+<tr><td>Farmer</td><td>farm</td><td>35</td><td>3</td><td>+2 output on every harvest recipe.</td></tr>
+<tr><td>Engineer</td><td>rail-depot</td><td>80</td><td>4</td><td>Lay Rail costs 1 less build-point per tile, and trains this player runs need 1 less coal per tile.</td></tr></tbody></table></div>
+<h2>Items</h2>
+<h3>Clothing</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Tunic</td><td>tailor</td><td>1 cloth</td><td>2</td><td>26</td><td>Ignore the first -1 weather effort penalty each round.</td></tr>
+<tr><td>Winter Coat</td><td>tailor</td><td>2 cloth + 2 wool</td><td>3</td><td>60</td><td>Immune to Hard Frost. No tundra or mountain effort penalty.</td></tr>
+<tr><td>Travelling Cloak</td><td>tailor</td><td>2 cloth + 1 leather</td><td>3</td><td>55</td><td>+1 move point for the figure wearing it.</td></tr>
+<tr><td>Sturdy Boots</td><td>tailor</td><td>1 leather</td><td>2</td><td>30</td><td>Marsh and mountain tiles cost 1 less to move through, minimum 1.</td></tr>
+<tr><td>Fine Robes</td><td>tailor</td><td>2 fine-cloth + 1 gold</td><td>4</td><td>180</td><td>A merchant wearing these gets a further 10% on every market sale. Worth 2 victory points at game end.</td></tr></tbody></table></div>
+<h3>Armour</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Leather Jerkin</td><td>tailor</td><td>2 leather</td><td>3</td><td>50</td><td>Ignore the first hit in each battle.</td></tr>
+<tr><td>Chain Mail</td><td>blacksmith</td><td>2 ironware + 1 leather</td><td>5</td><td>130</td><td>Ignore the first two hits in each battle.</td></tr>
+<tr><td>Plate Harness</td><td>blacksmith</td><td>3 steel + 2 leather</td><td>8</td><td>320</td><td>Ignore the first three hits in each battle. -1 move point.</td></tr>
+<tr><td>Helm</td><td>blacksmith</td><td>1 ironware</td><td>2</td><td>45</td><td>Once per battle, cancel one hit.</td></tr>
+<tr><td>Shield</td><td>carpenter</td><td>1 lumber + 1 ironware</td><td>2</td><td>40</td><td>+1 defence die.</td></tr></tbody></table></div>
+<h3>Weapon</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Sword</td><td>blacksmith</td><td>2 pig-iron + 1 leather</td><td>4</td><td>95</td><td>+1 combat die.</td></tr>
+<tr><td>Steel Sword</td><td>blacksmith</td><td>2 steel + 1 leather</td><td>5</td><td>210</td><td>+2 combat dice, and hits on 3+ instead of 4+.</td></tr>
+<tr><td>War Axe</td><td>blacksmith</td><td>2 pig-iron + 1 lumber</td><td>3</td><td>80</td><td>+1 combat die, +2 when attacking.</td></tr>
+<tr><td>Pike</td><td>blacksmith</td><td>1 pig-iron + 2 lumber</td><td>3</td><td>70</td><td>+2 combat dice when defending a town. Cannot be used with a shield.</td></tr>
+<tr><td>Bow</td><td>carpenter</td><td>1 lumber + 1 rope</td><td>3</td><td>65</td><td>Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight.</td></tr>
+<tr><td>Quiver of Arrows</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>Holds 3 uses. Each battle with a bow spends 1.</td></tr>
+<tr><td>Sling</td><td>weaver</td><td>1 cloth</td><td>1</td><td>12</td><td>+1 combat die for halflings only. Everyone else may as well throw the stone.</td></tr>
+<tr><td>War Hammer</td><td>blacksmith</td><td>2 steel + 1 lumber</td><td>5</td><td>190</td><td>+2 combat dice. Ignores enemy armour entirely.</td></tr></tbody></table></div>
+<h3>Potion</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Draught of Vigour</td><td>alchemist</td><td>2 arcane-herb + 1 honey</td><td>3</td><td>70</td><td>Step one worker's effort die up two sizes for one round.</td></tr>
+<tr><td>Tireless Toil</td><td>alchemist</td><td>1 arcane-herb + 2 mushrooms</td><td>3</td><td>60</td><td>Re-roll every effort die of one worker and keep the better result.</td></tr>
+<tr><td>Brewmaster's Round</td><td>alchemist</td><td>1 ale + 2 arcane-herb</td><td>4</td><td>120</td><td>+1 flat effort to every worker in one town this round.</td></tr>
+<tr><td>Healing Draught</td><td>alchemist</td><td>2 arcane-herb + 2 berries</td><td>3</td><td>85</td><td>Cancel one worker loss, or ignore one Plague card. Or restore 3 health to one character.</td></tr>
+<tr><td>Swiftfoot</td><td>alchemist</td><td>1 arcane-herb + 1 mana-crystal</td><td>3</td><td>140</td><td>Double one figure's move points, or move one cargo token its full speed again this round.</td></tr>
+<tr><td>Stonehide</td><td>alchemist</td><td>1 mana-crystal + 2 mushrooms</td><td>4</td><td>150</td><td>One unit ignores all hits in one battle.</td></tr>
+<tr><td>Prospector's Clarity</td><td>alchemist</td><td>1 mana-crystal + 2 arcane-herb</td><td>4</td><td>160</td><td>Automatically succeed on one survey, and reveal all deposits on adjacent tiles.</td></tr>
+<tr><td>Merchant's Fortune</td><td>alchemist</td><td>1 gold + 2 arcane-herb</td><td>4</td><td>200</td><td>Shift one commodity family's price band two steps in your favour for your next sale only.</td></tr>
+<tr><td>Owl's Eye</td><td>alchemist</td><td>2 moon-blossom + 1 arcane-herb</td><td>3</td><td>90</td><td>One figure or party travels night legs this round as if carrying a lantern.</td></tr>
+<tr><td>Physic Tonic</td><td>alchemist</td><td>2 frost-lichen + 1 honey</td><td>3</td><td>95</td><td>Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick.</td></tr>
+<tr><td>Emberguard Salve</td><td>alchemist</td><td>2 ember-root + 1 honey</td><td>3</td><td>100</td><td>One unit or character ignores every hit from a fire-element monster in one battle.</td></tr></tbody></table></div>
+<h3>Light</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Torch</td><td>carpenter</td><td>1 lumber + 1 cloth</td><td>1</td><td>10</td><td>Travel one night leg at torch speed - see travel.json. Enter a cave. Each night leg or cave visit spends one use; at zero it is gone.</td></tr>
+<tr><td>Lantern</td><td>blacksmith</td><td>1 ironware + 1 glass</td><td>2</td><td>55</td><td>Travel night legs at lantern speed - see travel.json. Explore caves without spending uses. Does not wear out, but it can be lost, sold or stolen like any item.</td></tr></tbody></table></div>
+<h3>Talisman</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Capacity</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Bone Charm (TAL-01)</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>2</td><td>Stores up to 2 mana. Track with a token on the mana bar.</td></tr>
+<tr><td>Weaver's Knot (TAL-02)</td><td>weaver</td><td>2 yarn</td><td>3</td><td>45</td><td>3</td><td>Stores up to 3 mana.</td></tr>
+<tr><td>Copper Amulet (TAL-03)</td><td>blacksmith</td><td>1 copper</td><td>3</td><td>60</td><td>4</td><td>Stores up to 4 mana.</td></tr>
+<tr><td>Gold Locket (TAL-04)</td><td>blacksmith</td><td>1 gold</td><td>4</td><td>120</td><td>6</td><td>Stores up to 6 mana.</td></tr>
+<tr><td>Gemfire Pendant (TAL-05)</td><td>blacksmith</td><td>1 gems + 1 copper</td><td>5</td><td>190</td><td>8</td><td>Stores up to 8 mana.</td></tr>
+<tr><td>Crystal Phylactery (TAL-06)</td><td>alchemist</td><td>1 mana-crystal + 1 glass + 1 gold</td><td>6</td><td>320</td><td>10</td><td>Stores up to 10 mana. Worth 1 victory point at game end.</td></tr></tbody></table></div>
+<h2>Transport modes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Mode</th><th>Tier</th><th>Capacity</th><th>Speed</th><th>Needs</th><th>Buy</th><th>Upkeep</th><th>Theft risk</th></tr></thead>
+<tbody><tr><td>Porter</td><td>1</td><td>3</td><td>2</td><td>—</td><td>free</td><td>0</td><td>★</td></tr>
+<tr><td>Cart</td><td>1</td><td>8</td><td>2 (4 on road)</td><td>—</td><td>35</td><td>0</td><td>★★</td></tr>
+<tr><td>Caravan</td><td>2</td><td>24</td><td>2 (3 on road)</td><td>road</td><td>120</td><td>2</td><td>★</td></tr>
+<tr><td>Barge</td><td>2</td><td>30</td><td>3</td><td>dock</td><td>110</td><td>1</td><td>★★</td></tr>
+<tr><td>Ship</td><td>3</td><td>60</td><td>4</td><td>harbour</td><td>280</td><td>3</td><td>★★★</td></tr>
+<tr><td>Train</td><td>3</td><td>80</td><td>6</td><td>rail-depot</td><td>350</td><td>4</td><td>★★</td></tr></tbody></table></div>
+<h2>Vehicle deck</h2>
+<p>Damage bar up the <strong>left</strong> edge, cargo bar up the <strong>right</strong> — harm left, capacity right, on every deck in the game.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Vehicle</th><th>Kind</th><th>Cargo</th><th>Damage</th><th>Quirk</th></tr></thead>
+<tbody><tr><td>VEH-01</td><td>The Reach Flyer</td><td>train</td><td>40</td><td>8</td><td>+1 hex per leg, and she carries 4 passengers (figures or characters) free among the mail sacks.</td></tr>
+<tr><td>VEH-02</td><td>Steppe Hauler</td><td>train</td><td>100</td><td>10</td><td>Burns 1 extra coal per leg. Nothing else on rails carries close to her hundred bulk.</td></tr>
+<tr><td>VEH-03</td><td>Old Smoke</td><td>train</td><td>60</td><td>6</td><td>Costs half a train's price to buy. Each journey, roll a d6: on a 1 she limps, and the journey takes twice as long.</td></tr>
+<tr><td>VEH-04</td><td>Gullwing</td><td>ship</td><td>30</td><td>8</td><td>+1 hex per leg, and she carries a rigged lantern: she may sail night legs at half speed.</td></tr>
+<tr><td>VEH-05</td><td>Saltreach Pride</td><td>ship</td><td>80</td><td>12</td><td>Takes the first 2 hits of any battle or storm on her oak sides without marking damage.</td></tr>
+<tr><td>VEH-06</td><td>Ember Coast Trader</td><td>ship</td><td>55</td><td>10</td><td>Sells at +10% at any harbour on the southern coast - Dunhaven and Port Malchior know her flag and clear her berth.</td></tr>
+<tr><td>VEH-07</td><td>The Dunhaven Column</td><td>caravan</td><td>28</td><td>8</td><td>Desert-wise: crosses desert at 2 hexes per leg, and hazard results in desert cost her nothing.</td></tr>
+<tr><td>VEH-08</td><td>The Fenway Wagons</td><td>caravan</td><td>20</td><td>6</td><td>Broad marsh-rigged wheels: may cross marsh at 1 hex per leg, which no other wheeled thing can do at all.</td></tr>
+<tr><td>VEH-09</td><td>The Varl Wagonrow</td><td>caravan</td><td>24</td><td>7</td><td>Hill-country teams: crosses hills at 2 hexes per leg.</td></tr>
+<tr><td>VEH-10</td><td>Bay Courser</td><td>mounted</td><td>2</td><td>4</td><td>+1 hex on grassland legs. The fastest honest thing on four legs in the Reach.</td></tr>
+<tr><td>VEH-11</td><td>Steppe Pony</td><td>mounted</td><td>3</td><td>5</td><td>Ignores tundra penalties and forages for herself: no feed, ever.</td></tr>
+<tr><td>VEH-12</td><td>Black Malchior</td><td>mounted</td><td>2</td><td>4</td><td>Night-eyed: may travel one night leg per journey with no light at all.</td></tr></tbody></table></div>
+<h2>Monster deck</h2>
+<p>S = slay (always allowed), E = enslave, B = befriend, D = domesticate. Slaying yields the mana; the other three trade mana away for a living asset.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Monster</th><th>Element</th><th>Str</th><th>Health</th><th>Mana</th><th>Ground</th><th>Options</th></tr></thead>
+<tbody><tr><td>MON-01</td><td>Cinder Wolf</td><td>fire</td><td>2</td><td>4</td><td>1</td><td>desert, hills, grassland</td><td>S B D</td></tr>
+<tr><td>MON-02</td><td>Ash Drake</td><td>fire</td><td>4</td><td>8</td><td>3</td><td>mountain, desert</td><td>S E</td></tr>
+<tr><td>MON-03</td><td>Forge Wight</td><td>fire</td><td>3</td><td>6</td><td>2</td><td>mountain, hills</td><td>S E B</td></tr>
+<tr><td>MON-04</td><td>Barrow Troll</td><td>earth</td><td>4</td><td>10</td><td>3</td><td>hills, grassland</td><td>S E</td></tr>
+<tr><td>MON-05</td><td>Stone Boar</td><td>earth</td><td>2</td><td>6</td><td>1</td><td>forest, hills</td><td>S B D</td></tr>
+<tr><td>MON-06</td><td>Gravel Wyrm</td><td>earth</td><td>3</td><td>8</td><td>2</td><td>mountain, desert</td><td>S</td></tr>
+<tr><td>MON-07</td><td>Mire Strangler</td><td>water</td><td>3</td><td>6</td><td>2</td><td>marsh</td><td>S</td></tr>
+<tr><td>MON-08</td><td>Reef Serpent</td><td>water</td><td>3</td><td>7</td><td>2</td><td>coast, shallow-water</td><td>S B</td></tr>
+<tr><td>MON-09</td><td>The Deepwater Maw <em>(unique)</em></td><td>water</td><td>5</td><td>12</td><td>4</td><td>deep-water</td><td>S</td></tr>
+<tr><td>MON-10</td><td>Rime Harpy</td><td>air</td><td>2</td><td>5</td><td>1</td><td>tundra, mountain</td><td>S E B</td></tr>
+<tr><td>MON-11</td><td>Dust Devil</td><td>air</td><td>2</td><td>4</td><td>2</td><td>desert, grassland</td><td>S</td></tr>
+<tr><td>MON-12</td><td>Storm Roc</td><td>air</td><td>4</td><td>9</td><td>3</td><td>mountain, coast</td><td>S D</td></tr></tbody></table></div>
+<h2>Character deck</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Character</th><th>People</th><th>Calling</th><th>Health</th><th>Mana</th><th>Traits</th></tr></thead>
+<tbody><tr><td>CHR-01</td><td>Corin Vale</td><td>human</td><td>Wayfarer</td><td>10</td><td>talisman</td><td>Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere.</td></tr>
+<tr><td>CHR-02</td><td>Berga Understone</td><td>dwarf</td><td>Prospector</td><td>12</td><td>talisman</td><td>Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1.</td></tr>
+<tr><td>CHR-03</td><td>Sylvae of the Duskmere</td><td>elf</td><td>Herbalist</td><td>8</td><td>3 innate</td><td>Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross.</td></tr>
+<tr><td>CHR-04</td><td>Tilly Goodbarrel</td><td>halfling</td><td>Provisioner</td><td>8</td><td>talisman</td><td>Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes.</td></tr>
+<tr><td>CHR-05</td><td>Ruk of the Red Road</td><td>orc</td><td>Caravan Guard</td><td>13</td><td>talisman</td><td>Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo.</td></tr>
+<tr><td>CHR-06</td><td>Doctor Elspeth Marrow</td><td>human</td><td>Physician</td><td>9</td><td>talisman</td><td>Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever.</td></tr>
+<tr><td>CHR-07</td><td>Havik Coalbrand</td><td>dwarf</td><td>Engineer</td><td>10</td><td>talisman</td><td>Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands.</td></tr>
+<tr><td>CHR-08</td><td>Old Mother Keswick</td><td>human</td><td>Hedge-Witch</td><td>7</td><td>talisman</td><td>Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck.</td></tr></tbody></table></div>
+<h2>Quest deck</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Quest</th><th>Type</th><th>Cx</th><th>Task</th></tr></thead>
+<tbody><tr><td>QST-01</td><td>The Miller's Debt</td><td>mini</td><td>1</td><td>Deliver 3 grain to Grist.</td></tr>
+<tr><td>QST-02</td><td>Lanterns for Coldwater</td><td>mini</td><td>1</td><td>Deliver a lantern (the item) to Coldwater.</td></tr>
+<tr><td>QST-03</td><td>The Boar of Bramblehold</td><td>mini</td><td>2</td><td>Travel to any Bramblehold Wood hex and resolve a Stone Boar encounter there - slay it, or better, keep it.</td></tr>
+<tr><td>QST-04</td><td>Word to Dry Wells</td><td>mini</td><td>2</td><td>Carry the letter from Vossgard to Dry Wells within 4 rounds of accepting.</td></tr>
+<tr><td>QST-05</td><td>The Strangler in the Mire</td><td>mini</td><td>3</td><td>Slay the Mire Strangler within 2 hexes of Umber Hollow. If no Strangler is on the board, travelling those marsh hexes finds it on any discovery monster result, automatically.</td></tr>
+<tr><td>QST-06</td><td>A Draught for Fen's End</td><td>mini</td><td>3</td><td>Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count.</td></tr>
+<tr><td>QST-07</td><td>The Ironspine Road</td><td>campaign</td><td>4</td><td>3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel</td></tr>
+<tr><td>QST-08</td><td>The Drowned Bell of Taleowick</td><td>campaign</td><td>5</td><td>3 stages: The Tale at the Inn → The Sounding → What Rings It</td></tr></tbody></table></div>
+<h2>Spells</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Spell</th><th>Element</th><th>Mana</th><th>Effect</th></tr></thead>
+<tbody><tr><td>Kindle</td><td>fire</td><td>1</td><td>Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel.</td></tr>
+<tr><td>Ember Lash</td><td>fire</td><td>3</td><td>+2 combat dice to one unit or character for one battle.</td></tr>
+<tr><td>Mend Stone</td><td>earth</td><td>2</td><td>Repair 2 damage on one building or vehicle, or restore 4 wear to one tool.</td></tr>
+<tr><td>Bulwark</td><td>earth</td><td>4</td><td>One unit or character ignores 2 hits in one battle.</td></tr>
+<tr><td>Cleanse</td><td>water</td><td>2</td><td>Cure one illness marker, or restore 2 health to one character.</td></tr>
+<tr><td>Mist Veil</td><td>water</td><td>4</td><td>Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll.</td></tr>
+<tr><td>Fair Wind</td><td>air</td><td>2</td><td>+2 hexes on one leg, any mode. A ship gets +3.</td></tr>
+<tr><td>Stormcall</td><td>air</td><td>5</td><td>One party, vehicle or cargo you can see loses its next leg entirely.</td></tr></tbody></table></div>
+<h2>Event deck</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Card</th><th>Category</th><th>Scope</th><th>Copies</th></tr></thead>
+<tbody><tr><td>Hard Frost</td><td>weather</td><td>global</td><td>3</td></tr>
+<tr><td>Drought</td><td>weather</td><td>local</td><td>2</td></tr>
+<tr><td>Long Summer</td><td>weather</td><td>global</td><td>2</td></tr>
+<tr><td>Storms at Sea</td><td>weather</td><td>global</td><td>2</td></tr>
+<tr><td>Flood</td><td>disaster</td><td>local</td><td>2</td></tr>
+<tr><td>Earthquake</td><td>disaster</td><td>local</td><td>1</td></tr>
+<tr><td>Wildfire</td><td>disaster</td><td>local</td><td>2</td></tr>
+<tr><td>Mine Collapse</td><td>disaster</td><td>targeted</td><td>2</td></tr>
+<tr><td>Warehouse Heist</td><td>crime</td><td>targeted</td><td>3</td></tr>
+<tr><td>Caravan Robbery</td><td>crime</td><td>targeted</td><td>2</td></tr>
+<tr><td>Train Heist</td><td>crime</td><td>targeted</td><td>1</td></tr>
+<tr><td>Piracy</td><td>crime</td><td>global</td><td>1</td></tr>
+<tr><td>Smuggling Ring</td><td>crime</td><td>offer</td><td>2</td></tr>
+<tr><td>Wolf Pack</td><td>wildlife</td><td>local</td><td>2</td></tr>
+<tr><td>Boar in the Fields</td><td>wildlife</td><td>local</td><td>2</td></tr>
+<tr><td>Dragon Sighting</td><td>wildlife</td><td>global</td><td>1</td></tr>
+<tr><td>Raiders</td><td>conflict</td><td>targeted</td><td>3</td></tr>
+<tr><td>Border Dispute</td><td>conflict</td><td>global</td><td>2</td></tr>
+<tr><td>Mercenaries for Hire</td><td>conflict</td><td>offer</td><td>2</td></tr>
+<tr><td>Plague</td><td>social</td><td>local</td><td>1</td></tr>
+<tr><td>Migrants</td><td>social</td><td>offer</td><td>3</td></tr>
+<tr><td>Strike</td><td>social</td><td>targeted</td><td>2</td></tr>
+<tr><td>Festival</td><td>social</td><td>global</td><td>2</td></tr>
+<tr><td>Travelling Master</td><td>social</td><td>offer</td><td>2</td></tr>
+<tr><td>Iron Shortage</td><td>market</td><td>global</td><td>2</td></tr>
+<tr><td>Glut</td><td>market</td><td>global</td><td>2</td></tr>
+<tr><td>Foreign Demand</td><td>market</td><td>global</td><td>3</td></tr>
+<tr><td>Tax Levy</td><td>market</td><td>global</td><td>2</td></tr>
+<tr><td>Ley Surge</td><td>arcane</td><td>global</td><td>1</td></tr>
+<tr><td>Curdled Brew</td><td>arcane</td><td>targeted</td><td>1</td></tr>
+<tr><td>Wandering Wizard</td><td>arcane</td><td>offer</td><td>2</td></tr>
+<tr><td>Camp Fever</td><td>social</td><td>targeted</td><td>2</td></tr>
+<tr><td>Marsh Ague</td><td>social</td><td>local</td><td>2</td></tr>
+<tr><td>The Grey Pox</td><td>social</td><td>global</td><td>1</td></tr>
+<tr><td>Impure Smelt</td><td>industry</td><td>global</td><td>2</td></tr>
+<tr><td>Blood Moon</td><td>arcane</td><td>global</td><td>1</td></tr>
+<tr><td>The Quiet Season</td><td>wildlife</td><td>global</td><td>1</td></tr></tbody></table></div>
+<p>69 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.</p>
+</section>
+  </main>
+</div>
+
+</body>
+</html>

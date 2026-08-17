@@ -8,7 +8,7 @@
   <image href="../art/renders/talisman-tal-02.png" x="88" y="132" width="376" height="290" preserveAspectRatio="xMidYMid slice"/>
   <rect x="474" y="158" width="30" height="418" fill="#6B4C7D" opacity="0.28"/>
   
-  <rect x="24" y="596" width="504" height="108" fill="#D8CEBE" opacity="0.5"/>
+  <rect x="24" y="586" width="504" height="118" fill="#D8CEBE" opacity="0.5"/>
 </g>
 
 <!-- ============================================================ INK -->
@@ -24,24 +24,24 @@
   </g>
 
   <!-- name and card code, maker's-mark small -->
-  <text x="48" y="78" font-size="26" font-weight="bold">Weaver's Knot</text>
-  <text x="504" y="58" font-size="13" text-anchor="end" letter-spacing="2" font-family="Helvetica, Arial, sans-serif">TAL-02</text>
-  <text x="48" y="98" font-size="12.5" font-style="italic" fill="#3D3630">talisman · made at the weaver · 45 coin</text>
+  <text x="48" y="80" font-size="31" font-weight="bold">Weaver's Knot</text>
+  <text x="504" y="60" font-size="15" text-anchor="end" letter-spacing="2" font-family="Helvetica, Arial, sans-serif">TAL-02</text>
+  <text x="48" y="102" font-size="15.5" font-style="italic" fill="#3D3630">talisman · made at the weaver · 45 coin</text>
   
 
   <!-- portrait window rule: the wash bleeds, the ink holds the line -->
   <rect x="88" y="132" width="376" height="290" fill="none" stroke="#1A1714" stroke-width="2.4"/>
 
-  <rect x="474" y="158" width="30" height="418" fill="none" stroke="#1A1714" stroke-width="2"/><path d="M 474,436.66666666666663 H 504" stroke="#1A1714" stroke-width="1.1"/><path d="M 474,297.3333333333333 H 504" stroke="#1A1714" stroke-width="1.1"/><g fill="#1A1714"><text x="489" y="510.3333333333333" font-size="12.5" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">1</text><text x="489" y="371" font-size="12.5" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">2</text><text x="489" y="231.66666666666663" font-size="12.5" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">3</text></g><text x="489" y="150" font-size="9" text-anchor="middle" letter-spacing="1.1" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">MANA</text>
+  <rect x="474" y="158" width="30" height="418" fill="none" stroke="#1A1714" stroke-width="2"/><path d="M 474,436.66666666666663 H 504" stroke="#1A1714" stroke-width="1.1"/><path d="M 474,297.3333333333333 H 504" stroke="#1A1714" stroke-width="1.1"/><g fill="#1A1714"><text x="489" y="510.8333333333333" font-size="13.5" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">1</text><text x="489" y="371.5" font-size="13.5" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">2</text><text x="489" y="232.16666666666663" font-size="13.5" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">3</text></g><text x="489" y="150" font-size="10" text-anchor="middle" letter-spacing="1.1" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">MANA</text>
 
   <!-- the card's working text -->
-  <g font-size="13.5">
-    <text x="90" y="446" font-size="13.5" >Stores up to 3 mana.</text>
+  <g font-size="18">
+    <text x="90" y="448" font-size="18" >Stores up to 3 mana.</text>
   </g>
-  <path d="M 48,600 H 504" stroke="#1A1714" stroke-width="1.2"/>
+  <path d="M 48,590 H 504" stroke="#1A1714" stroke-width="1.2"/>
   <g font-style="italic" fill="#3D3630">
-    <text x="50" y="622" font-size="12.5" >A cord tied in a knot with no beginning. Weavers make</text>
-    <text x="50" y="638.5" font-size="12.5" >them in the winter and do not discuss the pattern.</text>
+    <text x="50" y="612" font-size="16.5" >A cord tied in a knot with no beginning. Weavers make them</text>
+    <text x="50" y="631.5" font-size="16.5" >in the winter and do not discuss the pattern.</text>
   </g>
 </g>
 

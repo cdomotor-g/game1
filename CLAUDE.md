@@ -42,6 +42,7 @@ node tools/build-map.mjs       # map proof sheets, and the derived print sizes
 node tools/build-data.mjs      # rebuild the web bundle
 node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
+node tools/build-book.mjs      # regenerate docs/book/ from docs/design/*.md
 node tools/simulate.mjs        # check it still plays
 node tools/validate-art.mjs    # palette and layer contract
 ```

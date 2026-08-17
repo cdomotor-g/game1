@@ -97,17 +97,19 @@ function bar({ x, yTop, yBottom, cells, step, colour, label, harm }) {
     /* harm bars carry the notch-down mark on the ink plate (06-components.md),
        so harm vs capacity survives the black-and-white edition */
     if (harm) ink += `<path d="M ${x - 1},${yLine + hCell / 2 - 4} l 5,4 l -5,4" fill="none" stroke="${SOOT}" stroke-width="1.4"/>`;
-    nums.push(`<text x="${x + wBox / 2 + (harm ? 3 : 0)}" y="${yBottom - (i - 0.5) * hCell + 4}" font-size="12.5" text-anchor="middle" font-family="${SANS}">${i * step}</text>`);
+    nums.push(`<text x="${x + wBox / 2 + (harm ? 3 : 0)}" y="${yBottom - (i - 0.5) * hCell + 4.5}" font-size="13.5" text-anchor="middle" font-family="${SANS}">${i * step}</text>`);
   }
   ink += `<g fill="${SOOT}">${nums.join('')}</g>`;
-  ink += `<text x="${x + wBox / 2}" y="${yTop - 8}" font-size="9" text-anchor="middle" letter-spacing="1.1" font-family="${SANS}" fill="${T70}">${esc(label)}</text>`;
+  ink += `<text x="${x + wBox / 2}" y="${yTop - 8}" font-size="10" text-anchor="middle" letter-spacing="1.1" font-family="${SANS}" fill="${T70}">${esc(label)}</text>`;
   return { wash, ink };
 }
 
-/** Nice step so a big capacity still fits a walkable ladder. */
+/** Nice step so a big capacity still fits a walkable ladder. 14 cells is the
+    most the edge holds, and every harm bar in the data fits it at step 1 —
+    a harm track must never skip-count. */
 function barScale(total) {
   for (const step of [1, 2, 5, 10, 20]) {
-    if (total / step <= 12) return { cells: Math.ceil(total / step), step };
+    if (total / step <= 14) return { cells: Math.ceil(total / step), step };
   }
   return { cells: Math.ceil(total / 50), step: 50 };
 }
@@ -126,10 +128,12 @@ function card(spec) {
   if (spec.left) bars.push(bar({ x: TRIM.x + 24, yTop: P.y + 26, yBottom: 576, ...barScale(spec.left.total), colour: OXIDE, label: spec.left.label, harm: true }));
   if (spec.right) bars.push(bar({ x: TRIM.x + TRIM.w - 54, yTop: P.y + 26, yBottom: 576, ...barScale(spec.right.total), colour: spec.right.colour, label: spec.right.label }));
 
-  const factLines = (spec.facts || []).flatMap((f) => wrap(f, 48));
-  const factY = P.y + P.h + 24;
-  const storyLines = wrap(spec.story, 56).slice(0, 5);
-  const storyY = 622;
+  /* type sits at or above the print floor: rules text ~6.5pt, story ~6pt,
+     name ~11pt at the card's true 63x88mm (8 units = 1mm; 1pt = 2.83 units) */
+  const factLines = (spec.facts || []).flatMap((f) => wrap(f, 44));
+  const factY = P.y + P.h + 26;
+  const storyLines = wrap(spec.story, 58).slice(0, 5);
+  const storyY = 612;
 
   const elementBadge = spec.element
     ? {
@@ -165,9 +169,9 @@ function card(spec) {
   </g>
 
   <!-- name and card code, maker's-mark small -->
-  <text x="${TRIM.x + 24}" y="${spec.element ? 100 : 78}" font-size="26" font-weight="bold">${esc(spec.name)}</text>
-  <text x="${TRIM.x + TRIM.w - 24}" y="58" font-size="13" text-anchor="end" letter-spacing="2" font-family="${SANS}">${esc(spec.code)}</text>
-  <text x="${TRIM.x + 24}" y="${spec.element ? 100 + 20 : 98}" font-size="12.5" font-style="italic" fill="${T85}">${esc(spec.kicker)}</text>
+  <text x="${TRIM.x + 24}" y="${spec.element ? 102 : 80}" font-size="31" font-weight="bold">${esc(spec.name)}</text>
+  <text x="${TRIM.x + TRIM.w - 24}" y="60" font-size="15" text-anchor="end" letter-spacing="2" font-family="${SANS}">${esc(spec.code)}</text>
+  <text x="${TRIM.x + 24}" y="${spec.element ? 102 + 22 : 102}" font-size="15.5" font-style="italic" fill="${T85}">${esc(spec.kicker)}</text>
   ${elementBadge ? elementBadge.ink : ''}
 
   <!-- portrait window rule: the wash bleeds, the ink holds the line -->
@@ -176,12 +180,12 @@ function card(spec) {
   ${bars.map((b) => b.ink).join('\n  ')}
 
   <!-- the card's working text -->
-  <g font-size="13.5">
-    ${textBlock(factLines, P.x + 2, factY, 13.5, 18)}
+  <g font-size="18">
+    ${textBlock(factLines, P.x + 2, factY, 18, 22)}
   </g>
   <path d="M ${TRIM.x + 24},${storyY - 22} H ${TRIM.x + TRIM.w - 24}" stroke="${SOOT}" stroke-width="1.2"/>
   <g font-style="italic" fill="${T85}">
-    ${textBlock(storyLines, TRIM.x + 26, storyY, 12.5, 16.5)}
+    ${textBlock(storyLines, TRIM.x + 26, storyY, 16.5, 19.5)}
   </g>
 </g>
 
@@ -287,17 +291,25 @@ const index = `<!doctype html>
   body { margin: 24px; background: ${TALLOW}; color: ${SOOT}; font-family: ${SERIF}; }
   h1 { font-size: 22px; } h2 { font-size: 17px; margin: 26px 0 4px; }
   p.note { color: ${T70}; font-size: 14px; max-width: 72ch; }
+  .bar { display: flex; gap: 14px; align-items: baseline; font-family: ${SANS}; font-size: 13.5px; margin-bottom: 14px; }
+  .bar a, .bar button { color: ${T85}; background: none; border: none; font: inherit; cursor: pointer; padding: 0; }
+  .bar a:hover, .bar button:hover { text-decoration: underline; }
   .deck { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; }
   .deck object { width: 276px; height: 376px; border: 1px solid ${T25}; background: ${TALLOW}; }
   @media print {
     body { margin: 0; background: none; }
-    h1, h2, p.note { display: none; }
+    h1, h2, p.note, .bar { display: none; }
     .deck { gap: 0; }
     .deck object { width: 63mm; height: 88mm; border: none; page-break-inside: avoid; }
   }
 </style>
 </head>
 <body>
+<div class="bar">
+  <a href="../index.html">← Explorer</a>
+  <a href="../book/index.html">The rulebook</a>
+  <button type="button" onclick="window.print()">Print the cards</button>
+</div>
 <h1>The adventure deck cards</h1>
 <p class="note">Generated by <code>tools/build-cards.mjs</code> from <code>data/*.json</code> and the accepted
 plates in <code>docs/art/renders/</code> — edit those, re-run the tool, and never these files. Only cards whose

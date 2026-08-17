@@ -419,6 +419,10 @@
 
     return el('div', [
       pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. Harm bars sit on a card’s left edge, capacity bars on its right, on every deck in the game. Plates are the accepted renders from docs/art/prompts.'),
+      el('div.flow', { style: 'margin-bottom:6px' }, [
+        el('a.btn', { href: 'cards/index.html' }, 'Open the card fronts'),
+        el('a.btn.small', { href: 'book/index.html' }, 'Read the rulebook'),
+      ]),
       ...section('Characters', 'Each player’s hero figure takes one at setup.', q(D.characters).map((c) =>
         deckCard('character', c, `${D.name('people', c.people)} · ${c.calling}`, [
           pill(`health ${c.health}`, 'bad'),
