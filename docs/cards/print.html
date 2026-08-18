@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Print the cards — game1</title>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+  /* Screen: a control bar, a card picker, and a stack of sheet previews.
+     Print: one sheet per page, at true size, and nothing else.
+
+     Prefixed like the map's print page, and for the same reason: app.css already
+     owns .bar, .card and .sheet, and a page-local rule that sets only what it
+     cares about inherits the rest of whatever else claims the name. */
+  .printbar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px 18px;
+              align-items: center; padding: 11px 18px; background: var(--bg-raised);
+              border-bottom: 1px solid var(--line); }
+  .printbar h1 { font-size: .95rem; margin: 0; }
+  .printbar .spacer { flex: 1; }
+  .printbar label { font-size: .78rem; color: var(--ink-soft); display: flex; gap: 5px; align-items: center; }
+  .printbar select, .printbar button, .printbar input[type=number] {
+    font: inherit; font-size: .8rem; padding: 4px 9px; border-radius: 7px;
+    border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+  .printbar input[type=number] { width: 4.2em; }
+  .printbar button { cursor: pointer; }
+  .printbar button:hover { border-color: var(--accent); }
+  .printbar button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg-raised); font-weight: 600; }
+  .printbar a { color: var(--accent); font-size: .78rem; }
+
+  .note { max-width: 68ch; margin: 18px auto 4px; padding: 0 18px; color: var(--ink-soft); font-size: .85rem; }
+  .note p { margin: 0 0 6px; }
+  .note strong { color: var(--ink); }
+
+  /* The picker: every card that has a plate, grouped by deck, click to include. */
+  .picker { max-width: 68ch; margin: 0 auto; padding: 0 18px 6px; }
+  .picker h2 { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+               color: var(--ink-faint); margin: 12px 0 6px; display: flex; gap: 10px; align-items: baseline; }
+  .picker h2 button { font: inherit; font-size: .72rem; text-transform: none; letter-spacing: 0;
+                      background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; }
+  .pickrow { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pick { display: flex; gap: 6px; align-items: center; font-size: .78rem; cursor: pointer;
+          border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px 3px 7px; background: var(--bg-raised); }
+  .pick[data-on="0"] { opacity: .45; }
+  .pick .code { font-family: var(--mono); font-size: .7rem; color: var(--ink-faint); }
+
+  .sheets { padding: 18px; overflow-x: auto; }
+  .sheet-frame { width: max-content; margin: 0 auto 22px; }
+  .sheet-frame:last-child { margin-bottom: 0; }
+  .cardsheet { position: relative; background: #fff; box-shadow: var(--shadow); overflow: hidden;
+               transform-origin: top left; }
+
+  /* One slot is one card at its true trim size. The SVG inside is bigger than
+     the slot by its bleed and is pulled up and left by exactly that much, so
+     what shows through is the trim and nothing else. */
+  .slot { position: absolute; overflow: hidden; }
+  .slot object { position: absolute; display: block; border: 0; }
+  .guide { position: absolute; inset: 0; border: 0.2mm dashed #8c8c8c; pointer-events: none; }
+  .stamp { position: absolute; font: 600 7px/1.2 var(--mono, monospace); color: #777; letter-spacing: .05em; }
+  .empty { padding: 40px 18px; text-align: center; color: var(--ink-faint); font-size: .85rem; }
+
+  /* Nothing that is only there to make the preview readable may survive into
+     print: the promise of this page is that a card comes off the paper at the
+     size it says, which a sheet printed at 86% quietly breaks. */
+  @media print {
+    .printbar, .note, .picker { display: none !important; }
+    .sheets { padding: 0; overflow: visible; }
+    .sheet-frame { width: auto !important; height: auto !important; margin: 0 !important;
+                   break-after: page; page-break-after: always; }
+    .sheet-frame:last-child { break-after: auto; page-break-after: auto; }
+    .cardsheet { box-shadow: none; margin: 0; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="printbar">
+  <h1>Print &amp; cut the cards</h1>
+  <label>paper
+    <select id="paper">
+      <option value="A4">A4 — 210 × 297 mm</option>
+      <option value="letter">US Letter — 216 × 279 mm</option>
+    </select>
+  </label>
+  <label>spacing
+    <select id="spacing">
+      <option value="4">4 mm between cards</option>
+      <option value="2">2 mm — tight</option>
+      <option value="5">5 mm — roomy</option>
+    </select>
+  </label>
+  <label>copies <input type="number" id="copies" min="1" max="20" step="1" value="1"></label>
+  <label><input type="checkbox" id="opt-guides" checked> cut lines</label>
+  <label>preview
+    <select id="zoom">
+      <option value="fit">fit the window</option>
+      <option value="1">100%</option>
+      <option value="0.5">50%</option>
+    </select>
+  </label>
+  <span class="spacer"></span>
+  <a href="index.html">← the cards</a>
+  <a href="../index.html">Explorer</a>
+  <button type="button" class="primary" id="go-print">Print / save as PDF…</button>
+</div>
+
+<div class="note">
+  <p id="summary"></p>
+  <p><strong>Print at 100% — no “fit to page”, no scaling</strong> — then cut along the dotted lines. Every card
+  comes off the sheet at 63 × 88 mm, the size of a standard playing card, so a cut card glues
+  straight onto one. The dotted line is the cut: it sits on the card's edge, and the 3 mm of bleed
+  each card is drawn with stays outside the window, where the blade never goes. For a file rather than paper,
+  print and choose <strong>Save as PDF</strong> — the page size is already set, so the PDF is true size too.</p>
+</div>
+
+<div class="picker" id="picker"></div>
+<div class="sheets" id="sheets"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* Generated by tools/build-cards.mjs — the cards whose plates are accepted. */
+  var CARDS = [{"code":"CHR-01","name":"Corin Vale","deck":"CHR"},{"code":"CHR-02","name":"Berga Understone","deck":"CHR"},{"code":"CHR-03","name":"Sylvae of the Duskmere","deck":"CHR"},{"code":"CHR-04","name":"Tilly Goodbarrel","deck":"CHR"},{"code":"CHR-05","name":"Ruk of the Red Road","deck":"CHR"},{"code":"CHR-06","name":"Doctor Elspeth Marrow","deck":"CHR"},{"code":"CHR-07","name":"Havik Coalbrand","deck":"CHR"},{"code":"CHR-08","name":"Old Mother Keswick","deck":"CHR"},{"code":"VEH-01","name":"The Reach Flyer","deck":"VEH"},{"code":"VEH-02","name":"Steppe Hauler","deck":"VEH"},{"code":"VEH-03","name":"Old Smoke","deck":"VEH"},{"code":"VEH-04","name":"Gullwing","deck":"VEH"},{"code":"VEH-05","name":"Saltreach Pride","deck":"VEH"},{"code":"VEH-06","name":"Ember Coast Trader","deck":"VEH"},{"code":"VEH-07","name":"The Dunhaven Column","deck":"VEH"},{"code":"VEH-08","name":"The Fenway Wagons","deck":"VEH"},{"code":"VEH-10","name":"Bay Courser","deck":"VEH"},{"code":"VEH-11","name":"Steppe Pony","deck":"VEH"},{"code":"VEH-12","name":"Black Malchior","deck":"VEH"},{"code":"MON-06","name":"Gravel Wyrm","deck":"MON"},{"code":"MON-07","name":"Mire Strangler","deck":"MON"},{"code":"MON-08","name":"Reef Serpent","deck":"MON"},{"code":"MON-09","name":"The Deepwater Maw — unique","deck":"MON"},{"code":"MON-10","name":"Rime Harpy","deck":"MON"},{"code":"MON-11","name":"Dust Devil","deck":"MON"},{"code":"MON-12","name":"Storm Roc","deck":"MON"},{"code":"TAL-01","name":"Bone Charm","deck":"TAL"},{"code":"TAL-02","name":"Weaver's Knot","deck":"TAL"},{"code":"TAL-03","name":"Copper Amulet","deck":"TAL"},{"code":"TAL-04","name":"Gold Locket","deck":"TAL"},{"code":"TAL-05","name":"Gemfire Pendant","deck":"TAL"},{"code":"TAL-06","name":"Crystal Phylactery","deck":"TAL"}];
+  var DECKS = [{"prefix":"CHR","title":"Characters"},{"prefix":"VEH","title":"Vehicles"},{"prefix":"MON","title":"Monsters"},{"prefix":"TAL","title":"Talismans"}];
+
+  var CARD_W = 63, CARD_H = 88, BLEED = 3;
+  var SVG_W = CARD_W + 2 * BLEED, SVG_H = CARD_H + 2 * BLEED;
+  var PAPER = { A4: [210, 297], letter: [215.9, 279.4] };
+  /* What a home printer will not print in. The cut line sits on the card, not in
+     the margin, so this only has to keep the cards off the paper's edge. */
+  var MIN_MARGIN = 5;
+
+  var chosen = {};
+  CARDS.forEach(function (c) { chosen[c.code] = true; });
+
+  /* ------------------------------------------------------------- the picker */
+
+  var picker = document.getElementById('picker');
+  DECKS.forEach(function (deck) {
+    var cards = CARDS.filter(function (c) { return c.deck === deck.prefix; });
+    if (!cards.length) return;
+    var head = document.createElement('h2');
+    head.textContent = deck.title + ' ';
+    ['all', 'none'].forEach(function (which) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = which;
+      b.addEventListener('click', function () {
+        cards.forEach(function (c) { chosen[c.code] = which === 'all'; });
+        syncPicker();
+        render();
+      });
+      head.appendChild(b);
+    });
+    picker.appendChild(head);
+
+    var row = document.createElement('div');
+    row.className = 'pickrow';
+    cards.forEach(function (c) {
+      var label = document.createElement('label');
+      label.className = 'pick';
+      label.dataset.code = c.code;
+      var box = document.createElement('input');
+      box.type = 'checkbox';
+      box.checked = true;
+      box.addEventListener('change', function () {
+        chosen[c.code] = box.checked;
+        syncPicker();
+        render();
+      });
+      var code = document.createElement('span');
+      code.className = 'code';
+      code.textContent = c.code;
+      label.appendChild(box);
+      label.appendChild(code);
+      label.appendChild(document.createTextNode(c.name));
+      row.appendChild(label);
+    });
+    picker.appendChild(row);
+  });
+
+  function syncPicker() {
+    Array.prototype.forEach.call(picker.querySelectorAll('.pick'), function (label) {
+      var on = !!chosen[label.dataset.code];
+      label.dataset.on = on ? '1' : '0';
+      label.querySelector('input').checked = on;
+    });
+  }
+
+  /* -------------------------------------------------------------- the sheets */
+
+  function grid(paper, gap) {
+    var size = PAPER[paper] || PAPER.A4;
+    var cols = Math.max(1, Math.floor((size[0] - 2 * MIN_MARGIN + gap) / (CARD_W + gap)));
+    var rows = Math.max(1, Math.floor((size[1] - 2 * MIN_MARGIN + gap) / (CARD_H + gap)));
+    return {
+      w: size[0], h: size[1], cols: cols, rows: rows, gap: gap,
+      left: (size[0] - (cols * CARD_W + (cols - 1) * gap)) / 2,
+      top: (size[1] - (rows * CARD_H + (rows - 1) * gap)) / 2,
+    };
+  }
+
+  var current = null;
+
+  function render() {
+    var gap = parseFloat(document.getElementById('spacing').value);
+    var g = grid(document.getElementById('paper').value, gap);
+    var copies = Math.max(1, Math.min(20, parseInt(document.getElementById('copies').value, 10) || 1));
+    var guides = document.getElementById('opt-guides').checked;
+
+    /* Copies go out deck by deck, all of card one before card two: a cut stack
+       then sorts itself, and a half-printed sheet is still a usable deck. */
+    var queue = [];
+    CARDS.forEach(function (c) {
+      if (!chosen[c.code]) return;
+      for (var i = 0; i < copies; i++) queue.push(c);
+    });
+
+    var perSheet = g.cols * g.rows;
+    var sheets = Math.ceil(queue.length / perSheet);
+
+    document.getElementById('summary').innerHTML = queue.length
+      ? '<strong>' + queue.length + ' card' + (queue.length === 1 ? '' : 's') + ' on ' + sheets +
+        ' sheet' + (sheets === 1 ? '' : 's') + '</strong> of ' +
+        (document.getElementById('paper').value === 'A4' ? 'A4' : 'US Letter') + ', ' +
+        g.cols + ' across by ' + g.rows + ' down, ' + gap + ' mm apart.'
+      : '<strong>Nothing chosen.</strong> Pick some cards below.';
+
+    var host = document.getElementById('sheets');
+    host.innerHTML = '';
+
+    var style = document.getElementById('pagesize') || document.createElement('style');
+    style.id = 'pagesize';
+    style.textContent = '@page { size: ' + g.w + 'mm ' + g.h + 'mm; margin: 0; }';
+    document.head.appendChild(style);
+
+    if (!queue.length) {
+      var none = document.createElement('p');
+      none.className = 'empty';
+      none.textContent = 'No cards chosen.';
+      host.appendChild(none);
+      current = null;
+      return;
+    }
+
+    for (var s = 0; s < sheets; s++) {
+      var sheet = document.createElement('div');
+      sheet.className = 'cardsheet';
+      sheet.style.width = g.w + 'mm';
+      sheet.style.height = g.h + 'mm';
+
+      for (var i = 0; i < perSheet; i++) {
+        var card = queue[s * perSheet + i];
+        if (!card) break;
+        var col = i % g.cols, row = Math.floor(i / g.cols);
+
+        var slot = document.createElement('div');
+        slot.className = 'slot';
+        slot.style.left = (g.left + col * (CARD_W + g.gap)) + 'mm';
+        slot.style.top = (g.top + row * (CARD_H + g.gap)) + 'mm';
+        slot.style.width = CARD_W + 'mm';
+        slot.style.height = CARD_H + 'mm';
+
+        /* <object>, not <img>: an SVG in an <img> is not allowed to fetch the
+           plate it draws, and the plate is the card. */
+        var obj = document.createElement('object');
+        obj.type = 'image/svg+xml';
+        obj.data = card.code + '.svg';
+        obj.setAttribute('aria-label', card.name);
+        obj.style.left = '-' + BLEED + 'mm';
+        obj.style.top = '-' + BLEED + 'mm';
+        obj.style.width = SVG_W + 'mm';
+        obj.style.height = SVG_H + 'mm';
+        slot.appendChild(obj);
+
+        if (guides) {
+          var guide = document.createElement('div');
+          guide.className = 'guide';
+          slot.appendChild(guide);
+        }
+        sheet.appendChild(slot);
+      }
+
+      var stamp = document.createElement('div');
+      stamp.className = 'stamp';
+      stamp.style.left = g.left + 'mm';
+      stamp.style.top = (g.top + g.rows * CARD_H + (g.rows - 1) * g.gap + 2.5) + 'mm';
+      stamp.textContent = 'GAME1  ·  SHEET ' + (s + 1) + ' OF ' + sheets +
+        '  ·  CARDS ' + CARD_W + ' × ' + CARD_H + ' MM AT 100%';
+      sheet.appendChild(stamp);
+
+      var frame = document.createElement('div');
+      frame.className = 'sheet-frame';
+      frame.appendChild(sheet);
+      host.appendChild(frame);
+    }
+
+    current = g;
+    applyScale();
+  }
+
+  /* -------------------------------------------------------- preview scale */
+
+  /* CSS fixes the millimetre at exactly 96/25.4 px, so this needs no measuring. */
+  var MM = 96 / 25.4;
+  var zoom = document.getElementById('zoom');
+
+  function applyScale(force) {
+    if (!current) return;
+    var host = document.getElementById('sheets');
+    var wanted = force === undefined ? zoom.value : force;
+    var wpx = current.w * MM, hpx = current.h * MM;
+    var room = host.clientWidth - 36;
+    var scale = wanted === 'fit' ? Math.min(1, room / wpx) : parseFloat(wanted) || 1;
+
+    Array.prototype.forEach.call(host.children, function (frame) {
+      var sheet = frame.firstElementChild;
+      if (!sheet || scale >= 1) {
+        if (sheet) sheet.style.transform = '';
+        frame.style.width = '';
+        frame.style.height = '';
+      } else {
+        sheet.style.transform = 'scale(' + scale + ')';
+        frame.style.width = Math.round(wpx * scale) + 'px';
+        frame.style.height = Math.round(hpx * scale) + 'px';
+      }
+    });
+  }
+
+  ['paper', 'spacing', 'copies', 'opt-guides'].forEach(function (id) {
+    document.getElementById(id).addEventListener('change', render);
+  });
+  zoom.addEventListener('change', function () { applyScale(); });
+  window.addEventListener('resize', function () { applyScale(); });
+
+  /* The @media print rules undo the preview scale on their own. This is the belt
+     to that pair of braces: a card must never reach paper at 86%. */
+  window.addEventListener('beforeprint', function () { applyScale(1); });
+  window.addEventListener('afterprint', function () { applyScale(); });
+  document.getElementById('go-print').addEventListener('click', function () { window.print(); });
+
+  syncPicker();
+  render();
+})();
+</script>
+</body>
+</html>

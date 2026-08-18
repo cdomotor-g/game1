@@ -140,6 +140,11 @@ Not an afterthought — it is the mode the two-plate system exists for.
   hostile deliverable
 - Tile backs print as the lattice only
 
+The adventure decks have their half of this built:
+[`docs/cards/print.html`](../cards/print.html) sheets the generated card fronts at true
+size with a cut line round each card. It prints the colour edition — the ink-plate-only
+sheet described above is still to come.
+
 ## The web build
 
 `docs/css/app.css` is already close in spirit. See

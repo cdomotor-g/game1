@@ -12,7 +12,7 @@
  * type 3) are expanded from PLTE. Interlaced (Adam7) images are rejected loudly
  * rather than decoded wrongly.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, openSync, readSync, closeSync } from 'node:fs';
 import { inflateSync, deflateSync } from 'node:zlib';
 
 const SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
@@ -155,6 +155,20 @@ export function readPng(path) {
   }
 
   return { width, height, rgb };
+}
+
+/**
+ * Width and height alone, read from the IHDR without inflating a byte of image
+ * data. The card and bundle builders only ever ask a plate how big it is, and
+ * `readPng` on 36 four-megabyte plates costs seconds where this costs nothing.
+ */
+export function pngSize(path) {
+  const head = Buffer.alloc(24);
+  const fd = openSync(path, 'r');
+  try { readSync(fd, head, 0, 24, 0); } finally { closeSync(fd); }
+  if (!head.subarray(0, 8).equals(SIGNATURE)) throw new Error(`${path} is not a PNG`);
+  if (head.toString('ascii', 12, 16) !== 'IHDR') throw new Error(`${path}: no IHDR`);
+  return { width: head.readUInt32BE(16), height: head.readUInt32BE(20) };
 }
 
 /** Colour at a pixel, clamped to the image bounds. */

@@ -26,7 +26,7 @@ const arg = (name, fallback) => {
 /* Load the browser modules into a minimal global shim. */
 const sandboxGlobal = { localStorage: { getItem: () => null, setItem: () => {} } };
 sandboxGlobal.window = sandboxGlobal;
-for (const file of ['docs/data/bundle.js', 'docs/js/ui.js', 'docs/js/data.js', 'docs/js/engine.js']) {
+for (const file of ['docs/data/bundle.js', 'docs/js/ui.js', 'docs/js/framing.js', 'docs/js/data.js', 'docs/js/engine.js']) {
   const src = readFileSync(join(ROOT, file), 'utf8');
   new Function('window', 'document', 'UI', 'Engine', 'GameData',
     `with (this) { ${src} }`

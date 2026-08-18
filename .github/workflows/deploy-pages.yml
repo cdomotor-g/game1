@@ -73,6 +73,19 @@ jobs:
       - name: Fail if the committed annex is stale
         run: node tools/build-annex.mjs --check
 
+      # The card fronts and their print sheet are generated from data/*.json, the
+      # accepted plates and docs/art/framing.json, and committed for the same reason
+      # the bundle is: Pages serves the files in the branch. A card whose numbers,
+      # words or framing have moved on without the SVG being rebuilt is a card the
+      # site hands you to print wrong.
+      - name: Fail if the committed card fronts are stale
+        run: node tools/build-cards.mjs --check
+
+      # Colours declared in palette.json, a monochrome ink plate, and the wash/ink/grime
+      # layer contract that makes the black-and-white edition a real separation.
+      - name: Check the art against the palette
+        run: node tools/validate-art.mjs
+
   deploy:
     needs: check
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

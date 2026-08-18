@@ -55,9 +55,9 @@
 
   const artFiles = D.art || { renders: {}, minimaps: {} };
 
-  /** Path (relative to docs/) of an entity's plate, or null if not rendered yet.
-      The render ids are the prompt headings in docs/art/prompts/: the deck code
-      decks use their card code, monsters and peoples use their data id. */
+  /** An entity's plate — {file, width, height, subject} — or null if it is not
+      drawn yet. The render ids are the prompt headings in docs/art/prompts/: the
+      card-code decks use their card code, monsters and peoples use their data id. */
   function art(kind, entity) {
     if (!entity) return null;
     const renderId =
@@ -68,6 +68,22 @@
       kind === 'item' && entity.class === 'talisman' ? `talisman-${entity.cardCode.toLowerCase()}` :
       null;
     return renderId ? artFiles.renders[renderId] || null : null;
+  }
+
+  /** Where to put a plate inside a window of `aspect` so that the subject is what
+      you see: the image's size and offset as percentages of the window, ready for
+      a `position: absolute` inside something with `overflow: hidden`. The crop is
+      the same one tools/build-cards.mjs takes for the printed card — one plate,
+      one idea of where its subject is. See docs/js/framing.js. */
+  function artPlacement(plate, aspect) {
+    if (!plate) return null;
+    const box = Framing.crop(plate, plate.subject, aspect, artFiles.pad || 0);
+    return {
+      width: 100 / box.w,
+      height: 100 / box.h,
+      left: (-box.x / box.w) * 100,
+      top: (-box.y / box.h) * 100,
+    };
   }
 
   /* The sheet codes are positional by design: SET-NN is the Nth settlement of the
@@ -253,7 +269,7 @@
     commodities, tools, buildings, recipes, terrains, deposits,
     modes, figures, peoples, professions, cards, items,
     monsters, vehicles, characters, quests, spells, talismans,
-    art, placeSheet, groundSheet, holdingSheets,
+    art, artPlacement, placeSheet, groundSheet, holdingSheets,
     categories: {
       commodity: D.commodities.categories,
       building: D.buildings.categories,

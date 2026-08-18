@@ -1,0 +1,156 @@
+{
+  "$comment": "Where the subject sits on each accepted plate in docs/art/renders/, so that anything cropping a plate crops it around the subject instead of around the middle of the file. Read by tools/lib/framing.mjs; consumed by tools/build-cards.mjs (the card windows) and tools/build-data.mjs (the explorer thumbnails).",
+  "note": "A plate is a whole drawn page - docs/art/prompts/ asks for A4 proportions and says card crops are taken from the plate later. A card window is not that shape, so something has to be thrown away, and the only question is what. `subject` says what may not be: the head, the hands, and the gear the card names. Everything outside it is scenery the crop may spend.",
+  "format": {
+    "subject": "[x, y, w, h] as fractions of the plate, 0..1 from its top-left. Draw it a little loose - the crop grows this box out to the window's shape, it never shrinks it, so a tight box only means more scenery comes with it.",
+    "note": "Prose, for the next person holding the pen. Not read by anything."
+  },
+  "pad": 0.03,
+  "padNote": "Breathing room added around the subject before the box is grown to the window's shape, as a fraction of the subject's shorter side. Keeps a head off the window rule.",
+  "plates": {
+    "character-chr-01": {
+      "subject": [0.15, 0.05, 0.76, 0.58],
+      "note": "Corin at the stump, lacing a boot - head, both hands and the staff top."
+    },
+    "character-chr-02": {
+      "subject": [0.18, 0.06, 0.75, 0.68],
+      "note": "Berga crouched over the pan; the pan is the card, so the box runs down to it."
+    },
+    "character-chr-03": {
+      "subject": [0.18, 0.06, 0.74, 0.60],
+      "note": "Sylvae reading - head, the open herbal, and the hand writing in it."
+    },
+    "character-chr-04": {
+      "subject": [0.13, 0.06, 0.72, 0.58],
+      "note": "Tilly on the crate: head, the gourd under one arm, the hand chalking the tally."
+    },
+    "character-chr-05": {
+      "subject": [0.10, 0.09, 0.82, 0.58],
+      "note": "Ruk seated at the haft - head high, both hands and the axe head across the middle."
+    },
+    "character-chr-06": {
+      "subject": [0.22, 0.10, 0.74, 0.66],
+      "note": "Elspeth reading a vial against the light; the open case is the other half of her."
+    },
+    "character-chr-07": {
+      "subject": [0.10, 0.12, 0.82, 0.58],
+      "note": "Havik in the motion works - head, both hands in the gear, the lamps left."
+    },
+    "character-chr-08": {
+      "subject": [0.16, 0.08, 0.72, 0.58],
+      "note": "Old Mother Keswick shelling into the bowl. The cat comes along below if there is room."
+    },
+    "monster-deepwater-maw": {
+      "subject": [0.02, 0.36, 0.96, 0.52],
+      "note": "The eye and the ring of teeth. The ship on the horizon is scale, not subject - it goes."
+    },
+    "monster-dust-devil": {
+      "subject": [0.04, 0.16, 0.94, 0.58],
+      "note": "The funnel and the wagon it is emptying, whole; the debris trailing off the top may be spent."
+    },
+    "monster-gravel-wyrm": {
+      "subject": [0.05, 0.10, 0.82, 0.63],
+      "note": "The arch of plated back and the blind maw at the end of it."
+    },
+    "monster-mire-strangler": {
+      "subject": [0.04, 0.13, 0.92, 0.58],
+      "note": "Both drowned trees, the bundle hung between them, and the first fan of roots."
+    },
+    "monster-reef-serpent": {
+      "subject": [0.04, 0.20, 0.92, 0.58],
+      "note": "The head taking the offered fish, the coils on the beacon, the bow of the boat."
+    },
+    "monster-rime-harpy": {
+      "subject": [0.14, 0.09, 0.76, 0.62],
+      "note": "Head to talons, both wings. The nest at the foot of the crag is scenery."
+    },
+    "monster-storm-roc": {
+      "subject": [0.02, 0.05, 0.96, 0.42],
+      "note": "The spread wings and the lamb; the sea stack below carries as much as fits."
+    },
+    "vehicle-veh-01": {
+      "subject": [0.03, 0.16, 0.94, 0.48],
+      "note": "Locomotive to last carriage, with the smoke above the stack."
+    },
+    "vehicle-veh-02": {
+      "subject": [0.03, 0.14, 0.95, 0.72],
+      "note": "The water tower and the ore train running away from it."
+    },
+    "vehicle-veh-03": {
+      "subject": [0.03, 0.18, 0.94, 0.68],
+      "note": "Old Smoke and her tender, wheels on the rail."
+    },
+    "vehicle-veh-04": {
+      "subject": [0.10, 0.08, 0.84, 0.76],
+      "note": "Hull and both masts to the mastheads."
+    },
+    "vehicle-veh-05": {
+      "subject": [0.03, 0.12, 0.94, 0.76],
+      "note": "The whole carrack, bowsprit to stern, mastheads in."
+    },
+    "vehicle-veh-06": {
+      "subject": [0.06, 0.10, 0.88, 0.78],
+      "note": "The lateen sail and the loaded hull under it."
+    },
+    "vehicle-veh-07": {
+      "subject": [0.03, 0.24, 0.95, 0.58],
+      "note": "The column of wagons, lead team to the last tilt, pennant included."
+    },
+    "vehicle-veh-08": {
+      "subject": [0.03, 0.26, 0.95, 0.54],
+      "note": "The wagons on the causeway and the reeds they are crossing."
+    },
+    "vehicle-veh-10": {
+      "subject": [0.03, 0.15, 0.94, 0.72],
+      "note": "The courser at full gallop, nose to tail."
+    },
+    "vehicle-veh-11": {
+      "subject": [0.08, 0.13, 0.84, 0.76],
+      "note": "The pony grazing, panniers on."
+    },
+    "vehicle-veh-12": {
+      "subject": [0.15, 0.08, 0.78, 0.82],
+      "note": "Horse and rider on the night road; the moon is spendable."
+    },
+    "talisman-tal-01": {
+      "subject": [0.22, 0.10, 0.62, 0.85],
+      "note": "The knot at the top of the thong down to the three marked charms."
+    },
+    "talisman-tal-02": {
+      "subject": [0.20, 0.11, 0.64, 0.76],
+      "note": "The knot itself with its hanging loop."
+    },
+    "talisman-tal-03": {
+      "subject": [0.13, 0.16, 0.79, 0.68],
+      "note": "The disc and enough of the pooled chain to read as one."
+    },
+    "talisman-tal-04": {
+      "subject": [0.07, 0.19, 0.89, 0.69],
+      "note": "Both halves of the open locket - the portrait is the point of the card."
+    },
+    "talisman-tal-05": {
+      "subject": [0.22, 0.08, 0.64, 0.79],
+      "note": "The stone in its claws, and the plait it hangs from."
+    },
+    "talisman-tal-06": {
+      "subject": [0.16, 0.08, 0.70, 0.84],
+      "note": "Stopper to base of the flask, with the crystal caged inside it."
+    },
+    "people-dwarf": {
+      "subject": [0.12, 0.10, 0.80, 0.62],
+      "note": "Pick over the shoulder, lamp in the other hand, head between them."
+    },
+    "people-elf": {
+      "subject": [0.08, 0.08, 0.84, 0.60],
+      "note": "The weaver at the loom - head and the sprig she is holding up to look at."
+    },
+    "people-halfling": {
+      "subject": [0.06, 0.10, 0.88, 0.60],
+      "note": "Yoke across the shoulders with a basket swinging at each end."
+    },
+    "people-human": {
+      "subject": [0.13, 0.10, 0.74, 0.62],
+      "note": "The builder with the maul up and the frame he is raising behind him."
+    }
+  }
+}
