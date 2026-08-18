@@ -10,7 +10,7 @@ window.GAME_DATA = {
         "key": "rules",
         "file": "rules.json",
         "collection": null,
-        "summary": "Tunable constants: round structure, effort, food, storage, market, victory."
+        "summary": "Tunable constants: round structure, effort, food, storage, market, carrying, victory."
       },
       {
         "key": "commodities",
@@ -80,7 +80,7 @@ window.GAME_DATA = {
         "file": "items.json",
         "collection": "items",
         "idField": "id",
-        "summary": "Clothing, armour, weapons, potions, lights and talismans."
+        "summary": "Clothing, armour, weapons, potions, lights and talismans, each with its mass in kg."
       },
       {
         "key": "travel",
@@ -121,7 +121,7 @@ window.GAME_DATA = {
         "file": "characters.json",
         "collection": "characters",
         "idField": "id",
-        "summary": "The character deck: named heroes with health and mana bars."
+        "summary": "The character deck: named heroes with health, burden and mana bars."
       },
       {
         "key": "quests",
@@ -565,6 +565,21 @@ window.GAME_DATA = {
         "notes": "Tools may be bought the same way at any settlement with a blacksmith rank town or better: deal from the tool list instead."
       },
       "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
+    },
+    "carrying": {
+      "$comment": "What a figure carries on its own back, in kilograms. Mass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
+      "unit": "kg",
+      "barStepKg": 2,
+      "carryLimit": "Printed on the character card as the BURDEN bar up the right edge. A character's limit is their people's carry.baseKg adjusted for build and calling; other figures use their people's base unmodified.",
+      "marker": "Stand a token on the burden bar and move it as the character picks things up and puts them down. Total the mass of everything they carry - worn, wielded and stowed alike - and stand the token on the first mark at or above that total.",
+      "limitRule": "A character may not take up an item that would push the token past the top of the bar. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
+      "notCarried": [
+        "Commodities in transit, which travel by transport mode and are measured in bulk.",
+        "Coin.",
+        "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."
+      ],
+      "onZeroHealth": "A character carried to a settlement at 0 health loses everything on the burden bar on the way; clear the token to zero.",
+      "notes": "The bar is a capacity bar, so it sits on the right edge like every other capacity bar in the game, and it is ruled in slate like a vehicle's cargo. Where a character also has innate mana, the mana bar moves inboard of it and sits on the portrait."
     },
     "movement": {
       "landMoveCostDefault": 1,
@@ -6186,8 +6201,8 @@ window.GAME_DATA = {
     ]
   },
   "peoples": {
-    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman).",
-    "version": "0.2.0",
+    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). carry.baseKg is how much mass, in kilograms, a figure of that people carries unaided; a character card prints its own limit as the BURDEN bar, that base adjusted for build and calling - see rules.json carrying.",
+    "version": "0.3.0",
     "peoples": [
       {
         "id": "human",
@@ -6211,6 +6226,10 @@ window.GAME_DATA = {
           "coast",
           "forest"
         ],
+        "carry": {
+          "baseKg": 22,
+          "note": "The middle of every scale, this one included."
+        },
         "manaStorage": {
           "innate": 0,
           "note": "A human body holds no mana. Every drop lives in a talisman."
@@ -6254,6 +6273,10 @@ window.GAME_DATA = {
           "hills",
           "tundra"
         ],
+        "carry": {
+          "baseKg": 26,
+          "note": "Short, and built like the stone they work: a dwarf out-carries a taller people all day."
+        },
         "manaStorage": {
           "innate": 0,
           "note": "Dwarves distrust mana in the flesh and keep it in worked metal, where it belongs."
@@ -6293,6 +6316,10 @@ window.GAME_DATA = {
           "hills",
           "grassland"
         ],
+        "carry": {
+          "baseKg": 20,
+          "note": "Light-framed, and disinclined to haul what a second trip would carry."
+        },
         "manaStorage": {
           "innate": 3,
           "note": "An elf may hold up to 3 mana in the body; anything beyond that needs a talisman like everyone else."
@@ -6333,6 +6360,10 @@ window.GAME_DATA = {
           "forest",
           "coast"
         ],
+        "carry": {
+          "baseKg": 16,
+          "note": "Small hands and a small back - and a wagon, which is rather the point."
+        },
         "manaStorage": {
           "innate": 0,
           "note": "Halflings hold no mana and are privately relieved about it."
@@ -6373,6 +6404,10 @@ window.GAME_DATA = {
           "tundra",
           "mountain"
         ],
+        "carry": {
+          "baseKg": 28,
+          "note": "The most any figure in the game shoulders unaided."
+        },
         "manaStorage": {
           "innate": 0,
           "note": "An orc who wants mana takes a talisman from someone who had one."
@@ -7603,8 +7638,8 @@ window.GAME_DATA = {
     }
   },
   "items": {
-    "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use. Talisman cards carry a vertical numbered mana bar on the RIGHT edge (capacity bars always sit right; harm bars always sit left - the convention is stated in docs/art/06-components.md).",
-    "version": "0.2.0",
+    "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use. Every item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, and the BURDEN bar up the right edge of every character card. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. Talisman cards carry a vertical numbered mana bar on the RIGHT edge (capacity bars always sit right; harm bars always sit left - the convention is stated in docs/art/06-components.md).",
+    "version": "0.3.0",
     "classes": [
       {
         "id": "clothing",
@@ -7652,6 +7687,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 26,
+        "massKg": 1,
         "effects": [
           "Ignore the first -1 weather effort penalty each round."
         ]
@@ -7674,6 +7710,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 60,
+        "massKg": 3,
         "effects": [
           "Immune to Hard Frost.",
           "No tundra or mountain effort penalty."
@@ -7697,6 +7734,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 55,
+        "massKg": 2,
         "effects": [
           "+1 move point for the figure wearing it."
         ]
@@ -7715,6 +7753,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 30,
+        "massKg": 1.5,
         "effects": [
           "Marsh and mountain tiles cost 1 less to move through, minimum 1."
         ]
@@ -7737,6 +7776,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 180,
+        "massKg": 1.5,
         "effects": [
           "A merchant wearing these gets a further 10% on every market sale.",
           "Worth 2 victory points at game end."
@@ -7756,6 +7796,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 50,
+        "massKg": 5,
         "effects": [
           "Ignore the first hit in each battle."
         ],
@@ -7779,6 +7820,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 130,
+        "massKg": 12,
         "effects": [
           "Ignore the first two hits in each battle."
         ],
@@ -7802,6 +7844,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 8,
         "baseValue": 320,
+        "massKg": 25,
         "specialist": "smith",
         "effects": [
           "Ignore the first three hits in each battle.",
@@ -7823,6 +7866,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 45,
+        "massKg": 2.5,
         "effects": [
           "Once per battle, cancel one hit."
         ],
@@ -7846,6 +7890,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 40,
+        "massKg": 4,
         "effects": [
           "+1 defence die."
         ],
@@ -7869,6 +7914,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 95,
+        "massKg": 1.5,
         "effects": [
           "+1 combat die."
         ],
@@ -7892,6 +7938,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 210,
+        "massKg": 1.5,
         "specialist": "smith",
         "effects": [
           "+2 combat dice, and hits on 3+ instead of 4+."
@@ -7916,6 +7963,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 80,
+        "massKg": 3,
         "effects": [
           "+1 combat die, +2 when attacking."
         ],
@@ -7939,6 +7987,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 70,
+        "massKg": 4.5,
         "effects": [
           "+2 combat dice when defending a town.",
           "Cannot be used with a shield."
@@ -7963,6 +8012,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 65,
+        "massKg": 1,
         "effects": [
           "Rolls its dice before the enemy rolls theirs.",
           "+1 output on Hunt Game.",
@@ -7988,6 +8038,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 30,
+        "massKg": 2,
         "effects": [
           "Holds 3 uses. Each battle with a bow spends 1."
         ],
@@ -8007,6 +8058,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 1,
         "baseValue": 12,
+        "massKg": 0.5,
         "effects": [
           "+1 combat die for halflings only. Everyone else may as well throw the stone."
         ],
@@ -8030,6 +8082,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 190,
+        "massKg": 6,
         "effects": [
           "+2 combat dice. Ignores enemy armour entirely."
         ],
@@ -8052,6 +8105,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 70,
+        "massKg": 0.5,
         "effects": [
           "Step one worker's effort die up two sizes for one round."
         ]
@@ -8073,6 +8127,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 60,
+        "massKg": 0.5,
         "effects": [
           "Re-roll every effort die of one worker and keep the better result."
         ]
@@ -8094,6 +8149,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 120,
+        "massKg": 0.5,
         "effects": [
           "+1 flat effort to every worker in one town this round."
         ]
@@ -8115,6 +8171,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 85,
+        "massKg": 0.5,
         "effects": [
           "Cancel one worker loss, or ignore one Plague card.",
           "Or restore 3 health to one character."
@@ -8137,6 +8194,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 140,
+        "massKg": 0.5,
         "effects": [
           "Double one figure's move points, or move one cargo token its full speed again this round."
         ]
@@ -8158,6 +8216,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 150,
+        "massKg": 0.5,
         "effects": [
           "One unit ignores all hits in one battle."
         ]
@@ -8179,6 +8238,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 160,
+        "massKg": 0.5,
         "effects": [
           "Automatically succeed on one survey, and reveal all deposits on adjacent tiles."
         ]
@@ -8200,6 +8260,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 200,
+        "massKg": 0.5,
         "effects": [
           "Shift one commodity family's price band two steps in your favour for your next sale only."
         ]
@@ -8221,6 +8282,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 90,
+        "massKg": 0.5,
         "effects": [
           "One figure or party travels night legs this round as if carrying a lantern."
         ]
@@ -8242,6 +8304,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 95,
+        "massKg": 0.5,
         "effects": [
           "Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card.",
           "In a healer's hands at an infirmary it cures the whole town - see Tend the Sick."
@@ -8264,6 +8327,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 100,
+        "massKg": 0.5,
         "effects": [
           "One unit or character ignores every hit from a fire-element monster in one battle."
         ]
@@ -8285,6 +8349,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 1,
         "baseValue": 10,
+        "massKg": 0.5,
         "uses": 2,
         "effects": [
           "Travel one night leg at torch speed - see travel.json.",
@@ -8309,6 +8374,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 55,
+        "massKg": 1.5,
         "effects": [
           "Travel night legs at lantern speed - see travel.json.",
           "Explore caves without spending uses.",
@@ -8334,6 +8400,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 30,
+        "massKg": 0.5,
         "story": "Knucklebones and a thong of hide, carved by someone's grandmother against the dark. It works, which is more than can be said for most of what grandmothers carve.",
         "effects": [
           "Stores up to 2 mana. Track with a token on the mana bar."
@@ -8354,6 +8421,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 45,
+        "massKg": 0.5,
         "story": "A cord tied in a knot with no beginning. Weavers make them in the winter and do not discuss the pattern.",
         "effects": [
           "Stores up to 3 mana."
@@ -8374,6 +8442,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 60,
+        "massKg": 0.5,
         "story": "Copper takes a charge the way dry grass takes a spark. Miners wear them green with age and swear the green is where the mana sits.",
         "effects": [
           "Stores up to 4 mana."
@@ -8395,6 +8464,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 120,
+        "massKg": 0.5,
         "story": "Gold never tarnishes and never forgets. A locket holds a portrait on one side and six charges of something else on the other.",
         "effects": [
           "Stores up to 6 mana."
@@ -8420,6 +8490,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 190,
+        "massKg": 0.5,
         "story": "A cut stone in a copper claw. Hold it to the light and something at the centre of it holds still, watching you back.",
         "effects": [
           "Stores up to 8 mana."
@@ -8449,6 +8520,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 6,
         "baseValue": 320,
+        "massKg": 1,
         "story": "A mana crystal sealed in blown glass and bound in gold wire. The pinnacle of the jeweller's and the alchemist's arts together, and the reason both of them lock their doors.",
         "effects": [
           "Stores up to 10 mana.",
@@ -9717,8 +9789,8 @@ window.GAME_DATA = {
     ]
   },
   "characters": {
-    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a health track and sometimes mana. Card layout: portrait across the middle, name and code at the top, story low; a vertical numbered HEALTH bar up the LEFT edge, and - only where the character has mana capacity - a vertical numbered MANA bar up the RIGHT edge. Harm left, capacity right, same as every deck (docs/art/06-components.md). A character at 0 health is carried to the nearest settlement and rests until healed to half; they lose any carried cargo on the way. Art prompts in docs/art/prompts/characters.md.",
-    "version": "0.1.0",
+    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a health track and sometimes mana. Card layout: portrait across the middle, name and code at the top, story low; a vertical numbered HEALTH bar up the LEFT edge, and up the RIGHT edge a numbered BURDEN bar in kilograms - carryKg, what this character can carry unaided, walked by a token as they pick things up (rules.json carrying). Where the character has innate mana capacity a MANA bar runs inboard of the burden bar, on the portrait itself. Harm left, capacity right, same as every deck (docs/art/06-components.md). A character at 0 health is carried to the nearest settlement and rests until healed to half; they lose any carried cargo on the way. Art prompts in docs/art/prompts/characters.md.",
+    "version": "0.2.0",
     "characters": [
       {
         "id": "corin-vale",
@@ -9727,6 +9799,7 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Wayfarer",
         "health": 10,
+        "carryKg": 24,
         "manaCapacity": 0,
         "traits": [
           "Wayfinder: +1 hex on any day leg that starts on a road.",
@@ -9744,6 +9817,7 @@ window.GAME_DATA = {
         "people": "dwarf",
         "calling": "Prospector",
         "health": 12,
+        "carryKg": 26,
         "manaCapacity": 0,
         "traits": [
           "Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party.",
@@ -9761,6 +9835,7 @@ window.GAME_DATA = {
         "people": "elf",
         "calling": "Herbalist",
         "health": 8,
+        "carryKg": 20,
         "manaCapacity": 3,
         "manaNote": "Innate - no talisman needed for the first 3.",
         "traits": [
@@ -9777,6 +9852,7 @@ window.GAME_DATA = {
         "people": "halfling",
         "calling": "Provisioner",
         "health": 8,
+        "carryKg": 18,
         "manaCapacity": 0,
         "traits": [
           "Iron Stomach: Tilly and her party ignore illness event cards.",
@@ -9792,6 +9868,7 @@ window.GAME_DATA = {
         "people": "orc",
         "calling": "Caravan Guard",
         "health": 13,
+        "carryKg": 28,
         "manaCapacity": 0,
         "traits": [
           "Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave.",
@@ -9809,6 +9886,7 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Physician",
         "health": 9,
+        "carryKg": 20,
         "manaCapacity": 0,
         "traits": [
           "Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed.",
@@ -9826,6 +9904,7 @@ window.GAME_DATA = {
         "people": "dwarf",
         "calling": "Engineer",
         "health": 10,
+        "carryKg": 26,
         "manaCapacity": 0,
         "traits": [
           "Linesman: a train Havik rides spends 1 less coal per leg.",
@@ -9841,6 +9920,7 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Hedge-Witch",
         "health": 7,
+        "carryKg": 16,
         "manaCapacity": 0,
         "manaNote": "Human - every drop she holds lives in a talisman, and she holds plenty.",
         "traits": [

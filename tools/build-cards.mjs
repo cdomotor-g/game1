@@ -18,8 +18,13 @@
  * Card anatomy (docs/art/06-components.md, "The adventure decks"):
  *   name and card code at the top · portrait across the middle · story low ·
  *   HARM bar on the LEFT edge (oxide) · CAPACITY bar on the RIGHT edge
- *   (slate for cargo, bruise for mana — mana is arcane) · numbered from the
- *   bottom, walked by a token · a card with no bar leaves the edge quiet.
+ *   (slate for cargo and for a character's burden in kg, bruise for mana —
+ *   mana is arcane) · numbered from the bottom, walked by a token · a card
+ *   with no bar leaves the edge quiet.
+ *
+ * A character carries two capacities — kilograms and, sometimes, mana — and
+ * the edge only holds one bar. Burden keeps the edge, because every character
+ * has one; mana comes inboard and lies on the portrait, on its own paper.
  *
  * The portrait window is not a fixed box. A deck's plates have one shape (the
  * figures are drawn on A4 pages, the talismans square, the vehicles 3:2) and a
@@ -110,12 +115,24 @@ function textBlock(lines, x, y, size, leading, attrs = '') {
  * A vertical numbered bar: `cells` boxes of `step` each, numbered from the
  * bottom, hung between yTop and yBottom on the given edge. The wash tints the
  * column; the ink draws the ladder, so the bar survives the mono edition.
+ *
+ * `unit` sets a second, smaller label line above the first — a bar counting
+ * kilograms has to say so, and "BURDEN kg" on one line runs into the frame.
+ * `onArt` is for a bar that hangs over the portrait rather than beside it: it
+ * lays its own paper down first, because a ladder read off a drawing is not a
+ * ladder. That paper is wash, which costs the mono edition nothing — the
+ * portrait is wash too, so the ink plate has bare paper there already.
  */
-function bar({ x, yTop, yBottom, cells, step, colour, label, harm }) {
+function bar({ x, yTop, yBottom, cells, step, colour, label, unit, harm, onArt }) {
   const wBox = 30;
   const hAll = yBottom - yTop;
   const hCell = hAll / cells;
-  let wash = `<rect x="${x}" y="${num(yTop)}" width="${wBox}" height="${num(hAll)}" fill="${colour}" opacity="0.28"/>`;
+  const labels = unit ? [label, unit] : [label];
+  const labelTop = yTop - 8 - (labels.length - 1) * 12;
+  let wash = onArt
+    ? `<rect x="${x - 7}" y="${num(labelTop - 12)}" width="${wBox + 14}" height="${num(yBottom - labelTop + 19)}" fill="${TALLOW}" opacity="0.93"/>`
+    : '';
+  wash += `<rect x="${x}" y="${num(yTop)}" width="${wBox}" height="${num(hAll)}" fill="${colour}" opacity="0.28"/>`;
   let ink = `<rect x="${x}" y="${num(yTop)}" width="${wBox}" height="${num(hAll)}" fill="none" stroke="${SOOT}" stroke-width="2"/>`;
   const nums = [];
   for (let i = 1; i <= cells; i++) {
@@ -127,7 +144,9 @@ function bar({ x, yTop, yBottom, cells, step, colour, label, harm }) {
     nums.push(`<text x="${x + wBox / 2 + (harm ? 3 : 0)}" y="${num(yBottom - (i - 0.5) * hCell + 4.5)}" font-size="13.5" text-anchor="middle" font-family="${SANS}">${i * step}</text>`);
   }
   ink += `<g fill="${SOOT}">${nums.join('')}</g>`;
-  ink += `<text x="${x + wBox / 2}" y="${num(yTop - 8)}" font-size="10" text-anchor="middle" letter-spacing="1.1" font-family="${SANS}" fill="${T70}">${esc(label)}</text>`;
+  ink += labels.map((line, i) =>
+    `<text x="${x + wBox / 2}" y="${num(labelTop + i * 12)}" font-size="${i && unit ? 9 : 10}" text-anchor="middle" letter-spacing="1.1" font-family="${SANS}" fill="${T70}">${esc(line)}</text>`
+  ).join('');
   return { wash, ink };
 }
 
@@ -219,7 +238,11 @@ function card(spec, geom) {
 
   const bars = [];
   if (spec.left) bars.push(bar({ x: TRIM.x + 24, yTop: P.y + 26, yBottom: 576, ...barScale(spec.left.total), colour: OXIDE, label: spec.left.label, harm: true }));
-  if (spec.right) bars.push(bar({ x: TRIM.x + TRIM.w - 54, yTop: P.y + 26, yBottom: 576, ...barScale(spec.right.total), colour: spec.right.colour, label: spec.right.label }));
+  if (spec.right) bars.push(bar({ x: TRIM.x + TRIM.w - 54, yTop: P.y + 26, yBottom: 576, ...barScale(spec.right.total), colour: spec.right.colour, label: spec.right.label, unit: spec.right.unit }));
+  /* A second capacity bar has nowhere on the edge left to go, so it comes
+     inboard and lies on the portrait — and it stops at the foot of the window,
+     because below that the rules text is already using the width. */
+  if (spec.inner) bars.push(bar({ x: TRIM.x + TRIM.w - 104, yTop: P.y + 26, yBottom: P.y + P.h - 26, ...barScale(spec.inner.total), colour: spec.inner.colour, label: spec.inner.label, onArt: true }));
 
   const elementBadge = spec.element
     ? {
@@ -312,9 +335,10 @@ for (const c of characters) {
   specs.push({
     code: c.cardCode, name: c.name, portrait: render,
     kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling}`,
-    desc: `Character card: ${c.name}, ${c.calling}.`,
+    desc: `Character card: ${c.name}, ${c.calling}. Health up the left edge, ${c.carryKg}kg of burden up the right${c.manaCapacity ? ', mana inboard of it' : ''}.`,
     left: { total: c.health, label: 'HEALTH' },
-    right: c.manaCapacity ? { total: c.manaCapacity, label: 'MANA', colour: BRUISE } : null,
+    right: { total: c.carryKg, label: 'BURDEN', unit: 'kg', colour: SLATE },
+    inner: c.manaCapacity ? { total: c.manaCapacity, label: 'MANA', colour: BRUISE } : null,
     facts: c.traits,
     story: c.story,
   });
@@ -361,7 +385,7 @@ for (const t of talismans) {
   if (!hasRender(render)) { skipped.push(t.cardCode); continue; }
   specs.push({
     code: t.cardCode, name: t.name, portrait: render,
-    kicker: `talisman · made at the ${t.madeAt} · ${t.baseValue} coin`,
+    kicker: `talisman · made at the ${t.madeAt} · ${t.baseValue} coin · ${t.massKg} kg`,
     desc: `Talisman card: ${t.name}. An arcane subject - the mana bar rules in bruise.`,
     left: null,
     right: { total: t.manaCapacity, label: 'MANA', colour: BRUISE },

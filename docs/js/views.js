@@ -343,7 +343,7 @@
     return collectionPage({
       key: 'items', query,
       title: 'Equipment & potions',
-      blurb: 'Carried by workers, figures and soldiers. Armour and weapons matter in battle; potions are spent for one round of advantage.',
+      blurb: 'Carried by workers, figures and soldiers. Armour and weapons matter in battle; potions are spent for one round of advantage. Every item has a mass in kilograms, and it counts against what the carrier can shoulder.',
       items: D.items,
       categories: D.categories.item,
       categoryOf: (i) => i.class,
@@ -352,6 +352,7 @@
         (i.effects || [])[0] || '',
         [
           pill(`${i.baseValue}${R.currency.symbol}`, 'accent'),
+          pill(`${i.massKg} kg`),
           i.combatDice ? pill(`+${i.combatDice} dice`, 'bad') : null,
           i.armourValue ? pill(`armour ${i.armourValue}`, 'good') : null,
           i.madeAt ? pill(D.name('building', i.madeAt)) : null,
@@ -436,14 +437,15 @@
     ] : []);
 
     return el('div', [
-      pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. Harm bars sit on a card’s left edge, capacity bars on its right, on every deck in the game. Plates are the accepted renders from docs/art/prompts.'),
+      pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. Harm bars sit on a card’s left edge, capacity bars on its right, on every deck in the game — and where a character carries two capacities, burden keeps the edge and mana comes inboard onto the portrait. Plates are the accepted renders from docs/art/prompts.'),
       el('div.flow', { style: 'margin-bottom:6px' }, [
         el('a.btn', { href: 'cards/index.html' }, 'Open the card fronts'),
         el('a.btn.small', { href: 'book/index.html' }, 'Read the rulebook'),
       ]),
-      ...section('Characters', 'Each player’s hero figure takes one at setup.', q(D.characters).map((c) =>
+      ...section('Characters', 'Each player’s hero figure takes one at setup. The burden bar is what they can carry, in kilograms.', q(D.characters).map((c) =>
         deckCard('character', c, `${D.name('people', c.people)} · ${c.calling}`, [
           pill(`health ${c.health}`, 'bad'),
+          pill(`carries ${c.carryKg} kg`),
           c.manaCapacity ? pill(`mana ${c.manaCapacity}`, 'accent') : null,
         ])
       )),
@@ -846,7 +848,10 @@
         i.madeAt ? el('p.prose', `Made at the ${D.name('building', i.madeAt)}${i.specialist ? `, by a ${D.name('profession', i.specialist)}` : ''}.`) : null,
       ]),
       el('section', [el('h4', 'Effects'), el('ul', { style: 'padding-left:18px;font-size:13.5px' }, (i.effects || []).map((e) => el('li', e)))]),
-      el('section', [el('h4', 'Value'), el('div.deflist', [el('dt', 'Base'), el('dd', `${i.baseValue}${R.currency.symbol}`)])]),
+      el('section', [el('h4', 'Value and mass'), el('div.deflist', [
+        el('dt', 'Base'), el('dd', `${i.baseValue}${R.currency.symbol}`),
+        el('dt', 'Mass'), el('dd', `${i.massKg} kg — counts against the carrier's burden`),
+      ])]),
     ];
   };
 
@@ -905,7 +910,8 @@
         el('h4', 'The card'),
         el('div.deflist', [
           el('dt', 'Health'), el('dd', `${c.health} — harm bar, left edge`),
-          el('dt', 'Mana'), el('dd', c.manaCapacity ? `${c.manaCapacity} — capacity bar, right edge` : 'none held in the body — talismans only'),
+          el('dt', 'Burden'), el('dd', `${c.carryKg} kg — capacity bar, right edge. Walk a token up it as ${c.name.split(' ')[0]} picks things up.`),
+          el('dt', 'Mana'), el('dd', c.manaCapacity ? `${c.manaCapacity} — capacity bar, inboard of the burden bar` : 'none held in the body — talismans only'),
           ...(c.manaNote ? [el('dt', 'Note'), el('dd', c.manaNote)] : []),
         ]),
       ]),

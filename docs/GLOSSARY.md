@@ -27,6 +27,7 @@ Defined in `data/tools.json`.
 
 **Item** — clothing, armour, weapons and potions. Like tools, owned individually;
 unlike tools, they are carried by a figure or worker rather than used at a work site.
+Every item has a **mass**, because something has to carry it.
 Defined in `data/items.json`.
 
 ### The word "resource"
@@ -44,9 +45,16 @@ verb of a player's turn.
 **Batch** — one execution of a recipe: its full effort cost, its full inputs, its full
 outputs. You cannot run half a batch.
 
+**Burden** — what a character is carrying right now, in kilograms, and the bar that
+tracks it up the right edge of their card. The top of the bar is that character's
+carry limit; a token walks up it as they pick things up and back down as they put
+things down. Burden is a *capacity* bar, so it sits on the right like every other
+capacity in the game, and it rules in slate like a vehicle's cargo. See
+`rules.json → carrying`.
+
 **Character** — a named adventurer card that a player's hero figure takes on: a face,
-a health bar, sometimes mana. Defined in `data/characters.json`. A character is not a
-worker and rolls no effort die.
+a health bar, a burden bar, sometimes mana. Defined in `data/characters.json`. A
+character is not a worker and rolls no effort die.
 
 **Build-point** — one hour of construction work banked on a building's progress track.
 A building is finished when its track is full *and* its minimum-rounds floor has
@@ -54,7 +62,7 @@ passed, so no amount of effort finishes a manor in one round.
 
 **Bulk** — the storage slot cost of one unit of a commodity, and the capacity it eats
 when shipped. Logs are bulk 2, gems are bulk 0.5. Bulk is why raw materials are worth
-processing before moving them.
+processing before moving them. Bulk is *not* mass: see **Mass**.
 
 **Day leg / night leg** — one round's movement for a figure, party or vehicle. The
 day leg is free; the night leg needs a lit torch or lantern, is slower, and makes the
@@ -75,6 +83,12 @@ merchant, soldier, hero.
 
 **Job** — a runnable instance of a recipe. The recipe is the rule; the job is you,
 this round, at this site, with these tools.
+
+**Mass** — what one item weighs, in kilograms — `massKg` in `data/items.json`. Mass
+is the cost of carrying a thing on a back; **bulk** is the cost of storing and shipping
+a commodity. They measure different things for different components and never convert
+into each other: cargo in a cart is bulk, the axe on your shoulder is mass. A commodity
+has bulk and no mass; an item has mass and no bulk.
 
 **Mana** — the arcane charge a slain monster yields, element-matched. Not a commodity:
 no bulk, no stockpile, no crate. It lives in bodies (rarely) and in talismans, and it

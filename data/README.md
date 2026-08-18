@@ -9,7 +9,7 @@ the web prototype and any future card/tile generator read.
 | File | Collection | What it holds |
 | --- | --- | --- |
 | `manifest.json` | — | Index of every dataset, plus the cross-file reference checks |
-| `rules.json` | — | Tunable constants: round phases, effort, food, rest, hirelings, market, victory |
+| `rules.json` | — | Tunable constants: round phases, effort, food, carrying, rest, hirelings, market, victory |
 | `commodities.json` | `commodities` | Every storable, tradeable good |
 | `tools.json` | `tools` | Equipment that gates recipes and wears out |
 | `buildings.json` | `buildings` | Everything constructable, including roads and rail |
@@ -19,13 +19,13 @@ the web prototype and any future card/tile generator read.
 | `discovery.json` | `tables` | The d20 discovery tables, one per terrain code plus overlays |
 | `deposits.json` | `deposits` | Finite mineral sources hidden under tiles |
 | `transport.json` | `modes` | Cargo modes, route rules, board figures |
-| `peoples.json` | `peoples` | Playable peoples, worker types, professions, mana storage |
+| `peoples.json` | `peoples` | Playable peoples, worker types, professions, mana storage, carrying capacity |
 | `events.json` | `cards` | The event deck |
-| `items.json` | `items` | Clothing, armour, weapons, potions, lights, talismans |
+| `items.json` | `items` | Clothing, armour, weapons, potions, lights, talismans — each with its mass in kg |
 | `arcana.json` | `spells` | Elements, mana rules, the spell list |
 | `monsters.json` | `monsters` | The monster deck, with encounter options |
 | `vehicles.json` | `vehicles` | The vehicle deck, and the card-code scheme |
-| `characters.json` | `characters` | The character deck |
+| `characters.json` | `characters` | The character deck: health, burden and mana |
 | `quests.json` | `quests` | The quest deck: mini-quests and campaigns |
 
 `schema/game.schema.json` documents the shape of each entry. It is for editors and
@@ -36,6 +36,14 @@ reading — can hold. A new system is a new file plus a `manifest.json` entry, n
 new wing on an existing file; that is what keeps any single change reviewable and any
 single file readable without loading the rest. Decks that are meant to grow (events,
 monsters, quests, vehicles, characters) grow by appending entries.
+
+### Mass and bulk are different measures
+
+**Bulk** is a commodity's storage-slot and shipping cost, and it belongs to
+`commodities.json` and `transport.json`. **Mass** is what one item weighs in
+kilograms — `items.json` `massKg` — and it belongs to whoever is carrying it.
+Cargo in a cart is bulk; the axe on your shoulder is mass. The two never convert
+into each other, and no entry should ever carry both.
 
 ## Rules of the road
 
@@ -62,6 +70,8 @@ The validator checks more than broken references. It also flags:
 - commodities nothing consumes — a dead end in the economy
 - tools and recipes that disagree about which enables which
 - buildings with worker slots that no recipe can use
+- an item with no mass, or a character whose carry limit is off the burden bar's step
+- a character who starts with more gear than they can lift
 
 Those warnings are design feedback, not just lint. A commodity nothing consumes is
 usually a missing recipe rather than a mistake in the file.

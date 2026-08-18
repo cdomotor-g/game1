@@ -27,6 +27,7 @@ const discovery = read('discovery.json');
 const commodities = read('commodities.json');
 const tools = read('tools.json');
 const buildings = read('buildings.json');
+const rules = read('rules.json');
 const peoples = read('peoples.json');
 const items = read('items.json');
 const events = read('events.json');
@@ -163,9 +164,10 @@ table(
 say('## Peoples');
 say();
 table(
-  ['People', 'Die', 'Workers', 'Terrain comfort', 'Mana'],
+  ['People', 'Die', 'Workers', 'Terrain comfort', 'Carries', 'Mana'],
   peoples.peoples.map((p) => [
     p.name, p.effortDie, p.startingWorkers, list(p.terrainComfort),
+    `${p.carry?.baseKg} kg`,
     p.manaStorage?.innate ? `${p.manaStorage.innate} innate` : 'talisman only',
   ])
 );
@@ -187,6 +189,10 @@ table(
 /* -------------------------------------------------------------------- items */
 say('## Items');
 say();
+say(`Mass is what the thing weighs. It counts against the carrier's **burden** —`);
+say(`the ${rules.carrying.unit} bar up the right edge of every character card — and it is not`);
+say('bulk: bulk is a commodity\'s storage and shipping cost, and no item has one.');
+say();
 for (const cls of items.classes) {
   const rows = items.items.filter((i) => i.class === cls.id);
   if (!rows.length) continue;
@@ -194,9 +200,10 @@ for (const cls of items.classes) {
   say();
   const extra = cls.id === 'talisman' ? ['Capacity'] : [];
   table(
-    ['Item', 'Made at', 'Inputs', 'Hours', 'Value', ...extra, 'Effects'],
+    ['Item', 'Made at', 'Inputs', 'Hours', 'Value', 'Mass', ...extra, 'Effects'],
     rows.map((i) => [
       i.name + (i.cardCode ? ` (${i.cardCode})` : ''), i.madeAt, io(i.inputs), i.effortHours, i.baseValue,
+      `${i.massKg} kg`,
       ...(cls.id === 'talisman' ? [i.manaCapacity] : []),
       (i.effects || []).join(' '),
     ])
@@ -247,9 +254,9 @@ table(
 say('## Character deck');
 say();
 table(
-  ['Code', 'Character', 'People', 'Calling', 'Health', 'Mana', 'Traits'],
+  ['Code', 'Character', 'People', 'Calling', 'Health', 'Burden', 'Mana', 'Traits'],
   characters.characters.map((c) => [
-    c.cardCode, c.name, c.people, c.calling, c.health,
+    c.cardCode, c.name, c.people, c.calling, c.health, `${c.carryKg} kg`,
     c.manaCapacity ? `${c.manaCapacity} innate` : 'talisman',
     (c.traits || []).join(' '),
   ])

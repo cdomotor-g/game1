@@ -106,9 +106,19 @@ Four decks share one anatomy, so a bar never needs explaining twice:
 - **Vertical numbered bars**, numbered from the bottom, walked by a token.
 - **Harm on the LEFT edge** — a vehicle's damage, a monster's or character's health.
   Bar rules in oxide; the ink-plate mark is the notch-down.
-- **Capacity on the RIGHT edge** — a vehicle's cargo, a talisman's or character's mana.
-  Cargo bars rule in slate; mana bars in bruise (talismans and mana are arcane subjects,
-  and the only cards in these decks permitted the slip).
+- **Capacity on the RIGHT edge** — a vehicle's cargo, a character's burden in kilograms,
+  a talisman's or character's mana. Cargo and burden bars rule in slate; mana bars in
+  bruise (talismans and mana are arcane subjects, and the only cards in these decks
+  permitted the slip).
+- **A second capacity comes inboard, onto the portrait.** A character has burden and may
+  also have mana, and the edge holds one bar. Burden keeps the edge — every character has
+  one — and the mana bar moves in over the plate, laying down its own paper first so the
+  ladder is read off paper and not off a drawing. That paper is wash, which costs the
+  black-and-white edition nothing: the portrait is wash too, so the ink plate has bare
+  paper there already. The inboard bar stops at the foot of the portrait window, because
+  below that the rules text is already using the width.
+- **A bar that counts something names its unit**, on a second, smaller label line under
+  the first. `BURDEN` over `kg`; a bar counting hit points or charges needs no line.
 - **Portrait across the middle, name and card code at the top, story text low.** The
   card code (`VEH-03`, `MON-09`) sets in the same small caps as a maker's mark.
 

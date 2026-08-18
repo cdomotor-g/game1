@@ -197,7 +197,7 @@
     },
     "item": {
       "type": "object",
-      "required": ["id", "name", "class", "inputs"],
+      "required": ["id", "name", "class", "inputs", "massKg"],
       "properties": {
         "id": { "$ref": "#/$defs/id" },
         "name": { "type": "string" },
@@ -207,6 +207,7 @@
         "inputs": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
         "effortHours": { "type": "number" },
         "baseValue": { "type": "number" },
+        "massKg": { "type": "number", "description": "What one of these weighs, in kilograms. Counts against a figure's carry limit - see rules.carrying." },
         "specialist": { "$ref": "#/$defs/id" },
         "effects": { "type": "array", "items": { "type": "string" } },
         "armourValue": { "type": "integer" },
@@ -267,7 +268,7 @@
     },
     "character": {
       "type": "object",
-      "required": ["id", "cardCode", "name", "people", "calling", "health", "traits", "story"],
+      "required": ["id", "cardCode", "name", "people", "calling", "health", "carryKg", "traits", "story"],
       "properties": {
         "id": { "$ref": "#/$defs/id" },
         "cardCode": { "$ref": "#/$defs/cardCode" },
@@ -275,7 +276,8 @@
         "people": { "$ref": "#/$defs/id" },
         "calling": { "type": "string" },
         "health": { "type": "integer", "description": "Height of the health bar (left edge)." },
-        "manaCapacity": { "type": "integer", "description": "Innate mana bar (right edge). 0 or absent = talisman only." },
+        "carryKg": { "type": "number", "description": "Carrying capacity in kilograms. Height of the burden bar (right edge)." },
+        "manaCapacity": { "type": "integer", "description": "Innate mana bar, inboard of the burden bar and over the portrait. 0 or absent = talisman only." },
         "manaNote": { "type": "string" },
         "traits": { "type": "array", "items": { "type": "string" } },
         "startsWith": { "type": "array", "items": { "$ref": "#/$defs/id" }, "description": "Item ids dealt with the card." },

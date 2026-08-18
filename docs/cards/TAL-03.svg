@@ -31,7 +31,7 @@
   <!-- name and card code, maker's-mark small -->
   <text x="48" y="80" font-size="31" font-weight="bold">Copper Amulet</text>
   <text x="504" y="60" font-size="15" text-anchor="end" letter-spacing="2" font-family="Helvetica, Arial, sans-serif">TAL-03</text>
-  <text x="48" y="102" font-size="15.5" font-style="italic" fill="#3D3630">talisman · made at the blacksmith · 60 coin</text>
+  <text x="48" y="102" font-size="15.5" font-style="italic" fill="#3D3630">talisman · made at the blacksmith · 60 coin · 0.5 kg</text>
   
 
   <!-- portrait window rule: the wash bleeds, the ink holds the line -->

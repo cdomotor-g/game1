@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "name": "game1",
   "datasets": [
-    { "key": "rules", "file": "rules.json", "collection": null, "summary": "Tunable constants: round structure, effort, food, storage, market, victory." },
+    { "key": "rules", "file": "rules.json", "collection": null, "summary": "Tunable constants: round structure, effort, food, storage, market, carrying, victory." },
     { "key": "commodities", "file": "commodities.json", "collection": "commodities", "idField": "id", "summary": "Every storable, tradeable good." },
     { "key": "tools", "file": "tools.json", "collection": "tools", "idField": "id", "summary": "Equipment that gates recipes and wears out." },
     { "key": "buildings", "file": "buildings.json", "collection": "buildings", "idField": "id", "summary": "Everything that can be constructed on a tile." },
@@ -13,13 +13,13 @@
     { "key": "transport", "file": "transport.json", "collection": "modes", "idField": "id", "summary": "Cargo modes, routes and board figures." },
     { "key": "peoples", "file": "peoples.json", "collection": "peoples", "idField": "id", "summary": "Playable peoples, worker types and professions." },
     { "key": "events", "file": "events.json", "collection": "cards", "idField": "id", "summary": "The event deck." },
-    { "key": "items", "file": "items.json", "collection": "items", "idField": "id", "summary": "Clothing, armour, weapons, potions, lights and talismans." },
+    { "key": "items", "file": "items.json", "collection": "items", "idField": "id", "summary": "Clothing, armour, weapons, potions, lights and talismans, each with its mass in kg." },
     { "key": "travel", "file": "travel.json", "collection": null, "summary": "Travel speeds by mode, terrain code and time of day; night, light and cave rules." },
     { "key": "discovery", "file": "discovery.json", "collection": "tables", "idField": "id", "summary": "Discovery roll tables: one d20 column per terrain code, plus road, rail and cave." },
     { "key": "arcana", "file": "arcana.json", "collection": "spells", "idField": "id", "summary": "Elements, mana storage and the spell list." },
     { "key": "monsters", "file": "monsters.json", "collection": "monsters", "idField": "id", "summary": "The monster deck, three per element, with encounter options." },
     { "key": "vehicles", "file": "vehicles.json", "collection": "vehicles", "idField": "id", "summary": "The vehicle deck: named trains, ships, caravans and horses, with damage and cargo bars." },
-    { "key": "characters", "file": "characters.json", "collection": "characters", "idField": "id", "summary": "The character deck: named heroes with health and mana bars." },
+    { "key": "characters", "file": "characters.json", "collection": "characters", "idField": "id", "summary": "The character deck: named heroes with health, burden and mana bars." },
     { "key": "quests", "file": "quests.json", "collection": "quests", "idField": "id", "summary": "The quest deck: mini-quests and campaigns, accept or decline." }
   ],
   "maps": {

@@ -89,6 +89,18 @@
     "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
   },
 
+  "carrying": {
+    "$comment": "What a figure carries on its own back, in kilograms. Mass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
+    "unit": "kg",
+    "barStepKg": 2,
+    "carryLimit": "Printed on the character card as the BURDEN bar up the right edge. A character's limit is their people's carry.baseKg adjusted for build and calling; other figures use their people's base unmodified.",
+    "marker": "Stand a token on the burden bar and move it as the character picks things up and puts them down. Total the mass of everything they carry - worn, wielded and stowed alike - and stand the token on the first mark at or above that total.",
+    "limitRule": "A character may not take up an item that would push the token past the top of the bar. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
+    "notCarried": ["Commodities in transit, which travel by transport mode and are measured in bulk.", "Coin.", "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."],
+    "onZeroHealth": "A character carried to a settlement at 0 health loses everything on the burden bar on the way; clear the token to zero.",
+    "notes": "The bar is a capacity bar, so it sits on the right edge like every other capacity bar in the game, and it is ruled in slate like a vehicle's cargo. Where a character also has innate mana, the mana bar moves inboard of it and sits on the portrait."
+  },
+
   "movement": {
     "landMoveCostDefault": 1,
     "figureMovePointsPerRound": 4,

@@ -213,9 +213,42 @@ Wagonrow (VEH-09) is still to be drawn:
 | *Steppe Pony (VEH-11)* | *Black Malchior (VEH-12)* | |
 
 **Characters** (`characters.json`) — eight named adventurers; each player's hero
-figure takes one at setup for a face, a **health bar (left edge)** and, where
-the card has it, a **mana bar (right edge)**. Same convention on every deck in
-the game: *harm left, capacity right.*
+figure takes one at setup for a face, a **health bar (left edge)** and a
+**burden bar (right edge)**. Same convention on every deck in the game:
+*harm left, capacity right.*
+
+### Burden — what a character can carry
+
+Every item in `items.json` now carries a **mass in kilograms**, and every
+character card carries the other half of that arithmetic: a numbered **burden
+bar** up the right edge, in 2 kg steps, topping out at what that character can
+shoulder unaided. A tunic is 1 kg, a sword 1.5, a plate harness 25. Ruk of the
+Red Road carries 28 kg, the most of anyone; Old Mother Keswick carries 16.
+
+The bar is *played*, not printed and forgotten. Stand a token on it, total the
+mass of everything the character is carrying — worn, wielded and stowed alike —
+and move the token to the first mark at or above that total as they pick things
+up and put them down. A character may not take up an item that would push the
+token past the top of the bar: load it onto a vehicle, hand it to someone with
+room, or leave it where it lies. A character carried to a settlement at 0 health
+loses the lot, and the token goes back to zero.
+
+The numbers start from the people — `peoples.json → carry.baseKg`, 16 kg for a
+halfling up to 28 for an orc — and the card adjusts that for build and calling.
+A dwarf out-carries a taller people all day; the point of Tilly Goodbarrel is
+that her wagon does the hauling, not her back.
+
+**Mass is not bulk.** Bulk is a commodity's storage-slot and shipping cost and
+belongs to the cart; mass is what a thing weighs and belongs to whoever is
+holding it. They never convert into each other, and nothing in the data has
+both. Full rules in `rules.json → carrying`; the whole item table with masses is
+in the [annex](14-annex.md#items).
+
+Where a character also has innate mana, the mana bar cannot have the right edge
+too — burden owns it, because every character has burden and only some have
+mana. So the **mana bar moves inboard and sits on the portrait**, on its own
+patch of paper. That keeps one geometry across all eight cards instead of two
+layouts, and the portrait loses a strip it was not using.
 
 All eight character plates are accepted
 ([`docs/art/prompts/characters.md`](../art/prompts/characters.md)):

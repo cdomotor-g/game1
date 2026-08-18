@@ -43,8 +43,12 @@ fork is free to renumber.
 **The bar convention.** Any card that tracks a quantity does it with a **vertical
 numbered bar**, numbered from the bottom, walked by a token: **harm on the left edge**
 (a vehicle's damage, a monster's or character's health), **capacity on the right edge**
-(a vehicle's cargo, a talisman's or character's mana). One convention, every deck, so a
-bar never needs explaining twice.
+(a vehicle's cargo, a character's burden in kilograms, a talisman's or character's
+mana). One convention, every deck, so a bar never needs explaining twice.
+
+A character carries two capacities and the edge holds one bar, so **burden keeps the
+edge** — every character has one — and the mana bar moves inboard onto the portrait.
+That is deliberate: eight cards with one geometry beat eight cards with two.
 
 ## Tokens and bits
 
@@ -68,6 +72,10 @@ bar never needs explaining twice.
   See [../art/02-palette.md](../art/02-palette.md).
 
 - **~120 coins** in 1 / 5 / 20 denominations
+- **Bar tokens** — one small disc per printed bar in play, in the owning player's colour:
+  health and burden on every character card, mana where the card has it, damage and cargo
+  on every vehicle. A character in play is two discs minimum, and the burden disc moves
+  every time they pick something up
 - **Price band markers** — 11, one per commodity category, on a shared market track
 - **Round marker**, turn order markers, first player token
 

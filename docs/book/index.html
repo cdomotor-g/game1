@@ -483,12 +483,14 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <li><strong>37 item cards</strong> — clothing, armour, weapons, potions, lights and talismans</li>
 <li><strong>12 monster cards</strong>, <strong>12 vehicle cards</strong>, <strong>8 character cards</strong>, <strong>8 quest cards</strong> — the adventure decks, in <code>data/monsters.json</code>, <code>vehicles.json</code>, <code>characters.json</code> and <code>quests.json</code>, all built to grow</li></ul>
 <p><strong>Card codes.</strong> Every card carries a deck prefix and a two-digit sequence — <code>VEH-03</code>, <code>MON-09</code>, <code>QST-07</code> — with a <code>v2</code> suffix if a card is ever reprinted changed. The scheme is data (<code>vehicles.json → cardIdScheme</code>), the numbering is this repository's own, and a fork is free to renumber.</p>
-<p><strong>The bar convention.</strong> Any card that tracks a quantity does it with a <strong>vertical numbered bar</strong>, numbered from the bottom, walked by a token: <strong>harm on the left edge</strong> (a vehicle's damage, a monster's or character's health), <strong>capacity on the right edge</strong> (a vehicle's cargo, a talisman's or character's mana). One convention, every deck, so a bar never needs explaining twice.</p>
+<p><strong>The bar convention.</strong> Any card that tracks a quantity does it with a <strong>vertical numbered bar</strong>, numbered from the bottom, walked by a token: <strong>harm on the left edge</strong> (a vehicle's damage, a monster's or character's health), <strong>capacity on the right edge</strong> (a vehicle's cargo, a character's burden in kilograms, a talisman's or character's mana). One convention, every deck, so a bar never needs explaining twice.</p>
+<p>A character carries two capacities and the edge holds one bar, so <strong>burden keeps the edge</strong> — every character has one — and the mana bar moves inboard onto the portrait. That is deliberate: eight cards with one geometry beat eight cards with two.</p>
 <h2>Tokens and bits</h2>
 <ul><li><strong>Commodity tokens</strong> — the big question. 63 commodities is far too many to give each its own wooden bit. Two candidate approaches: 1. <strong>Generic cubes in 11 category colours</strong>, with the specific commodity tracked on a player-board grid. Cheap, compact, and it makes a stockpile hard to read at a glance from across the table. 2. <strong>Printed cardboard chits per commodity</strong>, ~20 of the common ones and ~8 of the rare. Readable, thematic, and a genuinely large amount of punchboard.</li></ul>
 <p>  The digital prototype sidesteps this entirely, which is exactly why it should not be   the thing that decides it. This needs a paper prototype before it needs an opinion.</p>
 <p>  One thing the style guide settles either way: <strong>eleven distinguishable colours do not   exist</strong> — not across colour-blindness, not across dye lots, and not in greyscale, where   the eleven collapse into five clusters. So each category also carries a hatch pattern,   which is what actually identifies it. Under option 1 the hatch moves to the   player-board grid cell, and the cube supplies only colour — which is a real argument in   favour of cubes, since it costs nothing to print a hatch into a cell.   See <a href="../art/02-palette.md">../art/02-palette.md</a>.</p>
 <ul><li><strong>~120 coins</strong> in 1 / 5 / 20 denominations</li>
+<li><strong>Bar tokens</strong> — one small disc per printed bar in play, in the owning player's colour: health and burden on every character card, mana where the card has it, damage and cargo on every vehicle. A character in play is two discs minimum, and the burden disc moves every time they pick something up</li>
 <li><strong>Price band markers</strong> — 11, one per commodity category, on a shared market track</li>
 <li><strong>Round marker</strong>, turn order markers, first player token</li></ul>
 <h2>Mini-maps</h2>
@@ -764,7 +766,13 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td><em>The Dunhaven Column (VEH-07)</em></td><td><em>The Fenway Wagons (VEH-08)</em></td><td><em>Bay Courser (VEH-10)</em></td></tr>
 <tr><td><img src="../art/renders/vehicle-veh-11.png" alt="Steppe Pony" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-12.png" alt="Black Malchior" loading="lazy"></td><td></td></tr>
 <tr><td><em>Steppe Pony (VEH-11)</em></td><td><em>Black Malchior (VEH-12)</em></td><td></td></tr></tbody></table></div>
-<p><strong>Characters</strong> (<code>characters.json</code>) — eight named adventurers; each player's hero figure takes one at setup for a face, a <strong>health bar (left edge)</strong> and, where the card has it, a <strong>mana bar (right edge)</strong>. Same convention on every deck in the game: <em>harm left, capacity right.</em></p>
+<p><strong>Characters</strong> (<code>characters.json</code>) — eight named adventurers; each player's hero figure takes one at setup for a face, a <strong>health bar (left edge)</strong> and a <strong>burden bar (right edge)</strong>. Same convention on every deck in the game: <em>harm left, capacity right.</em></p>
+<h3>Burden — what a character can carry</h3>
+<p>Every item in <code>items.json</code> now carries a <strong>mass in kilograms</strong>, and every character card carries the other half of that arithmetic: a numbered <strong>burden bar</strong> up the right edge, in 2 kg steps, topping out at what that character can shoulder unaided. A tunic is 1 kg, a sword 1.5, a plate harness 25. Ruk of the Red Road carries 28 kg, the most of anyone; Old Mother Keswick carries 16.</p>
+<p>The bar is <em>played</em>, not printed and forgotten. Stand a token on it, total the mass of everything the character is carrying — worn, wielded and stowed alike — and move the token to the first mark at or above that total as they pick things up and put them down. A character may not take up an item that would push the token past the top of the bar: load it onto a vehicle, hand it to someone with room, or leave it where it lies. A character carried to a settlement at 0 health loses the lot, and the token goes back to zero.</p>
+<p>The numbers start from the people — <code>peoples.json → carry.baseKg</code>, 16 kg for a halfling up to 28 for an orc — and the card adjusts that for build and calling. A dwarf out-carries a taller people all day; the point of Tilly Goodbarrel is that her wagon does the hauling, not her back.</p>
+<p><strong>Mass is not bulk.</strong> Bulk is a commodity's storage-slot and shipping cost and belongs to the cart; mass is what a thing weighs and belongs to whoever is holding it. They never convert into each other, and nothing in the data has both. Full rules in <code>rules.json → carrying</code>; the whole item table with masses is in the <a href="#c-14-annex">annex</a>.</p>
+<p>Where a character also has innate mana, the mana bar cannot have the right edge too — burden owns it, because every character has burden and only some have mana. So the <strong>mana bar moves inboard and sits on the portrait</strong>, on its own patch of paper. That keeps one geometry across all eight cards instead of two layouts, and the portrait loses a strip it was not using.</p>
 <p>All eight character plates are accepted (<a href="../art/prompts/characters.md"><code>docs/art/prompts/characters.md</code></a>):</p>
 <div class="table-wrap gallery"><table>
 <tbody><tr><td><img src="../art/renders/character-chr-01.png" alt="Corin Vale" loading="lazy"></td><td><img src="../art/renders/character-chr-02.png" alt="Berga Understone" loading="lazy"></td><td><img src="../art/renders/character-chr-03.png" alt="Sylvae of the Duskmere" loading="lazy"></td><td><img src="../art/renders/character-chr-04.png" alt="Tilly Goodbarrel" loading="lazy"></td></tr>
@@ -1002,12 +1010,12 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Rail Depot</td><td>infrastructure</td><td>3</td><td>4 brick + 2 steel + 2 lumber</td><td>18</td><td>—</td></tr></tbody></table></div>
 <h2>Peoples</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>People</th><th>Die</th><th>Workers</th><th>Terrain comfort</th><th>Mana</th></tr></thead>
-<tbody><tr><td>Humans</td><td>d6</td><td>2</td><td>grassland, coast, forest</td><td>talisman only</td></tr>
-<tr><td>Dwarves</td><td>d6</td><td>2</td><td>mountain, hills, tundra</td><td>talisman only</td></tr>
-<tr><td>Elves</td><td>d6</td><td>2</td><td>forest, hills, grassland</td><td>3 innate</td></tr>
-<tr><td>Halflings</td><td>d6</td><td>3</td><td>grassland, forest, coast</td><td>talisman only</td></tr>
-<tr><td>Orcs</td><td>d8</td><td>2</td><td>hills, marsh, tundra, mountain</td><td>talisman only</td></tr></tbody></table></div>
+<thead><tr><th>People</th><th>Die</th><th>Workers</th><th>Terrain comfort</th><th>Carries</th><th>Mana</th></tr></thead>
+<tbody><tr><td>Humans</td><td>d6</td><td>2</td><td>grassland, coast, forest</td><td>22 kg</td><td>talisman only</td></tr>
+<tr><td>Dwarves</td><td>d6</td><td>2</td><td>mountain, hills, tundra</td><td>26 kg</td><td>talisman only</td></tr>
+<tr><td>Elves</td><td>d6</td><td>2</td><td>forest, hills, grassland</td><td>20 kg</td><td>3 innate</td></tr>
+<tr><td>Halflings</td><td>d6</td><td>3</td><td>grassland, forest, coast</td><td>16 kg</td><td>talisman only</td></tr>
+<tr><td>Orcs</td><td>d8</td><td>2</td><td>hills, marsh, tundra, mountain</td><td>28 kg</td><td>talisman only</td></tr></tbody></table></div>
 <h3>Traits</h3>
 <div class="table-wrap"><table>
 <thead><tr><th>People</th><th>Trait</th><th>Effect</th></tr></thead>
@@ -1045,61 +1053,62 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Farmer</td><td>farm</td><td>35</td><td>3</td><td>+2 output on every harvest recipe.</td></tr>
 <tr><td>Engineer</td><td>rail-depot</td><td>80</td><td>4</td><td>Lay Rail costs 1 less build-point per tile, and trains this player runs need 1 less coal per tile.</td></tr></tbody></table></div>
 <h2>Items</h2>
+<p>Mass is what the thing weighs. It counts against the carrier's <strong>burden</strong> — the kg bar up the right edge of every character card — and it is not bulk: bulk is a commodity's storage and shipping cost, and no item has one.</p>
 <h3>Clothing</h3>
 <div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
-<tbody><tr><td>Tunic</td><td>tailor</td><td>1 cloth</td><td>2</td><td>26</td><td>Ignore the first -1 weather effort penalty each round.</td></tr>
-<tr><td>Winter Coat</td><td>tailor</td><td>2 cloth + 2 wool</td><td>3</td><td>60</td><td>Immune to Hard Frost. No tundra or mountain effort penalty.</td></tr>
-<tr><td>Travelling Cloak</td><td>tailor</td><td>2 cloth + 1 leather</td><td>3</td><td>55</td><td>+1 move point for the figure wearing it.</td></tr>
-<tr><td>Sturdy Boots</td><td>tailor</td><td>1 leather</td><td>2</td><td>30</td><td>Marsh and mountain tiles cost 1 less to move through, minimum 1.</td></tr>
-<tr><td>Fine Robes</td><td>tailor</td><td>2 fine-cloth + 1 gold</td><td>4</td><td>180</td><td>A merchant wearing these gets a further 10% on every market sale. Worth 2 victory points at game end.</td></tr></tbody></table></div>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Tunic</td><td>tailor</td><td>1 cloth</td><td>2</td><td>26</td><td>1 kg</td><td>Ignore the first -1 weather effort penalty each round.</td></tr>
+<tr><td>Winter Coat</td><td>tailor</td><td>2 cloth + 2 wool</td><td>3</td><td>60</td><td>3 kg</td><td>Immune to Hard Frost. No tundra or mountain effort penalty.</td></tr>
+<tr><td>Travelling Cloak</td><td>tailor</td><td>2 cloth + 1 leather</td><td>3</td><td>55</td><td>2 kg</td><td>+1 move point for the figure wearing it.</td></tr>
+<tr><td>Sturdy Boots</td><td>tailor</td><td>1 leather</td><td>2</td><td>30</td><td>1.5 kg</td><td>Marsh and mountain tiles cost 1 less to move through, minimum 1.</td></tr>
+<tr><td>Fine Robes</td><td>tailor</td><td>2 fine-cloth + 1 gold</td><td>4</td><td>180</td><td>1.5 kg</td><td>A merchant wearing these gets a further 10% on every market sale. Worth 2 victory points at game end.</td></tr></tbody></table></div>
 <h3>Armour</h3>
 <div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
-<tbody><tr><td>Leather Jerkin</td><td>tailor</td><td>2 leather</td><td>3</td><td>50</td><td>Ignore the first hit in each battle.</td></tr>
-<tr><td>Chain Mail</td><td>blacksmith</td><td>2 ironware + 1 leather</td><td>5</td><td>130</td><td>Ignore the first two hits in each battle.</td></tr>
-<tr><td>Plate Harness</td><td>blacksmith</td><td>3 steel + 2 leather</td><td>8</td><td>320</td><td>Ignore the first three hits in each battle. -1 move point.</td></tr>
-<tr><td>Helm</td><td>blacksmith</td><td>1 ironware</td><td>2</td><td>45</td><td>Once per battle, cancel one hit.</td></tr>
-<tr><td>Shield</td><td>carpenter</td><td>1 lumber + 1 ironware</td><td>2</td><td>40</td><td>+1 defence die.</td></tr></tbody></table></div>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Leather Jerkin</td><td>tailor</td><td>2 leather</td><td>3</td><td>50</td><td>5 kg</td><td>Ignore the first hit in each battle.</td></tr>
+<tr><td>Chain Mail</td><td>blacksmith</td><td>2 ironware + 1 leather</td><td>5</td><td>130</td><td>12 kg</td><td>Ignore the first two hits in each battle.</td></tr>
+<tr><td>Plate Harness</td><td>blacksmith</td><td>3 steel + 2 leather</td><td>8</td><td>320</td><td>25 kg</td><td>Ignore the first three hits in each battle. -1 move point.</td></tr>
+<tr><td>Helm</td><td>blacksmith</td><td>1 ironware</td><td>2</td><td>45</td><td>2.5 kg</td><td>Once per battle, cancel one hit.</td></tr>
+<tr><td>Shield</td><td>carpenter</td><td>1 lumber + 1 ironware</td><td>2</td><td>40</td><td>4 kg</td><td>+1 defence die.</td></tr></tbody></table></div>
 <h3>Weapon</h3>
 <div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
-<tbody><tr><td>Sword</td><td>blacksmith</td><td>2 pig-iron + 1 leather</td><td>4</td><td>95</td><td>+1 combat die.</td></tr>
-<tr><td>Steel Sword</td><td>blacksmith</td><td>2 steel + 1 leather</td><td>5</td><td>210</td><td>+2 combat dice, and hits on 3+ instead of 4+.</td></tr>
-<tr><td>War Axe</td><td>blacksmith</td><td>2 pig-iron + 1 lumber</td><td>3</td><td>80</td><td>+1 combat die, +2 when attacking.</td></tr>
-<tr><td>Pike</td><td>blacksmith</td><td>1 pig-iron + 2 lumber</td><td>3</td><td>70</td><td>+2 combat dice when defending a town. Cannot be used with a shield.</td></tr>
-<tr><td>Bow</td><td>carpenter</td><td>1 lumber + 1 rope</td><td>3</td><td>65</td><td>Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight.</td></tr>
-<tr><td>Quiver of Arrows</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>Holds 3 uses. Each battle with a bow spends 1.</td></tr>
-<tr><td>Sling</td><td>weaver</td><td>1 cloth</td><td>1</td><td>12</td><td>+1 combat die for halflings only. Everyone else may as well throw the stone.</td></tr>
-<tr><td>War Hammer</td><td>blacksmith</td><td>2 steel + 1 lumber</td><td>5</td><td>190</td><td>+2 combat dice. Ignores enemy armour entirely.</td></tr></tbody></table></div>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Sword</td><td>blacksmith</td><td>2 pig-iron + 1 leather</td><td>4</td><td>95</td><td>1.5 kg</td><td>+1 combat die.</td></tr>
+<tr><td>Steel Sword</td><td>blacksmith</td><td>2 steel + 1 leather</td><td>5</td><td>210</td><td>1.5 kg</td><td>+2 combat dice, and hits on 3+ instead of 4+.</td></tr>
+<tr><td>War Axe</td><td>blacksmith</td><td>2 pig-iron + 1 lumber</td><td>3</td><td>80</td><td>3 kg</td><td>+1 combat die, +2 when attacking.</td></tr>
+<tr><td>Pike</td><td>blacksmith</td><td>1 pig-iron + 2 lumber</td><td>3</td><td>70</td><td>4.5 kg</td><td>+2 combat dice when defending a town. Cannot be used with a shield.</td></tr>
+<tr><td>Bow</td><td>carpenter</td><td>1 lumber + 1 rope</td><td>3</td><td>65</td><td>1 kg</td><td>Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight.</td></tr>
+<tr><td>Quiver of Arrows</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>2 kg</td><td>Holds 3 uses. Each battle with a bow spends 1.</td></tr>
+<tr><td>Sling</td><td>weaver</td><td>1 cloth</td><td>1</td><td>12</td><td>0.5 kg</td><td>+1 combat die for halflings only. Everyone else may as well throw the stone.</td></tr>
+<tr><td>War Hammer</td><td>blacksmith</td><td>2 steel + 1 lumber</td><td>5</td><td>190</td><td>6 kg</td><td>+2 combat dice. Ignores enemy armour entirely.</td></tr></tbody></table></div>
 <h3>Potion</h3>
 <div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
-<tbody><tr><td>Draught of Vigour</td><td>alchemist</td><td>2 arcane-herb + 1 honey</td><td>3</td><td>70</td><td>Step one worker's effort die up two sizes for one round.</td></tr>
-<tr><td>Tireless Toil</td><td>alchemist</td><td>1 arcane-herb + 2 mushrooms</td><td>3</td><td>60</td><td>Re-roll every effort die of one worker and keep the better result.</td></tr>
-<tr><td>Brewmaster's Round</td><td>alchemist</td><td>1 ale + 2 arcane-herb</td><td>4</td><td>120</td><td>+1 flat effort to every worker in one town this round.</td></tr>
-<tr><td>Healing Draught</td><td>alchemist</td><td>2 arcane-herb + 2 berries</td><td>3</td><td>85</td><td>Cancel one worker loss, or ignore one Plague card. Or restore 3 health to one character.</td></tr>
-<tr><td>Swiftfoot</td><td>alchemist</td><td>1 arcane-herb + 1 mana-crystal</td><td>3</td><td>140</td><td>Double one figure's move points, or move one cargo token its full speed again this round.</td></tr>
-<tr><td>Stonehide</td><td>alchemist</td><td>1 mana-crystal + 2 mushrooms</td><td>4</td><td>150</td><td>One unit ignores all hits in one battle.</td></tr>
-<tr><td>Prospector's Clarity</td><td>alchemist</td><td>1 mana-crystal + 2 arcane-herb</td><td>4</td><td>160</td><td>Automatically succeed on one survey, and reveal all deposits on adjacent tiles.</td></tr>
-<tr><td>Merchant's Fortune</td><td>alchemist</td><td>1 gold + 2 arcane-herb</td><td>4</td><td>200</td><td>Shift one commodity family's price band two steps in your favour for your next sale only.</td></tr>
-<tr><td>Owl's Eye</td><td>alchemist</td><td>2 moon-blossom + 1 arcane-herb</td><td>3</td><td>90</td><td>One figure or party travels night legs this round as if carrying a lantern.</td></tr>
-<tr><td>Physic Tonic</td><td>alchemist</td><td>2 frost-lichen + 1 honey</td><td>3</td><td>95</td><td>Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick.</td></tr>
-<tr><td>Emberguard Salve</td><td>alchemist</td><td>2 ember-root + 1 honey</td><td>3</td><td>100</td><td>One unit or character ignores every hit from a fire-element monster in one battle.</td></tr></tbody></table></div>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Draught of Vigour</td><td>alchemist</td><td>2 arcane-herb + 1 honey</td><td>3</td><td>70</td><td>0.5 kg</td><td>Step one worker's effort die up two sizes for one round.</td></tr>
+<tr><td>Tireless Toil</td><td>alchemist</td><td>1 arcane-herb + 2 mushrooms</td><td>3</td><td>60</td><td>0.5 kg</td><td>Re-roll every effort die of one worker and keep the better result.</td></tr>
+<tr><td>Brewmaster's Round</td><td>alchemist</td><td>1 ale + 2 arcane-herb</td><td>4</td><td>120</td><td>0.5 kg</td><td>+1 flat effort to every worker in one town this round.</td></tr>
+<tr><td>Healing Draught</td><td>alchemist</td><td>2 arcane-herb + 2 berries</td><td>3</td><td>85</td><td>0.5 kg</td><td>Cancel one worker loss, or ignore one Plague card. Or restore 3 health to one character.</td></tr>
+<tr><td>Swiftfoot</td><td>alchemist</td><td>1 arcane-herb + 1 mana-crystal</td><td>3</td><td>140</td><td>0.5 kg</td><td>Double one figure's move points, or move one cargo token its full speed again this round.</td></tr>
+<tr><td>Stonehide</td><td>alchemist</td><td>1 mana-crystal + 2 mushrooms</td><td>4</td><td>150</td><td>0.5 kg</td><td>One unit ignores all hits in one battle.</td></tr>
+<tr><td>Prospector's Clarity</td><td>alchemist</td><td>1 mana-crystal + 2 arcane-herb</td><td>4</td><td>160</td><td>0.5 kg</td><td>Automatically succeed on one survey, and reveal all deposits on adjacent tiles.</td></tr>
+<tr><td>Merchant's Fortune</td><td>alchemist</td><td>1 gold + 2 arcane-herb</td><td>4</td><td>200</td><td>0.5 kg</td><td>Shift one commodity family's price band two steps in your favour for your next sale only.</td></tr>
+<tr><td>Owl's Eye</td><td>alchemist</td><td>2 moon-blossom + 1 arcane-herb</td><td>3</td><td>90</td><td>0.5 kg</td><td>One figure or party travels night legs this round as if carrying a lantern.</td></tr>
+<tr><td>Physic Tonic</td><td>alchemist</td><td>2 frost-lichen + 1 honey</td><td>3</td><td>95</td><td>0.5 kg</td><td>Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick.</td></tr>
+<tr><td>Emberguard Salve</td><td>alchemist</td><td>2 ember-root + 1 honey</td><td>3</td><td>100</td><td>0.5 kg</td><td>One unit or character ignores every hit from a fire-element monster in one battle.</td></tr></tbody></table></div>
 <h3>Light</h3>
 <div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Effects</th></tr></thead>
-<tbody><tr><td>Torch</td><td>carpenter</td><td>1 lumber + 1 cloth</td><td>1</td><td>10</td><td>Travel one night leg at torch speed - see travel.json. Enter a cave. Each night leg or cave visit spends one use; at zero it is gone.</td></tr>
-<tr><td>Lantern</td><td>blacksmith</td><td>1 ironware + 1 glass</td><td>2</td><td>55</td><td>Travel night legs at lantern speed - see travel.json. Explore caves without spending uses. Does not wear out, but it can be lost, sold or stolen like any item.</td></tr></tbody></table></div>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Torch</td><td>carpenter</td><td>1 lumber + 1 cloth</td><td>1</td><td>10</td><td>0.5 kg</td><td>Travel one night leg at torch speed - see travel.json. Enter a cave. Each night leg or cave visit spends one use; at zero it is gone.</td></tr>
+<tr><td>Lantern</td><td>blacksmith</td><td>1 ironware + 1 glass</td><td>2</td><td>55</td><td>1.5 kg</td><td>Travel night legs at lantern speed - see travel.json. Explore caves without spending uses. Does not wear out, but it can be lost, sold or stolen like any item.</td></tr></tbody></table></div>
 <h3>Talisman</h3>
 <div class="table-wrap"><table>
-<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Capacity</th><th>Effects</th></tr></thead>
-<tbody><tr><td>Bone Charm (TAL-01)</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>2</td><td>Stores up to 2 mana. Track with a token on the mana bar.</td></tr>
-<tr><td>Weaver's Knot (TAL-02)</td><td>weaver</td><td>2 yarn</td><td>3</td><td>45</td><td>3</td><td>Stores up to 3 mana.</td></tr>
-<tr><td>Copper Amulet (TAL-03)</td><td>blacksmith</td><td>1 copper</td><td>3</td><td>60</td><td>4</td><td>Stores up to 4 mana.</td></tr>
-<tr><td>Gold Locket (TAL-04)</td><td>blacksmith</td><td>1 gold</td><td>4</td><td>120</td><td>6</td><td>Stores up to 6 mana.</td></tr>
-<tr><td>Gemfire Pendant (TAL-05)</td><td>blacksmith</td><td>1 gems + 1 copper</td><td>5</td><td>190</td><td>8</td><td>Stores up to 8 mana.</td></tr>
-<tr><td>Crystal Phylactery (TAL-06)</td><td>alchemist</td><td>1 mana-crystal + 1 glass + 1 gold</td><td>6</td><td>320</td><td>10</td><td>Stores up to 10 mana. Worth 1 victory point at game end.</td></tr></tbody></table></div>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>Capacity</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Bone Charm (TAL-01)</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>0.5 kg</td><td>2</td><td>Stores up to 2 mana. Track with a token on the mana bar.</td></tr>
+<tr><td>Weaver's Knot (TAL-02)</td><td>weaver</td><td>2 yarn</td><td>3</td><td>45</td><td>0.5 kg</td><td>3</td><td>Stores up to 3 mana.</td></tr>
+<tr><td>Copper Amulet (TAL-03)</td><td>blacksmith</td><td>1 copper</td><td>3</td><td>60</td><td>0.5 kg</td><td>4</td><td>Stores up to 4 mana.</td></tr>
+<tr><td>Gold Locket (TAL-04)</td><td>blacksmith</td><td>1 gold</td><td>4</td><td>120</td><td>0.5 kg</td><td>6</td><td>Stores up to 6 mana.</td></tr>
+<tr><td>Gemfire Pendant (TAL-05)</td><td>blacksmith</td><td>1 gems + 1 copper</td><td>5</td><td>190</td><td>0.5 kg</td><td>8</td><td>Stores up to 8 mana.</td></tr>
+<tr><td>Crystal Phylactery (TAL-06)</td><td>alchemist</td><td>1 mana-crystal + 1 glass + 1 gold</td><td>6</td><td>320</td><td>1 kg</td><td>10</td><td>Stores up to 10 mana. Worth 1 victory point at game end.</td></tr></tbody></table></div>
 <h2>Transport modes</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Mode</th><th>Tier</th><th>Capacity</th><th>Speed</th><th>Needs</th><th>Buy</th><th>Upkeep</th><th>Theft risk</th></tr></thead>
@@ -1143,15 +1152,15 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>MON-12</td><td>Storm Roc</td><td>air</td><td>4</td><td>9</td><td>3</td><td>mountain, coast</td><td>S D</td></tr></tbody></table></div>
 <h2>Character deck</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Code</th><th>Character</th><th>People</th><th>Calling</th><th>Health</th><th>Mana</th><th>Traits</th></tr></thead>
-<tbody><tr><td>CHR-01</td><td>Corin Vale</td><td>human</td><td>Wayfarer</td><td>10</td><td>talisman</td><td>Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere.</td></tr>
-<tr><td>CHR-02</td><td>Berga Understone</td><td>dwarf</td><td>Prospector</td><td>12</td><td>talisman</td><td>Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1.</td></tr>
-<tr><td>CHR-03</td><td>Sylvae of the Duskmere</td><td>elf</td><td>Herbalist</td><td>8</td><td>3 innate</td><td>Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross.</td></tr>
-<tr><td>CHR-04</td><td>Tilly Goodbarrel</td><td>halfling</td><td>Provisioner</td><td>8</td><td>talisman</td><td>Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes.</td></tr>
-<tr><td>CHR-05</td><td>Ruk of the Red Road</td><td>orc</td><td>Caravan Guard</td><td>13</td><td>talisman</td><td>Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo.</td></tr>
-<tr><td>CHR-06</td><td>Doctor Elspeth Marrow</td><td>human</td><td>Physician</td><td>9</td><td>talisman</td><td>Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever.</td></tr>
-<tr><td>CHR-07</td><td>Havik Coalbrand</td><td>dwarf</td><td>Engineer</td><td>10</td><td>talisman</td><td>Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands.</td></tr>
-<tr><td>CHR-08</td><td>Old Mother Keswick</td><td>human</td><td>Hedge-Witch</td><td>7</td><td>talisman</td><td>Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck.</td></tr></tbody></table></div>
+<thead><tr><th>Code</th><th>Character</th><th>People</th><th>Calling</th><th>Health</th><th>Burden</th><th>Mana</th><th>Traits</th></tr></thead>
+<tbody><tr><td>CHR-01</td><td>Corin Vale</td><td>human</td><td>Wayfarer</td><td>10</td><td>24 kg</td><td>talisman</td><td>Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere.</td></tr>
+<tr><td>CHR-02</td><td>Berga Understone</td><td>dwarf</td><td>Prospector</td><td>12</td><td>26 kg</td><td>talisman</td><td>Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1.</td></tr>
+<tr><td>CHR-03</td><td>Sylvae of the Duskmere</td><td>elf</td><td>Herbalist</td><td>8</td><td>20 kg</td><td>3 innate</td><td>Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross.</td></tr>
+<tr><td>CHR-04</td><td>Tilly Goodbarrel</td><td>halfling</td><td>Provisioner</td><td>8</td><td>18 kg</td><td>talisman</td><td>Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes.</td></tr>
+<tr><td>CHR-05</td><td>Ruk of the Red Road</td><td>orc</td><td>Caravan Guard</td><td>13</td><td>28 kg</td><td>talisman</td><td>Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo.</td></tr>
+<tr><td>CHR-06</td><td>Doctor Elspeth Marrow</td><td>human</td><td>Physician</td><td>9</td><td>20 kg</td><td>talisman</td><td>Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever.</td></tr>
+<tr><td>CHR-07</td><td>Havik Coalbrand</td><td>dwarf</td><td>Engineer</td><td>10</td><td>26 kg</td><td>talisman</td><td>Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands.</td></tr>
+<tr><td>CHR-08</td><td>Old Mother Keswick</td><td>human</td><td>Hedge-Witch</td><td>7</td><td>16 kg</td><td>talisman</td><td>Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck.</td></tr></tbody></table></div>
 <h2>Quest deck</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Quest</th><th>Type</th><th>Cx</th><th>Task</th></tr></thead>

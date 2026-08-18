@@ -78,7 +78,7 @@ data/          the rules as data — the single source of truth, one file per sy
   arcana.json        elements, mana and the spell list
   monsters.json      the monster deck — slay, enslave, befriend or domesticate
   vehicles.json      the vehicle deck — named trains, ships, caravans, horses
-  characters.json    the character deck — named heroes with health and mana bars
+  characters.json    the character deck — named heroes with health, burden and mana bars
   quests.json        the quest deck — mini-quests and campaigns
   manifest.json      index of all of the above, plus reference checks
   schema/            JSON Schema documentation of every shape

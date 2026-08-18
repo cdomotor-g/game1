@@ -218,6 +218,53 @@ for (const r of recipes) {
   }
 }
 
+// Mass and burden are one system: an item weighs, a figure carries, and the
+// burden bar has to print a ladder that tops out at exactly the limit.
+const carrying = datasets.rules?.carrying;
+const peoples = datasets.peoples?.peoples ?? [];
+const characters = datasets.characters?.characters ?? [];
+const itemList = datasets.items?.items ?? [];
+const step = carrying?.barStepKg;
+
+if (!carrying) errors.push('rules: no "carrying" block - items have mass and nothing says what it is for');
+for (const i of itemList) {
+  if (typeof i.massKg !== 'number') errors.push(`items: "${i.id}" has no massKg`);
+  else if (i.massKg <= 0) errors.push(`items: "${i.id}" has massKg ${i.massKg} - an item weighs something`);
+}
+for (const p of peoples) {
+  if (typeof p.carry?.baseKg !== 'number') errors.push(`peoples: "${p.id}" has no carry.baseKg`);
+}
+
+const massOf = new Map(itemList.map((i) => [i.id, i.massKg]));
+const carryOf = new Map(peoples.map((p) => [p.id, p.carry?.baseKg]));
+const biggestCarry = Math.max(0, ...characters.map((c) => c.carryKg || 0), ...carryOf.values());
+
+for (const c of characters) {
+  if (typeof c.carryKg !== 'number' || c.carryKg <= 0) {
+    errors.push(`characters: "${c.id}" has no carryKg - every character card prints a burden bar`);
+    continue;
+  }
+  /* barScale picks the step; a limit off the step prints a top mark ABOVE the
+     limit, which is a card that lies about what it can carry. */
+  if (step && c.carryKg % step !== 0) {
+    errors.push(`characters: "${c.id}" carries ${c.carryKg}kg, which is not a multiple of the ${step}kg bar step - the bar would print a mark past the limit`);
+  }
+  const base = carryOf.get(c.people);
+  if (typeof base === 'number' && Math.abs(c.carryKg - base) > 8) {
+    warnings.push(`characters: "${c.id}" carries ${c.carryKg}kg against a ${c.people} base of ${base}kg - a long way off their people`);
+  }
+  const kit = (c.startsWith ?? []).reduce((sum, id) => sum + (massOf.get(id) ?? 0), 0);
+  if (kit > c.carryKg) {
+    errors.push(`characters: "${c.id}" starts with ${kit}kg of gear but can carry ${c.carryKg}kg`);
+  }
+}
+
+for (const i of itemList) {
+  if (typeof i.massKg === 'number' && i.massKg > biggestCarry) {
+    warnings.push(`items: "${i.id}" weighs ${i.massKg}kg - more than any figure in the game can carry`);
+  }
+}
+
 // A building nobody can reach is a design bug worth hearing about.
 const buildingUsed = new Set();
 for (const r of recipes) {
