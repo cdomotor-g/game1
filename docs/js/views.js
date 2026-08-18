@@ -61,14 +61,32 @@
     ]);
   }
 
-  /** A rendered plate as a thumbnail, or nothing if the plate is not drawn yet. */
-  function plateThumb(path, alt) {
-    return path ? el('img.card-art', { src: path, alt: alt || '', loading: 'lazy' }) : null;
+  /**
+   * A rendered plate as a thumbnail, or nothing if the plate is not drawn yet.
+   *
+   * A plate is a whole drawn page and a thumbnail is a window on it, so this is
+   * a crop, not a squeeze: docs/js/framing.js places the image so that what the
+   * window holds is the subject — the same crop the printed card takes. The
+   * window's shape is set here rather than in the stylesheet because the
+   * placement is computed from it, and a rule in app.css that quietly disagreed
+   * would slide the subject back out of frame.
+   */
+  function plateThumb(plate, alt, aspect) {
+    if (!plate) return null;
+    const shape = aspect || 5 / 4;
+    const place = D.artPlacement(plate, shape);
+    const pc = (n) => n.toFixed(3) + '%';
+    return el('div.card-art', { style: `aspect-ratio:${shape}` }, [
+      el('img', {
+        src: plate.file, alt: alt || '', loading: 'lazy',
+        style: `width:${pc(place.width)};height:${pc(place.height)};left:${pc(place.left)};top:${pc(place.top)}`,
+      }),
+    ]);
   }
 
-  /** The plate at drawer size. */
-  function plateFull(path, alt) {
-    return path ? el('img.plate', { src: path, alt: alt || '', loading: 'lazy' }) : null;
+  /** The plate at drawer size — whole, because there is room for the whole page. */
+  function plateFull(plate, alt) {
+    return plate ? el('img.plate', { src: plate.file, alt: alt || '', loading: 'lazy' }) : null;
   }
 
   /** A deck card: plate on top, then title, sub and pills. */
@@ -348,7 +366,7 @@
       pageHead('Peoples & professions', 'A people sets your baseline. Professions are individual workers trained at a guildhall.'),
       el('div.grid.wide', D.peoples.map((p) =>
         el('div.card', { style: 'cursor:default' }, [
-          plateThumb(D.art('people', p), p.name),
+          plateThumb(D.art('people', p), p.name, 4 / 3),
           el('div.card-head', [el('span.card-title', p.name), pill(p.effortDie, 'accent')]),
           el('div.card-sub', p.summary),
           el('ul', { style: 'margin:6px 0 0;padding-left:18px;font-size:13px' }, p.traits.map((t) =>

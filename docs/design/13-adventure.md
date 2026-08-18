@@ -239,6 +239,18 @@ the accepted plates, into [`docs/cards/`](../cards/index.html), to the two-plate
 layer contract. Only a card whose plate has been accepted is rendered; edit the
 data or the renders, re-run the tool, and never the SVGs.
 
+Each deck's portrait window is the shape of that deck's plates, as tall as its
+wordiest card leaves room for, and what fills it is a crop taken around the
+plate's subject from [`docs/art/framing.json`](../art/framing.json) — a card
+shows a character's face and hands, not the middle of the page they were drawn
+on. The explorer's deck thumbnails crop through the same code.
+
+**Printing them.** [`docs/cards/print.html`](../cards/print.html) collates any
+selection of these cards onto A4 or US Letter at a true 63 × 88 mm — nine to a
+sheet of A4 — each with a dotted line on its trim to cut along and its 3 mm of
+bleed held outside that line. A cut card is the size of a standard playing card,
+which is the point: it glues onto one and shuffles with the rest of the deck.
+
 ## Mini-maps
 
 Some moments need more board than a single hex: a battle, a boarding action, a

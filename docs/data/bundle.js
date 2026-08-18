@@ -10787,44 +10787,404 @@ window.GAME_DATA = {
     }
   ],
   "art": {
-    "$comment": "derived from the committed PNGs - see docs/art/prompts/ and docs/minimaps/prompts/",
+    "$comment": "derived from the committed PNGs - see docs/art/prompts/ and docs/minimaps/prompts/ - plus the subject boxes in docs/art/framing.json",
     "renders": {
-      "character-chr-01": "art/renders/character-chr-01.png",
-      "character-chr-02": "art/renders/character-chr-02.png",
-      "character-chr-03": "art/renders/character-chr-03.png",
-      "character-chr-04": "art/renders/character-chr-04.png",
-      "character-chr-05": "art/renders/character-chr-05.png",
-      "character-chr-06": "art/renders/character-chr-06.png",
-      "character-chr-07": "art/renders/character-chr-07.png",
-      "character-chr-08": "art/renders/character-chr-08.png",
-      "monster-deepwater-maw": "art/renders/monster-deepwater-maw.png",
-      "monster-dust-devil": "art/renders/monster-dust-devil.png",
-      "monster-gravel-wyrm": "art/renders/monster-gravel-wyrm.png",
-      "monster-mire-strangler": "art/renders/monster-mire-strangler.png",
-      "monster-reef-serpent": "art/renders/monster-reef-serpent.png",
-      "monster-rime-harpy": "art/renders/monster-rime-harpy.png",
-      "monster-storm-roc": "art/renders/monster-storm-roc.png",
-      "people-dwarf": "art/renders/people-dwarf.png",
-      "people-elf": "art/renders/people-elf.png",
-      "people-halfling": "art/renders/people-halfling.png",
-      "people-human": "art/renders/people-human.png",
-      "talisman-tal-01": "art/renders/talisman-tal-01.png",
-      "talisman-tal-02": "art/renders/talisman-tal-02.png",
-      "talisman-tal-03": "art/renders/talisman-tal-03.png",
-      "talisman-tal-04": "art/renders/talisman-tal-04.png",
-      "talisman-tal-05": "art/renders/talisman-tal-05.png",
-      "talisman-tal-06": "art/renders/talisman-tal-06.png",
-      "vehicle-veh-01": "art/renders/vehicle-veh-01.png",
-      "vehicle-veh-02": "art/renders/vehicle-veh-02.png",
-      "vehicle-veh-03": "art/renders/vehicle-veh-03.png",
-      "vehicle-veh-04": "art/renders/vehicle-veh-04.png",
-      "vehicle-veh-05": "art/renders/vehicle-veh-05.png",
-      "vehicle-veh-06": "art/renders/vehicle-veh-06.png",
-      "vehicle-veh-07": "art/renders/vehicle-veh-07.png",
-      "vehicle-veh-08": "art/renders/vehicle-veh-08.png",
-      "vehicle-veh-10": "art/renders/vehicle-veh-10.png",
-      "vehicle-veh-11": "art/renders/vehicle-veh-11.png",
-      "vehicle-veh-12": "art/renders/vehicle-veh-12.png"
+      "character-chr-01": {
+        "file": "art/renders/character-chr-01.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.15,
+          0.05,
+          0.76,
+          0.58
+        ]
+      },
+      "character-chr-02": {
+        "file": "art/renders/character-chr-02.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.18,
+          0.06,
+          0.75,
+          0.68
+        ]
+      },
+      "character-chr-03": {
+        "file": "art/renders/character-chr-03.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.18,
+          0.06,
+          0.74,
+          0.6
+        ]
+      },
+      "character-chr-04": {
+        "file": "art/renders/character-chr-04.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.13,
+          0.06,
+          0.72,
+          0.58
+        ]
+      },
+      "character-chr-05": {
+        "file": "art/renders/character-chr-05.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.1,
+          0.09,
+          0.82,
+          0.58
+        ]
+      },
+      "character-chr-06": {
+        "file": "art/renders/character-chr-06.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.22,
+          0.1,
+          0.74,
+          0.66
+        ]
+      },
+      "character-chr-07": {
+        "file": "art/renders/character-chr-07.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.1,
+          0.12,
+          0.82,
+          0.58
+        ]
+      },
+      "character-chr-08": {
+        "file": "art/renders/character-chr-08.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.16,
+          0.08,
+          0.72,
+          0.58
+        ]
+      },
+      "monster-deepwater-maw": {
+        "file": "art/renders/monster-deepwater-maw.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.02,
+          0.36,
+          0.96,
+          0.52
+        ]
+      },
+      "monster-dust-devil": {
+        "file": "art/renders/monster-dust-devil.png",
+        "width": 1054,
+        "height": 1492,
+        "subject": [
+          0.04,
+          0.16,
+          0.94,
+          0.58
+        ]
+      },
+      "monster-gravel-wyrm": {
+        "file": "art/renders/monster-gravel-wyrm.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.05,
+          0.1,
+          0.82,
+          0.63
+        ]
+      },
+      "monster-mire-strangler": {
+        "file": "art/renders/monster-mire-strangler.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.04,
+          0.13,
+          0.92,
+          0.58
+        ]
+      },
+      "monster-reef-serpent": {
+        "file": "art/renders/monster-reef-serpent.png",
+        "width": 1054,
+        "height": 1492,
+        "subject": [
+          0.04,
+          0.2,
+          0.92,
+          0.58
+        ]
+      },
+      "monster-rime-harpy": {
+        "file": "art/renders/monster-rime-harpy.png",
+        "width": 1054,
+        "height": 1492,
+        "subject": [
+          0.14,
+          0.09,
+          0.76,
+          0.62
+        ]
+      },
+      "monster-storm-roc": {
+        "file": "art/renders/monster-storm-roc.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.02,
+          0.05,
+          0.96,
+          0.42
+        ]
+      },
+      "people-dwarf": {
+        "file": "art/renders/people-dwarf.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.12,
+          0.1,
+          0.8,
+          0.62
+        ]
+      },
+      "people-elf": {
+        "file": "art/renders/people-elf.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.08,
+          0.08,
+          0.84,
+          0.6
+        ]
+      },
+      "people-halfling": {
+        "file": "art/renders/people-halfling.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.06,
+          0.1,
+          0.88,
+          0.6
+        ]
+      },
+      "people-human": {
+        "file": "art/renders/people-human.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.13,
+          0.1,
+          0.74,
+          0.62
+        ]
+      },
+      "talisman-tal-01": {
+        "file": "art/renders/talisman-tal-01.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.22,
+          0.1,
+          0.62,
+          0.85
+        ]
+      },
+      "talisman-tal-02": {
+        "file": "art/renders/talisman-tal-02.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.2,
+          0.11,
+          0.64,
+          0.76
+        ]
+      },
+      "talisman-tal-03": {
+        "file": "art/renders/talisman-tal-03.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.13,
+          0.16,
+          0.79,
+          0.68
+        ]
+      },
+      "talisman-tal-04": {
+        "file": "art/renders/talisman-tal-04.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.07,
+          0.19,
+          0.89,
+          0.69
+        ]
+      },
+      "talisman-tal-05": {
+        "file": "art/renders/talisman-tal-05.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.22,
+          0.08,
+          0.64,
+          0.79
+        ]
+      },
+      "talisman-tal-06": {
+        "file": "art/renders/talisman-tal-06.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.16,
+          0.08,
+          0.7,
+          0.84
+        ]
+      },
+      "vehicle-veh-01": {
+        "file": "art/renders/vehicle-veh-01.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.03,
+          0.16,
+          0.94,
+          0.48
+        ]
+      },
+      "vehicle-veh-02": {
+        "file": "art/renders/vehicle-veh-02.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.03,
+          0.14,
+          0.95,
+          0.72
+        ]
+      },
+      "vehicle-veh-03": {
+        "file": "art/renders/vehicle-veh-03.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.03,
+          0.18,
+          0.94,
+          0.68
+        ]
+      },
+      "vehicle-veh-04": {
+        "file": "art/renders/vehicle-veh-04.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.1,
+          0.08,
+          0.84,
+          0.76
+        ]
+      },
+      "vehicle-veh-05": {
+        "file": "art/renders/vehicle-veh-05.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.03,
+          0.12,
+          0.94,
+          0.76
+        ]
+      },
+      "vehicle-veh-06": {
+        "file": "art/renders/vehicle-veh-06.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.06,
+          0.1,
+          0.88,
+          0.78
+        ]
+      },
+      "vehicle-veh-07": {
+        "file": "art/renders/vehicle-veh-07.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.03,
+          0.24,
+          0.95,
+          0.58
+        ]
+      },
+      "vehicle-veh-08": {
+        "file": "art/renders/vehicle-veh-08.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.03,
+          0.26,
+          0.95,
+          0.54
+        ]
+      },
+      "vehicle-veh-10": {
+        "file": "art/renders/vehicle-veh-10.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.03,
+          0.15,
+          0.94,
+          0.72
+        ]
+      },
+      "vehicle-veh-11": {
+        "file": "art/renders/vehicle-veh-11.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.08,
+          0.13,
+          0.84,
+          0.76
+        ]
+      },
+      "vehicle-veh-12": {
+        "file": "art/renders/vehicle-veh-12.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.15,
+          0.08,
+          0.78,
+          0.82
+        ]
+      }
     },
     "minimaps": {
       "PSM-01": "minimaps/img/PSM-01.png",
@@ -10859,6 +11219,7 @@ window.GAME_DATA = {
       "TBM-07": "minimaps/img/TBM-07.png",
       "TBM-08": "minimaps/img/TBM-08.png",
       "TBM-09": "minimaps/img/TBM-09.png"
-    }
+    },
+    "pad": 0.03
   }
 };

@@ -25,6 +25,20 @@ arcana and the decks are separate files so no task needs the whole ruleset in co
 Add a new system as a new file plus a `manifest.json` entry, never as a new wing on an
 existing file.
 
+## A plate is cropped, never squeezed — and never by eye
+
+`docs/art/renders/*.png` are whole drawn pages. Every place that shows one — a card
+window, an explorer thumbnail — is a different shape, so it shows a crop, and where that
+crop sits comes from `docs/art/framing.json`: one `subject` box per plate, holding the
+head, the hands and the gear the card names. The arithmetic lives once, in
+`docs/js/framing.js`, which `tools/lib/framing.mjs` loads for the build tools the way
+`tools/simulate.mjs` loads the engine — so a printed card and a thumbnail of the same
+plate cannot disagree about where the subject is.
+
+Add a plate, add its framing entry in the same commit. Without one it is framed on the
+middle of the page — which is what put a character's chin at the top edge of their own
+card in the first place — and `build-cards.mjs` and `build-data.mjs` both warn.
+
 ## The map artwork is never edited by a tool
 
 `docs/map/*.png` is a plate: committed as supplied, never re-encoded, never repainted.

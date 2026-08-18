@@ -12,6 +12,8 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { pngSize } from './lib/png.mjs';
+import { readFraming, WHOLE_PLATE } from './lib/framing.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -39,18 +41,49 @@ if (manifest.maps) {
 
 /* Art is files, not data, so its index is derived by looking: whatever plates are
    actually committed under docs/ is what the explorer offers to show. Paths are
-   relative to docs/ because that is where index.html lives. */
-const art = { $comment: 'derived from the committed PNGs - see docs/art/prompts/ and docs/minimaps/prompts/', renders: {}, minimaps: {} };
-const scanPngs = (dir, into) => {
-  const abs = join(ROOT, 'docs', dir);
-  if (!existsSync(abs)) return;
-  for (const f of readdirSync(abs).sort()) {
-    if (f.endsWith('.png')) into[f.slice(0, -4)] = `${dir}/${f}`;
-  }
+   relative to docs/ because that is where index.html lives.
+
+   A render carries its pixel size and the subject box from docs/art/framing.json
+   as well as its path, because a thumbnail of a plate is a crop of it and a crop
+   needs to know what shape the page is and what on it may not be cut. Mini-map
+   sheets are shown whole, so a path is all they need. */
+const art = {
+  $comment: 'derived from the committed PNGs - see docs/art/prompts/ and docs/minimaps/prompts/ - plus the subject boxes in docs/art/framing.json',
+  renders: {},
+  minimaps: {},
 };
-scanPngs('art/renders', art.renders);
-scanPngs('minimaps/img', art.minimaps);
+const framing = readFraming(ROOT);
+const unframed = [];
+const abs = (dir) => join(ROOT, 'docs', dir);
+
+if (existsSync(abs('art/renders'))) {
+  for (const f of readdirSync(abs('art/renders')).sort()) {
+    if (!f.endsWith('.png')) continue;
+    const id = f.slice(0, -4);
+    const { width, height } = pngSize(join(abs('art/renders'), f));
+    const entry = framing.plates[id];
+    if (!entry) unframed.push(id);
+    art.renders[id] = {
+      file: `art/renders/${f}`,
+      width,
+      height,
+      subject: entry ? entry.subject : WHOLE_PLATE,
+    };
+  }
+}
+art.pad = framing.pad;
+
+if (existsSync(abs('minimaps/img'))) {
+  for (const f of readdirSync(abs('minimaps/img')).sort()) {
+    if (f.endsWith('.png')) art.minimaps[f.slice(0, -4)] = `minimaps/img/${f}`;
+  }
+}
 bundle.art = art;
+
+if (unframed.length) {
+  console.warn(`warning  no entry in docs/art/framing.json for ${unframed.join(', ')} ` +
+    '- those plates are shown from the middle of the page, which is what framing.json exists to stop.');
+}
 
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(

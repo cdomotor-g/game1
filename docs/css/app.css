@@ -492,12 +492,16 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
    shown at full width in the drawer. The frame is the same rule the almanac
    uses everywhere: one honest line, no glow. */
 
+/* A thumbnail is a window on a plate, not the plate scaled down: the image
+   inside is positioned by docs/js/framing.js so the window holds the subject.
+   The shape comes from views.js with the placement, because the two have to be
+   the same number. */
 .card-art {
-  width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top center;
+  position: relative; overflow: hidden; width: 100%; aspect-ratio: 5 / 4;
   border: 1px solid var(--line-strong); border-radius: calc(var(--radius) - 4px);
   background: var(--bg-sunken);
 }
-.deck-card .card-art { aspect-ratio: 5 / 4; }
+.card-art img { position: absolute; display: block; max-width: none; }
 .card-code { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; }
 
 .plate {
