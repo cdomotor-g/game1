@@ -262,10 +262,33 @@
     },
     {
       "id": "inn", "name": "Inn", "category": "civic", "tier": 2,
-      "summary": "Rest, rumour and hired muscle. Serve ale or wine to clear 1 unrest; travellers rest here to heal; escorts are hired here; quests are heard here.",
+      "summary": "Rest, rumour and hired muscle. Serve drink to clear unrest; travellers rest here to heal; escorts are hired here; quests are heard here. The one building in the game that may stand outside a town.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 12, "minRounds": 2,
       "workerSlots": 2,
-      "notes": "Resting, hireling costs and rumours are in rules.json under rest and hirelings. Every settlement printed on a map is assumed to contain an inn of its rank."
+      "roadside": {
+      "$comment": "An inn is the only building that does not need a town under it. That is not a special case for its own sake - it is what makes a long route survivable, and it is the reason a player builds anything on the empty half of the board. A roadside inn is a holding: it earns, it can be bought and sold, and it can be burned down.",
+      "where": "On any tile carrying a road, rail or a route the builder has travelled, in or out of a town. A roadside inn founds no town and stores nothing.",
+      "extraCost": [{ "commodity": "lumber", "qty": 2 }],
+      "cap": 3,
+      "capNote": "Three inns per player. Past that an innkeeper is a landlord, and landlords are the land-ownership rules, which are not written yet."
+    },
+    "drink": {
+      "$comment": "The sink the drink half of the economy was missing. Ale is the everyday pour and mead is what an inn actually wants: it is the only thing on the list that both clears unrest and pays a toll back to its owner, which is what makes an apiary and a brewery worth the tiles they sit on.",
+      "serves": [
+        { "commodity": "ale", "clearsUnrest": 1, "coinPerUnit": 6 },
+        { "commodity": "wine", "clearsUnrest": 1, "coinPerUnit": 12 },
+        { "commodity": "mead", "clearsUnrest": 2, "coinPerUnit": 14, "note": "Mead is the inn's own trade. Two unrest a barrel, and no other building will take it in quantity." }
+      ],
+      "limit": "One barrel served per inn per round, owner's choice of which."
+    },
+    "rest": {
+      "$comment": "Stated on the building as well as in rules.json rest, because the building is where a player looks.",
+      "heals": 2,
+      "healsWithHealer": 3,
+      "coin": 5,
+      "toll": "At an inn owned by another player, the 5 coin goes to that player rather than to the board. At your own, it is waived."
+    },
+    "notes": "Resting, hireling costs and rumours are in rules.json under rest and hirelings. Every settlement printed on a map is assumed to contain an inn of its rank - those are the board's, not any player's."
     },
     {
       "id": "infirmary", "name": "Infirmary", "category": "civic", "tier": 2,

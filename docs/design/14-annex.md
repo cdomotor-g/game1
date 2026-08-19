@@ -33,6 +33,8 @@ travel and discovery tables below.
 | Caravan | 2 | 1 | 1 | — | — | 1 | 2 | 2 | — | — |
 | Barge | — | — | — | — | — | — | — | 3 | 3 | — |
 | Ship | — | — | — | — | — | — | — | 2 | 3 | 5 |
+| Sled | 1 | 1 | 2 | 2 | 2 | 5 | — | 1 | 2 | — |
+| Airship | 5 | 5 | 5 | 4 | 5 | 5 | 5 | 5 | 5 | 5 |
 
 Overrides: **On a Road** — on-foot 5, mounted 8, cart 6, caravan 4; **On Rail** — train 6.
 
@@ -325,6 +327,11 @@ bulk: bulk is a commodity's storage and shipping cost, and no item has one.
 | Quiver of Arrows | carpenter | 1 lumber + 1 leather | 2 | 30 | 2 kg | Holds 3 uses. Each battle with a bow spends 1. |
 | Sling | weaver | 1 cloth | 1 | 12 | 0.5 kg | +1 combat die for halflings only. Everyone else may as well throw the stone. |
 | War Hammer | blacksmith | 2 steel + 1 lumber | 5 | 190 | 6 kg | +2 combat dice. Ignores enemy armour entirely. |
+| Crossbow | blacksmith | 1 steel + 2 lumber + 1 rope | 5 | 175 | 5 kg | +3 combat dice, and ignores 1 point of enemy armour. Slow: it rolls in the first round of a battle and every second round after. Needs a quiver to fight. |
+| Harpoon | blacksmith | 1 pig-iron + 1 lumber + 2 rope | 3 | 75 | 4 kg | +1 combat die, and +3 instead against any water-element monster or anything bigger than a horse. A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round. +1 output on Fish. |
+| Dirk | blacksmith | 1 pig-iron | 2 | 35 | 0.8 kg | +1 combat die. Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls. |
+| Greatsword | blacksmith | 3 steel + 1 leather | 7 | 340 | 4 kg | +3 combat dice, and hits on 3+ instead of 4+. -1 move point, and it cannot be used with a shield. Worth 1 victory point at game end. |
+| Boar Spear | blacksmith | 1 pig-iron + 1 lumber | 2 | 55 | 3 kg | +1 combat die, and +3 in the first round against any monster that charges - anything of strength 4 or more that attacks first. The crossbar holds it off you: ignore the first hit from that monster. +1 output on Hunt Game. |
 
 ### Potion
 
@@ -341,6 +348,11 @@ bulk: bulk is a commodity's storage and shipping cost, and no item has one.
 | Owl's Eye | alchemist | 2 moon-blossom + 1 arcane-herb | 3 | 90 | 0.5 kg | One figure or party travels night legs this round as if carrying a lantern. |
 | Physic Tonic | alchemist | 2 frost-lichen + 1 honey | 3 | 95 | 0.5 kg | Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick. |
 | Emberguard Salve | alchemist | 2 ember-root + 1 honey | 3 | 100 | 0.5 kg | One unit or character ignores every hit from a fire-element monster in one battle. |
+| Ley Tincture | alchemist | 1 mana-crystal + 3 arcane-herb | 5 | 220 | 0.5 kg | For one round the drinker holds 3 mana in the body, talisman or no talisman. Mana still there when the round ends blows away, and the drinker takes 1 damage. |
+| Innkeeper's Forbearance | alchemist | 2 mead + 1 arcane-herb | 3 | 80 | 1 kg | Broached at an inn, it clears 2 unrest in that town and everyone forgives everyone. Anywhere else it clears 1 unrest and starts an argument. |
+| Long Ration | alchemist | 1 honey + 1 salted-meat + 1 arcane-herb | 3 | 75 | 0.5 kg | One travelling party eats nothing for two rounds, and nobody complains until the third. |
+| Dragonsbane Draught | alchemist | 2 ember-root + 2 frost-lichen + 1 mana-crystal | 6 | 380 | 0.5 kg | For one battle, the drinker's party ignores the free first round any monster of strength 5 or more gets, and halves its hits, rounded up. It does not help you win. It helps you still be there at the end. |
+| Aeronaut's Nerve | alchemist | 1 moon-blossom + 1 ale + 1 arcane-herb | 3 | 110 | 0.5 kg | Re-roll one airship wind roll and keep the better result - see travel.json. The crew are steady at any height for the rest of the journey, which matters more than the roll does. |
 
 ### Light
 
@@ -370,6 +382,8 @@ bulk: bulk is a commodity's storage and shipping cost, and no item has one.
 | Barge | 2 | 30 | 3 | dock | 110 | 1 | ★★ |
 | Ship | 3 | 60 | 4 | harbour | 280 | 3 | ★★★ |
 | Train | 3 | 80 | 6 | rail-depot | 350 | 4 | ★★ |
+| Sled | 2 | 10 | 3 | — | 90 | 2 | ★ |
+| Airship | 4 | 18 | 5 | — | 520 | 5 | — |
 
 ## Vehicle deck
 
@@ -390,6 +404,11 @@ capacity right, on every deck in the game.
 | VEH-10 | Bay Courser | mounted | 2 | 4 | +1 hex on grassland legs. The fastest honest thing on four legs in the Reach. |
 | VEH-11 | Steppe Pony | mounted | 3 | 5 | Ignores tundra penalties and forages for herself: no feed, ever. |
 | VEH-12 | Black Malchior | mounted | 2 | 4 | Night-eyed: may travel one night leg per journey with no light at all. |
+| VEH-13 | Nine and the Drum | sled | 10 | 5 | Nine dogs and a lead bitch called Drum. +2 hexes on any tundra leg, and the team smells a crevasse: ignore the first hazard result of every journey. |
+| VEH-14 | The Red Lantern | ship | 70 | 11 | Junk-rigged and steam-fitted: sails free, or burns 1 coal per leg for +2 hexes and no wind roll at all. Her battened sails take no damage from storms. |
+| VEH-15 | The Carrion Queen | ship | 45 | 12 | +3 combat dice at sea, and any ship she catches must hand over one cargo token or fight. Nobody legitimate will berth her: she may not use a harbour she does not own, and pays double at any market that takes her coin at all. |
+| VEH-16 | The Pilgrim's Patience | airship | 18 | 6 | Goes over everything: no terrain costs her anything, and she cannot be robbed on the road. Roll the wind each leg (travel.json) - she has no answer to it. |
+| VEH-17 | The Sweep of Vossgard | airship | 14 | 7 | Sweep-rigged: a fixed upper beam and a working lower one down each flank, rowed by the crew. Treat any Foul or Contrary wind as Contrary at full speed, for 1 extra crew fed that round. She cannot beat the wind - she can refuse to be beaten by it. |
 
 ## Monster deck
 
@@ -398,18 +417,20 @@ Slaying yields the mana; the other three trade mana away for a living asset.
 
 | Code | Monster | Element | Str | Health | Mana | Ground | Options |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| MON-01 | Cinder Wolf | fire | 2 | 4 | 1 | desert, hills, grassland | S B D |
-| MON-02 | Ash Drake | fire | 4 | 8 | 3 | mountain, desert | S E |
-| MON-03 | Forge Wight | fire | 3 | 6 | 2 | mountain, hills | S E B |
-| MON-04 | Barrow Troll | earth | 4 | 10 | 3 | hills, grassland | S E |
-| MON-05 | Stone Boar | earth | 2 | 6 | 1 | forest, hills | S B D |
-| MON-06 | Gravel Wyrm | earth | 3 | 8 | 2 | mountain, desert | S |
-| MON-07 | Mire Strangler | water | 3 | 6 | 2 | marsh | S |
-| MON-08 | Reef Serpent | water | 3 | 7 | 2 | coast, shallow-water | S B |
-| MON-09 | The Deepwater Maw *(unique)* | water | 5 | 12 | 4 | deep-water | S |
-| MON-10 | Rime Harpy | air | 2 | 5 | 1 | tundra, mountain | S E B |
-| MON-11 | Dust Devil | air | 2 | 4 | 2 | desert, grassland | S |
-| MON-12 | Storm Roc | air | 4 | 9 | 3 | mountain, coast | S D |
+| MON-01 | Cinder Wolf | ![](../art/icons/element-fire.svg) fire | 2 | 4 | 1 | desert, hills, grassland | S B D |
+| MON-02 | Ash Drake | ![](../art/icons/element-fire.svg) fire | 4 | 8 | 3 | mountain, desert | S E |
+| MON-03 | Forge Wight | ![](../art/icons/element-fire.svg) fire | 3 | 6 | 2 | mountain, hills | S E B |
+| MON-04 | Barrow Troll | ![](../art/icons/element-earth.svg) earth | 4 | 10 | 3 | hills, grassland | S E |
+| MON-05 | Stone Boar | ![](../art/icons/element-earth.svg) earth | 2 | 6 | 1 | forest, hills | S B D |
+| MON-06 | Gravel Wyrm | ![](../art/icons/element-earth.svg) earth | 3 | 8 | 2 | mountain, desert | S |
+| MON-07 | Mire Strangler | ![](../art/icons/element-water.svg) water | 3 | 6 | 2 | marsh | S |
+| MON-08 | Reef Serpent | ![](../art/icons/element-water.svg) water | 3 | 7 | 2 | coast, shallow-water | S B |
+| MON-09 | The Deepwater Maw *(unique)* | ![](../art/icons/element-water.svg) water | 5 | 12 | 4 | deep-water | S |
+| MON-10 | Rime Harpy | ![](../art/icons/element-air.svg) air | 2 | 5 | 1 | tundra, mountain | S E B |
+| MON-11 | Dust Devil | ![](../art/icons/element-air.svg) air | 2 | 4 | 2 | desert, grassland | S |
+| MON-12 | Storm Roc | ![](../art/icons/element-air.svg) air | 4 | 9 | 3 | mountain, coast | S D |
+| MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | ![](../art/icons/element-fire.svg) fire | 7 | 16 | 6 | mountain, hills, desert | S B |
+| MON-14 | The Hoarwyrm | ![](../art/icons/element-air.svg) air | 5 | 13 | 4 | tundra, mountain, coast | S D |
 
 ## Character deck
 
@@ -437,18 +458,70 @@ Slaying yields the mana; the other three trade mana away for a living asset.
 | QST-07 | The Ironspine Road | campaign | 4 | 3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel |
 | QST-08 | The Drowned Bell of Taleowick | campaign | 5 | 3 stages: The Tale at the Inn → The Sounding → What Rings It |
 
+## The elements
+
+Four elements, four marks. The mark is data - one path per element in
+`data/arcana.json` - so a card, a chit, this table and the explorer all say
+fire the same way. `tools/build-icons.mjs` draws them.
+
+| Mark | Element | Ink | At home |
+| --- | --- | --- | --- |
+| ![](../art/icons/element-fire.svg) | **Fire** | oxide | Heat, forge-work, hunger. At home in the desert and under the mountains. |
+| ![](../art/icons/element-earth.svg) | **Earth** | verdigris | Stone, root, patience. At home in hills, barrows and old woods. |
+| ![](../art/icons/element-water.svg) | **Water** | slate | Current, mist, depth. At home in marsh, shore and open sea. |
+| ![](../art/icons/element-air.svg) | **Air** | soot-tint-40 | Wind, cold, distance. At home on the tundra and the high passes. |
+
 ## Spells
 
-| Spell | Element | Mana | Effect |
-| --- | --- | --- | --- |
-| Kindle | fire | 1 | Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel. |
-| Ember Lash | fire | 3 | +2 combat dice to one unit or character for one battle. |
-| Mend Stone | earth | 2 | Repair 2 damage on one building or vehicle, or restore 4 wear to one tool. |
-| Bulwark | earth | 4 | One unit or character ignores 2 hits in one battle. |
-| Cleanse | water | 2 | Cure one illness marker, or restore 2 health to one character. |
-| Mist Veil | water | 4 | Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll. |
-| Fair Wind | air | 2 | +2 hexes on one leg, any mode. A ship gets +3. |
-| Stormcall | air | 5 | One party, vehicle or cargo you can see loses its next leg entirely. |
+| Code | Spell | Element | Mana | Effect |
+| --- | --- | --- | --- | --- |
+| SPL-01 | Kindle | ![](../art/icons/element-fire.svg) fire | 1 | Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel. |
+| SPL-02 | Ember Lash | ![](../art/icons/element-fire.svg) fire | 3 | +2 combat dice to one unit or character for one battle. |
+| SPL-03 | Mend Stone | ![](../art/icons/element-earth.svg) earth | 2 | Repair 2 damage on one building or vehicle, or restore 4 wear to one tool. |
+| SPL-04 | Bulwark | ![](../art/icons/element-earth.svg) earth | 4 | One unit or character ignores 2 hits in one battle. |
+| SPL-05 | Cleanse | ![](../art/icons/element-water.svg) water | 2 | Cure one illness marker, or restore 2 health to one character. |
+| SPL-06 | Mist Veil | ![](../art/icons/element-water.svg) water | 4 | Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll. |
+| SPL-07 | Fair Wind | ![](../art/icons/element-air.svg) air | 2 | +2 hexes on one leg, any mode. A ship gets +3. |
+| SPL-08 | Stormcall | ![](../art/icons/element-air.svg) air | 5 | One party, vehicle or cargo you can see loses its next leg entirely. |
+| SPL-09 | Wayfire | ![](../art/icons/element-fire.svg) fire | 3 | Burn one blockage clear: a route blocked by an event card reopens, or one tile of forest or marsh costs your party nothing to cross this leg. The tile is scorched - nothing may be foraged there for the rest of the game. |
+| SPL-10 | Seam-Sense | ![](../art/icons/element-earth.svg) earth | 3 | Look at the deposit token under your hex and under every hex adjacent to it, then put them back face down. You may tell the truth about them or not. |
+| SPL-11 | Root-Snare | ![](../art/icons/element-earth.svg) earth | 3 | One monster, party or figure in your hex or adjacent to it may not move next round. A vehicle instead marks 1 damage tearing itself free. |
+| SPL-12 | Deep Draught | ![](../art/icons/element-water.svg) water | 2 | Fill every empty barrel in one town with water, free, wherever it stands - and that town ignores Drought this round. |
+| SPL-13 | Farspeak | ![](../art/icons/element-air.svg) air | 2 | Speak to any other character on the board, wherever they are. You may agree a trade, a price or an alliance at that distance, and either of you may hold to it or not, exactly as if you had met. |
+| SPL-14 | Loft | ![](../art/icons/element-air.svg) air | 4 | One vehicle - any mode, including a wagon or a sled - is lifted over one impassable hex and set down on the far side. An airship instead ignores its next wind roll and moves at full speed. |
+
+## Enchantments
+
+The other half of the arcane deck.
+
+| Code | Enchantment | Element | Mana | Bound to | Effect |
+| --- | --- | --- | --- | --- | --- |
+| ENC-01 | Bound Hearth | ![](../art/icons/element-fire.svg) fire | 4 | one building with a furnace, kiln or oven | The building pays no fuel, ever. |
+| ENC-02 | Truename Stamp | ![](../art/icons/element-earth.svg) earth | 3 | one tool | The tool takes no wear. It can still be lost, sold or stolen - and it is the single most stolen object in the game. |
+| ENC-03 | Salt-Kept | ![](../art/icons/element-water.svg) water | 3 | one granary, warehouse or ship's hold | Nothing inside spoils, perishes or curdles. Milk keeps. So does everything else. |
+| ENC-04 | Keening Ward | ![](../art/icons/element-air.svg) air | 4 | one building | Cancel every theft, heist and robbery card aimed at this building. Each time it does, roll d6: on a 1 the ward is spent and the card comes off. |
+| ENC-05 | Weightless Hand | ![](../art/icons/element-air.svg) air | 5 | one character's pack, belt or cloak | +10 kg to that character's burden bar. The bar is walked as normal; the last ten kilograms simply do not pull. |
+| ENC-06 | Deeproot Footing | ![](../art/icons/element-earth.svg) earth | 5 | one building | The building ignores Earthquake, Flood and Landslip entirely, and takes half damage, rounded down, from every other source. |
+
+## Modification deck
+
+Fittings and enchantments bolted onto a vehicle. They share the vehicle's
+slots — 2 on most, and at most 1 enchantment whatever the count — so a
+shipwright and a hedge-witch are competing for the same hull.
+
+| Code | Modification | Class | Fits | Cost | Effect |
+| --- | --- | --- | --- | --- | --- |
+| MOD-01 | Spinnaker | rigging | ship, barge | 4 fine-cloth + 3 rope + 1 lumber | +2 hexes on any leg run with the wind - which at sea means any leg that is not into a storm. Cancel the bonus in a Storms at Sea round: the spinnaker is the first thing struck, and a skipper who leaves it up loses it. |
+| MOD-02 | Sweep Rig | rigging | airship | 4 lumber + 3 fine-cloth + 4 rope + 2 ironware | A fixed upper beam and a hinged lower one down each flank, worked by the crew: treat any Foul or Contrary wind roll as Contrary at full speed, for 1 extra crew fed that round. It cannot beat the wind - it can refuse to be beaten by it. |
+| MOD-03 | Copper Sheathing | hull | ship, barge | 6 copper + 2 ironware | +1 hex per leg, permanently - a foul bottom is a slow bottom. The hull takes no damage from reef, ice or grounding, and worms and rot never touch her. |
+| MOD-04 | Iron Ram | hull | ship | 4 ironware + 2 steel + 3 lumber | +3 combat dice in the first round of any battle at sea, attacking only. -1 hex per leg, always: it is a great deal of iron a long way forward. |
+| MOD-05 | Storm Shutters | hull | ship, barge, airship, train | 3 lumber + 2 leather + 1 ironware | Cargo aboard loses nothing to weather: ignore every cargo-loss effect from a weather or disaster event card. The vehicle itself still takes its damage. |
+| MOD-06 | Ice Runners | running-gear | cart, caravan, sled | 2 steel + 2 lumber | Shod runners that swap for the wheels in an hour. While the winter rule in travel.json is in force the vehicle moves at sled speeds; the rest of the year it is 70 kg of steel in the bed and does nothing at all. |
+| MOD-07 | Compound Boiler | powerplant | train, ship, airship | 4 steel + 3 copper + 2 ironware | Uses the same steam twice. Halve the vehicle's fuel per leg, rounded up, and +1 hex per leg. It is delicate: on any hazard or battle result, roll d6 and on a 1 the boiler is out until repaired at a steelworks. |
+| MOD-08 | Keelbound | enchantment | ship, barge | 5 water mana | She will not sink. A damage bar that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off. |
+| MOD-09 | Fleetfoot Binding | enchantment | any | 4 air mana | +2 hexes on every day leg, whatever the mode and whatever the ground. An airship instead re-rolls one wind roll per journey. |
+| MOD-10 | Warded Hold | enchantment | any | 4 earth mana | Nothing is taken from this vehicle that its owner did not hand over. Cancel every theft, robbery, piracy and heist card aimed at its cargo. A boarder who wins a battle may still take the vehicle entire - the ward is on the hold, not on the owner. |
+| MOD-11 | Salamander Grate | enchantment | train, ship, airship | 6 fire mana | The firebox burns without fuel: the vehicle pays no fuel per leg, ever. It also never runs cold - the vehicle may take a night leg with no light, because the glare from the grate is light enough. |
 
 ## Event deck
 
@@ -491,5 +564,19 @@ Slaying yields the mana; the other three trade mana away for a living asset.
 | Impure Smelt | industry | global | 2 |
 | Blood Moon | arcane | global | 1 |
 | The Quiet Season | wildlife | global | 1 |
+| Black Sails on the Horizon | crime | global | 2 |
+| Letter of Marque | crime | offer | 1 |
+| Press Gang | crime | targeted | 2 |
+| The Dragon's Tithe | conflict | global | 1 |
+| The Aerial Post | industry | offer | 1 |
+| Gale | weather | global | 2 |
+| Early Thaw | weather | global | 2 |
+| Clipped Coin | market | global | 2 |
+| Guild Embargo | market | targeted | 2 |
+| New Tolls | social | local | 2 |
+| The Sign of the Green Man | social | offer | 2 |
+| The Mead Run | market | offer | 2 |
+| Ley Drought | arcane | global | 2 |
+| Boom Town | market | local | 2 |
 
-69 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.
+94 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.

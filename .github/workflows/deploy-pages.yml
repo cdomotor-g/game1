@@ -81,6 +81,23 @@ jobs:
       - name: Fail if the committed card fronts are stale
         run: node tools/build-cards.mjs --check
 
+      # The element marks are path data in data/arcana.json; the icons in
+      # docs/art/icons/ are drawn from it and committed, like everything else the
+      # site serves. A mark edited without re-running the tool means a card and a
+      # chapter heading saying fire two different ways.
+      - name: Fail if the committed element icons are stale
+        run: node tools/build-icons.mjs --check
+
+      # The rulebook is docs/design/*.md rendered to one page, committed for the
+      # same reason: GitHub Pages serves markdown as plain text.
+      - name: Fail if the committed rulebook is stale
+        run: node tools/build-book.mjs --check
+
+      # The mint queue is computed from the data, the briefs, the plates and the
+      # framing entries - so it goes stale the moment any of those move.
+      - name: Fail if the committed mint queue is stale
+        run: node tools/mint-queue.mjs --check
+
       # Colours declared in palette.json, a monochrome ink plate, and the wash/ink/grime
       # layer contract that makes the black-and-white edition a real separation.
       - name: Check the art against the palette

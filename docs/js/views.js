@@ -428,6 +428,35 @@
 
   const ELEMENT_PILL = { fire: 'bad', earth: 'good', water: '', air: '' };
 
+  /* The element's own mark, inline, from the same path data the cards and the
+     printed book draw — data/arcana.json, bundled. Built as a node rather than
+     loaded as a file so it inherits the pill's colour and needs no request. */
+  const elementMark = (id) => {
+    const e = (D.elements || []).find((x) => x.id === id);
+    if (!e || !e.mark) return null;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('class', 'elmark');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', e.mark);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'currentColor');
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(path);
+    return svg;
+  };
+
+  /** A pill that leads with the element's mark. */
+  const elementPill = (id) => {
+    const p = pill(id, ELEMENT_PILL[id]);
+    const mark = elementMark(id);
+    if (mark) p.insertBefore(mark, p.firstChild);
+    return p;
+  };
+
   views.adventure = function (query) {
     const q = (list) => list.filter((x) => UI.matches(x, query));
 
@@ -458,7 +487,7 @@
       )),
       ...section('Monsters', 'Drawn when a discovery roll says monster and the card’s terrain list includes the hex.', q(D.monsters).map((m) =>
         deckCard('monster', m, m.story, [
-          pill(m.element, ELEMENT_PILL[m.element]),
+          elementPill(m.element),
           pill(`str ${m.strength}`),
           pill(`health ${m.health}`, 'bad'),
           pill(`mana ${m.manaYield}`, 'accent'),
@@ -468,6 +497,25 @@
         deckCard('item', t, (t.effects || [])[0], [
           pill(`mana ${t.manaCapacity}`, 'accent'),
           pill(`${t.baseValue}${R.currency.symbol}`),
+        ])
+      )),
+      ...section('Modifications', 'Fittings and enchantments bolted onto a vehicle after it is built — the only one of the three a player makes during a game. They share the vehicle’s slots, so a shipwright and a hedge-witch compete for the same hull.', q(D.modifications).map((m) =>
+        el('button.card', { type: 'button', onclick: () => open('modification', m.id) }, [
+          el('div.card-head', [el('span.card-title', m.name), el('span.card-code', m.cardCode)]),
+          el('div.card-sub', m.effect),
+          el('div.card-meta', [
+            pill(UI.titleize(m.class)),
+            m.element ? elementPill(m.element) : null,
+            m.manaCost ? pill(`${m.manaCost} mana`, 'accent') : pill(`${m.baseValue}${R.currency.symbol}`),
+            pill(`fits ${m.fits.join(', ')}`),
+          ].filter(Boolean)),
+        ])
+      )),
+      ...section('Enchantments', 'Mana laid into a building, a tool or a person and left there. A spell is spent and gone; an enchantment holds until something breaks it.', q(D.enchantments).map((e) =>
+        el('button.card', { type: 'button', onclick: () => open('enchantment', e.id) }, [
+          el('div.card-head', [el('span.card-title', e.name), el('span.card-code', e.cardCode)]),
+          el('div.card-sub', e.effect),
+          el('div.card-meta', [elementPill(e.element), pill(`${e.cost} mana`, 'accent'), pill(e.boundTo)]),
         ])
       )),
       ...section('Quests', 'Arrive through omens and inn rumours; accepted or declined on the spot.', q(D.quests).map((qc) =>
@@ -799,10 +847,52 @@
         el('h4', 'Numbers'),
         el('div.deflist', [
           el('dt', 'Yields'), el('dd', d.yields.map((y) => D.name('commodity', y)).join(', ')),
-          el('dt', 'Total yield'), el('dd', String(d.totalYield)),
-          el('dt', 'Tokens'), el('dd', String(d.tokensInSetup)),
+          /* One token is one prospect and they differ - see data/deposits.json.
+             The spread is the interesting number, so it is shown before the sum. */
+          el('dt', 'Tokens'), el('dd', `${d.tokenYields.length} — ${d.tokenYields.join(' · ')}`),
+          el('dt', 'Richest'), el('dd', `${Math.max.apply(null, d.tokenYields)}, and the poorest ${Math.min.apply(null, d.tokenYields)}`),
+          el('dt', 'Total yield'), el('dd', String(d.tokenYields.reduce((a, b) => a + b, 0))),
           el('dt', 'Survey'), el('dd', `${d.surveyDifficulty}+ on a d6`),
           el('dt', 'Needs'), el('dd', d.requiresBuilding ? D.name('building', d.requiresBuilding) : 'no building'),
+        ]),
+      ]),
+    ];
+  };
+
+  detail.modification = function (m) {
+    return [
+      el('span.kicker', `modification · ${m.class}${m.element ? ' · ' + m.element : ''}`),
+      el('h2', m.name),
+      el('p.prose', m.story),
+      el('section', [el('h4', 'Effect'), el('p.prose', m.effect)]),
+      el('section', [
+        el('h4', 'Numbers'),
+        el('div.deflist', [
+          el('dt', 'Fits'), el('dd', m.fits.map((f) => (f === 'any' ? 'any vehicle' : D.name('mode', f))).join(', ')),
+          el('dt', 'Fitted at'), el('dd', D.name('building', m.madeAt)),
+          m.manaCost ? el('dt', 'Mana') : null, m.manaCost ? el('dd', `${m.manaCost} ${m.element}`) : null,
+          m.inputs ? el('dt', 'Made from') : null,
+          m.inputs ? el('dd', m.inputs.map((i) => `${i.qty} × ${D.name('commodity', i.commodity)}`).join(', ')) : null,
+          m.baseValue ? el('dt', 'Value') : null, m.baseValue ? el('dd', `${m.baseValue}${R.currency.symbol}`) : null,
+          m.massKg ? el('dt', 'Mass') : null, m.massKg ? el('dd', `${m.massKg} kg`) : null,
+        ].filter(Boolean)),
+      ]),
+    ];
+  };
+
+  detail.enchantment = function (e) {
+    return [
+      el('span.kicker', `enchantment · ${e.element}`),
+      el('h2', e.name),
+      el('p.prose', e.story),
+      el('section', [el('h4', 'Effect'), el('p.prose', e.effect)]),
+      el('section', [
+        el('h4', 'Binding'),
+        el('div.deflist', [
+          el('dt', 'Costs'), el('dd', `${e.cost} ${e.element} mana`),
+          el('dt', 'Bound to'), el('dd', e.boundTo),
+          el('dt', 'Where'), el('dd', D.raw.arcana.enchantments.binding.where),
+          el('dt', 'Slots'), el('dd', D.raw.arcana.enchantments.binding.slots),
         ]),
       ]),
     ];

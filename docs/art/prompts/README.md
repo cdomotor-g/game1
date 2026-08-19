@@ -6,13 +6,27 @@ negative prompt from [`07-ai-agent-brief.md`](../07-ai-agent-brief.md) — read
 that document first anyway: the two-plate rules, the acceptance checklist and
 the banned list all apply to every render.
 
+**Every prompt also carries a `FRAMING.` block, and a new one must.** A plate is
+never shown whole — a card window is a different shape and takes a crop — so
+where the subject sits on the page is as much a part of the brief as what the
+subject is. [`09-framing-and-composition.md`](../09-framing-and-composition.md)
+is the contract: read it before writing a prompt, and write the framing block
+from it rather than from memory.
+
+**Which subjects still need a prompt is not tracked here.** It is computed, by
+`node tools/mint-queue.mjs`, and written to
+[`../mint/QUEUE.md`](../mint/QUEUE.md). Add a card to `data/` and it appears
+there the moment the tool is run — see [`../../CARD-MINT.md`](../../CARD-MINT.md)
+for who does what next.
+
 | File | Subjects | Format |
 | --- | --- | --- |
 | [`peoples.md`](peoples.md) | The 5 playable peoples | A4 portrait plate, full-length study |
-| [`monsters.md`](monsters.md) | The 12 monsters | A4 portrait plate, full-length study |
+| [`monsters.md`](monsters.md) | The 14 monsters | A4 portrait plate, full-length study |
 | [`characters.md`](characters.md) | The 8 character cards | A4 portrait plate, three-quarter figure |
-| [`vehicles.md`](vehicles.md) | The 12 vehicle cards | A4 landscape plate, full profile |
+| [`vehicles.md`](vehicles.md) | The 17 vehicle cards | A4 landscape plate, full profile |
 | [`talismans.md`](talismans.md) | The 6 talisman cards | Single object study |
+| [`modifications.md`](modifications.md) | The 11 modification cards | Single object study |
 
 The plates are drawn as pages from a **field naturalist's folio**: the same worn
 1600s-almanac register as everything else, but sheet-sized — a specimen study

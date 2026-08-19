@@ -3,8 +3,12 @@
   "note": "A plate is a whole drawn page - docs/art/prompts/ asks for A4 proportions and says card crops are taken from the plate later. A card window is not that shape, so something has to be thrown away, and the only question is what. `subject` says what may not be: the head, the hands, and the gear the card names. Everything outside it is scenery the crop may spend.",
   "format": {
     "subject": "[x, y, w, h] as fractions of the plate, 0..1 from its top-left. Draw it a little loose - the crop grows this box out to the window's shape, it never shrinks it, so a tight box only means more scenery comes with it.",
+    "focal": "[x, y] as fractions of the plate: the one point the picture is OF. A face, nearly always; on a vehicle, the wheelhouse or the driver; on a monster, the eye. Optional, and new plates should have one - see docs/art/09-framing-and-composition.md. Subject says what may not be cut; focal says what the crop is aimed at, and the two do different jobs. Without it the crop centres on the subject box, and the middle of a standing figure's bounding box is their sternum.",
+    "focalTargetOverride": "[x, y] as fractions of the WINDOW, if this plate should not use the default focalTarget below. Rare - a plate that needs its own target usually needs a better subject box.",
     "note": "Prose, for the next person holding the pen. Not read by anything."
   },
+  "focalTarget": [0.5, 0.4],
+  "focalTargetNote": "Where a focal point lands in the window: centred across, a little above the middle down. That is where a reader looks first and where a face belongs. The crop slides to put the focal point here, as far as the subject box allows - the subject always wins.",
   "pad": 0.03,
   "padNote": "Breathing room added around the subject before the box is grown to the window's shape, as a fraction of the subject's shorter side. Keeps a head off the window rule.",
   "plates": {

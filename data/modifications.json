@@ -1,0 +1,102 @@
+{
+  "$comment": "The modification deck: things bolted, stitched or bound onto a vehicle after it is built. A vehicle card (vehicles.json) is a specific machine; a transport mode (transport.json) is the rules it runs on; a modification is what its owner did to it afterwards, and it is the only one of the three a player creates during a game. Fittings and enchantments are in the same file and compete for the same slots on purpose - a shipwright and a hedge-witch are both trying to make the same hull go faster, and the player has to choose which. The general enchantments, the ones laid on buildings, tools and people, are in arcana.json. Card layout: the fitting drawn across the middle, name and code at the top, what it fits as the kicker, story low. A modification card carries no bars - it has neither harm nor capacity of its own; what it does is change the bars on the card it is tucked under. Art prompts in docs/art/prompts/modifications.md.",
+  "version": "0.1.0",
+
+  "slots": {
+    "$comment": "How many modifications a vehicle may carry at once. Kept deliberately tight: the interesting decision is which two, not whether to take all six.",
+    "base": 2,
+    "byTier": { "$note": "the tier of the vehicle's mode in transport.json", "1": 1, "2": 2, "3": 3, "4": 3 },
+    "enchantmentLimit": 1,
+    "rules": [
+      "One modification per slot, and no two of the same modification on one vehicle.",
+      "At most one enchantment, whatever the slot count. Binding a second breaks the first and its mana is gone.",
+      "A modification is fitted at the building named on its card, over one whole round, with the vehicle standing there.",
+      "Removing a fitting takes a round and returns half its inputs, rounded down. Removing an enchantment breaks it and returns nothing.",
+      "A wrecked vehicle takes its modifications with it. Salvage recovers fittings on a d6 of 5+, one roll each; enchantments never survive.",
+      "A modification adds its baseValue to what the vehicle sells for, and an enchanted vehicle adds 20 coin per mana bound as well."
+    ]
+  },
+
+  "classes": [
+    { "id": "rigging", "name": "Rigging", "summary": "Sail, spar and line. What catches the wind, or refuses to need it." },
+    { "id": "hull", "name": "Hull", "summary": "Sheathing, plating, ram and shutter. What the journey happens inside." },
+    { "id": "running-gear", "name": "Running Gear", "summary": "Wheels, runners, harness and axle. What meets the ground." },
+    { "id": "powerplant", "name": "Powerplant", "summary": "Boiler, furnace and gear. What burns, and how well." },
+    { "id": "enchantment", "name": "Enchantment", "summary": "Mana bound into a vehicle at an alchemist or shrine. Costs mana, not commodities, and one per vehicle." }
+  ],
+
+  "modifications": [
+    { "id": "spinnaker", "cardCode": "MOD-01", "name": "Spinnaker", "class": "rigging",
+      "fits": ["ship", "barge"], "madeAt": "weaver", "specialist": "weaver",
+      "inputs": [{ "commodity": "fine-cloth", "qty": 4 }, { "commodity": "rope", "qty": 3 }, { "commodity": "lumber", "qty": 1 }],
+      "effortHours": 6, "baseValue": 160, "massKg": 40,
+      "effect": "+2 hexes on any leg run with the wind - which at sea means any leg that is not into a storm. Cancel the bonus in a Storms at Sea round: the spinnaker is the first thing struck, and a skipper who leaves it up loses it.",
+      "story": "An enormous belly of dyed cloth flown from the bow, and the reason the western packet run is a day and a half rather than three. Setting it is a two-person job; getting it down in a squall is a four-person job, and the fourth person is usually the one who wanted it up." },
+
+    { "id": "sweep-rig", "cardCode": "MOD-02", "name": "Sweep Rig", "class": "rigging",
+      "fits": ["airship"], "madeAt": "carpenter", "specialist": "carpenter",
+      "inputs": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "fine-cloth", "qty": 3 }, { "commodity": "rope", "qty": 4 }, { "commodity": "ironware", "qty": 2 }],
+      "effortHours": 9, "baseValue": 240, "massKg": 120,
+      "effect": "A fixed upper beam and a hinged lower one down each flank, worked by the crew: treat any Foul or Contrary wind roll as Contrary at full speed, for 1 extra crew fed that round. It cannot beat the wind - it can refuse to be beaten by it.",
+      "story": "Sail is a wing when there is wind and a bedsheet when there is not. Hinge the bottom spar, put eight strong people on the handles, and the bedsheet becomes an oar. It sounds like a mill and looks like a lunatic's drawing, and it is the reason the Vossgard mail arrives in a headwind." },
+
+    { "id": "copper-sheathing", "cardCode": "MOD-03", "name": "Copper Sheathing", "class": "hull",
+      "fits": ["ship", "barge"], "madeAt": "harbour", "specialist": "smith",
+      "inputs": [{ "commodity": "copper", "qty": 6 }, { "commodity": "ironware", "qty": 2 }],
+      "effortHours": 8, "baseValue": 300, "massKg": 400,
+      "effect": "+1 hex per leg, permanently - a foul bottom is a slow bottom. The hull takes no damage from reef, ice or grounding, and worms and rot never touch her.",
+      "story": "Plate the whole underbody in copper below the waterline and she comes out of a year's trading as clean as she went in. It costs what a small farm costs. Every owner who has paid it says the same thing, which is that they should have paid it sooner." },
+
+    { "id": "iron-ram", "cardCode": "MOD-04", "name": "Iron Ram", "class": "hull",
+      "fits": ["ship"], "madeAt": "harbour", "specialist": "smith",
+      "inputs": [{ "commodity": "ironware", "qty": 4 }, { "commodity": "steel", "qty": 2 }, { "commodity": "lumber", "qty": 3 }],
+      "effortHours": 7, "baseValue": 210, "massKg": 900,
+      "effect": "+3 combat dice in the first round of any battle at sea, attacking only. -1 hex per leg, always: it is a great deal of iron a long way forward.",
+      "story": "A beak of forged iron scarfed onto the stem below the waterline. It is not subtle and it is not a deterrent, because nobody can see it until the moment it stops being relevant." },
+
+    { "id": "storm-shutters", "cardCode": "MOD-05", "name": "Storm Shutters", "class": "hull",
+      "fits": ["ship", "barge", "airship", "train"], "madeAt": "carpenter",
+      "inputs": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "leather", "qty": 2 }, { "commodity": "ironware", "qty": 1 }],
+      "effortHours": 4, "baseValue": 85, "massKg": 60,
+      "effect": "Cargo aboard loses nothing to weather: ignore every cargo-loss effect from a weather or disaster event card. The vehicle itself still takes its damage.",
+      "story": "Hinged boards and oiled hide over every opening, dogged down by a crew who have learned the hard way what a following sea does to an open hatch. Cheap, ugly, and the difference between a bad round and a ruinous one." },
+
+    { "id": "ice-runners", "cardCode": "MOD-06", "name": "Ice Runners", "class": "running-gear",
+      "fits": ["cart", "caravan", "sled"], "madeAt": "blacksmith", "specialist": "smith",
+      "inputs": [{ "commodity": "steel", "qty": 2 }, { "commodity": "lumber", "qty": 2 }],
+      "effortHours": 5, "baseValue": 130, "massKg": 70,
+      "effect": "Shod runners that swap for the wheels in an hour. While the winter rule in travel.json is in force the vehicle moves at sled speeds; the rest of the year it is 70 kg of steel in the bed and does nothing at all.",
+      "story": "The Varl wagonrows carry them from the first frost, and unbolt them the week the thaw starts - a week early, every year, and every year somebody argues." },
+
+    { "id": "compound-boiler", "cardCode": "MOD-07", "name": "Compound Boiler", "class": "powerplant",
+      "fits": ["train", "ship", "airship"], "madeAt": "steelworks", "specialist": "engineer",
+      "inputs": [{ "commodity": "steel", "qty": 4 }, { "commodity": "copper", "qty": 3 }, { "commodity": "ironware", "qty": 2 }],
+      "effortHours": 12, "baseValue": 420, "massKg": 800,
+      "effect": "Uses the same steam twice. Halve the vehicle's fuel per leg, rounded up, and +1 hex per leg. It is delicate: on any hazard or battle result, roll d6 and on a 1 the boiler is out until repaired at a steelworks.",
+      "story": "Havik Coalbrand's own drawing, and he will explain it to you at length: the steam leaves the high-pressure cylinder with most of its temper intact, so you give it a second, larger cylinder to lose that temper in. Half the coal, more speed, and one more thing to go wrong in a tunnel." },
+
+    { "id": "keelbound", "cardCode": "MOD-08", "name": "Keelbound", "class": "enchantment", "element": "water",
+      "fits": ["ship", "barge"], "madeAt": "alchemist", "manaCost": 5,
+      "effortHours": 0, "baseValue": 0, "massKg": 0,
+      "effect": "She will not sink. A damage bar that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.",
+      "story": "Bound into the keel timber before she is planked, which means it is nearly always done to a new hull and nearly never to an old one. Insurers ask. Insurers charge less when the answer is yes." },
+
+    { "id": "fleetfoot-binding", "cardCode": "MOD-09", "name": "Fleetfoot Binding", "class": "enchantment", "element": "air",
+      "fits": ["any"], "madeAt": "alchemist", "manaCost": 4,
+      "effortHours": 0, "baseValue": 0, "massKg": 0,
+      "effect": "+2 hexes on every day leg, whatever the mode and whatever the ground. An airship instead re-rolls one wind roll per journey.",
+      "story": "Four mana of moving air laid along the axle, the keel, the rail or the traces, depending on what you are enchanting and how patient the alchemist is. The oldest and most-copied binding in the book, and still the one every carter asks for first." },
+
+    { "id": "warded-hold", "cardCode": "MOD-10", "name": "Warded Hold", "class": "enchantment", "element": "earth",
+      "fits": ["any"], "madeAt": "alchemist", "manaCost": 4,
+      "effortHours": 0, "baseValue": 0, "massKg": 0,
+      "effect": "Nothing is taken from this vehicle that its owner did not hand over. Cancel every theft, robbery, piracy and heist card aimed at its cargo. A boarder who wins a battle may still take the vehicle entire - the ward is on the hold, not on the owner.",
+      "story": "The lids stick. That is all a ward looks like from outside: crates that will not open for the wrong hands, and a thief standing in a hold full of goods getting increasingly upset with a crowbar." },
+
+    { "id": "salamander-grate", "cardCode": "MOD-11", "name": "Salamander Grate", "class": "enchantment", "element": "fire",
+      "fits": ["train", "ship", "airship"], "madeAt": "alchemist", "manaCost": 6, "specialist": "alchemist",
+      "effortHours": 0, "baseValue": 0, "massKg": 0,
+      "effect": "The firebox burns without fuel: the vehicle pays no fuel per leg, ever. It also never runs cold - the vehicle may take a night leg with no light, because the glare from the grate is light enough.",
+      "story": "A cast grate with something bound under it that was never quite alive and is now definitely not dead. Firemen on a grated engine have nothing to do but watch it, and they mostly do not." }
+  ]
+}

@@ -52,6 +52,11 @@
   th, td { border: 1px solid #C0B7A9; padding: 6px 10px; text-align: left; vertical-align: top; }
   th { background: #D9CBAF; font-family: Helvetica, Arial, sans-serif; font-size: 12.5px; }
   img { max-width: 100%; height: auto; }
+  /* The element marks are type, not pictures: they run inline at the size of a
+     capital and sit on the baseline. Without this a 64px icon lands in a table
+     cell and the row is an inch tall. */
+  img[src*="icons/element-"] { width: 1.25em; height: 1.25em; vertical-align: -0.28em; }
+  p img[src*="icons/element-"], li img[src*="icons/element-"] { margin-right: .1em; }
   .gallery table { width: 100%; }
   .gallery th, .gallery td { border: none; padding: 4px 6px; }
   .gallery td { font-style: italic; font-size: 13px; color: #5F564C; text-align: center; }
@@ -449,7 +454,16 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <tr><td>Physic Tonic</td><td>Cure one illness, anywhere</td></tr>
 <tr><td>Emberguard Salve</td><td>Ignore every hit from a fire monster, one battle</td></tr></tbody></table></div>
 <p>Every one of them buys hours, movement, safety or information. None of them break the economy, and all of them are made of things the economy produces.</p>
-<p><strong>Mana and talismans.</strong> Slaying a monster yields mana of its element — and mana must be <em>held</em>. Elves carry up to 3 in the body; everyone else carries none, and stores it in a <strong>talisman</strong>: six cards from a 2-capacity bone charm to a 10-capacity crystal phylactery, each an item that is made, sold and stolen like any other. Mana is spent on <strong>spells</strong> — eight, two per element, minor and major, listed in the <a href="#c-14-annex">annex</a> — one cast per character per round. The whole system is defined in <code>data/arcana.json</code> and reasoned through in <a href="#c-13-adventure">13-adventure.md</a>.</p>
+<h3>The four elements</h3>
+<p>Every monster, every spell, every enchantment and every arcane fitting belongs to one of four elements, and each one has a mark. The mark is <strong>data</strong> — one drawn path per element in <a href="../../data/arcana.json"><code>data/arcana.json</code></a> — so a card, a chit, this page and the explorer all say <em>fire</em> with the same four strokes, and changing the mark changes all of them at once.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Mark</th><th>Element</th><th>Ink</th><th>At home</th></tr></thead>
+<tbody><tr><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"></td><td><strong>Fire</strong></td><td>oxide</td><td>Heat, forge-work, hunger. The desert and under the mountains.</td></tr>
+<tr><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"></td><td><strong>Earth</strong></td><td>verdigris</td><td>Stone, root, patience. Hills, barrows and old woods.</td></tr>
+<tr><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"></td><td><strong>Water</strong></td><td>slate</td><td>Current, mist, depth. Marsh, shore and open sea.</td></tr>
+<tr><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"></td><td><strong>Air</strong></td><td>soot</td><td>Wind, cold, distance. The tundra and the high passes.</td></tr></tbody></table></div>
+<p>They are built on one construction, so they read as a set: a ground line, and what the element does to it. Fire stands three tongues on it, earth puts a stone on it and takes the ground down in strata, water replaces it with three swells, air lifts three streamers clear of it altogether. None of them is a borrowed alchemical triangle — <a href="../art/04-iconography.md"><code>04-iconography.md</code></a> bans real-world symbols along with letterforms, and the triangles are the most borrowed symbols there are.</p>
+<p><strong>Mana and talismans.</strong> Slaying a monster yields mana of its element — and mana must be <em>held</em>. Elves carry up to 3 in the body; everyone else carries none, and stores it in a <strong>talisman</strong>: six cards from a 2-capacity bone charm to a 10-capacity crystal phylactery, each an item that is made, sold and stolen like any other. Mana is spent on <strong>spells</strong> — fourteen now, listed in the <a href="#c-14-annex">annex</a> — one cast per character per round. The whole system is defined in <code>data/arcana.json</code> and reasoned through in <a href="#c-13-adventure">13-adventure.md</a>.</p>
 <h2>Conflict</h2>
 <p><strong>Combat.</strong> Each side rolls a die per unit and hits on 4+. Weapons add dice; armour cancels hits. Both sides apply hits at once, so attacking is never free. One round per battle, with retreat allowed — the intent is a sharp exchange, not a wargame inside a economy game.</p>
 <p><strong>Equipment.</strong> A sword is +1 die. Steel doubles that and hits on 3+. A bow rolls before the enemy does but needs arrows. A war hammer ignores armour entirely. Plate harness absorbs three hits and costs you a move point.</p>
@@ -823,7 +837,9 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Cart</td><td>3</td><td>1</td><td>1</td><td>—</td><td>—</td><td>1</td><td>2</td><td>3</td><td>—</td><td>—</td></tr>
 <tr><td>Caravan</td><td>2</td><td>1</td><td>1</td><td>—</td><td>—</td><td>1</td><td>2</td><td>2</td><td>—</td><td>—</td></tr>
 <tr><td>Barge</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>3</td><td>3</td><td>—</td></tr>
-<tr><td>Ship</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>2</td><td>3</td><td>5</td></tr></tbody></table></div>
+<tr><td>Ship</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>2</td><td>3</td><td>5</td></tr>
+<tr><td>Sled</td><td>1</td><td>1</td><td>2</td><td>2</td><td>2</td><td>5</td><td>—</td><td>1</td><td>2</td><td>—</td></tr>
+<tr><td>Airship</td><td>5</td><td>5</td><td>5</td><td>4</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td></tr></tbody></table></div>
 <p>Overrides: <strong>On a Road</strong> — on-foot 5, mounted 8, cart 6, caravan 4; <strong>On Rail</strong> — train 6.</p>
 <h2>Night legs</h2>
 <div class="table-wrap"><table>
@@ -1080,7 +1096,12 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Bow</td><td>carpenter</td><td>1 lumber + 1 rope</td><td>3</td><td>65</td><td>1 kg</td><td>Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight.</td></tr>
 <tr><td>Quiver of Arrows</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>2 kg</td><td>Holds 3 uses. Each battle with a bow spends 1.</td></tr>
 <tr><td>Sling</td><td>weaver</td><td>1 cloth</td><td>1</td><td>12</td><td>0.5 kg</td><td>+1 combat die for halflings only. Everyone else may as well throw the stone.</td></tr>
-<tr><td>War Hammer</td><td>blacksmith</td><td>2 steel + 1 lumber</td><td>5</td><td>190</td><td>6 kg</td><td>+2 combat dice. Ignores enemy armour entirely.</td></tr></tbody></table></div>
+<tr><td>War Hammer</td><td>blacksmith</td><td>2 steel + 1 lumber</td><td>5</td><td>190</td><td>6 kg</td><td>+2 combat dice. Ignores enemy armour entirely.</td></tr>
+<tr><td>Crossbow</td><td>blacksmith</td><td>1 steel + 2 lumber + 1 rope</td><td>5</td><td>175</td><td>5 kg</td><td>+3 combat dice, and ignores 1 point of enemy armour. Slow: it rolls in the first round of a battle and every second round after. Needs a quiver to fight.</td></tr>
+<tr><td>Harpoon</td><td>blacksmith</td><td>1 pig-iron + 1 lumber + 2 rope</td><td>3</td><td>75</td><td>4 kg</td><td>+1 combat die, and +3 instead against any water-element monster or anything bigger than a horse. A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round. +1 output on Fish.</td></tr>
+<tr><td>Dirk</td><td>blacksmith</td><td>1 pig-iron</td><td>2</td><td>35</td><td>0.8 kg</td><td>+1 combat die. Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls.</td></tr>
+<tr><td>Greatsword</td><td>blacksmith</td><td>3 steel + 1 leather</td><td>7</td><td>340</td><td>4 kg</td><td>+3 combat dice, and hits on 3+ instead of 4+. -1 move point, and it cannot be used with a shield. Worth 1 victory point at game end.</td></tr>
+<tr><td>Boar Spear</td><td>blacksmith</td><td>1 pig-iron + 1 lumber</td><td>2</td><td>55</td><td>3 kg</td><td>+1 combat die, and +3 in the first round against any monster that charges - anything of strength 4 or more that attacks first. The crossbar holds it off you: ignore the first hit from that monster. +1 output on Hunt Game.</td></tr></tbody></table></div>
 <h3>Potion</h3>
 <div class="table-wrap"><table>
 <thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>Effects</th></tr></thead>
@@ -1094,7 +1115,12 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Merchant's Fortune</td><td>alchemist</td><td>1 gold + 2 arcane-herb</td><td>4</td><td>200</td><td>0.5 kg</td><td>Shift one commodity family's price band two steps in your favour for your next sale only.</td></tr>
 <tr><td>Owl's Eye</td><td>alchemist</td><td>2 moon-blossom + 1 arcane-herb</td><td>3</td><td>90</td><td>0.5 kg</td><td>One figure or party travels night legs this round as if carrying a lantern.</td></tr>
 <tr><td>Physic Tonic</td><td>alchemist</td><td>2 frost-lichen + 1 honey</td><td>3</td><td>95</td><td>0.5 kg</td><td>Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick.</td></tr>
-<tr><td>Emberguard Salve</td><td>alchemist</td><td>2 ember-root + 1 honey</td><td>3</td><td>100</td><td>0.5 kg</td><td>One unit or character ignores every hit from a fire-element monster in one battle.</td></tr></tbody></table></div>
+<tr><td>Emberguard Salve</td><td>alchemist</td><td>2 ember-root + 1 honey</td><td>3</td><td>100</td><td>0.5 kg</td><td>One unit or character ignores every hit from a fire-element monster in one battle.</td></tr>
+<tr><td>Ley Tincture</td><td>alchemist</td><td>1 mana-crystal + 3 arcane-herb</td><td>5</td><td>220</td><td>0.5 kg</td><td>For one round the drinker holds 3 mana in the body, talisman or no talisman. Mana still there when the round ends blows away, and the drinker takes 1 damage.</td></tr>
+<tr><td>Innkeeper's Forbearance</td><td>alchemist</td><td>2 mead + 1 arcane-herb</td><td>3</td><td>80</td><td>1 kg</td><td>Broached at an inn, it clears 2 unrest in that town and everyone forgives everyone. Anywhere else it clears 1 unrest and starts an argument.</td></tr>
+<tr><td>Long Ration</td><td>alchemist</td><td>1 honey + 1 salted-meat + 1 arcane-herb</td><td>3</td><td>75</td><td>0.5 kg</td><td>One travelling party eats nothing for two rounds, and nobody complains until the third.</td></tr>
+<tr><td>Dragonsbane Draught</td><td>alchemist</td><td>2 ember-root + 2 frost-lichen + 1 mana-crystal</td><td>6</td><td>380</td><td>0.5 kg</td><td>For one battle, the drinker's party ignores the free first round any monster of strength 5 or more gets, and halves its hits, rounded up. It does not help you win. It helps you still be there at the end.</td></tr>
+<tr><td>Aeronaut's Nerve</td><td>alchemist</td><td>1 moon-blossom + 1 ale + 1 arcane-herb</td><td>3</td><td>110</td><td>0.5 kg</td><td>Re-roll one airship wind roll and keep the better result - see travel.json. The crew are steady at any height for the rest of the journey, which matters more than the roll does.</td></tr></tbody></table></div>
 <h3>Light</h3>
 <div class="table-wrap"><table>
 <thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>Effects</th></tr></thead>
@@ -1117,7 +1143,9 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Caravan</td><td>2</td><td>24</td><td>2 (3 on road)</td><td>road</td><td>120</td><td>2</td><td>★</td></tr>
 <tr><td>Barge</td><td>2</td><td>30</td><td>3</td><td>dock</td><td>110</td><td>1</td><td>★★</td></tr>
 <tr><td>Ship</td><td>3</td><td>60</td><td>4</td><td>harbour</td><td>280</td><td>3</td><td>★★★</td></tr>
-<tr><td>Train</td><td>3</td><td>80</td><td>6</td><td>rail-depot</td><td>350</td><td>4</td><td>★★</td></tr></tbody></table></div>
+<tr><td>Train</td><td>3</td><td>80</td><td>6</td><td>rail-depot</td><td>350</td><td>4</td><td>★★</td></tr>
+<tr><td>Sled</td><td>2</td><td>10</td><td>3</td><td>—</td><td>90</td><td>2</td><td>★</td></tr>
+<tr><td>Airship</td><td>4</td><td>18</td><td>5</td><td>—</td><td>520</td><td>5</td><td>—</td></tr></tbody></table></div>
 <h2>Vehicle deck</h2>
 <p>Damage bar up the <strong>left</strong> edge, cargo bar up the <strong>right</strong> — harm left, capacity right, on every deck in the game.</p>
 <div class="table-wrap"><table>
@@ -1133,23 +1161,30 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>VEH-09</td><td>The Varl Wagonrow</td><td>caravan</td><td>24</td><td>7</td><td>Hill-country teams: crosses hills at 2 hexes per leg.</td></tr>
 <tr><td>VEH-10</td><td>Bay Courser</td><td>mounted</td><td>2</td><td>4</td><td>+1 hex on grassland legs. The fastest honest thing on four legs in the Reach.</td></tr>
 <tr><td>VEH-11</td><td>Steppe Pony</td><td>mounted</td><td>3</td><td>5</td><td>Ignores tundra penalties and forages for herself: no feed, ever.</td></tr>
-<tr><td>VEH-12</td><td>Black Malchior</td><td>mounted</td><td>2</td><td>4</td><td>Night-eyed: may travel one night leg per journey with no light at all.</td></tr></tbody></table></div>
+<tr><td>VEH-12</td><td>Black Malchior</td><td>mounted</td><td>2</td><td>4</td><td>Night-eyed: may travel one night leg per journey with no light at all.</td></tr>
+<tr><td>VEH-13</td><td>Nine and the Drum</td><td>sled</td><td>10</td><td>5</td><td>Nine dogs and a lead bitch called Drum. +2 hexes on any tundra leg, and the team smells a crevasse: ignore the first hazard result of every journey.</td></tr>
+<tr><td>VEH-14</td><td>The Red Lantern</td><td>ship</td><td>70</td><td>11</td><td>Junk-rigged and steam-fitted: sails free, or burns 1 coal per leg for +2 hexes and no wind roll at all. Her battened sails take no damage from storms.</td></tr>
+<tr><td>VEH-15</td><td>The Carrion Queen</td><td>ship</td><td>45</td><td>12</td><td>+3 combat dice at sea, and any ship she catches must hand over one cargo token or fight. Nobody legitimate will berth her: she may not use a harbour she does not own, and pays double at any market that takes her coin at all.</td></tr>
+<tr><td>VEH-16</td><td>The Pilgrim's Patience</td><td>airship</td><td>18</td><td>6</td><td>Goes over everything: no terrain costs her anything, and she cannot be robbed on the road. Roll the wind each leg (travel.json) - she has no answer to it.</td></tr>
+<tr><td>VEH-17</td><td>The Sweep of Vossgard</td><td>airship</td><td>14</td><td>7</td><td>Sweep-rigged: a fixed upper beam and a working lower one down each flank, rowed by the crew. Treat any Foul or Contrary wind as Contrary at full speed, for 1 extra crew fed that round. She cannot beat the wind - she can refuse to be beaten by it.</td></tr></tbody></table></div>
 <h2>Monster deck</h2>
 <p>S = slay (always allowed), E = enslave, B = befriend, D = domesticate. Slaying yields the mana; the other three trade mana away for a living asset.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Monster</th><th>Element</th><th>Str</th><th>Health</th><th>Mana</th><th>Ground</th><th>Options</th></tr></thead>
-<tbody><tr><td>MON-01</td><td>Cinder Wolf</td><td>fire</td><td>2</td><td>4</td><td>1</td><td>desert, hills, grassland</td><td>S B D</td></tr>
-<tr><td>MON-02</td><td>Ash Drake</td><td>fire</td><td>4</td><td>8</td><td>3</td><td>mountain, desert</td><td>S E</td></tr>
-<tr><td>MON-03</td><td>Forge Wight</td><td>fire</td><td>3</td><td>6</td><td>2</td><td>mountain, hills</td><td>S E B</td></tr>
-<tr><td>MON-04</td><td>Barrow Troll</td><td>earth</td><td>4</td><td>10</td><td>3</td><td>hills, grassland</td><td>S E</td></tr>
-<tr><td>MON-05</td><td>Stone Boar</td><td>earth</td><td>2</td><td>6</td><td>1</td><td>forest, hills</td><td>S B D</td></tr>
-<tr><td>MON-06</td><td>Gravel Wyrm</td><td>earth</td><td>3</td><td>8</td><td>2</td><td>mountain, desert</td><td>S</td></tr>
-<tr><td>MON-07</td><td>Mire Strangler</td><td>water</td><td>3</td><td>6</td><td>2</td><td>marsh</td><td>S</td></tr>
-<tr><td>MON-08</td><td>Reef Serpent</td><td>water</td><td>3</td><td>7</td><td>2</td><td>coast, shallow-water</td><td>S B</td></tr>
-<tr><td>MON-09</td><td>The Deepwater Maw <em>(unique)</em></td><td>water</td><td>5</td><td>12</td><td>4</td><td>deep-water</td><td>S</td></tr>
-<tr><td>MON-10</td><td>Rime Harpy</td><td>air</td><td>2</td><td>5</td><td>1</td><td>tundra, mountain</td><td>S E B</td></tr>
-<tr><td>MON-11</td><td>Dust Devil</td><td>air</td><td>2</td><td>4</td><td>2</td><td>desert, grassland</td><td>S</td></tr>
-<tr><td>MON-12</td><td>Storm Roc</td><td>air</td><td>4</td><td>9</td><td>3</td><td>mountain, coast</td><td>S D</td></tr></tbody></table></div>
+<tbody><tr><td>MON-01</td><td>Cinder Wolf</td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>2</td><td>4</td><td>1</td><td>desert, hills, grassland</td><td>S B D</td></tr>
+<tr><td>MON-02</td><td>Ash Drake</td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>4</td><td>8</td><td>3</td><td>mountain, desert</td><td>S E</td></tr>
+<tr><td>MON-03</td><td>Forge Wight</td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>3</td><td>6</td><td>2</td><td>mountain, hills</td><td>S E B</td></tr>
+<tr><td>MON-04</td><td>Barrow Troll</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>4</td><td>10</td><td>3</td><td>hills, grassland</td><td>S E</td></tr>
+<tr><td>MON-05</td><td>Stone Boar</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>2</td><td>6</td><td>1</td><td>forest, hills</td><td>S B D</td></tr>
+<tr><td>MON-06</td><td>Gravel Wyrm</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>3</td><td>8</td><td>2</td><td>mountain, desert</td><td>S</td></tr>
+<tr><td>MON-07</td><td>Mire Strangler</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>3</td><td>6</td><td>2</td><td>marsh</td><td>S</td></tr>
+<tr><td>MON-08</td><td>Reef Serpent</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>3</td><td>7</td><td>2</td><td>coast, shallow-water</td><td>S B</td></tr>
+<tr><td>MON-09</td><td>The Deepwater Maw <em>(unique)</em></td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>5</td><td>12</td><td>4</td><td>deep-water</td><td>S</td></tr>
+<tr><td>MON-10</td><td>Rime Harpy</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>2</td><td>5</td><td>1</td><td>tundra, mountain</td><td>S E B</td></tr>
+<tr><td>MON-11</td><td>Dust Devil</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>2</td><td>4</td><td>2</td><td>desert, grassland</td><td>S</td></tr>
+<tr><td>MON-12</td><td>Storm Roc</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>4</td><td>9</td><td>3</td><td>mountain, coast</td><td>S D</td></tr>
+<tr><td>MON-13</td><td>Vhalrik, the Cinder-Crowned <em>(unique)</em></td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>7</td><td>16</td><td>6</td><td>mountain, hills, desert</td><td>S B</td></tr>
+<tr><td>MON-14</td><td>The Hoarwyrm</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>5</td><td>13</td><td>4</td><td>tundra, mountain, coast</td><td>S D</td></tr></tbody></table></div>
 <h2>Character deck</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Character</th><th>People</th><th>Calling</th><th>Health</th><th>Burden</th><th>Mana</th><th>Traits</th></tr></thead>
@@ -1172,17 +1207,56 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>QST-06</td><td>A Draught for Fen's End</td><td>mini</td><td>3</td><td>Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count.</td></tr>
 <tr><td>QST-07</td><td>The Ironspine Road</td><td>campaign</td><td>4</td><td>3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel</td></tr>
 <tr><td>QST-08</td><td>The Drowned Bell of Taleowick</td><td>campaign</td><td>5</td><td>3 stages: The Tale at the Inn → The Sounding → What Rings It</td></tr></tbody></table></div>
+<h2>The elements</h2>
+<p>Four elements, four marks. The mark is data - one path per element in <code>data/arcana.json</code> - so a card, a chit, this table and the explorer all say fire the same way. <code>tools/build-icons.mjs</code> draws them.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Mark</th><th>Element</th><th>Ink</th><th>At home</th></tr></thead>
+<tbody><tr><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"></td><td><strong>Fire</strong></td><td>oxide</td><td>Heat, forge-work, hunger. At home in the desert and under the mountains.</td></tr>
+<tr><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"></td><td><strong>Earth</strong></td><td>verdigris</td><td>Stone, root, patience. At home in hills, barrows and old woods.</td></tr>
+<tr><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"></td><td><strong>Water</strong></td><td>slate</td><td>Current, mist, depth. At home in marsh, shore and open sea.</td></tr>
+<tr><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"></td><td><strong>Air</strong></td><td>soot-tint-40</td><td>Wind, cold, distance. At home on the tundra and the high passes.</td></tr></tbody></table></div>
 <h2>Spells</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Spell</th><th>Element</th><th>Mana</th><th>Effect</th></tr></thead>
-<tbody><tr><td>Kindle</td><td>fire</td><td>1</td><td>Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel.</td></tr>
-<tr><td>Ember Lash</td><td>fire</td><td>3</td><td>+2 combat dice to one unit or character for one battle.</td></tr>
-<tr><td>Mend Stone</td><td>earth</td><td>2</td><td>Repair 2 damage on one building or vehicle, or restore 4 wear to one tool.</td></tr>
-<tr><td>Bulwark</td><td>earth</td><td>4</td><td>One unit or character ignores 2 hits in one battle.</td></tr>
-<tr><td>Cleanse</td><td>water</td><td>2</td><td>Cure one illness marker, or restore 2 health to one character.</td></tr>
-<tr><td>Mist Veil</td><td>water</td><td>4</td><td>Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll.</td></tr>
-<tr><td>Fair Wind</td><td>air</td><td>2</td><td>+2 hexes on one leg, any mode. A ship gets +3.</td></tr>
-<tr><td>Stormcall</td><td>air</td><td>5</td><td>One party, vehicle or cargo you can see loses its next leg entirely.</td></tr></tbody></table></div>
+<thead><tr><th>Code</th><th>Spell</th><th>Element</th><th>Mana</th><th>Effect</th></tr></thead>
+<tbody><tr><td>SPL-01</td><td>Kindle</td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>1</td><td>Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel.</td></tr>
+<tr><td>SPL-02</td><td>Ember Lash</td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>3</td><td>+2 combat dice to one unit or character for one battle.</td></tr>
+<tr><td>SPL-03</td><td>Mend Stone</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>2</td><td>Repair 2 damage on one building or vehicle, or restore 4 wear to one tool.</td></tr>
+<tr><td>SPL-04</td><td>Bulwark</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>4</td><td>One unit or character ignores 2 hits in one battle.</td></tr>
+<tr><td>SPL-05</td><td>Cleanse</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>2</td><td>Cure one illness marker, or restore 2 health to one character.</td></tr>
+<tr><td>SPL-06</td><td>Mist Veil</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>4</td><td>Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll.</td></tr>
+<tr><td>SPL-07</td><td>Fair Wind</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>2</td><td>+2 hexes on one leg, any mode. A ship gets +3.</td></tr>
+<tr><td>SPL-08</td><td>Stormcall</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>5</td><td>One party, vehicle or cargo you can see loses its next leg entirely.</td></tr>
+<tr><td>SPL-09</td><td>Wayfire</td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>3</td><td>Burn one blockage clear: a route blocked by an event card reopens, or one tile of forest or marsh costs your party nothing to cross this leg. The tile is scorched - nothing may be foraged there for the rest of the game.</td></tr>
+<tr><td>SPL-10</td><td>Seam-Sense</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>3</td><td>Look at the deposit token under your hex and under every hex adjacent to it, then put them back face down. You may tell the truth about them or not.</td></tr>
+<tr><td>SPL-11</td><td>Root-Snare</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>3</td><td>One monster, party or figure in your hex or adjacent to it may not move next round. A vehicle instead marks 1 damage tearing itself free.</td></tr>
+<tr><td>SPL-12</td><td>Deep Draught</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>2</td><td>Fill every empty barrel in one town with water, free, wherever it stands - and that town ignores Drought this round.</td></tr>
+<tr><td>SPL-13</td><td>Farspeak</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>2</td><td>Speak to any other character on the board, wherever they are. You may agree a trade, a price or an alliance at that distance, and either of you may hold to it or not, exactly as if you had met.</td></tr>
+<tr><td>SPL-14</td><td>Loft</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>4</td><td>One vehicle - any mode, including a wagon or a sled - is lifted over one impassable hex and set down on the far side. An airship instead ignores its next wind roll and moves at full speed.</td></tr></tbody></table></div>
+<h2>Enchantments</h2>
+<p>The other half of the arcane deck.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Enchantment</th><th>Element</th><th>Mana</th><th>Bound to</th><th>Effect</th></tr></thead>
+<tbody><tr><td>ENC-01</td><td>Bound Hearth</td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>4</td><td>one building with a furnace, kiln or oven</td><td>The building pays no fuel, ever.</td></tr>
+<tr><td>ENC-02</td><td>Truename Stamp</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>3</td><td>one tool</td><td>The tool takes no wear. It can still be lost, sold or stolen - and it is the single most stolen object in the game.</td></tr>
+<tr><td>ENC-03</td><td>Salt-Kept</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>3</td><td>one granary, warehouse or ship's hold</td><td>Nothing inside spoils, perishes or curdles. Milk keeps. So does everything else.</td></tr>
+<tr><td>ENC-04</td><td>Keening Ward</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>4</td><td>one building</td><td>Cancel every theft, heist and robbery card aimed at this building. Each time it does, roll d6: on a 1 the ward is spent and the card comes off.</td></tr>
+<tr><td>ENC-05</td><td>Weightless Hand</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>5</td><td>one character's pack, belt or cloak</td><td>+10 kg to that character's burden bar. The bar is walked as normal; the last ten kilograms simply do not pull.</td></tr>
+<tr><td>ENC-06</td><td>Deeproot Footing</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>5</td><td>one building</td><td>The building ignores Earthquake, Flood and Landslip entirely, and takes half damage, rounded down, from every other source.</td></tr></tbody></table></div>
+<h2>Modification deck</h2>
+<p>Fittings and enchantments bolted onto a vehicle. They share the vehicle's slots — 2 on most, and at most 1 enchantment whatever the count — so a shipwright and a hedge-witch are competing for the same hull.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Modification</th><th>Class</th><th>Fits</th><th>Cost</th><th>Effect</th></tr></thead>
+<tbody><tr><td>MOD-01</td><td>Spinnaker</td><td>rigging</td><td>ship, barge</td><td>4 fine-cloth + 3 rope + 1 lumber</td><td>+2 hexes on any leg run with the wind - which at sea means any leg that is not into a storm. Cancel the bonus in a Storms at Sea round: the spinnaker is the first thing struck, and a skipper who leaves it up loses it.</td></tr>
+<tr><td>MOD-02</td><td>Sweep Rig</td><td>rigging</td><td>airship</td><td>4 lumber + 3 fine-cloth + 4 rope + 2 ironware</td><td>A fixed upper beam and a hinged lower one down each flank, worked by the crew: treat any Foul or Contrary wind roll as Contrary at full speed, for 1 extra crew fed that round. It cannot beat the wind - it can refuse to be beaten by it.</td></tr>
+<tr><td>MOD-03</td><td>Copper Sheathing</td><td>hull</td><td>ship, barge</td><td>6 copper + 2 ironware</td><td>+1 hex per leg, permanently - a foul bottom is a slow bottom. The hull takes no damage from reef, ice or grounding, and worms and rot never touch her.</td></tr>
+<tr><td>MOD-04</td><td>Iron Ram</td><td>hull</td><td>ship</td><td>4 ironware + 2 steel + 3 lumber</td><td>+3 combat dice in the first round of any battle at sea, attacking only. -1 hex per leg, always: it is a great deal of iron a long way forward.</td></tr>
+<tr><td>MOD-05</td><td>Storm Shutters</td><td>hull</td><td>ship, barge, airship, train</td><td>3 lumber + 2 leather + 1 ironware</td><td>Cargo aboard loses nothing to weather: ignore every cargo-loss effect from a weather or disaster event card. The vehicle itself still takes its damage.</td></tr>
+<tr><td>MOD-06</td><td>Ice Runners</td><td>running-gear</td><td>cart, caravan, sled</td><td>2 steel + 2 lumber</td><td>Shod runners that swap for the wheels in an hour. While the winter rule in travel.json is in force the vehicle moves at sled speeds; the rest of the year it is 70 kg of steel in the bed and does nothing at all.</td></tr>
+<tr><td>MOD-07</td><td>Compound Boiler</td><td>powerplant</td><td>train, ship, airship</td><td>4 steel + 3 copper + 2 ironware</td><td>Uses the same steam twice. Halve the vehicle's fuel per leg, rounded up, and +1 hex per leg. It is delicate: on any hazard or battle result, roll d6 and on a 1 the boiler is out until repaired at a steelworks.</td></tr>
+<tr><td>MOD-08</td><td>Keelbound</td><td>enchantment</td><td>ship, barge</td><td>5 water mana</td><td>She will not sink. A damage bar that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.</td></tr>
+<tr><td>MOD-09</td><td>Fleetfoot Binding</td><td>enchantment</td><td>any</td><td>4 air mana</td><td>+2 hexes on every day leg, whatever the mode and whatever the ground. An airship instead re-rolls one wind roll per journey.</td></tr>
+<tr><td>MOD-10</td><td>Warded Hold</td><td>enchantment</td><td>any</td><td>4 earth mana</td><td>Nothing is taken from this vehicle that its owner did not hand over. Cancel every theft, robbery, piracy and heist card aimed at its cargo. A boarder who wins a battle may still take the vehicle entire - the ward is on the hold, not on the owner.</td></tr>
+<tr><td>MOD-11</td><td>Salamander Grate</td><td>enchantment</td><td>train, ship, airship</td><td>6 fire mana</td><td>The firebox burns without fuel: the vehicle pays no fuel per leg, ever. It also never runs cold - the vehicle may take a night leg with no light, because the glare from the grate is light enough.</td></tr></tbody></table></div>
 <h2>Event deck</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Card</th><th>Category</th><th>Scope</th><th>Copies</th></tr></thead>
@@ -1222,8 +1296,22 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>The Grey Pox</td><td>social</td><td>global</td><td>1</td></tr>
 <tr><td>Impure Smelt</td><td>industry</td><td>global</td><td>2</td></tr>
 <tr><td>Blood Moon</td><td>arcane</td><td>global</td><td>1</td></tr>
-<tr><td>The Quiet Season</td><td>wildlife</td><td>global</td><td>1</td></tr></tbody></table></div>
-<p>69 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.</p>
+<tr><td>The Quiet Season</td><td>wildlife</td><td>global</td><td>1</td></tr>
+<tr><td>Black Sails on the Horizon</td><td>crime</td><td>global</td><td>2</td></tr>
+<tr><td>Letter of Marque</td><td>crime</td><td>offer</td><td>1</td></tr>
+<tr><td>Press Gang</td><td>crime</td><td>targeted</td><td>2</td></tr>
+<tr><td>The Dragon's Tithe</td><td>conflict</td><td>global</td><td>1</td></tr>
+<tr><td>The Aerial Post</td><td>industry</td><td>offer</td><td>1</td></tr>
+<tr><td>Gale</td><td>weather</td><td>global</td><td>2</td></tr>
+<tr><td>Early Thaw</td><td>weather</td><td>global</td><td>2</td></tr>
+<tr><td>Clipped Coin</td><td>market</td><td>global</td><td>2</td></tr>
+<tr><td>Guild Embargo</td><td>market</td><td>targeted</td><td>2</td></tr>
+<tr><td>New Tolls</td><td>social</td><td>local</td><td>2</td></tr>
+<tr><td>The Sign of the Green Man</td><td>social</td><td>offer</td><td>2</td></tr>
+<tr><td>The Mead Run</td><td>market</td><td>offer</td><td>2</td></tr>
+<tr><td>Ley Drought</td><td>arcane</td><td>global</td><td>2</td></tr>
+<tr><td>Boom Town</td><td>market</td><td>local</td><td>2</td></tr></tbody></table></div>
+<p>94 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.</p>
 </section>
   </main>
 </div>

@@ -1,4 +1,4 @@
-# The monsters — A4 plates (monster-cinder-wolf … monster-storm-roc)
+# The monsters — A4 plates (monster-cinder-wolf … monster-hoarwyrm)
 
 Twelve full-page studies, one per monster card, in deck order (MON-01 … MON-12).
 Drawn like plates from a **field bestiary**: the creature observed from a safe
@@ -35,7 +35,7 @@ Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading,
 no lens effects, no magic particles. No text, no letters, no border rule.
 ```
 
-## Negative prompt — for all twelve
+## Negative prompt — for all fourteen
 
 ```text
 gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
@@ -203,4 +203,50 @@ In one talon, held gently, a full-grown ram, looking resigned rather than
 harmed. Far below at the cliff base, a tiny climber on a rope, mid-ascent,
 lunch in a shoulder bag. Wash: cold slate on the storm and wing shadow,
 flat.
+```
+
+## monster-vhalrik-the-cinder-crowned — Vhalrik, the Cinder-Crowned *(fire, MON-13, unique)*
+
+```text
+[PREAMBLE]
+
+An enormous four-limbed dragon at rest on a mountain hoard, coiled rather than
+rearing, chin down on crossed forelimbs so the head is level with the viewer
+and unmistakably awake and thinking. Long neck, folded ribbed wings drawn
+tight to the flanks, scales as overlapping plates hatched heavier along the
+spine. A crown of blunt fused horns crusted with cooled slag - the cinder
+crown, drawn as rock, never as fire. The hoard is coin, plate, chain and
+broken harness, hatched as a slope he is lying on rather than a pile beside
+him. Between the plates of his chest the hatching deepens to banked coal.
+Scale object: a full-sized wagon wheel among the coin, no taller than one of
+his claws. Wash: rust red between the chest plates and along the hoard, ochre
+on the coin, flat, no glow.
+
+FRAMING. A4 portrait plate, whole page drawn edge to edge.
+Head, crown, both forelimbs and the wagon wheel inside the middle 84% of the
+page. The tail and the far wing may run to the margins. Head turned
+three-quarters toward the centre of the page.
+```
+
+## monster-hoarwyrm — The Hoarwyrm *(air, MON-14)*
+
+```text
+[PREAMBLE]
+
+A long wingless serpentine dragon riding the air above a tundra ridge, its
+body drawn in three great horizontal undulations across the page with the
+head at the near end, low and forward. White-scaled: almost all bare paper,
+with the form built from the sparest contour hatching, so it reads as pale
+against the darker hatched sky rather than as an outline. A ruff of fine
+spines along the neck, each rimed with a hard crust of frost drawn as short
+crisp ticks. Long narrow head, no horns, eyes set forward. Beneath it the
+ground goes white in a widening band where the cold has come with it, and a
+herd of reindeer, drawn very small, moves out of that band. Wash: cold slate
+in the sky only, a single pale grey-green note on the frost; the wyrm itself
+takes no wash at all.
+
+FRAMING. A4 portrait plate, whole page drawn edge to edge.
+Head, neck ruff and the first undulation of the body inside the middle 84% of
+the page, with the head in the UPPER half. The far coils and the reindeer may
+run to the margins. Low horizon in the bottom third.
 ```

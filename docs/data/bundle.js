@@ -129,6 +129,20 @@ window.GAME_DATA = {
         "collection": "quests",
         "idField": "id",
         "summary": "The quest deck: mini-quests and campaigns, accept or decline."
+      },
+      {
+        "key": "modifications",
+        "file": "modifications.json",
+        "collection": "modifications",
+        "idField": "id",
+        "summary": "The modification deck: fittings and enchantments bolted onto a vehicle."
+      },
+      {
+        "key": "components",
+        "file": "components.json",
+        "collection": "decks",
+        "idField": "id",
+        "summary": "How a physical game element is built - card stock, frame, bars, marks, deck backs and tokens. Content-free: the shapes everything else is drawn into."
       }
     ],
     "maps": {
@@ -372,6 +386,11 @@ window.GAME_DATA = {
           "to": "arcana.elements"
         },
         {
+          "from": "arcana",
+          "path": "enchantments.cards[].element",
+          "to": "arcana.elements"
+        },
+        {
           "from": "monsters",
           "path": "monsters[].element",
           "to": "arcana.elements"
@@ -408,6 +427,40 @@ window.GAME_DATA = {
           "from": "quests",
           "path": "quests[].stages[].reward.items[]",
           "to": "items"
+        },
+        {
+          "from": "modifications",
+          "path": "modifications[].class",
+          "to": "modifications.classes"
+        },
+        {
+          "from": "modifications",
+          "path": "modifications[].inputs[].commodity",
+          "to": "commodities"
+        },
+        {
+          "from": "modifications",
+          "path": "modifications[].madeAt",
+          "to": "buildings"
+        },
+        {
+          "from": "modifications",
+          "path": "modifications[].specialist",
+          "to": "peoples.professions"
+        },
+        {
+          "from": "modifications",
+          "path": "modifications[].element",
+          "to": "arcana.elements"
+        },
+        {
+          "from": "modifications",
+          "path": "modifications[].fits[]",
+          "to": "transport",
+          "allow": [
+            "mounted",
+            "any"
+          ]
         }
       ]
     }
@@ -3001,7 +3054,7 @@ window.GAME_DATA = {
         "name": "Inn",
         "category": "civic",
         "tier": 2,
-        "summary": "Rest, rumour and hired muscle. Serve ale or wine to clear 1 unrest; travellers rest here to heal; escorts are hired here; quests are heard here.",
+        "summary": "Rest, rumour and hired muscle. Serve drink to clear unrest; travellers rest here to heal; escorts are hired here; quests are heard here. The one building in the game that may stand outside a town.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3015,7 +3068,48 @@ window.GAME_DATA = {
         "buildPoints": 12,
         "minRounds": 2,
         "workerSlots": 2,
-        "notes": "Resting, hireling costs and rumours are in rules.json under rest and hirelings. Every settlement printed on a map is assumed to contain an inn of its rank."
+        "roadside": {
+          "$comment": "An inn is the only building that does not need a town under it. That is not a special case for its own sake - it is what makes a long route survivable, and it is the reason a player builds anything on the empty half of the board. A roadside inn is a holding: it earns, it can be bought and sold, and it can be burned down.",
+          "where": "On any tile carrying a road, rail or a route the builder has travelled, in or out of a town. A roadside inn founds no town and stores nothing.",
+          "extraCost": [
+            {
+              "commodity": "lumber",
+              "qty": 2
+            }
+          ],
+          "cap": 3,
+          "capNote": "Three inns per player. Past that an innkeeper is a landlord, and landlords are the land-ownership rules, which are not written yet."
+        },
+        "drink": {
+          "$comment": "The sink the drink half of the economy was missing. Ale is the everyday pour and mead is what an inn actually wants: it is the only thing on the list that both clears unrest and pays a toll back to its owner, which is what makes an apiary and a brewery worth the tiles they sit on.",
+          "serves": [
+            {
+              "commodity": "ale",
+              "clearsUnrest": 1,
+              "coinPerUnit": 6
+            },
+            {
+              "commodity": "wine",
+              "clearsUnrest": 1,
+              "coinPerUnit": 12
+            },
+            {
+              "commodity": "mead",
+              "clearsUnrest": 2,
+              "coinPerUnit": 14,
+              "note": "Mead is the inn's own trade. Two unrest a barrel, and no other building will take it in quantity."
+            }
+          ],
+          "limit": "One barrel served per inn per round, owner's choice of which."
+        },
+        "rest": {
+          "$comment": "Stated on the building as well as in rules.json rest, because the building is where a player looks.",
+          "heals": 2,
+          "healsWithHealer": 3,
+          "coin": 5,
+          "toll": "At an inn owned by another player, the 5 coin goes to that player rather than to the board. At your own, it is waived."
+        },
+        "notes": "Resting, hireling costs and rumours are in rules.json under rest and hirelings. Every settlement printed on a map is assumed to contain an inn of its rank - those are the board's, not any player's."
       },
       {
         "id": "infirmary",
@@ -5788,8 +5882,8 @@ window.GAME_DATA = {
     }
   },
   "deposits": {
-    "$comment": "Deposits are face-down tokens placed under tiles at setup. A prospector's survey flips them. A deposit is not a commodity - it is a finite source that a mine draws from until it is exhausted.",
-    "version": "0.1.0",
+    "$comment": "Deposits are face-down tokens placed under tiles at setup. A prospector's survey flips them. A deposit is not a commodity - it is a finite source that a mine draws from until it is exhausted.\n\ntokenYields is the heart of it: one number per token, and they are NOT all the same. Two coal seams on the same board are not the same prospect, and a game where they are is a game where surveying is arithmetic rather than a gamble. Make one token per number, richest first in this file and face down on the table; what a survey reveals is which one you found. The sum of the list is the type's total yield and its length is how many go into the box - both are derived, and neither is written down twice.",
+    "version": "0.2.0",
     "deposits": [
       {
         "id": "clay-bed",
@@ -5798,8 +5892,16 @@ window.GAME_DATA = {
         "yields": [
           "clay"
         ],
-        "totalYield": 40,
-        "tokensInSetup": 8,
+        "tokenYields": [
+          7,
+          6,
+          6,
+          5,
+          5,
+          4,
+          4,
+          3
+        ],
         "surveyDifficulty": 2,
         "summary": "Common and shallow. Often visible without a survey on marsh and coast tiles."
       },
@@ -5810,8 +5912,14 @@ window.GAME_DATA = {
         "yields": [
           "sand"
         ],
-        "totalYield": 40,
-        "tokensInSetup": 6,
+        "tokenYields": [
+          9,
+          8,
+          7,
+          6,
+          5,
+          5
+        ],
         "surveyDifficulty": 2
       },
       {
@@ -5821,8 +5929,13 @@ window.GAME_DATA = {
         "yields": [
           "peat"
         ],
-        "totalYield": 30,
-        "tokensInSetup": 5,
+        "tokenYields": [
+          8,
+          7,
+          6,
+          5,
+          4
+        ],
         "surveyDifficulty": 2,
         "summary": "No mine needed - just a shovel and a strong back."
       },
@@ -5833,8 +5946,15 @@ window.GAME_DATA = {
         "yields": [
           "coal"
         ],
-        "totalYield": 30,
-        "tokensInSetup": 7,
+        "tokenYields": [
+          8,
+          6,
+          5,
+          4,
+          3,
+          2,
+          2
+        ],
         "surveyDifficulty": 4,
         "summary": "The engine of the industrial half of the game. Whoever holds coal sets the price of steel."
       },
@@ -5845,8 +5965,15 @@ window.GAME_DATA = {
         "yields": [
           "iron-ore"
         ],
-        "totalYield": 28,
-        "tokensInSetup": 7,
+        "tokenYields": [
+          7,
+          6,
+          4,
+          4,
+          3,
+          2,
+          2
+        ],
         "surveyDifficulty": 4
       },
       {
@@ -5856,8 +5983,12 @@ window.GAME_DATA = {
         "yields": [
           "copper-ore"
         ],
-        "totalYield": 20,
-        "tokensInSetup": 4,
+        "tokenYields": [
+          8,
+          5,
+          4,
+          3
+        ],
         "surveyDifficulty": 4
       },
       {
@@ -5867,8 +5998,11 @@ window.GAME_DATA = {
         "yields": [
           "gold-ore"
         ],
-        "totalYield": 10,
-        "tokensInSetup": 3,
+        "tokenYields": [
+          6,
+          3,
+          1
+        ],
         "surveyDifficulty": 5
       },
       {
@@ -5878,8 +6012,11 @@ window.GAME_DATA = {
         "yields": [
           "gems"
         ],
-        "totalYield": 8,
-        "tokensInSetup": 3,
+        "tokenYields": [
+          5,
+          2,
+          1
+        ],
         "surveyDifficulty": 5,
         "theftTarget": true
       },
@@ -5890,8 +6027,12 @@ window.GAME_DATA = {
         "yields": [
           "salt"
         ],
-        "totalYield": 24,
-        "tokensInSetup": 4,
+        "tokenYields": [
+          9,
+          7,
+          5,
+          3
+        ],
         "surveyDifficulty": 3
       },
       {
@@ -5901,8 +6042,10 @@ window.GAME_DATA = {
         "yields": [
           "mana-crystal"
         ],
-        "totalYield": 6,
-        "tokensInSetup": 2,
+        "tokenYields": [
+          4,
+          2
+        ],
         "surveyDifficulty": 6,
         "summary": "Rare. Elves will not mine one and will pay well to stop you."
       },
@@ -5913,8 +6056,11 @@ window.GAME_DATA = {
         "yields": [
           "crude-oil"
         ],
-        "totalYield": 20,
-        "tokensInSetup": 3,
+        "tokenYields": [
+          11,
+          6,
+          3
+        ],
         "surveyDifficulty": 5,
         "summary": "Worthless until someone builds a steelworks and a derrick. Then it is the best tile on the board."
       }
@@ -6152,6 +6298,94 @@ window.GAME_DATA = {
         "theftRisk": 2,
         "waterCapable": false,
         "notes": "The brief's train heist target. Big, valuable, and it cannot take a detour."
+      },
+      {
+        "id": "sled",
+        "name": "Sled",
+        "tier": 2,
+        "summary": "A team in harness and a load on runners. The only thing that crosses tundra faster than it crosses grass.",
+        "capacity": 10,
+        "speed": 3,
+        "requires": "none",
+        "buyCost": 90,
+        "effortToLoad": 2,
+        "packaging": [
+          {
+            "commodity": "sack",
+            "qty": 5
+          }
+        ],
+        "craft": {
+          "building": "carpenter",
+          "inputs": [
+            {
+              "commodity": "lumber",
+              "qty": 4
+            },
+            {
+              "commodity": "leather",
+              "qty": 3
+            },
+            {
+              "commodity": "rope",
+              "qty": 2
+            }
+          ],
+          "effortHours": 6
+        },
+        "upkeep": 2,
+        "theftRisk": 1,
+        "waterCapable": false,
+        "notes": "The team eats: 2 meat per round on the road, and a sled left standing through a thaw is a pile of lumber. It runs on snow, ice and frozen marsh, which on this board means tundra, mountain and anything the winter has taken."
+      },
+      {
+        "id": "airship",
+        "name": "Airship",
+        "tier": 4,
+        "summary": "A gasbag, a gondola and a great deal of nerve. It goes over everything - and it is at the mercy of the wind.",
+        "capacity": 18,
+        "speed": 5,
+        "requires": "none",
+        "buyCost": 520,
+        "effortToLoad": 3,
+        "packaging": [
+          {
+            "commodity": "crate",
+            "qty": 4
+          }
+        ],
+        "craft": {
+          "building": "glassworks",
+          "inputs": [
+            {
+              "commodity": "fine-cloth",
+              "qty": 8
+            },
+            {
+              "commodity": "rope",
+              "qty": 6
+            },
+            {
+              "commodity": "lumber",
+              "qty": 4
+            },
+            {
+              "commodity": "ironware",
+              "qty": 3
+            }
+          ],
+          "effortHours": 18
+        },
+        "upkeep": 5,
+        "fuelPerTile": [
+          {
+            "commodity": "charcoal",
+            "qty": 1
+          }
+        ],
+        "theftRisk": 0,
+        "waterCapable": true,
+        "notes": "Ignores terrain entirely - there is no ground up there - but it is the only mode weather can stop dead, and the only one with nowhere to tie up. It must end each journey at a settlement or lose 1 damage box to the mooring. Cargo aboard an airship cannot be robbed on the road; it can be dropped."
       }
     ],
     "routes": {
@@ -6657,6 +6891,7 @@ window.GAME_DATA = {
     "cards": [
       {
         "id": "hard-frost",
+        "cardCode": "EVT-01",
         "name": "Hard Frost",
         "category": "weather",
         "scope": "global",
@@ -6688,6 +6923,7 @@ window.GAME_DATA = {
       },
       {
         "id": "drought",
+        "cardCode": "EVT-02",
         "name": "Drought",
         "category": "weather",
         "scope": "local",
@@ -6714,6 +6950,7 @@ window.GAME_DATA = {
       },
       {
         "id": "long-summer",
+        "cardCode": "EVT-03",
         "name": "Long Summer",
         "category": "weather",
         "scope": "global",
@@ -6736,6 +6973,7 @@ window.GAME_DATA = {
       },
       {
         "id": "storms",
+        "cardCode": "EVT-04",
         "name": "Storms at Sea",
         "category": "weather",
         "scope": "global",
@@ -6766,6 +7004,7 @@ window.GAME_DATA = {
       },
       {
         "id": "flood",
+        "cardCode": "EVT-05",
         "name": "Flood",
         "category": "disaster",
         "scope": "local",
@@ -6794,6 +7033,7 @@ window.GAME_DATA = {
       },
       {
         "id": "earthquake",
+        "cardCode": "EVT-06",
         "name": "Earthquake",
         "category": "disaster",
         "scope": "local",
@@ -6819,6 +7059,7 @@ window.GAME_DATA = {
       },
       {
         "id": "wildfire",
+        "cardCode": "EVT-07",
         "name": "Wildfire",
         "category": "disaster",
         "scope": "local",
@@ -6844,6 +7085,7 @@ window.GAME_DATA = {
       },
       {
         "id": "mine-collapse",
+        "cardCode": "EVT-08",
         "name": "Mine Collapse",
         "category": "disaster",
         "scope": "targeted",
@@ -6870,6 +7112,7 @@ window.GAME_DATA = {
       },
       {
         "id": "warehouse-heist",
+        "cardCode": "EVT-09",
         "name": "Warehouse Heist",
         "category": "crime",
         "scope": "targeted",
@@ -6891,6 +7134,7 @@ window.GAME_DATA = {
       },
       {
         "id": "caravan-robbery",
+        "cardCode": "EVT-10",
         "name": "Caravan Robbery",
         "category": "crime",
         "scope": "targeted",
@@ -6915,6 +7159,7 @@ window.GAME_DATA = {
       },
       {
         "id": "train-heist",
+        "cardCode": "EVT-11",
         "name": "Train Heist",
         "category": "crime",
         "scope": "targeted",
@@ -6941,6 +7186,7 @@ window.GAME_DATA = {
       },
       {
         "id": "piracy",
+        "cardCode": "EVT-12",
         "name": "Piracy",
         "category": "crime",
         "scope": "global",
@@ -6961,6 +7207,7 @@ window.GAME_DATA = {
       },
       {
         "id": "smuggling-ring",
+        "cardCode": "EVT-13",
         "name": "Smuggling Ring",
         "category": "crime",
         "scope": "offer",
@@ -6997,6 +7244,7 @@ window.GAME_DATA = {
       },
       {
         "id": "wolf-pack",
+        "cardCode": "EVT-14",
         "name": "Wolf Pack",
         "category": "wildlife",
         "scope": "local",
@@ -7023,6 +7271,7 @@ window.GAME_DATA = {
       },
       {
         "id": "boar-in-the-fields",
+        "cardCode": "EVT-15",
         "name": "Boar in the Fields",
         "category": "wildlife",
         "scope": "local",
@@ -7062,6 +7311,7 @@ window.GAME_DATA = {
       },
       {
         "id": "dragon-sighting",
+        "cardCode": "EVT-16",
         "name": "Dragon Sighting",
         "category": "wildlife",
         "scope": "global",
@@ -7094,6 +7344,7 @@ window.GAME_DATA = {
       },
       {
         "id": "raiders",
+        "cardCode": "EVT-17",
         "name": "Raiders",
         "category": "conflict",
         "scope": "targeted",
@@ -7120,6 +7371,7 @@ window.GAME_DATA = {
       },
       {
         "id": "border-dispute",
+        "cardCode": "EVT-18",
         "name": "Border Dispute",
         "category": "conflict",
         "scope": "global",
@@ -7155,6 +7407,7 @@ window.GAME_DATA = {
       },
       {
         "id": "mercenaries-for-hire",
+        "cardCode": "EVT-19",
         "name": "Mercenaries for Hire",
         "category": "conflict",
         "scope": "offer",
@@ -7185,6 +7438,7 @@ window.GAME_DATA = {
       },
       {
         "id": "plague",
+        "cardCode": "EVT-20",
         "name": "Plague",
         "category": "social",
         "scope": "local",
@@ -7211,6 +7465,7 @@ window.GAME_DATA = {
       },
       {
         "id": "migrants",
+        "cardCode": "EVT-21",
         "name": "Migrants",
         "category": "social",
         "scope": "offer",
@@ -7247,6 +7502,7 @@ window.GAME_DATA = {
       },
       {
         "id": "strike",
+        "cardCode": "EVT-22",
         "name": "Strike",
         "category": "social",
         "scope": "targeted",
@@ -7268,6 +7524,7 @@ window.GAME_DATA = {
       },
       {
         "id": "festival",
+        "cardCode": "EVT-23",
         "name": "Festival",
         "category": "social",
         "scope": "global",
@@ -7297,6 +7554,7 @@ window.GAME_DATA = {
       },
       {
         "id": "master-craftsman",
+        "cardCode": "EVT-24",
         "name": "Travelling Master",
         "category": "social",
         "scope": "offer",
@@ -7327,6 +7585,7 @@ window.GAME_DATA = {
       },
       {
         "id": "iron-shortage",
+        "cardCode": "EVT-25",
         "name": "Iron Shortage",
         "category": "market",
         "scope": "global",
@@ -7344,6 +7603,7 @@ window.GAME_DATA = {
       },
       {
         "id": "glut",
+        "cardCode": "EVT-26",
         "name": "Glut",
         "category": "market",
         "scope": "global",
@@ -7361,6 +7621,7 @@ window.GAME_DATA = {
       },
       {
         "id": "foreign-demand",
+        "cardCode": "EVT-27",
         "name": "Foreign Demand",
         "category": "market",
         "scope": "global",
@@ -7377,6 +7638,7 @@ window.GAME_DATA = {
       },
       {
         "id": "tax-levy",
+        "cardCode": "EVT-28",
         "name": "Tax Levy",
         "category": "market",
         "scope": "global",
@@ -7393,6 +7655,7 @@ window.GAME_DATA = {
       },
       {
         "id": "ley-surge",
+        "cardCode": "EVT-29",
         "name": "Ley Surge",
         "category": "arcane",
         "scope": "global",
@@ -7416,6 +7679,7 @@ window.GAME_DATA = {
       },
       {
         "id": "curdled-brew",
+        "cardCode": "EVT-30",
         "name": "Curdled Brew",
         "category": "arcane",
         "scope": "targeted",
@@ -7437,6 +7701,7 @@ window.GAME_DATA = {
       },
       {
         "id": "wandering-wizard",
+        "cardCode": "EVT-31",
         "name": "Wandering Wizard",
         "category": "arcane",
         "scope": "offer",
@@ -7467,6 +7732,7 @@ window.GAME_DATA = {
       },
       {
         "id": "camp-fever",
+        "cardCode": "EVT-32",
         "name": "Camp Fever",
         "category": "social",
         "scope": "targeted",
@@ -7495,6 +7761,7 @@ window.GAME_DATA = {
       },
       {
         "id": "marsh-ague",
+        "cardCode": "EVT-33",
         "name": "Marsh Ague",
         "category": "social",
         "scope": "local",
@@ -7523,6 +7790,7 @@ window.GAME_DATA = {
       },
       {
         "id": "grey-pox",
+        "cardCode": "EVT-34",
         "name": "The Grey Pox",
         "category": "social",
         "scope": "global",
@@ -7552,6 +7820,7 @@ window.GAME_DATA = {
       },
       {
         "id": "impure-smelt",
+        "cardCode": "EVT-35",
         "name": "Impure Smelt",
         "category": "industry",
         "scope": "global",
@@ -7579,6 +7848,7 @@ window.GAME_DATA = {
       },
       {
         "id": "blood-moon",
+        "cardCode": "EVT-36",
         "name": "Blood Moon",
         "category": "arcane",
         "scope": "global",
@@ -7600,6 +7870,7 @@ window.GAME_DATA = {
       },
       {
         "id": "quiet-season",
+        "cardCode": "EVT-37",
         "name": "The Quiet Season",
         "category": "wildlife",
         "scope": "global",
@@ -7615,11 +7886,404 @@ window.GAME_DATA = {
             "text": "Monster bands on every discovery table shrink by 2 for two rounds."
           }
         ]
+      },
+      {
+        "id": "black-sails",
+        "cardCode": "EVT-38",
+        "name": "Black Sails on the Horizon",
+        "category": "crime",
+        "scope": "global",
+        "copies": 2,
+        "text": "A squadron under no flag anyone will name works the sea lanes for a season.",
+        "effects": [
+          {
+            "type": "cargo",
+            "op": "steal",
+            "value": 1,
+            "modes": [
+              "ship",
+              "barge"
+            ],
+            "text": "Every player with cargo at sea loses one cargo token - highest value first."
+          },
+          {
+            "type": "price",
+            "op": "band",
+            "value": 1,
+            "family": "luxury",
+            "text": "Anything that has to come by sea gets dearer."
+          }
+        ],
+        "mitigations": [
+          "A ship with a Warded Hold or an escort of 2+ soldiers keeps its cargo.",
+          "A player whose shore hex is patrolled by a befriended Reef Serpent is not touched.",
+          "Cargo sitting in a harbour is safe - it just is not moving."
+        ]
+      },
+      {
+        "id": "letter-of-marque",
+        "cardCode": "EVT-39",
+        "name": "Letter of Marque",
+        "category": "crime",
+        "scope": "offer",
+        "copies": 1,
+        "text": "A seat of government will licence one privateer, and look away.",
+        "effects": [
+          {
+            "type": "choice",
+            "op": "accept-or-pass",
+            "text": "Take it: for the next 3 rounds your ships may take one cargo token per round from any other player's ship in an adjacent water hex, and keep it. Every other player gains 1 unrest in every coastal town of yours they can reach, and your ships pay double harbour fees for the rest of the game."
+          }
+        ],
+        "mitigations": [
+          "Passing costs nothing. The card goes round in turn order and is discarded if nobody takes it.",
+          "A victim may buy the letter back from the holder at any agreed price; the licence is a piece of paper, and paper is tradeable."
+        ]
+      },
+      {
+        "id": "press-gang",
+        "cardCode": "EVT-40",
+        "name": "Press Gang",
+        "category": "crime",
+        "scope": "targeted",
+        "copies": 2,
+        "text": "They came for the harbour taverns at midnight and left with whoever could walk.",
+        "effects": [
+          {
+            "type": "population",
+            "op": "remove",
+            "value": 2,
+            "target": "one-coastal-town",
+            "text": "Two workers are gone. They may come back - see the mitigation."
+          },
+          {
+            "type": "unrest",
+            "op": "add",
+            "value": 1,
+            "target": "that-town"
+          }
+        ],
+        "mitigations": [
+          "A town with a palisade or a garrison of 1+ soldiers loses nobody.",
+          "A town with an inn loses one worker instead of two: the innkeeper hides the regulars in the cellar.",
+          "Roll d6 at the end of each following round; on a 6 the pressed workers walk home."
+        ]
+      },
+      {
+        "id": "dragons-tithe",
+        "cardCode": "EVT-41",
+        "name": "The Dragon's Tithe",
+        "category": "conflict",
+        "scope": "global",
+        "copies": 1,
+        "text": "Vhalrik has counted, and finds the Reach behind on its payments.",
+        "effects": [
+          {
+            "type": "commodity-loss",
+            "op": "choice",
+            "text": "Every player hands over 1 gold, 1 gems or 2 jewellery, their choice, from any one town. A player with none of those loses their highest-value commodity stack instead."
+          },
+          {
+            "type": "combat",
+            "op": "spawn",
+            "monster": "vhalrik-the-cinder-crowned",
+            "text": "Any player who refuses places Vhalrik on their richest town. He attacks it at the start of the next round."
+          }
+        ],
+        "mitigations": [
+          "A player who has befriended Vhalrik pays nothing and may not be attacked by him.",
+          "Paying is always allowed and always ends it. That is the lesson."
+        ]
+      },
+      {
+        "id": "aerial-post",
+        "cardCode": "EVT-42",
+        "name": "The Aerial Post",
+        "category": "industry",
+        "scope": "offer",
+        "copies": 1,
+        "text": "A postal contract, offered to whoever can actually fly it.",
+        "effects": [
+          {
+            "type": "choice",
+            "op": "accept-or-pass",
+            "text": "Take it if you own an airship: 40 coin now, and 15 coin at the end of every round in which that airship ends its leg at a different settlement from the one it started at. Miss two rounds running and the contract is cancelled."
+          }
+        ],
+        "mitigations": [
+          "Only a player with an airship may take it. If nobody has one it is discarded, and shuffled back in ten rounds later.",
+          "Cancelling costs nothing but the contract."
+        ]
+      },
+      {
+        "id": "gale",
+        "cardCode": "EVT-43",
+        "name": "Gale",
+        "category": "weather",
+        "scope": "global",
+        "copies": 2,
+        "text": "It comes off the ice and does not stop until it reaches the sea.",
+        "effects": [
+          {
+            "type": "movement",
+            "op": "block",
+            "modes": [
+              "airship"
+            ],
+            "rounds": 1,
+            "text": "Nothing flies. An airship in the air when this is drawn marks 2 damage and comes down on the nearest land hex."
+          },
+          {
+            "type": "movement",
+            "op": "slow",
+            "value": 0.5,
+            "modes": [
+              "ship",
+              "barge"
+            ],
+            "rounds": 1
+          },
+          {
+            "type": "building",
+            "op": "damage",
+            "value": 1,
+            "target": "all-timber-buildings",
+            "chance": "d6 6"
+          }
+        ],
+        "mitigations": [
+          "An airship moored at a settlement takes no damage.",
+          "A ship in harbour is unaffected.",
+          "A sweep-rigged airship marks 1 damage instead of 2 - the crew can at least steer the descent."
+        ]
+      },
+      {
+        "id": "early-thaw",
+        "cardCode": "EVT-44",
+        "name": "Early Thaw",
+        "category": "weather",
+        "scope": "global",
+        "copies": 2,
+        "text": "The frost lets go three weeks before anybody planned for.",
+        "effects": [
+          {
+            "type": "movement",
+            "op": "block",
+            "modes": [
+              "sled"
+            ],
+            "rounds": 2,
+            "text": "The winter rule in travel.json lifts. Any sled standing on marsh or water is lost with its cargo."
+          },
+          {
+            "type": "crop",
+            "op": "advance",
+            "value": 1,
+            "target": "all-growing"
+          },
+          {
+            "type": "movement",
+            "op": "block",
+            "terrain": [
+              "marsh"
+            ],
+            "rounds": 1,
+            "text": "The fens are impassable to everything."
+          }
+        ],
+        "mitigations": [
+          "A sled on solid ground is fine - it just becomes a box on runners until the next frost.",
+          "A player who moved every sled to a settlement last round loses nothing."
+        ]
+      },
+      {
+        "id": "clipped-coin",
+        "cardCode": "EVT-45",
+        "name": "Clipped Coin",
+        "category": "market",
+        "scope": "global",
+        "copies": 2,
+        "text": "Somebody has been shaving the edges, and everybody knows it but nobody will be first to refuse a coin.",
+        "effects": [
+          {
+            "type": "price",
+            "op": "band",
+            "value": 1,
+            "family": "all",
+            "text": "Every price band shifts up one step. Prices are higher; the coin in your hand is not."
+          },
+          {
+            "type": "unrest",
+            "op": "add",
+            "value": 1,
+            "target": "all-towns-with-a-market"
+          }
+        ],
+        "mitigations": [
+          "A player holding gold, gems or jewellery instead of coin loses nothing to this - metal does not care what the mint says.",
+          "A trading house sets its own scales: its owner ignores the band shift for one sale."
+        ]
+      },
+      {
+        "id": "guild-embargo",
+        "cardCode": "EVT-46",
+        "name": "Guild Embargo",
+        "category": "market",
+        "scope": "targeted",
+        "copies": 2,
+        "text": "You have undercut them once too often.",
+        "effects": [
+          {
+            "type": "price",
+            "op": "band",
+            "value": -2,
+            "family": "one-of-yours",
+            "target": "drawer",
+            "text": "Pick the commodity family you sell most of: you sell it at two bands worse for 3 rounds. Everyone else sells it at one band better."
+          }
+        ],
+        "mitigations": [
+          "A player with a merchant or a trading house may pay the guild off: 60 coin, and the card is discarded.",
+          "Selling to another player instead of to the board sidesteps the embargo entirely - which is the whole point of having friends."
+        ]
+      },
+      {
+        "id": "new-tolls",
+        "cardCode": "EVT-47",
+        "name": "New Tolls",
+        "category": "social",
+        "scope": "local",
+        "copies": 2,
+        "text": "A gate, a rope and a man with a ledger, on a road you paid to build.",
+        "effects": [
+          {
+            "type": "movement",
+            "op": "toll",
+            "value": 5,
+            "target": "region",
+            "text": "5 coin per cargo token entering or leaving the region by road, for 3 rounds. Pay, or go round."
+          }
+        ],
+        "mitigations": [
+          "The player who built the road in that region collects the toll instead of paying it.",
+          "Rail, water and air pay nothing - which is how everyone learns what a road is worth."
+        ]
+      },
+      {
+        "id": "green-man",
+        "cardCode": "EVT-48",
+        "name": "The Sign of the Green Man",
+        "category": "social",
+        "scope": "offer",
+        "copies": 2,
+        "text": "A failing inn on a good road, and an innkeeper who wants out.",
+        "effects": [
+          {
+            "type": "choice",
+            "op": "accept-or-pass",
+            "text": "Buy it for 70 coin: place an inn, free of build cost and build time, on any road or route tile you have travelled, inside or outside a town. It is yours, it earns like any inn, and other players may use it at your price."
+          }
+        ],
+        "mitigations": [
+          "Passing costs nothing.",
+          "A player who already owns three inns may not take it - see buildings.json inn, and the reason there is a cap."
+        ]
+      },
+      {
+        "id": "mead-run",
+        "cardCode": "EVT-49",
+        "name": "The Mead Run",
+        "category": "market",
+        "scope": "offer",
+        "copies": 2,
+        "text": "Every inn in the Reach is dry at once, and they are all offering above the odds.",
+        "effects": [
+          {
+            "type": "choice",
+            "op": "accept-or-pass",
+            "text": "Sell any quantity of mead or ale this round at double the current band, to the board, from any town connected to a route - no market building needed."
+          },
+          {
+            "type": "price",
+            "op": "band",
+            "value": -1,
+            "family": "drink",
+            "text": "Afterwards the cellars are full and the price falls a band."
+          }
+        ],
+        "mitigations": [
+          "Passing costs nothing.",
+          "A player with an apiary and a brewery can usually take this twice a game, which is exactly the industry this card exists to make worth building."
+        ]
+      },
+      {
+        "id": "ley-drought",
+        "cardCode": "EVT-50",
+        "name": "Ley Drought",
+        "category": "arcane",
+        "scope": "global",
+        "copies": 2,
+        "text": "The ground has gone quiet. Nobody can say why, and the ones who can will not.",
+        "effects": [
+          {
+            "type": "commodity-loss",
+            "commodity": "mana-crystal",
+            "qty": 1,
+            "target": "all-towns"
+          },
+          {
+            "type": "effort",
+            "op": "flat",
+            "value": -1,
+            "target": "workers-at-arcane-buildings",
+            "text": "Every spell costs 1 extra mana for 2 rounds, and mana veins yield nothing."
+          }
+        ],
+        "mitigations": [
+          "Mana already stored in a talisman is untouched - which is what talismans are for.",
+          "An elf holds their innate mana as normal.",
+          "A shrine in a town cancels the extra spell cost for characters standing in it."
+        ]
+      },
+      {
+        "id": "boom-town",
+        "cardCode": "EVT-51",
+        "name": "Boom Town",
+        "category": "market",
+        "scope": "local",
+        "copies": 2,
+        "text": "A strike is announced, the road fills with hopefuls, and a village of forty becomes a town of four hundred in a month.",
+        "effects": [
+          {
+            "type": "population",
+            "op": "add",
+            "value": 2,
+            "target": "region-largest-town"
+          },
+          {
+            "type": "price",
+            "op": "band",
+            "value": 2,
+            "family": "food",
+            "target": "region",
+            "text": "Food and drink in that region jump two bands. Everyone has to eat and nobody planted anything."
+          },
+          {
+            "type": "unrest",
+            "op": "add",
+            "value": 1,
+            "target": "region-towns"
+          }
+        ],
+        "mitigations": [
+          "A town with a granary holding 4+ food ignores the price jump and gains the workers anyway - which is the whole argument for granaries.",
+          "The player who owns the nearest farm may sell into that region at the boom price. Demand is only a disaster if you have nothing to sell."
+        ]
       }
     ],
     "deck": {
-      "totalCards": 69,
-      "$totalNote": "Sum of every card's copies. The previous figure of 58 had drifted from the data - which is exactly why the annex is generated now.",
+      "totalCards": 94,
+      "$totalNote": "Sum of every card's copies, and it is generated rather than remembered: the figure has drifted twice already, which is exactly why the annex is built from this file.",
       "drawPerPlayerPerRound": 1,
       "drawnBy": "each-player",
       "when": "In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.",
@@ -8089,6 +8753,141 @@ window.GAME_DATA = {
         "combatDice": 2
       },
       {
+        "id": "crossbow",
+        "name": "Crossbow",
+        "class": "weapon",
+        "slot": "two-hand",
+        "madeAt": "blacksmith",
+        "inputs": [
+          {
+            "commodity": "steel",
+            "qty": 1
+          },
+          {
+            "commodity": "lumber",
+            "qty": 2
+          },
+          {
+            "commodity": "rope",
+            "qty": 1
+          }
+        ],
+        "effortHours": 5,
+        "baseValue": 175,
+        "massKg": 5,
+        "specialist": "smith",
+        "effects": [
+          "+3 combat dice, and ignores 1 point of enemy armour.",
+          "Slow: it rolls in the first round of a battle and every second round after.",
+          "Needs a quiver to fight."
+        ],
+        "combatDice": 3
+      },
+      {
+        "id": "harpoon",
+        "name": "Harpoon",
+        "class": "weapon",
+        "slot": "two-hand",
+        "madeAt": "blacksmith",
+        "inputs": [
+          {
+            "commodity": "pig-iron",
+            "qty": 1
+          },
+          {
+            "commodity": "lumber",
+            "qty": 1
+          },
+          {
+            "commodity": "rope",
+            "qty": 2
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 75,
+        "massKg": 4,
+        "effects": [
+          "+1 combat die, and +3 instead against any water-element monster or anything bigger than a horse.",
+          "A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round.",
+          "+1 output on Fish."
+        ],
+        "combatDice": 1
+      },
+      {
+        "id": "dirk",
+        "name": "Dirk",
+        "class": "weapon",
+        "slot": "hand",
+        "madeAt": "blacksmith",
+        "inputs": [
+          {
+            "commodity": "pig-iron",
+            "qty": 1
+          }
+        ],
+        "effortHours": 2,
+        "baseValue": 35,
+        "massKg": 0.8,
+        "effects": [
+          "+1 combat die.",
+          "Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls."
+        ],
+        "combatDice": 1
+      },
+      {
+        "id": "greatsword",
+        "name": "Greatsword",
+        "class": "weapon",
+        "slot": "two-hand",
+        "madeAt": "blacksmith",
+        "inputs": [
+          {
+            "commodity": "steel",
+            "qty": 3
+          },
+          {
+            "commodity": "leather",
+            "qty": 1
+          }
+        ],
+        "effortHours": 7,
+        "baseValue": 340,
+        "massKg": 4,
+        "specialist": "smith",
+        "effects": [
+          "+3 combat dice, and hits on 3+ instead of 4+.",
+          "-1 move point, and it cannot be used with a shield.",
+          "Worth 1 victory point at game end."
+        ],
+        "combatDice": 3
+      },
+      {
+        "id": "boar-spear",
+        "name": "Boar Spear",
+        "class": "weapon",
+        "slot": "two-hand",
+        "madeAt": "blacksmith",
+        "inputs": [
+          {
+            "commodity": "pig-iron",
+            "qty": 1
+          },
+          {
+            "commodity": "lumber",
+            "qty": 1
+          }
+        ],
+        "effortHours": 2,
+        "baseValue": 55,
+        "massKg": 3,
+        "effects": [
+          "+1 combat die, and +3 in the first round against any monster that charges - anything of strength 4 or more that attacks first.",
+          "The crossbar holds it off you: ignore the first hit from that monster.",
+          "+1 output on Hunt Game."
+        ],
+        "combatDice": 1
+      },
+      {
         "id": "potion-vigour",
         "name": "Draught of Vigour",
         "class": "potion",
@@ -8330,6 +9129,134 @@ window.GAME_DATA = {
         "massKg": 0.5,
         "effects": [
           "One unit or character ignores every hit from a fire-element monster in one battle."
+        ]
+      },
+      {
+        "id": "potion-ley-tincture",
+        "name": "Ley Tincture",
+        "class": "potion",
+        "madeAt": "alchemist",
+        "inputs": [
+          {
+            "commodity": "mana-crystal",
+            "qty": 1
+          },
+          {
+            "commodity": "arcane-herb",
+            "qty": 3
+          }
+        ],
+        "effortHours": 5,
+        "baseValue": 220,
+        "massKg": 0.5,
+        "specialist": "alchemist",
+        "effects": [
+          "For one round the drinker holds 3 mana in the body, talisman or no talisman.",
+          "Mana still there when the round ends blows away, and the drinker takes 1 damage."
+        ]
+      },
+      {
+        "id": "potion-forbearance",
+        "name": "Innkeeper's Forbearance",
+        "class": "potion",
+        "madeAt": "alchemist",
+        "inputs": [
+          {
+            "commodity": "mead",
+            "qty": 2
+          },
+          {
+            "commodity": "arcane-herb",
+            "qty": 1
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 80,
+        "massKg": 1,
+        "effects": [
+          "Broached at an inn, it clears 2 unrest in that town and everyone forgives everyone.",
+          "Anywhere else it clears 1 unrest and starts an argument."
+        ]
+      },
+      {
+        "id": "potion-long-ration",
+        "name": "Long Ration",
+        "class": "potion",
+        "madeAt": "alchemist",
+        "inputs": [
+          {
+            "commodity": "honey",
+            "qty": 1
+          },
+          {
+            "commodity": "salted-meat",
+            "qty": 1
+          },
+          {
+            "commodity": "arcane-herb",
+            "qty": 1
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 75,
+        "massKg": 0.5,
+        "effects": [
+          "One travelling party eats nothing for two rounds, and nobody complains until the third."
+        ]
+      },
+      {
+        "id": "potion-dragonsbane",
+        "name": "Dragonsbane Draught",
+        "class": "potion",
+        "madeAt": "alchemist",
+        "inputs": [
+          {
+            "commodity": "ember-root",
+            "qty": 2
+          },
+          {
+            "commodity": "frost-lichen",
+            "qty": 2
+          },
+          {
+            "commodity": "mana-crystal",
+            "qty": 1
+          }
+        ],
+        "effortHours": 6,
+        "baseValue": 380,
+        "massKg": 0.5,
+        "specialist": "alchemist",
+        "effects": [
+          "For one battle, the drinker's party ignores the free first round any monster of strength 5 or more gets, and halves its hits, rounded up.",
+          "It does not help you win. It helps you still be there at the end."
+        ]
+      },
+      {
+        "id": "potion-aeronaut",
+        "name": "Aeronaut's Nerve",
+        "class": "potion",
+        "madeAt": "alchemist",
+        "inputs": [
+          {
+            "commodity": "moon-blossom",
+            "qty": 1
+          },
+          {
+            "commodity": "ale",
+            "qty": 1
+          },
+          {
+            "commodity": "arcane-herb",
+            "qty": 1
+          }
+        ],
+        "effortHours": 3,
+        "baseValue": 110,
+        "massKg": 0.5,
+        "effects": [
+          "Re-roll one airship wind roll and keep the better result - see travel.json.",
+          "The crew are steady at any height for the rest of the journey, which matters more than the roll does."
         ]
       },
       {
@@ -8648,6 +9575,40 @@ window.GAME_DATA = {
             "S": 3,
             "O": 5
           }
+        },
+        {
+          "id": "sled",
+          "name": "Sled",
+          "hexesPerDayLeg": {
+            "G": 1,
+            "F": 1,
+            "H": 2,
+            "M": 2,
+            "B": 2,
+            "T": 5,
+            "D": 0,
+            "C": 1,
+            "S": 2,
+            "O": 0
+          },
+          "note": "Runners want snow and ice. Tundra is its road; frozen marsh and shallow water carry it where nothing wheeled will go; on bare grass it is a heavy box being dragged. Shallow water only while a frost is on - see the winter rule below."
+        },
+        {
+          "id": "airship",
+          "name": "Airship",
+          "hexesPerDayLeg": {
+            "G": 5,
+            "F": 5,
+            "H": 5,
+            "M": 4,
+            "B": 5,
+            "T": 5,
+            "D": 5,
+            "C": 5,
+            "S": 5,
+            "O": 5
+          },
+          "note": "One number for every terrain, because there is no terrain up there - only the mountain reaches high enough to matter. What an airship pays instead is the wind: see wind, below."
         }
       ],
       "overrides": [
@@ -8699,6 +9660,36 @@ window.GAME_DATA = {
         "rule": "Owl's Eye (items.json) counts as a lantern for one round",
         "note": null
       }
+    },
+    "wind": {
+      "$comment": "What an airship pays instead of terrain. Rolled once per airship per day leg, before it moves. This is the whole reason the sweep-rig on VEH-17 exists, and the reason Fair Wind is worth 2 mana to an aeronaut.",
+      "roll": "d6 at the start of each airship day leg.",
+      "table": [
+        {
+          "d6": "1",
+          "result": "Foul. The airship moves 1 hex, in a direction of the left-hand player's choosing."
+        },
+        {
+          "d6": "2-3",
+          "result": "Contrary. Half speed, rounded down."
+        },
+        {
+          "d6": "4-5",
+          "result": "Fair. Full speed."
+        },
+        {
+          "d6": "6",
+          "result": "Following. Full speed +2 hexes."
+        }
+      ],
+      "sweeps": "An airship with a sweep-rig - fixed upper beam, working lower beam, rowed by the crew - treats any Foul or Contrary result as Contrary at full speed instead, at the cost of 1 extra crew fed that round. It cannot beat the wind; it can refuse to be beaten by it.",
+      "spells": "Fair Wind (arcana.json) sets the result to Following without rolling. Stormcall against an airship counts as Foul."
+    },
+    "winter": {
+      "$comment": "A sled is the first mode in the game whose speeds depend on the season, so the season needs stating somewhere. It is stated here and nowhere else.",
+      "when": "While a Hard Frost card (events.json) is in play, and on any tundra or mountain tile at any time.",
+      "effect": "Marsh, shallow water and coast tiles count as frozen: sleds cross them at the listed speed and no other land mode may enter shallow water at all. Barges and ships may not enter a frozen tile.",
+      "thaw": "When the frost lifts, any sled standing on a marsh or water tile is lost with its cargo. Move it before the round ends."
     },
     "caves": {
       "$comment": "Cave mouths are placed by discovery rolls on terrain with the caves feature (hills, mountain). What is inside is worth the oil.",
@@ -9295,30 +10286,43 @@ window.GAME_DATA = {
   "arcana": {
     "$comment": "Mana, elements and spells. Mana is NOT a commodity: it has no bulk, sits in no stockpile, and cannot be crated. It lives in bodies (rarely - see peoples.json manaStorage) and in talismans (items.json, class talisman), tracked with a token on the talisman's mana bar. Mana crystals in commodities.json are a different thing: frozen mana as a trade good and potion ingredient - a crystal can be shattered by its holder to yield 2 mana of any one element, but mana can never be pressed back into a crystal.",
     "version": "0.1.0",
+    "elementMarks": {
+      "$comment": "One drawn mark per element, so that a card, a chit, a page of the book and the explorer all say fire the same way. The path is the whole mark: stroked, never filled, on the grid and at the weight data/components.json declares under marks.element - so a mark reads at chit size and survives the black-and-white edition, which is the whole point of putting it on the ink plate. The marks are built on one construction, a ground line and what the element does to it: fire puts three tongues above it, earth puts a stone on it and a root under it, water replaces it with three swells, air lifts three streamers clear of it. None of them is a borrowed alchemical sign - see docs/art/04-iconography.md, which bans letterforms and real-world symbols alike.",
+      "grid": "0 0 24 24, and the mark is drawn to fill it edge to edge",
+      "renderedBy": "tools/build-icons.mjs, which writes docs/art/icons/element-<id>.svg from these paths and nothing else"
+    },
     "elements": [
       {
         "id": "fire",
         "name": "Fire",
         "ink": "oxide",
-        "summary": "Heat, forge-work, hunger. At home in the desert and under the mountains."
+        "summary": "Heat, forge-work, hunger. At home in the desert and under the mountains.",
+        "mark": "M4 20.6H20M12 5.6c2.9 4.4 3.5 6 3.5 8.6 0 3.6-2.5 5.1-3.5 6.2-1-1.1-3.5-2.6-3.5-6.2 0-2.6.6-4.2 3.5-8.6zM7.2 11.6c1.7 2.6 2.1 3.6 2.1 5.1 0 2.1-1.5 3.1-2.1 3.7-.6-.6-2.1-1.6-2.1-3.7 0-1.5.4-2.5 2.1-5.1zM16.8 11.6c1.7 2.6 2.1 3.6 2.1 5.1 0 2.1-1.5 3.1-2.1 3.7-.6-.6-2.1-1.6-2.1-3.7 0-1.5.4-2.5 2.1-5.1z",
+        "markNote": "Three tongues standing on the hearth line, rooted in it - a flame that floats is a seed."
       },
       {
         "id": "earth",
         "name": "Earth",
         "ink": "verdigris",
-        "summary": "Stone, root, patience. At home in hills, barrows and old woods."
+        "summary": "Stone, root, patience. At home in hills, barrows and old woods.",
+        "mark": "M3.6 11.6H20.4M6 16.4H18M8.4 20.6H15.6M8.8 11.6c0-2.6 1.4-4.2 3.2-4.2s3.2 1.6 3.2 4.2z",
+        "markNote": "A stone on the ground line, and the ground going down in narrowing strata under it. Water is these lines moving; earth is them holding still."
       },
       {
         "id": "water",
         "name": "Water",
         "ink": "slate",
-        "summary": "Current, mist, depth. At home in marsh, shore and open sea."
+        "summary": "Current, mist, depth. At home in marsh, shore and open sea.",
+        "mark": "M3.6 7.4q4.2-3.3 8.4 0t8.4 0M3.6 13.4q4.2-3.3 8.4 0t8.4 0M3.6 19.4q4.2-3.3 8.4 0t8.4 0",
+        "markNote": "The ground line has become swell - three of them, and no ground at all."
       },
       {
         "id": "air",
         "name": "Air",
         "ink": "soot-tint-40",
-        "summary": "Wind, cold, distance. At home on the tundra and the high passes."
+        "summary": "Wind, cold, distance. At home on the tundra and the high passes.",
+        "mark": "M3.6 7.6h9.4a2.6 2.6 0 1 0-2.6-2.6M3.6 12.8h12a2.8 2.8 0 1 1-2.8 2.8M3.6 18h7.6",
+        "markNote": "Three streamers, two of them curling off the end. Nothing touches the ground."
       }
     ],
     "mana": {
@@ -9331,6 +10335,7 @@ window.GAME_DATA = {
     "spells": [
       {
         "id": "kindle",
+        "cardCode": "SPL-01",
         "name": "Kindle",
         "element": "fire",
         "cost": 1,
@@ -9338,6 +10343,7 @@ window.GAME_DATA = {
       },
       {
         "id": "ember-lash",
+        "cardCode": "SPL-02",
         "name": "Ember Lash",
         "element": "fire",
         "cost": 3,
@@ -9345,6 +10351,7 @@ window.GAME_DATA = {
       },
       {
         "id": "mend-stone",
+        "cardCode": "SPL-03",
         "name": "Mend Stone",
         "element": "earth",
         "cost": 2,
@@ -9352,6 +10359,7 @@ window.GAME_DATA = {
       },
       {
         "id": "bulwark",
+        "cardCode": "SPL-04",
         "name": "Bulwark",
         "element": "earth",
         "cost": 4,
@@ -9359,6 +10367,7 @@ window.GAME_DATA = {
       },
       {
         "id": "cleanse",
+        "cardCode": "SPL-05",
         "name": "Cleanse",
         "element": "water",
         "cost": 2,
@@ -9366,6 +10375,7 @@ window.GAME_DATA = {
       },
       {
         "id": "mist-veil",
+        "cardCode": "SPL-06",
         "name": "Mist Veil",
         "element": "water",
         "cost": 4,
@@ -9373,6 +10383,7 @@ window.GAME_DATA = {
       },
       {
         "id": "fair-wind",
+        "cardCode": "SPL-07",
         "name": "Fair Wind",
         "element": "air",
         "cost": 2,
@@ -9380,12 +10391,133 @@ window.GAME_DATA = {
       },
       {
         "id": "stormcall",
+        "cardCode": "SPL-08",
         "name": "Stormcall",
         "element": "air",
         "cost": 5,
         "effect": "One party, vehicle or cargo you can see loses its next leg entirely."
+      },
+      {
+        "id": "wayfire",
+        "cardCode": "SPL-09",
+        "name": "Wayfire",
+        "element": "fire",
+        "cost": 3,
+        "effect": "Burn one blockage clear: a route blocked by an event card reopens, or one tile of forest or marsh costs your party nothing to cross this leg. The tile is scorched - nothing may be foraged there for the rest of the game."
+      },
+      {
+        "id": "seam-sense",
+        "cardCode": "SPL-10",
+        "name": "Seam-Sense",
+        "element": "earth",
+        "cost": 3,
+        "effect": "Look at the deposit token under your hex and under every hex adjacent to it, then put them back face down. You may tell the truth about them or not."
+      },
+      {
+        "id": "root-snare",
+        "cardCode": "SPL-11",
+        "name": "Root-Snare",
+        "element": "earth",
+        "cost": 3,
+        "effect": "One monster, party or figure in your hex or adjacent to it may not move next round. A vehicle instead marks 1 damage tearing itself free."
+      },
+      {
+        "id": "deep-draught",
+        "cardCode": "SPL-12",
+        "name": "Deep Draught",
+        "element": "water",
+        "cost": 2,
+        "effect": "Fill every empty barrel in one town with water, free, wherever it stands - and that town ignores Drought this round."
+      },
+      {
+        "id": "farspeak",
+        "cardCode": "SPL-13",
+        "name": "Farspeak",
+        "element": "air",
+        "cost": 2,
+        "effect": "Speak to any other character on the board, wherever they are. You may agree a trade, a price or an alliance at that distance, and either of you may hold to it or not, exactly as if you had met."
+      },
+      {
+        "id": "loft",
+        "cardCode": "SPL-14",
+        "name": "Loft",
+        "element": "air",
+        "cost": 4,
+        "effect": "One vehicle - any mode, including a wagon or a sled - is lifted over one impassable hex and set down on the far side. An airship instead ignores its next wind roll and moves at full speed."
       }
     ],
+    "enchantments": {
+      "$comment": "The other half of the arcane deck. A spell is spent and gone; an enchantment is mana laid into an object and left there. It is bound at an alchemist or a shrine, costs its mana up front, and holds until it is broken - which is a thing an event or an enemy can do. Enchantments bound to VEHICLES are not here: a vehicle carries fittings as well as enchantments and the two share a slot, so both live together in data/modifications.json. This file holds the enchantments laid on buildings, tools, items and people.",
+      "binding": {
+        "where": "At an alchemist, or at a shrine for half again the mana, rounded up.",
+        "who": "A character holding the mana - the same rule as casting. Binding takes the whole round.",
+        "slots": "One enchantment per object. Binding a second breaks the first, and the mana in it is gone.",
+        "broken": "A destroyed object takes its enchantment with it. Some event cards break enchantments outright; a broken enchantment refunds nothing.",
+        "value": "An enchanted object sells for its base value plus 20 coin per mana bound into it, and scores 1 victory point per 4 mana bound, rounded down."
+      },
+      "cards": [
+        {
+          "id": "bound-hearth",
+          "cardCode": "ENC-01",
+          "name": "Bound Hearth",
+          "element": "fire",
+          "cost": 4,
+          "boundTo": "one building with a furnace, kiln or oven",
+          "effect": "The building pays no fuel, ever.",
+          "story": "A coal that was burning when the binding closed, and is burning still. Bakers who own one do not sell it, and bakers who do not own one say so loudly at every guild meeting."
+        },
+        {
+          "id": "truename-stamp",
+          "cardCode": "ENC-02",
+          "name": "Truename Stamp",
+          "element": "earth",
+          "cost": 3,
+          "boundTo": "one tool",
+          "effect": "The tool takes no wear. It can still be lost, sold or stolen - and it is the single most stolen object in the game.",
+          "story": "The smith's touchmark struck twice: once in the iron, once in whatever is under the iron. A stamped tool knows what it is for and declines to become anything else."
+        },
+        {
+          "id": "salt-kept",
+          "cardCode": "ENC-03",
+          "name": "Salt-Kept",
+          "element": "water",
+          "cost": 3,
+          "boundTo": "one granary, warehouse or ship's hold",
+          "effect": "Nothing inside spoils, perishes or curdles. Milk keeps. So does everything else.",
+          "story": "The air inside goes still and tastes faintly of the sea. Three generations of the Saltreach victuallers have made their whole living off one bound cellar and a reputation for honesty they did not entirely earn."
+        },
+        {
+          "id": "keening-ward",
+          "cardCode": "ENC-04",
+          "name": "Keening Ward",
+          "element": "air",
+          "cost": 4,
+          "boundTo": "one building",
+          "effect": "Cancel every theft, heist and robbery card aimed at this building. Each time it does, roll d6: on a 1 the ward is spent and the card comes off.",
+          "story": "It screams. That is the whole enchantment. It screams in a voice the owner cannot hear and the thief cannot stop hearing for about a week."
+        },
+        {
+          "id": "weightless-hand",
+          "cardCode": "ENC-05",
+          "name": "Weightless Hand",
+          "element": "air",
+          "cost": 5,
+          "boundTo": "one character's pack, belt or cloak",
+          "effect": "+10 kg to that character's burden bar. The bar is walked as normal; the last ten kilograms simply do not pull.",
+          "story": "Not lighter - the pack weighs what it weighs, and a scale will say so. It just declines to be heavy on the person carrying it, which mule drivers consider a distinction without a difference and porters consider the point."
+        },
+        {
+          "id": "deeproot-footing",
+          "cardCode": "ENC-06",
+          "name": "Deeproot Footing",
+          "element": "earth",
+          "cost": 5,
+          "boundTo": "one building",
+          "effect": "The building ignores Earthquake, Flood and Landslip entirely, and takes half damage, rounded down, from every other source.",
+          "story": "Laid into the foundation trench before the first course goes down, which is why it is almost never retrofitted and almost always regretted. The Dunhaven customs house has one. The Dunhaven customs house is the only thing on that street older than sixty years."
+        }
+      ]
+    },
     "casting": {
       "who": "Any character holding the mana - innately or in a carried talisman. Workers and soldiers do not cast.",
       "when": "Any time its effect makes sense; combat spells before hits are applied, Mist Veil after the discovery roll.",
@@ -9394,7 +10526,7 @@ window.GAME_DATA = {
     }
   },
   "monsters": {
-    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element for now - the deck is built to grow. Card layout: portrait, name and element badge at the top, story text low, vertical numbered HEALTH bar on the LEFT edge (harm bars always sit left, capacity bars always sit right - the convention is in docs/art/06-components.md), strength and mana yield as fixed stats. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
+    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow. Card layout: portrait, name and element badge at the top, story text low, vertical numbered HEALTH bar on the LEFT edge (harm bars always sit left, capacity bars always sit right - the convention is in docs/art/06-components.md), strength and mana yield as fixed stats. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
     "version": "0.1.0",
     "encounterOptions": {
       "$comment": "Meeting a monster is a choice, and the choice is the player's unless the card says otherwise. The card lists which of the four options it allows; slay is always allowed.",
@@ -9646,11 +10778,55 @@ window.GAME_DATA = {
         },
         "domesticated": "The grandest mount in the game: one character may ride it - day legs of 8 in any terrain, ignoring ground entirely. It eats 2 meat per round and will not enter a battle.",
         "story": "Its wingbeats are the weather two valleys over. Nobody has befriended one - the roc does not take gifts - but a bird beaten fairly and fed patiently has, three times in recorded history, decided a rider was worth carrying."
+      },
+      {
+        "id": "vhalrik-the-cinder-crowned",
+        "cardCode": "MON-13",
+        "name": "Vhalrik, the Cinder-Crowned",
+        "element": "fire",
+        "strength": 7,
+        "health": 16,
+        "manaYield": 6,
+        "unique": true,
+        "terrains": [
+          "mountain",
+          "hills",
+          "desert"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": true,
+          "domesticate": false
+        },
+        "gift": "1 gems and 1 gold, laid out and named aloud as tribute - he counts, and he remembers who was short",
+        "befriended": "He does not guard, escort or carry. Once per game, name a settlement: he burns it, and everything in it, whoever owns it. Then he goes back to the mountain and will not speak to you again.",
+        "story": "This is the dragon the sighting cards are about. Four hundred years on one hoard under the Kholvar peaks, old enough to be bored and rich enough to be patient. He talks, which is the frightening part, and he negotiates, which is worse: everyone who has bargained with Vhalrik got exactly what they asked for."
+      },
+      {
+        "id": "hoarwyrm",
+        "cardCode": "MON-14",
+        "name": "The Hoarwyrm",
+        "element": "air",
+        "strength": 5,
+        "health": 13,
+        "manaYield": 4,
+        "terrains": [
+          "tundra",
+          "mountain",
+          "coast"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": true
+        },
+        "domesticated": "Two full winters at a pasture on tundra, fed 4 meat a round the whole time. Then it flies cargo: 12 bulk, 6 hexes a leg, over any terrain and any weather, and no wind roll. It will not fight, and it will not go south of the frost line.",
+        "story": "White-scaled, wingless at rest and forty feet of it, riding the cold air off the ice the way a gull rides a cliff. It does not hoard gold - it hoards weather, or the herders think so, because where it winters the frost comes early and stays. Two families in the north have raised one from the shell. Neither will tell you how, and both are very rich."
       }
     ]
   },
   "vehicles": {
-    "$comment": "The vehicle deck: named, individual vehicles as cards, twelve for now, three of each kind. A vehicle card is a specific machine with a history; transport.json modes are the generic rules it runs on (mode names which). Card layout: picture across the middle, name and card code at the top, story text low; a vertical numbered DAMAGE bar up the LEFT edge and a vertical numbered CARGO bar up the RIGHT edge, both numbered from the bottom - harm left, capacity right, the same convention as every other deck (docs/art/06-components.md). Track damage and loaded bulk with tokens on the bars. A vehicle whose damage bar fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first. Art prompts in docs/art/prompts/vehicles.md.",
+    "$comment": "The vehicle deck: named, individual vehicles as cards - seventeen now, and every one of them a specific machine rather than a class of machine. A vehicle card is a specific machine with a history; transport.json modes are the generic rules it runs on (mode names which). Card layout: picture across the middle, name and card code at the top, story text low; a vertical numbered DAMAGE bar up the LEFT edge and a vertical numbered CARGO bar up the RIGHT edge, both numbered from the bottom - harm left, capacity right, the same convention as every other deck (docs/art/06-components.md). Track damage and loaded bulk with tokens on the bars. A vehicle whose damage bar fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first. Art prompts in docs/art/prompts/vehicles.md.",
     "version": "0.1.0",
     "cardIdScheme": {
       "$comment": "Every card in every deck carries a code: a deck prefix, a dash, a two-digit sequence. VEH vehicles, MON monsters, CHR characters, QST quests, TAL talismans, EVT events, ITM items, SPL spells. A revision suffix (VEH-03 v2) marks a reprinted card; unrevised cards carry no suffix. The numbering is this repository's own - anyone forking the game is free to renumber, which is why the code is data, not identity: the id field is the identity.",
@@ -9662,8 +10838,11 @@ window.GAME_DATA = {
         "TAL": "items (talismans)",
         "EVT": "events",
         "ITM": "items",
-        "SPL": "arcana (spells)"
-      }
+        "SPL": "arcana (spells)",
+        "ENC": "arcana (enchantments)",
+        "MOD": "modifications"
+      },
+      "seeAlso": "data/components.json lists the decks themselves - what each one is called, what its back looks like, and which file its content comes from."
     },
     "vehicles": [
       {
@@ -9785,6 +10964,56 @@ window.GAME_DATA = {
         "damageBoxes": 4,
         "quirk": "Night-eyed: may travel one night leg per journey with no light at all.",
         "story": "A tall black gelding the port is named after, or the other way round - the ostlers argue. He walks the dark road at an even pace, and riders swear he sees the ruts before the moon does."
+      },
+      {
+        "id": "nine-and-the-drum",
+        "cardCode": "VEH-13",
+        "name": "Nine and the Drum",
+        "mode": "sled",
+        "cargoCapacity": 10,
+        "damageBoxes": 5,
+        "quirk": "Nine dogs and a lead bitch called Drum. +2 hexes on any tundra leg, and the team smells a crevasse: ignore the first hazard result of every journey.",
+        "story": "Eight in the traces, one spare running loose, and Drum out front deciding what the driver meant. She has brought two drivers home unconscious on the load and takes the view that this is the arrangement."
+      },
+      {
+        "id": "red-lantern",
+        "cardCode": "VEH-14",
+        "name": "The Red Lantern",
+        "mode": "ship",
+        "cargoCapacity": 70,
+        "damageBoxes": 11,
+        "quirk": "Junk-rigged and steam-fitted: sails free, or burns 1 coal per leg for +2 hexes and no wind roll at all. Her battened sails take no damage from storms.",
+        "story": "Five battened sails the colour of dried blood, a squat iron funnel amidships, and a hull built in sealed compartments so a holed one is an inconvenience rather than a funeral. She came the long way round the southern ocean and her master has never once explained why."
+      },
+      {
+        "id": "carrion-queen",
+        "cardCode": "VEH-15",
+        "name": "The Carrion Queen",
+        "mode": "ship",
+        "cargoCapacity": 45,
+        "damageBoxes": 12,
+        "quirk": "+3 combat dice at sea, and any ship she catches must hand over one cargo token or fight. Nobody legitimate will berth her: she may not use a harbour she does not own, and pays double at any market that takes her coin at all.",
+        "story": "Black hull, black sails gone to ribbons, and a boiler bolted in below by somebody who did not care what it did to her lines. She makes eleven knots on a dead calm, which is the whole trick and the whole terror: outrunning the Queen used to be a matter of weather."
+      },
+      {
+        "id": "pilgrims-patience",
+        "cardCode": "VEH-16",
+        "name": "The Pilgrim's Patience",
+        "mode": "airship",
+        "cargoCapacity": 18,
+        "damageBoxes": 6,
+        "quirk": "Goes over everything: no terrain costs her anything, and she cannot be robbed on the road. Roll the wind each leg (travel.json) - she has no answer to it.",
+        "story": "A varnished silk envelope the length of a chapel, a wicker gondola, and a crew of four who have agreed not to discuss the drop. She carries mail, medicine and very expensive people, and has twice arrived somewhere nobody asked her to go."
+      },
+      {
+        "id": "sweep-of-vossgard",
+        "cardCode": "VEH-17",
+        "name": "The Sweep of Vossgard",
+        "mode": "airship",
+        "cargoCapacity": 14,
+        "damageBoxes": 7,
+        "quirk": "Sweep-rigged: a fixed upper beam and a working lower one down each flank, rowed by the crew. Treat any Foul or Contrary wind as Contrary at full speed, for 1 extra crew fed that round. She cannot beat the wind - she can refuse to be beaten by it.",
+        "story": "Havik Coalbrand drew the rig on the back of a timetable: fix the top spar, hinge the bottom one, and let eight strong people row the air. It looks absurd, it sounds like a mill, and it is the only airship in the Reach that has ever kept an appointment in a headwind."
       }
     ]
   },
@@ -10093,6 +11322,624 @@ window.GAME_DATA = {
         "notes": "Stages in order. If the Maw is slain by anyone else first, stage 3 completes at the Maw's hex with the clapper aboard - the bell falls silent either way."
       }
     ]
+  },
+  "modifications": {
+    "$comment": "The modification deck: things bolted, stitched or bound onto a vehicle after it is built. A vehicle card (vehicles.json) is a specific machine; a transport mode (transport.json) is the rules it runs on; a modification is what its owner did to it afterwards, and it is the only one of the three a player creates during a game. Fittings and enchantments are in the same file and compete for the same slots on purpose - a shipwright and a hedge-witch are both trying to make the same hull go faster, and the player has to choose which. The general enchantments, the ones laid on buildings, tools and people, are in arcana.json. Card layout: the fitting drawn across the middle, name and code at the top, what it fits as the kicker, story low. A modification card carries no bars - it has neither harm nor capacity of its own; what it does is change the bars on the card it is tucked under. Art prompts in docs/art/prompts/modifications.md.",
+    "version": "0.1.0",
+    "slots": {
+      "$comment": "How many modifications a vehicle may carry at once. Kept deliberately tight: the interesting decision is which two, not whether to take all six.",
+      "base": 2,
+      "byTier": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 3,
+        "$note": "the tier of the vehicle's mode in transport.json"
+      },
+      "enchantmentLimit": 1,
+      "rules": [
+        "One modification per slot, and no two of the same modification on one vehicle.",
+        "At most one enchantment, whatever the slot count. Binding a second breaks the first and its mana is gone.",
+        "A modification is fitted at the building named on its card, over one whole round, with the vehicle standing there.",
+        "Removing a fitting takes a round and returns half its inputs, rounded down. Removing an enchantment breaks it and returns nothing.",
+        "A wrecked vehicle takes its modifications with it. Salvage recovers fittings on a d6 of 5+, one roll each; enchantments never survive.",
+        "A modification adds its baseValue to what the vehicle sells for, and an enchanted vehicle adds 20 coin per mana bound as well."
+      ]
+    },
+    "classes": [
+      {
+        "id": "rigging",
+        "name": "Rigging",
+        "summary": "Sail, spar and line. What catches the wind, or refuses to need it."
+      },
+      {
+        "id": "hull",
+        "name": "Hull",
+        "summary": "Sheathing, plating, ram and shutter. What the journey happens inside."
+      },
+      {
+        "id": "running-gear",
+        "name": "Running Gear",
+        "summary": "Wheels, runners, harness and axle. What meets the ground."
+      },
+      {
+        "id": "powerplant",
+        "name": "Powerplant",
+        "summary": "Boiler, furnace and gear. What burns, and how well."
+      },
+      {
+        "id": "enchantment",
+        "name": "Enchantment",
+        "summary": "Mana bound into a vehicle at an alchemist or shrine. Costs mana, not commodities, and one per vehicle."
+      }
+    ],
+    "modifications": [
+      {
+        "id": "spinnaker",
+        "cardCode": "MOD-01",
+        "name": "Spinnaker",
+        "class": "rigging",
+        "fits": [
+          "ship",
+          "barge"
+        ],
+        "madeAt": "weaver",
+        "specialist": "weaver",
+        "inputs": [
+          {
+            "commodity": "fine-cloth",
+            "qty": 4
+          },
+          {
+            "commodity": "rope",
+            "qty": 3
+          },
+          {
+            "commodity": "lumber",
+            "qty": 1
+          }
+        ],
+        "effortHours": 6,
+        "baseValue": 160,
+        "massKg": 40,
+        "effect": "+2 hexes on any leg run with the wind - which at sea means any leg that is not into a storm. Cancel the bonus in a Storms at Sea round: the spinnaker is the first thing struck, and a skipper who leaves it up loses it.",
+        "story": "An enormous belly of dyed cloth flown from the bow, and the reason the western packet run is a day and a half rather than three. Setting it is a two-person job; getting it down in a squall is a four-person job, and the fourth person is usually the one who wanted it up."
+      },
+      {
+        "id": "sweep-rig",
+        "cardCode": "MOD-02",
+        "name": "Sweep Rig",
+        "class": "rigging",
+        "fits": [
+          "airship"
+        ],
+        "madeAt": "carpenter",
+        "specialist": "carpenter",
+        "inputs": [
+          {
+            "commodity": "lumber",
+            "qty": 4
+          },
+          {
+            "commodity": "fine-cloth",
+            "qty": 3
+          },
+          {
+            "commodity": "rope",
+            "qty": 4
+          },
+          {
+            "commodity": "ironware",
+            "qty": 2
+          }
+        ],
+        "effortHours": 9,
+        "baseValue": 240,
+        "massKg": 120,
+        "effect": "A fixed upper beam and a hinged lower one down each flank, worked by the crew: treat any Foul or Contrary wind roll as Contrary at full speed, for 1 extra crew fed that round. It cannot beat the wind - it can refuse to be beaten by it.",
+        "story": "Sail is a wing when there is wind and a bedsheet when there is not. Hinge the bottom spar, put eight strong people on the handles, and the bedsheet becomes an oar. It sounds like a mill and looks like a lunatic's drawing, and it is the reason the Vossgard mail arrives in a headwind."
+      },
+      {
+        "id": "copper-sheathing",
+        "cardCode": "MOD-03",
+        "name": "Copper Sheathing",
+        "class": "hull",
+        "fits": [
+          "ship",
+          "barge"
+        ],
+        "madeAt": "harbour",
+        "specialist": "smith",
+        "inputs": [
+          {
+            "commodity": "copper",
+            "qty": 6
+          },
+          {
+            "commodity": "ironware",
+            "qty": 2
+          }
+        ],
+        "effortHours": 8,
+        "baseValue": 300,
+        "massKg": 400,
+        "effect": "+1 hex per leg, permanently - a foul bottom is a slow bottom. The hull takes no damage from reef, ice or grounding, and worms and rot never touch her.",
+        "story": "Plate the whole underbody in copper below the waterline and she comes out of a year's trading as clean as she went in. It costs what a small farm costs. Every owner who has paid it says the same thing, which is that they should have paid it sooner."
+      },
+      {
+        "id": "iron-ram",
+        "cardCode": "MOD-04",
+        "name": "Iron Ram",
+        "class": "hull",
+        "fits": [
+          "ship"
+        ],
+        "madeAt": "harbour",
+        "specialist": "smith",
+        "inputs": [
+          {
+            "commodity": "ironware",
+            "qty": 4
+          },
+          {
+            "commodity": "steel",
+            "qty": 2
+          },
+          {
+            "commodity": "lumber",
+            "qty": 3
+          }
+        ],
+        "effortHours": 7,
+        "baseValue": 210,
+        "massKg": 900,
+        "effect": "+3 combat dice in the first round of any battle at sea, attacking only. -1 hex per leg, always: it is a great deal of iron a long way forward.",
+        "story": "A beak of forged iron scarfed onto the stem below the waterline. It is not subtle and it is not a deterrent, because nobody can see it until the moment it stops being relevant."
+      },
+      {
+        "id": "storm-shutters",
+        "cardCode": "MOD-05",
+        "name": "Storm Shutters",
+        "class": "hull",
+        "fits": [
+          "ship",
+          "barge",
+          "airship",
+          "train"
+        ],
+        "madeAt": "carpenter",
+        "inputs": [
+          {
+            "commodity": "lumber",
+            "qty": 3
+          },
+          {
+            "commodity": "leather",
+            "qty": 2
+          },
+          {
+            "commodity": "ironware",
+            "qty": 1
+          }
+        ],
+        "effortHours": 4,
+        "baseValue": 85,
+        "massKg": 60,
+        "effect": "Cargo aboard loses nothing to weather: ignore every cargo-loss effect from a weather or disaster event card. The vehicle itself still takes its damage.",
+        "story": "Hinged boards and oiled hide over every opening, dogged down by a crew who have learned the hard way what a following sea does to an open hatch. Cheap, ugly, and the difference between a bad round and a ruinous one."
+      },
+      {
+        "id": "ice-runners",
+        "cardCode": "MOD-06",
+        "name": "Ice Runners",
+        "class": "running-gear",
+        "fits": [
+          "cart",
+          "caravan",
+          "sled"
+        ],
+        "madeAt": "blacksmith",
+        "specialist": "smith",
+        "inputs": [
+          {
+            "commodity": "steel",
+            "qty": 2
+          },
+          {
+            "commodity": "lumber",
+            "qty": 2
+          }
+        ],
+        "effortHours": 5,
+        "baseValue": 130,
+        "massKg": 70,
+        "effect": "Shod runners that swap for the wheels in an hour. While the winter rule in travel.json is in force the vehicle moves at sled speeds; the rest of the year it is 70 kg of steel in the bed and does nothing at all.",
+        "story": "The Varl wagonrows carry them from the first frost, and unbolt them the week the thaw starts - a week early, every year, and every year somebody argues."
+      },
+      {
+        "id": "compound-boiler",
+        "cardCode": "MOD-07",
+        "name": "Compound Boiler",
+        "class": "powerplant",
+        "fits": [
+          "train",
+          "ship",
+          "airship"
+        ],
+        "madeAt": "steelworks",
+        "specialist": "engineer",
+        "inputs": [
+          {
+            "commodity": "steel",
+            "qty": 4
+          },
+          {
+            "commodity": "copper",
+            "qty": 3
+          },
+          {
+            "commodity": "ironware",
+            "qty": 2
+          }
+        ],
+        "effortHours": 12,
+        "baseValue": 420,
+        "massKg": 800,
+        "effect": "Uses the same steam twice. Halve the vehicle's fuel per leg, rounded up, and +1 hex per leg. It is delicate: on any hazard or battle result, roll d6 and on a 1 the boiler is out until repaired at a steelworks.",
+        "story": "Havik Coalbrand's own drawing, and he will explain it to you at length: the steam leaves the high-pressure cylinder with most of its temper intact, so you give it a second, larger cylinder to lose that temper in. Half the coal, more speed, and one more thing to go wrong in a tunnel."
+      },
+      {
+        "id": "keelbound",
+        "cardCode": "MOD-08",
+        "name": "Keelbound",
+        "class": "enchantment",
+        "element": "water",
+        "fits": [
+          "ship",
+          "barge"
+        ],
+        "madeAt": "alchemist",
+        "manaCost": 5,
+        "effortHours": 0,
+        "baseValue": 0,
+        "massKg": 0,
+        "effect": "She will not sink. A damage bar that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.",
+        "story": "Bound into the keel timber before she is planked, which means it is nearly always done to a new hull and nearly never to an old one. Insurers ask. Insurers charge less when the answer is yes."
+      },
+      {
+        "id": "fleetfoot-binding",
+        "cardCode": "MOD-09",
+        "name": "Fleetfoot Binding",
+        "class": "enchantment",
+        "element": "air",
+        "fits": [
+          "any"
+        ],
+        "madeAt": "alchemist",
+        "manaCost": 4,
+        "effortHours": 0,
+        "baseValue": 0,
+        "massKg": 0,
+        "effect": "+2 hexes on every day leg, whatever the mode and whatever the ground. An airship instead re-rolls one wind roll per journey.",
+        "story": "Four mana of moving air laid along the axle, the keel, the rail or the traces, depending on what you are enchanting and how patient the alchemist is. The oldest and most-copied binding in the book, and still the one every carter asks for first."
+      },
+      {
+        "id": "warded-hold",
+        "cardCode": "MOD-10",
+        "name": "Warded Hold",
+        "class": "enchantment",
+        "element": "earth",
+        "fits": [
+          "any"
+        ],
+        "madeAt": "alchemist",
+        "manaCost": 4,
+        "effortHours": 0,
+        "baseValue": 0,
+        "massKg": 0,
+        "effect": "Nothing is taken from this vehicle that its owner did not hand over. Cancel every theft, robbery, piracy and heist card aimed at its cargo. A boarder who wins a battle may still take the vehicle entire - the ward is on the hold, not on the owner.",
+        "story": "The lids stick. That is all a ward looks like from outside: crates that will not open for the wrong hands, and a thief standing in a hold full of goods getting increasingly upset with a crowbar."
+      },
+      {
+        "id": "salamander-grate",
+        "cardCode": "MOD-11",
+        "name": "Salamander Grate",
+        "class": "enchantment",
+        "element": "fire",
+        "fits": [
+          "train",
+          "ship",
+          "airship"
+        ],
+        "madeAt": "alchemist",
+        "manaCost": 6,
+        "specialist": "alchemist",
+        "effortHours": 0,
+        "baseValue": 0,
+        "massKg": 0,
+        "effect": "The firebox burns without fuel: the vehicle pays no fuel per leg, ever. It also never runs cold - the vehicle may take a night leg with no light, because the glare from the grate is light enough.",
+        "story": "A cast grate with something bound under it that was never quite alive and is now definitely not dead. Firemen on a grated engine have nothing to do but watch it, and they mostly do not."
+      }
+    ]
+  },
+  "components": {
+    "$comment": "How a physical game element is built - stated once, here, and pointed at from everywhere that draws one. This file holds no content: no card says anything here, no monster is named here. It says what shape a card is, where its bars hang, how thick the frame is drawn, what a deck's back looks like. tools/build-cards.mjs reads it instead of carrying those numbers in its head, which is the point: change the corner radius here and the fronts, the backs, the print sheet and the explorer previews all move together. Adding a deck is an entry under `decks` plus its content file - not a new set of numbers copied out of this one. See docs/design/08-components.md for the bill of materials and docs/art/06-components.md for why each convention is what it is.",
+    "version": "0.1.0",
+    "$structure": {
+      "$comment": "The tiny type system this file uses, so the next thing that reads it does not have to guess. Every length is in millimetres unless the key says otherwise. A `ref` is a dotted path into this file or another dataset, and means 'use that definition, do not restate it'.",
+      "units": "mm for anything physical, grid units for anything drawn (see stock.unitsPerMm)",
+      "ref": "dotted path, resolved against data/ - e.g. arcana.elements[].mark"
+    },
+    "stock": {
+      "$comment": "The physical card. 63 x 88 mm is the standard playing-card size the print page promises, and 3.5 mm is the corner radius a deck of cards actually has - cards are not cut square, and a card drawn square looks like a proof rather than a card. Everything is drawn at 8 units per millimetre, so the numbers in a generated SVG are whole and a millimetre is never a rounding error.",
+      "card": {
+        "widthMm": 63,
+        "heightMm": 88,
+        "bleedMm": 3,
+        "cornerRadiusMm": 3.5,
+        "safeMarginMm": 4
+      },
+      "unitsPerMm": 8
+    },
+    "frame": {
+      "$comment": "The timber-and-iron border every card in every deck carries, from docs/art/06-components.md. Insets are from the trim edge, in grid units. Both rules follow the card's corner, one radius inside the other, or the frame reads as a square box floating in a rounded card.",
+      "outer": {
+        "inset": 8,
+        "strokeWidth": 4
+      },
+      "inner": {
+        "inset": 16,
+        "strokeWidth": 1.2
+      },
+      "rivets": {
+        "inset": 15,
+        "radius": 3.6
+      }
+    },
+    "bars": {
+      "$comment": "The vertical numbered bars. Harm always left, capacity always right - the convention is load-bearing across four decks and is stated in docs/art/06-components.md. A bar is numbered from the bottom and walked by a token. `maxCells` is the most rungs the edge will hold; `steps` is the ladder of step sizes a scale may choose from, smallest first, so a 100-bulk hold still fits a walkable bar.",
+      "width": 30,
+      "maxCells": 14,
+      "steps": [
+        1,
+        2,
+        5,
+        10,
+        20,
+        50
+      ],
+      "harm": {
+        "edge": "left",
+        "ink": "oxide",
+        "inkPlateMark": "notch-down",
+        "never": "skip-counts - a harm track is always step 1"
+      },
+      "capacity": {
+        "edge": "right",
+        "ink": "slate"
+      },
+      "arcaneCapacity": {
+        "edge": "right",
+        "ink": "bruise",
+        "note": "mana bars only - mana is an arcane subject"
+      },
+      "inboard": {
+        "note": "A second capacity comes in over the portrait and lays its own paper first.",
+        "offsetFromRight": 104
+      }
+    },
+    "marks": {
+      "$comment": "Drawn marks that are not pictures: they are read, like letters, and so they are held to one grid and one weight wherever they appear. The path data is not here - it belongs to the thing the mark is of. This says how to draw it.",
+      "element": {
+        "pathsFrom": "arcana.elements[].mark",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "strokeWidth": 2,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round",
+        "sizes": {
+          "chit": 12,
+          "card": 20,
+          "plate": 40,
+          "$note": "millimetres; draw for the smallest"
+        },
+        "onCard": {
+          "$comment": "The element badge on a card that has an element: the mark on the ink plate, a disc of the element's ink behind it on the wash. The badge is a ring, not a filled disc, so it does not read as the commodity frame in docs/art/04-iconography.md.",
+          "radius": 22,
+          "washOpacity": 0.5,
+          "insetInDisc": 0.78,
+          "$insetNote": "The mark is authored edge to edge on its 24-grid. Inside a disc it is scaled down about the centre by this much, or the ends of the ground line run off the ring - which is what a mark drawn to a square and dropped in a circle always does."
+        }
+      }
+    },
+    "$deckKeys": {
+      "$comment": "What each deck entry means. plateId is the template that turns a card into the name of the plate it needs - {id} and {cardCode} are fields of the card, |lower lowercases. It lives here rather than in the tools because three different tools need to agree on it: the card builder looks for the plate, the mint queue reports which are missing, and the art prompts are filed under exactly these names. minting says whether this deck is in the mint queue yet; a deck with minting false is declared, numbered and backed, and simply not being illustrated this month.",
+      "prefix": "the card code prefix - see vehicles.json cardIdScheme",
+      "plateId": "template for the render filename under docs/art/renders/, without the .png",
+      "promptFile": "which file in docs/art/prompts/ holds this deck's briefs",
+      "plateFormat": "the page the artist draws - see docs/art/09-framing-and-composition.md",
+      "minting": "true if tools/mint-queue.mjs should chase this deck's missing plates",
+      "back": "how this deck's card back is drawn - word, motif and ink"
+    },
+    "decks": [
+      {
+        "prefix": "CHR",
+        "plateId": "character-{cardCode|lower}",
+        "promptFile": "characters.md",
+        "plateFormat": "A4 portrait",
+        "minting": true,
+        "id": "characters",
+        "name": "Characters",
+        "source": "characters.json",
+        "back": {
+          "word": "CHARACTERS",
+          "motif": "rivet",
+          "ink": "ochre"
+        }
+      },
+      {
+        "prefix": "VEH",
+        "plateId": "vehicle-{cardCode|lower}",
+        "promptFile": "vehicles.md",
+        "plateFormat": "A4 landscape, 3:2",
+        "minting": true,
+        "id": "vehicles",
+        "name": "Vehicles",
+        "source": "vehicles.json",
+        "back": {
+          "word": "VEHICLES",
+          "motif": "wheel",
+          "ink": "slate"
+        }
+      },
+      {
+        "prefix": "MON",
+        "plateId": "monster-{id}",
+        "promptFile": "monsters.md",
+        "plateFormat": "A4 portrait",
+        "minting": true,
+        "id": "monsters",
+        "name": "Monsters",
+        "source": "monsters.json",
+        "back": {
+          "word": "MONSTERS",
+          "motif": "eye",
+          "ink": "oxide"
+        }
+      },
+      {
+        "prefix": "TAL",
+        "plateId": "talisman-{cardCode|lower}",
+        "promptFile": "talismans.md",
+        "plateFormat": "square",
+        "minting": true,
+        "id": "talismans",
+        "name": "Talismans",
+        "source": "items.json",
+        "filter": "class == talisman",
+        "back": {
+          "word": "TALISMANS",
+          "motif": "rayed",
+          "ink": "bruise"
+        }
+      },
+      {
+        "prefix": "MOD",
+        "plateId": "modification-{id}",
+        "promptFile": "modifications.md",
+        "plateFormat": "square",
+        "minting": true,
+        "id": "modifications",
+        "name": "Modifications",
+        "source": "modifications.json",
+        "back": {
+          "word": "MODIFICATIONS",
+          "motif": "wheel",
+          "ink": "verdigris"
+        }
+      },
+      {
+        "prefix": "SPL",
+        "plateId": "spell-{id}",
+        "promptFile": "spells.md",
+        "plateFormat": "square",
+        "minting": false,
+        "id": "spells",
+        "name": "Spells",
+        "source": "arcana.json",
+        "back": {
+          "word": "SPELLS",
+          "motif": "rayed",
+          "ink": "bruise"
+        }
+      },
+      {
+        "prefix": "EVT",
+        "plateId": "event-{id}",
+        "promptFile": "events.md",
+        "plateFormat": "landscape scene",
+        "minting": false,
+        "id": "events",
+        "name": "Events",
+        "source": "events.json",
+        "back": {
+          "word": "EVENTS",
+          "motif": "rivet",
+          "ink": "oxide"
+        }
+      },
+      {
+        "prefix": "QST",
+        "plateId": "quest-{id}",
+        "promptFile": "quests.md",
+        "plateFormat": "landscape scene",
+        "minting": false,
+        "id": "quests",
+        "name": "Quests",
+        "source": "quests.json",
+        "back": {
+          "word": "QUESTS",
+          "motif": "rivet",
+          "ink": "ochre"
+        }
+      },
+      {
+        "prefix": "ITM",
+        "plateId": "item-{id}",
+        "promptFile": "items.md",
+        "plateFormat": "square",
+        "minting": false,
+        "id": "items",
+        "name": "Items",
+        "source": "items.json",
+        "back": {
+          "word": "ITEMS",
+          "motif": "rivet",
+          "ink": "slate"
+        }
+      }
+    ],
+    "back": {
+      "$comment": "One back per deck, so a face-down stack is identifiable across the table without turning a card over. The design is a single word - the deck's name - mirrored across the card's horizontal centre line, so the back has no up and no down: a card dealt either way round reads the same, which is what a back is for. The word is the identification; the ink and the motif are the fast read at arm's length, before anyone is close enough to spell anything.",
+      "symmetry": "horizontal - the word and its mirror meet at the card's centre line",
+      "wordFontSizeMm": 5.5,
+      "wordTracking": 0.34,
+      "lathe": {
+        "$comment": "The engine-turned ground behind the word, the way a banknote or a playing card back has one. Drawn on the ink plate at hairline weight so the back survives the black-and-white edition, and drawn from the card's own centre so it is symmetrical for free.",
+        "rings": 9,
+        "rays": 48,
+        "strokeWidth": 0.55,
+        "opacity": 0.5
+      },
+      "motifs": {
+        "$comment": "The mark in the roundel at the card's centre, on the axis of symmetry - so it is mirrored by construction rather than by luck. Drawn on the same 24-grid as the element marks. A motif is a deck's fast read; it says nothing about the individual card, because a back that varies is a marked card.",
+        "rivet": "M12 3.2a8.8 8.8 0 1 0 .001 0zM12 7.6a4.4 4.4 0 1 0 .001 0zM12 3.2V7.6M12 16.4V20.8M3.2 12H7.6M16.4 12H20.8",
+        "wheel": "M12 2.6a9.4 9.4 0 1 0 .001 0zM12 8.6a3.4 3.4 0 1 0 .001 0zM12 2.6V8.6M12 15.4V21.4M2.6 12H8.6M15.4 12H21.4M5.35 5.35 9.6 9.6M14.4 14.4l4.25 4.25M18.65 5.35 14.4 9.6M9.6 14.4 5.35 18.65",
+        "eye": "M2.4 12s4.1-6.2 9.6-6.2S21.6 12 21.6 12s-4.1 6.2-9.6 6.2S2.4 12 2.4 12zM12 8.4a3.6 3.6 0 1 0 .001 0zM12 2.6V5M12 19V21.4",
+        "rayed": "M12 2.4V21.6M2.4 12H21.6M5.2 5.2 18.8 18.8M18.8 5.2 5.2 18.8M12 8.2a3.8 3.8 0 1 0 .001 0z"
+      }
+    },
+    "tokens": {
+      "$comment": "Round board tokens - the generic ones, which is all of them. A commodity's identity lives on its card; the token on the board only has to say which commodity family it belongs to and be findable in a heap. 18 mm is the chit tier in docs/art/04-iconography.md: silhouette and frame only. `engravable` marks the ones that are meant to survive being cut on a laser rather than printed - which means the mark has to work as a single-depth engraving with no tint at all.",
+      "commodity": {
+        "diameterMm": 18,
+        "shape": "round",
+        "engravable": true,
+        "carries": "the commodity family's mark and hatch, never a number"
+      },
+      "deposit": {
+        "diameterMm": 18,
+        "shape": "round",
+        "engravable": true,
+        "carries": "the deposit's mark on one face, its yield on the other - deposits differ, see data/deposits.json tokenYields"
+      },
+      "bar": {
+        "diameterMm": 7,
+        "shape": "round",
+        "engravable": false,
+        "carries": "nothing - it is the marker that walks a card's bar"
+      }
+    }
   },
   "maps": [
     {
@@ -11300,6 +13147,10 @@ window.GAME_DATA = {
       "TBM-08": "minimaps/img/TBM-08.png",
       "TBM-09": "minimaps/img/TBM-09.png"
     },
-    "pad": 0.03
+    "pad": 0.03,
+    "focalTarget": [
+      0.5,
+      0.4
+    ]
   }
 };

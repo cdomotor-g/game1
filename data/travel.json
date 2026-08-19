@@ -19,7 +19,11 @@
       { "id": "cart", "name": "Cart", "hexesPerDayLeg": { "G": 3, "F": 1, "H": 1, "M": 0, "B": 0, "T": 1, "D": 2, "C": 3, "S": 0, "O": 0 } },
       { "id": "caravan", "name": "Caravan", "hexesPerDayLeg": { "G": 2, "F": 1, "H": 1, "M": 0, "B": 0, "T": 1, "D": 2, "C": 2, "S": 0, "O": 0 } },
       { "id": "barge", "name": "Barge", "hexesPerDayLeg": { "G": 0, "F": 0, "H": 0, "M": 0, "B": 0, "T": 0, "D": 0, "C": 3, "S": 3, "O": 0 } },
-      { "id": "ship", "name": "Ship", "hexesPerDayLeg": { "G": 0, "F": 0, "H": 0, "M": 0, "B": 0, "T": 0, "D": 0, "C": 2, "S": 3, "O": 5 } }
+      { "id": "ship", "name": "Ship", "hexesPerDayLeg": { "G": 0, "F": 0, "H": 0, "M": 0, "B": 0, "T": 0, "D": 0, "C": 2, "S": 3, "O": 5 } },
+      { "id": "sled", "name": "Sled", "hexesPerDayLeg": { "G": 1, "F": 1, "H": 2, "M": 2, "B": 2, "T": 5, "D": 0, "C": 1, "S": 2, "O": 0 },
+        "note": "Runners want snow and ice. Tundra is its road; frozen marsh and shallow water carry it where nothing wheeled will go; on bare grass it is a heavy box being dragged. Shallow water only while a frost is on - see the winter rule below." },
+      { "id": "airship", "name": "Airship", "hexesPerDayLeg": { "G": 5, "F": 5, "H": 5, "M": 4, "B": 5, "T": 5, "D": 5, "C": 5, "S": 5, "O": 5 },
+        "note": "One number for every terrain, because there is no terrain up there - only the mountain reaches high enough to matter. What an airship pays instead is the wind: see wind, below." }
     ],
     "overrides": [
       { "id": "road", "name": "On a Road", "hexesPerDayLeg": { "on-foot": 5, "mounted": 8, "cart": 6, "caravan": 4 },
@@ -37,6 +41,26 @@
     "trains": { "rule": "trains run at night at full rail speed if the engine carries a lantern", "note": "Fitted as cargo of 0 bulk. Some vehicle cards carry one already." },
     "ships": { "rule": "no night sailing without a lantern rigged; with one, half speed", "note": null },
     "potions": { "rule": "Owl's Eye (items.json) counts as a lantern for one round", "note": null }
+  },
+
+  "wind": {
+    "$comment": "What an airship pays instead of terrain. Rolled once per airship per day leg, before it moves. This is the whole reason the sweep-rig on VEH-17 exists, and the reason Fair Wind is worth 2 mana to an aeronaut.",
+    "roll": "d6 at the start of each airship day leg.",
+    "table": [
+      { "d6": "1", "result": "Foul. The airship moves 1 hex, in a direction of the left-hand player's choosing." },
+      { "d6": "2-3", "result": "Contrary. Half speed, rounded down." },
+      { "d6": "4-5", "result": "Fair. Full speed." },
+      { "d6": "6", "result": "Following. Full speed +2 hexes." }
+    ],
+    "sweeps": "An airship with a sweep-rig - fixed upper beam, working lower beam, rowed by the crew - treats any Foul or Contrary result as Contrary at full speed instead, at the cost of 1 extra crew fed that round. It cannot beat the wind; it can refuse to be beaten by it.",
+    "spells": "Fair Wind (arcana.json) sets the result to Following without rolling. Stormcall against an airship counts as Foul."
+  },
+
+  "winter": {
+    "$comment": "A sled is the first mode in the game whose speeds depend on the season, so the season needs stating somewhere. It is stated here and nowhere else.",
+    "when": "While a Hard Frost card (events.json) is in play, and on any tundra or mountain tile at any time.",
+    "effect": "Marsh, shallow water and coast tiles count as frozen: sleds cross them at the listed speed and no other land mode may enter shallow water at all. Barges and ships may not enter a frozen tile.",
+    "thaw": "When the frost lifts, any sled standing on a marsh or water tile is lost with its cargo. Move it before the round ends."
   },
 
   "caves": {

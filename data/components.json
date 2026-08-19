@@ -1,0 +1,201 @@
+{
+  "$comment": "How a physical game element is built - stated once, here, and pointed at from everywhere that draws one. This file holds no content: no card says anything here, no monster is named here. It says what shape a card is, where its bars hang, how thick the frame is drawn, what a deck's back looks like. tools/build-cards.mjs reads it instead of carrying those numbers in its head, which is the point: change the corner radius here and the fronts, the backs, the print sheet and the explorer previews all move together. Adding a deck is an entry under `decks` plus its content file - not a new set of numbers copied out of this one. See docs/design/08-components.md for the bill of materials and docs/art/06-components.md for why each convention is what it is.",
+  "version": "0.1.0",
+
+  "$structure": {
+    "$comment": "The tiny type system this file uses, so the next thing that reads it does not have to guess. Every length is in millimetres unless the key says otherwise. A `ref` is a dotted path into this file or another dataset, and means 'use that definition, do not restate it'.",
+    "units": "mm for anything physical, grid units for anything drawn (see stock.unitsPerMm)",
+    "ref": "dotted path, resolved against data/ - e.g. arcana.elements[].mark"
+  },
+
+  "stock": {
+    "$comment": "The physical card. 63 x 88 mm is the standard playing-card size the print page promises, and 3.5 mm is the corner radius a deck of cards actually has - cards are not cut square, and a card drawn square looks like a proof rather than a card. Everything is drawn at 8 units per millimetre, so the numbers in a generated SVG are whole and a millimetre is never a rounding error.",
+    "card": {
+      "widthMm": 63,
+      "heightMm": 88,
+      "bleedMm": 3,
+      "cornerRadiusMm": 3.5,
+      "safeMarginMm": 4
+    },
+    "unitsPerMm": 8
+  },
+
+  "frame": {
+    "$comment": "The timber-and-iron border every card in every deck carries, from docs/art/06-components.md. Insets are from the trim edge, in grid units. Both rules follow the card's corner, one radius inside the other, or the frame reads as a square box floating in a rounded card.",
+    "outer": { "inset": 8, "strokeWidth": 4 },
+    "inner": { "inset": 16, "strokeWidth": 1.2 },
+    "rivets": { "inset": 15, "radius": 3.6 }
+  },
+
+  "bars": {
+    "$comment": "The vertical numbered bars. Harm always left, capacity always right - the convention is load-bearing across four decks and is stated in docs/art/06-components.md. A bar is numbered from the bottom and walked by a token. `maxCells` is the most rungs the edge will hold; `steps` is the ladder of step sizes a scale may choose from, smallest first, so a 100-bulk hold still fits a walkable bar.",
+    "width": 30,
+    "maxCells": 14,
+    "steps": [1, 2, 5, 10, 20, 50],
+    "harm": { "edge": "left", "ink": "oxide", "inkPlateMark": "notch-down", "never": "skip-counts - a harm track is always step 1" },
+    "capacity": { "edge": "right", "ink": "slate" },
+    "arcaneCapacity": { "edge": "right", "ink": "bruise", "note": "mana bars only - mana is an arcane subject" },
+    "inboard": { "note": "A second capacity comes in over the portrait and lays its own paper first.", "offsetFromRight": 104 }
+  },
+
+  "marks": {
+    "$comment": "Drawn marks that are not pictures: they are read, like letters, and so they are held to one grid and one weight wherever they appear. The path data is not here - it belongs to the thing the mark is of. This says how to draw it.",
+    "element": {
+      "pathsFrom": "arcana.elements[].mark",
+      "viewBox": "0 0 24 24",
+      "fill": "none",
+      "strokeWidth": 2,
+      "strokeLinecap": "round",
+      "strokeLinejoin": "round",
+      "sizes": { "chit": 12, "card": 20, "plate": 40, "$note": "millimetres; draw for the smallest" },
+      "onCard": {
+        "$comment": "The element badge on a card that has an element: the mark on the ink plate, a disc of the element's ink behind it on the wash. The badge is a ring, not a filled disc, so it does not read as the commodity frame in docs/art/04-iconography.md.",
+        "radius": 22,
+        "washOpacity": 0.5,
+        "insetInDisc": 0.78,
+        "$insetNote": "The mark is authored edge to edge on its 24-grid. Inside a disc it is scaled down about the centre by this much, or the ends of the ground line run off the ring - which is what a mark drawn to a square and dropped in a circle always does."
+      }
+    }
+  },
+
+  "$deckKeys": {
+    "$comment": "What each deck entry means. plateId is the template that turns a card into the name of the plate it needs - {id} and {cardCode} are fields of the card, |lower lowercases. It lives here rather than in the tools because three different tools need to agree on it: the card builder looks for the plate, the mint queue reports which are missing, and the art prompts are filed under exactly these names. minting says whether this deck is in the mint queue yet; a deck with minting false is declared, numbered and backed, and simply not being illustrated this month.",
+    "prefix": "the card code prefix - see vehicles.json cardIdScheme",
+    "plateId": "template for the render filename under docs/art/renders/, without the .png",
+    "promptFile": "which file in docs/art/prompts/ holds this deck's briefs",
+    "plateFormat": "the page the artist draws - see docs/art/09-framing-and-composition.md",
+    "minting": "true if tools/mint-queue.mjs should chase this deck's missing plates",
+    "back": "how this deck's card back is drawn - word, motif and ink"
+  },
+
+  "decks": [
+    {
+      "prefix": "CHR",
+      "plateId": "character-{cardCode|lower}",
+      "promptFile": "characters.md",
+      "plateFormat": "A4 portrait",
+      "minting": true,
+      "id": "characters",
+      "name": "Characters",
+      "source": "characters.json",
+      "back": { "word": "CHARACTERS", "motif": "rivet", "ink": "ochre" }
+    },
+    {
+      "prefix": "VEH",
+      "plateId": "vehicle-{cardCode|lower}",
+      "promptFile": "vehicles.md",
+      "plateFormat": "A4 landscape, 3:2",
+      "minting": true,
+      "id": "vehicles",
+      "name": "Vehicles",
+      "source": "vehicles.json",
+      "back": { "word": "VEHICLES", "motif": "wheel", "ink": "slate" }
+    },
+    {
+      "prefix": "MON",
+      "plateId": "monster-{id}",
+      "promptFile": "monsters.md",
+      "plateFormat": "A4 portrait",
+      "minting": true,
+      "id": "monsters",
+      "name": "Monsters",
+      "source": "monsters.json",
+      "back": { "word": "MONSTERS", "motif": "eye", "ink": "oxide" }
+    },
+    {
+      "prefix": "TAL",
+      "plateId": "talisman-{cardCode|lower}",
+      "promptFile": "talismans.md",
+      "plateFormat": "square",
+      "minting": true,
+      "id": "talismans",
+      "name": "Talismans",
+      "source": "items.json",
+      "filter": "class == talisman",
+      "back": { "word": "TALISMANS", "motif": "rayed", "ink": "bruise" }
+    },
+    {
+      "prefix": "MOD",
+      "plateId": "modification-{id}",
+      "promptFile": "modifications.md",
+      "plateFormat": "square",
+      "minting": true,
+      "id": "modifications",
+      "name": "Modifications",
+      "source": "modifications.json",
+      "back": { "word": "MODIFICATIONS", "motif": "wheel", "ink": "verdigris" }
+    },
+    {
+      "prefix": "SPL",
+      "plateId": "spell-{id}",
+      "promptFile": "spells.md",
+      "plateFormat": "square",
+      "minting": false,
+      "id": "spells",
+      "name": "Spells",
+      "source": "arcana.json",
+      "back": { "word": "SPELLS", "motif": "rayed", "ink": "bruise" }
+    },
+    {
+      "prefix": "EVT",
+      "plateId": "event-{id}",
+      "promptFile": "events.md",
+      "plateFormat": "landscape scene",
+      "minting": false,
+      "id": "events",
+      "name": "Events",
+      "source": "events.json",
+      "back": { "word": "EVENTS", "motif": "rivet", "ink": "oxide" }
+    },
+    {
+      "prefix": "QST",
+      "plateId": "quest-{id}",
+      "promptFile": "quests.md",
+      "plateFormat": "landscape scene",
+      "minting": false,
+      "id": "quests",
+      "name": "Quests",
+      "source": "quests.json",
+      "back": { "word": "QUESTS", "motif": "rivet", "ink": "ochre" }
+    },
+    {
+      "prefix": "ITM",
+      "plateId": "item-{id}",
+      "promptFile": "items.md",
+      "plateFormat": "square",
+      "minting": false,
+      "id": "items",
+      "name": "Items",
+      "source": "items.json",
+      "back": { "word": "ITEMS", "motif": "rivet", "ink": "slate" }
+    }
+  ],
+
+  "back": {
+    "$comment": "One back per deck, so a face-down stack is identifiable across the table without turning a card over. The design is a single word - the deck's name - mirrored across the card's horizontal centre line, so the back has no up and no down: a card dealt either way round reads the same, which is what a back is for. The word is the identification; the ink and the motif are the fast read at arm's length, before anyone is close enough to spell anything.",
+    "symmetry": "horizontal - the word and its mirror meet at the card's centre line",
+    "wordFontSizeMm": 5.5,
+    "wordTracking": 0.34,
+    "lathe": {
+      "$comment": "The engine-turned ground behind the word, the way a banknote or a playing card back has one. Drawn on the ink plate at hairline weight so the back survives the black-and-white edition, and drawn from the card's own centre so it is symmetrical for free.",
+      "rings": 9,
+      "rays": 48,
+      "strokeWidth": 0.55,
+      "opacity": 0.5
+    },
+    "motifs": {
+      "$comment": "The mark in the roundel at the card's centre, on the axis of symmetry - so it is mirrored by construction rather than by luck. Drawn on the same 24-grid as the element marks. A motif is a deck's fast read; it says nothing about the individual card, because a back that varies is a marked card.",
+      "rivet": "M12 3.2a8.8 8.8 0 1 0 .001 0zM12 7.6a4.4 4.4 0 1 0 .001 0zM12 3.2V7.6M12 16.4V20.8M3.2 12H7.6M16.4 12H20.8",
+      "wheel": "M12 2.6a9.4 9.4 0 1 0 .001 0zM12 8.6a3.4 3.4 0 1 0 .001 0zM12 2.6V8.6M12 15.4V21.4M2.6 12H8.6M15.4 12H21.4M5.35 5.35 9.6 9.6M14.4 14.4l4.25 4.25M18.65 5.35 14.4 9.6M9.6 14.4 5.35 18.65",
+      "eye": "M2.4 12s4.1-6.2 9.6-6.2S21.6 12 21.6 12s-4.1 6.2-9.6 6.2S2.4 12 2.4 12zM12 8.4a3.6 3.6 0 1 0 .001 0zM12 2.6V5M12 19V21.4",
+      "rayed": "M12 2.4V21.6M2.4 12H21.6M5.2 5.2 18.8 18.8M18.8 5.2 5.2 18.8M12 8.2a3.8 3.8 0 1 0 .001 0z"
+    }
+  },
+
+  "tokens": {
+    "$comment": "Round board tokens - the generic ones, which is all of them. A commodity's identity lives on its card; the token on the board only has to say which commodity family it belongs to and be findable in a heap. 18 mm is the chit tier in docs/art/04-iconography.md: silhouette and frame only. `engravable` marks the ones that are meant to survive being cut on a laser rather than printed - which means the mark has to work as a single-depth engraving with no tint at all.",
+    "commodity": { "diameterMm": 18, "shape": "round", "engravable": true, "carries": "the commodity family's mark and hatch, never a number" },
+    "deposit": { "diameterMm": 18, "shape": "round", "engravable": true, "carries": "the deposit's mark on one face, its yield on the other - deposits differ, see data/deposits.json tokenYields" },
+    "bar": { "diameterMm": 7, "shape": "round", "engravable": false, "carries": "nothing - it is the marker that walks a card's bar" }
+  }
+}

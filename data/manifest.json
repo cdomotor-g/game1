@@ -20,7 +20,9 @@
     { "key": "monsters", "file": "monsters.json", "collection": "monsters", "idField": "id", "summary": "The monster deck, three per element, with encounter options." },
     { "key": "vehicles", "file": "vehicles.json", "collection": "vehicles", "idField": "id", "summary": "The vehicle deck: named trains, ships, caravans and horses, with damage and cargo bars." },
     { "key": "characters", "file": "characters.json", "collection": "characters", "idField": "id", "summary": "The character deck: named heroes with health, burden and mana bars." },
-    { "key": "quests", "file": "quests.json", "collection": "quests", "idField": "id", "summary": "The quest deck: mini-quests and campaigns, accept or decline." }
+    { "key": "quests", "file": "quests.json", "collection": "quests", "idField": "id", "summary": "The quest deck: mini-quests and campaigns, accept or decline." },
+    { "key": "modifications", "file": "modifications.json", "collection": "modifications", "idField": "id", "summary": "The modification deck: fittings and enchantments bolted onto a vehicle." },
+    { "key": "components", "file": "components.json", "collection": "decks", "idField": "id", "summary": "How a physical game element is built - card stock, frame, bars, marks, deck backs and tokens. Content-free: the shapes everything else is drawn into." }
   ],
   "maps": {
     "$comment": "Boards. Each file in data/maps/ is one drawn map hexed for play: a grid, one character per hex, plus the settlements, regions and routes on it. They live in a directory rather than in 'datasets' above because a map is a document, not a table, and because adding the next one should not mean editing this file. The bundler picks up everything in the directory; tools/validate-map.mjs checks them against terrain.json.",
@@ -78,13 +80,20 @@
       { "from": "discovery", "path": "tables[].terrain", "to": "terrain" },
       { "from": "discovery", "path": "tables[].entries[].result", "to": "discovery.results" },
       { "from": "arcana", "path": "spells[].element", "to": "arcana.elements" },
+      { "from": "arcana", "path": "enchantments.cards[].element", "to": "arcana.elements" },
       { "from": "monsters", "path": "monsters[].element", "to": "arcana.elements" },
       { "from": "monsters", "path": "monsters[].terrains[]", "to": "terrain" },
       { "from": "vehicles", "path": "vehicles[].mode", "to": "transport", "allow": ["mounted"] },
       { "from": "characters", "path": "characters[].people", "to": "peoples" },
       { "from": "characters", "path": "characters[].startsWith[]", "to": "items" },
       { "from": "quests", "path": "quests[].reward.items[]", "to": "items" },
-      { "from": "quests", "path": "quests[].stages[].reward.items[]", "to": "items" }
+      { "from": "quests", "path": "quests[].stages[].reward.items[]", "to": "items" },
+      { "from": "modifications", "path": "modifications[].class", "to": "modifications.classes" },
+      { "from": "modifications", "path": "modifications[].inputs[].commodity", "to": "commodities" },
+      { "from": "modifications", "path": "modifications[].madeAt", "to": "buildings" },
+      { "from": "modifications", "path": "modifications[].specialist", "to": "peoples.professions" },
+      { "from": "modifications", "path": "modifications[].element", "to": "arcana.elements" },
+      { "from": "modifications", "path": "modifications[].fits[]", "to": "transport", "allow": ["mounted", "any"] }
     ]
   }
 }

@@ -19,15 +19,14 @@
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="#1A1714">
-  <!-- timber-and-iron frame, rivets at the corners -->
+  <!-- timber-and-iron frame, rivets at the corners. Both rules follow the card's
+       own corner radius, one inside the other, or the frame reads as a square
+       box floating in a rounded card. -->
   <g fill="none" stroke="#1A1714">
-    <rect x="32" y="32" width="488" height="688" stroke-width="4"/>
-    <rect x="40" y="40" width="472" height="672" stroke-width="1.2"/>
+    <rect x="32" y="32" width="488" height="688" rx="20" stroke-width="4"/>
+    <rect x="40" y="40" width="472" height="672" rx="12" stroke-width="1.2"/>
   </g>
-  <g>
-    <circle cx="39" cy="39" r="3.6"/><circle cx="513" cy="39" r="3.6"/>
-    <circle cx="39" cy="713" r="3.6"/><circle cx="513" cy="713" r="3.6"/>
-  </g>
+  <g><circle cx="47.4" cy="47.4" r="3.6"/><circle cx="504.6" cy="47.4" r="3.6"/><circle cx="47.4" cy="704.6" r="3.6"/><circle cx="504.6" cy="704.6" r="3.6"/></g>
 
   <!-- name and card code, maker's-mark small -->
   <text x="48" y="80" font-size="31" font-weight="bold">The Fenway Wagons</text>
@@ -57,6 +56,7 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime">
+  <g fill="none" stroke="#1A1714" stroke-width="1" opacity="0.32"><path d="M 18,52 A 34,34 0 0 1 52,18"/><path d="M 500,18 A 34,34 0 0 1 534,52"/><path d="M 534,700 A 34,34 0 0 1 500,734"/><path d="M 52,734 A 34,34 0 0 1 18,700"/></g>
   <path d="M 0,0 H 92 Q 38,40 0,86 Z" fill="#1A1714" opacity="0.028"/>
   <path d="M 552,752 H 468 Q 516,718 552,676 Z" fill="#1A1714" opacity="0.025"/>
   <g fill="#1A1714" opacity="0.055">

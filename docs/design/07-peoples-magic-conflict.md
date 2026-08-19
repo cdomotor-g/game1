@@ -63,11 +63,34 @@ the things the game actually cares about — hours, movement, safety:
 Every one of them buys hours, movement, safety or information. None of them break the
 economy, and all of them are made of things the economy produces.
 
+### The four elements
+
+Every monster, every spell, every enchantment and every arcane fitting belongs to
+one of four elements, and each one has a mark. The mark is **data** — one drawn
+path per element in [`data/arcana.json`](../../data/arcana.json) — so a card, a
+chit, this page and the explorer all say *fire* with the same four strokes, and
+changing the mark changes all of them at once.
+
+| Mark | Element | Ink | At home |
+| --- | --- | --- | --- |
+| ![](../art/icons/element-fire.svg) | **Fire** | oxide | Heat, forge-work, hunger. The desert and under the mountains. |
+| ![](../art/icons/element-earth.svg) | **Earth** | verdigris | Stone, root, patience. Hills, barrows and old woods. |
+| ![](../art/icons/element-water.svg) | **Water** | slate | Current, mist, depth. Marsh, shore and open sea. |
+| ![](../art/icons/element-air.svg) | **Air** | soot | Wind, cold, distance. The tundra and the high passes. |
+
+They are built on one construction, so they read as a set: a ground line, and
+what the element does to it. Fire stands three tongues on it, earth puts a stone
+on it and takes the ground down in strata, water replaces it with three swells,
+air lifts three streamers clear of it altogether. None of them is a borrowed
+alchemical triangle — [`04-iconography.md`](../art/04-iconography.md) bans
+real-world symbols along with letterforms, and the triangles are the most
+borrowed symbols there are.
+
 **Mana and talismans.** Slaying a monster yields mana of its element — and mana must
 be *held*. Elves carry up to 3 in the body; everyone else carries none, and stores it
 in a **talisman**: six cards from a 2-capacity bone charm to a 10-capacity crystal
 phylactery, each an item that is made, sold and stolen like any other. Mana is spent
-on **spells** — eight, two per element, minor and major, listed in the
+on **spells** — fourteen now, listed in the
 [annex](14-annex.md) — one cast per character per round. The whole system is defined
 in `data/arcana.json` and reasoned through in [13-adventure.md](13-adventure.md).
 

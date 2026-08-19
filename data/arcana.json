@@ -2,11 +2,25 @@
   "$comment": "Mana, elements and spells. Mana is NOT a commodity: it has no bulk, sits in no stockpile, and cannot be crated. It lives in bodies (rarely - see peoples.json manaStorage) and in talismans (items.json, class talisman), tracked with a token on the talisman's mana bar. Mana crystals in commodities.json are a different thing: frozen mana as a trade good and potion ingredient - a crystal can be shattered by its holder to yield 2 mana of any one element, but mana can never be pressed back into a crystal.",
   "version": "0.1.0",
 
+  "elementMarks": {
+    "$comment": "One drawn mark per element, so that a card, a chit, a page of the book and the explorer all say fire the same way. The path is the whole mark: stroked, never filled, on the grid and at the weight data/components.json declares under marks.element - so a mark reads at chit size and survives the black-and-white edition, which is the whole point of putting it on the ink plate. The marks are built on one construction, a ground line and what the element does to it: fire puts three tongues above it, earth puts a stone on it and a root under it, water replaces it with three swells, air lifts three streamers clear of it. None of them is a borrowed alchemical sign - see docs/art/04-iconography.md, which bans letterforms and real-world symbols alike.",
+    "grid": "0 0 24 24, and the mark is drawn to fill it edge to edge",
+    "renderedBy": "tools/build-icons.mjs, which writes docs/art/icons/element-<id>.svg from these paths and nothing else"
+  },
+
   "elements": [
-    { "id": "fire", "name": "Fire", "ink": "oxide", "summary": "Heat, forge-work, hunger. At home in the desert and under the mountains." },
-    { "id": "earth", "name": "Earth", "ink": "verdigris", "summary": "Stone, root, patience. At home in hills, barrows and old woods." },
-    { "id": "water", "name": "Water", "ink": "slate", "summary": "Current, mist, depth. At home in marsh, shore and open sea." },
-    { "id": "air", "name": "Air", "ink": "soot-tint-40", "summary": "Wind, cold, distance. At home on the tundra and the high passes." }
+    { "id": "fire", "name": "Fire", "ink": "oxide", "summary": "Heat, forge-work, hunger. At home in the desert and under the mountains.",
+      "mark": "M4 20.6H20M12 5.6c2.9 4.4 3.5 6 3.5 8.6 0 3.6-2.5 5.1-3.5 6.2-1-1.1-3.5-2.6-3.5-6.2 0-2.6.6-4.2 3.5-8.6zM7.2 11.6c1.7 2.6 2.1 3.6 2.1 5.1 0 2.1-1.5 3.1-2.1 3.7-.6-.6-2.1-1.6-2.1-3.7 0-1.5.4-2.5 2.1-5.1zM16.8 11.6c1.7 2.6 2.1 3.6 2.1 5.1 0 2.1-1.5 3.1-2.1 3.7-.6-.6-2.1-1.6-2.1-3.7 0-1.5.4-2.5 2.1-5.1z",
+      "markNote": "Three tongues standing on the hearth line, rooted in it - a flame that floats is a seed." },
+    { "id": "earth", "name": "Earth", "ink": "verdigris", "summary": "Stone, root, patience. At home in hills, barrows and old woods.",
+      "mark": "M3.6 11.6H20.4M6 16.4H18M8.4 20.6H15.6M8.8 11.6c0-2.6 1.4-4.2 3.2-4.2s3.2 1.6 3.2 4.2z",
+      "markNote": "A stone on the ground line, and the ground going down in narrowing strata under it. Water is these lines moving; earth is them holding still." },
+    { "id": "water", "name": "Water", "ink": "slate", "summary": "Current, mist, depth. At home in marsh, shore and open sea.",
+      "mark": "M3.6 7.4q4.2-3.3 8.4 0t8.4 0M3.6 13.4q4.2-3.3 8.4 0t8.4 0M3.6 19.4q4.2-3.3 8.4 0t8.4 0",
+      "markNote": "The ground line has become swell - three of them, and no ground at all." },
+    { "id": "air", "name": "Air", "ink": "soot-tint-40", "summary": "Wind, cold, distance. At home on the tundra and the high passes.",
+      "mark": "M3.6 7.6h9.4a2.6 2.6 0 1 0-2.6-2.6M3.6 12.8h12a2.8 2.8 0 1 1-2.8 2.8M3.6 18h7.6",
+      "markNote": "Three streamers, two of them curling off the end. Nothing touches the ground." }
   ],
 
   "mana": {
@@ -18,23 +32,73 @@
   },
 
   "spells": [
-    { "id": "kindle", "name": "Kindle", "element": "fire", "cost": 1,
+    { "id": "kindle", "cardCode": "SPL-01", "name": "Kindle", "element": "fire", "cost": 1,
       "effect": "Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel." },
-    { "id": "ember-lash", "name": "Ember Lash", "element": "fire", "cost": 3,
+    { "id": "ember-lash", "cardCode": "SPL-02", "name": "Ember Lash", "element": "fire", "cost": 3,
       "effect": "+2 combat dice to one unit or character for one battle." },
-    { "id": "mend-stone", "name": "Mend Stone", "element": "earth", "cost": 2,
+    { "id": "mend-stone", "cardCode": "SPL-03", "name": "Mend Stone", "element": "earth", "cost": 2,
       "effect": "Repair 2 damage on one building or vehicle, or restore 4 wear to one tool." },
-    { "id": "bulwark", "name": "Bulwark", "element": "earth", "cost": 4,
+    { "id": "bulwark", "cardCode": "SPL-04", "name": "Bulwark", "element": "earth", "cost": 4,
       "effect": "One unit or character ignores 2 hits in one battle." },
-    { "id": "cleanse", "name": "Cleanse", "element": "water", "cost": 2,
+    { "id": "cleanse", "cardCode": "SPL-05", "name": "Cleanse", "element": "water", "cost": 2,
       "effect": "Cure one illness marker, or restore 2 health to one character." },
-    { "id": "mist-veil", "name": "Mist Veil", "element": "water", "cost": 4,
+    { "id": "mist-veil", "cardCode": "SPL-06", "name": "Mist Veil", "element": "water", "cost": 4,
       "effect": "Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll." },
-    { "id": "fair-wind", "name": "Fair Wind", "element": "air", "cost": 2,
+    { "id": "fair-wind", "cardCode": "SPL-07", "name": "Fair Wind", "element": "air", "cost": 2,
       "effect": "+2 hexes on one leg, any mode. A ship gets +3." },
-    { "id": "stormcall", "name": "Stormcall", "element": "air", "cost": 5,
-      "effect": "One party, vehicle or cargo you can see loses its next leg entirely." }
+    { "id": "stormcall", "cardCode": "SPL-08", "name": "Stormcall", "element": "air", "cost": 5,
+      "effect": "One party, vehicle or cargo you can see loses its next leg entirely." },
+
+    { "id": "wayfire", "cardCode": "SPL-09", "name": "Wayfire", "element": "fire", "cost": 3,
+      "effect": "Burn one blockage clear: a route blocked by an event card reopens, or one tile of forest or marsh costs your party nothing to cross this leg. The tile is scorched - nothing may be foraged there for the rest of the game." },
+    { "id": "seam-sense", "cardCode": "SPL-10", "name": "Seam-Sense", "element": "earth", "cost": 3,
+      "effect": "Look at the deposit token under your hex and under every hex adjacent to it, then put them back face down. You may tell the truth about them or not." },
+    { "id": "root-snare", "cardCode": "SPL-11", "name": "Root-Snare", "element": "earth", "cost": 3,
+      "effect": "One monster, party or figure in your hex or adjacent to it may not move next round. A vehicle instead marks 1 damage tearing itself free." },
+    { "id": "deep-draught", "cardCode": "SPL-12", "name": "Deep Draught", "element": "water", "cost": 2,
+      "effect": "Fill every empty barrel in one town with water, free, wherever it stands - and that town ignores Drought this round." },
+    { "id": "farspeak", "cardCode": "SPL-13", "name": "Farspeak", "element": "air", "cost": 2,
+      "effect": "Speak to any other character on the board, wherever they are. You may agree a trade, a price or an alliance at that distance, and either of you may hold to it or not, exactly as if you had met." },
+    { "id": "loft", "cardCode": "SPL-14", "name": "Loft", "element": "air", "cost": 4,
+      "effect": "One vehicle - any mode, including a wagon or a sled - is lifted over one impassable hex and set down on the far side. An airship instead ignores its next wind roll and moves at full speed." }
   ],
+
+  "enchantments": {
+    "$comment": "The other half of the arcane deck. A spell is spent and gone; an enchantment is mana laid into an object and left there. It is bound at an alchemist or a shrine, costs its mana up front, and holds until it is broken - which is a thing an event or an enemy can do. Enchantments bound to VEHICLES are not here: a vehicle carries fittings as well as enchantments and the two share a slot, so both live together in data/modifications.json. This file holds the enchantments laid on buildings, tools, items and people.",
+    "binding": {
+      "where": "At an alchemist, or at a shrine for half again the mana, rounded up.",
+      "who": "A character holding the mana - the same rule as casting. Binding takes the whole round.",
+      "slots": "One enchantment per object. Binding a second breaks the first, and the mana in it is gone.",
+      "broken": "A destroyed object takes its enchantment with it. Some event cards break enchantments outright; a broken enchantment refunds nothing.",
+      "value": "An enchanted object sells for its base value plus 20 coin per mana bound into it, and scores 1 victory point per 4 mana bound, rounded down."
+    },
+    "cards": [
+      { "id": "bound-hearth", "cardCode": "ENC-01", "name": "Bound Hearth", "element": "fire", "cost": 4,
+        "boundTo": "one building with a furnace, kiln or oven",
+        "effect": "The building pays no fuel, ever.",
+        "story": "A coal that was burning when the binding closed, and is burning still. Bakers who own one do not sell it, and bakers who do not own one say so loudly at every guild meeting." },
+      { "id": "truename-stamp", "cardCode": "ENC-02", "name": "Truename Stamp", "element": "earth", "cost": 3,
+        "boundTo": "one tool",
+        "effect": "The tool takes no wear. It can still be lost, sold or stolen - and it is the single most stolen object in the game.",
+        "story": "The smith's touchmark struck twice: once in the iron, once in whatever is under the iron. A stamped tool knows what it is for and declines to become anything else." },
+      { "id": "salt-kept", "cardCode": "ENC-03", "name": "Salt-Kept", "element": "water", "cost": 3,
+        "boundTo": "one granary, warehouse or ship's hold",
+        "effect": "Nothing inside spoils, perishes or curdles. Milk keeps. So does everything else.",
+        "story": "The air inside goes still and tastes faintly of the sea. Three generations of the Saltreach victuallers have made their whole living off one bound cellar and a reputation for honesty they did not entirely earn." },
+      { "id": "keening-ward", "cardCode": "ENC-04", "name": "Keening Ward", "element": "air", "cost": 4,
+        "boundTo": "one building",
+        "effect": "Cancel every theft, heist and robbery card aimed at this building. Each time it does, roll d6: on a 1 the ward is spent and the card comes off.",
+        "story": "It screams. That is the whole enchantment. It screams in a voice the owner cannot hear and the thief cannot stop hearing for about a week." },
+      { "id": "weightless-hand", "cardCode": "ENC-05", "name": "Weightless Hand", "element": "air", "cost": 5,
+        "boundTo": "one character's pack, belt or cloak",
+        "effect": "+10 kg to that character's burden bar. The bar is walked as normal; the last ten kilograms simply do not pull.",
+        "story": "Not lighter - the pack weighs what it weighs, and a scale will say so. It just declines to be heavy on the person carrying it, which mule drivers consider a distinction without a difference and porters consider the point." },
+      { "id": "deeproot-footing", "cardCode": "ENC-06", "name": "Deeproot Footing", "element": "earth", "cost": 5,
+        "boundTo": "one building",
+        "effect": "The building ignores Earthquake, Flood and Landslip entirely, and takes half damage, rounded down, from every other source.",
+        "story": "Laid into the foundation trench before the first course goes down, which is why it is almost never retrofitted and almost always regretted. The Dunhaven customs house has one. The Dunhaven customs house is the only thing on that street older than sixty years." }
+    ]
+  },
 
   "casting": {
     "who": "Any character holding the mana - innately or in a carried talisman. Workers and soldiers do not cast.",

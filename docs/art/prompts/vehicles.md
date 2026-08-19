@@ -1,6 +1,6 @@
-# The vehicles — plates (vehicle-veh-01 … vehicle-veh-12)
+# The vehicles — plates (vehicle-veh-01 … vehicle-veh-17)
 
-Twelve plates, one per vehicle card (`data/vehicles.json`), in deck order.
+Seventeen plates, one per vehicle card (`data/vehicles.json`), in deck order.
 Drawn like pages from a **carrier's trade catalogue**: the machine in full
 profile, working, crewed lightly or not at all, with the wear its story earns
 it. A4 landscape proportion — the card crops a wide band from the middle.
@@ -176,4 +176,110 @@ asleep in the saddle, reins slack. The night is drawn as dense cross-hatch
 sky and bare-paper road; the horse's ears are forward, reading the dark. A
 shuttered lantern hangs UNLIT from the saddle - he does not need it.
 Wash: cold slate blue on the night, flat; the horse nearly all ink.
+```
+
+## vehicle-veh-13 — Nine and the Drum *(sled)*
+
+```text
+[PREAMBLE]
+
+A long freight sled on steel-shod runners, low and narrow, lashed under a
+canvas with a rope net over the load. Nine dogs in a single gang line ahead of
+it, deep-chested and thick-coated, harness and tug lines drawn taut and true;
+the lead dog turning her head back along the line. A driver standing on the
+runners at the rear, hooded, one hand on the handlebar and the other on the
+snow hook. Ground line of wind-scoured hard snow with sastrugi ridges hatched
+across it. Wash: cold slate on the snow shadow, ochre on the canvas, rust red
+on the harness, flat.
+
+FRAMING. A4 landscape plate, whole page drawn edge to edge.
+The sled, the driver and the lead dog all well inside the middle 84% of the
+page; the middle of the gang line may run to the margin. Low horizon in the
+bottom third. Clear, quiet page above.
+```
+
+## vehicle-veh-14 — The Red Lantern *(steam junk, ship)*
+
+```text
+[PREAMBLE]
+
+A large ocean-going junk in full profile: high transom stern, flat bow, three
+masts carrying fully battened lugsails - every batten drawn as a hard
+horizontal line across the sail, the sails hauled taut and shown from the lee
+side. A squat riveted iron funnel amidships between the main and mizzen,
+trailing a flat hatched smoke plume laid along the wind. Hull built in
+bulkheaded sections with the compartment lines visible above the waterline; a
+big balanced rudder shipped through the stern. Deck cargo lashed under
+matting; a single paper lantern hung at the break of the poop. Wash: rust red
+on the sails and the lantern, ochre on the hull timber, cold slate on the
+funnel and the sea, flat.
+
+FRAMING. A4 landscape plate, whole page drawn edge to edge.
+The hull, the funnel and the lowest third of the sails inside the middle 84%
+of the page; mast tops may run to the top margin. Low horizon in the bottom
+third.
+```
+
+## vehicle-veh-15 — The Carrion Queen *(pirate steamer, ship)*
+
+```text
+[PREAMBLE]
+
+A rakish three-masted ship in full profile, hull rendered near-solid black
+with dense cross-hatching, only the sheer line and the gunports left as bare
+paper. Sails black and ruined - long ragged tears, missing panels, edges
+frayed into streamers, patched twice with cloth of a different weave and
+patched badly. A tall thin iron funnel wedged in behind the foremast where it
+plainly does not belong, guyed with wire, trailing flat hatched smoke. Bow
+chase gun run out; boarding grapnels racked along the rail. No flag, and an
+empty flag halyard drawn slack. Wash: cold slate on the sea and the smoke,
+one small note of rust red at the waterline, flat. The hull takes no wash -
+the black line does all of it.
+
+FRAMING. A4 landscape plate, whole page drawn edge to edge.
+Hull, funnel and the lower half of the rigging inside the middle 84% of the
+page. Low horizon in the bottom third.
+```
+
+## vehicle-veh-16 — The Pilgrim's Patience *(airship)*
+
+```text
+[PREAMBLE]
+
+A large airship in full profile: a long varnished-silk envelope with a
+lengthwise seam and a hatched net of rigging over the whole of it, gathered
+into catenary lines that carry a slender wicker gondola slung well below.
+Gondola glazed along its length, a small propeller on an outrigger at the
+stern, mail sacks and a strapped crate visible through the open cargo door.
+Mooring lines trailing; a hatched cloud bank far below and behind, and the
+ground drawn very small and very far down at the bottom edge. Wash: ochre on
+the envelope, cold slate on the cloud, flat.
+
+FRAMING. A4 landscape plate, whole page drawn edge to edge.
+Envelope and gondola inside the middle 84% of the page. The horizon sits in
+the BOTTOM eighth of the page and is drawn tiny - the subject is in the air,
+and the page has to say so.
+```
+
+## vehicle-veh-17 — The Sweep of Vossgard *(sweep-rigged airship)*
+
+```text
+[PREAMBLE]
+
+An airship in full profile, smaller and more angular than a passenger craft,
+with the sweep rig that is the whole point of the card: down each flank, a
+long FIXED upper spar running the length of the gondola, and below it a
+HINGED lower spar pivoting at the bow end, with a tall trapezoid of sailcloth
+laced between the two. Four crew at handles along the gondola side, caught
+mid-stroke, the lower spar swung well aft of the upper one so the sail is
+raked - it is being rowed through the air. Draw the hinge, the pivot pin and
+the guy lines plainly; this is a mechanism, not a decoration. A second sweep
+on the far side just visible past the hull. Small propeller at the stern.
+Wash: dusty grey-green on the sail, ochre on the envelope, rust red on the
+ironwork at the hinges, flat.
+
+FRAMING. A4 landscape plate, whole page drawn edge to edge.
+The gondola, the crew at the handles, and the whole of the near sweep - upper
+spar, lower spar, hinge - inside the middle 84% of the page. The envelope may
+run to the top margin. Horizon in the bottom eighth, drawn tiny.
 ```

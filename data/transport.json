@@ -43,7 +43,24 @@
       "craft": { "building": "steelworks", "inputs": [{ "commodity": "steel", "qty": 8 }, { "commodity": "ironware", "qty": 4 }, { "commodity": "lumber", "qty": 4 }], "effortHours": 16 },
       "upkeep": 4, "fuelPerTile": [{ "commodity": "coal", "qty": 1 }],
       "theftRisk": 2, "waterCapable": false,
-      "notes": "The brief's train heist target. Big, valuable, and it cannot take a detour." }
+      "notes": "The brief's train heist target. Big, valuable, and it cannot take a detour." },
+
+    { "id": "sled", "name": "Sled", "tier": 2,
+      "summary": "A team in harness and a load on runners. The only thing that crosses tundra faster than it crosses grass.",
+      "capacity": 10, "speed": 3, "requires": "none", "buyCost": 90, "effortToLoad": 2,
+      "packaging": [{ "commodity": "sack", "qty": 5 }],
+      "craft": { "building": "carpenter", "inputs": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "leather", "qty": 3 }, { "commodity": "rope", "qty": 2 }], "effortHours": 6 },
+      "upkeep": 2, "theftRisk": 1, "waterCapable": false,
+      "notes": "The team eats: 2 meat per round on the road, and a sled left standing through a thaw is a pile of lumber. It runs on snow, ice and frozen marsh, which on this board means tundra, mountain and anything the winter has taken." },
+
+    { "id": "airship", "name": "Airship", "tier": 4,
+      "summary": "A gasbag, a gondola and a great deal of nerve. It goes over everything - and it is at the mercy of the wind.",
+      "capacity": 18, "speed": 5, "requires": "none", "buyCost": 520, "effortToLoad": 3,
+      "packaging": [{ "commodity": "crate", "qty": 4 }],
+      "craft": { "building": "glassworks", "inputs": [{ "commodity": "fine-cloth", "qty": 8 }, { "commodity": "rope", "qty": 6 }, { "commodity": "lumber", "qty": 4 }, { "commodity": "ironware", "qty": 3 }], "effortHours": 18 },
+      "upkeep": 5, "fuelPerTile": [{ "commodity": "charcoal", "qty": 1 }],
+      "theftRisk": 0, "waterCapable": true,
+      "notes": "Ignores terrain entirely - there is no ground up there - but it is the only mode weather can stop dead, and the only one with nowhere to tie up. It must end each journey at a settlement or lose 1 damage box to the mooring. Cargo aboard an airship cannot be robbed on the road; it can be dropped." }
   ],
   "routes": {
     "$comment": "A route is a chain of tiles between two towns. Cargo moves along it at the mode's speed, spending the tile move cost.",

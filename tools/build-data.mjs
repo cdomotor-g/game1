@@ -68,10 +68,15 @@ if (existsSync(abs('art/renders'))) {
       width,
       height,
       subject: entry ? entry.subject : WHOLE_PLATE,
+      /* Where the picture is aimed. Optional, and undefined stays out of the
+         bundle rather than going in as null - see docs/art/09-framing-and-composition.md. */
+      ...(entry && entry.focal ? { focal: entry.focal } : {}),
+      ...(entry && entry.focalTargetOverride ? { focalTarget: entry.focalTargetOverride } : {}),
     };
   }
 }
 art.pad = framing.pad;
+art.focalTarget = framing.focalTarget;
 
 if (existsSync(abs('minimaps/img'))) {
   for (const f of readdirSync(abs('minimaps/img')).sort()) {

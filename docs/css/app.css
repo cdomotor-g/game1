@@ -266,6 +266,15 @@ input:focus-visible, select:focus-visible, button:focus-visible {
 .pill.bad  { color: var(--bad-text);  border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
 .pill.mono { font-family: var(--mono); }
 
+/* The element mark, inline in a pill. The path comes from data/arcana.json, the
+   same one the printed cards and the rulebook draw — see docs/art/icons/. It
+   takes currentColor, so it is oxide inside a fire pill without anything here
+   knowing which element it is. */
+.pill .elmark {
+  width: 1.15em; height: 1.15em; margin: 0 3px 0 -1px;
+  vertical-align: -0.24em; overflow: visible;
+}
+
 /* ---------- semantic marks ---------- */
 
 /* palette.json, semantic.*: "Each is paired with a mandatory ink-plate mark,

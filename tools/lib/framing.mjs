@@ -19,7 +19,7 @@ shim.window = shim;
 new Function('window', `with (this) { ${readFileSync(join(ROOT, 'docs/js/framing.js'), 'utf8')} }`)
   .call(shim, shim);
 
-export const { crop, WHOLE_PLATE } = shim.Framing;
+export const { crop, WHOLE_PLATE, FOCAL_TARGET } = shim.Framing;
 
 /** docs/art/framing.json, parsed. */
 export function readFraming(root = ROOT) {

@@ -1,5 +1,5 @@
 {
-  "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element for now - the deck is built to grow. Card layout: portrait, name and element badge at the top, story text low, vertical numbered HEALTH bar on the LEFT edge (harm bars always sit left, capacity bars always sit right - the convention is in docs/art/06-components.md), strength and mana yield as fixed stats. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
+  "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow. Card layout: portrait, name and element badge at the top, story text low, vertical numbered HEALTH bar on the LEFT edge (harm bars always sit left, capacity bars always sit right - the convention is in docs/art/06-components.md), strength and mana yield as fixed stats. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
   "version": "0.1.0",
 
   "encounterOptions": {
@@ -88,6 +88,21 @@
       "terrains": ["mountain", "coast"],
       "options": { "enslave": false, "befriend": false, "domesticate": true },
       "domesticated": "The grandest mount in the game: one character may ride it - day legs of 8 in any terrain, ignoring ground entirely. It eats 2 meat per round and will not enter a battle.",
-      "story": "Its wingbeats are the weather two valleys over. Nobody has befriended one - the roc does not take gifts - but a bird beaten fairly and fed patiently has, three times in recorded history, decided a rider was worth carrying." }
+      "story": "Its wingbeats are the weather two valleys over. Nobody has befriended one - the roc does not take gifts - but a bird beaten fairly and fed patiently has, three times in recorded history, decided a rider was worth carrying." },
+
+    { "id": "vhalrik-the-cinder-crowned", "cardCode": "MON-13", "name": "Vhalrik, the Cinder-Crowned", "element": "fire",
+      "strength": 7, "health": 16, "manaYield": 6, "unique": true,
+      "terrains": ["mountain", "hills", "desert"],
+      "options": { "enslave": false, "befriend": true, "domesticate": false },
+      "gift": "1 gems and 1 gold, laid out and named aloud as tribute - he counts, and he remembers who was short",
+      "befriended": "He does not guard, escort or carry. Once per game, name a settlement: he burns it, and everything in it, whoever owns it. Then he goes back to the mountain and will not speak to you again.",
+      "story": "This is the dragon the sighting cards are about. Four hundred years on one hoard under the Kholvar peaks, old enough to be bored and rich enough to be patient. He talks, which is the frightening part, and he negotiates, which is worse: everyone who has bargained with Vhalrik got exactly what they asked for." },
+
+    { "id": "hoarwyrm", "cardCode": "MON-14", "name": "The Hoarwyrm", "element": "air",
+      "strength": 5, "health": 13, "manaYield": 4,
+      "terrains": ["tundra", "mountain", "coast"],
+      "options": { "enslave": false, "befriend": false, "domesticate": true },
+      "domesticated": "Two full winters at a pasture on tundra, fed 4 meat a round the whole time. Then it flies cargo: 12 bulk, 6 hexes a leg, over any terrain and any weather, and no wind roll. It will not fight, and it will not go south of the frost line.",
+      "story": "White-scaled, wingless at rest and forty feet of it, riding the cold air off the ice the way a gull rides a cliff. It does not hoard gold - it hoards weather, or the herders think so, because where it winters the frost comes early and stays. Two families in the north have raised one from the shell. Neither will tell you how, and both are very rich." }
   ]
 }

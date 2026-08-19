@@ -37,6 +37,7 @@ const vehicles = read('vehicles.json');
 const characters = read('characters.json');
 const quests = read('quests.json');
 const arcana = read('arcana.json');
+const modifications = read('modifications.json');
 
 const lines = [];
 const say = (s = '') => lines.push(s);
@@ -51,6 +52,18 @@ function table(headers, rows) {
 }
 
 const list = (arr) => (arr && arr.length ? arr.join(', ') : '—');
+
+/**
+ * An element, with its mark.
+ *
+ * The mark comes from docs/art/icons/, which tools/build-icons.mjs draws from
+ * the same data/arcana.json this file is reading - so a table in the printed
+ * annex says fire with the mark a card says it with. The path is relative to
+ * docs/design/, which is also where docs/book/ sits, so it resolves in the
+ * rendered book, on GitHub, and in a plain markdown reader alike.
+ */
+const elementMark = (id) => `![](../art/icons/element-${id}.svg)`;
+const element = (id) => `${elementMark(id)} ${id}`;
 const io = (arr) => (arr && arr.length ? arr.map((i) => `${i.qty} ${i.commodity}`).join(' + ') : '—');
 
 say('# 14 — Annex: the reference tables');
@@ -244,7 +257,7 @@ say();
 table(
   ['Code', 'Monster', 'Element', 'Str', 'Health', 'Mana', 'Ground', 'Options'],
   monsters.monsters.map((m) => [
-    m.cardCode, m.name + (m.unique ? ' *(unique)*' : ''), m.element, m.strength, m.health, m.manaYield,
+    m.cardCode, m.name + (m.unique ? ' *(unique)*' : ''), element(m.element), m.strength, m.health, m.manaYield,
     list(m.terrains),
     'S' + (m.options.enslave ? ' E' : '') + (m.options.befriend ? ' B' : '') + (m.options.domesticate ? ' D' : ''),
   ])
@@ -273,12 +286,48 @@ table(
   ])
 );
 
-/* ------------------------------------------------------------------- spells */
+/* ------------------------------------------------------ elements and arcana */
+say('## The elements');
+say();
+say('Four elements, four marks. The mark is data - one path per element in');
+say('`data/arcana.json` - so a card, a chit, this table and the explorer all say');
+say('fire the same way. `tools/build-icons.mjs` draws them.');
+say();
+table(
+  ['Mark', 'Element', 'Ink', 'At home'],
+  arcana.elements.map((e) => [elementMark(e.id), `**${e.name}**`, e.ink, e.summary])
+);
+
 say('## Spells');
 say();
 table(
-  ['Spell', 'Element', 'Mana', 'Effect'],
-  arcana.spells.map((s) => [s.name, s.element, s.cost, s.effect])
+  ['Code', 'Spell', 'Element', 'Mana', 'Effect'],
+  arcana.spells.map((s) => [s.cardCode, s.name, element(s.element), s.cost, s.effect])
+);
+
+say('## Enchantments');
+say();
+say(arcana.enchantments.$comment.split('.')[0] + '.');
+say();
+table(
+  ['Code', 'Enchantment', 'Element', 'Mana', 'Bound to', 'Effect'],
+  arcana.enchantments.cards.map((e) => [e.cardCode, e.name, element(e.element), e.cost, e.boundTo, e.effect])
+);
+
+/* ----------------------------------------------------------- modifications */
+say('## Modification deck');
+say();
+say('Fittings and enchantments bolted onto a vehicle. They share the vehicle\'s');
+say(`slots — ${modifications.slots.base} on most, and at most ${modifications.slots.enchantmentLimit} enchantment whatever the count — so a`);
+say('shipwright and a hedge-witch are competing for the same hull.');
+say();
+table(
+  ['Code', 'Modification', 'Class', 'Fits', 'Cost', 'Effect'],
+  modifications.modifications.map((m) => [
+    m.cardCode, m.name, m.class, list(m.fits),
+    m.manaCost ? `${m.manaCost} ${m.element} mana` : io(m.inputs),
+    m.effect,
+  ])
 );
 
 /* -------------------------------------------------------------------- events */

@@ -41,6 +41,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pngSize } from './lib/png.mjs';
 import { crop, readFraming, WHOLE_PLATE } from './lib/framing.mjs';
+import { plateIdFor } from './lib/plates.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -51,6 +52,17 @@ const checkOnly = process.argv.includes('--check');
 const read = (f) => JSON.parse(readFileSync(join(DATA, f), 'utf8'));
 const palette = JSON.parse(readFileSync(join(ROOT, 'docs/art/palette.json'), 'utf8'));
 const framing = readFraming(ROOT);
+/* Every shape on a card - its size, its corner, its frame, its bars, its back -
+   is declared once in data/components.json and read here. Nothing below invents
+   a number that belongs to a component. */
+const components = read('components.json');
+
+/* The decks, and the order they are dealt in, come from data/components.json -
+   which is also where each one's back is described and how its plates are named.
+   A deck with no rendered card yet still has a back: the back is what a deck is,
+   before it has cards. */
+const DECKS = components.decks;
+const deckByPrefix = (p) => DECKS.find((d) => d.prefix === p);
 
 /* Every colour below is declared in palette.json — validate-art.mjs checks. */
 const SOOT = palette.ink.soot.hex;
@@ -67,16 +79,39 @@ const BRUISE = palette.inks.bruise.hex;
 const OCHRE = palette.inks.ochre.hex;
 const VERDIGRIS = palette.inks.verdigris.hex;
 
-/* The element carries its ink, as the monster brief assigns them. */
-const ELEMENT_INK = { fire: OXIDE, earth: VERDIGRIS, water: SLATE, air: T40 };
+/* The element carries its ink and its mark, both from data/arcana.json - the
+   same path the icons and the book draw, so a card cannot say fire differently
+   from a chapter heading. How to draw one is components.json marks.element. */
+const ELEMENTS = new Map(read('arcana.json').elements.map((e) => [e.id, e]));
+const MARK = components.marks.element;
 
 const SERIF = "Georgia, 'Iowan Old Style', 'Times New Roman', serif";
 const SANS = 'Helvetica, Arial, sans-serif';
 
-/* Drawn at 8 units = 1mm, like the examples: 63x88mm card, 3mm bleed. */
-const W = 552, H = 752;            // bleed box
-const TRIM = { x: 24, y: 24, w: 504, h: 704 };
-const CARD_MM = { w: 63, h: 88, bleed: 3 };
+/* "oxide" -> the named ink, "soot-tint-40" -> that tint. The data names inks;
+   this is the only place a name becomes a hex. */
+function inkHex(name) {
+  const tint = /^soot-tint-(\d+)$/.exec(name);
+  if (tint) return palette.ink.tints[tint[1]].hex;
+  if (name === 'soot') return SOOT;
+  const ink = palette.inks[name];
+  if (!ink) throw new Error(`data names an ink the palette does not declare: ${name}`);
+  return ink.hex;
+}
+
+/* The card stock, from data/components.json. Drawn at 8 units = 1mm. */
+const STOCK = components.stock;
+const U = STOCK.unitsPerMm;
+const CARD_MM = { w: STOCK.card.widthMm, h: STOCK.card.heightMm, bleed: STOCK.card.bleedMm, corner: STOCK.card.cornerRadiusMm };
+const BLEED = CARD_MM.bleed * U;
+const W = (CARD_MM.w + 2 * CARD_MM.bleed) * U;   // bleed box
+const H = (CARD_MM.h + 2 * CARD_MM.bleed) * U;
+const TRIM = { x: BLEED, y: BLEED, w: CARD_MM.w * U, h: CARD_MM.h * U };
+/* Playing cards are not cut square. This is where they stop being drawn as if
+   they were: the frame follows the corner, the print page's window follows the
+   corner, and the sheet carries a die mark at each one. */
+const CORNER = CARD_MM.corner * U;
+const FRAME = components.frame;
 
 /* Type sits at or above the print floor: rules text ~6.5pt, story ~6pt, name
    ~11pt at the card's true 63x88mm (1pt = 2.83 units). Those sizes are what the
@@ -90,6 +125,77 @@ const PORTRAIT = { x: 88, w: 376 };  // the window runs between the two bars
    slot, but below about this the window stops reading as a plate on a page and
    starts reading as a letterbox slot cut in one. */
 const FLATTEST = 1.34;
+
+/* ------------------------------------------------------- shared card shapes */
+
+/**
+ * The element badge: the element's mark inside a ring, in the element's ink.
+ *
+ * A ring rather than a filled disc, because 04-iconography.md gives the filled
+ * circle to commodities. The mark is authored edge to edge on a 24-grid and is
+ * pulled in about its centre here, or the ends of its ground line cross the ring.
+ */
+function elementMark(id, cx, cy, r) {
+  const e = ELEMENTS.get(id);
+  if (!e) throw new Error(`no such element: ${id}`);
+  const k = (2 * r / 24) * MARK.onCard.insetInDisc;
+  return {
+    wash: `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${inkHex(e.ink)}" opacity="${MARK.onCard.washOpacity}"/>`,
+    ink:
+      `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${SOOT}" stroke-width="2"/>` +
+      `<g transform="translate(${num(cx - 12 * k)} ${num(cy - 12 * k)}) scale(${num(k)})" fill="${MARK.fill}" ` +
+      `stroke="${SOOT}" stroke-width="${MARK.strokeWidth}" stroke-linecap="${MARK.strokeLinecap}" ` +
+      `stroke-linejoin="${MARK.strokeLinejoin}"><path d="${e.mark}"/></g>` +
+      `<text x="${cx + r + 9}" y="${cy + 5}" font-size="13" letter-spacing="1.5" font-family="${SANS}" fill="${T85}">${e.name.toUpperCase()}</text>`,
+  };
+}
+
+/** A rectangle inset from the trim, following the card's corner as it goes in. */
+function inset(by) {
+  return { x: TRIM.x + by, y: TRIM.y + by, w: TRIM.w - 2 * by, h: TRIM.h - 2 * by, r: Math.max(0, CORNER - by) };
+}
+const rounded = (b, attrs) => `<rect x="${num(b.x)}" y="${num(b.y)}" width="${num(b.w)}" height="${num(b.h)}" rx="${num(b.r)}" ${attrs}/>`;
+
+/** The two frame rules, both on the corner. */
+function frameRules() {
+  const outer = inset(FRAME.outer.inset);
+  const inner = inset(FRAME.inner.inset);
+  return `<g fill="none" stroke="${SOOT}">\n    ${rounded(outer, `stroke-width="${FRAME.outer.strokeWidth}"`)}\n    ${rounded(inner, `stroke-width="${FRAME.inner.strokeWidth}"`)}\n  </g>`;
+}
+
+/** The four rivets, pulled in off the corner so they sit on the round, not past it. */
+function rivets() {
+  const d = FRAME.rivets.inset;
+  const r = FRAME.rivets.radius;
+  const k = CORNER * 0.30;   // slide along the diagonal, onto the arc
+  const pts = [
+    [TRIM.x + d + k, TRIM.y + d + k],
+    [TRIM.x + TRIM.w - d - k, TRIM.y + d + k],
+    [TRIM.x + d + k, TRIM.y + TRIM.h - d - k],
+    [TRIM.x + TRIM.w - d - k, TRIM.y + TRIM.h - d - k],
+  ];
+  return `<g>${pts.map(([x, y]) => `<circle cx="${num(x)}" cy="${num(y)}" r="${r}"/>`).join('')}</g>`;
+}
+
+/**
+ * Where the die goes, marked in the bleed and never on the card.
+ *
+ * A card is cut with a radius, so the sheet has to say what radius. These are
+ * four quarter-arcs drawn just outside the trim, in the margin the blade takes
+ * away - the same job a crop mark does, for a corner that is not a right angle.
+ */
+function dieMarks() {
+  const g = 6;                       // stand off the trim so the arc is readable
+  const R = CORNER + g;
+  const b = { x: TRIM.x - g, y: TRIM.y - g, w: TRIM.w + 2 * g, h: TRIM.h + 2 * g };
+  const arcs = [
+    `M ${num(b.x)},${num(b.y + R)} A ${num(R)},${num(R)} 0 0 1 ${num(b.x + R)},${num(b.y)}`,
+    `M ${num(b.x + b.w - R)},${num(b.y)} A ${num(R)},${num(R)} 0 0 1 ${num(b.x + b.w)},${num(b.y + R)}`,
+    `M ${num(b.x + b.w)},${num(b.y + b.h - R)} A ${num(R)},${num(R)} 0 0 1 ${num(b.x + b.w - R)},${num(b.y + b.h)}`,
+    `M ${num(b.x + R)},${num(b.y + b.h)} A ${num(R)},${num(R)} 0 0 1 ${num(b.x)},${num(b.y + b.h - R)}`,
+  ];
+  return `<g fill="none" stroke="${SOOT}" stroke-width="1" opacity="0.32">${arcs.map((d) => `<path d="${d}"/>`).join('')}</g>`;
+}
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const num = (n) => Number(n.toFixed(2));
@@ -154,10 +260,12 @@ function bar({ x, yTop, yBottom, cells, step, colour, label, unit, harm, onArt }
     most the edge holds, and every harm bar in the data fits it at step 1 —
     a harm track must never skip-count. */
 function barScale(total) {
-  for (const step of [1, 2, 5, 10, 20]) {
-    if (total / step <= 14) return { cells: Math.ceil(total / step), step };
+  const { steps, maxCells } = components.bars;
+  for (const step of steps) {
+    if (total / step <= maxCells) return { cells: Math.ceil(total / step), step };
   }
-  return { cells: Math.ceil(total / 50), step: 50 };
+  const last = steps[steps.length - 1];
+  return { cells: Math.ceil(total / last), step: last };
 }
 
 /* ------------------------------------------------------------------ framing */
@@ -170,10 +278,10 @@ function plateSize(id) {
 }
 
 const unframed = [];
-function subjectOf(id) {
+function frameOf(id) {
   const entry = framing.plates[id];
-  if (!entry) { unframed.push(id); return WHOLE_PLATE; }
-  return entry.subject;
+  if (!entry) { unframed.push(id); return { subject: WHOLE_PLATE }; }
+  return entry;
 }
 
 /**
@@ -210,7 +318,8 @@ function deckGeometry(deck) {
 /** The crop of this card's plate that fills its window, framed on the subject. */
 function portraitCrop(spec, window) {
   const plate = plateSize(spec.portrait);
-  const c = crop(plate, subjectOf(spec.portrait), window.w / window.h, framing.pad);
+  const f = frameOf(spec.portrait);
+  const c = crop(plate, f.subject, window.w / window.h, framing.pad, f.focal, f.focalTargetOverride || framing.focalTarget);
   const scale = window.w / (c.w * plate.width);
   return {
     x: num(window.x - c.x * plate.width * scale),
@@ -244,13 +353,7 @@ function card(spec, geom) {
      because below that the rules text is already using the width. */
   if (spec.inner) bars.push(bar({ x: TRIM.x + TRIM.w - 104, yTop: P.y + 26, yBottom: P.y + P.h - 26, ...barScale(spec.inner.total), colour: spec.inner.colour, label: spec.inner.label, onArt: true }));
 
-  const elementBadge = spec.element
-    ? {
-        wash: `<circle cx="${TRIM.x + 40}" cy="66" r="13" fill="${ELEMENT_INK[spec.element]}" opacity="0.55"/>`,
-        ink: `<circle cx="${TRIM.x + 40}" cy="66" r="13" fill="none" stroke="${SOOT}" stroke-width="2"/>` +
-          `<text x="${TRIM.x + 62}" y="71" font-size="13" letter-spacing="1.5" font-family="${SANS}" fill="${T85}">${spec.element.toUpperCase()}</text>`,
-      }
-    : null;
+  const elementBadge = spec.element ? elementMark(spec.element, TRIM.x + 24 + MARK.onCard.radius, 68, MARK.onCard.radius) : null;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="${SERIF}">
 <title>${esc(spec.name)} — ${esc(spec.code)}</title>
@@ -272,15 +375,11 @@ function card(spec, geom) {
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="${SOOT}">
-  <!-- timber-and-iron frame, rivets at the corners -->
-  <g fill="none" stroke="${SOOT}">
-    <rect x="${TRIM.x + 8}" y="${TRIM.y + 8}" width="${TRIM.w - 16}" height="${TRIM.h - 16}" stroke-width="4"/>
-    <rect x="${TRIM.x + 16}" y="${TRIM.y + 16}" width="${TRIM.w - 32}" height="${TRIM.h - 32}" stroke-width="1.2"/>
-  </g>
-  <g>
-    <circle cx="${TRIM.x + 15}" cy="${TRIM.y + 15}" r="3.6"/><circle cx="${TRIM.x + TRIM.w - 15}" cy="${TRIM.y + 15}" r="3.6"/>
-    <circle cx="${TRIM.x + 15}" cy="${TRIM.y + TRIM.h - 15}" r="3.6"/><circle cx="${TRIM.x + TRIM.w - 15}" cy="${TRIM.y + TRIM.h - 15}" r="3.6"/>
-  </g>
+  <!-- timber-and-iron frame, rivets at the corners. Both rules follow the card's
+       own corner radius, one inside the other, or the frame reads as a square
+       box floating in a rounded card. -->
+  ${frameRules()}
+  ${rivets()}
 
   <!-- name and card code, maker's-mark small -->
   <text x="${TRIM.x + 24}" y="${spec.element ? 102 : 80}" font-size="31" font-weight="bold">${esc(spec.name)}</text>
@@ -305,12 +404,115 @@ function card(spec, geom) {
 
 <!-- ============================================================ GRIME -->
 <g id="grime">
+  ${dieMarks()}
   <path d="M 0,0 H 92 Q 38,40 0,86 Z" fill="${SOOT}" opacity="0.028"/>
   <path d="M ${W},${H} H ${W - 84} Q ${W - 36},${H - 34} ${W},${H - 76} Z" fill="${SOOT}" opacity="0.025"/>
   <g fill="${SOOT}" opacity="0.055">
     <circle cx="150" cy="700" r="1.4"/><circle cx="420" cy="112" r="1.2"/><circle cx="500" cy="470" r="1.3"/>
   </g>
   <circle cx="470" cy="676" r="26" fill="none" stroke="${FOXING}" stroke-width="4" opacity="0.5"/>
+</g>
+</svg>
+`;
+}
+
+/* ---------------------------------------------------------------- the back */
+
+/**
+ * One deck's back.
+ *
+ * A face-down stack has to be identifiable across a table, and there will be
+ * many stacks: characters, vehicles, monsters, talismans, modifications, spells,
+ * events, quests, items. So the back carries the deck's name — and carries it
+ * twice, mirrored across the card's horizontal centre line, so the back has no
+ * up and no down. A card dealt either way round reads the same, which is the one
+ * thing a back must never fail at.
+ *
+ * The symmetry is built rather than drawn: the top half is composed once and the
+ * bottom half is that same markup under a vertical flip, so the two can never
+ * drift apart. The roundel sits on the axis and is drawn once — every motif in
+ * components.json is itself symmetrical about that line.
+ *
+ * Everything else is engine turning: rings and rays struck from the card's own
+ * centre, on the ink plate at hairline weight, the way a playing card or a
+ * banknote has a ground. It costs the black-and-white edition nothing.
+ */
+function back(deck) {
+  const ink = inkHex(deck.back.ink);
+  const B = components.back;
+  const cx = W / 2;
+  const cy = H / 2;
+  const motif = B.motifs[deck.back.motif];
+  if (!motif) throw new Error(`components.json declares no motif "${deck.back.motif}"`);
+
+  /* ---- engine-turned ground, struck from the centre ---- */
+  const inner = inset(FRAME.inner.inset);
+  const rMax = Math.hypot(inner.w, inner.h) / 2;
+  const lathe = [];
+  for (let i = 1; i <= B.lathe.rings; i++) {
+    lathe.push(`<circle cx="${cx}" cy="${cy}" r="${num((rMax * i) / B.lathe.rings)}"/>`);
+  }
+  for (let i = 0; i < B.lathe.rays; i++) {
+    const a = (i * 2 * Math.PI) / B.lathe.rays;
+    lathe.push(
+      `<path d="M ${num(cx + Math.cos(a) * 44)},${num(cy + Math.sin(a) * 44)} L ${num(cx + Math.cos(a) * rMax)},${num(cy + Math.sin(a) * rMax)}"/>`
+    );
+  }
+
+  /* ---- the word, fitted to the card rather than hoped to fit ---- */
+  const word = deck.back.word;
+  const avail = TRIM.w - 96;
+  const size = Math.min(B.wordFontSizeMm * U, avail / (word.length * 0.80));
+  const span = Math.min(avail, word.length * size * 0.95);
+
+  /* ---- one half, then that same half flipped ---- */
+  const roundelR = 78;
+  const half =
+    `<text x="${cx}" y="${num(cy - roundelR - 30)}" font-size="${num(size)}" text-anchor="middle" ` +
+    `textLength="${num(span)}" lengthAdjust="spacing" font-weight="bold" font-family="${SANS}">${esc(word)}</text>` +
+    `<path d="M ${num(cx - span / 2)},${num(cy - roundelR - 14)} H ${num(cx + span / 2)}" stroke="${SOOT}" stroke-width="1.4" fill="none"/>`;
+
+  const k = (roundelR * 1.16) / 24;
+  const roundel =
+    `<circle cx="${cx}" cy="${cy}" r="${roundelR}" fill="${TALLOW}"/>` +
+    `<circle cx="${cx}" cy="${cy}" r="${roundelR}" fill="none" stroke="${SOOT}" stroke-width="2.6"/>` +
+    `<circle cx="${cx}" cy="${cy}" r="${num(roundelR - 7)}" fill="none" stroke="${SOOT}" stroke-width="1"/>` +
+    `<g transform="translate(${num(cx - 12 * k)} ${num(cy - 12 * k)}) scale(${num(k)})" fill="none" stroke="${SOOT}" ` +
+    `stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${motif}"/></g>`;
+
+  const flip = `matrix(1 0 0 -1 0 ${H})`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="${SERIF}">
+<title>${esc(deck.name)} — the card back</title>
+<desc>The back of the ${esc(deck.name.toLowerCase())} deck: the deck's name mirrored across the card's horizontal centre line, over engine turning struck from the centre, with the ${esc(deck.back.motif)} roundel on the axis. Generated by tools/build-cards.mjs from data/components.json - do not edit. ${CARD_MM.w} x ${CARD_MM.h} mm at ${U} units/mm, ${CARD_MM.bleed} mm bleed, ${CARD_MM.corner} mm corner. The ink plate alone is the black-and-white edition.</desc>
+<defs>
+  <clipPath id="card-inside">${rounded(inner, '')}</clipPath>
+</defs>
+
+<!-- ============================================================ WASH -->
+<g id="wash">
+  <rect x="0" y="0" width="${W}" height="${H}" fill="${TALLOW}"/>
+  ${rounded(inset(FRAME.outer.inset), `fill="${ink}" opacity="0.30"`)}
+</g>
+
+<!-- ============================================================ INK -->
+<g id="ink" fill="${SOOT}">
+  <g clip-path="url(#card-inside)" fill="none" stroke="${SOOT}" stroke-width="${components.back.lathe.strokeWidth}" opacity="${components.back.lathe.opacity}">
+    ${lathe.join('\n    ')}
+  </g>
+  ${frameRules()}
+  ${rivets()}
+  <g>${half}</g>
+  <g transform="${flip}">${half}</g>
+  ${roundel}
+</g>
+
+<!-- ============================================================ GRIME -->
+<g id="grime">
+  ${dieMarks()}
+  <g fill="${SOOT}" opacity="0.05">
+    <circle cx="118" cy="150" r="1.5"/><circle cx="434" cy="602" r="1.5"/>
+  </g>
 </g>
 </svg>
 `;
@@ -330,7 +532,7 @@ const specs = [];
 const skipped = [];
 
 for (const c of characters) {
-  const render = `character-${c.cardCode.toLowerCase()}`;
+  const render = plateIdFor(deckByPrefix('CHR'), c);
   if (!hasRender(render)) { skipped.push(c.cardCode); continue; }
   specs.push({
     code: c.cardCode, name: c.name, portrait: render,
@@ -345,7 +547,7 @@ for (const c of characters) {
 }
 
 for (const v of vehicles) {
-  const render = `vehicle-${v.cardCode.toLowerCase()}`;
+  const render = plateIdFor(deckByPrefix('VEH'), v);
   if (!hasRender(render)) { skipped.push(v.cardCode); continue; }
   specs.push({
     code: v.cardCode, name: v.name, portrait: render,
@@ -359,7 +561,7 @@ for (const v of vehicles) {
 }
 
 for (const m of monsters) {
-  const render = `monster-${m.id}`;
+  const render = plateIdFor(deckByPrefix('MON'), m);
   if (!hasRender(render)) { skipped.push(m.cardCode); continue; }
   const opts = ['Slay', m.options.enslave && 'Enslave', m.options.befriend && 'Befriend', m.options.domesticate && 'Domesticate'].filter(Boolean);
   specs.push({
@@ -381,7 +583,7 @@ for (const m of monsters) {
 }
 
 for (const t of talismans) {
-  const render = `talisman-${t.cardCode.toLowerCase()}`;
+  const render = plateIdFor(deckByPrefix('TAL'), t);
   if (!hasRender(render)) { skipped.push(t.cardCode); continue; }
   specs.push({
     code: t.cardCode, name: t.name, portrait: render,
@@ -394,13 +596,8 @@ for (const t of talismans) {
   });
 }
 
-const DECKS = [
-  { prefix: 'CHR', title: 'Characters' },
-  { prefix: 'VEH', title: 'Vehicles' },
-  { prefix: 'MON', title: 'Monsters' },
-  { prefix: 'TAL', title: 'Talismans' },
-];
 const deckOf = (spec) => DECKS.find((d) => spec.code.startsWith(d.prefix));
+const rendered = (prefix) => specs.filter((s) => s.code.startsWith(prefix));
 
 /* ------------------------------------------------------------------ output */
 
@@ -418,7 +615,11 @@ const index = `<!doctype html>
   .bar a { color: ${T85}; }
   .bar a.primary { color: ${SOOT}; font-weight: bold; }
   .deck { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; }
-  .deck object { width: 276px; height: 376px; border: 1px solid ${T25}; background: ${TALLOW}; }
+  /* The window is the card's trim, corner and all: a preview with square corners
+     is a preview of a card nobody is going to cut. ${CARD_MM.corner}mm at this
+     scale, from data/components.json. */
+  .deck object { width: 276px; height: 376px; border: 1px solid ${T25}; background: ${TALLOW};
+                 border-radius: ${num(CARD_MM.corner * 276 / (CARD_MM.w + 2 * CARD_MM.bleed))}px; }
 </style>
 </head>
 <body>
@@ -433,11 +634,19 @@ plates in <code>docs/art/renders/</code> — edit those, re-run the tool, and ne
 plate has been accepted are rendered${skipped.length ? ` (still waiting on renders: ${skipped.join(', ')})` : ''}.
 Each card is shown here with its 3&nbsp;mm bleed; <a href="print.html">the print page</a> lays them out on paper
 at their true ${CARD_MM.w} × ${CARD_MM.h}&nbsp;mm, cut lines and all.</p>
-${DECKS.map(({ prefix, title }) => {
-  const deck = specs.filter((s) => s.code.startsWith(prefix));
+${DECKS.map(({ prefix, name: title }) => {
+  const deck = rendered(prefix);
   if (!deck.length) return '';
   return `<h2>${title}</h2>\n<div class="deck">\n${deck.map((s) => `  <object data="${s.code}.svg" type="image/svg+xml" aria-label="${esc(s.name)}"></object>`).join('\n')}\n</div>`;
 }).join('\n')}
+<h2>The backs</h2>
+<p class="note">One per deck, so a face-down stack is identifiable across the table. Each carries its deck's
+name mirrored across the card's horizontal centre line — a back with an up and a down is a back that gives
+the card away. Described in <code>data/components.json</code> under <code>back</code>, and generated with
+the fronts.</p>
+<div class="deck">
+${DECKS.map((d) => `  <object data="back-${d.prefix}.svg" type="image/svg+xml" aria-label="${esc(d.name)} — the card back"></object>`).join('\n')}
+</div>
 </body>
 </html>
 `;
@@ -506,9 +715,13 @@ const print = `<!doctype html>
   /* One slot is one card at its true trim size. The SVG inside is bigger than
      the slot by its bleed and is pulled up and left by exactly that much, so
      what shows through is the trim and nothing else. */
-  .slot { position: absolute; overflow: hidden; }
+  /* The slot is the card's trim, corner and all - the radius is
+     data/components.json stock.card.cornerRadiusMm, and it is the same radius
+     the guide is drawn at, because the guide is where the blade goes. */
+  .slot { position: absolute; overflow: hidden; border-radius: ${CARD_MM.corner}mm; }
   .slot object { position: absolute; display: block; border: 0; }
-  .guide { position: absolute; inset: 0; border: 0.2mm dashed #8c8c8c; pointer-events: none; }
+  .guide { position: absolute; inset: 0; border: 0.2mm dashed #8c8c8c; pointer-events: none;
+           border-radius: ${CARD_MM.corner}mm; }
   .stamp { position: absolute; font: 600 7px/1.2 var(--mono, monospace); color: #777; letter-spacing: .05em; }
   .empty { padding: 40px 18px; text-align: center; color: var(--ink-faint); font-size: .85rem; }
 
@@ -564,6 +777,13 @@ const print = `<!doctype html>
   straight onto one. The dotted line is the cut: it sits on the card's edge, and the ${CARD_MM.bleed} mm of bleed
   each card is drawn with stays outside the window, where the blade never goes. For a file rather than paper,
   print and choose <strong>Save as PDF</strong> — the page size is already set, so the PDF is true size too.</p>
+  <p>The corners are round — ${CARD_MM.corner} mm, which is what a playing card actually has. The guide is
+  drawn on that radius, and each card carries a faint arc in its bleed showing where the die goes. Cut the
+  straights with a blade and take the corners with a ${CARD_MM.corner} mm punch, or trust your scissors: gluing
+  a square-cut card onto a rounded one hides the difference anyway.</p>
+  <p><strong>Backs</strong> are under <em>Card backs</em> in the picker, one per deck. Print a sheet of the
+  backs you need, feed the paper through again, and print the fronts — or glue the two sheets back to back,
+  which is what most people's printers make them do.</p>
 </div>
 
 <div class="picker" id="picker"></div>
@@ -574,8 +794,17 @@ const print = `<!doctype html>
   'use strict';
 
   /* Generated by tools/build-cards.mjs — the cards whose plates are accepted. */
-  var CARDS = ${JSON.stringify(specs.map((s) => ({ code: s.code, name: s.name, deck: deckOf(s).prefix })), null, 0)};
-  var DECKS = ${JSON.stringify(DECKS, null, 0)};
+  var CARDS = ${JSON.stringify(
+    [
+      ...specs.map((s) => ({ code: s.code, name: s.name, deck: deckOf(s).prefix })),
+      ...DECKS.map((d) => ({ code: `back-${d.prefix}`, name: `${d.name} back`, deck: 'BACK' })),
+    ],
+    null, 0)};
+  /* The backs are their own group in the picker: you print a sheet of them, not
+     one alongside its front. Duplex is below. */
+  var DECKS = ${JSON.stringify(
+    [...DECKS.map((d) => ({ prefix: d.prefix, name: d.name })), { prefix: 'BACK', name: 'Card backs' }],
+    null, 0)};
 
   var CARD_W = ${CARD_MM.w}, CARD_H = ${CARD_MM.h}, BLEED = ${CARD_MM.bleed};
   var SVG_W = CARD_W + 2 * BLEED, SVG_H = CARD_H + 2 * BLEED;
@@ -594,7 +823,7 @@ const print = `<!doctype html>
     var cards = CARDS.filter(function (c) { return c.deck === deck.prefix; });
     if (!cards.length) return;
     var head = document.createElement('h2');
-    head.textContent = deck.title + ' ';
+    head.textContent = deck.name + ' ';
     ['all', 'none'].forEach(function (which) {
       var b = document.createElement('button');
       b.type = 'button';
@@ -802,11 +1031,16 @@ const print = `<!doctype html>
 `;
 
 const wanted = new Map();
-for (const { prefix } of DECKS) {
-  const deck = specs.filter((s) => s.code.startsWith(prefix));
-  if (!deck.length) continue;
-  const geom = deckGeometry(deck);
-  for (const spec of deck) wanted.set(`${spec.code}.svg`, card(spec, geom));
+for (const deck of DECKS) {
+  const cards = rendered(deck.prefix);
+  if (cards.length) {
+    const geom = deckGeometry(cards);
+    for (const spec of cards) wanted.set(`${spec.code}.svg`, card(spec, geom));
+  }
+  /* Every declared deck gets a back, cards or no cards. A deck that is still
+     waiting on its plates is still a deck, and its back is still what tells it
+     apart from the stack next to it. */
+  wanted.set(`back-${deck.prefix}.svg`, back(deck));
 }
 wanted.set('index.html', index);
 wanted.set('print.html', print);

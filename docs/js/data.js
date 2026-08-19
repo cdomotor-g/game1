@@ -27,6 +27,9 @@
   const characters = D.characters.characters;
   const quests = D.quests.quests;
   const spells = D.arcana.spells;
+  const elements = D.arcana.elements;
+  const enchantments = (D.arcana.enchantments || {}).cards || [];
+  const modifications = D.modifications.modifications;
   const talismans = items.filter((i) => i.class === 'talisman');
 
   const index = (arr) => new Map(arr.map((x) => [x.id, x]));
@@ -43,6 +46,9 @@
     people: index(peoples),
     profession: index(professions),
     card: index(cards),
+    element: index(elements),
+    enchantment: index(enchantments),
+    modification: index(modifications),
     item: index(items),
     monster: index(monsters),
     vehicle: index(vehicles),
@@ -77,7 +83,8 @@
       one idea of where its subject is. See docs/js/framing.js. */
   function artPlacement(plate, aspect) {
     if (!plate) return null;
-    const box = Framing.crop(plate, plate.subject, aspect, artFiles.pad || 0);
+    const box = Framing.crop(plate, plate.subject, aspect, artFiles.pad || 0,
+      plate.focal, plate.focalTarget || artFiles.focalTarget);
     return {
       width: 100 / box.w,
       height: 100 / box.h,
@@ -254,6 +261,8 @@
       ['character', 'Characters', characters],
       ['quest', 'Quests', quests],
       ['spell', 'Spells', spells],
+      ['enchantment', 'Enchantments', enchantments],
+      ['modification', 'Modifications', modifications],
     ];
     const out = [];
     for (const [kind, label, list] of groups) {
@@ -269,6 +278,7 @@
     commodities, tools, buildings, recipes, terrains, deposits,
     modes, figures, peoples, professions, cards, items,
     monsters, vehicles, characters, quests, spells, talismans,
+    elements, enchantments, modifications,
     art, artPlacement, placeSheet, groundSheet, holdingSheets,
     categories: {
       commodity: D.commodities.categories,
