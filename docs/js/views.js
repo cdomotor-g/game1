@@ -537,6 +537,11 @@
     return el('div', [
       pageHead('Maps', 'A drawn map and the hex board read off it. The artwork is committed as it was supplied; the grid is an overlay, so a mistake about the terrain is a one-character edit and never a repaint.'),
       maps.map((m) => {
+        /* A commission is a map whose plate has not been drawn yet: the board is
+           empty because there is nothing to read it off. It shows what was asked
+           for rather than what is there. See docs/MINT.md. */
+        if (!(m.rows || []).length) return commissionPanel(m);
+
         const tally = {};
         for (const line of m.rows) for (const ch of line) tally[m.legend[ch]] = (tally[m.legend[ch]] || 0) + 1;
         const water = (tally['deep-water'] || 0) + (tally['shallow-water'] || 0);
@@ -590,6 +595,57 @@
         D.holdingSheets().map((p, i) => [p, `Sheet ${i + 1}`])),
     ]);
   };
+
+  /** A commissioned map: what has been asked for, and what is waiting on what. */
+  function commissionPanel(m) {
+    const c = m.commission || {};
+    const s = c.settlements || {};
+    const ranks = ['seat', 'city', 'town', 'village']
+      .filter((r) => s[r])
+      .map((r) => `${s[r]} ${r}${s[r] === 1 ? '' : r === 'city' ? 'ies' : 's'}`);
+
+    return el('div.panel', [
+      el('h3', m.name, el('span.count', 'commissioned')),
+      el('p.prose', m.summary || ''),
+      el('div.card-meta', [
+        pill('no plate yet'),
+        pill(`${m.grid.cols} × ${m.grid.rows} reserved`),
+        pill(`${s.count || 0} settlements`),
+        pill(`${(c.plate || {}).minWidthPx || '?'} px minimum`),
+      ]),
+      el('h4', { style: 'margin-top:16px' }, 'What it is for'),
+      el('p.prose', c.why || ''),
+      el('h4', { style: 'margin-top:16px' }, 'The country'),
+      el('p.prose', c.landmass || ''),
+      el('h4', { style: 'margin-top:16px' }, 'Terrain budget'),
+      el('div.grid.wide', (c.terrainBudget || []).map((b) => {
+        const t = D.terrains.find((x) => x.id === b.terrain);
+        return el('button.card', { type: 'button', onclick: () => open('terrain', b.terrain) }, [
+          el('div.card-head', [
+            el('span.card-title', [
+              el('span', { style: `display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;background:${(t && t.colour) || '#888'}` }),
+              (t && t.name) || b.terrain,
+            ]),
+            pill(`${Math.round(b.share * 100)}%`),
+          ]),
+          el('div.card-sub', `${Math.round(b.share * m.grid.cols * m.grid.rows)} hexes of ${m.grid.cols * m.grid.rows}`),
+        ]);
+      })),
+      ranks.length ? el('h4', { style: 'margin-top:16px' }, 'Settlements asked for') : null,
+      ranks.length ? el('div.flow', ranks.map((r) => el('span.token', r))
+        .concat(s.harbours ? [el('span.token', `${s.harbours} harbours`)] : [])) : null,
+      el('h4', { style: 'margin-top:16px' }, 'Must have'),
+      el('div.linklist', (c.mustHave || []).map((w) =>
+        el('div.linkrow', { style: 'cursor:default' }, [el('strong', w)]))),
+      el('h4', { style: 'margin-top:16px' }, 'Must not have'),
+      el('div.linklist', (c.mustNotHave || []).map((w) =>
+        el('div.linkrow', { style: 'cursor:default' }, [el('strong', w)]))),
+      el('div.flow', { style: 'margin-top:16px' }, [
+        el('a.btn', { href: 'mint/index.html' }, 'The mint — how this gets drawn'),
+        el('a.btn.small', { href: 'art/mint/QUEUE.md' }, 'The queue'),
+      ]),
+    ]);
+  }
 
   /** A panel of mini-map sheets: [path, caption] pairs, missing sheets skipped. */
   function sheetGallery(title, blurb, pairs) {

@@ -60,6 +60,7 @@
     { "id": "caves", "name": "Caves", "summary": "Discovery rolls here can reveal a cave mouth. Entering a cave needs a lit torch or lantern - see travel.json and discovery.json." }
   ],
   "boardSetup": {
+    "$comment": "Setup for a board dealt from a bag of TILES. That board is shelved - see https://github.com/cdomotor-g/game1/issues/18 - and this block is kept rather than removed, because it is still the right answer for a tile set and because tools/validate-map.mjs reads terrainMix and recommendedTiles to report what a DRAWN board actually holds against what the rules assume. Nothing here is a rule about a drawn map: a continent is not a shuffled tile bag, and validate-map reports the gap without ever failing on it.",
     "recommendedTiles": { "2players": 37, "3players": 49, "4players": 61, "5players": 75 },
     "faceDownAtStart": "All tiles beyond each player's starting cluster of 3.",
     "startingCluster": "Each player places a town hall on a face-up start tile plus its two neighbours, at least 3 tiles from any other player.",

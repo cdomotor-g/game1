@@ -626,6 +626,7 @@ const index = `<!doctype html>
 <div class="bar">
   <a href="../index.html">← Explorer</a>
   <a href="../book/index.html">The rulebook</a>
+  <a href="../mint/index.html">The mint</a>
   <a class="primary" href="print.html">Print &amp; cut the cards →</a>
 </div>
 <h1>The adventure deck cards</h1>

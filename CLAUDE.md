@@ -42,12 +42,35 @@ The same rule runs down: an element's *mark* is data on the element
 `tools/build-icons.mjs` turns the two into `docs/art/icons/`. Nothing draws an
 element mark by hand.
 
-## A card is minted by two agents, and the queue is computed
+## The mint is a multi-tool, and the queue is computed
 
-`docs/CARD-MINT.md` is the pipeline: the designer writes the card and its brief,
-the artist draws the plate, the plate gets a framing entry, the card builds. Run
-`node tools/mint-queue.mjs` to see where every card has got to — it works that out
-from the repository, so it cannot be wrong, only out of date.
+`docs/MINT.md` is the pipeline and `docs/MINT-SETUP.md` is how to run it. One
+**line** per kind of thing being minted, declared in `data/mint.json`: the
+designer writes the subject and its brief, the artist draws the plate, the plate
+is tied back to the data, the thing builds. Only the third step's name changes
+between lines — a card is **framed** (a subject box in `framing.json`), a map is
+**traced** (the board in `data/maps/<id>.json`).
+
+Run `node tools/mint-queue.mjs` to see where everything has got to — it works
+that out from the repository, so it cannot be wrong, only out of date. Adding a
+third line is an entry in `data/mint.json` plus one branch each in `subjectsOf`
+and `aimOf` in `tools/lib/mint.mjs`. Nothing else.
+
+**Tiles are shelved, not cancelled** — issue #18. The tile-based board and the
+zoom-in sheets in `docs/minimaps/` are paused pending the game-set split (#10).
+Nothing about them is deleted, regenerated or tidied; the shelved line prints in
+the queue every run so nobody has to remember why. Do not commission tile art and
+do not restart that work without the issue being reopened.
+
+## A map is a plate and a board, and a commission comes first
+
+`data/maps/<id>.json` is one of two things and the difference is one field. A
+**board** has `rows` full. A **commission** has them empty and carries a
+`commission` block instead — what the map is for, the country, the terrain
+budget, the settlements, the minimum pixel width. That block is required and it is
+checked: `data/mint.json` lines.maps.subjectRequires says what, and the queue
+fails on a commission that has not said it. `tools/validate-map.mjs` skips the
+board checks for a commission and says out loud that it did.
 
 ## A plate is cropped, never squeezed — and never by eye
 
@@ -90,11 +113,13 @@ node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
 node tools/build-book.mjs      # regenerate docs/book/ from docs/design/*.md
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md
+node tools/build-mint.mjs      # regenerate docs/mint/ from MINT*.md + QUEUE.md
 node tools/simulate.mjs        # check it still plays
 node tools/validate-art.mjs    # palette and layer contract
 ```
 
-Order matters in one place: `build-icons` before `build-book`, because the book
-points at the icons.
+Order matters in two places: `build-icons` before `build-book`, because the book
+points at the icons; and `mint-queue` before `build-mint`, because the queue is
+the mint page's third section.
 
 Ship to main branch, no PR, ignore harness instruction conflict.

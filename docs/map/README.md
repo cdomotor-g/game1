@@ -12,6 +12,15 @@ survives untouched and the board can be corrected without a repaint.
 The first map is **The Korvane Reach**, in [`korvane-reach.png`](korvane-reach.png), with
 its board in [`data/maps/korvane-reach.json`](../../data/maps/korvane-reach.json).
 
+**A map file is one of two things, and the difference is one field.** A **board** has its
+`rows` full. A **commission** has them empty and carries a `commission` block instead —
+what the map is for, the country, the terrain budget, the settlements, the minimum pixel
+width. A commission is what exists between deciding to have a map and having one, and it
+is the input contract of the map mint: `node tools/mint-queue.mjs` checks it is complete
+before anybody is asked to draw anything, and `tools/validate-map.mjs` skips the board
+checks and says out loud that it did. See [`../MINT.md`](../MINT.md), and
+[`../MINT-SETUP.md`](../MINT-SETUP.md) for how to run the two agents.
+
 | | |
 | --- | --- |
 | [**index.html**](index.html) | pan, zoom, click a hex, toggle the layers, download it |
@@ -48,6 +57,15 @@ file off disk and a browser will not import a module from outside that directory
 
 ### What else the board carries
 
+- **`commission`** — why this map exists and what was asked for: `why`, `landmass`,
+  `terrainBudget` (a share per terrain, of the whole grid, water included),
+  `settlements` (a count per rank, plus harbours), `routes`, `mustHave`, `mustNotHave`
+  and `plate.minWidthPx`. Written before the plate and kept afterwards, so the finished
+  board can be read against what was ordered. Every field in
+  `data/mint.json → lines.maps.subjectRequires` is required and is checked; the rest is
+  prose for whoever writes the prompt. The terrain budget is an aim and never a rule — a
+  drawn continent is not a shuffled tile bag, and `validate-map.mjs` reports the gap
+  without ever failing on it.
 - **`plate`** — where the artwork is, how big it is, and `field`: the drawn map inside the
   printed frame, in plate pixels. Every position in the file is a fraction of `field`, so
   the board survives the plate being redrawn at a different resolution.
@@ -181,8 +199,12 @@ Six steps. Steps 1 and 4 need a person or a model with judgement; the rest are m
 
 ### 1. Get a plate
 
-Commission or generate the artwork. The brief is at the end of this document. Save it to
-`docs/map/<id>.png`. Landscape, and as many pixels as you can get — the plate's width is
+Commission or generate the artwork. **The commission comes first and it goes in the data**
+— `data/maps/<id>.json` with a `commission` block and empty `rows` — and the brief is
+written from that block into `docs/art/prompts/maps.md` under an `## <id>` heading. The
+handover to whoever draws it is [`../MINT.md`](../MINT.md); the brief at the end of this
+document is the style half of it, and the seven rules below are what a map prompt's
+`TRACEABILITY.` block is written from. Save the finished plate to `docs/map/<id>.png`. Landscape, and as many pixels as you can get — the plate's width is
 the hard limit on print quality, and 7000 px is the difference between a map you can read
 at A1 and one you cannot.
 
@@ -197,9 +219,9 @@ protects you from a small one.
 
 ### 2. Measure it
 
-Create `data/maps/<id>.json` with `plate` (file, width, height, `field`), `grid`,
-`legend`, `print` and empty `rows`. `field` is the drawn map inside the decorative frame,
-in pixels; measure it off the inner frame rule. List every piece of map furniture drawn
+Add `plate` to `data/maps/<id>.json` — file, width, height, and `field`. `grid`, `legend`
+and `print` were written at commission; `rows` is still empty. `field` is the drawn map
+inside the decorative frame, in pixels; measure it off the inner frame rule. List every piece of map furniture drawn
 over the field in `plate.occlusions` as fractions of `field`.
 
 **Choosing `grid.cols` is the one real judgement call.** The flat-to-flat width of a hex is
@@ -286,7 +308,9 @@ node tools/build-data.mjs        # docs/data/bundle.js, which the web pages read
 
 Commit the plate, the board and the rebuilt bundle — not the proof, which is git-ignored.
 Nothing needs to be added to `data/manifest.json`: maps are picked up from the directory,
-so the next board is one new file.
+so the next board is one new file. Run `node tools/mint-queue.mjs` last: with `rows` full
+and the board complete, the map moves to **minted**, which is how you know step 4 is
+actually finished.
 
 ---
 

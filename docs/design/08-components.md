@@ -5,6 +5,12 @@ for a 4-player game and are estimates, not a manufacturing spec.
 
 ## Board
 
+> **The 61 tiles are shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** They stay in the bill of
+> materials because they are still the right answer for a *tile set*; the board
+> currently being built is one printed map plate — see the Maps section of the
+> root README. Deposit and tree tokens are unaffected: they sit on a hex whether
+> that hex is printed on a tile or on a map.
+
 - **61 hex tiles** — double-sided, terrain printed on the face, a neutral "unexplored"
   pattern on the back. Terrain mix in `data/terrain.json` under `boardSetup.terrainMix`.
 - **45 deposit tokens** — placed face down under tiles at setup, flipped when surveyed.

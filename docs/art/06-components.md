@@ -67,6 +67,11 @@ what a banded table needs.
 
 ## Hex tiles — 60mm across flats
 
+> **Shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** No tile art is being commissioned. The contract
+> below is the right one and is kept for the day a tile set is made; the board in
+> production is a drawn map plate, whose art contract is the seven traceability
+> rules in [`../map/README.md`](../map/README.md).
+
 - **Face:** terrain wash as a flat tint, ink-plate ground texture over it — tussocks,
   tree marks, contour hatching, ripple lines. Terrain identity is in the texture, not the
   colour.

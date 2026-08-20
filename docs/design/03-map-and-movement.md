@@ -2,6 +2,16 @@
 
 ## Tiles
 
+> **The tile board is shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** What is below stays true as
+> rules, and it is not what is being built. The board in play is a **drawn map
+> plate with the hex grid overlaid at read time** — see
+> [`../map/README.md`](../map/README.md) — where a mistake about the terrain is a
+> one-character edit rather than a repaint. A bag of tiles is a different physical
+> product with its own art contract and its own setup, and it comes back as a
+> *tile set* once the game-set split ([#10](https://github.com/cdomotor-g/game1/issues/10)) has decided how a set supplies
+> a board. Terrain, move costs and the letter codes below are shared by both and
+> are not affected.
+
 The board is hex tiles, each one terrain type. 37 tiles for two players up to 75 for
 five. Everything beyond each player's starting cluster of three starts **face down**.
 

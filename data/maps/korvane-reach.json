@@ -5,6 +5,39 @@
   "name": "The Korvane Reach",
   "subtitle": "a true charting of the free lands, the ember coast & the rimeward marches",
   "summary": "A north-facing continent map: an ice waste along the top edge and a second one across the northern bay, a temperate wooded west, a dry ochre south, and a mountain spine running south-east from the western sea to the eastern shore.",
+  "commission": {
+    "$comment": "The commission: what this map was for, written out after the fact. The Korvane Reach predates the map mint (docs/MINT.md) and this block is what its commission WOULD have said - it is here because a contract nobody has ever written a real example of is a contract nobody can follow. data/mint.json lines.maps.subjectRequires is the checkable half of it; tools/mint-queue.mjs fails the queue if a commissioned map is missing any of it.",
+    "why": "The first board: one drawn continent big enough to hold a full campaign, hexed, with enough coast and enough interior that both the shipping half and the rail half of the economy have somewhere to happen.",
+    "landmass": "One north-facing continent filling most of the frame, open sea on the north, west and east edges, a deeply indented coastline with offshore islands, and a mountain spine running south-east from the western sea to the eastern shore.",
+    "terrainBudget": [
+      { "terrain": "deep-water", "share": 0.29 },
+      { "terrain": "shallow-water", "share": 0.17 },
+      { "terrain": "grassland", "share": 0.11 },
+      { "terrain": "tundra", "share": 0.10 },
+      { "terrain": "coast", "share": 0.08 },
+      { "terrain": "mountain", "share": 0.08 },
+      { "terrain": "forest", "share": 0.08 },
+      { "terrain": "desert", "share": 0.07 },
+      { "terrain": "marsh", "share": 0.02 },
+      { "terrain": "hills", "share": 0.01 }
+    ],
+    "$terrainBudgetNote": "Shares of the whole grid, water included, as built. A budget is an aim for the artist and a sanity check afterwards, never a rule: a drawn continent is not a shuffled tile bag. tools/validate-map.mjs reports the finished board against boardSetup.terrainMix in data/terrain.json for the same reason - a map with a quarter of the hills the rules assume is a map where iron is scarce, and that is worth knowing before anyone plays on it. This map is one of those: 0.8% hills against the 8% the rules assume.",
+    "settlements": { "count": 19, "seat": 1, "city": 2, "town": 11, "village": 5, "harbours": 4 },
+    "routes": { "rail": true, "shipping": true, "road": true },
+    "mustHave": [
+      "an ice waste along the top edge and a second across the northern bay",
+      "a temperate wooded west and a dry ochre south",
+      "two rail lines meeting at one inland seat",
+      "at least four harbours, spread around the coast"
+    ],
+    "mustNotHave": [
+      "a hex grid, a square grid, or any ruled lines on the artwork",
+      "hillshading, relief shading or contour lines",
+      "map furniture over a coastline - cartouche, legend and compass all sit over water"
+    ],
+    "plate": { "minWidthPx": 4000, "wantWidthPx": 7000, "aspect": "root-two landscape" },
+    "$plateNote": "Not met. This plate arrived at 1491 px, which cost the two larger print presets - see docs/map/README.md. It is the one property of a plate that cannot be recovered later, and it is in the contract now because of this map."
+  },
   "plate": {
     "file": "korvane-reach.png",
     "$fileNote": "Relative to docs/map/. The artwork is committed as supplied and is never re-encoded by any tool here — the hex grid is an overlay drawn on top of it, not a change to it.",

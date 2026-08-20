@@ -1,0 +1,124 @@
+{
+  "$comment": "A COMMISSION, not a board. The plate has not been drawn yet, so this file has no `plate` block and its `rows` are empty. What it does have is a complete `commission`: what the map is for, what country it is, what the terrain budget is and how many settlements of what rank — the map mint's input contract, in data/mint.json under lines.maps.subjectRequires. Run `node tools/mint-queue.mjs` to see where it has got to. The whole pipeline, and who does what, is in docs/MINT.md; docs/map/README.md is the six steps of turning a plate into a board.",
+  "version": "0.1.0",
+  "id": "sundering-isles",
+  "name": "The Sundering Isles",
+  "subtitle": "a chart of the broken coast, the scatter & the drowned road",
+  "summary": "A warm archipelago south of the Reach: no continent, a hundred islands, and more water than land. Everything moves by hull. Commissioned as the second board, and as the map that makes the shipping half of the economy matter — the Korvane Reach is a rail map with a coast, and this is its opposite.",
+
+  "commission": {
+    "$comment": "The input contract. Everything the artist needs decided BEFORE a prompt is written, and everything the tracer needs true of the finished plate. docs/art/prompts/maps.md § sundering-isles is written from this block and from nothing else; if the two disagree, this file is right and the prompt is stale.",
+
+    "why": "The Reach is a continent with a coastline: rail carries the tonnage and ships are the alternative. This board inverts that — no route on it is walkable end to end, so barges, ships and harbours become the transport rules that are actually in play, and a settlement without a harbour is a settlement that has to pay someone else's freight.",
+
+    "landmass": "No continent. Three loose chains of islands running north-east to south-west across a warm shallow sea, with the largest island about a sixth of the frame and nothing else above a twentieth. Open deep water on the south and east edges; the north edge is the shallow approach to the Korvane Reach's southern shore, drawn as a shelf running off the top of the frame. One long reef, drawn as shallows, chains two of the groups together — the drowned road the subtitle is named for.",
+
+    "terrainBudget": [
+      { "terrain": "deep-water", "share": 0.30 },
+      { "terrain": "shallow-water", "share": 0.22 },
+      { "terrain": "coast", "share": 0.15 },
+      { "terrain": "grassland", "share": 0.11 },
+      { "terrain": "forest", "share": 0.09 },
+      { "terrain": "hills", "share": 0.05 },
+      { "terrain": "mountain", "share": 0.04 },
+      { "terrain": "marsh", "share": 0.03 },
+      { "terrain": "desert", "share": 0.01 }
+    ],
+    "$terrainBudgetNote": "Shares of the whole grid, water included. Half the board is water on purpose and the land is nearly all within one hex of it, which is what makes coast the third-largest terrain here and what makes the board play differently from the Reach. Tundra is deliberately absent: this is a warm sea. It keeps a character in the legend anyway, because a legend that covers all ten terrains costs nothing and a board that later grows a cold rock should not need a legend edit to say so.",
+
+    "settlements": { "count": 14, "seat": 1, "city": 1, "town": 5, "village": 7, "harbours": 12 },
+    "$settlementNote": "Twelve of the fourteen are harbours — on this board a settlement off the water is the exception and should look like a hard place to live. The seat is on the largest island; the city is on the reef chain, where the freight has to change hulls.",
+
+    "routes": { "rail": false, "shipping": true, "road": true },
+    "$routeNote": "No rail at all. A rail line needs continuous land and there is none; the day someone bridges the reef is a design decision, not a drawing.",
+
+    "mustHave": [
+      "three island groups, none of them touching, with the largest island about a sixth of the frame",
+      "a reef drawn as a distinct paler shallow, chaining two groups together",
+      "at least twelve harbours, and a named anchorage drawn at each",
+      "one volcanic peak on the largest island — the only mountain worth the name",
+      "a shelf running off the north edge, so the board reads as being south of somewhere"
+    ],
+    "mustNotHave": [
+      "a hex grid, a square grid, or any ruled lines over the field",
+      "hillshading, relief shading, contour lines or depth soundings",
+      "map furniture over land or over the reef — cartouche, legend and compass sit over open water",
+      "display lettering over any island — the big names go on the sea, where a mis-read costs nothing",
+      "a second colour of ochre: the desert wash and the marsh wash must not be the same, which is the mistake the Reach's plate made"
+    ],
+
+    "plate": {
+      "minWidthPx": 4000,
+      "wantWidthPx": 7000,
+      "aspect": "root-two landscape",
+      "$note": "Ask for the width before anything else. It is the one property of a plate that cannot be recovered later, and the Reach is on its second plate at 1491 px, which cost it the two larger print presets."
+    }
+  },
+
+  "grid": {
+    "shape": "hex",
+    "orientation": "pointy",
+    "offset": "odd-r",
+    "cols": 30,
+    "rows": 24,
+    "fit": "field-width",
+    "$fitNote": "Chosen at commission, confirmed when the field is measured. 30 columns on a root-two landscape field puts the rows at 24 and keeps a hex about the size of a small island, which is what this board needs: an island that is one hex is a place, and an island that is half a hex is decoration. The Reach uses 32 on a wider country; fewer columns here would swallow the scatter."
+  },
+
+  "print": {
+    "$comment": "Sheet layouts, in the same three sizes as every other board — the geometry is a property of A4 and of the root-two frame, not of the artwork. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived from the plate and written in by tools/build-map.mjs; they are absent here because there is no plate to derive them from yet.",
+    "default": "four-sheet",
+    "presets": [
+      {
+        "id": "four-sheet",
+        "name": "Four sheets, A2",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 2,
+        "sheetRows": 2,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "note": "Two by two, printed landscape. The working size for a table."
+      },
+      {
+        "id": "nine-sheet",
+        "name": "Nine sheets, A1",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 3,
+        "sheetRows": 3,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "note": "Three by three. Worth printing only if the plate arrives at 7000 px."
+      },
+      {
+        "id": "one-sheet",
+        "name": "One sheet, reference",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 1,
+        "sheetRows": 1,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "note": "The whole board on one page, for reading rather than playing."
+      }
+    ]
+  },
+
+  "legend": {
+    "$comment": "Character to terrain id, for the 'rows' block. Fixed at commission so the tracer's output is readable the day it first runs, and identical to the Korvane Reach's so a board from either map reads the same in a text editor.",
+    "~": "deep-water",
+    "-": "shallow-water",
+    "c": "coast",
+    ".": "grassland",
+    "f": "forest",
+    "h": "hills",
+    "^": "mountain",
+    "m": "marsh",
+    "t": "tundra",
+    "d": "desert"
+  },
+
+  "rows": [],
+  "$rowsNote": "Empty until the plate exists and tools/trace-map.mjs has read it. A map with no rows is a commission, not a board: tools/validate-map.mjs skips the board checks and says so, the explorer shows it as commissioned, and tools/mint-queue.mjs puts it on the step it has actually reached."
+}

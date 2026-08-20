@@ -125,7 +125,10 @@
 (function () {
   'use strict';
   var D = window.GAME_DATA;
-  var map = (D.maps || [])[0];
+  /* The first map that is actually a BOARD. data/maps/ also holds commissions -
+     a map whose plate has not been drawn yet, with an empty `rows` - and there is
+     nothing here to draw for one. See docs/MINT.md. */
+  var map = (D.maps || []).filter(function (m) { return (m.rows || []).length; })[0];
 
   var palette = {
     ink: { soot: { hex: '#1A1714' } },

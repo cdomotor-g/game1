@@ -66,6 +66,10 @@ reason to build a market at all beyond the safety net.
 Hexes are in the data (`terrain.tileShape`), squares are listed as an alternative. Hexes
 are better for movement and worse for rail networks, which want to branch orthogonally.
 
+**Parked behind [#18](https://github.com/cdomotor-g/game1/issues/18).** The question only bites for a board made of tiles, and
+that is shelved; a drawn map plate is hexed by an overlay, and the overlay's shape is a
+one-field change in the board file. It comes back with the tile set.
+
 ### 8. How does a player found a second town?
 
 Not designed. A town hall is "one per town", but nothing says what a town *is*, how far

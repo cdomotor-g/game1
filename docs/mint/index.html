@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>game1 — the mint</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #EDE4D1; color: #1A1714;
+    font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    font-size: 16px; line-height: 1.55;
+  }
+  .bar {
+    position: sticky; top: 0; z-index: 3; display: flex; gap: 14px; align-items: baseline;
+    padding: 10px 18px; background: #EDE4D1; border-bottom: 1px solid #C0B7A9;
+    font-family: Helvetica, Arial, sans-serif; font-size: 13.5px;
+  }
+  .bar strong { font-size: 15px; margin-right: auto; }
+  .bar a, .bar button {
+    color: #8A561C; text-decoration: none; background: none; border: none;
+    font: inherit; cursor: pointer; padding: 0;
+  }
+  .bar a:hover, .bar button:hover { text-decoration: underline; }
+  .wrap { display: flex; gap: 34px; max-width: 1180px; margin: 0 auto; padding: 26px 18px 80px; }
+  nav.toc {
+    flex: 0 0 230px; position: sticky; top: 58px; align-self: flex-start;
+    display: flex; flex-direction: column; gap: 6px;
+    font-family: Helvetica, Arial, sans-serif; font-size: 13px;
+    max-height: calc(100vh - 80px); overflow-y: auto; padding-right: 8px;
+  }
+  nav.toc a { color: #3D3630; text-decoration: none; }
+  nav.toc a:hover { color: #1A1714; text-decoration: underline; }
+  main { flex: 1; min-width: 0; }
+  .chapter { border-top: 1px solid #C0B7A9; padding-top: 26px; margin-top: 26px; }
+  .chapter:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  h1 { font-size: 27px; line-height: 1.2; }
+  h2 { font-size: 21px; margin-top: 1.6em; }
+  h3 { font-size: 17px; margin-top: 1.4em; }
+  h4 { font-size: 15px; margin-top: 1.2em; }
+  a { color: #8A561C; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.86em; background: #D9CBAF; padding: 1px 4px; border-radius: 4px;
+  }
+  pre { background: #D9CBAF; padding: 12px 14px; border-radius: 6px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  blockquote { margin: 1em 0; padding: 2px 16px; border-left: 3px solid #C0B7A9; color: #5F564C; }
+  hr { border: none; border-top: 1px solid #C0B7A9; margin: 2em 0; }
+  .table-wrap { overflow-x: auto; margin: 1em 0; }
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { border: 1px solid #C0B7A9; padding: 6px 10px; text-align: left; vertical-align: top; }
+  th { background: #D9CBAF; font-family: Helvetica, Arial, sans-serif; font-size: 12.5px; }
+  img { max-width: 100%; height: auto; }
+  /* The element marks are type, not pictures: they run inline at the size of a
+     capital and sit on the baseline. Without this a 64px icon lands in a table
+     cell and the row is an inch tall. */
+  img[src*="icons/element-"] { width: 1.25em; height: 1.25em; vertical-align: -0.28em; }
+  p img[src*="icons/element-"], li img[src*="icons/element-"] { margin-right: .1em; }
+  .gallery table { width: 100%; }
+  .gallery th, .gallery td { border: none; padding: 4px 6px; }
+  .gallery td { font-style: italic; font-size: 13px; color: #5F564C; text-align: center; }
+  .gallery img { display: block; margin: 0 auto; border: 1px solid #C0B7A9; }
+  @media (max-width: 900px) {
+    .wrap { flex-direction: column; }
+    nav.toc { position: static; flex-basis: auto; max-height: none; }
+  }
+  @media print {
+    .bar, nav.toc { display: none; }
+    .wrap { display: block; padding: 0; max-width: none; }
+    body { font-size: 11pt; background: white; }
+    .chapter { border-top: none; break-before: page; padding-top: 0; margin-top: 0; }
+    .chapter:first-child { break-before: auto; }
+    a { color: inherit; text-decoration: none; }
+    pre, blockquote, .table-wrap, img { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <strong>game1 — the mint</strong>
+  <a href="../index.html">Explorer</a>
+  <a href="../book/index.html">The rulebook</a>
+  <a href="../cards/index.html">Card fronts</a>
+  <a href="../map/index.html">Map</a>
+  <button type="button" onclick="window.print()">Print the guide</button>
+</div>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Chapters">
+      <a href="#s-setup">Setting up the mint</a>
+      <a href="#s-mint">The mint</a>
+      <a href="#s-queue">The mint queue</a>
+  </nav>
+  <main>
+<section class="chapter" id="s-setup">
+<h1 id="setting-up-the-mint">Setting up the mint</h1>
+<p><strong>This is the how-to.</strong> <a href="#s-mint"><code>MINT.md</code></a> says what the mint <em>is</em> — the lines, the four steps, the contracts. This says how to actually set up the two agents, what to paste into each of them, and what to do when a run goes wrong.</p>
+<p>Read it once end to end before your first run. After that, the <a href="#the-run-sheet">Run sheet</a> at the bottom is the only part you need open.</p>
+<hr>
+<h2 id="0-what-you-need">0 · What you need</h2>
+<div class="table-wrap"><table>
+<tbody><tr><td><strong>The designer</strong></td><td>Claude Code, pointed at this repository. The web app, the desktop app or the CLI — all three work; the web app is easiest because the pull request happens where the agent already is</td></tr>
+<tr><td><strong>The artist</strong></td><td>Any image model you can hold a conversation with and get files out of. ChatGPT is the default. Midjourney and the rest work, but you become the courier: they cannot commit to a branch, so you download and push</td></tr>
+<tr><td><strong>A GitHub account</strong></td><td>with write access to this repository. Both agents work on one branch and talk in one pull request thread</td></tr>
+<tr><td><strong>Node</strong></td><td>only if you want to run the tools yourself. The designer runs them for you</td></tr></tbody></table></div>
+<p>You do not need an image model that can write files. If it cannot, you save the PNG and push it — the pipeline does not care who moved the bytes, only that the file has the right name and lands in the right folder.</p>
+<hr>
+<h2 id="1-set-up-the-designer">1 · Set up the designer</h2>
+<p>The designer is the one that has to be told the most, and almost all of it is already written down in this repository. The whole set-up is: point it here and tell it which line it is working.</p>
+<h3 id="the-opening-message">The opening message</h3>
+<p>Paste this, filling in the two blanks:</p>
+<pre><code>You are the DESIGNER on a mint run for this repository.
+
+Read docs/MINT.md first — it is the pipeline, and it is binding. Then read
+data/mint.json for the line you are working.
+
+Line:    &lt;cards | maps&gt;
+Run:     &lt;a short name, e.g. &quot;dragons-and-airships&quot; or &quot;sundering-isles&quot;&gt;
+
+Do this, in order:
+
+1. Run `node tools/mint-queue.mjs` and tell me what is at each step.
+2. Branch `mint/&lt;run&gt;`.
+3. For everything at step 1 (WRITE), write its brief into the line's prompt
+   file, under a `## &lt;plate-id&gt;` heading, following the shared preamble at the
+   top of that file and the line's aim contract.
+4. Run the full check list at the bottom of docs/MINT.md and commit.
+5. Open a pull request, then post ONE comment per subject in the format
+   docs/MINT.md gives for MINT REQUEST — with the complete prompt pasted in,
+   preamble and negative prompt included. Do not link to the brief. Paste it.
+
+You own data/, docs/art/prompts/, docs/art/framing.json, data/maps/ and every
+tool. You do not draw. If a subject cannot be briefed without a design decision
+I have not made, ask me rather than inventing one.</code></pre>
+<h3 id="what-the-designer-must-never-do">What the designer must never do</h3>
+<p>Say this once and it will hold, because it is also written into <code>CLAUDE.md</code> and the tools enforce most of it:</p>
+<ul><li><strong>It does not edit a plate.</strong> Not to crop it, not to resize it, not to &quot;clean it up&quot;. <code>docs/map/*.png</code> and <code>docs/art/renders/*.png</code> are committed as supplied. Cropping is done at read time by <code>docs/js/framing.js</code>, from numbers, so that a printed card and a thumbnail cannot disagree.</li>
+<li><strong>It does not add a terrain to make a map work.</strong> The ten terrains in <code>data/terrain.json</code> are the vocabulary; if a drawn map calls its country something the game has no word for, the map changes and the rules do not. The order of resolution is in <a href="../map/README.md"><code>map/README.md</code></a>.</li>
+<li><strong>It does not hand-edit a generated file.</strong> <code>docs/data/bundle.js</code>, <code>docs/design/14-annex.md</code>, <code>docs/cards/</code>, <code>docs/book/</code>, <code>docs/mint/</code> and <code>docs/art/mint/QUEUE.md</code> are all outputs. CI fails if any of them has drifted from its source.</li></ul>
+<h3 id="checking-it-is-set-up-right">Checking it is set up right</h3>
+<p>Ask it: <strong>&quot;run <code>node tools/mint-queue.mjs</code> and paste the output&quot;</strong>. If it comes back with a per-line breakdown, a shelved line for tiles and a note about plate sizes, it is reading the right things.</p>
+<hr>
+<h2 id="2-set-up-the-artist">2 · Set up the artist</h2>
+<p>The artist needs three things, in this order: the house style, the acceptance rules, and then one prompt at a time. Give it the first two <strong>once</strong> at the start of a session and it will hold them for the rest of it.</p>
+<h3 id="the-standing-instructions">The standing instructions</h3>
+<p>Paste this into a new chat before anything else:</p>
+<pre><code>You are the ARTIST on a plate-minting run for a tabletop game.
+
+Everything you draw is a PLATE: a whole drawn page, in one consistent house
+style, which will later be cropped by machine. You will be given one complete
+prompt at a time. Follow it exactly. Do not improve it, do not add a border,
+do not add text or lettering, and do not add a grid of any kind.
+
+The house style, in short:
+
+- Black ink line art on warm unbleached paper, in the manner of a worn 1600s
+  printed almanac: heavy uneven woodcut outlines, interior shading built only
+  from hand-drawn hatching and cross-hatching, bare paper for the lit surfaces.
+- Flat muted spot colour sits UNDER the black line like a mis-registered
+  letterpress run: solid areas, no blending, no gradients.
+- Palette: warm ochre, rust red, dusty grey-green, cold slate blue. Paper is
+  warm oatmeal, never white. Ink is warm near-black, never pure black.
+- Never: gradients, glow, bloom, drop shadow, soft or airbrushed shading, lens
+  effects, magic particles, 3D render, photographic texture, digital painting.
+
+Two rules that are not about how it looks, and that I will reject a plate for:
+
+1. WIDTH. Render at the pixel size the prompt asks for, on the long side. It is
+   the one property I cannot fix afterwards.
+2. FRAMING. The prompt will carry a FRAMING or TRACEABILITY block. That block
+   says where the subject must sit on the page and what must be kept clear. It
+   is not a suggestion — a plate that ignores it is unusable even if the drawing
+   is good, because the crop is taken by machine and cannot be argued with.
+
+When you deliver, tell me: the pixel dimensions, and whether you had to change
+any wording to get an acceptable result. If you did, give me the exact wording
+you actually used.</code></pre>
+<h3 id="if-the-artist-can-read-the-repository">If the artist can read the repository</h3>
+<p>If you are using an agent that can browse or clone, point it at these three files instead of the summary above — they are the real thing:</p>
+<ul><li><a href="../art/07-ai-agent-brief.md"><code>art/07-ai-agent-brief.md</code></a> — the preamble, the negative prompt and the <strong>acceptance checklist</strong></li>
+<li><a href="../art/09-framing-and-composition.md"><code>art/09-framing-and-composition.md</code></a> — where the subject goes on the page, for card plates</li>
+<li><a href="../map/README.md"><code>map/README.md</code></a> — the seven rules a map plate has to follow to be traceable</li></ul>
+<hr>
+<h2 id="3-what-every-prompt-must-contain">3 · What every prompt must contain</h2>
+<p>A brief is not a sentence. Every one of them, in every line, has four parts, and the queue's step 1 is not finished until all four are there.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Part</th><th>What it does</th><th>Where it comes from</th></tr></thead>
+<tbody><tr><td><strong>Preamble</strong></td><td>the house style, identical for every subject in the line</td><td>the top of the line's prompt file</td></tr>
+<tr><td><strong>Subject</strong></td><td>this one drawing: what it is, what it is doing, what is around it, what the wash is on</td><td>written by the designer from the subject's own data</td></tr>
+<tr><td><strong>Negative</strong></td><td>the banned list, identical for every subject in the line</td><td>the top of the line's prompt file</td></tr>
+<tr><td><strong>Aim block</strong></td><td>how the drawing will be <em>read</em> afterwards</td><td>the line's aim contract</td></tr></tbody></table></div>
+<p>The aim block is the part people leave out, and it is the part that decides whether the plate is usable:</p>
+<p><strong>For cards it is a <code>FRAMING.</code> block</strong> — where the head, the hands and the named gear sit on the page, and how much clear margin is left around them for the crop to slide in. A plate is a page and a card window is not that shape, so something is thrown away every time; the block is how the artist makes <em>any</em> crop survivable.</p>
+<p><strong>For maps it is a <code>TRACEABILITY.</code> block</strong> — the seven rules from <a href="../map/README.md"><code>map/README.md</code></a>, made specific to this map. Flat washes with hard edges. One wash per terrain and no two terrains sharing one. Water colder than every land colour. Display lettering off the terrain you care about. Map furniture in the corners over water. A plain frame with a visible inner rule. And no grid, ever.</p>
+<p>Those blocks are not decoration and they are not for the picture's benefit. A gradient is a region the tracer reads as two terrains. A fen and a desert painted the same ochre cost the Korvane Reach the most hand-correction of anything on it, because nothing in the pixels can separate them — only the label can, and the label is prose.</p>
+<hr>
+<h2 id="4-run-one">4 · Run one</h2>
+<h3 id="step-1-see-what-is-waiting">Step 1 — see what is waiting</h3>
+<p>Ask the designer to run the queue. Or run it yourself:</p>
+<pre><code>node tools/mint-queue.mjs</code></pre>
+<p>It prints, per line, who owes what. It also writes <a href="#s-queue"><code>art/mint/QUEUE.md</code></a>, which is on the website. Nothing is tracked by hand: it works this out from the repository every time, so it cannot be wrong, only out of date.</p>
+<h3 id="step-2-the-designer-writes-the-briefs-and-opens-the-pr">Step 2 — the designer writes the briefs and opens the PR</h3>
+<p>You get a pull request with one comment per subject. Each comment is a complete, self-contained commission — everything the artist needs, in one paste.</p>
+<h3 id="step-3-you-carry-the-commission-to-the-artist">Step 3 — you carry the commission to the artist</h3>
+<p>Copy one <code>MINT REQUEST</code> comment. Paste the prompt part into the artist's chat. That is the whole job. Do not summarise it, do not trim it, do not paste two at once — one subject per message keeps the style from drifting.</p>
+<h3 id="step-4-the-plate-comes-back">Step 4 — the plate comes back</h3>
+<p>Save it under the exact filename the request gave. Not <code>dragon-final-v3.png</code>. The filename is how three different tools find it.</p>
+<pre><code>git add docs/art/renders/monster-vhalrik-the-cinder-crowned.png
+git commit -m &quot;Plate: Vhalrik, the Cinder-Crowned&quot;
+git push</code></pre>
+<p>Then reply on the subject's thread with <code>PLATE READY · &lt;code&gt;</code>, and note any wording you had to change. If the wording changed, save what was actually used next to the image as <code>&lt;plate&gt;.txt</code> — a prompt that produced an accepted render is worth more than the one that was written.</p>
+<h3 id="step-5-the-designer-aims-it-and-builds">Step 5 — the designer aims it and builds</h3>
+<p>Ask the designer to pull and finish. It adds the framing entry or traces the board, runs the tools, and commits the regenerated files. Then run the queue once more: the subject should say <strong>minted</strong>.</p>
+<h3 id="step-6-merge">Step 6 — merge</h3>
+<p>Merge the pull request. The site rebuilds on push and the new card or map is on it.</p>
+<hr>
+<h2 id="5-accepting-and-rejecting">5 · Accepting and rejecting</h2>
+<p>The one rule that keeps this from turning into taste: <strong>reject with one concrete reason from the checklist, never with a feeling.</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Good</th><th>Useless</th></tr></thead>
+<tbody><tr><td>&quot;The subject is against the top edge; there is no margin for the crop to slide in&quot;</td><td>&quot;It doesn't feel right&quot;</td></tr>
+<tr><td>&quot;The fens and the desert are the same ochre — nothing in the pixels can separate them&quot;</td><td>&quot;The colours are a bit off&quot;</td></tr>
+<tr><td>&quot;1024 px on the long side; the brief asked for 4000&quot;</td><td>&quot;It's a bit low-res&quot;</td></tr>
+<tr><td>&quot;There is lettering in the picture and the brief bans text&quot;</td><td>&quot;Too busy&quot;</td></tr></tbody></table></div>
+<p>If the honest reason really is &quot;it doesn't feel right&quot;, then <strong>the brief was wrong</strong> and the designer owns the fix. Rewrite the brief, do not re-roll the image; a re-roll against a bad brief is a slot machine.</p>
+<hr>
+<h2 id="6-when-it-goes-wrong">6 · When it goes wrong</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Symptom</th><th>What is actually happening</th><th>Fix</th></tr></thead>
+<tbody><tr><td>The queue says a subject is at DRAW and you have pushed the plate</td><td>the filename does not match the plate id</td><td>rename it to exactly what the request said</td></tr>
+<tr><td>The queue says a card is at FRAME forever</td><td>the plate is committed, <code>framing.json</code> has no entry</td><td>the designer adds <code>subject</code>, <code>focal</code> and <code>note</code></td></tr>
+<tr><td>A card's picture is cropped to somebody's chest</td><td>there is a <code>subject</code> box and no <code>focal</code> point</td><td>add the focal point — two numbers</td></tr>
+<tr><td>The map traces as one giant mountain range</td><td>display lettering reads as ink to the sampler</td><td>move the big names over sea, or hand-correct those rows</td></tr>
+<tr><td>Two regions trace as the same terrain</td><td>two terrains share a wash on the plate</td><td>it is a plate problem, not a data problem — reject and re-render</td></tr>
+<tr><td>CI fails on &quot;stale&quot; something</td><td>a generated file was not rebuilt</td><td>run the list at the bottom of <a href="#s-mint"><code>MINT.md</code></a> and commit</td></tr>
+<tr><td>The style drifted halfway through a deck</td><td>the artist's session lost the preamble</td><td>re-paste the standing instructions and re-check against the first accepted plate in the deck</td></tr></tbody></table></div>
+<p><strong>Work a deck at a time.</strong> Generate one reference render, accept it, then match the rest of the deck to it. Re-check against the reference every ten renders or so — style drifts slowly enough that you will not notice inside a session.</p>
+<hr>
+<h2 id="the-run-sheet">The run sheet</h2>
+<p>Everything above, on one screen.</p>
+<pre><code>1.  node tools/mint-queue.mjs              see who owes what
+2.  designer: branch mint/&lt;run&gt;, write the briefs, open the PR
+3.  you:      copy one MINT REQUEST → paste into the artist
+4.  artist:   render, report pixel size and any wording changes
+5.  you:      save under the EXACT filename, commit, push,
+              reply PLATE READY · &lt;code&gt;
+6.  designer: frame (cards) or trace (maps), run the tools, commit
+7.  node tools/mint-queue.mjs              should now say minted
+8.  merge</code></pre>
+<p><strong>The three things that get a plate rejected:</strong> wrong pixel size, ignored aim block, anything from the banned list. Everything else is negotiable.</p>
+<p><strong>The one thing to ask for first:</strong> the width. It is the only property of a plate that cannot be recovered later.</p>
+</section>
+
+<section class="chapter" id="s-mint">
+<h1 id="the-mint">The mint</h1>
+<p>How something goes from an idea to a finished, printable thing, with two agents doing the work and a pull request as the workbench.</p>
+<p>The short version: <strong>the mint is a multi-tool. One <code>line</code> per kind of thing being minted, every line runs the same four steps, each step is owned by exactly one pair of hands, and which step a subject is on is computed from the repository rather than tracked by anybody.</strong></p>
+<p>It started as a card minter. It is not one any more — the same handover works for anything where somebody who can write and cannot draw has to hand over to somebody who can draw and does not know the rules. Maps were the second line and they needed no new machinery, only a new entry in <a href="../../data/mint.json"><code>../data/mint.json</code></a>.</p>
+<h2 id="the-lines">The lines</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Line</th><th>Subject</th><th>Brief</th><th>Plate</th><th>Aimed by</th><th>Status</th></tr></thead>
+<tbody><tr><td><strong>Cards</strong></td><td>one card in an adventure deck</td><td><code>art/prompts/&lt;deck&gt;.md</code></td><td><code>art/renders/&lt;plate&gt;.png</code></td><td><strong>FRAME</strong> — a subject box and a focal point in <code>art/framing.json</code></td><td>active</td></tr>
+<tr><td><strong>Maps</strong></td><td>one drawn map plate and the board read off it</td><td><code>art/prompts/maps.md</code></td><td><code>map/&lt;id&gt;.png</code></td><td><strong>TRACE</strong> — the board in <code>data/maps/&lt;id&gt;.json</code></td><td>active</td></tr>
+<tr><td><strong>Tiles</strong></td><td>a printed hex tile face and its zoom-in sheet</td><td>—</td><td>—</td><td>—</td><td><strong>shelved</strong>, <a href="https://github.com/cdomotor-g/game1/issues/18">#18</a></td></tr></tbody></table></div>
+<p>A line is declared in <code>data/mint.json</code> and nowhere else. That file holds no content — no card says anything in it, no map is described in it — exactly like <code>data/components.json</code>. It says what a line <em>is</em>: where its subjects come from, where its briefs live, what a plate has to be, and what ties the plate back to the data.</p>
+<p><strong>Tiles are shelved, not cancelled.</strong> The tile-based board — 61 hex tiles dealt face down, and the Holdings / Grounds / Places sheets in <a href="../minimaps/README.md"><code>minimaps/</code></a> — is paused pending the game-set split (<a href="https://github.com/cdomotor-g/game1/issues/10">#10</a>), where it fits as a <em>way of supplying a board</em>: a plate set gives you one drawn map, a tile set gives you a bag. Nothing is deleted; the 32 accepted sheets stay committed and stay on the site. The queue prints the shelved line every run, so it is visible from the tool rather than remembered.</p>
+<h2 id="the-four-steps">The four steps</h2>
+<pre><code>   data/*.json          art/prompts/            the plate            the tie-back
+   the subject      ──▶ the brief          ──▶  the drawing     ──▶  to the data    ──▶  MINTED
+        │                     │                      │                     │
+     designer              designer                artist               designer
+       WRITE                 WRITE                  DRAW            FRAME / TRACE</code></pre>
+<p>Only the third step's <em>name</em> changes between lines — a card is <strong>framed</strong>, a map is <strong>traced</strong> — because the job is the same one: a drawing is useless to a build tool until the data says how to read it. A card's plate is a whole page and a card window is not that shape, so the data says which box may not be cut. A map's plate is a whole country and the rules need to know what is on each hex, so the data says what every hex is. Same step, two contracts.</p>
+<p>Run <code>node tools/mint-queue.mjs</code> at any time. It reads the data, the brief files, the plate directories and the tie-backs, works out where every subject has got to, and writes the worklist to <a href="#s-queue"><code>art/mint/QUEUE.md</code></a>. Nothing about a subject's status is stored anywhere; there is no board to fall out of date, because there is no board.</p>
+<p>The queue reports three separate things, because three different people fix them:</p>
+<div class="table-wrap"><table>
+<tbody><tr><td><strong>a step</strong></td><td>missing work — whose turn it is</td></tr>
+<tr><td><strong>a contract problem</strong></td><td>something the line <em>requires</em> is not there. A commission that never said what its terrain budget is cannot be handed to an artist at all</td></tr>
+<tr><td><strong>a note</strong></td><td>true, and nobody's turn. &quot;32 of 56 plates are under the 4000 px this line asks for&quot; is one decision, not thirty findings</td></tr></tbody></table></div>
+<h2 id="the-two-agents">The two agents</h2>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th><strong>Designer</strong></th><th><strong>Artist</strong></th></tr></thead>
+<tbody><tr><td>Default</td><td>Claude Code, in this repository</td><td>ChatGPT, or any image model</td></tr>
+<tr><td>Owns</td><td><code>data/</code>, <code>docs/art/prompts/</code>, <code>docs/art/framing.json</code>, <code>data/maps/</code>, every tool</td><td>the plate files: <code>docs/art/renders/*.png</code>, <code>docs/map/*.png</code></td></tr>
+<tr><td>Cannot</td><td>draw</td><td>change the rules</td></tr></tbody></table></div>
+<p>The split is real, not ceremonial. The designer can write a perfect brief and cannot produce a plate; the artist can produce a beautiful plate and has no idea what a burden bar is, or why hills and marsh must never share a wash. Neither can finish a subject alone, which is why the handover has to be written down.</p>
+<p><strong>How to actually set the two of them up, and what to paste where, is <a href="#s-setup"><code>MINT-SETUP.md</code></a>.</strong> This document is what the pipeline <em>is</em>; that one is how to run it.</p>
+<h2 id="where-the-handover-happens">Where the handover happens</h2>
+<p><strong>One pull request per minting run</strong>, on a branch named <code>mint/&lt;what&gt;</code> — say <code>mint/dragons-and-airships</code>, or <code>mint/sundering-isles</code>. Both agents work on that one branch and talk in its comment thread. The PR is the workbench: the brief is posted on it, the plate is pushed to it, the finished thing is built on it, and the whole exchange is readable afterwards by whoever wonders why something looks the way it does.</p>
+<p>Two PRs and a cross-posting protocol were the original sketch. One is better: the branch is the shared state, the thread is the conversation, and neither agent has to discover the other's PR number.</p>
+<h3 id="the-round-trip">The round trip</h3>
+<p><strong>1 · The designer opens the run.</strong></p>
+<p>Adds or edits the subjects in <code>data/</code>, writes a brief per subject into the line's prompt file, runs the tools, pushes the branch and opens the PR. Then posts one comment per subject — the commission:</p>
+<pre><code>### MINT REQUEST · MON-13 · Vhalrik, the Cinder-Crowned
+
+**line**     cards
+**plate id** `monster-vhalrik-the-cinder-crowned`
+**save to**  `docs/art/renders/monster-vhalrik-the-cinder-crowned.png`
+**format**   A4 portrait, 4000 px on the long side or better
+**brief**    docs/art/prompts/monsters.md § monster-vhalrik-the-cinder-crowned
+
+&lt;the complete prompt, preamble and negative prompt included, pasted in full&gt;
+
+Reply on this thread with `PLATE READY · MON-13` when it is pushed.</code></pre>
+<p>The prompt is pasted <strong>in full</strong>, not linked. The artist should never have to assemble a prompt out of three files, and a prompt that was actually used is worth having in the thread verbatim.</p>
+<p><strong>2 · The artist draws and pushes.</strong></p>
+<p>Generates against the brief, checks it against the acceptance list in <a href="../art/07-ai-agent-brief.md"><code>art/07-ai-agent-brief.md</code></a> and the line's own contract — <a href="../art/09-framing-and-composition.md"><code>art/09-framing-and-composition.md</code></a> for cards, <a href="../map/README.md"><code>map/README.md</code></a> for maps — commits the PNG to the branch, and, if the wording had to change to get an acceptable render, the frozen wording alongside it as <code>&lt;plate&gt;.txt</code>. Then replies on the same thread:</p>
+<pre><code>PLATE READY · MON-13 · `docs/art/renders/monster-vhalrik-the-cinder-crowned.png`
+
+Prompt changed: dropped &quot;rearing&quot; — it kept producing a heraldic pose.
+Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt</code></pre>
+<p><strong>3 · The designer aims, builds and merges.</strong></p>
+<p>Pulls the branch and does the line's third step:</p>
+<ul><li><strong>cards</strong> — adds the plate's <code>subject</code>, <code>focal</code> and <code>note</code> to <code>docs/art/framing.json</code></li>
+<li><strong>maps</strong> — measures <code>plate.field</code> off the inner frame rule, runs <code>node tools/trace-map.mjs &lt;id&gt; --write</code>, then corrects <code>rows</code> by hand against the proof sheet, and adds the settlements, regions and routes</li></ul>
+<p>Then runs the tools, commits the regenerated files, and either accepts the plate or replies with what to change. When the queue says it is minted, it is minted: it is in <code>docs/cards/</code> or on the map page, on the print sheet, in the explorer and in the annex, all at once, because all of them are generated from the same data.</p>
+<h3 id="rejecting-a-plate">Rejecting a plate</h3>
+<p>Reply on the subject's thread with <code>PLATE REJECTED · &lt;code&gt;</code> and <strong>one</strong> concrete reason, taken from the acceptance checklist rather than from taste. &quot;The subject is against the top edge and there is no margin for the crop to slide in&quot; is actionable, and so is &quot;the fens and the desert are the same ochre, so nothing in the pixels can separate them&quot;. &quot;It doesn't feel right&quot; is not, and if that is genuinely the problem then the brief was wrong and the designer owns the fix.</p>
+<h2 id="the-contracts">The contracts</h2>
+<p>This is the part that makes it repeatable rather than a habit. Each line's input and output are declared in <code>data/mint.json</code>, and <code>tools/lib/mint.mjs</code> checks the declared fields for real — an under-specified subject is a queue error rather than a surprise three weeks later.</p>
+<h3 id="cards">Cards</h3>
+<div class="table-wrap"><table>
+<tbody><tr><td><strong>In</strong></td><td>a card in <code>data/</code>, with a <code>cardCode</code> and a <code>name</code></td></tr>
+<tr><td><strong>Brief</strong></td><td>an <code>## &lt;plate-id&gt;</code> section in the deck's prompt file. The heading <strong>is</strong> the plate id — that is what lets the queue find it with nobody filing an index</td></tr>
+<tr><td><strong>Plate id</strong></td><td>the <code>plateId</code> template on the deck in <code>data/components.json</code> — <code>character-{cardCode|lower}</code> → <code>character-chr-06</code></td></tr>
+<tr><td><strong>Out</strong></td><td><code>docs/art/renders/&lt;plate&gt;.png</code>, at the deck's <code>plateFormat</code>, 4000 px on the long side</td></tr>
+<tr><td><strong>Aim</strong></td><td>an entry in <code>docs/art/framing.json</code>: <code>subject</code> (the veto — what may not be cut), <code>focal</code> (the aim — the one point the picture is of), <code>note</code></td></tr>
+<tr><td><strong>Builds</strong></td><td><code>docs/cards/</code> via <code>build-cards.mjs</code>; the explorer thumbnails via <code>build-data.mjs</code></td></tr></tbody></table></div>
+<h3 id="maps">Maps</h3>
+<p>A map file is one of two things and the difference is one field: a <strong>commission</strong> has no <code>rows</code>, a <strong>board</strong> has them full. Both live in <code>data/maps/&lt;id&gt;.json</code>, both are checked, and <code>validate-map.mjs</code> says which it is looking at.</p>
+<div class="table-wrap"><table>
+<tbody><tr><td><strong>In</strong></td><td><code>data/maps/&lt;id&gt;.json</code> with a <code>commission</code> block: <code>why</code>, <code>landmass</code>, <code>terrainBudget</code>, <code>settlements</code>, <code>plate.minWidthPx</code>, plus the <code>grid</code> and the <code>legend</code> the board will be read on. All of it is required and all of it is checked</td></tr>
+<tr><td><strong>Brief</strong></td><td>an <code>## &lt;map-id&gt;</code> section in <code>docs/art/prompts/maps.md</code>, written <strong>from the commission and nothing else</strong>. If the two disagree, the commission is right and the prompt is stale</td></tr>
+<tr><td><strong>Plate id</strong></td><td>the map's own id. A map's plate is named after the map</td></tr>
+<tr><td><strong>Out</strong></td><td><code>docs/map/&lt;id&gt;.png</code> — landscape, root-two, a plain frame with a visible inner rule, 4000 px minimum and 7000 for A1. Committed as supplied and never re-encoded by any tool here</td></tr>
+<tr><td><strong>Aim</strong></td><td>the board: a measured <code>plate</code> block, a full <code>rows</code>, and the <code>settlements</code>, <code>regions</code>, <code>routes</code> and <code>print</code> presets</td></tr>
+<tr><td><strong>Builds</strong></td><td>the proof sheet and the derived print sizes via <code>build-map.mjs</code>; the viewer, the print sheets and the explorer via <code>build-data.mjs</code></td></tr></tbody></table></div>
+<p><strong>Ask for the width before you ask for anything else.</strong> It is the one property of a plate that cannot be recovered later: a coastline can be re-traced, a legend can be drawn over, a label can be argued with, but pixels that were never drawn are gone. The Korvane Reach arrived at 1491 px and it cost the two larger print presets permanently.</p>
+<p><strong>Never ask for a grid on the plate.</strong> The grid is an overlay drawn from the board. One baked into the artwork cannot be moved, cannot be resized when <code>cols</code> changes, and will not line up with the one the tools draw. <code>hex grid</code> is in the negative prompt on purpose.</p>
+<h2 id="running-it-as-automation">Running it as automation</h2>
+<p>Everything above is written to be done by two humans, two agents, or one of each, because that is the only version that is definitely going to work. If it is automated, the pieces are:</p>
+<ul><li>Each agent subscribes to the PR. On this repository that is <code>subscribe_pr_activity</code>; the artist's side needs whatever the equivalent is.</li>
+<li>A comment beginning <code>MINT REQUEST ·</code> is the artist's work item; a comment beginning <code>PLATE READY ·</code> is the designer's. Both are prefixes on purpose: they are greppable, and an agent can ignore everything else in the thread.</li>
+<li>The designer's wake-up is: pull, run <code>node tools/mint-queue.mjs</code>, and act on whatever is at step 3. It does not need to parse the comment to know what to do — the repository already says.</li></ul>
+<p>That last point is the load-bearing one, and the reason the queue is computed rather than tracked. <strong>The comments are a notification, not a state machine.</strong> If a comment is missed, dropped, posted twice or posted out of order, the next run of the tool still produces the correct worklist. Automating the notification is then a convenience rather than a dependency, and can be added, removed or broken without stranding anything half-minted.</p>
+<h2 id="adding-a-third-line">Adding a third line</h2>
+<p>The mint is a multi-tool because the next thing is not going to be a card or a map. Adding a line is:</p>
+<ol><li><strong>An entry under <code>lines</code> in <code>data/mint.json</code></strong> — where its subjects come from, where its briefs live, what a plate has to be, what ties the plate to the data, what it builds and what checks it.</li>
+<li><strong>A branch in <code>subjectsOf</code> and <code>aimOf</code> in <code>tools/lib/mint.mjs</code></strong> — how to enumerate the subjects, and how to tell whether one has been tied back. It is deliberately dull, one branch per line; a query language in a JSON file is a worse version of that switch which nobody can grep.</li>
+<li><strong>A prompt file</strong> under <code>docs/art/prompts/</code>, with the shared preamble, the negative prompt, and a block equivalent to <code>FRAMING.</code> — whatever the artist has to be told about how the drawing will be read.</li></ol>
+<p>Nothing else. The queue, the CI check, the site page and the handover all pick it up.</p>
+<h2 id="before-merging-a-mint-run">Before merging a mint run</h2>
+<pre><code>node tools/validate-data.mjs    # the subject is referentially sound
+node tools/validate-map.mjs     # boards against terrain.json and themselves
+node tools/validate-art.mjs     # palette and the two-plate contract
+node tools/build-map.mjs        # proof sheets and the derived print sizes
+node tools/build-icons.mjs      # element marks
+node tools/build-data.mjs       # the explorer bundle
+node tools/build-annex.mjs      # the printed annex
+node tools/build-cards.mjs      # the cards themselves
+node tools/build-book.mjs       # the rulebook
+node tools/mint-queue.mjs       # the worklist
+node tools/build-mint.mjs       # the mint page on the site</code></pre>
+<p>Anything that reaches <code>main</code> without those re-run is something the website and the rulebook disagree about. The full list, in order, is in <a href="../../CLAUDE.md"><code>../CLAUDE.md</code></a>.</p>
+</section>
+
+<section class="chapter" id="s-queue">
+<h1 id="the-mint-queue">The mint queue</h1>
+<p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
+<p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
+<p><strong>cards 32/56 · maps 1/2</strong></p>
+<blockquote><p><strong>Note.</strong> cards: 32 of 56 plates are under the 4000 px long side this line asks for — smallest is <code>TAL-01</code> at 1254 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
+<blockquote><p><strong>Note.</strong> maps: 1 of 2 plates are under the 4000 px long side this line asks for — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
+<h2 id="cards">Cards</h2>
+<p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
+<p><strong>32 of 56 minted.</strong> 0 waiting on a brief, 24 waiting on art, 0 waiting on frame.</p>
+<h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
+<p>Nothing waiting.</p>
+<h3 id="2-draw-the-artist-24-cards">2 · DRAW — the artist — 24 cards</h3>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, 4000 px on the long side or better, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
+<tbody><tr><td><code>VEH-09</code></td><td>The Varl Wagonrow</td><td>Vehicles</td><td><code>vehicle-veh-09</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>VEH-13</code></td><td>Nine and the Drum</td><td>Vehicles</td><td><code>vehicle-veh-13</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>VEH-14</code></td><td>The Red Lantern</td><td>Vehicles</td><td><code>vehicle-veh-14</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>VEH-15</code></td><td>The Carrion Queen</td><td>Vehicles</td><td><code>vehicle-veh-15</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>VEH-16</code></td><td>The Pilgrim's Patience</td><td>Vehicles</td><td><code>vehicle-veh-16</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>VEH-17</code></td><td>The Sweep of Vossgard</td><td>Vehicles</td><td><code>vehicle-veh-17</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-01</code></td><td>Cinder Wolf</td><td>Monsters</td><td><code>monster-cinder-wolf</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-02</code></td><td>Ash Drake</td><td>Monsters</td><td><code>monster-ash-drake</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-03</code></td><td>Forge Wight</td><td>Monsters</td><td><code>monster-forge-wight</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-04</code></td><td>Barrow Troll</td><td>Monsters</td><td><code>monster-barrow-troll</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-05</code></td><td>Stone Boar</td><td>Monsters</td><td><code>monster-stone-boar</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-13</code></td><td>Vhalrik, the Cinder-Crowned</td><td>Monsters</td><td><code>monster-vhalrik-the-cinder-crowned</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-14</code></td><td>The Hoarwyrm</td><td>Monsters</td><td><code>monster-hoarwyrm</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-01</code></td><td>Spinnaker</td><td>Modifications</td><td><code>modification-spinnaker</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-02</code></td><td>Sweep Rig</td><td>Modifications</td><td><code>modification-sweep-rig</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-03</code></td><td>Copper Sheathing</td><td>Modifications</td><td><code>modification-copper-sheathing</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-04</code></td><td>Iron Ram</td><td>Modifications</td><td><code>modification-iron-ram</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-05</code></td><td>Storm Shutters</td><td>Modifications</td><td><code>modification-storm-shutters</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-06</code></td><td>Ice Runners</td><td>Modifications</td><td><code>modification-ice-runners</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-07</code></td><td>Compound Boiler</td><td>Modifications</td><td><code>modification-compound-boiler</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-08</code></td><td>Keelbound</td><td>Modifications</td><td><code>modification-keelbound</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-09</code></td><td>Fleetfoot Binding</td><td>Modifications</td><td><code>modification-fleetfoot-binding</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-10</code></td><td>Warded Hold</td><td>Modifications</td><td><code>modification-warded-hold</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MOD-11</code></td><td>Salamander Grate</td><td>Modifications</td><td><code>modification-salamander-grate</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
+<h3 id="3-frame-whoever-accepts-the-plate">3 · FRAME — whoever accepts the plate</h3>
+<p>Nothing waiting.</p>
+<h3 id="minted">Minted</h3>
+<p>32 cards complete: <code>CHR-01</code>, <code>CHR-02</code>, <code>CHR-03</code>, <code>CHR-04</code>, <code>CHR-05</code>, <code>CHR-06</code>, <code>CHR-07</code>, <code>CHR-08</code>, <code>VEH-01</code>, <code>VEH-02</code>, <code>VEH-03</code>, <code>VEH-04</code>, <code>VEH-05</code>, <code>VEH-06</code>, <code>VEH-07</code>, <code>VEH-08</code>, <code>VEH-10</code>, <code>VEH-11</code>, <code>VEH-12</code>, <code>MON-06</code>, <code>MON-07</code>, <code>MON-08</code>, <code>MON-09</code>, <code>MON-10</code>, <code>MON-11</code>, <code>MON-12</code>, <code>TAL-01</code>, <code>TAL-02</code>, <code>TAL-03</code>, <code>TAL-04</code>, <code>TAL-05</code>, <code>TAL-06</code>.</p>
+<p>32 of them are framed but have no <code>focal</code> point — they predate it and are not broken, they are just aimed at the middle of their subject box. Adding one is a two-number improvement: <code>character-chr-01</code>, <code>character-chr-02</code>, <code>character-chr-03</code>, <code>character-chr-04</code>, <code>character-chr-05</code>, <code>character-chr-06</code>, <code>character-chr-07</code>, <code>character-chr-08</code>, <code>vehicle-veh-01</code>, <code>vehicle-veh-02</code>, <code>vehicle-veh-03</code>, <code>vehicle-veh-04</code>, <code>vehicle-veh-05</code>, <code>vehicle-veh-06</code>, <code>vehicle-veh-07</code>, <code>vehicle-veh-08</code>, <code>vehicle-veh-10</code>, <code>vehicle-veh-11</code>, <code>vehicle-veh-12</code>, <code>monster-gravel-wyrm</code>, <code>monster-mire-strangler</code>, <code>monster-reef-serpent</code>, <code>monster-deepwater-maw</code>, <code>monster-rime-harpy</code>, <code>monster-dust-devil</code>, <code>monster-storm-roc</code>, <code>talisman-tal-01</code>, <code>talisman-tal-02</code>, <code>talisman-tal-03</code>, <code>talisman-tal-04</code>, <code>talisman-tal-05</code>, <code>talisman-tal-06</code>.</p>
+<h3 id="not-being-minted-yet">Not being minted yet</h3>
+<p>Declared, numbered, backed — and simply not being illustrated this round. Set <code>minting: true</code> on one to bring it into the queue above.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Deck</th><th>Cards in the data</th><th>Plate format</th></tr></thead>
+<tbody><tr><td>Spells</td><td>14</td><td>square</td></tr>
+<tr><td>Events</td><td>51</td><td>landscape scene</td></tr>
+<tr><td>Quests</td><td>8</td><td>landscape scene</td></tr>
+<tr><td>Items</td><td>0</td><td>square</td></tr></tbody></table></div>
+<hr>
+<h2 id="maps">Maps</h2>
+<p>One drawn map plate, and the hex board read off it. Briefs in <a href="../art/prompts/maps.md"><code>docs/art/prompts/maps.md</code></a>, plates in <code>docs/map/</code>, aimed by <strong>TRACE</strong> in <code>data/maps/{id}.json</code>.</p>
+<p><strong>1 of 2 minted.</strong> 0 waiting on a brief, 1 waiting on art, 0 waiting on trace.</p>
+<h3 id="1-write-the-designer-1">1 · WRITE — the designer</h3>
+<p>Nothing waiting.</p>
+<h3 id="2-draw-the-artist-1-map">2 · DRAW — the artist — 1 map</h3>
+<p>The brief is written and there is no plate. Generate it at <strong>landscape, root-two (1.414) inside a plain frame with a visible inner rule</strong>, 4000 px on the long side or better, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/map/&lt;plate&gt;.png</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Map</th><th>Grid</th><th>Plate</th><th>brief</th><th>plate</th><th>trace</th></tr></thead>
+<tbody><tr><td><code>sundering-isles</code></td><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
+<h3 id="3-trace-designer">3 · TRACE — designer</h3>
+<p>Nothing waiting.</p>
+<h3 id="minted-1">Minted</h3>
+<p>1 map complete: <code>korvane-reach</code>.</p>
+<p>Every minted map is fully aimed: the measured <code>plate</code> block and a full <code>rows</code> board, hand-corrected against the proof sheet.</p>
+<hr>
+<h2 id="shelved-lines">Shelved lines</h2>
+<p>Declared, reported here every run, and chased by nobody. A shelved line is a decision with a reason attached, not an absence — which is why it prints rather than disappearing.</p>
+<h3 id="tiles-shelved-18">Tiles — shelved, <a href="https://github.com/cdomotor-g/game1/issues/18">#18</a></h3>
+<p>The tile-based board - 61 double-sided hex tiles dealt face down, and the Holdings / Grounds / Places zoom-in sheets in docs/minimaps/ - is paused, not cancelled. Nothing is deleted: the 32 accepted sheets stay committed and stay on the site, and terrain.json keeps boardSetup. It comes back as a GAME SET (#10): a table would pick either a plate set, where one drawn map is hexed and the world is known, or a tile set, where the board is a bag and the world is unknown until walked. Both feed the same terrain vocabulary and the same move costs, which is the test of whether #10 drew its line in the right place.</p>
+<p><strong>It comes back when:</strong></p>
+<ul><li>#10 has drawn the core/set line and a set can supply a board</li>
+<li>the tile art contract is written: edge continuity across butted tiles, an unexplored back that gives nothing away, the deposit slot</li>
+<li>this line's status flips to active and <code>subjectsFrom</code> is filled in</li></ul>
+<p><strong>What already exists, and stays:</strong></p>
+<ul><li>docs/minimaps/ - 32 accepted sheets: 4 Holdings, 9 Grounds, 19 Places</li>
+<li>docs/art/06-components.md - the 60 mm hex tile face and back</li>
+<li>docs/design/08-components.md - 61 tiles in the bill of materials</li>
+<li>data/terrain.json - boardSetup.terrainMix, recommendedTiles, faceDownAtStart</li></ul>
+</section>
+  </main>
+</div>
+
+</body>
+</html>

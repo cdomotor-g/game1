@@ -94,9 +94,17 @@ jobs:
         run: node tools/build-book.mjs --check
 
       # The mint queue is computed from the data, the briefs, the plates and the
-      # framing entries - so it goes stale the moment any of those move.
+      # tie-backs, across every line in data/mint.json - so it goes stale the
+      # moment any of those move.
       - name: Fail if the committed mint queue is stale
         run: node tools/mint-queue.mjs --check
+
+      # The mint page is docs/MINT-SETUP.md, docs/MINT.md and that queue rendered
+      # to one readable page, because Pages serves markdown as plain text and the
+      # setup guide is the one document somebody follows while working. Checked
+      # after the queue, since the queue is its third section.
+      - name: Fail if the committed mint page is stale
+        run: node tools/build-mint.mjs --check
 
       # Colours declared in palette.json, a monochrome ink plate, and the wash/ink/grime
       # layer contract that makes the black-and-white edition a real separation.

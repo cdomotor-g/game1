@@ -21,6 +21,7 @@ const quiet = process.argv.includes('--quiet');
 
 const errors = [];
 const warnings = [];
+const commissions = [];
 
 const terrainFile = JSON.parse(readFileSync(join(ROOT, 'data', 'terrain.json'), 'utf8'));
 const terrainById = new Map(terrainFile.terrains.map((t) => [t.id, t]));
@@ -66,8 +67,30 @@ function checkMap(file) {
     errors.push(`${where}: grid.cols and grid.rows are required`);
     return;
   }
-  if (!Array.isArray(map.rows) || map.rows.length !== rowCount) {
-    errors.push(`${where}: expected ${rowCount} rows, found ${map.rows?.length ?? 0}`);
+
+  /* A COMMISSION, not a board: the plate has not been drawn, so there is nothing
+     to trace and no coastline to be wrong about. It is still a map file and it is
+     still checked - the legend above, and the commission contract, which is
+     data/mint.json lines.maps.subjectRequires and is enforced by
+     tools/mint-queue.mjs. Everything below this point is about a board, so a
+     commission says what it is and stops. See docs/MINT.md. */
+  if (!Array.isArray(map.rows) || map.rows.length === 0) {
+    if (!map.commission) {
+      errors.push(`${where}: has no rows and no commission - a map file is either a board or a commission for one`);
+      return;
+    }
+    commissions.push(map);
+    if (!quiet) {
+      console.log(`${map.name} (${where})`);
+      console.log(`  COMMISSIONED — no plate yet. ${cols} x ${rowCount} grid reserved, ${cols * rowCount} hexes.`);
+      console.log(`  ${map.commission.why}`);
+      console.log(`  next: node tools/mint-queue.mjs`);
+    }
+    return;
+  }
+
+  if (map.rows.length !== rowCount) {
+    errors.push(`${where}: expected ${rowCount} rows, found ${map.rows.length}`);
     return;
   }
 
@@ -244,5 +267,9 @@ function checkMap(file) {
 
 for (const w of warnings) console.warn(`warning: ${w}`);
 for (const e of errors) console.error(`error:   ${e}`);
-console.log(`\n${files.length} map(s), ${errors.length} error(s), ${warnings.length} warning(s)`);
+console.log(
+  `\n${files.length} map(s)` +
+    (commissions.length ? `, ${commissions.length} of them commissioned and not drawn yet` : '') +
+    `, ${errors.length} error(s), ${warnings.length} warning(s)`
+);
 process.exit(errors.length ? 1 : 0);

@@ -143,6 +143,13 @@ window.GAME_DATA = {
         "collection": "decks",
         "idField": "id",
         "summary": "How a physical game element is built - card stock, frame, bars, marks, deck backs and tokens. Content-free: the shapes everything else is drawn into."
+      },
+      {
+        "key": "mint",
+        "file": "mint.json",
+        "collection": "lines",
+        "idField": "id",
+        "summary": "The mint: one line per kind of thing that goes designer -> artist -> build. Cards, maps, and tiles while they are shelved. Content-free, like components.json: it says what a line is, never what a card says."
       }
     ],
     "maps": {
@@ -5859,6 +5866,7 @@ window.GAME_DATA = {
       }
     ],
     "boardSetup": {
+      "$comment": "Setup for a board dealt from a bag of TILES. That board is shelved - see https://github.com/cdomotor-g/game1/issues/18 - and this block is kept rather than removed, because it is still the right answer for a tile set and because tools/validate-map.mjs reads terrainMix and recommendedTiles to report what a DRAWN board actually holds against what the rules assume. Nothing here is a rule about a drawn map: a continent is not a shuffled tile bag, and validate-map reports the gap without ever failing on it.",
       "recommendedTiles": {
         "2players": 37,
         "3players": 49,
@@ -11941,6 +11949,211 @@ window.GAME_DATA = {
       }
     }
   },
+  "mint": {
+    "$comment": "The mint: how a thing that is declared in data/ becomes a finished artefact on the table. It is a multi-tool, not a card tool. One entry under `lines` per KIND of thing being minted - cards today, maps today, tiles when they come back - and each line says the same four things: where its subjects come from, where its briefs live, what a plate has to be, and what ties the plate back to the data. tools/lib/mint.mjs reads this and knows how to enumerate and probe each line; tools/mint-queue.mjs turns that into docs/art/mint/QUEUE.md. The prose version, with the handover and who does what, is docs/MINT.md.\n\nThis file holds no content: no card is named here, no map is described here. It says what a line IS. A line's subjects live in their own files, exactly as a card's words live in the card's own file.",
+    "version": "0.1.0",
+    "$structure": {
+      "$comment": "The tiny type system this file uses, so the next tool that reads it does not have to guess.",
+      "path": "a repository-relative path, always with forward slashes and never with a leading ./",
+      "dottedPath": "a path into a subject object - `commission.plate.minWidthPx` - used by the *Requires lists, which tools/lib/mint.mjs checks for real",
+      "status": "active | shelved. A shelved line is declared, reported by the queue every run, and chased by nobody. It carries `issue`, so the reason is one click away and is never re-litigated from memory."
+    },
+    "steps": {
+      "$comment": "Every line is minted in the same four steps, because the split that matters is the same one every time: somebody who can write and cannot draw hands over to somebody who can draw and does not know the rules, and then the drawing has to be tied back to the data before anything can be built from it. Only the third step's NAME changes between lines - a card is framed, a map is traced - and a line says which under `aim`.\n\nA subject's step is COMPUTED from the repository, never stored. There is no board to fall out of date because there is no board: commit a PNG and the subject moves to step 3 by itself.",
+      "order": [
+        "write",
+        "draw",
+        "aim",
+        "minted"
+      ],
+      "write": {
+        "name": "WRITE",
+        "owner": "designer",
+        "test": "the subject exists in data/ and its brief does not",
+        "produces": "a complete generation brief, filed under the plate's own id"
+      },
+      "draw": {
+        "name": "DRAW",
+        "owner": "artist",
+        "test": "the brief exists and the plate does not",
+        "produces": "one image file, at the line's declared format and minimum width"
+      },
+      "aim": {
+        "name": "AIM",
+        "owner": "whoever accepts the plate",
+        "test": "the plate exists and nothing in data/ says how to read it",
+        "produces": "the tie between the plate and the data - see each line's `aim`"
+      },
+      "minted": {
+        "name": "MINTED",
+        "owner": "-",
+        "test": "all three, and the build tools draw the thing",
+        "produces": "nothing further; the artefact is generated from here on"
+      }
+    },
+    "handover": {
+      "$comment": "The mint runs on a pull request, and the notification protocol is three greppable prefixes. They are prefixes on purpose: an agent subscribed to the thread can ignore everything else in it. The comments are a NOTIFICATION, not a state machine - if one is missed, dropped, posted twice or posted out of order, the next run of tools/mint-queue.mjs still produces the correct worklist. See docs/MINT.md.",
+      "branch": "mint/{run}",
+      "prefixes": {
+        "request": "MINT REQUEST",
+        "ready": "PLATE READY",
+        "rejected": "PLATE REJECTED"
+      },
+      "onePerSubject": true,
+      "briefPastedInFull": true,
+      "$briefNote": "The prompt goes into the comment complete - preamble, subject, negative prompt and the line's aim block. The artist should never have to assemble a prompt out of three files, and a prompt that was actually used is worth having in the thread verbatim."
+    },
+    "lines": [
+      {
+        "id": "cards",
+        "name": "Cards",
+        "status": "active",
+        "subject": "one card in one of the adventure decks",
+        "unit": "card",
+        "groupLabel": "Deck",
+        "subjectsFrom": {
+          "kind": "decks",
+          "file": "components.json",
+          "collection": "decks",
+          "$note": "A deck says where its cards live (`source`), what its plates are called (`plateId`), which prompt file briefs them (`promptFile`) and whether it is being minted at all (`minting`). The mint does not restate any of it."
+        },
+        "subjectRequires": [
+          "cardCode",
+          "name"
+        ],
+        "brief": {
+          "dir": "docs/art/prompts",
+          "fileFrom": "deck.promptFile",
+          "headingIs": "plateId",
+          "$note": "A brief is an `## <plate-id>` section in the deck's prompt file. The heading IS the plate id, which is what lets the queue find it without anybody filing an index."
+        },
+        "plate": {
+          "dir": "docs/art/renders",
+          "ext": ".png",
+          "idFrom": "components.decks[].plateId",
+          "formatFrom": "components.decks[].plateFormat",
+          "minLongSidePx": 4000,
+          "$minLongSideNote": "What the prompt files ask for: 4000 px on the LONG side, which is the height on a portrait plate and the width on a landscape one. The plates accepted so far are 1055-1536 px and do not meet it; the queue says so in one line rather than thirty, because it is one decision - re-render for print, or accept that these are screen plates - and not thirty findings.",
+          "frozenWording": "docs/art/renders/{plate}.txt"
+        },
+        "aim": {
+          "step": "FRAME",
+          "owner": "whoever accepts the plate",
+          "file": "docs/art/framing.json",
+          "at": "plates",
+          "produces": "a `subject` box, a `focal` point and a one-line `note`",
+          "contract": "docs/art/09-framing-and-composition.md",
+          "$note": "A plate is a whole drawn page and a card window is not that shape, so something is thrown away. `subject` is the veto - what may not be cut. `focal` is the aim - the one point the picture is of. Without an entry the card is cropped on the middle of the page, which is what put a character's chin on the top edge of their own card."
+        },
+        "builds": [
+          "docs/cards/ - tools/build-cards.mjs",
+          "docs/data/bundle.js thumbnails - tools/build-data.mjs"
+        ],
+        "checks": [
+          "node tools/validate-data.mjs",
+          "node tools/validate-art.mjs",
+          "node tools/build-cards.mjs --check"
+        ]
+      },
+      {
+        "id": "maps",
+        "name": "Maps",
+        "status": "active",
+        "subject": "one drawn map plate, and the hex board read off it",
+        "unit": "map",
+        "groupLabel": "Grid",
+        "subjectsFrom": {
+          "kind": "directory",
+          "dir": "maps",
+          "ext": ".json",
+          "$note": "One file per map, picked up from the directory rather than from an index, exactly as the bundler does it - adding the next map is one new file and no edit anywhere else."
+        },
+        "subjectRequires": [
+          "id",
+          "name",
+          "summary",
+          "commission.why",
+          "commission.landmass",
+          "commission.terrainBudget",
+          "commission.settlements",
+          "commission.plate.minWidthPx",
+          "grid.cols",
+          "grid.rows",
+          "legend"
+        ],
+        "$subjectRequiresNote": "The COMMISSION contract: what a map file must say before anybody is asked to draw it. A commission is the map's brief-in-data - what the map is for, what country it is, what the terrain budget is, how many settlements of what rank - and it is checked for real by tools/lib/mint.mjs, so an under-specified commission is a queue error rather than a surprise three weeks later.",
+        "brief": {
+          "dir": "docs/art/prompts",
+          "file": "maps.md",
+          "headingIs": "map id",
+          "$note": "One `## <map-id>` section per commissioned map, holding the complete prompt: the shared preamble, the subject paragraph written from `commission`, the negative prompt, and the TRACEABILITY block. Same shape as a deck's prompt file; the heading is the map id because a map's plate is named after the map."
+        },
+        "plate": {
+          "dir": "docs/map",
+          "ext": ".png",
+          "idFrom": "the map's own id",
+          "format": "landscape, root-two (1.414) inside a plain frame with a visible inner rule",
+          "minLongSidePx": 4000,
+          "wantLongSidePx": 7000,
+          "frozenWording": "docs/map/{plate}.txt",
+          "$widthNote": "The plate's width is the hard limit on print quality and it is the one property that cannot be recovered later: a coastline can be re-traced and a legend can be drawn over, but pixels that were never drawn are gone. 4000 px is a working minimum; A1 wants 7000. Ask for the width before anything else.",
+          "$gridNote": "NEVER ask for a grid on the plate. The grid is an overlay drawn from the board; one baked into the artwork cannot be moved, cannot be resized when cols changes, and will not line up with the one the tools draw."
+        },
+        "aim": {
+          "step": "TRACE",
+          "owner": "designer",
+          "file": "data/maps/{id}.json",
+          "at": "rows",
+          "produces": "the measured `plate` block and a full `rows` board, hand-corrected against the proof sheet",
+          "contract": "docs/map/README.md",
+          "$note": "The map equivalent of framing a card. A card's plate is tied to its data by a subject box; a map's plate is tied to its data by the board read off it - the same job, which is why it is the same step. tools/trace-map.mjs proposes rows by sampling the artwork and tools/build-map.mjs renders the proof sheet you correct them against. Expect three or four rounds; it is not optional."
+        },
+        "boardRequires": [
+          "plate.file",
+          "plate.width",
+          "plate.height",
+          "plate.field",
+          "rows",
+          "settlements",
+          "regions",
+          "print"
+        ],
+        "$boardRequiresNote": "The OUTPUT contract: what the map file must say before the map counts as minted. Checked by tools/lib/mint.mjs; the semantics underneath - no deep water against a beach, no harbour inland, no rail across an unbridged river - are checked by tools/validate-map.mjs.",
+        "builds": [
+          "docs/map/{id}-proof.png - tools/build-map.mjs, git-ignored, for review",
+          "the derived print sizes in `print.presets` - tools/build-map.mjs",
+          "docs/data/bundle.js - tools/build-data.mjs, which is what docs/map/ reads"
+        ],
+        "checks": [
+          "node tools/validate-map.mjs",
+          "node tools/build-map.mjs {id} --check",
+          "node tools/trace-map.mjs {id} --diff"
+        ]
+      },
+      {
+        "id": "tiles",
+        "name": "Tiles",
+        "status": "shelved",
+        "issue": 18,
+        "issueUrl": "https://github.com/cdomotor-g/game1/issues/18",
+        "subject": "one printed hex tile face, and the zoom-in sheet behind it",
+        "unit": "tile",
+        "groupLabel": "Series",
+        "shelvedNote": "The tile-based board - 61 double-sided hex tiles dealt face down, and the Holdings / Grounds / Places zoom-in sheets in docs/minimaps/ - is paused, not cancelled. Nothing is deleted: the 32 accepted sheets stay committed and stay on the site, and terrain.json keeps boardSetup. It comes back as a GAME SET (#10): a table would pick either a plate set, where one drawn map is hexed and the world is known, or a tile set, where the board is a bag and the world is unknown until walked. Both feed the same terrain vocabulary and the same move costs, which is the test of whether #10 drew its line in the right place.",
+        "whenItReturns": [
+          "#10 has drawn the core/set line and a set can supply a board",
+          "the tile art contract is written: edge continuity across butted tiles, an unexplored back that gives nothing away, the deposit slot",
+          "this line's status flips to active and `subjectsFrom` is filled in"
+        ],
+        "existingWork": [
+          "docs/minimaps/ - 32 accepted sheets: 4 Holdings, 9 Grounds, 19 Places",
+          "docs/art/06-components.md - the 60 mm hex tile face and back",
+          "docs/design/08-components.md - 61 tiles in the bill of materials",
+          "data/terrain.json - boardSetup.terrainMix, recommendedTiles, faceDownAtStart"
+        ]
+      }
+    ]
+  },
   "maps": [
     {
       "$comment": "The Korvane Reach: a drawn map, hexed. The artwork in docs/map/korvane-reach.png is the plate; everything a program needs to know about what is ON that plate is in this file. 'rows' is the board — one string per grid row, one character per hex, decoded through 'legend'. Edit it by hand: it is a picture of the map you can read in a text editor, and it diffs like one. tools/trace-map.mjs proposes rows by sampling the plate; it never rewrites them unless asked.",
@@ -11949,6 +12162,84 @@ window.GAME_DATA = {
       "name": "The Korvane Reach",
       "subtitle": "a true charting of the free lands, the ember coast & the rimeward marches",
       "summary": "A north-facing continent map: an ice waste along the top edge and a second one across the northern bay, a temperate wooded west, a dry ochre south, and a mountain spine running south-east from the western sea to the eastern shore.",
+      "commission": {
+        "$comment": "The commission: what this map was for, written out after the fact. The Korvane Reach predates the map mint (docs/MINT.md) and this block is what its commission WOULD have said - it is here because a contract nobody has ever written a real example of is a contract nobody can follow. data/mint.json lines.maps.subjectRequires is the checkable half of it; tools/mint-queue.mjs fails the queue if a commissioned map is missing any of it.",
+        "why": "The first board: one drawn continent big enough to hold a full campaign, hexed, with enough coast and enough interior that both the shipping half and the rail half of the economy have somewhere to happen.",
+        "landmass": "One north-facing continent filling most of the frame, open sea on the north, west and east edges, a deeply indented coastline with offshore islands, and a mountain spine running south-east from the western sea to the eastern shore.",
+        "terrainBudget": [
+          {
+            "terrain": "deep-water",
+            "share": 0.29
+          },
+          {
+            "terrain": "shallow-water",
+            "share": 0.17
+          },
+          {
+            "terrain": "grassland",
+            "share": 0.11
+          },
+          {
+            "terrain": "tundra",
+            "share": 0.1
+          },
+          {
+            "terrain": "coast",
+            "share": 0.08
+          },
+          {
+            "terrain": "mountain",
+            "share": 0.08
+          },
+          {
+            "terrain": "forest",
+            "share": 0.08
+          },
+          {
+            "terrain": "desert",
+            "share": 0.07
+          },
+          {
+            "terrain": "marsh",
+            "share": 0.02
+          },
+          {
+            "terrain": "hills",
+            "share": 0.01
+          }
+        ],
+        "$terrainBudgetNote": "Shares of the whole grid, water included, as built. A budget is an aim for the artist and a sanity check afterwards, never a rule: a drawn continent is not a shuffled tile bag. tools/validate-map.mjs reports the finished board against boardSetup.terrainMix in data/terrain.json for the same reason - a map with a quarter of the hills the rules assume is a map where iron is scarce, and that is worth knowing before anyone plays on it. This map is one of those: 0.8% hills against the 8% the rules assume.",
+        "settlements": {
+          "count": 19,
+          "seat": 1,
+          "city": 2,
+          "town": 11,
+          "village": 5,
+          "harbours": 4
+        },
+        "routes": {
+          "rail": true,
+          "shipping": true,
+          "road": true
+        },
+        "mustHave": [
+          "an ice waste along the top edge and a second across the northern bay",
+          "a temperate wooded west and a dry ochre south",
+          "two rail lines meeting at one inland seat",
+          "at least four harbours, spread around the coast"
+        ],
+        "mustNotHave": [
+          "a hex grid, a square grid, or any ruled lines on the artwork",
+          "hillshading, relief shading or contour lines",
+          "map furniture over a coastline - cartouche, legend and compass all sit over water"
+        ],
+        "plate": {
+          "minWidthPx": 4000,
+          "wantWidthPx": 7000,
+          "aspect": "root-two landscape"
+        },
+        "$plateNote": "Not met. This plate arrived at 1491 px, which cost the two larger print presets - see docs/map/README.md. It is the one property of a plate that cannot be recovered later, and it is in the contract now because of this map."
+      },
       "plate": {
         "file": "korvane-reach.png",
         "$fileNote": "Relative to docs/map/. The artwork is committed as supplied and is never re-encoded by any tool here — the hex grid is an overlay drawn on top of it, not a change to it.",
@@ -12711,6 +13002,156 @@ window.GAME_DATA = {
           }
         ]
       }
+    },
+    {
+      "$comment": "A COMMISSION, not a board. The plate has not been drawn yet, so this file has no `plate` block and its `rows` are empty. What it does have is a complete `commission`: what the map is for, what country it is, what the terrain budget is and how many settlements of what rank — the map mint's input contract, in data/mint.json under lines.maps.subjectRequires. Run `node tools/mint-queue.mjs` to see where it has got to. The whole pipeline, and who does what, is in docs/MINT.md; docs/map/README.md is the six steps of turning a plate into a board.",
+      "version": "0.1.0",
+      "id": "sundering-isles",
+      "name": "The Sundering Isles",
+      "subtitle": "a chart of the broken coast, the scatter & the drowned road",
+      "summary": "A warm archipelago south of the Reach: no continent, a hundred islands, and more water than land. Everything moves by hull. Commissioned as the second board, and as the map that makes the shipping half of the economy matter — the Korvane Reach is a rail map with a coast, and this is its opposite.",
+      "commission": {
+        "$comment": "The input contract. Everything the artist needs decided BEFORE a prompt is written, and everything the tracer needs true of the finished plate. docs/art/prompts/maps.md § sundering-isles is written from this block and from nothing else; if the two disagree, this file is right and the prompt is stale.",
+        "why": "The Reach is a continent with a coastline: rail carries the tonnage and ships are the alternative. This board inverts that — no route on it is walkable end to end, so barges, ships and harbours become the transport rules that are actually in play, and a settlement without a harbour is a settlement that has to pay someone else's freight.",
+        "landmass": "No continent. Three loose chains of islands running north-east to south-west across a warm shallow sea, with the largest island about a sixth of the frame and nothing else above a twentieth. Open deep water on the south and east edges; the north edge is the shallow approach to the Korvane Reach's southern shore, drawn as a shelf running off the top of the frame. One long reef, drawn as shallows, chains two of the groups together — the drowned road the subtitle is named for.",
+        "terrainBudget": [
+          {
+            "terrain": "deep-water",
+            "share": 0.3
+          },
+          {
+            "terrain": "shallow-water",
+            "share": 0.22
+          },
+          {
+            "terrain": "coast",
+            "share": 0.15
+          },
+          {
+            "terrain": "grassland",
+            "share": 0.11
+          },
+          {
+            "terrain": "forest",
+            "share": 0.09
+          },
+          {
+            "terrain": "hills",
+            "share": 0.05
+          },
+          {
+            "terrain": "mountain",
+            "share": 0.04
+          },
+          {
+            "terrain": "marsh",
+            "share": 0.03
+          },
+          {
+            "terrain": "desert",
+            "share": 0.01
+          }
+        ],
+        "$terrainBudgetNote": "Shares of the whole grid, water included. Half the board is water on purpose and the land is nearly all within one hex of it, which is what makes coast the third-largest terrain here and what makes the board play differently from the Reach. Tundra is deliberately absent: this is a warm sea. It keeps a character in the legend anyway, because a legend that covers all ten terrains costs nothing and a board that later grows a cold rock should not need a legend edit to say so.",
+        "settlements": {
+          "count": 14,
+          "seat": 1,
+          "city": 1,
+          "town": 5,
+          "village": 7,
+          "harbours": 12
+        },
+        "$settlementNote": "Twelve of the fourteen are harbours — on this board a settlement off the water is the exception and should look like a hard place to live. The seat is on the largest island; the city is on the reef chain, where the freight has to change hulls.",
+        "routes": {
+          "rail": false,
+          "shipping": true,
+          "road": true
+        },
+        "$routeNote": "No rail at all. A rail line needs continuous land and there is none; the day someone bridges the reef is a design decision, not a drawing.",
+        "mustHave": [
+          "three island groups, none of them touching, with the largest island about a sixth of the frame",
+          "a reef drawn as a distinct paler shallow, chaining two groups together",
+          "at least twelve harbours, and a named anchorage drawn at each",
+          "one volcanic peak on the largest island — the only mountain worth the name",
+          "a shelf running off the north edge, so the board reads as being south of somewhere"
+        ],
+        "mustNotHave": [
+          "a hex grid, a square grid, or any ruled lines over the field",
+          "hillshading, relief shading, contour lines or depth soundings",
+          "map furniture over land or over the reef — cartouche, legend and compass sit over open water",
+          "display lettering over any island — the big names go on the sea, where a mis-read costs nothing",
+          "a second colour of ochre: the desert wash and the marsh wash must not be the same, which is the mistake the Reach's plate made"
+        ],
+        "plate": {
+          "minWidthPx": 4000,
+          "wantWidthPx": 7000,
+          "aspect": "root-two landscape",
+          "$note": "Ask for the width before anything else. It is the one property of a plate that cannot be recovered later, and the Reach is on its second plate at 1491 px, which cost it the two larger print presets."
+        }
+      },
+      "grid": {
+        "shape": "hex",
+        "orientation": "pointy",
+        "offset": "odd-r",
+        "cols": 30,
+        "rows": 24,
+        "fit": "field-width",
+        "$fitNote": "Chosen at commission, confirmed when the field is measured. 30 columns on a root-two landscape field puts the rows at 24 and keeps a hex about the size of a small island, which is what this board needs: an island that is one hex is a place, and an island that is half a hex is decoration. The Reach uses 32 on a wider country; fewer columns here would swallow the scatter."
+      },
+      "print": {
+        "$comment": "Sheet layouts, in the same three sizes as every other board — the geometry is a property of A4 and of the root-two frame, not of the artwork. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived from the plate and written in by tools/build-map.mjs; they are absent here because there is no plate to derive them from yet.",
+        "default": "four-sheet",
+        "presets": [
+          {
+            "id": "four-sheet",
+            "name": "Four sheets, A2",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 2,
+            "sheetRows": 2,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "Two by two, printed landscape. The working size for a table."
+          },
+          {
+            "id": "nine-sheet",
+            "name": "Nine sheets, A1",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 3,
+            "sheetRows": 3,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "Three by three. Worth printing only if the plate arrives at 7000 px."
+          },
+          {
+            "id": "one-sheet",
+            "name": "One sheet, reference",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 1,
+            "sheetRows": 1,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "The whole board on one page, for reading rather than playing."
+          }
+        ]
+      },
+      "legend": {
+        "$comment": "Character to terrain id, for the 'rows' block. Fixed at commission so the tracer's output is readable the day it first runs, and identical to the Korvane Reach's so a board from either map reads the same in a text editor.",
+        "~": "deep-water",
+        "-": "shallow-water",
+        "c": "coast",
+        ".": "grassland",
+        "f": "forest",
+        "h": "hills",
+        "^": "mountain",
+        "m": "marsh",
+        "t": "tundra",
+        "d": "desert"
+      },
+      "rows": [],
+      "$rowsNote": "Empty until the plate exists and tools/trace-map.mjs has read it. A map with no rows is a commission, not a board: tools/validate-map.mjs skips the board checks and says so, the explorer shows it as commissioned, and tools/mint-queue.mjs puts it on the step it has actually reached."
     }
   ],
   "art": {

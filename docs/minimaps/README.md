@@ -1,5 +1,13 @@
 # Mini-maps
 
+> **Shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** These sheets are part of the tile-based board,
+> which is paused. Nothing here is deleted or regenerated: all 32 accepted
+> artworks stay committed and stay on the site, and this document stays as the
+> spec they were drawn to. **No further sheets are commissioned** until the
+> game-set split ([#10](https://github.com/cdomotor-g/game1/issues/10)) has decided how a set supplies a board, at which
+> point a tile set is exactly what these are for. The mint reports the shelved
+> line every run — see [`../MINT.md`](../MINT.md).
+
 Some moments need more board than a single hex: a battle, a monster encounter, a
 farm growing into a walled town. Those moments zoom in — one cell of the
 campaign map opens out onto a **mini-map**, play happens inside it, and the

@@ -83,6 +83,7 @@
 
   <aside class="side">
     <a class="back" href="../index.html">← explorer</a>
+    <a class="back" href="../mint/index.html">the mint — how a map is made</a>
     <h1 id="title">…</h1>
     <p class="sub" id="subtitle"></p>
 
@@ -122,7 +123,10 @@
 (function () {
   'use strict';
   var D = window.GAME_DATA;
-  var map = (D.maps || [])[0];
+  /* The first map that is actually a BOARD. data/maps/ also holds commissions -
+     a map whose plate has not been drawn yet, with an empty `rows` - and there is
+     nothing here to draw for one. See docs/MINT.md. */
+  var map = (D.maps || []).filter(function (m) { return (m.rows || []).length; })[0];
   var palette = null;
 
   /* The palette is a doc file rather than a dataset, so its colours are inlined
