@@ -265,6 +265,94 @@ for (const i of itemList) {
   }
 }
 
+// The player board. Its tracks are printed ladders of a fixed length, which is
+// a promise: a character with 16 health or a hull with 16 damage boxes would
+// walk its token off the top of the board and nobody would notice until it was
+// printed. So every track says the largest value the game can reach, says where
+// that number comes from, and both are checked here.
+const boardSpec = datasets.playerboard;
+const boardShape = datasets.components?.board;
+
+if (boardSpec && boardShape) {
+  const rungs = boardShape.track.rungs;
+  const letters = new Set();
+
+  for (const t of boardSpec.tracks ?? []) {
+    if (t.letter?.length !== 1) errors.push(`playerboard: track "${t.id}" needs a single-letter head, not "${t.letter}"`);
+    else if (letters.has(t.letter)) errors.push(`playerboard: two tracks are called "${t.letter}" - a player has to be able to say which one`);
+    else letters.add(t.letter);
+
+    let step = t.step;
+    if (step === undefined && t.stepFrom) {
+      const [key, ...rest] = t.stepFrom.split('.');
+      let node = datasets[key];
+      for (const part of rest) node = node?.[part];
+      step = node;
+      if (typeof step !== 'number') {
+        errors.push(`playerboard: track "${t.id}" reads its step from "${t.stepFrom}", which does not resolve to a number`);
+        continue;
+      }
+    }
+    if (typeof step !== 'number' || step <= 0) {
+      errors.push(`playerboard: track "${t.id}" has no step - a rung has to be worth something`);
+      continue;
+    }
+    if (t.kind === 'harm' && step !== 1) {
+      errors.push(`playerboard: track "${t.id}" is a harm track stepping ${step} - a harm track never skip-counts (components.json bars.harm)`);
+    }
+
+    const covers = t.covers;
+    if (typeof covers?.value !== 'number') {
+      errors.push(`playerboard: track "${t.id}" does not say what it has to cover`);
+      continue;
+    }
+    /* The number is restated on the track so the board can be checked without
+       the whole ruleset in context; the path is what stops it going stale. */
+    if (covers.path && covers.dataset) {
+      const root = datasets[covers.dataset];
+      if (!root) {
+        errors.push(`playerboard: track "${t.id}" points at dataset "${covers.dataset}", which is not in the manifest`);
+      } else {
+        const found = collect(root, covers.path, covers.dataset)
+          .map((hit) => hit.value)
+          .filter((v) => typeof v === 'number');
+        const max = found.length ? Math.max(...found) : null;
+        if (max !== null && max !== covers.value) {
+          errors.push(`playerboard: track "${t.id}" says it covers ${covers.value}, but ${covers.path} now tops out at ${max}`);
+        }
+      }
+    }
+    if (rungs * step < covers.value) {
+      errors.push(`playerboard: the ${t.label} track is ${rungs} rungs of ${step} = ${rungs * step}, and has to cover ${covers.value} - the token would walk off the top`);
+    }
+  }
+
+  /* The slots take cards from somewhere, and "somewhere" has to be a dataset. */
+  const datasetKeys = new Set(manifest.datasets.map((d) => d.key));
+  for (const slot of boardSpec.slots ?? []) {
+    for (const takes of slot.takes ?? []) {
+      if (!datasetKeys.has(takes)) errors.push(`playerboard: slot "${slot.id}" takes "${takes}", which is not a dataset`);
+    }
+  }
+
+  /* The board's geometry is what is left over once the cards have had theirs,
+     so adding a track or growing a card silently narrows the columns. Below the
+     width of the token that walks them, the board has run out of room. */
+  const card = datasets.components.stock.card;
+  const slotW = card.widthMm + 2 * boardShape.slot.clearanceMm;
+  const contentW = boardShape.sheet.widthMm - boardShape.margins.spineMm - boardShape.margins.outerMm;
+  const kitCount = (boardSpec.slots ?? []).find((s) => s.id === 'kit')?.count ?? 0;
+  const kitW = 2 * slotW + boardShape.gutterMm;
+  const columnW = (contentW - slotW - kitW - 2 * boardShape.gutterMm) / (boardSpec.tracks?.length || 1);
+  const tokenMm = datasets.components.tokens?.bar?.diameterMm ?? 7;
+  if (columnW < tokenMm + 2) {
+    errors.push(`playerboard: ${boardSpec.tracks.length} tracks leave ${columnW.toFixed(1)}mm a column, and the token that walks them is ${tokenMm}mm - the board has run out of middle`);
+  }
+  if (kitCount % 2 !== 0) {
+    warnings.push(`playerboard: ${kitCount} kit slots do not fill the two columns the board draws them in`);
+  }
+}
+
 // A building nobody can reach is a design bug worth hearing about.
 const buildingUsed = new Set();
 for (const r of recipes) {

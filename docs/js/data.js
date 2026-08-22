@@ -30,6 +30,7 @@
   const elements = D.arcana.elements;
   const enchantments = (D.arcana.enchantments || {}).cards || [];
   const modifications = D.modifications.modifications;
+  const playerboard = D.playerboard;
   const talismans = items.filter((i) => i.class === 'talisman');
 
   const index = (arr) => new Map(arr.map((x) => [x.id, x]));
@@ -278,7 +279,7 @@
     commodities, tools, buildings, recipes, terrains, deposits,
     modes, figures, peoples, professions, cards, items,
     monsters, vehicles, characters, quests, spells, talismans,
-    elements, enchantments, modifications,
+    elements, enchantments, modifications, playerboard,
     art, artPlacement, placeSheet, groundSheet, holdingSheets,
     categories: {
       commodity: D.commodities.categories,

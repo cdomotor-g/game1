@@ -27,6 +27,8 @@ the web prototype and any future card/tile generator read.
 | `vehicles.json` | `vehicles` | The vehicle deck, and the card-code scheme |
 | `characters.json` | `characters` | The character deck: health, burden and mana |
 | `quests.json` | `quests` | The quest deck: mini-quests and campaigns |
+| `components.json` | `decks` | How a component is built — card stock, frames, bars, board, backs, tokens |
+| `playerboard.json` | `tracks` | The player board: its five numbered tracks, its card slots, its turn reference |
 
 `schema/game.schema.json` documents the shape of each entry. It is for editors and
 for humans — it deliberately does not try to validate across files.

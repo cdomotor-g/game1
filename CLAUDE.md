@@ -42,6 +42,20 @@ The same rule runs down: an element's *mark* is data on the element
 `tools/build-icons.mjs` turns the two into `docs/art/icons/`. Nothing draws an
 element mark by hand.
 
+## The player board is computed, not laid out
+
+`tools/build-board.mjs` holds no coordinates. The track columns are the width left over
+once the card recesses and the gutters have taken theirs; the rungs are the height left
+once the head and the seat have. So a sixth track narrows the columns and a bigger card
+narrows them further — and nothing ever runs off the paper. If you find yourself typing
+an x or a y into that file, the number belongs in `data/components.json` under `board`
+instead.
+
+What the tracks *count* is content and lives in `data/playerboard.json`. Every track
+names the largest value it has to cover and the dotted path that number comes from;
+`validate-data.mjs` recomputes it, so a character with one more point of health fails the
+build rather than walking a token off the top of a board somebody already printed.
+
 ## The mint is a multi-tool, and the queue is computed
 
 `docs/MINT.md` is the pipeline and `docs/MINT-SETUP.md` is how to run it. One
@@ -111,6 +125,7 @@ node tools/build-icons.mjs     # element marks -> docs/art/icons/
 node tools/build-data.mjs      # rebuild the web bundle
 node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
+node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + components
 node tools/build-book.mjs      # regenerate docs/book/ from docs/design/*.md
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md
 node tools/build-mint.mjs      # regenerate docs/mint/ from MINT*.md + QUEUE.md

@@ -457,6 +457,53 @@
     return p;
   };
 
+  /**
+   * The player board, at the head of the adventure page — because the board is
+   * what the four decks are played ON, and its five tracks are the bars off
+   * their edges brought together in one place.
+   *
+   * Read straight out of data/playerboard.json, so the tracks here, the printed
+   * board and the rulebook cannot disagree about what a track counts.
+   */
+  function boardPanel() {
+    const pb = D.playerboard;
+    const shape = D.raw.components && D.raw.components.board;
+    if (!pb || !shape) return null;
+    const rungs = shape.track.rungs;
+
+    /* `stepFrom` is a dotted path into the data rather than a number copied out
+       of it — the burden track steps in whatever rules.json says it steps in. */
+    const stepOf = (t) => {
+      if (typeof t.step === 'number') return t.step;
+      let node = D.raw;
+      for (const part of String(t.stepFrom || '').split('.')) node = node && node[part];
+      return typeof node === 'number' ? node : 1;
+    };
+
+    const slots = pb.slots.reduce((n, s) => n + s.count, 0);
+    /* el() reads a bare string as the child list, so a heading with a count
+       beside it has to hand both over as an array or the count is dropped. */
+    return el('div.panel', [
+      el('h3', [pb.board.name, el('span.count', `${pb.tracks.length} tracks · ${slots} card slots`)]),
+      el('p.prose', pb.board.summary),
+      el('p.prose', 'A card in a recess is a card whose edges you cannot reach, so the board takes the bars over: one place to look, one place to knock the tokens off, and the cards stay flat.'),
+      el('div.grid.wide', pb.tracks.map((t) => {
+        const step = stepOf(t);
+        return el('div.card', [
+          el('div.card-head', [el('span.card-title', t.label), el('span.card-code', t.letter)]),
+          el('div.card-sub', t.walks),
+          el('div.card-meta', [
+            pill(`${step} – ${rungs * step}${t.unit ? ' ' + t.unit : ''}`),
+            pill(t.kind === 'leg' ? 'leg clock' : t.kind, t.kind === 'harm' ? 'bad' : t.arcane ? 'accent' : ''),
+          ]),
+        ]);
+      })),
+      el('div.flow', { style: 'margin-top:12px' }, [
+        el('a.btn', { href: 'boards/index.html' }, 'Open the player boards'),
+      ]),
+    ]);
+  }
+
   views.adventure = function (query) {
     const q = (list) => list.filter((x) => UI.matches(x, query));
 
@@ -469,8 +516,10 @@
       pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. Harm bars sit on a card’s left edge, capacity bars on its right, on every deck in the game — and where a character carries two capacities, burden keeps the edge and mana comes inboard onto the portrait. Plates are the accepted renders from docs/art/prompts.'),
       el('div.flow', { style: 'margin-bottom:6px' }, [
         el('a.btn', { href: 'cards/index.html' }, 'Open the card fronts'),
+        el('a.btn.small', { href: 'boards/index.html' }, 'The player boards'),
         el('a.btn.small', { href: 'book/index.html' }, 'Read the rulebook'),
       ]),
+      boardPanel(),
       ...section('Characters', 'Each player’s hero figure takes one at setup. The burden bar is what they can carry, in kilograms.', q(D.characters).map((c) =>
         deckCard('character', c, `${D.name('people', c.people)} · ${c.calling}`, [
           pill(`health ${c.health}`, 'bad'),

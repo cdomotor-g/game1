@@ -314,6 +314,43 @@ All thirty-two sheet artworks are accepted and live in
 | ![PSM-01 — The River Meadow](../minimaps/img/PSM-01.png) | ![TBM-05 — the marsh ground](../minimaps/img/TBM-05.png) | ![SET-01 — Vossgard](../minimaps/img/SET-01.png) |
 | *Holdings: The River Meadow (PSM-01)* | *Grounds: marsh (TBM-05)* | *Places: Vossgard (SET-01)* |
 
+## The player board
+
+The adventure layer arrived one card at a time — a health bar here, a burden bar
+there, a mana bar inboard of that one — and every bar was on an edge, which is
+the right place for a card you are holding and the wrong place for one lying on
+the table. The [player board](08-components.md#the-player-board) is where they
+all end up.
+
+One A4 landscape sheet each, printed at
+[`docs/boards/`](../boards/index.html). The hero's card drops into a recess top
+left, four more recesses take whatever else is in play, the round's phases print
+under the character, and five numbered tracks run up the middle:
+
+| | Track | Tops out at | What walks it |
+| --- | --- | --- | --- |
+| **H** | Health | 15 | The hero, hit and rested |
+| **B** | Burden | 30 kg | Everything worn, wielded and stowed |
+| **S** | Speed | 15 hexes | Hexes left in this leg |
+| **D** | Damage | 15 | The vehicle being run |
+| **M** | Mana | 15 | The body, and every talisman in a slot |
+
+Four of them are bars that already exist on cards, so nothing new has to be
+learned: the ladders are numbered from the bottom and walked by a token exactly
+as a card's edge is, and they rule in the same inks — harm oxide, capacity
+slate, mana bruise.
+
+**Speed is the board's own**, and it is the one that was missing. A party looks
+its day-leg speed up in [`travel.json`](../../data/travel.json) every single
+round of the game and has never had anywhere to keep it: set the token at the
+start of a leg, walk it down a rung per hex entered, halve it for a night leg
+under a lantern. When it reaches the seat the leg is over, and the discovery
+roll happens wherever it stopped.
+
+The board carries no rule the cards do not, which is the point — it is
+furniture, not a fifth deck. What it fixes is that a hero in play was four
+tokens on three cards and a number somebody was holding in their head.
+
 ## What this layer deliberately does not do
 
 No experience points, no levels, no skill trees. A character gets better the

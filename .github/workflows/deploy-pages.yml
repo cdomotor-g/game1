@@ -81,6 +81,13 @@ jobs:
       - name: Fail if the committed card fronts are stale
         run: node tools/build-cards.mjs --check
 
+      # The player boards are generated from data/playerboard.json and the shapes in
+      # data/components.json, and committed for the same reason the card fronts are:
+      # Pages serves the files in the branch, and a board whose tracks have moved on
+      # without the SVG being rebuilt is a board the site hands you to print wrong.
+      - name: Fail if the committed player boards are stale
+        run: node tools/build-board.mjs --check
+
       # The element marks are path data in data/arcana.json; the icons in
       # docs/art/icons/ are drawn from it and committed, like everything else the
       # site serves. A mark edited without re-running the tool means a card and a
