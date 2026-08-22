@@ -52,9 +52,14 @@ an x or a y into that file, the number belongs in `data/components.json` under `
 instead.
 
 What the tracks *count* is content and lives in `data/playerboard.json`. Every track
-names the largest value it has to cover and the dotted path that number comes from;
-`validate-data.mjs` recomputes it, so a character with one more point of health fails the
-build rather than walking a token off the top of a board somebody already printed.
+names the largest value it has to cover and the dotted paths that number comes from, and
+`ceiling.paths` lists every number in the whole game that a token walks — **the board's
+0-14 is the game's ceiling**, and `validate-data.mjs` sweeps all of it. A character with
+one more point of health fails the build rather than walking a token off the top of a
+board somebody already printed.
+
+The board is generic on purpose. Anything that differs between one player and the next
+belongs on the character card in the recess, never printed into the board.
 
 ## The mint is a multi-tool, and the queue is computed
 

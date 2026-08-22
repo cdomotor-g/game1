@@ -469,7 +469,7 @@
     const pb = D.playerboard;
     const shape = D.raw.components && D.raw.components.board;
     if (!pb || !shape) return null;
-    const rungs = shape.track.rungs;
+    const { from, to } = shape.track;
 
     /* `stepFrom` is a dotted path into the data rather than a number copied out
        of it — the burden track steps in whatever rules.json says it steps in. */
@@ -487,19 +487,20 @@
       el('h3', [pb.board.name, el('span.count', `${pb.tracks.length} tracks · ${slots} card slots`)]),
       el('p.prose', pb.board.summary),
       el('p.prose', 'A card in a recess is a card whose edges you cannot reach, so the board takes the bars over: one place to look, one place to knock the tokens off, and the cards stay flat.'),
+      el('p.prose', pb.board.generic),
       el('div.grid.wide', pb.tracks.map((t) => {
         const step = stepOf(t);
         return el('div.card', [
           el('div.card-head', [el('span.card-title', t.label), el('span.card-code', t.letter)]),
           el('div.card-sub', t.walks),
           el('div.card-meta', [
-            pill(`${step} – ${rungs * step}${t.unit ? ' ' + t.unit : ''}`),
+            pill(`${from * step}–${to * step}${t.unit ? ' ' + t.unit : ''}`),
             pill(t.kind === 'leg' ? 'leg clock' : t.kind, t.kind === 'harm' ? 'bad' : t.arcane ? 'accent' : ''),
           ]),
         ]);
       })),
       el('div.flow', { style: 'margin-top:12px' }, [
-        el('a.btn', { href: 'boards/index.html' }, 'Open the player boards'),
+        el('a.btn', { href: 'boards/index.html' }, 'Open the player board'),
       ]),
     ]);
   }
@@ -516,7 +517,7 @@
       pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. Harm bars sit on a card’s left edge, capacity bars on its right, on every deck in the game — and where a character carries two capacities, burden keeps the edge and mana comes inboard onto the portrait. Plates are the accepted renders from docs/art/prompts.'),
       el('div.flow', { style: 'margin-bottom:6px' }, [
         el('a.btn', { href: 'cards/index.html' }, 'Open the card fronts'),
-        el('a.btn.small', { href: 'boards/index.html' }, 'The player boards'),
+        el('a.btn.small', { href: 'boards/index.html' }, 'The player board'),
         el('a.btn.small', { href: 'book/index.html' }, 'Read the rulebook'),
       ]),
       boardPanel(),

@@ -30,7 +30,7 @@
   <!-- name and card code, maker's-mark small -->
   <text x="48" y="80" font-size="31" font-weight="bold">Gold Locket</text>
   <text x="504" y="60" font-size="15" text-anchor="end" letter-spacing="2" font-family="Helvetica, Arial, sans-serif">TAL-04</text>
-  <text x="48" y="102" font-size="15.5" font-style="italic" fill="#3D3630">talisman · made at the blacksmith · 120 coin · 0.5 kg</text>
+  <text x="48" y="102" font-size="15.5" font-style="italic" fill="#3D3630">talisman · made at the blacksmith · 120 coin · 0.25 kg</text>
   
 
   <!-- portrait window rule: the wash bleeds, the ink holds the line -->

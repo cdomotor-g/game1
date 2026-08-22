@@ -80,7 +80,7 @@ const page = docPage({
     { href: '../index.html', label: 'Explorer' },
     { href: '../book/index.html', label: 'The rulebook' },
     { href: '../cards/index.html', label: 'Card fronts' },
-    { href: '../boards/index.html', label: 'Player boards' },
+    { href: '../boards/index.html', label: 'Player board' },
     { href: '../map/index.html', label: 'Map' },
   ],
   printLabel: 'Print the guide',

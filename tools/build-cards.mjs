@@ -536,8 +536,12 @@ for (const c of characters) {
   if (!hasRender(render)) { skipped.push(c.cardCode); continue; }
   specs.push({
     code: c.cardCode, name: c.name, portrait: render,
-    kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling}`,
-    desc: `Character card: ${c.name}, ${c.calling}. Health up the left edge, ${c.carryKg}kg of burden up the right${c.manaCapacity ? ', mana inboard of it' : ''}.`,
+    /* Strength sits in the kicker rather than on a bar: it is a rating, not a
+       quantity that moves, and it is read off the card by whoever is fighting
+       this character as often as by the player holding it - exactly the way a
+       monster card carries its own. The board's S track is set from here. */
+    kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling} · strength ${c.strength}`,
+    desc: `Character card: ${c.name}, ${c.calling}, strength ${c.strength}. Health up the left edge, ${c.carryKg}kg of burden up the right${c.manaCapacity ? ', mana inboard of it' : ''}.`,
     left: { total: c.health, label: 'HEALTH' },
     right: { total: c.carryKg, label: 'BURDEN', unit: 'kg', colour: SLATE },
     inner: c.manaCapacity ? { total: c.manaCapacity, label: 'MANA', colour: BRUISE } : null,
@@ -626,7 +630,7 @@ const index = `<!doctype html>
 <div class="bar">
   <a href="../index.html">← Explorer</a>
   <a href="../book/index.html">The rulebook</a>
-  <a href="../boards/index.html">The player boards</a>
+  <a href="../boards/index.html">The player board</a>
   <a href="../mint/index.html">The mint</a>
   <a class="primary" href="print.html">Print &amp; cut the cards →</a>
 </div>

@@ -91,7 +91,7 @@
       "story": "Its wingbeats are the weather two valleys over. Nobody has befriended one - the roc does not take gifts - but a bird beaten fairly and fed patiently has, three times in recorded history, decided a rider was worth carrying." },
 
     { "id": "vhalrik-the-cinder-crowned", "cardCode": "MON-13", "name": "Vhalrik, the Cinder-Crowned", "element": "fire",
-      "strength": 7, "health": 16, "manaYield": 6, "unique": true,
+      "strength": 7, "health": 14, "manaYield": 6, "unique": true,
       "terrains": ["mountain", "hills", "desert"],
       "options": { "enslave": false, "befriend": true, "domesticate": false },
       "gift": "1 gems and 1 gold, laid out and named aloud as tribute - he counts, and he remembers who was short",

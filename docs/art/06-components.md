@@ -84,35 +84,43 @@ what a banded table needs.
 
 ## Player boards — A4 landscape
 
-The largest flat area in the game and the easiest to overload. Five of them are drawn,
-one per playable people, by `tools/build-board.mjs` into
+The largest flat area in the game and the easiest to overload. One is drawn — the same
+board for every player — by `tools/build-board.mjs` into
 [`../boards/`](../boards/index.html); the anatomy is in
 [`08-components.md`](../design/08-components.md#the-player-board).
 
-- The board is a **workbench**: sawn timber ground, iron-strapped edges, tracks routed
-  into the surface. The grain and the seams are ink-plate tint at hairline weight, so
-  they survive the black-and-white edition and never compete with a number
-- Player colour appears only in the **border banding** and the **maker's mark** — the
-  working surface stays neutral so the player's own tokens read against it. Even in the
-  banding the colour is a wash and the people's **hatch** is struck over it on the ink
-  plate, because the hatch is what identifies a player and the colour is a convenience
+- The board is a **workbench**: sawn timber ground, tracks routed into the surface. The
+  grain and the seams are ink-plate tint at hairline weight, so they survive the
+  black-and-white edition and never compete with a number
+- **No border.** A card has a frame because a card is held, fanned and cut out; a board is
+  not, and the border this one used to carry was 18 mm of paper making the middle
+  narrower. The timber runs to the trim, the way terrain runs to a tile's bleed
+- **No player colour**, because there is nothing on the board to colour. Everything that
+  differs between one player and the next is on the character card lying in the recess.
+  The working surface was always meant to stay neutral so a player's own tokens read
+  against it; the shortest way to guarantee that turned out to be printing one board
 - **Card recesses**, not printed pictures of cards: a groove, corner brackets, and the
   name of what belongs there set faintly in the middle — which a card covers the moment
   one is played, and which is exactly when it stops being needed
-- **Five numbered tracks up the middle**, drawn to the same convention as a card's edge
+- **Six numbered tracks up the middle**, drawn to the same convention as a card's edge
   bar and no other: numbered from the bottom, walked by a bar token, harm in oxide,
-  capacity in slate, mana in bruise. The board is not allowed a second convention, so a
-  player who has learned to read a card has already learned to read the board
+  capacity in slate, a rating in ochre, mana in bruise. The board is not allowed a second
+  convention, so a player who has learned to read a card has already learned to read the
+  board
+- **Every track runs the same range, 0 to 14**, so the six columns are one grid rather
+  than six scales to keep straight. The bottom rung is zero — where a token starts and
+  where it ends up — which is a numbered rung rather than the separate seat ring it used
+  to be: a ring under a ladder reads as decoration, and a 0 does not
 - Every fifth rung **rules heavier and sets its number bold** — the
   [tally motif](00-art-direction.md#motifs) doing component duty. It is what lets a
   player read 12 without counting to 12
-- A **seat** below each ladder: a dashed ring where the token lives at nothing. A card
-  bar has nowhere to put a token at zero and does not need one; a board does, or the
-  token ends up on the table
-- A column is 10.8 mm wide and BURDEN is six letters, so the head sets the **letter**
+- A column is 11 mm wide and STRENGTH is eight letters, so the head sets the **letter**
   at full size with the **word running up beside it** and the unit under it. Nothing on
   the board drops below the 6 pt floor in `palette.json`
-- Mana is the only arcane subject on the sheet, so it is the only thing that takes the
+- Each track's ink-plate **mark repeats on every rung** — notch-down for harm, notch-flat
+  for a capacity, notch-up for the leg, a **pip** for a rating, which goes neither up nor
+  down because it is a value a figure *has*. Mana is the only arcane subject on the sheet,
+  so it is the only thing that takes the
   [slip](01-two-plate-system.md#the-third-plate-the-slip) — well inside the 3% ration
 
 Still to come, and belonging to the settlement half of the game rather than the hero's:

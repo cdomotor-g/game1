@@ -39,14 +39,14 @@
   },
 
   "board": {
-    "$comment": "The player board: one A4 sheet a player keeps in front of them, holding cards in recesses and tracks routed up the middle. Only the shapes are here - what the tracks COUNT and what the slots TAKE is content and lives in data/playerboard.json, the same division as everywhere else in this file.\n\nAlmost nothing below is a position. The board's geometry is DERIVED from four numbers - the sheet, the margins, the gutter, and the size of a card recess - so a track column is exactly the width left over once the cards have had theirs, and adding a sixth track narrows the columns rather than running off the paper. tools/build-board.mjs does that arithmetic; see also tools/build-map.mjs, which derives its print sizes the same way and for the same reason.",
+    "$comment": "The player board: one A4 sheet a player keeps in front of them, holding cards in recesses and tracks routed up the middle. Only the shapes are here - what the tracks COUNT and what the slots TAKE is content and lives in data/playerboard.json, the same division as everywhere else in this file.\n\nAlmost nothing below is a position. The board's geometry is DERIVED from four numbers - the sheet, the margin, the gutter, and the size of a card recess - so a track column is exactly the width left over once the cards have had theirs, and adding a track narrows the columns rather than running off the paper. tools/build-board.mjs does that arithmetic; see also tools/build-map.mjs, which derives its print sizes the same way and for the same reason.\n\nThere is no frame block, and that is deliberate. A card has a frame because a card is held, fanned and cut out; a board is not, and the border it used to carry was 18 mm of paper doing nothing but making the middle narrower. Taking it off is what paid for the sixth track.",
 
     "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6,
       "$note": "A4 landscape. The corner is bigger than a card's because the sheet is bigger; a board cut square looks like a print-out, which is exactly what it would be." },
 
-    "margins": { "topMm": 12, "bottomMm": 12, "outerMm": 12, "spineMm": 18 },
+    "marginMm": 8,
     "gutterMm": 6,
-    "$marginNote": "The spine margin is the wide one: the board's title sets in it, running up the left edge the way a title runs up the spine of a book. Everything else clears the frame by the same 12 mm.",
+    "$marginNote": "One margin, all four sides - with no border to clear, nothing needs a wider side than any other. 8 mm is the least a home printer can be trusted to put ink inside.",
 
     "slot": {
       "$comment": "A recess a card drops into, cut round the card's own trim plus a clearance either side. The corner follows: a rounded card in a square hole is a card that has to be aimed.",
@@ -59,29 +59,13 @@
     },
 
     "track": {
-      "$comment": "The numbered ladders. Fifteen rungs, numbered from the bottom and walked by a bar token, exactly like a card's edge bar - the board is not allowed a second convention. The rung height falls out of the sheet, and at A4 it lands within a hair of the column width, so the cells come out square and a 7 mm token sits in the middle of one without touching a rule.",
-      "rungs": 15,
+      "$comment": "The numbered ladders. Every track on the board runs the same range, from the same floor to the same ceiling, walked by a bar token - so the columns are one grid and not six scales a player has to keep straight. The ceiling is the game's ceiling too: tools/validate-data.mjs recomputes every value a track carries and fails the build if anything in data/ has grown past it.",
+      "from": 0,
+      "to": 14,
       "headMm": 15,
-      "seatMm": 9,
       "ruleEvery": 5,
-      "$seatNote": "The seat is the ring below the bottom rung where the token lives at nothing - health at 0, an empty talisman, a leg not yet begun. A card bar has nowhere to put a token at zero and does not need one; a board does, or the token ends up on the table.",
+      "$fromNote": "The bottom rung is zero, which is where a token starts and where it ends up: health at nothing, an empty talisman, a leg not yet begun. It used to be a separate seat ring under the ladder; a numbered rung says the same thing, takes no extra paper, and cannot be mistaken for decoration.",
       "$ruleNote": "Every fifth rung rules heavier, which is the tally motif doing component duty (docs/art/00-art-direction.md). It is what lets a player read 12 without counting to 12."
-    },
-
-    "frame": {
-      "$comment": "Iron-strapped edges, in grid units from the trim like the card frame. The straps are the board's own: short bars across each corner, riveted at both ends, the way the corner of a chest or a workbench is strapped.",
-      "outer": { "inset": 32, "strokeWidth": 5 },
-      "inner": { "inset": 64, "strokeWidth": 1.4 },
-      "rivets": { "inset": 48, "radius": 5 },
-      "strap": { "lengthMm": 26, "strokeWidth": 3 }
-    },
-
-    "banding": {
-      "$comment": "The band between the two frame rules, and one of the two places on the whole board a player's colour is allowed - the maker's mark is the other. The working surface stays neutral so that a player's own tokens read against it. The colour is a wash; the people's hatch is struck over it on the ink plate, because the hatch is what actually identifies a player and the colour is a convenience.",
-      "fromMm": 4,
-      "toMm": 8,
-      "washOpacity": 0.55,
-      "hatchOpacity": 0.5
     },
 
     "timber": {

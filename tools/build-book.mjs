@@ -49,7 +49,7 @@ const page = docPage({
   barLinks: [
     { href: '../index.html', label: 'Explorer' },
     { href: '../cards/index.html', label: 'Card fronts' },
-    { href: '../boards/index.html', label: 'Player boards' },
+    { href: '../boards/index.html', label: 'Player board' },
     { href: '../map/index.html', label: 'Map' },
     { href: '../mint/index.html', label: 'The mint' },
   ],

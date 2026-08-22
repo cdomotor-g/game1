@@ -92,7 +92,8 @@
   "carrying": {
     "$comment": "What a figure carries on its own back, in kilograms. Mass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
     "unit": "kg",
-    "barStepKg": 2,
+    "barStepKg": 1,
+    "$scaleNote": "One kilogram a rung. The whole mass scale was halved when the player board settled on tracks of 0 to 14 - every massKg, every carry.baseKg and every carryKg came down by the same factor, so nothing about what fits in whose hands changed, only what it is counted in. A plate harness is still very nearly all a strong figure can shoulder.",
     "carryLimit": "Printed on the character card as the BURDEN bar up the right edge. A character's limit is their people's carry.baseKg adjusted for build and calling; other figures use their people's base unmodified.",
     "marker": "Stand a token on the burden bar and move it as the character picks things up and puts them down. Total the mass of everything they carry - worn, wielded and stowed alike - and stand the token on the first mark at or above that total.",
     "limitRule": "A character may not take up an item that would push the token past the top of the bar. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
@@ -151,7 +152,18 @@
     "roundsPerBattle": 1,
     "retreatAllowed": true,
     "lootFraction": 0.25,
-    "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour. Both sides apply hits simultaneously."
+    "strength": {
+      "$comment": "Strength was already in the game, on every monster card, doing one job: a threat rating that some rules read as a threshold. This is the other half of it - what strength does when the dice come out - and it is a shift on the number you need rather than a pile of extra dice. Dice count stays where it was, one per unit, so a strong figure is not a faster figure and a battle does not get longer because somebody is strong.\n\nThe shift is a DIFFERENCE, which is the whole point: strength 6 means nothing on its own, it means something against strength 3. That also lets one number on the board serve both sides of a fight - yours on the track, theirs on the card in front of you.",
+      "rule": "Shift the number you need by the strength difference: less your own, plus your opponent's.",
+      "formula": "target = hitsOn + opponentStrength - yourStrength",
+      "worked": "Equal strength 4+. A point stronger, 3+. Two weaker, 6+.",
+      "clamp": [2, 6],
+      "clampNote": "Never better than 2+ and never worse than 6+. A fight is never decided before the dice are thrown - the dragon at strength 7 is terrifying, not arithmetic, and the halfling still lands one in six.",
+      "appliesTo": "Any figure with a strength: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the strength printed on the inn's board.",
+      "notDice": "Strength never adds dice. Weapons and armour add dice and soak hits, exactly as they did; +1 combat die is still +1 combat die.",
+      "threshold": "The older job is unchanged and still reads off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges."
+    },
+    "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour, and hit on the number the strength difference leaves them needing. Both sides apply hits simultaneously."
   },
 
   "victory": {

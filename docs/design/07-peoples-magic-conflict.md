@@ -101,6 +101,19 @@ cancels hits. Both sides apply hits at once, so attacking is never free. One rou
 battle, with retreat allowed — the intent is a sharp exchange, not a wargame inside a
 economy game.
 
+**Strength.** The 4+ is not fixed: shift it by the difference in strength — less your
+own, plus your opponent's. Equal strength hits on 4+, a point stronger hits on 3+, two
+points weaker on 6+, and it never goes better than 2+ or worse than 6+. Every monster
+has carried a strength since the deck was written and some rules already read it as a
+threshold (a thug refuses anything of strength 4 or more); this is the other half of the
+job. Characters carry one too, printed on the card and set on the player board's **S**
+track, which is the only track a player sets once and mostly leaves alone.
+
+It is a *difference*, not a score, and it never adds dice. That keeps a battle one round
+long however strong the people in it are, leaves +1 combat die meaning exactly what it
+always meant, and lets one number on the board serve both sides of the fight — because
+the other side's is already printed on the card in front of you.
+
 **Equipment.** A sword is +1 die. Steel doubles that and hits on 3+. A bow rolls before
 the enemy does but needs arrows. A war hammer ignores armour entirely. Plate harness
 absorbs three hits and costs you a move point.

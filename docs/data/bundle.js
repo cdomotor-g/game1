@@ -636,7 +636,8 @@ window.GAME_DATA = {
     "carrying": {
       "$comment": "What a figure carries on its own back, in kilograms. Mass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
       "unit": "kg",
-      "barStepKg": 2,
+      "barStepKg": 1,
+      "$scaleNote": "One kilogram a rung. The whole mass scale was halved when the player board settled on tracks of 0 to 14 - every massKg, every carry.baseKg and every carryKg came down by the same factor, so nothing about what fits in whose hands changed, only what it is counted in. A plate harness is still very nearly all a strong figure can shoulder.",
       "carryLimit": "Printed on the character card as the BURDEN bar up the right edge. A character's limit is their people's carry.baseKg adjusted for build and calling; other figures use their people's base unmodified.",
       "marker": "Stand a token on the burden bar and move it as the character picks things up and puts them down. Total the mass of everything they carry - worn, wielded and stowed alike - and stand the token on the first mark at or above that total.",
       "limitRule": "A character may not take up an item that would push the token past the top of the bar. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
@@ -719,7 +720,21 @@ window.GAME_DATA = {
       "roundsPerBattle": 1,
       "retreatAllowed": true,
       "lootFraction": 0.25,
-      "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour. Both sides apply hits simultaneously."
+      "strength": {
+        "$comment": "Strength was already in the game, on every monster card, doing one job: a threat rating that some rules read as a threshold. This is the other half of it - what strength does when the dice come out - and it is a shift on the number you need rather than a pile of extra dice. Dice count stays where it was, one per unit, so a strong figure is not a faster figure and a battle does not get longer because somebody is strong.\n\nThe shift is a DIFFERENCE, which is the whole point: strength 6 means nothing on its own, it means something against strength 3. That also lets one number on the board serve both sides of a fight - yours on the track, theirs on the card in front of you.",
+        "rule": "Shift the number you need by the strength difference: less your own, plus your opponent's.",
+        "formula": "target = hitsOn + opponentStrength - yourStrength",
+        "worked": "Equal strength 4+. A point stronger, 3+. Two weaker, 6+.",
+        "clamp": [
+          2,
+          6
+        ],
+        "clampNote": "Never better than 2+ and never worse than 6+. A fight is never decided before the dice are thrown - the dragon at strength 7 is terrifying, not arithmetic, and the halfling still lands one in six.",
+        "appliesTo": "Any figure with a strength: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the strength printed on the inn's board.",
+        "notDice": "Strength never adds dice. Weapons and armour add dice and soak hits, exactly as they did; +1 combat die is still +1 combat die.",
+        "threshold": "The older job is unchanged and still reads off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges."
+      },
+      "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour, and hit on the number the strength difference leaves them needing. Both sides apply hits simultaneously."
     },
     "victory": {
       "gameLengthRounds": 24,
@@ -6476,8 +6491,12 @@ window.GAME_DATA = {
           "forest"
         ],
         "carry": {
-          "baseKg": 22,
+          "baseKg": 11,
           "note": "The middle of every scale, this one included."
+        },
+        "strength": {
+          "base": 3,
+          "note": "The middle of every scale, this one included - a human wins no fight on build alone."
         },
         "manaStorage": {
           "innate": 0,
@@ -6523,8 +6542,12 @@ window.GAME_DATA = {
           "tundra"
         ],
         "carry": {
-          "baseKg": 26,
+          "baseKg": 13,
           "note": "Short, and built like the stone they work: a dwarf out-carries a taller people all day."
+        },
+        "strength": {
+          "base": 4,
+          "note": "Low, braced and used to swinging something heavy in a confined space."
         },
         "manaStorage": {
           "innate": 0,
@@ -6566,8 +6589,12 @@ window.GAME_DATA = {
           "grassland"
         ],
         "carry": {
-          "baseKg": 20,
+          "baseKg": 10,
           "note": "Light-framed, and disinclined to haul what a second trip would carry."
+        },
+        "strength": {
+          "base": 2,
+          "note": "An elf fights with reach and timing. Strength is the one contest they decline."
         },
         "manaStorage": {
           "innate": 3,
@@ -6610,8 +6637,12 @@ window.GAME_DATA = {
           "coast"
         ],
         "carry": {
-          "baseKg": 16,
+          "baseKg": 8,
           "note": "Small hands and a small back - and a wagon, which is rather the point."
+        },
+        "strength": {
+          "base": 2,
+          "note": "Small, and entirely uninterested in being told about it."
         },
         "manaStorage": {
           "innate": 0,
@@ -6654,8 +6685,12 @@ window.GAME_DATA = {
           "mountain"
         ],
         "carry": {
-          "baseKg": 28,
+          "baseKg": 14,
           "note": "The most any figure in the game shoulders unaided."
+        },
+        "strength": {
+          "base": 5,
+          "note": "The strongest arm any figure in the game brings to a fight."
         },
         "manaStorage": {
           "innate": 0,
@@ -8366,7 +8401,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 26,
-        "massKg": 1,
+        "massKg": 0.5,
         "effects": [
           "Ignore the first -1 weather effort penalty each round."
         ]
@@ -8389,7 +8424,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 60,
-        "massKg": 3,
+        "massKg": 1.5,
         "effects": [
           "Immune to Hard Frost.",
           "No tundra or mountain effort penalty."
@@ -8413,7 +8448,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 55,
-        "massKg": 2,
+        "massKg": 1,
         "effects": [
           "+1 move point for the figure wearing it."
         ]
@@ -8432,7 +8467,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 30,
-        "massKg": 1.5,
+        "massKg": 0.75,
         "effects": [
           "Marsh and mountain tiles cost 1 less to move through, minimum 1."
         ]
@@ -8455,7 +8490,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 180,
-        "massKg": 1.5,
+        "massKg": 0.75,
         "effects": [
           "A merchant wearing these gets a further 10% on every market sale.",
           "Worth 2 victory points at game end."
@@ -8475,7 +8510,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 50,
-        "massKg": 5,
+        "massKg": 2.5,
         "effects": [
           "Ignore the first hit in each battle."
         ],
@@ -8499,7 +8534,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 130,
-        "massKg": 12,
+        "massKg": 6,
         "effects": [
           "Ignore the first two hits in each battle."
         ],
@@ -8523,7 +8558,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 8,
         "baseValue": 320,
-        "massKg": 25,
+        "massKg": 12.5,
         "specialist": "smith",
         "effects": [
           "Ignore the first three hits in each battle.",
@@ -8545,7 +8580,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 45,
-        "massKg": 2.5,
+        "massKg": 1.25,
         "effects": [
           "Once per battle, cancel one hit."
         ],
@@ -8569,7 +8604,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 40,
-        "massKg": 4,
+        "massKg": 2,
         "effects": [
           "+1 defence die."
         ],
@@ -8593,7 +8628,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 95,
-        "massKg": 1.5,
+        "massKg": 0.75,
         "effects": [
           "+1 combat die."
         ],
@@ -8617,7 +8652,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 210,
-        "massKg": 1.5,
+        "massKg": 0.75,
         "specialist": "smith",
         "effects": [
           "+2 combat dice, and hits on 3+ instead of 4+."
@@ -8642,7 +8677,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 80,
-        "massKg": 3,
+        "massKg": 1.5,
         "effects": [
           "+1 combat die, +2 when attacking."
         ],
@@ -8666,7 +8701,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 70,
-        "massKg": 4.5,
+        "massKg": 2.25,
         "effects": [
           "+2 combat dice when defending a town.",
           "Cannot be used with a shield."
@@ -8691,7 +8726,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 65,
-        "massKg": 1,
+        "massKg": 0.5,
         "effects": [
           "Rolls its dice before the enemy rolls theirs.",
           "+1 output on Hunt Game.",
@@ -8717,7 +8752,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 30,
-        "massKg": 2,
+        "massKg": 1,
         "effects": [
           "Holds 3 uses. Each battle with a bow spends 1."
         ],
@@ -8737,7 +8772,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 1,
         "baseValue": 12,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "+1 combat die for halflings only. Everyone else may as well throw the stone."
         ],
@@ -8761,7 +8796,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 190,
-        "massKg": 6,
+        "massKg": 3,
         "effects": [
           "+2 combat dice. Ignores enemy armour entirely."
         ],
@@ -8789,7 +8824,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 175,
-        "massKg": 5,
+        "massKg": 2.5,
         "specialist": "smith",
         "effects": [
           "+3 combat dice, and ignores 1 point of enemy armour.",
@@ -8820,7 +8855,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 75,
-        "massKg": 4,
+        "massKg": 2,
         "effects": [
           "+1 combat die, and +3 instead against any water-element monster or anything bigger than a horse.",
           "A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round.",
@@ -8842,7 +8877,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 35,
-        "massKg": 0.8,
+        "massKg": 0.4,
         "effects": [
           "+1 combat die.",
           "Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls."
@@ -8867,7 +8902,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 7,
         "baseValue": 340,
-        "massKg": 4,
+        "massKg": 2,
         "specialist": "smith",
         "effects": [
           "+3 combat dice, and hits on 3+ instead of 4+.",
@@ -8894,7 +8929,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 55,
-        "massKg": 3,
+        "massKg": 1.5,
         "effects": [
           "+1 combat die, and +3 in the first round against any monster that charges - anything of strength 4 or more that attacks first.",
           "The crossbar holds it off you: ignore the first hit from that monster.",
@@ -8919,7 +8954,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 70,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "Step one worker's effort die up two sizes for one round."
         ]
@@ -8941,7 +8976,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 60,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "Re-roll every effort die of one worker and keep the better result."
         ]
@@ -8963,7 +8998,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 120,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "+1 flat effort to every worker in one town this round."
         ]
@@ -8985,7 +9020,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 85,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "Cancel one worker loss, or ignore one Plague card.",
           "Or restore 3 health to one character."
@@ -9008,7 +9043,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 140,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "Double one figure's move points, or move one cargo token its full speed again this round."
         ]
@@ -9030,7 +9065,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 150,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "One unit ignores all hits in one battle."
         ]
@@ -9052,7 +9087,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 160,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "Automatically succeed on one survey, and reveal all deposits on adjacent tiles."
         ]
@@ -9074,7 +9109,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 200,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "Shift one commodity family's price band two steps in your favour for your next sale only."
         ]
@@ -9096,7 +9131,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 90,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "One figure or party travels night legs this round as if carrying a lantern."
         ]
@@ -9118,7 +9153,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 95,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card.",
           "In a healer's hands at an infirmary it cures the whole town - see Tend the Sick."
@@ -9141,7 +9176,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 100,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "One unit or character ignores every hit from a fire-element monster in one battle."
         ]
@@ -9163,7 +9198,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 220,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "specialist": "alchemist",
         "effects": [
           "For one round the drinker holds 3 mana in the body, talisman or no talisman.",
@@ -9187,7 +9222,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 80,
-        "massKg": 1,
+        "massKg": 0.5,
         "effects": [
           "Broached at an inn, it clears 2 unrest in that town and everyone forgives everyone.",
           "Anywhere else it clears 1 unrest and starts an argument."
@@ -9214,7 +9249,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 75,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "One travelling party eats nothing for two rounds, and nobody complains until the third."
         ]
@@ -9240,7 +9275,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 6,
         "baseValue": 380,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "specialist": "alchemist",
         "effects": [
           "For one battle, the drinker's party ignores the free first round any monster of strength 5 or more gets, and halves its hits, rounded up.",
@@ -9268,7 +9303,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 110,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "effects": [
           "Re-roll one airship wind roll and keep the better result - see travel.json.",
           "The crew are steady at any height for the rest of the journey, which matters more than the roll does."
@@ -9291,7 +9326,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 1,
         "baseValue": 10,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "uses": 2,
         "effects": [
           "Travel one night leg at torch speed - see travel.json.",
@@ -9316,7 +9351,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 55,
-        "massKg": 1.5,
+        "massKg": 0.75,
         "effects": [
           "Travel night legs at lantern speed - see travel.json.",
           "Explore caves without spending uses.",
@@ -9342,7 +9377,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 2,
         "baseValue": 30,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "story": "Knucklebones and a thong of hide, carved by someone's grandmother against the dark. It works, which is more than can be said for most of what grandmothers carve.",
         "effects": [
           "Stores up to 2 mana. Track with a token on the mana bar."
@@ -9363,7 +9398,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 45,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "story": "A cord tied in a knot with no beginning. Weavers make them in the winter and do not discuss the pattern.",
         "effects": [
           "Stores up to 3 mana."
@@ -9384,7 +9419,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 3,
         "baseValue": 60,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "story": "Copper takes a charge the way dry grass takes a spark. Miners wear them green with age and swear the green is where the mana sits.",
         "effects": [
           "Stores up to 4 mana."
@@ -9406,7 +9441,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 4,
         "baseValue": 120,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "story": "Gold never tarnishes and never forgets. A locket holds a portrait on one side and six charges of something else on the other.",
         "effects": [
           "Stores up to 6 mana."
@@ -9432,7 +9467,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 5,
         "baseValue": 190,
-        "massKg": 0.5,
+        "massKg": 0.25,
         "story": "A cut stone in a copper claw. Hold it to the light and something at the centre of it holds still, watching you back.",
         "effects": [
           "Stores up to 8 mana."
@@ -9462,7 +9497,7 @@ window.GAME_DATA = {
         ],
         "effortHours": 6,
         "baseValue": 320,
-        "massKg": 1,
+        "massKg": 0.5,
         "story": "A mana crystal sealed in blown glass and bound in gold wire. The pinnacle of the jeweller's and the alchemist's arts together, and the reason both of them lock their doors.",
         "effects": [
           "Stores up to 10 mana.",
@@ -10800,7 +10835,7 @@ window.GAME_DATA = {
         "name": "Vhalrik, the Cinder-Crowned",
         "element": "fire",
         "strength": 7,
-        "health": 16,
+        "health": 14,
         "manaYield": 6,
         "unique": true,
         "terrains": [
@@ -11042,8 +11077,9 @@ window.GAME_DATA = {
         "name": "Corin Vale",
         "people": "human",
         "calling": "Wayfarer",
+        "strength": 3,
         "health": 10,
-        "carryKg": 24,
+        "carryKg": 12,
         "manaCapacity": 0,
         "traits": [
           "Wayfinder: +1 hex on any day leg that starts on a road.",
@@ -11060,8 +11096,9 @@ window.GAME_DATA = {
         "name": "Berga Understone",
         "people": "dwarf",
         "calling": "Prospector",
+        "strength": 4,
         "health": 12,
-        "carryKg": 26,
+        "carryKg": 13,
         "manaCapacity": 0,
         "traits": [
           "Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party.",
@@ -11078,8 +11115,9 @@ window.GAME_DATA = {
         "name": "Sylvae of the Duskmere",
         "people": "elf",
         "calling": "Herbalist",
+        "strength": 2,
         "health": 8,
-        "carryKg": 20,
+        "carryKg": 10,
         "manaCapacity": 3,
         "manaNote": "Innate - no talisman needed for the first 3.",
         "traits": [
@@ -11095,8 +11133,9 @@ window.GAME_DATA = {
         "name": "Tilly Goodbarrel",
         "people": "halfling",
         "calling": "Provisioner",
+        "strength": 2,
         "health": 8,
-        "carryKg": 18,
+        "carryKg": 9,
         "manaCapacity": 0,
         "traits": [
           "Iron Stomach: Tilly and her party ignore illness event cards.",
@@ -11111,8 +11150,9 @@ window.GAME_DATA = {
         "name": "Ruk of the Red Road",
         "people": "orc",
         "calling": "Caravan Guard",
+        "strength": 6,
         "health": 13,
-        "carryKg": 28,
+        "carryKg": 14,
         "manaCapacity": 0,
         "traits": [
           "Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave.",
@@ -11129,8 +11169,9 @@ window.GAME_DATA = {
         "name": "Doctor Elspeth Marrow",
         "people": "human",
         "calling": "Physician",
+        "strength": 2,
         "health": 9,
-        "carryKg": 20,
+        "carryKg": 10,
         "manaCapacity": 0,
         "traits": [
           "Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed.",
@@ -11147,8 +11188,9 @@ window.GAME_DATA = {
         "name": "Havik Coalbrand",
         "people": "dwarf",
         "calling": "Engineer",
+        "strength": 4,
         "health": 10,
-        "carryKg": 26,
+        "carryKg": 13,
         "manaCapacity": 0,
         "traits": [
           "Linesman: a train Havik rides spends 1 less coal per leg.",
@@ -11163,8 +11205,9 @@ window.GAME_DATA = {
         "name": "Old Mother Keswick",
         "people": "human",
         "calling": "Hedge-Witch",
+        "strength": 2,
         "health": 7,
-        "carryKg": 16,
+        "carryKg": 8,
         "manaCapacity": 0,
         "manaNote": "Human - every drop she holds lives in a talisman, and she holds plenty.",
         "traits": [
@@ -11744,7 +11787,7 @@ window.GAME_DATA = {
       }
     },
     "board": {
-      "$comment": "The player board: one A4 sheet a player keeps in front of them, holding cards in recesses and tracks routed up the middle. Only the shapes are here - what the tracks COUNT and what the slots TAKE is content and lives in data/playerboard.json, the same division as everywhere else in this file.\n\nAlmost nothing below is a position. The board's geometry is DERIVED from four numbers - the sheet, the margins, the gutter, and the size of a card recess - so a track column is exactly the width left over once the cards have had theirs, and adding a sixth track narrows the columns rather than running off the paper. tools/build-board.mjs does that arithmetic; see also tools/build-map.mjs, which derives its print sizes the same way and for the same reason.",
+      "$comment": "The player board: one A4 sheet a player keeps in front of them, holding cards in recesses and tracks routed up the middle. Only the shapes are here - what the tracks COUNT and what the slots TAKE is content and lives in data/playerboard.json, the same division as everywhere else in this file.\n\nAlmost nothing below is a position. The board's geometry is DERIVED from four numbers - the sheet, the margin, the gutter, and the size of a card recess - so a track column is exactly the width left over once the cards have had theirs, and adding a track narrows the columns rather than running off the paper. tools/build-board.mjs does that arithmetic; see also tools/build-map.mjs, which derives its print sizes the same way and for the same reason.\n\nThere is no frame block, and that is deliberate. A card has a frame because a card is held, fanned and cut out; a board is not, and the border it used to carry was 18 mm of paper doing nothing but making the middle narrower. Taking it off is what paid for the sixth track.",
       "sheet": {
         "widthMm": 297,
         "heightMm": 210,
@@ -11752,14 +11795,9 @@ window.GAME_DATA = {
         "cornerRadiusMm": 6,
         "$note": "A4 landscape. The corner is bigger than a card's because the sheet is bigger; a board cut square looks like a print-out, which is exactly what it would be."
       },
-      "margins": {
-        "topMm": 12,
-        "bottomMm": 12,
-        "outerMm": 12,
-        "spineMm": 18
-      },
+      "marginMm": 8,
       "gutterMm": 6,
-      "$marginNote": "The spine margin is the wide one: the board's title sets in it, running up the left edge the way a title runs up the spine of a book. Everything else clears the frame by the same 12 mm.",
+      "$marginNote": "One margin, all four sides - with no border to clear, nothing needs a wider side than any other. 8 mm is the least a home printer can be trusted to put ink inside.",
       "slot": {
         "$comment": "A recess a card drops into, cut round the card's own trim plus a clearance either side. The corner follows: a rounded card in a square hole is a card that has to be aimed.",
         "clearanceMm": 1,
@@ -11770,39 +11808,13 @@ window.GAME_DATA = {
         "$bracketNote": "Corner brackets rather than a fourth rule - the eye reads a bracket as a place to put something and a rule as a picture frame."
       },
       "track": {
-        "$comment": "The numbered ladders. Fifteen rungs, numbered from the bottom and walked by a bar token, exactly like a card's edge bar - the board is not allowed a second convention. The rung height falls out of the sheet, and at A4 it lands within a hair of the column width, so the cells come out square and a 7 mm token sits in the middle of one without touching a rule.",
-        "rungs": 15,
+        "$comment": "The numbered ladders. Every track on the board runs the same range, from the same floor to the same ceiling, walked by a bar token - so the columns are one grid and not six scales a player has to keep straight. The ceiling is the game's ceiling too: tools/validate-data.mjs recomputes every value a track carries and fails the build if anything in data/ has grown past it.",
+        "from": 0,
+        "to": 14,
         "headMm": 15,
-        "seatMm": 9,
         "ruleEvery": 5,
-        "$seatNote": "The seat is the ring below the bottom rung where the token lives at nothing - health at 0, an empty talisman, a leg not yet begun. A card bar has nowhere to put a token at zero and does not need one; a board does, or the token ends up on the table.",
+        "$fromNote": "The bottom rung is zero, which is where a token starts and where it ends up: health at nothing, an empty talisman, a leg not yet begun. It used to be a separate seat ring under the ladder; a numbered rung says the same thing, takes no extra paper, and cannot be mistaken for decoration.",
         "$ruleNote": "Every fifth rung rules heavier, which is the tally motif doing component duty (docs/art/00-art-direction.md). It is what lets a player read 12 without counting to 12."
-      },
-      "frame": {
-        "$comment": "Iron-strapped edges, in grid units from the trim like the card frame. The straps are the board's own: short bars across each corner, riveted at both ends, the way the corner of a chest or a workbench is strapped.",
-        "outer": {
-          "inset": 32,
-          "strokeWidth": 5
-        },
-        "inner": {
-          "inset": 64,
-          "strokeWidth": 1.4
-        },
-        "rivets": {
-          "inset": 48,
-          "radius": 5
-        },
-        "strap": {
-          "lengthMm": 26,
-          "strokeWidth": 3
-        }
-      },
-      "banding": {
-        "$comment": "The band between the two frame rules, and one of the two places on the whole board a player's colour is allowed - the maker's mark is the other. The working surface stays neutral so that a player's own tokens read against it. The colour is a wash; the people's hatch is struck over it on the ink plate, because the hatch is what actually identifies a player and the colour is a convenience.",
-        "fromMm": 4,
-        "toMm": 8,
-        "washOpacity": 0.55,
-        "hatchOpacity": 0.5
       },
       "timber": {
         "$comment": "Sawn boards running the length of the sheet: a seam every board width, grain between them, and a few knots. All of it ink-plate tint at hairline weight, so it survives the black-and-white edition and never competes with a number.",
@@ -12232,30 +12244,25 @@ window.GAME_DATA = {
     ]
   },
   "playerboard": {
-    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds their character card, four cards of whatever kit they have in play, and the five numbered tracks a hero and their gear walk a token along.\n\nWhy the board carries tracks at all, when the cards already have bars: a card in a recess is a card whose edges you cannot reach. The bar convention (docs/design/08-components.md) hangs harm off a card's left edge and capacity off its right, which works beautifully for a card held in the hand and not at all for one lying in a slot with four others. So the board takes the bars over. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. tools/build-board.mjs reads both and draws one board per playable people. Nothing in here is a number the build tool also knows.",
-    "version": "0.1.0",
+    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds their character card, four cards of whatever kit they have in play, and the six numbered tracks a hero and their gear walk a token along.\n\nOne board, not one per people. Everything that differs between an orc and a halfling is printed on the cards that lie in the recesses - their strength, their health, what they can shoulder - so the board underneath them has no business knowing which of them is sitting there. A board that did would be five boards to print, five to keep in step, and four of them wrong for whoever picked it up.\n\nWhy the board carries tracks at all, when the cards already have bars: a card in a recess is a card whose edges you cannot reach. The bar convention (docs/design/08-components.md) hangs harm off a card's left edge and capacity off its right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board takes the bars over. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
+    "version": "0.3.0",
     "board": {
       "id": "player-board",
       "name": "Player Board",
       "sheet": "A4 landscape",
-      "summary": "One per player. The character card top left, the five tracks up the middle, four cards of kit on the right, and the round's phases under the character.",
-      "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, iron-strapped edges, the tracks routed into the surface. The working surface stays neutral - the player's colour appears in the border banding and the maker's mark and nowhere else - so that a player's own tokens read against it."
-    },
-    "editions": {
-      "$comment": "One board per playable people, because the only thing that differs between them is the player colour in the banding and the maker's mark. Adding a sixth people to peoples.json prints a sixth board and nothing else has to be touched.",
-      "onePer": "peoples",
-      "colourFrom": "palette.peoples[].wash",
-      "hatchFrom": "palette.peoples[].hatch"
+      "summary": "One per player, and every one identical. The character card top left, six tracks up the middle, four cards of kit on the right, and the round's phases under the character.",
+      "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, which is what let a sixth track on without anything getting narrower.",
+      "generic": "The board says nothing about who is playing it. Race, calling, health, strength and burden limits are all printed on the character card, which is the thing that changes between players; the board is the furniture that card sits in."
     },
     "$trackKeys": {
-      "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, the way every bar in the game is numbered.",
+      "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, the way every bar in the game is numbered. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the six columns are one grid rather than six scales a player has to keep straight.",
       "letter": "the single letter printed at the head of the column - what a player calls the track across the table",
-      "label": "the full name, printed under the letter",
-      "unit": "printed as a second, smaller line where the track counts something - a bar that counts kilograms has to say so",
+      "label": "the full name, printed beside the letter",
+      "unit": "printed under the letter where the track counts something - a bar that counts kilograms has to say so",
       "step": "how much one rung is worth; `stepFrom` instead means 'read it from that dotted path in the data, do not restate it'",
-      "kind": "harm | capacity | leg - decides the ink and the ink-plate mark, exactly as it does on a card edge",
-      "covers": "the largest value the printed game can reach, so rungs x step can be checked against it. `path` is where that number comes from, and tools/validate-data.mjs recomputes it: a character with 16 health fails the check rather than running off the top of the track",
-      "mark": "the ink-plate mark at the head, from palette.json semantic - because one player in twelve cannot use the colour"
+      "kind": "harm | capacity | leg | rating - decides the ink and the ink-plate mark, exactly as it does on a card edge",
+      "covers": "the largest value the printed game can reach, so the ceiling can be checked against it. `path` is where that number comes from, and tools/validate-data.mjs recomputes it: a character with 15 health fails the check rather than running off the top of the track",
+      "mark": "the ink-plate mark on every rung, from palette.json semantic - because one player in twelve cannot use the colour"
     },
     "tracks": [
       {
@@ -12270,13 +12277,38 @@ window.GAME_DATA = {
         "step": 1,
         "covers": {
           "value": 13,
-          "dataset": "characters",
-          "path": "characters[].health",
+          "paths": [
+            "characters.characters[].health"
+          ],
           "note": "Ruk of the Red Road, the toughest character printed."
         },
         "walks": "Down as the hero takes hits, up as they rest - 2 a round at an inn, 3 where there is a healer.",
-        "atZero": "The hero is carried to the nearest settlement and rests until healed to half. Everything on the burden track is lost on the way: knock that token back to its seat too.",
+        "atZero": "The hero is carried to the nearest settlement and rests until healed to half. Everything on the burden track is lost on the way: knock that token down to zero too.",
         "rule": "rules.json rest, characters.json health"
+      },
+      {
+        "id": "strength",
+        "name": "Strength",
+        "letter": "S",
+        "label": "STRENGTH",
+        "unit": null,
+        "kind": "rating",
+        "ink": "ochre",
+        "mark": "pip",
+        "step": 1,
+        "covers": {
+          "value": 7,
+          "paths": [
+            "monsters.monsters[].strength",
+            "characters.characters[].strength"
+          ],
+          "note": "The Deepwater Maw. No character reaches it - Ruk, the strongest, is 6."
+        },
+        "walks": "Rarely. It is the one track that mostly sits still: set it from the character card at setup and move it only when something lends or takes strength.",
+        "atZero": "Nothing left to swing with. A figure at 0 strength does not fight.",
+        "reads": "Both ways at once. Your token is on the board, your opponent's number is printed on the card in front of you, and the fight is the difference between them: subtract yours, add theirs, and that is the number you need on a d6. Equal strength still hits on 4+, the way it always did.",
+        "note": "Strength was already on every monster card as a threat rating, and rules read it as a threshold - a thug refuses a monster of strength 4 or more. It now does the other half of the job as well, without ever adding a die: dice are what weapons and armour give you.",
+        "rule": "rules.json conflict.strength, monsters.json strength, characters.json strength, peoples.json strength.base"
       },
       {
         "id": "burden",
@@ -12289,21 +12321,22 @@ window.GAME_DATA = {
         "mark": "notch-flat",
         "stepFrom": "rules.carrying.barStepKg",
         "covers": {
-          "value": 28,
-          "dataset": "characters",
-          "path": "characters[].carryKg",
-          "note": "Ruk again - nobody in the deck carries more."
+          "value": 14,
+          "paths": [
+            "characters.characters[].carryKg"
+          ],
+          "note": "Ruk again - nobody in the deck carries more, and nobody can, because 14 is the top of the board."
         },
         "walks": "Total the mass of everything the hero is wearing, wielding and carrying, and stand the token on the first mark at or above that total.",
         "atZero": "Empty-handed.",
-        "limit": "A hero may not take up an item that would push the token past their own limit, which is printed on their character card - not past the top of this track. The track is longer than any one hero, on purpose: it is the same board whoever is sitting behind it.",
+        "limit": "A hero may not take up an item that would push the token past their own limit, which is printed on their character card - not past the top of this track. The track is the same length for everyone, on purpose: it is the same board whoever is sitting behind it.",
         "rule": "rules.json carrying, characters.json carryKg"
       },
       {
-        "id": "speed",
-        "name": "Speed",
-        "letter": "S",
-        "label": "SPEED",
+        "id": "pace",
+        "name": "Pace",
+        "letter": "P",
+        "label": "PACE",
         "unit": "hexes",
         "kind": "leg",
         "ink": "verdigris",
@@ -12315,7 +12348,7 @@ window.GAME_DATA = {
         },
         "walks": "Set it at the start of a leg to the speed in travel.json for the mode and the ground, then walk it down a rung per hex entered. Halve it for a night leg under a lantern; a torch buys one hex, two on a road.",
         "atZero": "The leg is over. Roll for discovery where you stopped.",
-        "note": "The one track that is not a bar off a card. A party counts hexes every single round of the game and has had nowhere to count them, which is what a board is for. It rules in verdigris - the ground you cross - so it cannot be mistaken for harm or for capacity at a glance.",
+        "note": "The one track that is not a bar off a card. A party counts hexes every single round of the game and has had nowhere to count them, which is what a board is for. It rules in verdigris - the ground you cross - so it cannot be mistaken for harm or for capacity at a glance. It is called pace rather than speed because strength has the S.",
         "rule": "travel.json speeds, rules.json movement.legs"
       },
       {
@@ -12330,8 +12363,9 @@ window.GAME_DATA = {
         "step": 1,
         "covers": {
           "value": 12,
-          "dataset": "vehicles",
-          "path": "vehicles[].damageBoxes",
+          "paths": [
+            "vehicles.vehicles[].damageBoxes"
+          ],
           "note": "The sturdiest hull in the vehicle deck."
         },
         "walks": "The vehicle the player is running - the train, the ship, the wagon, the horse. Up as it is damaged, down as it is repaired: one box a round in any settlement of town rank or better, at 5 coin a box.",
@@ -12351,8 +12385,10 @@ window.GAME_DATA = {
         "step": 1,
         "covers": {
           "value": 10,
-          "dataset": "items",
-          "path": "items[].manaCapacity",
+          "paths": [
+            "items.items[].manaCapacity",
+            "peoples.peoples[].manaStorage.innate"
+          ],
           "note": "The crystal phylactery, the deepest vessel in the game."
         },
         "walks": "Everything the hero can hold at once: what their body holds innately, plus every talisman in a slot. Slaying a monster fills it; casting spends it.",
@@ -12361,6 +12397,23 @@ window.GAME_DATA = {
         "rule": "arcana.json, items.json manaCapacity, peoples.json manaStorage"
       }
     ],
+    "ceiling": {
+      "$comment": "The board's ceiling is the game's ceiling. Every number a token walks in this game has to fit between components.json board.track.from and .to, and these are all of them - tools/validate-data.mjs sweeps the lot and fails the build on anything that has grown past it. That is the whole reason the mass scale was halved: a hero carrying 28 kg could not stand on a track that stops at 14, so the kilogram got smaller rather than the board getting longer.\n\nWhat is deliberately NOT here: a vehicle's cargoCapacity, which runs to 100. Cargo is bulk in a hold, measured on the vehicle card's own bar at whatever step keeps it walkable (components.json bars.steps), and no player ever stands a token on the board for it. A number only belongs on this list if the board has a column for it.",
+      "paths": [
+        "characters.characters[].health",
+        "characters.characters[].strength",
+        "characters.characters[].carryKg",
+        "characters.characters[].manaCapacity",
+        "monsters.monsters[].health",
+        "monsters.monsters[].strength",
+        "vehicles.vehicles[].damageBoxes",
+        "items.items[].manaCapacity",
+        "items.items[].massKg",
+        "peoples.peoples[].carry.baseKg",
+        "peoples.peoples[].strength.base",
+        "peoples.peoples[].manaStorage.innate"
+      ]
+    },
     "slots": [
       {
         "id": "character",
@@ -12370,7 +12423,7 @@ window.GAME_DATA = {
         "takes": [
           "characters"
         ],
-        "note": "The hero, dealt or picked at setup. Their card gives them a face, a health limit and a burden limit; the board gives them somewhere to keep it and the tracks to walk."
+        "note": "The hero, dealt or picked at setup. Their card is where everything particular about them lives - people, calling, health, strength, what they can shoulder - which is exactly why the board underneath is the same for everybody."
       },
       {
         "id": "kit",
@@ -12387,19 +12440,16 @@ window.GAME_DATA = {
       }
     ],
     "panel": {
-      "$comment": "The turn reference the bill of materials has always asked a player board for. It prints the round's phases in order, straight out of rules.json - so the board cannot fall out of step with the rules the way a hand-lettered one would.",
+      "$comment": "The turn reference the bill of materials has always asked a player board for. It prints the round's phases in order, straight out of rules.json - so the board cannot fall out of step with the rules the way a hand-lettered one would. Under it, the one line of combat arithmetic a player needs while a monster card is face up in front of them.",
       "id": "the-round",
       "title": "THE ROUND",
       "source": "rules.round.phases",
-      "foot": "Turn order passes to the left."
-    },
-    "makersMark": {
-      "$comment": "The one place other than the banding where a player's colour appears. A roundel struck with the people's hatch - which is the real identifier, the colour only being a convenience - and their name under it.",
-      "shows": [
-        "the people's hatch",
-        "the people's name"
-      ],
-      "note": "Hatch first, colour second: eleven distinguishable colours do not exist and five is not many more, so the mark has to survive both a photocopier and a player who cannot see the difference."
+      "foot": "Turn order passes to the left.",
+      "aside": {
+        "title": "IN A FIGHT",
+        "source": "rules.conflict.strength",
+        "note": "Printed from the rule rather than restated, so the board and the rulebook cannot drift."
+      }
     }
   },
   "maps": [

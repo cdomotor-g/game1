@@ -10,7 +10,8 @@
         { "name": "Builders", "effect": "All housing costs 1 less of its bulkiest material." }
       ],
       "foodPreference": [], "terrainComfort": ["grassland", "coast", "forest"],
-      "carry": { "baseKg": 22, "note": "The middle of every scale, this one included." },
+      "carry": { "baseKg": 11, "note": "The middle of every scale, this one included." },
+      "strength": { "base": 3, "note": "The middle of every scale, this one included - a human wins no fight on build alone." },
       "manaStorage": { "innate": 0, "note": "A human body holds no mana. Every drop lives in a talisman." }
     },
     {
@@ -24,7 +25,8 @@
         { "name": "Sun-shy", "effect": "-1 effort for any dwarf allocated to a farm, orchard or vineyard." }
       ],
       "foodPreference": ["mead", "meat", "mushrooms"], "terrainComfort": ["mountain", "hills", "tundra"],
-      "carry": { "baseKg": 26, "note": "Short, and built like the stone they work: a dwarf out-carries a taller people all day." },
+      "carry": { "baseKg": 13, "note": "Short, and built like the stone they work: a dwarf out-carries a taller people all day." },
+      "strength": { "base": 4, "note": "Low, braced and used to swinging something heavy in a confined space." },
       "manaStorage": { "innate": 0, "note": "Dwarves distrust mana in the flesh and keep it in worked metal, where it belongs." }
     },
     {
@@ -37,7 +39,8 @@
         { "name": "Will Not Delve", "effect": "Elves cannot be allocated to a mana vein, and roll d4 in any other mine." }
       ],
       "foodPreference": ["berries", "wine", "vegetables"], "terrainComfort": ["forest", "hills", "grassland"],
-      "carry": { "baseKg": 20, "note": "Light-framed, and disinclined to haul what a second trip would carry." },
+      "carry": { "baseKg": 10, "note": "Light-framed, and disinclined to haul what a second trip would carry." },
+      "strength": { "base": 2, "note": "An elf fights with reach and timing. Strength is the one contest they decline." },
       "manaStorage": { "innate": 3, "note": "An elf may hold up to 3 mana in the body; anything beyond that needs a talisman like everyone else." }
     },
     {
@@ -50,7 +53,8 @@
         { "name": "Small", "effect": "-1 combat die per halfling unit." }
       ],
       "foodPreference": ["bread", "cheese", "ale", "apples"], "terrainComfort": ["grassland", "forest", "coast"],
-      "carry": { "baseKg": 16, "note": "Small hands and a small back - and a wagon, which is rather the point." },
+      "carry": { "baseKg": 8, "note": "Small hands and a small back - and a wagon, which is rather the point." },
+      "strength": { "base": 2, "note": "Small, and entirely uninterested in being told about it." },
       "manaStorage": { "innate": 0, "note": "Halflings hold no mana and are privately relieved about it." }
     },
     {
@@ -63,7 +67,8 @@
         { "name": "Crude Craft", "effect": "Cannot build tier-3 or tier-4 buildings without capturing one first." }
       ],
       "foodPreference": ["meat", "salted-meat", "ale"], "terrainComfort": ["hills", "marsh", "tundra", "mountain"],
-      "carry": { "baseKg": 28, "note": "The most any figure in the game shoulders unaided." },
+      "carry": { "baseKg": 14, "note": "The most any figure in the game shoulders unaided." },
+      "strength": { "base": 5, "note": "The strongest arm any figure in the game brings to a fight." },
       "manaStorage": { "innate": 0, "note": "An orc who wants mana takes a talisman from someone who had one." }
     }
   ],

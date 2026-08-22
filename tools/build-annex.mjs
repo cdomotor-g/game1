@@ -177,9 +177,10 @@ table(
 say('## Peoples');
 say();
 table(
-  ['People', 'Die', 'Workers', 'Terrain comfort', 'Carries', 'Mana'],
+  ['People', 'Die', 'Workers', 'Terrain comfort', 'Strength', 'Carries', 'Mana'],
   peoples.peoples.map((p) => [
     p.name, p.effortDie, p.startingWorkers, list(p.terrainComfort),
+    p.strength?.base,
     `${p.carry?.baseKg} kg`,
     p.manaStorage?.innate ? `${p.manaStorage.innate} innate` : 'talisman only',
   ])
@@ -205,6 +206,9 @@ say();
 say(`Mass is what the thing weighs. It counts against the carrier's **burden** —`);
 say(`the ${rules.carrying.unit} bar up the right edge of every character card — and it is not`);
 say('bulk: bulk is a commodity\'s storage and shipping cost, and no item has one.');
+say();
+say(`One rung of that bar is ${rules.carrying.barStepKg} ${rules.carrying.unit}, and it runs to what the player board holds:`);
+say(`no figure in the game shoulders more than ${Math.max(...peoples.peoples.map((p) => p.carry?.baseKg ?? 0), ...characters.characters.map((c) => c.carryKg))} ${rules.carrying.unit} unaided.`);
 say();
 for (const cls of items.classes) {
   const rows = items.items.filter((i) => i.class === cls.id);
@@ -267,9 +271,9 @@ table(
 say('## Character deck');
 say();
 table(
-  ['Code', 'Character', 'People', 'Calling', 'Health', 'Burden', 'Mana', 'Traits'],
+  ['Code', 'Character', 'People', 'Calling', 'Str', 'Health', 'Burden', 'Mana', 'Traits'],
   characters.characters.map((c) => [
-    c.cardCode, c.name, c.people, c.calling, c.health, `${c.carryKg} kg`,
+    c.cardCode, c.name, c.people, c.calling, c.strength, c.health, `${c.carryKg} kg`,
     c.manaCapacity ? `${c.manaCapacity} innate` : 'talisman',
     (c.traits || []).join(' '),
   ])

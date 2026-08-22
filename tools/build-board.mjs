@@ -1,39 +1,37 @@
 #!/usr/bin/env node
 /**
- * Draws the player board — one A4 landscape sheet per playable people — from
- * data/playerboard.json and data/components.json.
+ * Draws the player board — one A4 landscape sheet — from data/playerboard.json
+ * and data/components.json.
  *
  * The same bargain as tools/build-cards.mjs: the data says what the board is
  * for, components.json says what shape it is drawn into, and nothing here
  * invents a number that belongs to either. What this file owns is the
  * arrangement — character card top left, the round under it, the tracks up the
  * middle, four cards of kit on the right — and even that is arithmetic rather
- * than a set of coordinates. Give the board a sixth track and the columns get
- * narrower; give it a bigger card and the columns get narrower still. Nothing
- * moves off the paper, because nothing was ever placed by hand.
+ * than a set of coordinates:
  *
  *   contentW - (character slot) - (two kit slots) - three gutters = the tracks
- *   contentH - (head) - (seat)                                    = the rungs
+ *   contentH - (the heads)                                       = the rungs
  *
- * At A4 those two divisions land within a tenth of a millimetre of each other,
- * so the cells come out square and a 7 mm bar token sits in the middle of one
- * without touching a rule. That is a happy accident of the sheet size, not a
- * number anybody typed.
+ * Give the board a seventh track and the columns get narrower; give it a bigger
+ * card and they get narrower still. Nothing moves off the paper, because nothing
+ * was ever placed by hand. The sixth track was paid for by taking the border
+ * off: 18 mm of paper that had been making the middle narrower.
  *
- * Two plates, as everywhere (docs/art/01-two-plate-system.md): #wash carries the
- * player's colour in the banding and a tint down each track, #ink carries every
- * rule, number, letter and hatch in soot alone, #grime carries the wear. Drop
- * #wash and #slip and you have the black-and-white edition — the tracks survive
- * as numbered ladders, because the numbering was never the colour's job.
+ * ONE BOARD, not one per people. Everything that differs between an orc and a
+ * halfling — strength, health, what they can shoulder — is printed on the
+ * character card lying in the recess, so the board underneath has no business
+ * knowing which of them is sitting there.
  *
- * The only thing that differs between the five boards is the player colour in
- * the banding and the maker's mark. That is the rule from
- * docs/art/06-components.md: the working surface stays neutral so a player's
- * own tokens read against it.
+ * Two plates, as everywhere (docs/art/01-two-plate-system.md): #wash carries a
+ * tint down each track, #ink carries every rule, number and letter in soot
+ * alone, #grime carries the wear. Drop #wash and #slip and you have the
+ * black-and-white edition — the tracks survive as numbered ladders, because the
+ * numbering was never the colour's job.
  *
  * Usage: node tools/build-board.mjs [--check]
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -55,9 +53,8 @@ const datasets = {
   characters: read('characters.json'),
   vehicles: read('vehicles.json'),
   items: read('items.json'),
-  peoples: read('peoples.json'),
+  monsters: read('monsters.json'),
 };
-const peoples = datasets.peoples.peoples;
 
 /* Every colour below is declared in palette.json — validate-art.mjs checks. */
 const SOOT = palette.ink.soot.hex;
@@ -92,6 +89,18 @@ function dotted(path) {
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const num = (n) => Number(n.toFixed(2));
 
+/** Greedy wrap by estimated glyph width — close enough for a serif at this size. */
+function wrap(text, maxChars) {
+  const out = [];
+  let line = '';
+  for (const w of String(text).split(/\s+/)) {
+    if (line && (line + ' ' + w).length > maxChars) { out.push(line); line = w; }
+    else line = line ? line + ' ' + w : w;
+  }
+  if (line) out.push(line);
+  return out;
+}
+
 /* ------------------------------------------------------------- the geometry */
 
 const B = components.board;
@@ -105,12 +114,12 @@ const TRIM = { x: BLEED, y: BLEED, w: mm(B.sheet.widthMm), h: mm(B.sheet.heightM
 const CORNER = mm(B.sheet.cornerRadiusMm);
 const GUT = mm(B.gutterMm);
 
-/** The working area, inside the margins. The spine margin is the wide one. */
+/** The working area. One margin all round — there is no border to clear. */
 const CONTENT = {
-  x: TRIM.x + mm(B.margins.spineMm),
-  y: TRIM.y + mm(B.margins.topMm),
-  w: TRIM.w - mm(B.margins.spineMm + B.margins.outerMm),
-  h: TRIM.h - mm(B.margins.topMm + B.margins.bottomMm),
+  x: TRIM.x + mm(B.marginMm),
+  y: TRIM.y + mm(B.marginMm),
+  w: TRIM.w - 2 * mm(B.marginMm),
+  h: TRIM.h - 2 * mm(B.marginMm),
 };
 
 /* A recess is the card's trim plus a clearance either side — a card has to drop
@@ -123,6 +132,7 @@ const SLOT = {
 };
 
 const KIT_COLS = 2;
+const KIT_ROWS = 2;
 const KIT_W = KIT_COLS * SLOT.w + (KIT_COLS - 1) * GUT;
 
 /* Everything the cards do not want is the tracks'. */
@@ -135,25 +145,19 @@ const TRACK_BLOCK = {
 };
 const CELL_W = TRACK_BLOCK.w / TRACKS.length;
 const HEAD = mm(B.track.headMm);
-const SEAT = mm(B.track.seatMm);
-const RUNGS = B.track.rungs;
-const CELL_H = (TRACK_BLOCK.h - HEAD - SEAT) / RUNGS;
+const RUNGS = B.track.to - B.track.from + 1;
+const CELL_H = (TRACK_BLOCK.h - HEAD) / RUNGS;
 
 const KIT_X = CONTENT.x + CONTENT.w - KIT_W;
+/* Two card recesses come up short of the sheet by more than a gutter, so the kit
+   rows are spread rather than stacked: the top row lines up with the character
+   card and the bottom row with the foot of the round panel. Three columns of
+   things, one top line and one bottom line - which is what stops the right-hand
+   half reading as a block that has slipped. */
+const KIT_ROW_GAP = (CONTENT.h - 2 * SLOT.h) / (KIT_ROWS - 1);
 const PANEL = { x: CONTENT.x, y: CONTENT.y + SLOT.h + GUT, w: SLOT.w, h: CONTENT.h - SLOT.h - GUT };
 
 /* ---------------------------------------------------------------- utilities */
-
-/** A rounded rectangle as a path, so it can be filled with a hole in it. */
-function roundedPath(x, y, w, h, r) {
-  const rr = Math.min(r, w / 2, h / 2);
-  return (
-    `M ${num(x + rr)},${num(y)} H ${num(x + w - rr)} A ${num(rr)},${num(rr)} 0 0 1 ${num(x + w)},${num(y + rr)} ` +
-    `V ${num(y + h - rr)} A ${num(rr)},${num(rr)} 0 0 1 ${num(x + w - rr)},${num(y + h)} ` +
-    `H ${num(x + rr)} A ${num(rr)},${num(rr)} 0 0 1 ${num(x)},${num(y + h - rr)} ` +
-    `V ${num(y + rr)} A ${num(rr)},${num(rr)} 0 0 1 ${num(x + rr)},${num(y)} Z`
-  );
-}
 
 /** A rectangle inset from the trim, its corner following the sheet's as it goes in. */
 function inset(by) {
@@ -167,36 +171,6 @@ function rng(seedText) {
   let s = 2166136261;
   for (const ch of seedText) { s ^= ch.charCodeAt(0); s = Math.imul(s, 16777619); }
   return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; };
-}
-
-/* ------------------------------------------------------------------ hatches */
-
-/**
- * A people's hatch as an SVG pattern, from palette.json — the Petra Sancta
- * system the whole game identifies things with. It is ink-plate line at print
- * weight, because the hatch is the real identifier and the colour under it is a
- * convenience for whoever can see it.
- */
-function hatchDef(id, name) {
-  const h = palette.hatches[name];
-  if (!h) throw new Error(`palette declares no hatch "${name}"`);
-  const px = (v) => mm(parseFloat(v));
-  const sp = px(h.spacing ?? '0.6mm');
-  const wt = px(h.weight ?? '0.15mm');
-  const line = `stroke="${SOOT}" stroke-width="${num(wt)}" fill="none"`;
-  let body;
-  let transform = '';
-  if (h.pattern === 'dots') {
-    body = `<circle cx="${num(sp / 2)}" cy="${num(sp / 2)}" r="${num(px(h.radius ?? '0.13mm'))}" fill="${SOOT}"/>`;
-  } else if (h.pattern === 'grid') {
-    body = `<path d="M ${num(sp / 2)},0 V ${num(sp)} M 0,${num(sp / 2)} H ${num(sp)}" ${line}/>`;
-  } else if (h.pattern === 'weave') {
-    body = `<path d="M 0,${num(sp / 2)} H ${num(sp / 2)} M ${num(sp / 2)},0 V ${num(sp)} M ${num(sp / 2)},${num(sp / 2)} H ${num(sp)}" ${line}/>`;
-  } else {
-    body = `<path d="M ${num(sp / 2)},0 V ${num(sp)}" ${line}/>`;
-    transform = ` patternTransform="rotate(${num(90 - (h.angle ?? 90))})"`;
-  }
-  return `<pattern id="${id}" width="${num(sp)}" height="${num(sp)}" patternUnits="userSpaceOnUse"${transform}>${body}</pattern>`;
 }
 
 /* ------------------------------------------------------------- board pieces */
@@ -228,69 +202,6 @@ function timber(seed) {
     }
   }
   return `<g fill="none" opacity="${t.grainOpacity}">\n    ${out.join('\n    ')}\n  </g>`;
-}
-
-/** The two frame rules, both following the sheet's own corner. */
-function frameRules() {
-  return (
-    `<g fill="none" stroke="${SOOT}">` +
-    rect(inset(B.frame.outer.inset), `stroke-width="${B.frame.outer.strokeWidth}"`) +
-    rect(inset(B.frame.inner.inset), `stroke-width="${B.frame.inner.strokeWidth}"`) +
-    `</g>`
-  );
-}
-
-/**
- * An iron plate strapped across each corner, riveted through.
- *
- * Drawn once for the top left and then mirrored into the other three, so the
- * four corners cannot drift apart. The plate is filled with paper rather than
- * left open: iron goes over the painted banding, not under it.
- */
-function cornerStraps() {
-  const o = inset(B.frame.outer.inset);
-  const i = inset(B.frame.inner.inset);
-  const L = mm(B.frame.strap.lengthMm);
-
-  /* out along the top edge, round the outer corner, back down the left edge,
-     across the band, and home along the inner corner the other way */
-  const path =
-    `M ${num(o.x + L)},${num(o.y)} H ${num(o.x + o.r)} ` +
-    `A ${num(o.r)},${num(o.r)} 0 0 0 ${num(o.x)},${num(o.y + o.r)} ` +
-    `V ${num(o.y + L)} H ${num(i.x)} ` +
-    `V ${num(i.y + i.r)} A ${num(i.r)},${num(i.r)} 0 0 1 ${num(i.x + i.r)},${num(i.y)} ` +
-    `H ${num(i.x + L - (i.x - o.x))} Z`;
-
-  /* Riveted through at the end of each leg and once on the corner, all three on
-     the band's own midline - which is the only line that stays on the plate the
-     whole way round it. Anywhere off that line and a rivet at the corner ends up
-     driven through the board rather than through the iron. */
-  const m = inset((B.frame.outer.inset + B.frame.inner.inset) / 2);
-  const d = (L - (m.x - o.x)) * 0.76;
-  const rivets = [
-    [m.x + d, m.y], [m.x, m.y + d], [m.x, m.y],
-  ].map(([rx, ry]) => `<circle cx="${num(rx)}" cy="${num(ry)}" r="${B.frame.rivets.radius}"/>`).join('');
-
-  const plate = `<path d="${path}" fill="${TALLOW}" stroke="${SOOT}" stroke-width="${B.frame.strap.strokeWidth}" stroke-linejoin="round"/><g fill="${SOOT}" stroke="none">${rivets}</g>`;
-  const mirrorX = `translate(${num(2 * o.x + o.w)} 0) scale(-1 1)`;
-  const mirrorY = `translate(0 ${num(2 * o.y + o.h)}) scale(1 -1)`;
-  return (
-    `<g>${plate}</g>` +
-    `<g transform="${mirrorX}">${plate}</g>` +
-    `<g transform="${mirrorY}">${plate}</g>` +
-    `<g transform="${mirrorX} ${mirrorY}">${plate}</g>`
-  );
-}
-
-/** The player's colour: a band between the two frame rules, and nowhere else. */
-function banding(people) {
-  const outer = inset(mm(B.banding.fromMm));
-  const inner = inset(mm(B.banding.toMm));
-  const ring = `${roundedPath(outer.x, outer.y, outer.w, outer.h, outer.r)} ${roundedPath(inner.x, inner.y, inner.w, inner.h, inner.r)}`;
-  return {
-    wash: `<path d="${ring}" fill-rule="evenodd" fill="${palette.peoples[people.id].wash}" opacity="${B.banding.washOpacity}"/>`,
-    ink: `<path d="${ring}" fill-rule="evenodd" fill="url(#player-hatch)" opacity="${B.banding.hatchOpacity}"/>`,
-  };
 }
 
 /**
@@ -330,6 +241,9 @@ function rungMark(mark, x, y) {
   if (mark === 'notch-down') return `<path d="M ${num(x - s)},${num(y - s)} L ${num(x)},${num(y + s * 0.7)} L ${num(x + s)},${num(y - s)}" ${line}/>`;
   if (mark === 'notch-up') return `<path d="M ${num(x - s)},${num(y + s)} L ${num(x)},${num(y - s * 0.7)} L ${num(x + s)},${num(y + s)}" ${line}/>`;
   if (mark === 'notch-flat') return `<path d="M ${num(x - s)},${num(y)} H ${num(x + s)}" ${line}/>`;
+  /* a rating goes neither up nor down - it is a value a figure has, so it gets
+     a pip rather than a direction */
+  if (mark === 'pip') return `<circle cx="${num(x)}" cy="${num(y)}" r="${num(s * 0.62)}" fill="${SOOT}"/>`;
   /* the slip: two ticks struck a shade out of register, which is what the
      arcane does to this world's presses */
   if (mark === 'slip') return `<path d="M ${num(x - s * 0.9)},${num(y - s * 0.8)} V ${num(y + s * 0.4)} M ${num(x + s * 0.3)},${num(y - s * 0.4)} V ${num(y + s * 0.8)}" ${line}/>`;
@@ -337,11 +251,12 @@ function rungMark(mark, x, y) {
 }
 
 /**
- * One numbered track: a head, fifteen rungs numbered from the bottom, and a
- * seat below them for the token at nothing.
+ * One numbered track: a head, and a ladder from the board's floor to its
+ * ceiling, numbered from the bottom.
  *
  * Every fifth rung rules heavier and sets its number bold — the tally motif,
- * and the reason a player can read 12 without counting to 12.
+ * and the reason a player can read 12 without counting to 12. The bottom rung
+ * is zero, so the token has somewhere to be when the answer is nothing.
  */
 function track(t, index) {
   const step = t.step ?? dotted(t.stepFrom);
@@ -358,46 +273,40 @@ function track(t, index) {
   ink.push(`<rect x="${num(col.x)}" y="${num(top)}" width="${num(col.w)}" height="${num(bottom - top)}" rx="${num(mm(1.2))}" fill="none" stroke="${SOOT}" stroke-width="2"/>`);
 
   const numbers = [];
-  for (let i = 1; i <= RUNGS; i++) {
-    const yLine = bottom - i * CELL_H;
-    const major = i % B.track.ruleEvery === 0;
-    if (i < RUNGS) {
+  for (let i = 0; i < RUNGS; i++) {
+    const value = (B.track.from + i) * step;
+    const yLine = bottom - (i + 1) * CELL_H;
+    const major = value !== 0 && value % (B.track.ruleEvery * step) === 0;
+    if (i < RUNGS - 1) {
       ink.push(`<path d="M ${num(col.x)},${num(yLine)} H ${num(col.x + col.w)}" stroke="${SOOT}" stroke-width="${major ? 1.8 : 0.9}" opacity="${major ? 1 : 0.75}"/>`);
     }
-    const midY = bottom - (i - 0.5) * CELL_H;
-    ink.push(rungMark(t.mark, col.x + mm(1.5), midY));
+    const midY = bottom - (i + 0.5) * CELL_H;
+    ink.push(rungMark(t.mark, col.x + mm(1.6), midY));
     numbers.push(
       `<text x="${num(cx + mm(0.7))}" y="${num(midY + mm(1.1))}" font-size="${num(mm(3))}" text-anchor="middle" ` +
-      `font-family="${SANS}"${major ? ' font-weight="bold"' : ''}>${i * step}</text>`
+      `font-family="${SANS}"${major ? ' font-weight="bold"' : ''}>${value}</text>`
     );
   }
   ink.push(`<g fill="${SOOT}">${numbers.join('')}</g>`);
 
   /* The head, boxed like the header row of the sketch this board was drawn
-     from. A column is 10.8 mm wide and BURDEN is six letters: set flat, the word
-     is wider than the track it names and runs into its neighbour. So the letter
-     takes the middle at full size, the word runs UP the side of it, and the unit
-     - never more than a few characters - sits under the letter where a reader
-     will look for it. Nothing here drops below the 6 pt floor in palette.json
-     printSafety. */
+     from. A column is a shade over 11 mm wide and STRENGTH is eight letters:
+     set flat, the word is wider than the track it names and runs into its
+     neighbour. So the letter takes the middle at full size, the word runs UP
+     the side of it, and the unit — never more than a few characters — sits
+     under the letter where a reader will look for it. Nothing here drops below
+     the 6 pt floor in palette.json printSafety. */
   const headMid = TRACK_BLOCK.y + HEAD / 2;
   const lx = cx + mm(0.8);
   ink.push(
     `<rect x="${num(col.x)}" y="${num(TRACK_BLOCK.y)}" width="${num(col.w)}" height="${num(HEAD)}" rx="${num(mm(1.2))}" fill="none" stroke="${T55}" stroke-width="0.9"/>` +
     `<text x="${num(lx)}" y="${num(TRACK_BLOCK.y + mm(9.8))}" font-size="${num(mm(6.8))}" text-anchor="middle" font-weight="bold">${esc(t.letter)}</text>` +
-    `<text transform="translate(${num(x + mm(2))} ${num(headMid)}) rotate(-90)" font-size="${num(mm(2.2))}" text-anchor="middle" ` +
-    `letter-spacing="${num(mm(0.25))}" font-family="${SANS}" fill="${T70}">${esc(t.label)}</text>` +
+    `<text transform="translate(${num(x + mm(1.9))} ${num(headMid)}) rotate(-90)" font-size="${num(mm(2.15))}" text-anchor="middle" ` +
+    `letter-spacing="${num(mm(0.2))}" font-family="${SANS}" fill="${T70}">${esc(t.label)}</text>` +
     (t.unit
       ? `<text x="${num(lx)}" y="${num(TRACK_BLOCK.y + mm(13.6))}" font-size="${num(mm(2.1))}" text-anchor="middle" ` +
         `letter-spacing="${num(mm(0.2))}" font-family="${SANS}" fill="${T55}">${esc(t.unit)}</text>`
       : '')
-  );
-
-  /* the seat: where the token lives at nothing */
-  const seatY = bottom + SEAT / 2;
-  ink.push(
-    `<circle cx="${num(cx)}" cy="${num(seatY)}" r="${num(mm(3.5))}" fill="none" stroke="${SOOT}" stroke-width="1.2" stroke-dasharray="${num(mm(1.4))} ${num(mm(1))}"/>` +
-    `<text x="${num(cx)}" y="${num(seatY + mm(1.1))}" font-size="${num(mm(2.8))}" text-anchor="middle" font-family="${SANS}" fill="${T55}">0</text>`
   );
 
   /* the arcane gets the slip and nothing else does: the wash struck a shade off
@@ -409,19 +318,28 @@ function track(t, index) {
   return { wash, ink: ink.join('\n    '), slip };
 }
 
-/** The turn reference: the round's phases, in order, straight out of rules.json. */
-function panel(people) {
-  const phases = datasets.rules.round.phases;
+/**
+ * The turn reference the bill of materials has always asked a player board for,
+ * and under it the one piece of arithmetic a player needs while a monster card
+ * is face up in front of them.
+ *
+ * Both are printed out of rules.json rather than written here, so the board
+ * cannot fall out of step with the rules the way a hand-lettered one would.
+ */
+function panel() {
+  const rules = datasets.rules;
+  const phases = rules.round.phases;
+  const fight = rules.conflict.strength;
   const pad = mm(4);
   const x = PANEL.x;
   const y = PANEL.y;
-  const rowH = mm(9.4);
-  const top = y + mm(12);
+  const rowH = mm(8.6);
+  const top = y + mm(11.4);
 
   const out = [];
   out.push(`<rect x="${num(x)}" y="${num(y)}" width="${num(PANEL.w)}" height="${num(PANEL.h)}" rx="${num(mm(2.5))}" fill="none" stroke="${SOOT}" stroke-width="1.6"/>`);
-  out.push(`<text x="${num(x + pad)}" y="${num(y + mm(7.4))}" font-size="${num(mm(2.9))}" letter-spacing="${num(mm(0.8))}" font-family="${SANS}" fill="${T70}">${esc(spec.panel.title)}</text>`);
-  out.push(`<path d="M ${num(x + pad)},${num(y + mm(10.4))} H ${num(x + PANEL.w - pad)}" stroke="${SOOT}" stroke-width="1.2"/>`);
+  out.push(`<text x="${num(x + pad)}" y="${num(y + mm(7))}" font-size="${num(mm(2.9))}" letter-spacing="${num(mm(0.8))}" font-family="${SANS}" fill="${T70}">${esc(spec.panel.title)}</text>`);
+  out.push(`<path d="M ${num(x + pad)},${num(y + mm(9.8))} H ${num(x + PANEL.w - pad)}" stroke="${SOOT}" stroke-width="1.2"/>`);
 
   /* banded rows, bare paper against the palest permitted tint — what a printed
      table wants, and what survives a photocopier */
@@ -429,37 +347,35 @@ function panel(people) {
     const ry = top + i * rowH;
     if (i % 2 === 0) out.push(`<rect x="${num(x + mm(2))}" y="${num(ry)}" width="${num(PANEL.w - mm(4))}" height="${num(rowH)}" fill="${T12}" opacity="0.6"/>`);
     out.push(
-      `<rect x="${num(x + pad)}" y="${num(ry + mm(1.9))}" width="${num(mm(5.6))}" height="${num(mm(5.6))}" rx="${num(mm(1))}" fill="none" stroke="${SOOT}" stroke-width="1.2"/>` +
-      `<text x="${num(x + pad + mm(2.8))}" y="${num(ry + mm(5.9))}" font-size="${num(mm(3.1))}" text-anchor="middle" font-family="${SANS}">${i + 1}</text>` +
-      `<text x="${num(x + pad + mm(8))}" y="${num(ry + mm(6))}" font-size="${num(mm(3.4))}">${esc(phase.name)}</text>`
+      `<rect x="${num(x + pad)}" y="${num(ry + mm(1.7))}" width="${num(mm(5.4))}" height="${num(mm(5.4))}" rx="${num(mm(1))}" fill="none" stroke="${SOOT}" stroke-width="1.2"/>` +
+      `<text x="${num(x + pad + mm(2.7))}" y="${num(ry + mm(5.6))}" font-size="${num(mm(3))}" text-anchor="middle" font-family="${SANS}">${i + 1}</text>` +
+      `<text x="${num(x + pad + mm(7.8))}" y="${num(ry + mm(5.7))}" font-size="${num(mm(3.3))}">${esc(phase.name)}</text>`
     );
   });
 
-  const footY = top + phases.length * rowH + mm(5.4);
-  out.push(`<text x="${num(x + pad)}" y="${num(footY)}" font-size="${num(mm(2.7))}" font-style="italic" fill="${T85}">${esc(spec.panel.foot)}</text>`);
+  let cursor = top + phases.length * rowH + mm(5);
+  out.push(`<text x="${num(x + pad)}" y="${num(cursor)}" font-size="${num(mm(2.6))}" font-style="italic" fill="${T85}">${esc(spec.panel.foot)}</text>`);
 
-  /* the maker's mark: the people's hatch struck in a roundel, their name beside
-     it — the second and last place a player's colour appears */
-  const mx = x + pad + mm(7);
-  const my = y + PANEL.h - mm(10);
+  /* The strength track is the new one, and the difference it makes is the one
+     thing on this board a player will not already know. */
+  cursor += mm(5.8);
+  out.push(`<path d="M ${num(x + pad)},${num(cursor - mm(3.6))} H ${num(x + PANEL.w - pad)}" stroke="${SOOT}" stroke-width="1.2"/>`);
+  out.push(`<text x="${num(x + pad)}" y="${num(cursor)}" font-size="${num(mm(2.7))}" letter-spacing="${num(mm(0.7))}" font-family="${SANS}" fill="${T70}">${esc(spec.panel.aside.title)}</text>`);
+
+  const lines = [
+    ...wrap(fight.rule, 40),
+    ...wrap(fight.worked, 40),
+  ];
+  lines.forEach((line, i) => {
+    out.push(`<text x="${num(x + pad)}" y="${num(cursor + mm(4.2) + i * mm(3.15))}" font-size="${num(mm(2.5))}">${esc(line)}</text>`);
+  });
+
+  /* the board's own name, small, where a maker's mark would have gone */
   out.push(
-    `<circle cx="${num(mx)}" cy="${num(my)}" r="${num(mm(6.6))}" fill="url(#player-hatch)" stroke="${SOOT}" stroke-width="2"/>` +
-    `<circle cx="${num(mx)}" cy="${num(my)}" r="${num(mm(5.1))}" fill="none" stroke="${SOOT}" stroke-width="0.9"/>` +
-    `<text x="${num(mx + mm(10))}" y="${num(my - mm(0.4))}" font-size="${num(mm(3.6))}" font-weight="bold">${esc(people.name)}</text>` +
-    `<text x="${num(mx + mm(10))}" y="${num(my + mm(3.8))}" font-size="${num(mm(2.4))}" letter-spacing="${num(mm(0.4))}" font-family="${SANS}" fill="${T55}">${esc(people.effortDie.toUpperCase())} · CARRIES ${people.carry.baseKg} KG</text>`
+    `<text x="${num(x + PANEL.w / 2)}" y="${num(y + PANEL.h - mm(3.4))}" font-size="${num(mm(2.3))}" text-anchor="middle" ` +
+    `letter-spacing="${num(mm(0.8))}" font-family="${SANS}" fill="${T40}">game1 · ${esc(spec.board.name.toUpperCase())}</text>`
   );
   return out.join('\n    ');
-}
-
-/** The title, running up the spine margin the way it runs up the spine of a book. */
-function spineTitle(people) {
-  const x = TRIM.x + mm((B.banding.toMm + B.margins.spineMm) / 2);
-  const y = CONTENT.y + CONTENT.h / 2;
-  const words = `game1 · ${spec.board.name.toUpperCase()} · ${people.name}`;
-  return (
-    `<text transform="translate(${num(x)} ${num(y)}) rotate(-90)" font-size="${num(mm(2.9))}" text-anchor="middle" ` +
-    `letter-spacing="${num(mm(0.9))}" font-family="${SANS}" fill="${T70}">${esc(words)}</text>`
-  );
 }
 
 /** Where the die goes, marked in the bleed and never on the board. */
@@ -493,10 +409,9 @@ function grime(seed) {
   );
 }
 
-/* ------------------------------------------------------------- one board */
+/* --------------------------------------------------------------- the board */
 
-function board(people) {
-  const bands = banding(people);
+function board() {
   const cols = TRACKS.map((t, i) => track(t, i));
   const kit = spec.slots.find((s) => s.id === 'kit');
   const character = spec.slots.find((s) => s.id === 'character');
@@ -504,24 +419,22 @@ function board(people) {
   const kitSlots = [];
   for (let i = 0; i < kit.count; i++) {
     const cx = KIT_X + (i % KIT_COLS) * (SLOT.w + GUT);
-    const cy = CONTENT.y + Math.floor(i / KIT_COLS) * (SLOT.h + GUT);
+    const cy = CONTENT.y + Math.floor(i / KIT_COLS) * (SLOT.h + KIT_ROW_GAP);
     kitSlots.push(slot(cx, cy, kit.label));
   }
 
   const arcane = TRACKS.filter((t) => t.arcane).map((t) => t.label.toLowerCase()).join(', ');
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${num(W)} ${num(H)}" width="${num(W)}" height="${num(H)}" font-family="${SERIF}">
-<title>${esc(spec.board.name)} — ${esc(people.name)}</title>
+<title>${esc(spec.board.name)}</title>
 <desc>${esc(spec.board.summary)} The ${esc(arcane)} track is an arcane subject and is the only thing on the board that takes the slip. Generated by tools/build-board.mjs from data/playerboard.json and data/components.json — do not edit. ${B.sheet.widthMm} x ${B.sheet.heightMm} mm at ${U} units/mm, ${B.sheet.bleedMm} mm bleed. The ink plate alone is the black-and-white edition.</desc>
 <defs>
-  ${hatchDef('player-hatch', palette.peoples[people.id].hatch)}
   <clipPath id="sheet">${rect(inset(0), '')}</clipPath>
 </defs>
 
 <!-- ============================================================ WASH -->
 <g id="wash">
   <rect x="0" y="0" width="${num(W)}" height="${num(H)}" fill="${TALLOW}"/>
-  ${bands.wash}
   ${cols.map((c) => c.wash).join('\n  ')}
 </g>
 
@@ -535,17 +448,15 @@ function board(people) {
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="${SOOT}">
+  <!-- the workbench itself: sawn boards the length of the sheet, running to the
+       edge, because there is no border for them to stop at -->
   <g clip-path="url(#sheet)">
-    ${timber(people.id)}
+    ${timber(spec.board.id)}
   </g>
-  ${bands.ink}
-  ${frameRules()}
-  ${cornerStraps()}
-  ${spineTitle(people)}
 
   <!-- the hero, and the round they are playing -->
   ${slot(CONTENT.x, CONTENT.y, character.label)}
-  ${panel(people)}
+  ${panel()}
 
   <!-- the tracks: numbered from the bottom, walked by a token, exactly as a
        card's edge bar is - the board is not allowed a second convention -->
@@ -557,7 +468,7 @@ function board(people) {
 
 <!-- ============================================================ GRIME -->
 <g id="grime">
-  ${grime(people.id)}
+  ${grime(spec.board.id)}
 </g>
 </svg>
 `;
@@ -565,14 +476,15 @@ function board(people) {
 
 /* ------------------------------------------------------------------ output */
 
-const boards = peoples.map((p) => ({ people: p, file: `player-board-${p.id}.svg`, svg: board(p) }));
+const BOARD_FILE = `${spec.board.id}.svg`;
+const svg = board();
 
 const index = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>game1 — the player boards</title>
+<title>game1 — the player board</title>
 <style>
   body { margin: 0; background: ${TALLOW}; color: ${SOOT}; font-family: ${SERIF}; }
   .wrap { margin: 24px auto; max-width: 1180px; padding: 0 18px; }
@@ -581,13 +493,11 @@ const index = `<!doctype html>
   .bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; font-family: ${SANS}; font-size: 13.5px; margin-bottom: 16px; }
   .bar a { color: ${T85}; }
   .bar a.primary { color: ${SOOT}; font-weight: bold; }
-  .boards { display: grid; gap: 20px; }
   /* A4 landscape, corner and all: a preview with square corners is a preview of
-     a board nobody is going to cut. ${B.sheet.cornerRadiusMm}mm at this scale. */
+     a board nobody is going to cut. */
   .boards object { width: 100%; aspect-ratio: ${num(W)} / ${num(H)}; border: 1px solid ${T25};
                    background: ${TALLOW}; border-radius: 10px; }
   figure { margin: 0; }
-  figcaption { font-family: ${SANS}; font-size: 12.5px; color: ${T70}; padding: 5px 2px 0; }
   table { border-collapse: collapse; font-size: 14px; margin: 8px 0 0; }
   th, td { text-align: left; padding: 5px 14px 5px 0; border-bottom: 1px solid ${T25}; vertical-align: top; }
   th { font-family: ${SANS}; font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: ${T70}; font-weight: 600; }
@@ -596,14 +506,11 @@ const index = `<!doctype html>
      The board is drawn with ${B.sheet.bleedMm}mm of bleed all round, so the sheet is laid
      ${B.sheet.bleedMm}mm out and up inside a window the size of the trim - the bleed runs off the
      page edge, which is the only place bleed is any use. Scale the whole thing
-     to the page instead and every board prints 2% small. */
+     to the page instead and the board prints 2% small. */
   @media print {
     .wrap { max-width: none; margin: 0; padding: 0; }
-    .bar, h1, h2, p.note, table, figcaption { display: none; }
-    .boards { display: block; gap: 0; }
-    .boards figure { position: relative; width: ${B.sheet.widthMm}mm; height: ${B.sheet.heightMm}mm; overflow: hidden;
-                     break-after: page; page-break-after: always; }
-    .boards figure:last-child { break-after: auto; page-break-after: auto; }
+    .bar, h1, h2, p.note, table { display: none; }
+    .boards figure { position: relative; width: ${B.sheet.widthMm}mm; height: ${B.sheet.heightMm}mm; overflow: hidden; }
     .boards object { position: absolute; left: -${B.sheet.bleedMm}mm; top: -${B.sheet.bleedMm}mm;
                      width: ${num(B.sheet.widthMm + 2 * B.sheet.bleedMm)}mm; height: ${num(B.sheet.heightMm + 2 * B.sheet.bleedMm)}mm;
                      border: 0; border-radius: 0; aspect-ratio: auto; }
@@ -618,56 +525,64 @@ const index = `<!doctype html>
   <a href="../book/index.html">The rulebook</a>
   <a href="../cards/index.html">The card fronts</a>
   <a href="../map/index.html">The map</a>
-  <a class="primary" href="#" onclick="window.print();return false;">Print the boards →</a>
+  <a class="primary" href="#" onclick="window.print();return false;">Print the board →</a>
 </div>
-<h1>The player boards</h1>
-<p class="note">${esc(spec.board.summary)} One per playable people — and the only difference between them
-is the player colour in the border banding and the maker's mark.</p>
-<p class="note">${esc(spec.board.note)}</p>
+<h1>The player board</h1>
+<p class="note">${esc(spec.board.summary)}</p>
+<p class="note">${esc(spec.board.generic)}</p>
 <p class="note">Generated by <code>tools/build-board.mjs</code> from <code>data/playerboard.json</code> and
-<code>data/components.json</code> — edit those, re-run the tool, and never these files. Printing this page
-gives one board per sheet of A4 at true size — set your printer to 100% and landscape and turn off
-"fit to page", and the ${B.sheet.bleedMm}&nbsp;mm of bleed each board is drawn with runs off the edge of the paper,
-which is the only place bleed is any use.</p>
+<code>data/components.json</code> — edit those, re-run the tool, and never these files. Print one copy per player:
+set your printer to 100% and landscape and turn off "fit to page", and the ${B.sheet.bleedMm}&nbsp;mm of bleed the board is
+drawn with runs off the edge of the paper, which is the only place bleed is any use.</p>
 
-<h2>The five tracks</h2>
+<h2>The ${TRACKS.length} tracks</h2>
 <table>
-<tr><th></th><th>Track</th><th>Counts to</th><th>What walks it</th></tr>
+<tr><th></th><th>Track</th><th>Runs</th><th>What walks it</th></tr>
 ${TRACKS.map((t) => {
   const step = t.step ?? dotted(t.stepFrom);
+  const unit = t.unit ? ' ' + esc(t.unit) : '';
   return `<tr><td class="letter">${esc(t.letter)}</td><td>${esc(t.label)}${t.unit ? ` <small>(${esc(t.unit)})</small>` : ''}</td>` +
-    `<td>${RUNGS * step}${t.unit ? ' ' + esc(t.unit) : ''}</td><td>${esc(t.walks)}</td></tr>`;
+    `<td>${B.track.from * step}–${B.track.to * step}${unit}</td><td>${esc(t.walks)}</td></tr>`;
 }).join('\n')}
 </table>
 
-<h2>The boards</h2>
+<h2>The board</h2>
 <div class="boards">
-${boards.map((b) => `  <figure><object data="${b.file}" type="image/svg+xml" aria-label="Player board — ${esc(b.people.name)}"></object><figcaption>${esc(b.people.name)}</figcaption></figure>`).join('\n')}
+  <figure><object data="${BOARD_FILE}" type="image/svg+xml" aria-label="The player board"></object></figure>
 </div>
 </div>
 </body>
 </html>
 `;
 
-const outputs = [...boards.map((b) => [b.file, b.svg]), ['index.html', index]];
+const outputs = [[BOARD_FILE, svg], ['index.html', index]];
+const keep = new Set(outputs.map(([f]) => f));
+
+/* Boards that are no longer built - the five per-people sheets this replaced -
+   are removed rather than left to be served by a site that has moved on. */
+const stale = existsSync(OUT_DIR)
+  ? readdirSync(OUT_DIR).filter((f) => f.endsWith('.svg') && !keep.has(f))
+  : [];
 
 if (checkOnly) {
-  const stale = outputs.filter(([file, body]) => {
+  const drifted = outputs.filter(([file, body]) => {
     let current = '';
     try { current = readFileSync(join(OUT_DIR, file), 'utf8'); } catch { /* absent counts as stale */ }
     return current !== body;
-  });
-  if (stale.length) {
-    console.error(`docs/boards is stale (${stale.map(([f]) => f).join(', ')}). Run: node tools/build-board.mjs`);
+  }).map(([f]) => f);
+  if (drifted.length || stale.length) {
+    console.error(`docs/boards is stale (${[...drifted, ...stale.map((f) => f + ' should not exist')].join(', ')}). Run: node tools/build-board.mjs`);
     process.exit(1);
   }
   console.log('docs/boards is up to date');
 } else {
   mkdirSync(OUT_DIR, { recursive: true });
   for (const [file, body] of outputs) writeFileSync(join(OUT_DIR, file), body, 'utf8');
+  for (const f of stale) unlinkSync(join(OUT_DIR, f));
   console.log(
-    `wrote ${boards.length} player boards to docs/boards/ — ` +
-    `${B.sheet.widthMm}x${B.sheet.heightMm}mm, ${TRACKS.length} tracks of ${RUNGS} rungs ` +
-    `(${num(CELL_W / U)}x${num(CELL_H / U)}mm cells), ${spec.slots.reduce((n, s) => n + s.count, 0)} card slots`
+    `wrote docs/boards/${BOARD_FILE} — ${B.sheet.widthMm}x${B.sheet.heightMm}mm, ` +
+    `${TRACKS.length} tracks of ${B.track.from}-${B.track.to} ` +
+    `(${num(CELL_W / U)}x${num(CELL_H / U)}mm cells), ${spec.slots.reduce((n, s) => n + s.count, 0)} card slots` +
+    (stale.length ? `; removed ${stale.length} board(s) no longer built` : '')
   );
 }

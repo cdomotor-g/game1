@@ -43,7 +43,9 @@ monsters, quests, vehicles, characters) grow by appending entries.
 
 **Bulk** is a commodity's storage-slot and shipping cost, and it belongs to
 `commodities.json` and `transport.json`. **Mass** is what one item weighs in
-kilograms — `items.json` `massKg` — and it belongs to whoever is carrying it.
+kilograms — `items.json` `massKg` — and it belongs to whoever is carrying it. The
+mass scale tops out at what the player board's burden track can hold: 14 kg, one
+kilogram a rung. See `playerboard.json` `ceiling`.
 Cargo in a cart is bulk; the axe on your shoulder is mass. The two never convert
 into each other, and no entry should ever carry both.
 

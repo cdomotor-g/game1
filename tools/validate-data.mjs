@@ -265,16 +265,28 @@ for (const i of itemList) {
   }
 }
 
-// The player board. Its tracks are printed ladders of a fixed length, which is
-// a promise: a character with 16 health or a hull with 16 damage boxes would
-// walk its token off the top of the board and nobody would notice until it was
-// printed. So every track says the largest value the game can reach, says where
-// that number comes from, and both are checked here.
+// The player board, and the ceiling it puts on the whole game.
+//
+// Every track runs the same range, 0 to a printed maximum, and that maximum is
+// not the board's business alone: a character with 15 health or a hull with 15
+// damage boxes would walk its token off the top and nobody would notice until
+// it was printed. So the board declares what has to fit, and it is all checked
+// here rather than trusted.
 const boardSpec = datasets.playerboard;
 const boardShape = datasets.components?.board;
 
+/** "characters.characters[].health" -> every number at that path. */
+function valuesAt(qualified) {
+  const dot = qualified.indexOf('.');
+  const key = qualified.slice(0, dot);
+  const path = qualified.slice(dot + 1);
+  const root = datasets[key];
+  if (!root) return null;
+  return collect(root, path, key).map((hit) => hit.value).filter((v) => typeof v === 'number');
+}
+
 if (boardSpec && boardShape) {
-  const rungs = boardShape.track.rungs;
+  const { from, to } = boardShape.track;
   const letters = new Set();
 
   for (const t of boardSpec.tracks ?? []) {
@@ -307,23 +319,34 @@ if (boardSpec && boardShape) {
       continue;
     }
     /* The number is restated on the track so the board can be checked without
-       the whole ruleset in context; the path is what stops it going stale. */
-    if (covers.path && covers.dataset) {
-      const root = datasets[covers.dataset];
-      if (!root) {
-        errors.push(`playerboard: track "${t.id}" points at dataset "${covers.dataset}", which is not in the manifest`);
-      } else {
-        const found = collect(root, covers.path, covers.dataset)
-          .map((hit) => hit.value)
-          .filter((v) => typeof v === 'number');
-        const max = found.length ? Math.max(...found) : null;
-        if (max !== null && max !== covers.value) {
-          errors.push(`playerboard: track "${t.id}" says it covers ${covers.value}, but ${covers.path} now tops out at ${max}`);
-        }
+       the whole ruleset in context; the paths are what stop it going stale. */
+    for (const qualified of covers.paths ?? []) {
+      const found = valuesAt(qualified);
+      if (!found) {
+        errors.push(`playerboard: track "${t.id}" points at "${qualified}", whose dataset is not in the manifest`);
+        continue;
+      }
+      const max = found.length ? Math.max(...found) : null;
+      if (max !== null && max > covers.value) {
+        errors.push(`playerboard: track "${t.id}" says it covers ${covers.value}, but ${qualified} now tops out at ${max}`);
       }
     }
-    if (rungs * step < covers.value) {
-      errors.push(`playerboard: the ${t.label} track is ${rungs} rungs of ${step} = ${rungs * step}, and has to cover ${covers.value} - the token would walk off the top`);
+    if (to * step < covers.value) {
+      errors.push(`playerboard: the ${t.label} track runs to ${to * step}, and has to cover ${covers.value} - the token would walk off the top`);
+    }
+  }
+
+  /* The board's ceiling is the game's ceiling. This is the sweep that keeps it
+     true: every number a token walks, checked against the top rung. */
+  for (const qualified of boardSpec.ceiling?.paths ?? []) {
+    const found = valuesAt(qualified);
+    if (!found) {
+      errors.push(`playerboard: ceiling path "${qualified}" does not resolve to a dataset`);
+      continue;
+    }
+    const over = found.filter((v) => v > to || v < from);
+    if (over.length) {
+      errors.push(`playerboard: ${qualified} has ${over.length} value(s) outside the board's ${from}-${to} - ${[...new Set(over)].sort((a, b) => b - a).join(', ')}`);
     }
   }
 
@@ -340,7 +363,7 @@ if (boardSpec && boardShape) {
      width of the token that walks them, the board has run out of room. */
   const card = datasets.components.stock.card;
   const slotW = card.widthMm + 2 * boardShape.slot.clearanceMm;
-  const contentW = boardShape.sheet.widthMm - boardShape.margins.spineMm - boardShape.margins.outerMm;
+  const contentW = boardShape.sheet.widthMm - 2 * boardShape.marginMm;
   const kitCount = (boardSpec.slots ?? []).find((s) => s.id === 'kit')?.count ?? 0;
   const kitW = 2 * slotW + boardShape.gutterMm;
   const columnW = (contentW - slotW - kitW - 2 * boardShape.gutterMm) / (boardSpec.tracks?.length || 1);
@@ -350,6 +373,28 @@ if (boardSpec && boardShape) {
   }
   if (kitCount % 2 !== 0) {
     warnings.push(`playerboard: ${kitCount} kit slots do not fill the two columns the board draws them in`);
+  }
+}
+
+// Strength is on both sides of every fight, so both sides have to have one, and
+// a character should not wander far from what their people are built like.
+const strengthOf = new Map(peoples.map((p) => [p.id, p.strength?.base]));
+for (const p of peoples) {
+  if (typeof p.strength?.base !== 'number') errors.push(`peoples: "${p.id}" has no strength.base - strength is a difference, and a difference needs both sides`);
+}
+for (const c of characters) {
+  if (typeof c.strength !== 'number' || c.strength <= 0) {
+    errors.push(`characters: "${c.id}" has no strength - every fight reads one off the card`);
+    continue;
+  }
+  const base = strengthOf.get(c.people);
+  if (typeof base === 'number' && Math.abs(c.strength - base) > 2) {
+    warnings.push(`characters: "${c.id}" is strength ${c.strength} against a ${c.people} base of ${base} - a long way off their people`);
+  }
+}
+for (const m of datasets.monsters?.monsters ?? []) {
+  if (typeof m.strength !== 'number' || m.strength <= 0) {
+    errors.push(`monsters: "${m.id}" has no strength - it is half of every attack roll made against it`);
   }
 }
 

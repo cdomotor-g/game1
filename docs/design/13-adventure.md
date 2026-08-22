@@ -221,9 +221,10 @@ figure takes one at setup for a face, a **health bar (left edge)** and a
 
 Every item in `items.json` now carries a **mass in kilograms**, and every
 character card carries the other half of that arithmetic: a numbered **burden
-bar** up the right edge, in 2 kg steps, topping out at what that character can
-shoulder unaided. A tunic is 1 kg, a sword 1.5, a plate harness 25. Ruk of the
-Red Road carries 28 kg, the most of anyone; Old Mother Keswick carries 16.
+bar** up the right edge, one kilogram a rung, topping out at what that character
+can shoulder unaided. A tunic is half a kilogram, a sword three-quarters, a plate
+harness 12.5. Ruk of the Red Road carries 14 kg, the most of anyone — and the
+most the board allows anyone; Old Mother Keswick carries 8.
 
 The bar is *played*, not printed and forgotten. Stand a token on it, total the
 mass of everything the character is carrying — worn, wielded and stowed alike —
@@ -233,8 +234,8 @@ token past the top of the bar: load it onto a vehicle, hand it to someone with
 room, or leave it where it lies. A character carried to a settlement at 0 health
 loses the lot, and the token goes back to zero.
 
-The numbers start from the people — `peoples.json → carry.baseKg`, 16 kg for a
-halfling up to 28 for an orc — and the card adjusts that for build and calling.
+The numbers start from the people — `peoples.json → carry.baseKg`, 8 kg for a
+halfling up to 14 for an orc — and the card adjusts that for build and calling.
 A dwarf out-carries a taller people all day; the point of Tilly Goodbarrel is
 that her wagon does the hauling, not her back.
 
@@ -322,34 +323,49 @@ the right place for a card you are holding and the wrong place for one lying on
 the table. The [player board](08-components.md#the-player-board) is where they
 all end up.
 
-One A4 landscape sheet each, printed at
+One A4 landscape sheet each and every one identical, printed at
 [`docs/boards/`](../boards/index.html). The hero's card drops into a recess top
 left, four more recesses take whatever else is in play, the round's phases print
-under the character, and five numbered tracks run up the middle:
+under the character, and six numbered tracks run up the middle:
 
-| | Track | Tops out at | What walks it |
-| --- | --- | --- | --- |
-| **H** | Health | 15 | The hero, hit and rested |
-| **B** | Burden | 30 kg | Everything worn, wielded and stowed |
-| **S** | Speed | 15 hexes | Hexes left in this leg |
-| **D** | Damage | 15 | The vehicle being run |
-| **M** | Mana | 15 | The body, and every talisman in a slot |
+| | Track | A rung is | Runs | Walked by |
+| --- | --- | --- | --- | --- |
+| **H** | Health | 1 | 0–14 | The hero, hit and rested |
+| **S** | Strength | 1 | 0–14 | Rarely — set from the character card, and read against whatever you are fighting |
+| **B** | Burden | 1 kg | 0–14 kg | Everything worn, wielded and stowed |
+| **P** | Pace | 1 hex | 0–14 | Hexes left in this leg |
+| **D** | Damage | 1 | 0–14 | The vehicle being run |
+| **M** | Mana | 1 | 0–14 | The body and every talisman in a slot |
 
 Four of them are bars that already exist on cards, so nothing new has to be
 learned: the ladders are numbered from the bottom and walked by a token exactly
 as a card's edge is, and they rule in the same inks — harm oxide, capacity
 slate, mana bruise.
 
-**Speed is the board's own**, and it is the one that was missing. A party looks
+**Pace is the board's own**, and it is the one that was missing. A party looks
 its day-leg speed up in [`travel.json`](../../data/travel.json) every single
 round of the game and has never had anywhere to keep it: set the token at the
 start of a leg, walk it down a rung per hex entered, halve it for a night leg
-under a lantern. When it reaches the seat the leg is over, and the discovery
-roll happens wherever it stopped.
+under a lantern. At zero the leg is over, and the discovery roll happens
+wherever it stopped. It is pace rather than speed because strength has the S.
 
-The board carries no rule the cards do not, which is the point — it is
-furniture, not a fifth deck. What it fixes is that a hero in play was four
-tokens on three cards and a number somebody was holding in their head.
+**Strength is the one that changed the game rather than recording it.** It was
+already printed on every monster card as a threat rating, and now it settles
+attack rolls as well: shift the number you need by the difference between your
+strength and your opponent's — less yours, plus theirs — so equal strength still
+hits on 4+ and a point of advantage is worth exactly one pip. It never adds
+dice; dice are what weapons and armour give you. The full rule, and why it is a
+difference rather than a score, is in
+[08-components.md](08-components.md#strength-in-a-fight).
+
+**Every track runs 0 to 14, and so does the game.** That is what set the ceiling
+on everything a token walks — health, burden, damage, mana, strength — and what
+halved the mass scale to get burden under it. Nothing about what fits in whose
+hands changed; the kilogram did.
+
+The board is otherwise furniture, not a fifth deck. What it fixes is that a hero
+in play was four tokens on three cards and a number somebody was holding in
+their head.
 
 ## What this layer deliberately does not do
 

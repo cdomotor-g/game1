@@ -241,13 +241,13 @@ Monster element weights by table:
 
 ## Peoples
 
-| People | Die | Workers | Terrain comfort | Carries | Mana |
-| --- | --- | --- | --- | --- | --- |
-| Humans | d6 | 2 | grassland, coast, forest | 22 kg | talisman only |
-| Dwarves | d6 | 2 | mountain, hills, tundra | 26 kg | talisman only |
-| Elves | d6 | 2 | forest, hills, grassland | 20 kg | 3 innate |
-| Halflings | d6 | 3 | grassland, forest, coast | 16 kg | talisman only |
-| Orcs | d8 | 2 | hills, marsh, tundra, mountain | 28 kg | talisman only |
+| People | Die | Workers | Terrain comfort | Strength | Carries | Mana |
+| --- | --- | --- | --- | --- | --- | --- |
+| Humans | d6 | 2 | grassland, coast, forest | 3 | 11 kg | talisman only |
+| Dwarves | d6 | 2 | mountain, hills, tundra | 4 | 13 kg | talisman only |
+| Elves | d6 | 2 | forest, hills, grassland | 2 | 10 kg | 3 innate |
+| Halflings | d6 | 3 | grassland, forest, coast | 2 | 8 kg | talisman only |
+| Orcs | d8 | 2 | hills, marsh, tundra, mountain | 5 | 14 kg | talisman only |
 
 ### Traits
 
@@ -295,82 +295,85 @@ Mass is what the thing weighs. It counts against the carrier's **burden** —
 the kg bar up the right edge of every character card — and it is not
 bulk: bulk is a commodity's storage and shipping cost, and no item has one.
 
+One rung of that bar is 1 kg, and it runs to what the player board holds:
+no figure in the game shoulders more than 14 kg unaided.
+
 ### Clothing
 
 | Item | Made at | Inputs | Hours | Value | Mass | Effects |
 | --- | --- | --- | --- | --- | --- | --- |
-| Tunic | tailor | 1 cloth | 2 | 26 | 1 kg | Ignore the first -1 weather effort penalty each round. |
-| Winter Coat | tailor | 2 cloth + 2 wool | 3 | 60 | 3 kg | Immune to Hard Frost. No tundra or mountain effort penalty. |
-| Travelling Cloak | tailor | 2 cloth + 1 leather | 3 | 55 | 2 kg | +1 move point for the figure wearing it. |
-| Sturdy Boots | tailor | 1 leather | 2 | 30 | 1.5 kg | Marsh and mountain tiles cost 1 less to move through, minimum 1. |
-| Fine Robes | tailor | 2 fine-cloth + 1 gold | 4 | 180 | 1.5 kg | A merchant wearing these gets a further 10% on every market sale. Worth 2 victory points at game end. |
+| Tunic | tailor | 1 cloth | 2 | 26 | 0.5 kg | Ignore the first -1 weather effort penalty each round. |
+| Winter Coat | tailor | 2 cloth + 2 wool | 3 | 60 | 1.5 kg | Immune to Hard Frost. No tundra or mountain effort penalty. |
+| Travelling Cloak | tailor | 2 cloth + 1 leather | 3 | 55 | 1 kg | +1 move point for the figure wearing it. |
+| Sturdy Boots | tailor | 1 leather | 2 | 30 | 0.75 kg | Marsh and mountain tiles cost 1 less to move through, minimum 1. |
+| Fine Robes | tailor | 2 fine-cloth + 1 gold | 4 | 180 | 0.75 kg | A merchant wearing these gets a further 10% on every market sale. Worth 2 victory points at game end. |
 
 ### Armour
 
 | Item | Made at | Inputs | Hours | Value | Mass | Effects |
 | --- | --- | --- | --- | --- | --- | --- |
-| Leather Jerkin | tailor | 2 leather | 3 | 50 | 5 kg | Ignore the first hit in each battle. |
-| Chain Mail | blacksmith | 2 ironware + 1 leather | 5 | 130 | 12 kg | Ignore the first two hits in each battle. |
-| Plate Harness | blacksmith | 3 steel + 2 leather | 8 | 320 | 25 kg | Ignore the first three hits in each battle. -1 move point. |
-| Helm | blacksmith | 1 ironware | 2 | 45 | 2.5 kg | Once per battle, cancel one hit. |
-| Shield | carpenter | 1 lumber + 1 ironware | 2 | 40 | 4 kg | +1 defence die. |
+| Leather Jerkin | tailor | 2 leather | 3 | 50 | 2.5 kg | Ignore the first hit in each battle. |
+| Chain Mail | blacksmith | 2 ironware + 1 leather | 5 | 130 | 6 kg | Ignore the first two hits in each battle. |
+| Plate Harness | blacksmith | 3 steel + 2 leather | 8 | 320 | 12.5 kg | Ignore the first three hits in each battle. -1 move point. |
+| Helm | blacksmith | 1 ironware | 2 | 45 | 1.25 kg | Once per battle, cancel one hit. |
+| Shield | carpenter | 1 lumber + 1 ironware | 2 | 40 | 2 kg | +1 defence die. |
 
 ### Weapon
 
 | Item | Made at | Inputs | Hours | Value | Mass | Effects |
 | --- | --- | --- | --- | --- | --- | --- |
-| Sword | blacksmith | 2 pig-iron + 1 leather | 4 | 95 | 1.5 kg | +1 combat die. |
-| Steel Sword | blacksmith | 2 steel + 1 leather | 5 | 210 | 1.5 kg | +2 combat dice, and hits on 3+ instead of 4+. |
-| War Axe | blacksmith | 2 pig-iron + 1 lumber | 3 | 80 | 3 kg | +1 combat die, +2 when attacking. |
-| Pike | blacksmith | 1 pig-iron + 2 lumber | 3 | 70 | 4.5 kg | +2 combat dice when defending a town. Cannot be used with a shield. |
-| Bow | carpenter | 1 lumber + 1 rope | 3 | 65 | 1 kg | Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight. |
-| Quiver of Arrows | carpenter | 1 lumber + 1 leather | 2 | 30 | 2 kg | Holds 3 uses. Each battle with a bow spends 1. |
-| Sling | weaver | 1 cloth | 1 | 12 | 0.5 kg | +1 combat die for halflings only. Everyone else may as well throw the stone. |
-| War Hammer | blacksmith | 2 steel + 1 lumber | 5 | 190 | 6 kg | +2 combat dice. Ignores enemy armour entirely. |
-| Crossbow | blacksmith | 1 steel + 2 lumber + 1 rope | 5 | 175 | 5 kg | +3 combat dice, and ignores 1 point of enemy armour. Slow: it rolls in the first round of a battle and every second round after. Needs a quiver to fight. |
-| Harpoon | blacksmith | 1 pig-iron + 1 lumber + 2 rope | 3 | 75 | 4 kg | +1 combat die, and +3 instead against any water-element monster or anything bigger than a horse. A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round. +1 output on Fish. |
-| Dirk | blacksmith | 1 pig-iron | 2 | 35 | 0.8 kg | +1 combat die. Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls. |
-| Greatsword | blacksmith | 3 steel + 1 leather | 7 | 340 | 4 kg | +3 combat dice, and hits on 3+ instead of 4+. -1 move point, and it cannot be used with a shield. Worth 1 victory point at game end. |
-| Boar Spear | blacksmith | 1 pig-iron + 1 lumber | 2 | 55 | 3 kg | +1 combat die, and +3 in the first round against any monster that charges - anything of strength 4 or more that attacks first. The crossbar holds it off you: ignore the first hit from that monster. +1 output on Hunt Game. |
+| Sword | blacksmith | 2 pig-iron + 1 leather | 4 | 95 | 0.75 kg | +1 combat die. |
+| Steel Sword | blacksmith | 2 steel + 1 leather | 5 | 210 | 0.75 kg | +2 combat dice, and hits on 3+ instead of 4+. |
+| War Axe | blacksmith | 2 pig-iron + 1 lumber | 3 | 80 | 1.5 kg | +1 combat die, +2 when attacking. |
+| Pike | blacksmith | 1 pig-iron + 2 lumber | 3 | 70 | 2.25 kg | +2 combat dice when defending a town. Cannot be used with a shield. |
+| Bow | carpenter | 1 lumber + 1 rope | 3 | 65 | 0.5 kg | Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight. |
+| Quiver of Arrows | carpenter | 1 lumber + 1 leather | 2 | 30 | 1 kg | Holds 3 uses. Each battle with a bow spends 1. |
+| Sling | weaver | 1 cloth | 1 | 12 | 0.25 kg | +1 combat die for halflings only. Everyone else may as well throw the stone. |
+| War Hammer | blacksmith | 2 steel + 1 lumber | 5 | 190 | 3 kg | +2 combat dice. Ignores enemy armour entirely. |
+| Crossbow | blacksmith | 1 steel + 2 lumber + 1 rope | 5 | 175 | 2.5 kg | +3 combat dice, and ignores 1 point of enemy armour. Slow: it rolls in the first round of a battle and every second round after. Needs a quiver to fight. |
+| Harpoon | blacksmith | 1 pig-iron + 1 lumber + 2 rope | 3 | 75 | 2 kg | +1 combat die, and +3 instead against any water-element monster or anything bigger than a horse. A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round. +1 output on Fish. |
+| Dirk | blacksmith | 1 pig-iron | 2 | 35 | 0.4 kg | +1 combat die. Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls. |
+| Greatsword | blacksmith | 3 steel + 1 leather | 7 | 340 | 2 kg | +3 combat dice, and hits on 3+ instead of 4+. -1 move point, and it cannot be used with a shield. Worth 1 victory point at game end. |
+| Boar Spear | blacksmith | 1 pig-iron + 1 lumber | 2 | 55 | 1.5 kg | +1 combat die, and +3 in the first round against any monster that charges - anything of strength 4 or more that attacks first. The crossbar holds it off you: ignore the first hit from that monster. +1 output on Hunt Game. |
 
 ### Potion
 
 | Item | Made at | Inputs | Hours | Value | Mass | Effects |
 | --- | --- | --- | --- | --- | --- | --- |
-| Draught of Vigour | alchemist | 2 arcane-herb + 1 honey | 3 | 70 | 0.5 kg | Step one worker's effort die up two sizes for one round. |
-| Tireless Toil | alchemist | 1 arcane-herb + 2 mushrooms | 3 | 60 | 0.5 kg | Re-roll every effort die of one worker and keep the better result. |
-| Brewmaster's Round | alchemist | 1 ale + 2 arcane-herb | 4 | 120 | 0.5 kg | +1 flat effort to every worker in one town this round. |
-| Healing Draught | alchemist | 2 arcane-herb + 2 berries | 3 | 85 | 0.5 kg | Cancel one worker loss, or ignore one Plague card. Or restore 3 health to one character. |
-| Swiftfoot | alchemist | 1 arcane-herb + 1 mana-crystal | 3 | 140 | 0.5 kg | Double one figure's move points, or move one cargo token its full speed again this round. |
-| Stonehide | alchemist | 1 mana-crystal + 2 mushrooms | 4 | 150 | 0.5 kg | One unit ignores all hits in one battle. |
-| Prospector's Clarity | alchemist | 1 mana-crystal + 2 arcane-herb | 4 | 160 | 0.5 kg | Automatically succeed on one survey, and reveal all deposits on adjacent tiles. |
-| Merchant's Fortune | alchemist | 1 gold + 2 arcane-herb | 4 | 200 | 0.5 kg | Shift one commodity family's price band two steps in your favour for your next sale only. |
-| Owl's Eye | alchemist | 2 moon-blossom + 1 arcane-herb | 3 | 90 | 0.5 kg | One figure or party travels night legs this round as if carrying a lantern. |
-| Physic Tonic | alchemist | 2 frost-lichen + 1 honey | 3 | 95 | 0.5 kg | Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick. |
-| Emberguard Salve | alchemist | 2 ember-root + 1 honey | 3 | 100 | 0.5 kg | One unit or character ignores every hit from a fire-element monster in one battle. |
-| Ley Tincture | alchemist | 1 mana-crystal + 3 arcane-herb | 5 | 220 | 0.5 kg | For one round the drinker holds 3 mana in the body, talisman or no talisman. Mana still there when the round ends blows away, and the drinker takes 1 damage. |
-| Innkeeper's Forbearance | alchemist | 2 mead + 1 arcane-herb | 3 | 80 | 1 kg | Broached at an inn, it clears 2 unrest in that town and everyone forgives everyone. Anywhere else it clears 1 unrest and starts an argument. |
-| Long Ration | alchemist | 1 honey + 1 salted-meat + 1 arcane-herb | 3 | 75 | 0.5 kg | One travelling party eats nothing for two rounds, and nobody complains until the third. |
-| Dragonsbane Draught | alchemist | 2 ember-root + 2 frost-lichen + 1 mana-crystal | 6 | 380 | 0.5 kg | For one battle, the drinker's party ignores the free first round any monster of strength 5 or more gets, and halves its hits, rounded up. It does not help you win. It helps you still be there at the end. |
-| Aeronaut's Nerve | alchemist | 1 moon-blossom + 1 ale + 1 arcane-herb | 3 | 110 | 0.5 kg | Re-roll one airship wind roll and keep the better result - see travel.json. The crew are steady at any height for the rest of the journey, which matters more than the roll does. |
+| Draught of Vigour | alchemist | 2 arcane-herb + 1 honey | 3 | 70 | 0.25 kg | Step one worker's effort die up two sizes for one round. |
+| Tireless Toil | alchemist | 1 arcane-herb + 2 mushrooms | 3 | 60 | 0.25 kg | Re-roll every effort die of one worker and keep the better result. |
+| Brewmaster's Round | alchemist | 1 ale + 2 arcane-herb | 4 | 120 | 0.25 kg | +1 flat effort to every worker in one town this round. |
+| Healing Draught | alchemist | 2 arcane-herb + 2 berries | 3 | 85 | 0.25 kg | Cancel one worker loss, or ignore one Plague card. Or restore 3 health to one character. |
+| Swiftfoot | alchemist | 1 arcane-herb + 1 mana-crystal | 3 | 140 | 0.25 kg | Double one figure's move points, or move one cargo token its full speed again this round. |
+| Stonehide | alchemist | 1 mana-crystal + 2 mushrooms | 4 | 150 | 0.25 kg | One unit ignores all hits in one battle. |
+| Prospector's Clarity | alchemist | 1 mana-crystal + 2 arcane-herb | 4 | 160 | 0.25 kg | Automatically succeed on one survey, and reveal all deposits on adjacent tiles. |
+| Merchant's Fortune | alchemist | 1 gold + 2 arcane-herb | 4 | 200 | 0.25 kg | Shift one commodity family's price band two steps in your favour for your next sale only. |
+| Owl's Eye | alchemist | 2 moon-blossom + 1 arcane-herb | 3 | 90 | 0.25 kg | One figure or party travels night legs this round as if carrying a lantern. |
+| Physic Tonic | alchemist | 2 frost-lichen + 1 honey | 3 | 95 | 0.25 kg | Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick. |
+| Emberguard Salve | alchemist | 2 ember-root + 1 honey | 3 | 100 | 0.25 kg | One unit or character ignores every hit from a fire-element monster in one battle. |
+| Ley Tincture | alchemist | 1 mana-crystal + 3 arcane-herb | 5 | 220 | 0.25 kg | For one round the drinker holds 3 mana in the body, talisman or no talisman. Mana still there when the round ends blows away, and the drinker takes 1 damage. |
+| Innkeeper's Forbearance | alchemist | 2 mead + 1 arcane-herb | 3 | 80 | 0.5 kg | Broached at an inn, it clears 2 unrest in that town and everyone forgives everyone. Anywhere else it clears 1 unrest and starts an argument. |
+| Long Ration | alchemist | 1 honey + 1 salted-meat + 1 arcane-herb | 3 | 75 | 0.25 kg | One travelling party eats nothing for two rounds, and nobody complains until the third. |
+| Dragonsbane Draught | alchemist | 2 ember-root + 2 frost-lichen + 1 mana-crystal | 6 | 380 | 0.25 kg | For one battle, the drinker's party ignores the free first round any monster of strength 5 or more gets, and halves its hits, rounded up. It does not help you win. It helps you still be there at the end. |
+| Aeronaut's Nerve | alchemist | 1 moon-blossom + 1 ale + 1 arcane-herb | 3 | 110 | 0.25 kg | Re-roll one airship wind roll and keep the better result - see travel.json. The crew are steady at any height for the rest of the journey, which matters more than the roll does. |
 
 ### Light
 
 | Item | Made at | Inputs | Hours | Value | Mass | Effects |
 | --- | --- | --- | --- | --- | --- | --- |
-| Torch | carpenter | 1 lumber + 1 cloth | 1 | 10 | 0.5 kg | Travel one night leg at torch speed - see travel.json. Enter a cave. Each night leg or cave visit spends one use; at zero it is gone. |
-| Lantern | blacksmith | 1 ironware + 1 glass | 2 | 55 | 1.5 kg | Travel night legs at lantern speed - see travel.json. Explore caves without spending uses. Does not wear out, but it can be lost, sold or stolen like any item. |
+| Torch | carpenter | 1 lumber + 1 cloth | 1 | 10 | 0.25 kg | Travel one night leg at torch speed - see travel.json. Enter a cave. Each night leg or cave visit spends one use; at zero it is gone. |
+| Lantern | blacksmith | 1 ironware + 1 glass | 2 | 55 | 0.75 kg | Travel night legs at lantern speed - see travel.json. Explore caves without spending uses. Does not wear out, but it can be lost, sold or stolen like any item. |
 
 ### Talisman
 
 | Item | Made at | Inputs | Hours | Value | Mass | Capacity | Effects |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Bone Charm (TAL-01) | carpenter | 1 lumber + 1 leather | 2 | 30 | 0.5 kg | 2 | Stores up to 2 mana. Track with a token on the mana bar. |
-| Weaver's Knot (TAL-02) | weaver | 2 yarn | 3 | 45 | 0.5 kg | 3 | Stores up to 3 mana. |
-| Copper Amulet (TAL-03) | blacksmith | 1 copper | 3 | 60 | 0.5 kg | 4 | Stores up to 4 mana. |
-| Gold Locket (TAL-04) | blacksmith | 1 gold | 4 | 120 | 0.5 kg | 6 | Stores up to 6 mana. |
-| Gemfire Pendant (TAL-05) | blacksmith | 1 gems + 1 copper | 5 | 190 | 0.5 kg | 8 | Stores up to 8 mana. |
-| Crystal Phylactery (TAL-06) | alchemist | 1 mana-crystal + 1 glass + 1 gold | 6 | 320 | 1 kg | 10 | Stores up to 10 mana. Worth 1 victory point at game end. |
+| Bone Charm (TAL-01) | carpenter | 1 lumber + 1 leather | 2 | 30 | 0.25 kg | 2 | Stores up to 2 mana. Track with a token on the mana bar. |
+| Weaver's Knot (TAL-02) | weaver | 2 yarn | 3 | 45 | 0.25 kg | 3 | Stores up to 3 mana. |
+| Copper Amulet (TAL-03) | blacksmith | 1 copper | 3 | 60 | 0.25 kg | 4 | Stores up to 4 mana. |
+| Gold Locket (TAL-04) | blacksmith | 1 gold | 4 | 120 | 0.25 kg | 6 | Stores up to 6 mana. |
+| Gemfire Pendant (TAL-05) | blacksmith | 1 gems + 1 copper | 5 | 190 | 0.25 kg | 8 | Stores up to 8 mana. |
+| Crystal Phylactery (TAL-06) | alchemist | 1 mana-crystal + 1 glass + 1 gold | 6 | 320 | 0.5 kg | 10 | Stores up to 10 mana. Worth 1 victory point at game end. |
 
 ## Transport modes
 
@@ -429,21 +432,21 @@ Slaying yields the mana; the other three trade mana away for a living asset.
 | MON-10 | Rime Harpy | ![](../art/icons/element-air.svg) air | 2 | 5 | 1 | tundra, mountain | S E B |
 | MON-11 | Dust Devil | ![](../art/icons/element-air.svg) air | 2 | 4 | 2 | desert, grassland | S |
 | MON-12 | Storm Roc | ![](../art/icons/element-air.svg) air | 4 | 9 | 3 | mountain, coast | S D |
-| MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | ![](../art/icons/element-fire.svg) fire | 7 | 16 | 6 | mountain, hills, desert | S B |
+| MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | ![](../art/icons/element-fire.svg) fire | 7 | 14 | 6 | mountain, hills, desert | S B |
 | MON-14 | The Hoarwyrm | ![](../art/icons/element-air.svg) air | 5 | 13 | 4 | tundra, mountain, coast | S D |
 
 ## Character deck
 
-| Code | Character | People | Calling | Health | Burden | Mana | Traits |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| CHR-01 | Corin Vale | human | Wayfarer | 10 | 24 kg | talisman | Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere. |
-| CHR-02 | Berga Understone | dwarf | Prospector | 12 | 26 kg | talisman | Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1. |
-| CHR-03 | Sylvae of the Duskmere | elf | Herbalist | 8 | 20 kg | 3 innate | Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross. |
-| CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 8 | 18 kg | talisman | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
-| CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 13 | 28 kg | talisman | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
-| CHR-06 | Doctor Elspeth Marrow | human | Physician | 9 | 20 kg | talisman | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
-| CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 26 kg | talisman | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands. |
-| CHR-08 | Old Mother Keswick | human | Hedge-Witch | 7 | 16 kg | talisman | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
+| Code | Character | People | Calling | Str | Health | Burden | Mana | Traits |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CHR-01 | Corin Vale | human | Wayfarer | 3 | 10 | 12 kg | talisman | Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere. |
+| CHR-02 | Berga Understone | dwarf | Prospector | 4 | 12 | 13 kg | talisman | Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1. |
+| CHR-03 | Sylvae of the Duskmere | elf | Herbalist | 2 | 8 | 10 kg | 3 innate | Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross. |
+| CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 2 | 8 | 9 kg | talisman | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
+| CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 6 | 13 | 14 kg | talisman | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
+| CHR-06 | Doctor Elspeth Marrow | human | Physician | 2 | 9 | 10 kg | talisman | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
+| CHR-07 | Havik Coalbrand | dwarf | Engineer | 4 | 10 | 13 kg | talisman | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands. |
+| CHR-08 | Old Mother Keswick | human | Hedge-Witch | 2 | 7 | 8 kg | talisman | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
 
 ## Quest deck
 
