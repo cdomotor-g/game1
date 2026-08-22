@@ -261,13 +261,14 @@ function cornerStraps() {
     `V ${num(i.y + i.r)} A ${num(i.r)},${num(i.r)} 0 0 1 ${num(i.x + i.r)},${num(i.y)} ` +
     `H ${num(i.x + L - (i.x - o.x))} Z`;
 
-  /* riveted through at both ends and on the bisector, on the band's midline */
-  const mid = (B.frame.outer.inset + B.frame.inner.inset) / 2;
-  const m = inset(mid);
-  const d = (L - (mid - B.frame.outer.inset)) * 0.72;
-  const diag = (mid - B.frame.outer.inset) + (L - (mid - B.frame.outer.inset)) * 0.12;
+  /* Riveted through at the end of each leg and once on the corner, all three on
+     the band's own midline - which is the only line that stays on the plate the
+     whole way round it. Anywhere off that line and a rivet at the corner ends up
+     driven through the board rather than through the iron. */
+  const m = inset((B.frame.outer.inset + B.frame.inner.inset) / 2);
+  const d = (L - (m.x - o.x)) * 0.76;
   const rivets = [
-    [m.x + d, m.y], [m.x, m.y + d], [m.x + diag * 0.62, m.y + diag * 0.62],
+    [m.x + d, m.y], [m.x, m.y + d], [m.x, m.y],
   ].map(([rx, ry]) => `<circle cx="${num(rx)}" cy="${num(ry)}" r="${B.frame.rivets.radius}"/>`).join('');
 
   const plate = `<path d="${path}" fill="${TALLOW}" stroke="${SOOT}" stroke-width="${B.frame.strap.strokeWidth}" stroke-linejoin="round"/><g fill="${SOOT}" stroke="none">${rivets}</g>`;
