@@ -31,6 +31,13 @@ because placing a die on a mine is a better game than subtracting 3 from a numbe
 board grid, or printed chits per commodity? See [08-components.md](08-components.md).
 This needs a paper prototype, not an argument.
 
+*Half-answered.* The **shape** is settled and the count is not. Commodity tokens are
+18 mm flat-top **hexagons**, because hexagons nest on a laser bed with shared cuts — a
+sheet of them yields around a fifth more pieces than the same sheet of discs, and the
+head travels a good deal less. Coins stay round, because a coin that is not round is not
+a coin and because round-against-hexagonal is the fastest distinction a hand can make in
+a heap. Whether there are sixty-three kinds of hexagon or eleven is still the open half.
+
 ### 3. Is 24 rounds right?
 
 The simulator gets one town to ten buildings in 24 rounds. Tier-3 chains are reachable

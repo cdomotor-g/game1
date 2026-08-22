@@ -114,14 +114,14 @@ window.GAME_DATA = {
         "file": "vehicles.json",
         "collection": "vehicles",
         "idField": "id",
-        "summary": "The vehicle deck: named trains, ships, caravans and horses, with damage and cargo bars."
+        "summary": "The vehicle deck: named trains, ships, caravans and horses, each printing its damage boxes and its hold."
       },
       {
         "key": "characters",
         "file": "characters.json",
         "collection": "characters",
         "idField": "id",
-        "summary": "The character deck: named heroes with health, burden and mana bars."
+        "summary": "The character deck: named heroes with health, strength, defence, mana and the gold they start with."
       },
       {
         "key": "quests",
@@ -156,7 +156,21 @@ window.GAME_DATA = {
         "file": "playerboard.json",
         "collection": "tracks",
         "idField": "id",
-        "summary": "The player board: the five numbered tracks a hero walks a token along, the card slots, and the turn reference. The shapes it is drawn into are components.json board."
+        "summary": "The player board: the six numbered tracks a figure walks a token along, the card slots, and the turn reference. The shapes it is drawn into are components.json board."
+      },
+      {
+        "key": "marketboard",
+        "file": "marketboard.json",
+        "collection": null,
+        "idField": null,
+        "summary": "The market board: identical price ladders, one per commodity in play, walked by that commodity's own hexagonal token. The bands are rules.json market.priceBands; the shapes are components.json marketBoard."
+      },
+      {
+        "key": "minimap",
+        "file": "minimap.json",
+        "collection": null,
+        "idField": null,
+        "summary": "The mini-map: one world hex opened out as a plain-colour hexagonal field whose cells are the size of a world-map hex. The shapes are components.json minimap."
       }
     ],
     "maps": {
@@ -633,21 +647,72 @@ window.GAME_DATA = {
       },
       "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
     },
+    "infrastructure": {
+      "$comment": "What a player gets for laying road and rail, beyond the fact that their own carts go faster on it. Roads were the one thing in the game you built for everybody and were paid for by nobody: the network victory condition scored them at the very end and nothing scored them in the twenty rounds before that, so a road only ever got built where its builder happened to want to walk.\n\nThree returns, in the order a player feels them: a toll every time somebody else uses it, a better price for cargo that moves on your own network, and the network points that were already there. The toll is small on purpose - it is a reason to build, not a business - and it is collected from the table rather than paid into a bank, so every coin of it comes out of a rival.",
+      "ownership": "A road, rail line or bridge belongs to the player who paid for it, for the rest of the game. Mark it with that player's route tokens (components.json tokens.route) as it is laid - the token IS the record, and an unmarked road belongs to nobody.",
+      "toll": {
+        "roadPerHex": 1,
+        "railPerHex": 2,
+        "collectedBy": "The owner, from the moving player, the moment that leg ends.",
+        "capPerLeg": 6,
+        "capNote": "No leg pays more than this however long it is, so a trunk road across the continent is worth building and is never a tax gate.",
+        "waived": [
+          "The owner's own figures, parties and cargo - you do not pay yourself.",
+          "Any party carrying a quest the owner accepted.",
+          "Any hex whose road the moving player also owns a share of, where two networks meet."
+        ],
+        "refused": "A player may decline to pay and go round. They may not decline to pay and go through."
+      },
+      "haulage": {
+        "bonusPercent": 10,
+        "rule": "Cargo that starts or ends its journey in a settlement your own road or rail reaches sells for a tenth more than the town price.",
+        "why": "A road is worth more to the person who built it than the toll on it will ever be. This is where the real money is, and it is why the sensible first road runs from your mine to your market rather than towards anybody else."
+      },
+      "payback": {
+        "$comment": "The check that says the numbers are not decoration. A road hex costs 1 stone and 3 build points; stone is 5 coin, so call it 5 coin a hex and an hour a hex on top. At 1 coin a hex a stretch pays for itself after five foreign crossings, which in a four-player game is a handful of rounds on any road worth building. Rail costs 2 steel and 2 lumber - 70 coin a hex - and will never repay that in tolls alone: rail is repaid by the train that runs on it and by victoryPointsPerTile, and the toll is a gratuity.",
+        "roadHexCoin": 5,
+        "roadHexHours": 3,
+        "railHexCoin": 70,
+        "railHexHours": 8
+      },
+      "victory": "Unchanged: the Network condition still scores towns joined by road, rail and sea routes you built (victory.conditions network), and rail still scores victoryPointsPerTile as it is laid.",
+      "notes": "None of this makes a road a private road. Anyone may walk it, and paying the toll is the price of the walk - which is exactly the relationship a turnpike had with the people who used it."
+    },
     "carrying": {
-      "$comment": "What a figure carries on its own back, in kilograms. Mass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
+      "$comment": "What a figure carries on its own back, in kilograms - and there is no longer a second number for it. Strength IS the carrying limit: one rating does the lifting and the swinging, because they are the same arm. A character card prints the kilograms so nobody does arithmetic at the table, but the kilograms are derived, not designed - change a figure's strength and what they can shoulder changes with it.\n\nMass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
       "unit": "kg",
-      "barStepKg": 1,
-      "$scaleNote": "One kilogram a rung. The whole mass scale was halved when the player board settled on tracks of 0 to 14 - every massKg, every carry.baseKg and every carryKg came down by the same factor, so nothing about what fits in whose hands changed, only what it is counted in. A plate harness is still very nearly all a strong figure can shoulder.",
-      "carryLimit": "Printed on the character card as the BURDEN bar up the right edge. A character's limit is their people's carry.baseKg adjusted for build and calling; other figures use their people's base unmodified.",
-      "marker": "Stand a token on the burden bar and move it as the character picks things up and puts them down. Total the mass of everything they carry - worn, wielded and stowed alike - and stand the token on the first mark at or above that total.",
-      "limitRule": "A character may not take up an item that would push the token past the top of the bar. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
+      "kgPerStrength": 3,
+      "$scaleNote": "Three kilograms to the point. It is the factor that leaves the deck where it already was - a strength-2 hedge-witch shoulders 6 kg and a strength-6 caravan guard 18, which is roughly what their old burden bars said - and it puts the plate harness (12.5 kg) out of reach of anyone under strength 5, which is the right sentence for a suit of plate to be in.",
+      "limit": "strength x kgPerStrength, in kilograms. Characters use the strength on their card; any other figure uses its people's strength.base (peoples.json).",
+      "marker": "None. There is no burden track any more and no token to walk: total what the figure is wearing, wielding and stowing, and it either fits under the limit printed on the card or it does not.",
+      "limitRule": "A figure may not take up an item that would put its load over the limit. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
       "notCarried": [
         "Commodities in transit, which travel by transport mode and are measured in bulk.",
         "Coin.",
         "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."
       ],
-      "onZeroHealth": "A character carried to a settlement at 0 health loses everything on the burden bar on the way; clear the token to zero.",
-      "notes": "The bar is a capacity bar, so it sits on the right edge like every other capacity bar in the game, and it is ruled in slate like a vehicle's cargo. Where a character also has innate mana, the mana bar moves inboard of it and sits on the portrait."
+      "onZeroHealth": "A figure carried to a settlement at 0 health loses everything it was carrying on the way.",
+      "notes": "Burden used to be a bar up the right edge of every character card and a track on the player board. Both are gone: the bar went when the cards took a summary strip across the top instead, and the track went when strength swallowed it."
+    },
+    "upkeep": {
+      "$comment": "What a figure spends by being alive and on the road, and which of its two numbers it spends. Food keeps HEALTH up; sleep keeps STRENGTH up. They are not interchangeable and neither is a substitute for the other, which is the whole design: a party can be well fed and exhausted, or rested and starving, and those are different problems with different answers.\n\nThe town-scale version of this - workers eating in the Feeding phase - is `population`. This block is the party-scale one, and it applies to every figure on the map that is not sitting in a town being fed by it.",
+      "food": {
+        "perFigurePerRound": 1,
+        "from": "What the party carries, or what it forages or buys that round.",
+        "shortfall": {
+          "health": -1
+        },
+        "shortfallNote": "A round that ends with a figure unfed costs that figure 1 health, every round it goes on. Nothing about being fed again puts the health back - see rest.medicalAid. Going hungry is a wound like any other."
+      },
+      "night": {
+        "camp": "A party that stops before dark and makes camp restores every figure's strength to the number printed on its card. A bed at an inn does the same and costs rest.cost.",
+        "noCamp": {
+          "strength": -1
+        },
+        "noCampNote": "A party that travels a night leg, or ends the round without stopping, loses 1 strength from every figure in it. That is on top of the extra discovery roll a night leg already draws (movement.legs.nightRisk).",
+        "cumulative": "Strength lost this way stacks night after night, and at 0 strength a figure does not fight and carries nothing (playerboard.json strength.atZero). Two hard nights turn a caravan guard into a passenger."
+      },
+      "notes": "This is the pressure that makes a lantern, a granary, an inn and a stretch of salted meat worth their coin - and the reason a shorter leg with a camp at the end of it often beats a longer one without."
     },
     "movement": {
       "landMoveCostDefault": 1,
@@ -672,27 +737,51 @@ window.GAME_DATA = {
         "when": "When a figure, party or vehicle ends its movement leg, roll once on the discovery table for the hex it stopped in - one roll for the leg, not one per hex crossed.",
         "tables": "data/discovery.json, one column per terrain letter code, with road and rail overrides",
         "placement": "Any result that persists - a monster, a trace, a cave, a quest site - is marked on the hex with a tile or figure so the whole table can see it.",
+        "encounter": {
+          "$comment": "What to DO with a discovery roll that turns up a living thing, which the tables have always produced and the rules have never said how to run. The answer is the one piece of furniture already on the table: a player board. The thing you met gets one, and for the length of the encounter it is a player - a player who is not a person.",
+          "rule": "Shuffle the deck the result names - monsters for a beast, characters for a stranger on the road - and deal one card face up onto a spare player board, into the character recess.",
+          "setUp": "Set that board's tracks from the card exactly as a player sets their own at setup: health, strength, defence and mana off the printed strip. It now has everything a player has and is run the same way, by whoever is to the left of the player who drew it.",
+          "boards": "Print one player board per player plus one for the table. The spare is the encounter board, and it is why the board is generic (playerboard.json board.generic): the furniture does not care whether a person or a wolf is sitting behind it.",
+          "afterwards": "When the encounter ends the card is put away - back into its deck, or onto the hex as a lair, or into the winner's hand if it was befriended, enslaved or domesticated (monsters.json encounterOptions). Clear the board's tokens. Nothing about the encounter is written down.",
+          "why": "A monster with a board is a monster whose health and strength are visible to everyone, walked down in front of the table rather than tracked in one player's head - and a stranger met on the road is set up exactly like a hero, because that is exactly what they are to themselves."
+        },
         "notes": "Discovery is what you find when you are NOT looking. Prospecting, foraging and hunting have their own recipes and roll tables, and a discovery roll never replaces a survey."
       },
       "notes": "A prospector entering a face-down tile flips it. Flipping reveals terrain immediately; deposits need a survey roll on top of that."
     },
     "rest": {
-      "where": "Any settlement with an inn - every printed settlement has one; a player-built town needs the inn building.",
-      "healthPerRound": 2,
-      "healthPerRoundWithHealer": 3,
+      "$comment": "Two different kinds of hurt, mended two different ways. Strength is spent, so sleep gives it back. Health is damage, so only a healer does. That split is what makes a night's camp a decision rather than a formality, and it is what makes a physician worth feeding.",
+      "where": "Any settlement with an inn - every printed settlement has one; a player-built town needs the inn building. A camp made on open ground counts for strength and for nothing else.",
+      "restoresStrength": "All of it. One night's sleep sets the strength token back to the number printed on the card, wherever that night is taken.",
+      "restoresHealth": "None. Sleeping through a wound does not close it - see medicalAid.",
+      "medicalAid": {
+        "$comment": "The only thing that puts health back. Everything on this list is a person, a building or a bottle: health is repaired by somebody, never by time.",
+        "healerPerRound": 3,
+        "infirmaryPerRound": 3,
+        "physicianPerRound": 2,
+        "physicianNote": "A character whose card says so - Doctor Elspeth Marrow, for one - mends this much anywhere they stand, with no infirmary and no town.",
+        "potion": "items.json potion-healing, which mends on the spot and is drunk doing it.",
+        "cost": {
+          "coin": 5,
+          "note": "Per round of care. Waived in your own town, and at any inn or infirmary a quest reward names."
+        }
+      },
       "cost": {
         "coin": 5,
-        "note": "Waived in your own town, and at any inn a quest reward names."
+        "note": "A bed for the night. Waived in your own town, and at any inn a quest reward names. A camp on open ground is free."
       },
       "notes": "A resting character does nothing else that round. Vehicle damage is repaired separately - 1 box per round in any settlement of town rank or better, paying 5 coin per box."
     },
     "hirelings": {
       "where": "Hired at any inn, in any settlement of village rank or better.",
+      "$statsNote": "Every figure in a fight needs a strength and a defence, hirelings included - conflict.attack reads both off whoever is swinging and whoever is being swung at, and a hireling with neither cannot be attacked by the rules as written. These are the numbers printed on the inn's board, and they are what you are paying for: the thug is strong and careless, the militiaman is neither and is wearing a coat of plates, and the blade is better at both than either.",
       "options": [
         {
           "id": "thug",
           "name": "Thug",
           "coinPerJourney": 20,
+          "strength": 4,
+          "defence": 2,
           "combatDice": 1,
           "note": "Refuses to fight monsters of strength 4 or more. Counts as a soldier for escort purposes."
         },
@@ -700,6 +789,8 @@ window.GAME_DATA = {
           "id": "militia",
           "name": "Militiaman",
           "coinPerJourney": 35,
+          "strength": 3,
+          "defence": 4,
           "combatDice": 1,
           "armourValue": 1,
           "note": "Steady. Fights anything."
@@ -708,11 +799,13 @@ window.GAME_DATA = {
           "id": "blade",
           "name": "Hired Blade",
           "coinPerJourney": 60,
+          "strength": 5,
+          "defence": 4,
           "combatDice": 2,
           "note": "Fights anything, and rolls first like a bow."
         }
       ],
-      "notes": "A hireling escorts one journey - a travelling party or a cargo in transit - then goes home. Hirelings eat no food; the fee is everything. An escorted cargo drops its theft risk to 0, same as a soldier escort."
+      "notes": "A hireling escorts one journey - a travelling party or a cargo in transit - then goes home. Hirelings eat no food; the fee is everything. An escorted cargo drops its theft risk to 0, same as a soldier escort. They do not eat and they do not sleep on your account either, so upkeep never touches them."
     },
     "conflict": {
       "combatDie": "d6",
@@ -721,20 +814,32 @@ window.GAME_DATA = {
       "retreatAllowed": true,
       "lootFraction": 0.25,
       "strength": {
-        "$comment": "Strength was already in the game, on every monster card, doing one job: a threat rating that some rules read as a threshold. This is the other half of it - what strength does when the dice come out - and it is a shift on the number you need rather than a pile of extra dice. Dice count stays where it was, one per unit, so a strong figure is not a faster figure and a battle does not get longer because somebody is strong.\n\nThe shift is a DIFFERENCE, which is the whole point: strength 6 means nothing on its own, it means something against strength 3. That also lets one number on the board serve both sides of a fight - yours on the track, theirs on the card in front of you.",
-        "rule": "Shift the number you need by the strength difference: less your own, plus your opponent's.",
-        "formula": "target = hitsOn + opponentStrength - yourStrength",
-        "worked": "Equal strength 4+. A point stronger, 3+. Two weaker, 6+.",
+        "$comment": "One number, three jobs, and it is the only number a figure brings to a fight of its own. Strength is what you SWING WITH - it shifts the number you need to hit. It is what you CARRY WITH - see carrying.kgPerStrength. And it is still the threat threshold some rules read off a monster card. It is also the number a hard night takes off you (upkeep.night), which is what ties the three together: an exhausted figure hits worse and carries less, and that is one token moving down one track.",
+        "scale": "0 to the board's ceiling (components.json board.track). Characters run 2 to 6, monsters 2 to 7.",
+        "carries": "strength x carrying.kgPerStrength kilograms. The card prints the kilograms; the track holds the strength.",
+        "notDice": "Strength never adds dice. Weapons and armour add dice and soak hits, exactly as they did; +1 combat die is still +1 combat die.",
+        "threshold": "Unchanged and read off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges.",
+        "atZero": "A figure at 0 strength does not fight and carries nothing."
+      },
+      "defence": {
+        "$comment": "The other half, and new. Strength used to sit on both sides of the attack roll - yours off the board, theirs off the card - which made a strong thing hard to hurt for no reason other than that it hit hard. Those are different properties and they now have different numbers: an ash drake is strong AND armoured, a dust devil is neither and is still almost impossible to land a blow on, and a stone boar barely swings at all and turns a sword.",
+        "scale": "0 to the board's ceiling, same as every other track. Characters run 2 to 5, monsters 1 to 6.",
+        "isNot": "Armour. Armour is items.json armourValue and still soaks hits after they land; defence is what makes them miss in the first place. A figure can have both, and a figure in plate usually does.",
+        "atZero": "Nothing between the blow and you. An attacker needs only its own hitsOn, less its strength."
+      },
+      "attack": {
+        "$comment": "The one line of arithmetic printed on the player board, because it is the only one a player needs while a monster card is face up in front of them. It is a DIFFERENCE, which is what lets one number on the board and one number on the card settle the whole roll.",
+        "rule": "Shift the number you need: less your own strength, plus their defence.",
+        "formula": "target = hitsOn + opponentDefence - yourStrength",
+        "worked": "Strength 3 against defence 3: 4+. Strength 5 against defence 3: 2+. Strength 2 against defence 5: 6+.",
         "clamp": [
           2,
           6
         ],
-        "clampNote": "Never better than 2+ and never worse than 6+. A fight is never decided before the dice are thrown - the dragon at strength 7 is terrifying, not arithmetic, and the halfling still lands one in six.",
-        "appliesTo": "Any figure with a strength: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the strength printed on the inn's board.",
-        "notDice": "Strength never adds dice. Weapons and armour add dice and soak hits, exactly as they did; +1 combat die is still +1 combat die.",
-        "threshold": "The older job is unchanged and still reads off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges."
+        "clampNote": "Never better than 2+ and never worse than 6+. A fight is never decided before the dice are thrown - Vhalrik at defence 6 is terrifying, not arithmetic, and the halfling still lands one in six.",
+        "appliesTo": "Any figure with a strength and a defence: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the numbers printed on the inn's board."
       },
-      "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour, and hit on the number the strength difference leaves them needing. Both sides apply hits simultaneously."
+      "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour, and hit on the number the strength-against-defence difference leaves them needing. Both sides apply hits simultaneously."
     },
     "victory": {
       "gameLengthRounds": 24,
@@ -6458,14 +6563,14 @@ window.GAME_DATA = {
         "name": "Hero",
         "movePoints": 5,
         "cost": 0,
-        "summary": "One per player, free at setup. Carries potions and equipment, rolls an extra combat die, and never starves. A character card from data/characters.json gives the hero a name, a face, a health bar and sometimes mana.",
+        "summary": "One per player, free at setup. Carries potions and equipment, rolls an extra combat die, and never starves. A character card from data/characters.json gives the hero a name, a face, and the summary strip every other number is read off.",
         "carries": 3,
         "unique": true
       }
     ]
   },
   "peoples": {
-    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). carry.baseKg is how much mass, in kilograms, a figure of that people carries unaided; a character card prints its own limit as the BURDEN bar, that base adjusted for build and calling - see rules.json carrying.",
+    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with AND what it carries with: kilograms are strength x rules.carrying.kgPerStrength, so a people's carrying is not a second number and never was. defence.base is what makes a blow miss, which is a different property from hitting hard and now has a number of its own. A character card prints its own strength and defence, that base adjusted for build and calling, in the summary strip across the top.",
     "version": "0.3.0",
     "peoples": [
       {
@@ -6490,13 +6595,13 @@ window.GAME_DATA = {
           "coast",
           "forest"
         ],
-        "carry": {
-          "baseKg": 11,
-          "note": "The middle of every scale, this one included."
-        },
         "strength": {
           "base": 3,
           "note": "The middle of every scale, this one included - a human wins no fight on build alone."
+        },
+        "defence": {
+          "base": 3,
+          "note": "The middle of every scale, this one included - a human neither turns a blow nor invites one."
         },
         "manaStorage": {
           "innate": 0,
@@ -6541,13 +6646,13 @@ window.GAME_DATA = {
           "hills",
           "tundra"
         ],
-        "carry": {
-          "baseKg": 13,
-          "note": "Short, and built like the stone they work: a dwarf out-carries a taller people all day."
-        },
         "strength": {
           "base": 4,
           "note": "Low, braced and used to swinging something heavy in a confined space."
+        },
+        "defence": {
+          "base": 3,
+          "note": "Low and braced. A dwarf is hard to knock over, which is most of what defence is."
         },
         "manaStorage": {
           "innate": 0,
@@ -6588,13 +6693,13 @@ window.GAME_DATA = {
           "hills",
           "grassland"
         ],
-        "carry": {
-          "baseKg": 10,
-          "note": "Light-framed, and disinclined to haul what a second trip would carry."
-        },
         "strength": {
           "base": 2,
           "note": "An elf fights with reach and timing. Strength is the one contest they decline."
+        },
+        "defence": {
+          "base": 3,
+          "note": "Reach and timing, which is the contest they DO win - an elf is missed far more often than an elf is strong."
         },
         "manaStorage": {
           "innate": 3,
@@ -6636,13 +6741,13 @@ window.GAME_DATA = {
           "forest",
           "coast"
         ],
-        "carry": {
-          "baseKg": 8,
-          "note": "Small hands and a small back - and a wagon, which is rather the point."
-        },
         "strength": {
           "base": 2,
           "note": "Small, and entirely uninterested in being told about it."
+        },
+        "defence": {
+          "base": 3,
+          "note": "A small target, and entirely willing to be one."
         },
         "manaStorage": {
           "innate": 0,
@@ -6684,13 +6789,13 @@ window.GAME_DATA = {
           "tundra",
           "mountain"
         ],
-        "carry": {
-          "baseKg": 14,
-          "note": "The most any figure in the game shoulders unaided."
-        },
         "strength": {
           "base": 5,
           "note": "The strongest arm any figure in the game brings to a fight."
+        },
+        "defence": {
+          "base": 4,
+          "note": "Thick-hided, and used to being hit by things that meant it."
         },
         "manaStorage": {
           "innate": 0,
@@ -8352,7 +8457,7 @@ window.GAME_DATA = {
     }
   },
   "items": {
-    "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use. Every item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, and the BURDEN bar up the right edge of every character card. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. Talisman cards carry a vertical numbered mana bar on the RIGHT edge (capacity bars always sit right; harm bars always sit left - the convention is stated in docs/art/06-components.md).",
+    "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use. Every item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, where the limit is strength x kgPerStrength and a character card prints the kilograms in its summary strip. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. A talisman card prints its capacity as an M box in the strip like everything else; the mana itself is walked on the player board's M track, because that is where every track in the game lives now (data/playerboard.json).",
     "version": "0.3.0",
     "classes": [
       {
@@ -8383,7 +8488,7 @@ window.GAME_DATA = {
       {
         "id": "talisman",
         "name": "Talisman",
-        "summary": "Stores mana. Most peoples cannot hold mana in the body at all - see peoples.json manaStorage. Track stored mana with a token on the card's mana bar."
+        "summary": "Stores mana. Most peoples cannot hold mana in the body at all - see peoples.json manaStorage. Track stored mana on the player board's M track - the card prints the capacity and nothing more."
       }
     ],
     "items": [
@@ -9380,7 +9485,7 @@ window.GAME_DATA = {
         "massKg": 0.25,
         "story": "Knucklebones and a thong of hide, carved by someone's grandmother against the dark. It works, which is more than can be said for most of what grandmothers carve.",
         "effects": [
-          "Stores up to 2 mana. Track with a token on the mana bar."
+          "Stores up to 2 mana."
         ]
       },
       {
@@ -10334,7 +10439,7 @@ window.GAME_DATA = {
     }
   },
   "arcana": {
-    "$comment": "Mana, elements and spells. Mana is NOT a commodity: it has no bulk, sits in no stockpile, and cannot be crated. It lives in bodies (rarely - see peoples.json manaStorage) and in talismans (items.json, class talisman), tracked with a token on the talisman's mana bar. Mana crystals in commodities.json are a different thing: frozen mana as a trade good and potion ingredient - a crystal can be shattered by its holder to yield 2 mana of any one element, but mana can never be pressed back into a crystal.",
+    "$comment": "Mana, elements and spells. Mana is NOT a commodity: it has no bulk, sits in no stockpile, and cannot be crated. It lives in bodies (rarely - see peoples.json manaStorage) and in talismans (items.json, class talisman), tracked with a token on the player board's M track, against the capacity the talisman's card prints. Mana crystals in commodities.json are a different thing: frozen mana as a trade good and potion ingredient - a crystal can be shattered by its holder to yield 2 mana of any one element, but mana can never be pressed back into a crystal.",
     "version": "0.1.0",
     "elementMarks": {
       "$comment": "One drawn mark per element, so that a card, a chit, a page of the book and the explorer all say fire the same way. The path is the whole mark: stroked, never filled, on the grid and at the weight data/components.json declares under marks.element - so a mark reads at chit size and survives the black-and-white edition, which is the whole point of putting it on the ink plate. The marks are built on one construction, a ground line and what the element does to it: fire puts three tongues above it, earth puts a stone on it and a root under it, water replaces it with three swells, air lifts three streamers clear of it. None of them is a borrowed alchemical sign - see docs/art/04-iconography.md, which bans letterforms and real-world symbols alike.",
@@ -10553,7 +10658,7 @@ window.GAME_DATA = {
           "element": "air",
           "cost": 5,
           "boundTo": "one character's pack, belt or cloak",
-          "effect": "+10 kg to that character's burden bar. The bar is walked as normal; the last ten kilograms simply do not pull.",
+          "effect": "+10 kg on top of what that character's strength allows them to carry (rules.json carrying). The last ten kilograms simply do not pull.",
           "story": "Not lighter - the pack weighs what it weighs, and a scale will say so. It just declines to be heavy on the person carrying it, which mule drivers consider a distinction without a difference and porters consider the point."
         },
         {
@@ -10576,8 +10681,8 @@ window.GAME_DATA = {
     }
   },
   "monsters": {
-    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow. Card layout: portrait, name and element badge at the top, story text low, vertical numbered HEALTH bar on the LEFT edge (harm bars always sit left, capacity bars always sit right - the convention is in docs/art/06-components.md), strength and mana yield as fixed stats. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
-    "version": "0.1.0",
+    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow.\n\nCard layout: name and card code at the top, a SUMMARY STRIP under them - H health, S strength, D defence, Y mana yield, and the element's mark in the last box - then the portrait across the full width the frame allows, and the story low. The strip prints maximums and nothing walks on the card: when this monster is met, its card is dealt onto a spare player board and its tracks are set from the strip, and from that moment it is run like a player who is not a person (rules.json exploration.discovery.encounter).\n\nStrength is what it swings with, defence is what makes you miss - two numbers now, where one used to do both jobs and made every strong thing armoured by accident. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
+    "version": "0.2.0",
     "encounterOptions": {
       "$comment": "Meeting a monster is a choice, and the choice is the player's unless the card says otherwise. The card lists which of the four options it allows; slay is always allowed.",
       "slay": "Fight it, per the conflict rules in rules.json. Slaying yields the monster's manaYield in mana of its element, split among the characters who fought.",
@@ -10594,6 +10699,7 @@ window.GAME_DATA = {
         "name": "Cinder Wolf",
         "element": "fire",
         "strength": 2,
+        "defence": 2,
         "health": 4,
         "manaYield": 1,
         "terrains": [
@@ -10616,6 +10722,7 @@ window.GAME_DATA = {
         "name": "Ash Drake",
         "element": "fire",
         "strength": 4,
+        "defence": 4,
         "health": 8,
         "manaYield": 3,
         "terrains": [
@@ -10636,6 +10743,7 @@ window.GAME_DATA = {
         "name": "Forge Wight",
         "element": "fire",
         "strength": 3,
+        "defence": 4,
         "health": 6,
         "manaYield": 2,
         "terrains": [
@@ -10657,6 +10765,7 @@ window.GAME_DATA = {
         "name": "Barrow Troll",
         "element": "earth",
         "strength": 4,
+        "defence": 4,
         "health": 10,
         "manaYield": 3,
         "terrains": [
@@ -10677,6 +10786,7 @@ window.GAME_DATA = {
         "name": "Stone Boar",
         "element": "earth",
         "strength": 2,
+        "defence": 4,
         "health": 6,
         "manaYield": 1,
         "terrains": [
@@ -10698,6 +10808,7 @@ window.GAME_DATA = {
         "name": "Gravel Wyrm",
         "element": "earth",
         "strength": 3,
+        "defence": 6,
         "health": 8,
         "manaYield": 2,
         "terrains": [
@@ -10717,6 +10828,7 @@ window.GAME_DATA = {
         "name": "Mire Strangler",
         "element": "water",
         "strength": 3,
+        "defence": 2,
         "health": 6,
         "manaYield": 2,
         "terrains": [
@@ -10735,6 +10847,7 @@ window.GAME_DATA = {
         "name": "Reef Serpent",
         "element": "water",
         "strength": 3,
+        "defence": 3,
         "health": 7,
         "manaYield": 2,
         "terrains": [
@@ -10756,6 +10869,7 @@ window.GAME_DATA = {
         "name": "The Deepwater Maw",
         "element": "water",
         "strength": 5,
+        "defence": 5,
         "health": 12,
         "manaYield": 4,
         "unique": true,
@@ -10775,6 +10889,7 @@ window.GAME_DATA = {
         "name": "Rime Harpy",
         "element": "air",
         "strength": 2,
+        "defence": 1,
         "health": 5,
         "manaYield": 1,
         "terrains": [
@@ -10796,6 +10911,7 @@ window.GAME_DATA = {
         "name": "Dust Devil",
         "element": "air",
         "strength": 2,
+        "defence": 3,
         "health": 4,
         "manaYield": 2,
         "terrains": [
@@ -10815,6 +10931,7 @@ window.GAME_DATA = {
         "name": "Storm Roc",
         "element": "air",
         "strength": 4,
+        "defence": 3,
         "health": 9,
         "manaYield": 3,
         "terrains": [
@@ -10835,6 +10952,7 @@ window.GAME_DATA = {
         "name": "Vhalrik, the Cinder-Crowned",
         "element": "fire",
         "strength": 7,
+        "defence": 6,
         "health": 14,
         "manaYield": 6,
         "unique": true,
@@ -10858,6 +10976,7 @@ window.GAME_DATA = {
         "name": "The Hoarwyrm",
         "element": "air",
         "strength": 5,
+        "defence": 5,
         "health": 13,
         "manaYield": 4,
         "terrains": [
@@ -10876,7 +10995,7 @@ window.GAME_DATA = {
     ]
   },
   "vehicles": {
-    "$comment": "The vehicle deck: named, individual vehicles as cards - seventeen now, and every one of them a specific machine rather than a class of machine. A vehicle card is a specific machine with a history; transport.json modes are the generic rules it runs on (mode names which). Card layout: picture across the middle, name and card code at the top, story text low; a vertical numbered DAMAGE bar up the LEFT edge and a vertical numbered CARGO bar up the RIGHT edge, both numbered from the bottom - harm left, capacity right, the same convention as every other deck (docs/art/06-components.md). Track damage and loaded bulk with tokens on the bars. A vehicle whose damage bar fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first. Art prompts in docs/art/prompts/vehicles.md.",
+    "$comment": "The vehicle deck: named, individual vehicles as cards - seventeen now, and every one of them a specific machine rather than a class of machine. A vehicle card is a specific machine with a history; transport.json modes are the generic rules it runs on (mode names which). Card layout: name and card code at the top, a summary strip under them - V for the damage boxes the hull holds, C for the bulk of its hold - then the picture across the full width the frame allows, and the story low. Nothing on the card is walked: damage runs up the player board's V track, and loaded bulk is counted against the printed C. A vehicle whose V track fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first. Art prompts in docs/art/prompts/vehicles.md.",
     "version": "0.1.0",
     "cardIdScheme": {
       "$comment": "Every card in every deck carries a code: a deck prefix, a dash, a two-digit sequence. VEH vehicles, MON monsters, CHR characters, QST quests, TAL talismans, EVT events, ITM items, SPL spells. A revision suffix (VEH-03 v2) marks a reprinted card; unrevised cards carry no suffix. The numbering is this repository's own - anyone forking the game is free to renumber, which is why the code is data, not identity: the id field is the identity.",
@@ -11068,8 +11187,8 @@ window.GAME_DATA = {
     ]
   },
   "characters": {
-    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a health track and sometimes mana. Card layout: portrait across the middle, name and code at the top, story low; a vertical numbered HEALTH bar up the LEFT edge, and up the RIGHT edge a numbered BURDEN bar in kilograms - carryKg, what this character can carry unaided, walked by a token as they pick things up (rules.json carrying). Where the character has innate mana capacity a MANA bar runs inboard of the burden bar, on the portrait itself. Harm left, capacity right, same as every deck (docs/art/06-components.md). A character at 0 health is carried to the nearest settlement and rests until healed to half; they lose any carried cargo on the way. Art prompts in docs/art/prompts/characters.md.",
-    "version": "0.2.0",
+    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a summary of their numbers and a story.\n\nCard layout: name and card code at the top, then a SUMMARY STRIP across the card - one lettered box per number, the letter the same one the player board's track carries, so H 10 on the card and the H track on the board are obviously the same thing. The strip prints the MAXIMUM and nothing else: there is no bar to walk on a card any more, because the board took the walking over and a card in a recess is a card whose edges you cannot reach. Under the strip the portrait runs the full width the frame allows, and the story sits low.\n\nThe numbers on the strip are health, strength, defence, mana, starting gold, and the kilograms the hero can shoulder - which is derived, not designed: strength x rules.carrying.kgPerStrength. Burden was a bar and then a track and is now neither; strength does that job. A character at 0 health is carried to the nearest settlement and mends only under medical aid (rules.json rest); a character at 0 strength does not fight and carries nothing, and one night's sleep puts all of it back. Art prompts in docs/art/prompts/characters.md.",
+    "version": "0.3.0",
     "characters": [
       {
         "id": "corin-vale",
@@ -11078,8 +11197,9 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Wayfarer",
         "strength": 3,
+        "defence": 3,
         "health": 10,
-        "carryKg": 12,
+        "startingGold": 45,
         "manaCapacity": 0,
         "traits": [
           "Wayfinder: +1 hex on any day leg that starts on a road.",
@@ -11097,8 +11217,9 @@ window.GAME_DATA = {
         "people": "dwarf",
         "calling": "Prospector",
         "strength": 4,
+        "defence": 3,
         "health": 12,
-        "carryKg": 13,
+        "startingGold": 55,
         "manaCapacity": 0,
         "traits": [
           "Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party.",
@@ -11116,8 +11237,9 @@ window.GAME_DATA = {
         "people": "elf",
         "calling": "Herbalist",
         "strength": 2,
+        "defence": 2,
         "health": 8,
-        "carryKg": 10,
+        "startingGold": 70,
         "manaCapacity": 3,
         "manaNote": "Innate - no talisman needed for the first 3.",
         "traits": [
@@ -11134,8 +11256,9 @@ window.GAME_DATA = {
         "people": "halfling",
         "calling": "Provisioner",
         "strength": 2,
+        "defence": 2,
         "health": 8,
-        "carryKg": 9,
+        "startingGold": 80,
         "manaCapacity": 0,
         "traits": [
           "Iron Stomach: Tilly and her party ignore illness event cards.",
@@ -11151,8 +11274,9 @@ window.GAME_DATA = {
         "people": "orc",
         "calling": "Caravan Guard",
         "strength": 6,
+        "defence": 5,
         "health": 13,
-        "carryKg": 14,
+        "startingGold": 50,
         "manaCapacity": 0,
         "traits": [
           "Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave.",
@@ -11170,8 +11294,9 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Physician",
         "strength": 2,
+        "defence": 2,
         "health": 9,
-        "carryKg": 10,
+        "startingGold": 65,
         "manaCapacity": 0,
         "traits": [
           "Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed.",
@@ -11189,8 +11314,9 @@ window.GAME_DATA = {
         "people": "dwarf",
         "calling": "Engineer",
         "strength": 4,
+        "defence": 3,
         "health": 10,
-        "carryKg": 13,
+        "startingGold": 60,
         "manaCapacity": 0,
         "traits": [
           "Linesman: a train Havik rides spends 1 less coal per leg.",
@@ -11206,8 +11332,9 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Hedge-Witch",
         "strength": 2,
+        "defence": 2,
         "health": 7,
-        "carryKg": 8,
+        "startingGold": 35,
         "manaCapacity": 0,
         "manaNote": "Human - every drop she holds lives in a talisman, and she holds plenty.",
         "traits": [
@@ -11661,7 +11788,7 @@ window.GAME_DATA = {
         "effortHours": 0,
         "baseValue": 0,
         "massKg": 0,
-        "effect": "She will not sink. A damage bar that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.",
+        "effect": "She will not sink. A V track that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.",
         "story": "Bound into the keel timber before she is planked, which means it is nearly always done to a new hull and nearly never to an old one. Insurers ask. Insurers charge less when the answer is yes."
       },
       {
@@ -11721,8 +11848,8 @@ window.GAME_DATA = {
     ]
   },
   "components": {
-    "$comment": "How a physical game element is built - stated once, here, and pointed at from everywhere that draws one. This file holds no content: no card says anything here, no monster is named here. It says what shape a card is, where its bars hang, how thick the frame is drawn, what a deck's back looks like. tools/build-cards.mjs reads it instead of carrying those numbers in its head, which is the point: change the corner radius here and the fronts, the backs, the print sheet and the explorer previews all move together. Adding a deck is an entry under `decks` plus its content file - not a new set of numbers copied out of this one. See docs/design/08-components.md for the bill of materials and docs/art/06-components.md for why each convention is what it is.",
-    "version": "0.1.0",
+    "$comment": "How a physical game element is built - stated once, here, and pointed at from everywhere that draws one. This file holds no content: no card says anything here, no monster is named here. It says what shape a card is, how its summary strip is set, how thick the frame is drawn, what a deck's back looks like, what shape a token is cut, and how the player board, the market board and a mini-map sheet are laid out. tools/build-cards.mjs reads it instead of carrying those numbers in its head, which is the point: change the corner radius here and the fronts, the backs, the print sheet and the explorer previews all move together. Adding a deck is an entry under `decks` plus its content file - not a new set of numbers copied out of this one. See docs/design/08-components.md for the bill of materials and docs/art/06-components.md for why each convention is what it is.",
+    "version": "0.2.0",
     "$structure": {
       "$comment": "The tiny type system this file uses, so the next thing that reads it does not have to guess. Every length is in millimetres unless the key says otherwise. A `ref` is a dotted path into this file or another dataset, and means 'use that definition, do not restate it'.",
       "units": "mm for anything physical, grid units for anything drawn (see stock.unitsPerMm)",
@@ -11754,36 +11881,52 @@ window.GAME_DATA = {
         "radius": 3.6
       }
     },
-    "bars": {
-      "$comment": "The vertical numbered bars. Harm always left, capacity always right - the convention is load-bearing across four decks and is stated in docs/art/06-components.md. A bar is numbered from the bottom and walked by a token. `maxCells` is the most rungs the edge will hold; `steps` is the ladder of step sizes a scale may choose from, smallest first, so a 100-bulk hold still fits a walkable bar.",
-      "width": 30,
-      "maxCells": 14,
-      "steps": [
-        1,
-        2,
-        5,
-        10,
-        20,
-        50
-      ],
-      "harm": {
-        "edge": "left",
-        "ink": "oxide",
-        "inkPlateMark": "notch-down",
-        "never": "skip-counts - a harm track is always step 1"
+    "statStrip": {
+      "$comment": "The row of lettered boxes across the top of every card, and what replaced the bars.\n\nA card used to hang a numbered ladder off each edge - harm left, capacity right - and a token walked it. That worked while a card was held in the hand. It stopped working the day the player board arrived, because a card in a recess is a card whose edges are under the board: the tracks moved to the board (playerboard.json) and the ladders on the cards became decoration that ate two columns of picture.\n\nSo a card now prints the MAXIMUM and nothing else. One box per number, the letter first and the figure after it - H 10, S 6, D 5 - and the letter is the same letter the board's track carries, so a player setting up reads across the strip and sets the tokens left to right. Nothing on a card moves any more; everything that moves is on the board.\n\nWhat the strip costs the picture is about six millimetres of height. What it pays back is the whole width of the card: the portrait window now runs frame to frame, because there is nothing beside it.",
+      "cells": {
+        "max": 6,
+        "heightMm": 5.75,
+        "gap": 5,
+        "pad": 4,
+        "cornerRadius": 5,
+        "$maxNote": "Six is what a 63 mm card holds at a legible size - about 9 mm a box. A deck that wants a seventh number wants a smaller number of numbers."
       },
-      "capacity": {
-        "edge": "right",
-        "ink": "slate"
+      "letterBox": {
+        "size": 34,
+        "fill": "soot-tint-12",
+        "$note": "A tinted square at the left of the box with the letter in it, so the letter reads as a label and not as part of the figure."
       },
-      "arcaneCapacity": {
-        "edge": "right",
-        "ink": "bruise",
-        "note": "mana bars only - mana is an arcane subject"
+      "letter": {
+        "size": 20,
+        "family": "sans",
+        "weight": "bold",
+        "tracking": 0.4
       },
-      "inboard": {
-        "note": "A second capacity comes in over the portrait and lays its own paper first.",
-        "offsetFromRight": 104
+      "value": {
+        "size": 22,
+        "family": "sans",
+        "weight": "bold",
+        "minSize": 17,
+        "$minNote": "The figure shrinks to fit its box and stops at minSize, which is the 6 pt print floor in palette.json rules.minTypeSize (6 pt = 17 grid units). A number that will not fit at 6 pt is a number that does not belong on a card."
+      },
+      "rule": {
+        "strokeWidth": 1.4,
+        "$note": "The strip sits in one boxed row under the kicker, each cell ruled, so it reads as a table and not as a sentence."
+      },
+      "letters": {
+        "$comment": "The letter a stat is called by, across the whole game. The five that the player board also has a track for MUST match data/playerboard.json - tools/validate-data.mjs checks that they do, and fails the build if a card and a board ever start calling the same number by different names. The rest are card-only: a number that is printed and never walked has no track to borrow a letter from, so it gets one here.\n\nThese are conventions, not content: no card is named here and no value is stated here.",
+        "health": "H",
+        "strength": "S",
+        "defence": "D",
+        "mana": "M",
+        "vehicle": "V",
+        "gold": "¤",
+        "carry": "KG",
+        "cargo": "C",
+        "yield": "Y",
+        "value": "¤",
+        "mass": "KG",
+        "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so."
       }
     },
     "board": {
@@ -12017,24 +12160,157 @@ window.GAME_DATA = {
       }
     },
     "tokens": {
-      "$comment": "Round board tokens - the generic ones, which is all of them. A commodity's identity lives on its card; the token on the board only has to say which commodity family it belongs to and be findable in a heap. 18 mm is the chit tier in docs/art/04-iconography.md: silhouette and frame only. `engravable` marks the ones that are meant to survive being cut on a laser rather than printed - which means the mark has to work as a single-depth engraving with no tint at all.",
+      "$comment": "Everything loose that is not a card. Two shapes and one reason for each: pieces that are CUT are hexagons, pieces that are STRUCK are discs.\n\nA hexagon shares its cuts. Nested on a sheet, one straight line is the edge of two tokens and every token but the outside row is bounded entirely by cuts somebody else already paid for, so a sheet of hexes yields around a fifth more pieces than the same sheet of discs and the laser travels a good deal less. Discs share nothing: every circle is cut alone and the waste between four of them is a piece of stock the size of a fifth. So the commodity tokens - the ones there are hundreds of - are hexagons, and it is worth the change of shape.\n\nCoins stay round, because a coin that is not round is not a coin. There are far fewer of them, they are the one piece a player handles by feel while looking somewhere else, and round against hexagonal is the fastest distinction a hand can make in a heap.",
       "commodity": {
-        "diameterMm": 18,
-        "shape": "round",
+        "shape": "hex",
+        "orientation": "flat-top",
+        "acrossFlatsMm": 18,
         "engravable": true,
-        "carries": "the commodity family's mark and hatch, never a number"
+        "carries": "the commodity family's mark and hatch, never a number",
+        "nesting": {
+          "rowPitchMm": 18,
+          "columnPitchMm": 15.59,
+          "sharedEdges": true,
+          "$note": "columnPitch is acrossFlats x 3/4 for a flat-top hex nested in a honeycomb: neighbouring columns interlock, and the cut between them is one line, not two."
+        },
+        "$note": "The commodity's identity lives on its card; the token only has to say which family it belongs to and be findable in a heap. 18 mm is the chit tier in docs/art/04-iconography.md - silhouette and frame only - and the mark has to work as a single-depth engraving with no tint at all."
       },
       "deposit": {
-        "diameterMm": 18,
+        "shape": "hex",
+        "orientation": "flat-top",
+        "acrossFlatsMm": 24,
+        "engravable": true,
+        "carries": "the deposit's mark on one face, its yield on the other - deposits differ, see data/deposits.json tokenYields",
+        "$note": "Cut from the same stock and nested the same way, and bigger than a commodity token because it lies on a map hex rather than in a heap: size is what tells the two apart on the table, since both are hexes."
+      },
+      "coin": {
         "shape": "round",
         "engravable": true,
-        "carries": "the deposit's mark on one face, its yield on the other - deposits differ, see data/deposits.json tokenYields"
+        "denominations": [
+          {
+            "value": 1,
+            "diameterMm": 16
+          },
+          {
+            "value": 5,
+            "diameterMm": 19
+          },
+          {
+            "value": 25,
+            "diameterMm": 22
+          }
+        ],
+        "carries": "the figure and the currency mark, from rules.json currency.symbol - a coin is the one token in the game that says a number out loud",
+        "$note": "Three sizes rather than three colours, so a stack is countable by feel and in the black-and-white edition. Round because a coin is round; see the block comment for why nothing else is."
       },
       "bar": {
-        "diameterMm": 7,
         "shape": "round",
+        "diameterMm": 7,
         "engravable": false,
-        "carries": "nothing - it is the marker that walks a card's bar"
+        "carries": "nothing - it is the marker that walks a track on the player board or the market board",
+        "$note": "Six of these per player board, one per track, plus one per commodity line in play on the market board."
+      },
+      "route": {
+        "$comment": "Road and rail, laid on the map hex by hex, and the piece that finally puts a player's name on the thing they paid for (rules.json infrastructure). A route token is a BAR, not a chit: it lies along the line between two hex centres, which is where a road actually is, and it is the length of that line so a run of them reads as a continuous road rather than as a row of counters.\n\nThe sizing is not typed here, because it is not ours to type - a map hex is whatever the map's print preset makes it (data/maps/<id>.json print.presets[].hexAcrossFlatsMm), and the bar has to match. So the token is stated as fractions of the hex and tools/build-map.mjs prints the millimetres for every preset it derives. At the default four-sheet Korvane Reach board - a 16.7 mm hex - that is a 15 x 3.7 mm road bar and a 15 x 5.3 mm rail bar, both cuttable in 3 mm ply and both big enough to pick up.",
+        "lengthFraction": 0.9,
+        "$lengthNote": "Nine tenths of the centre-to-centre distance, which for a pointy-top hex IS acrossFlats. The missing tenth is the gap that keeps two abutting bars from looking like one long one, and it is what lets a finger get under an end.",
+        "road": {
+          "widthFraction": 0.22,
+          "engravable": true,
+          "carries": "a plain metalled hatch along its length"
+        },
+        "rail": {
+          "widthFraction": 0.32,
+          "engravable": true,
+          "carries": "sleepers across its width - readable at arm's length as rail rather than road, which is the only thing the two shapes have to do"
+        },
+        "bridge": {
+          "widthFraction": 0.32,
+          "engravable": true,
+          "carries": "the same bar with its ends squared off and a parapet line, laid across one water hex"
+        },
+        "ownership": {
+          "$comment": "Whose road it is decides who collects the toll, so it has to be readable across a table and readable by a player who cannot use the colour.",
+          "mark": "peg holes along the centre line: one hole for the first player, two for the second, and so on to five.",
+          "holeDiameterMm": 2,
+          "colour": "The owner's colour on the wash as well, for everyone it does work for."
+        },
+        "howMany": "One per hex of road or rail built. A player who runs out has run out of road, which is a real limit and a fair one."
+      }
+    },
+    "minimap": {
+      "$comment": "The zoom-in sheet: one hex of the world map, opened out. Play happens inside it and the result is written back to the big map.\n\nIt is a flat colour and a grid, and NOTHING else. No render, no pattern, no hatch, no drawn terrain: the field is a hexagon of hexagons filled with the plain colour that terrain already prints in, and the grid is ruled on top. That is the whole sheet. It needs no plate, no artist and no framing entry, which is why it is not in the mint queue and why it is not waiting on anything.\n\nThe cell is the load-bearing decision: a mini-map cell is EXACTLY the size of a world-map hex. A figure standing on the big board picks up and stands on a mini-map cell without being re-based, a route token cut for the world map fits a mini-map lane, and one ruler measures both. The scale is a fiction - the ground inside one hex is not nine hexes of ground - and it is the right fiction, because everything physical about the two boards already agrees.",
+      "sheet": {
+        "widthMm": 297,
+        "heightMm": 210,
+        "bleedMm": 3,
+        "cornerRadiusMm": 6,
+        "$note": "A4 landscape, the same sheet as the player board."
+      },
+      "marginMm": 8,
+      "cellsPerSide": 5,
+      "$cellsNote": "Five to a side is 61 cells and nine across the middle row - the most that fits on A4 once the cell is pinned to the world hex, and the number the shelved drawn sheets were laid out to.",
+      "cellFrom": "maps.<id>.print.presets[default].hexAcrossFlatsMm",
+      "$cellFromNote": "Not a number. The cell IS the world hex, so it is read from whichever map and preset the table is playing on, and a bigger printed map makes a bigger mini-map cell without anything here changing.",
+      "field": {
+        "orientation": "pointy",
+        "strokeWidth": 2.4,
+        "$note": "Pointy-top cells, the same orientation as the world map's grid, so a lane of cells runs the same way on both boards. The field's edge is not a drawn hexagon: it is the outer edges of the outer cells, traced. A hexagon of hexes has a slightly stepped boundary and a smooth one drawn over it never quite lands on the cells - which is exactly the kind of half-millimetre nobody can see and everybody can feel."
+      },
+      "grid": {
+        "strokeWidth": 0.9,
+        "opacity": 0.6,
+        "coordinates": true,
+        "$note": "Ruled on the ink plate, exactly as the world map's overlay is - and for the same reason: never ask an image model for a grid. See docs/map/README.md. `coordinates` prints a row letter and a cell number in the corner of every cell, so a cell can be named across the table without anybody counting."
+      },
+      "wash": {
+        "from": "palette.terrain[].wash",
+        "opacity": 1,
+        "$fromNote": "The PRINTED colour, not the screen one. data/terrain.json terrains[].colour is what the explorer paints a hex in; docs/art/palette.json terrain[].wash is what a press puts on paper, and it is already a tint because - as that file says - terrain is the largest printed area in the game and a full-strength ink across it is both ugly and expensive. A mini-map field is the largest printed area of all, so it takes the wash at full strength and the tint is already in it. It also means the ink grid ruled on top stays the darkest thing on the sheet, which the raw screen green did not.",
+        "$bwNote": "In the black-and-white edition the field is bare paper and the grid, the letter code and the panels carry the sheet on their own."
+      },
+      "panels": {
+        "left": "encounter",
+        "right": "holdings",
+        "$note": "What a hexagon on a rectangle leaves over, either side of the field. Both print on every sheet, so no sheet is ever the wrong sheet."
+      }
+    },
+    "marketBoard": {
+      "$comment": "The market board: one A4 sheet of price ladders, and every ladder identical.\n\nA town's price for a commodity is its base value times a band (rules.json market.priceBands), and the band is the only part that moves. So the board prints the bands and nothing else - no commodity is named on it, no base value is printed on it - and you say WHICH commodity a line is about by standing that commodity's hexagonal token on it. The token is both the label and the reading: where it stands is the price, and which token it is says what the price is of. One generic board serves any commodity, any town and any table, and a game that adds a sixty-seventh commodity reprints nothing.\n\nThere is no name strip down the side, and that is the design rather than an omission. A strip would need a second token, or a pencil, to say what a line was about - and the line already has a token saying exactly that.\n\nThe geometry is derived the way the player board's is: a band cell is what the paper leaves once the blocks and the gutter have taken theirs, and the sheet holds however many lines fit. Nothing below is a coordinate, and the one dimension that is not free is the token: a line is a token tall plus its clearance, so a bigger commodity token makes a taller line and fewer of them, and never a token that does not fit its cell.",
+      "sheet": {
+        "widthMm": 297,
+        "heightMm": 210,
+        "bleedMm": 3,
+        "cornerRadiusMm": 6
+      },
+      "marginMm": 8,
+      "gutterMm": 6,
+      "headMm": 14,
+      "footMm": 12,
+      "$headNote": "One head row, at the top of the sheet, carrying every block's band labels - not one head over every line. Sixteen repetitions of x0.5 x0.75 x1 down a page is sixteen chances for the eye to lose which column it is in; one row and a ruled column edge does the job.",
+      "$footNote": "A strip across the bottom for the three lines a market board has to say out loud (marketboard.json panel). It is the only prose on the sheet.",
+      "line": {
+        "$comment": "One commodity's price, read left to right, cheap to dear. A line is a row of band cells and nothing else.",
+        "clearanceMm": 1.5,
+        "$heightNote": "A line's height is not stated: it is the commodity token's acrossFlats plus a clearance either side, so the token can be picked up out of a cell without lifting its neighbours.",
+        "strokeWidth": 1.6,
+        "bandStrokeWidth": 0.9
+      },
+      "cell": {
+        "minMm": 18,
+        "$note": "A band cell has to be wider than a commodity token is across the CORNERS, which for a flat-top hex is acrossFlats x 2/root-3 - about 21 mm for an 18 mm token. tools/build-market.mjs checks it and fails rather than printing a board a token overhangs."
+      },
+      "startBandRule": {
+        "strokeWidth": 2.4,
+        "$note": "The starting band (rules.json market.startingBandIndex) rules heavier and is where every token is placed at setup, so a board reset to nothing is a board with one straight column of tokens."
+      },
+      "timber": {
+        "boardWidthMm": 26,
+        "seamStrokeWidth": 1.1,
+        "grainStrokeWidth": 0.7,
+        "grainOpacity": 0.5,
+        "knots": 2,
+        "$note": "The same sawn ground as the player board. They are the same piece of furniture in two sizes and they should look it."
       }
     }
   },
@@ -12244,25 +12520,27 @@ window.GAME_DATA = {
     ]
   },
   "playerboard": {
-    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds their character card, four cards of whatever kit they have in play, and the six numbered tracks a hero and their gear walk a token along.\n\nOne board, not one per people. Everything that differs between an orc and a halfling is printed on the cards that lie in the recesses - their strength, their health, what they can shoulder - so the board underneath them has no business knowing which of them is sitting there. A board that did would be five boards to print, five to keep in step, and four of them wrong for whoever picked it up.\n\nWhy the board carries tracks at all, when the cards already have bars: a card in a recess is a card whose edges you cannot reach. The bar convention (docs/design/08-components.md) hangs harm off a card's left edge and capacity off its right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board takes the bars over. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
-    "version": "0.3.0",
+    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds their character card, four cards of whatever kit they have in play, and the six numbered tracks a figure and their gear walk a token along.\n\nOne board, not one per people, and not one per SPECIES either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, defence, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter): the furniture does not care.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
+    "version": "0.4.0",
     "board": {
       "id": "player-board",
       "name": "Player Board",
       "sheet": "A4 landscape",
-      "summary": "One per player, and every one identical. The character card top left, six tracks up the middle, four cards of kit on the right, and the round's phases under the character.",
+      "summary": "One per player and one for the table, and every one identical. The character card top left, six tracks up the middle, four cards of kit on the right, and the round's phases under the character.",
+      "spare": "Print one more than there are players. The spare is the ENCOUNTER board: when a discovery roll turns up a monster or a stranger, their card is dealt onto it, its tracks are set from the card's summary strip, and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter).",
       "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, which is what let a sixth track on without anything getting narrower.",
-      "generic": "The board says nothing about who is playing it. Race, calling, health, strength and burden limits are all printed on the character card, which is the thing that changes between players; the board is the furniture that card sits in."
+      "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person. People, calling, health, strength, defence and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster and a stranger met on the road."
     },
     "$trackKeys": {
-      "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, the way every bar in the game is numbered. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the six columns are one grid rather than six scales a player has to keep straight.",
+      "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, and numbered in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the six columns are one grid rather than six scales a player has to keep straight.",
       "letter": "the single letter printed at the head of the column - what a player calls the track across the table",
       "label": "the full name, printed beside the letter",
-      "unit": "printed under the letter where the track counts something - a bar that counts kilograms has to say so",
+      "unit": "printed under the letter where the track counts something other than itself - hexes, on the one track that does",
       "step": "how much one rung is worth; `stepFrom` instead means 'read it from that dotted path in the data, do not restate it'",
-      "kind": "harm | capacity | leg | rating - decides the ink and the ink-plate mark, exactly as it does on a card edge",
-      "covers": "the largest value the printed game can reach, so the ceiling can be checked against it. `path` is where that number comes from, and tools/validate-data.mjs recomputes it: a character with 15 health fails the check rather than running off the top of the track",
-      "mark": "the ink-plate mark on every rung, from palette.json semantic - because one player in twelve cannot use the colour"
+      "kind": "harm | capacity | leg | rating - decides the ink the column washes in",
+      "covers": "the largest value the printed game can reach, so the ceiling can be checked against it. `paths` is where that number comes from, and tools/validate-data.mjs recomputes it: a character with 15 health fails the check rather than running off the top of the track",
+      "reads": "who reads the number and which way round - defence is read by your opponent, not by you",
+      "$marksNote": "There is no `mark` any more. Every rung used to carry a little ink-plate glyph saying which KIND of number it was - a notch down for harm, a pip for a rating - and at 11 mm a column it fought the number for the same three millimetres and won often enough to matter. The columns are numbered and nothing else: no glyph, no plus, no minus. Which way a token walks is on the track's `walks` line and in the rulebook, where a sentence has room to say it."
     },
     "tracks": [
       {
@@ -12273,18 +12551,18 @@ window.GAME_DATA = {
         "unit": null,
         "kind": "harm",
         "ink": "oxide",
-        "mark": "notch-down",
         "step": 1,
         "covers": {
-          "value": 13,
+          "value": 14,
           "paths": [
-            "characters.characters[].health"
+            "characters.characters[].health",
+            "monsters.monsters[].health"
           ],
-          "note": "Ruk of the Red Road, the toughest character printed."
+          "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met."
         },
-        "walks": "Down as the hero takes hits, up as they rest - 2 a round at an inn, 3 where there is a healer.",
-        "atZero": "The hero is carried to the nearest settlement and rests until healed to half. Everything on the burden track is lost on the way: knock that token down to zero too.",
-        "rule": "rules.json rest, characters.json health"
+        "walks": "Down as the figure takes hits, and up under medical aid alone - 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A round that ends with nothing to eat costs 1.",
+        "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way.",
+        "rule": "rules.json rest, rules.json upkeep.food, characters.json health, monsters.json health"
       },
       {
         "id": "strength",
@@ -12294,7 +12572,6 @@ window.GAME_DATA = {
         "unit": null,
         "kind": "rating",
         "ink": "ochre",
-        "mark": "pip",
         "step": 1,
         "covers": {
           "value": 7,
@@ -12302,35 +12579,36 @@ window.GAME_DATA = {
             "monsters.monsters[].strength",
             "characters.characters[].strength"
           ],
-          "note": "The Deepwater Maw. No character reaches it - Ruk, the strongest, is 6."
+          "note": "Vhalrik. No character reaches it - Ruk, the strongest, is 6."
         },
-        "walks": "Rarely. It is the one track that mostly sits still: set it from the character card at setup and move it only when something lends or takes strength.",
-        "atZero": "Nothing left to swing with. A figure at 0 strength does not fight.",
-        "reads": "Both ways at once. Your token is on the board, your opponent's number is printed on the card in front of you, and the fight is the difference between them: subtract yours, add theirs, and that is the number you need on a d6. Equal strength still hits on 4+, the way it always did.",
-        "note": "Strength was already on every monster card as a threat rating, and rules read it as a threshold - a thug refuses a monster of strength 4 or more. It now does the other half of the job as well, without ever adding a die: dice are what weapons and armour give you.",
-        "rule": "rules.json conflict.strength, monsters.json strength, characters.json strength, peoples.json strength.base"
+        "walks": "Set it from the card at setup and knock it down a rung for every night the party does not make camp. One night's sleep puts all of it back, wherever that night is taken.",
+        "atZero": "Nothing left to swing with, and nothing left to shoulder. A figure at 0 strength does not fight and carries nothing.",
+        "reads": "Both ways at once. Your strength is on this track and the thing you are fighting has its defence printed in front of you; the roll is the difference. It is also what you can carry: strength x rules.carrying.kgPerStrength kilograms, and the character card prints the kilograms so nobody multiplies at the table.",
+        "note": "Strength swallowed burden. They were the same arm doing the same job with two numbers and two tracks, and one of them was a track a player moved every time they picked up a rope.",
+        "rule": "rules.json conflict.strength, rules.json carrying, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
       },
       {
-        "id": "burden",
-        "name": "Burden",
-        "letter": "B",
-        "label": "BURDEN",
-        "unit": "kg",
-        "kind": "capacity",
+        "id": "defence",
+        "name": "Defence",
+        "letter": "D",
+        "label": "DEFENCE",
+        "unit": null,
+        "kind": "rating",
         "ink": "slate",
-        "mark": "notch-flat",
-        "stepFrom": "rules.carrying.barStepKg",
+        "step": 1,
         "covers": {
-          "value": 14,
+          "value": 6,
           "paths": [
-            "characters.characters[].carryKg"
+            "monsters.monsters[].defence",
+            "characters.characters[].defence"
           ],
-          "note": "Ruk again - nobody in the deck carries more, and nobody can, because 14 is the top of the board."
+          "note": "The gravel wyrm's plated shale, and Vhalrik's hide - the two hardest things in the game to land a blow on."
         },
-        "walks": "Total the mass of everything the hero is wearing, wielding and carrying, and stand the token on the first mark at or above that total.",
-        "atZero": "Empty-handed.",
-        "limit": "A hero may not take up an item that would push the token past their own limit, which is printed on their character card - not past the top of this track. The track is the same length for everyone, on purpose: it is the same board whoever is sitting behind it.",
-        "rule": "rules.json carrying, characters.json carryKg"
+        "walks": "Rarely. Set it from the card at setup; a spell, a shield wall or a piece of ground may lend or take a point for a fight.",
+        "atZero": "Nothing between the blow and you.",
+        "reads": "Your opponent reads it, not you: they add your defence to the number they need. Armour is a separate thing and always was - it soaks hits after they land (items.json armourValue), where defence stops them landing.",
+        "note": "New, and it is the half of the old strength that had no business being there. Strength used to sit on both sides of the attack roll, which quietly made every strong thing armoured; a stone boar barely swings and turns a sword, and now it can say so.",
+        "rule": "rules.json conflict.defence, rules.json conflict.attack, monsters.json defence, characters.json defence, peoples.json defence.base"
       },
       {
         "id": "pace",
@@ -12340,7 +12618,6 @@ window.GAME_DATA = {
         "unit": "hexes",
         "kind": "leg",
         "ink": "verdigris",
-        "mark": "notch-up",
         "step": 1,
         "covers": {
           "value": 8,
@@ -12348,18 +12625,17 @@ window.GAME_DATA = {
         },
         "walks": "Set it at the start of a leg to the speed in travel.json for the mode and the ground, then walk it down a rung per hex entered. Halve it for a night leg under a lantern; a torch buys one hex, two on a road.",
         "atZero": "The leg is over. Roll for discovery where you stopped.",
-        "note": "The one track that is not a bar off a card. A party counts hexes every single round of the game and has had nowhere to count them, which is what a board is for. It rules in verdigris - the ground you cross - so it cannot be mistaken for harm or for capacity at a glance. It is called pace rather than speed because strength has the S.",
+        "note": "The one track that is not a number off a card. A party counts hexes every single round of the game and has had nowhere to count them, which is what a board is for. It rules in verdigris - the ground you cross - so it cannot be mistaken for harm or for a rating at a glance. It is called pace rather than speed because strength has the S.",
         "rule": "travel.json speeds, rules.json movement.legs"
       },
       {
-        "id": "damage",
-        "name": "Damage",
-        "letter": "D",
-        "label": "DAMAGE",
+        "id": "vehicle",
+        "name": "Vehicle Damage",
+        "letter": "V",
+        "label": "VEHICLE",
         "unit": null,
         "kind": "harm",
         "ink": "oxide",
-        "mark": "notch-down",
         "step": 1,
         "covers": {
           "value": 12,
@@ -12370,6 +12646,7 @@ window.GAME_DATA = {
         },
         "walks": "The vehicle the player is running - the train, the ship, the wagon, the horse. Up as it is damaged, down as it is repaired: one box a round in any settlement of town rank or better, at 5 coin a box.",
         "atZero": "Sound. At the top the vehicle is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
+        "note": "It takes the V rather than the D because defence took the D. A player says 'my defence' and 'the wagon's damage', and only one of those two is about the player - so the letter goes to the player and the vehicle is named outright.",
         "rule": "rules.json rest, vehicles.json damageBoxes"
       },
       {
@@ -12381,7 +12658,6 @@ window.GAME_DATA = {
         "kind": "capacity",
         "arcane": true,
         "ink": "bruise",
-        "mark": "slip",
         "step": 1,
         "covers": {
           "value": 10,
@@ -12402,15 +12678,16 @@ window.GAME_DATA = {
       "paths": [
         "characters.characters[].health",
         "characters.characters[].strength",
-        "characters.characters[].carryKg",
+        "characters.characters[].defence",
         "characters.characters[].manaCapacity",
         "monsters.monsters[].health",
         "monsters.monsters[].strength",
+        "monsters.monsters[].defence",
+        "monsters.monsters[].manaYield",
         "vehicles.vehicles[].damageBoxes",
         "items.items[].manaCapacity",
-        "items.items[].massKg",
-        "peoples.peoples[].carry.baseKg",
         "peoples.peoples[].strength.base",
+        "peoples.peoples[].defence.base",
         "peoples.peoples[].manaStorage.innate"
       ]
     },
@@ -12436,7 +12713,7 @@ window.GAME_DATA = {
           "modifications",
           "quests"
         ],
-        "note": "Whatever the hero has in play and needs to see: a weapon, a lantern, a talisman, the vehicle they are running, the quest they have accepted. Four, because five cards on the table is a hand and four is a kit - and because a hero who wants a fifth thing has to put something down, which is the same argument the burden track is making."
+        "note": "Whatever the hero has in play and needs to see: a weapon, a lantern, a talisman, the vehicle they are running, the quest they have accepted. Four, because five cards on the table is a hand and four is a kit - and because a hero who wants a fifth thing has to put something down, which is the same argument the strength limit is making."
       }
     ],
     "panel": {
@@ -12447,9 +12724,125 @@ window.GAME_DATA = {
       "foot": "Turn order passes to the left.",
       "aside": {
         "title": "IN A FIGHT",
-        "source": "rules.conflict.strength",
+        "source": "rules.conflict.attack",
         "note": "Printed from the rule rather than restated, so the board and the rulebook cannot drift."
       }
+    }
+  },
+  "marketboard": {
+    "$comment": "The market board: the sheet the price of everything lives on.\n\nPrices were a number in a rulebook and a sum done in somebody's head - base value times a band, six bands, one town at a time - and nobody could see them. This is that sum, made physical: one line per commodity in play, six band cells to walk along it, and the commodity's own hexagonal token standing on the band that is its price today. Look at the table and you can see what everything is worth.\n\nEvery line is IDENTICAL and no commodity is named on the sheet. That is the whole design. A line is not the line for grain until somebody stands the grain token on it, and it stops being the grain line when they take it off. So one board serves a table of two or of five, any commodity, any town, and adding a sixty-seventh commodity to the game reprints nothing.\n\nThis file is content: what a line is for, what a token on it means, what the panel says. How the board is DRAWN - sheet, margin, how tall a line is cut, how wide a band cell gets - is declared once in components.json under `marketBoard`, the same division as the player board. The BANDS themselves are neither: they are rules.json market.priceBands, read at build time, because a board that restated them is a board that could disagree with the game.",
+    "version": "0.1.0",
+    "board": {
+      "id": "market-board",
+      "name": "Market Board",
+      "sheet": "A4 landscape",
+      "summary": "One sheet of identical price ladders. Stand a commodity's token on a band and that is what the commodity is worth; move it as the market drifts.",
+      "note": "The same sawn workbench as the player board (docs/art/06-components.md), routed with lines instead of columns. It carries no border, for the same reason the player board carries none: the paper the border took is another line.",
+      "generic": "Nothing on this board names a commodity, a town or a player. It is six numbers repeated until the paper runs out, and everything particular arrives on a token.",
+      "howMany": "One per town whose market the table is actually trading in - which in practice is one board for the neutral market plus one per player town that buys and sells. Print more of the same sheet."
+    },
+    "line": {
+      "$comment": "One commodity's price. Read left to right, cheap to dear.",
+      "identity": "The token IS the label. A line is not the grain line until somebody stands the grain token on it, and it stops being the grain line when they take it off - so a line has no name printed on it and needs none.",
+      "walks": "The commodity's own token (components.json tokens.commodity), one cell per band.",
+      "reads": "price = the commodity's baseValue x the band the token stands on. The base value is on the commodity's card and in the annex; the board holds the multiplier and only the multiplier.",
+      "setup": "Every token in play starts on the starting band (rules.json market.startingBandIndex) - the heavier-ruled cell - so a board at setup is a board with one straight column of tokens.",
+      "drift": "In the Market phase each town shifts one random commodity family up or down one band (rules.json market.driftPerRound). Move the tokens; nothing is written down.",
+      "spread": "What a player pays or receives when trading with the board rather than another player is the band price plus market.buySpread or plus market.sellSpread. The board does not print the spread - it is the same two numbers everywhere and it belongs in the rulebook, not on sixty-six lines."
+    },
+    "tokens": {
+      "$comment": "What stands on this board, and why it is that shape. The shapes themselves are components.json tokens.",
+      "commodity": "A hexagon, because there are hundreds of them and hexagons nest on a laser bed with shared cuts. It carries its family's mark and never a number - the number is where the token is standing.",
+      "coin": "A disc, because a coin is round. Coins never go on this board; they cross the table when the trade is made.",
+      "note": "A player short of commodity tokens may stand a bar token on a line and remember what it is. They will not remember what it is."
+    },
+    "panel": {
+      "$comment": "The one thing a market board has to say out loud, printed from rules.json rather than restated here so the sheet and the rulebook cannot drift.",
+      "id": "the-market",
+      "title": "THE MARKET",
+      "source": "rules.market",
+      "lines": [
+        "Town price = the commodity's base value × the band its token stands on.",
+        "Buying from the board costs the spread on top; selling to it takes the spread off.",
+        "Cargo that starts or ends on your own road or rail sells for a tenth more (rules.json infrastructure.haulage)."
+      ],
+      "foot": "Prices drift in the Market phase, one family a town, one band."
+    }
+  },
+  "minimap": {
+    "$comment": "The mini-map: one hex of the world map, opened out onto a sheet you can put figures on.\n\nSome moments need more board than a single hex - a battle, a monster encounter, a farm growing into a walled town. Those moments zoom in: play happens inside the mini-map and the result is written back to the big map.\n\nWhat a mini-map IS, now: a flat colour and a grid. One regular hexagon filled with the plain colour the terrain already declares (terrain.json terrains[].colour), a hexagonal grid of cells ruled on top, and two working panels in the space a hexagon on a rectangle leaves over. No render. No pattern. No hatch. No drawn terrain of any kind - which means no plate, no artist, no framing entry and no place in the mint queue. A sheet is generated, not commissioned.\n\nThe cell is the decision the rest follows from: a mini-map cell is EXACTLY the size of a world-map hex, read off whichever map and print preset the table is playing on. A figure standing on the campaign board picks up and stands on a mini-map cell without being re-based; a route token cut for the world map fits a mini-map lane; one ruler measures both. The scale is a fiction - the ground inside one hex is not sixty-one hexes of ground - and it is the right fiction, because everything physical about the two boards agrees.\n\nThis file is content: what the sheets are for, what the panels hold, what the footer says. How a sheet is DRAWN - the paper, the margin, how many cells to a side, how the grid rules - is components.json minimap, the same division as the player board and the market board.",
+    "version": "0.1.0",
+    "board": {
+      "id": "minimap",
+      "name": "Mini-map",
+      "sheet": "A4 landscape",
+      "summary": "One world hex, opened out: a plain-colour hexagonal field of 61 cells, each cell the size of a world-map hex, with an encounter panel and a holdings panel either side.",
+      "generic": "A sheet says nothing but its terrain. Which hex of which map it is standing in for is written in the footer in pencil when it is put down, and rubbed out when it is picked up.",
+      "howMany": "One per terrain, printed once. A table needs whichever ground it is fighting or building on, which is rarely more than two sheets at a time.",
+      "note": "The flat colour is not a placeholder for artwork that has not been drawn. It is the specification. A drawn mini-map competes with the pieces standing on it, and every one of these sheets is a sheet somebody is standing pieces on."
+    },
+    "hexGrid": {
+      "$comment": "Kept for the record, because it is a decision that gets re-litigated every time somebody notices a square grid would be easier to draw.",
+      "why": "The grid is hexagonal rather than square to give movement more, and more equal, options. A hex has six neighbours and every one of them is the same distance away; a square has four at one distance and four more at root two, so a square grid either lies about diagonals or forbids them. Six equal exits is what makes a route a choice rather than a staircase - it is why a road can bend without costing more than a road that does not, why flanking is a real position rather than an arithmetic exception, and why a party fleeing a monster has five ways out instead of three.",
+      "cost": "One: a hex grid is harder to draw and harder to describe in prose. The overlay tools carry that cost once (tools/lib/hexgrid.mjs) and nothing else in the game pays it.",
+      "andSo": "terrain.json keeps `tileShape: hex` and lists square as an alternative it does not use, and a mini-map's own grid is hexagonal for exactly the same reason the campaign map's is - plus one more, which is that a cell has to line up with a world hex."
+    },
+    "panels": [
+      {
+        "id": "encounter",
+        "side": "left",
+        "title": "ENCOUNTER",
+        "note": "Out for the fight, then away. A monster or a stranger met here is dealt onto a spare player board and run like a player who is not a person (rules.json exploration.discovery.encounter); this panel is only the order they act in and how the fight is going.",
+        "rows": [
+          {
+            "label": "Order",
+            "count": 6,
+            "kind": "write"
+          },
+          {
+            "label": "Round",
+            "count": 6,
+            "kind": "box"
+          },
+          {
+            "label": "Morale",
+            "count": 6,
+            "kind": "box"
+          }
+        ]
+      },
+      {
+        "id": "holdings",
+        "side": "right",
+        "title": "HOLDINGS",
+        "note": "In front of the player, possibly all game. What is built on this ground, who garrisons it and what is stored here.",
+        "rows": [
+          {
+            "label": "Built",
+            "count": 8,
+            "kind": "write"
+          },
+          {
+            "label": "Garrison",
+            "count": 4,
+            "kind": "write"
+          },
+          {
+            "label": "Stores",
+            "count": 6,
+            "kind": "write"
+          }
+        ]
+      }
+    ],
+    "footer": {
+      "$comment": "The three things a sheet has to say about itself, and the only place a mini-map is ever specific.",
+      "fields": [
+        "sheet code",
+        "map hex (written in when placed)",
+        "terrain code"
+      ],
+      "note": "The terrain code is printed - it is the one thing the sheet knows about itself. The map hex is a ruled blank, because it changes every time the sheet is put down."
     }
   },
   "maps": [

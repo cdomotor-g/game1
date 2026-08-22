@@ -106,6 +106,13 @@ have to find first.
 coin per storage slot, the densest value in the game. Slow, deposit-dependent, and
 the single most attractive thing on the board for a thief.
 
+**Roads.** New, and the only strategy that takes money off other players rather than off
+the board. A road hex costs a stone and three build points; every hex of it another
+player's leg enters pays you a coin, rail pays two, and cargo that starts or ends on your
+own network sells for a tenth more. It is slow, it is cheap, and it compounds with every
+other strategy on this list — see
+[03-map-and-movement.md](03-map-and-movement.md#a-road-is-yours-and-it-pays).
+
 ## Balancing status
 
 Nothing here is balanced. What the simulator can currently say is in

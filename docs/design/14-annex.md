@@ -241,14 +241,18 @@ Monster element weights by table:
 
 ## Peoples
 
-| People | Die | Workers | Terrain comfort | Strength | Carries | Mana |
-| --- | --- | --- | --- | --- | --- | --- |
-| Humans | d6 | 2 | grassland, coast, forest | 3 | 11 kg | talisman only |
-| Dwarves | d6 | 2 | mountain, hills, tundra | 4 | 13 kg | talisman only |
-| Elves | d6 | 2 | forest, hills, grassland | 2 | 10 kg | 3 innate |
-| Halflings | d6 | 3 | grassland, forest, coast | 2 | 8 kg | talisman only |
-| Orcs | d8 | 2 | hills, marsh, tundra, mountain | 5 | 14 kg | talisman only |
+| People | Die | Workers | Terrain comfort | Strength | Defence | Carries | Mana |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Humans | d6 | 2 | grassland, coast, forest | 3 | 3 | 9 kg | talisman only |
+| Dwarves | d6 | 2 | mountain, hills, tundra | 4 | 3 | 12 kg | talisman only |
+| Elves | d6 | 2 | forest, hills, grassland | 2 | 3 | 6 kg | 3 innate |
+| Halflings | d6 | 3 | grassland, forest, coast | 2 | 3 | 6 kg | talisman only |
+| Orcs | d8 | 2 | hills, marsh, tundra, mountain | 5 | 4 | 15 kg | talisman only |
 
+
+Carrying is not a separate number and has not been since strength swallowed
+burden: a figure lifts strength × 3 kg, and the column above is that
+sum rather than a value anybody chose.
 ### Traits
 
 | People | Trait | Effect |
@@ -291,12 +295,13 @@ Monster element weights by table:
 
 ## Items
 
-Mass is what the thing weighs. It counts against the carrier's **burden** —
-the kg bar up the right edge of every character card — and it is not
+Mass is what the thing weighs. It counts against what the carrier can lift —
+strength × 3 kg, printed on every character card — and it is not
 bulk: bulk is a commodity's storage and shipping cost, and no item has one.
 
-One rung of that bar is 1 kg, and it runs to what the player board holds:
-no figure in the game shoulders more than 14 kg unaided.
+No figure in the game shoulders more than 18 kg unaided, and
+nothing walks a token for it: a load either fits under the printed limit or
+it does not.
 
 ### Clothing
 
@@ -368,7 +373,7 @@ no figure in the game shoulders more than 14 kg unaided.
 
 | Item | Made at | Inputs | Hours | Value | Mass | Capacity | Effects |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Bone Charm (TAL-01) | carpenter | 1 lumber + 1 leather | 2 | 30 | 0.25 kg | 2 | Stores up to 2 mana. Track with a token on the mana bar. |
+| Bone Charm (TAL-01) | carpenter | 1 lumber + 1 leather | 2 | 30 | 0.25 kg | 2 | Stores up to 2 mana. |
 | Weaver's Knot (TAL-02) | weaver | 2 yarn | 3 | 45 | 0.25 kg | 3 | Stores up to 3 mana. |
 | Copper Amulet (TAL-03) | blacksmith | 1 copper | 3 | 60 | 0.25 kg | 4 | Stores up to 4 mana. |
 | Gold Locket (TAL-04) | blacksmith | 1 gold | 4 | 120 | 0.25 kg | 6 | Stores up to 6 mana. |
@@ -390,8 +395,9 @@ no figure in the game shoulders more than 14 kg unaided.
 
 ## Vehicle deck
 
-Damage bar up the **left** edge, cargo bar up the **right** — harm left,
-capacity right, on every deck in the game.
+**V** is the damage boxes the hull holds, **C** the bulk of its hold — the two
+boxes of a vehicle card's summary strip. Damage is walked on the player
+board's V track; nothing is walked on the card.
 
 | Code | Vehicle | Kind | Cargo | Damage | Quirk |
 | --- | --- | --- | --- | --- | --- |
@@ -418,35 +424,44 @@ capacity right, on every deck in the game.
 S = slay (always allowed), E = enslave, B = befriend, D = domesticate.
 Slaying yields the mana; the other three trade mana away for a living asset.
 
-| Code | Monster | Element | Str | Health | Mana | Ground | Options |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| MON-01 | Cinder Wolf | ![](../art/icons/element-fire.svg) fire | 2 | 4 | 1 | desert, hills, grassland | S B D |
-| MON-02 | Ash Drake | ![](../art/icons/element-fire.svg) fire | 4 | 8 | 3 | mountain, desert | S E |
-| MON-03 | Forge Wight | ![](../art/icons/element-fire.svg) fire | 3 | 6 | 2 | mountain, hills | S E B |
-| MON-04 | Barrow Troll | ![](../art/icons/element-earth.svg) earth | 4 | 10 | 3 | hills, grassland | S E |
-| MON-05 | Stone Boar | ![](../art/icons/element-earth.svg) earth | 2 | 6 | 1 | forest, hills | S B D |
-| MON-06 | Gravel Wyrm | ![](../art/icons/element-earth.svg) earth | 3 | 8 | 2 | mountain, desert | S |
-| MON-07 | Mire Strangler | ![](../art/icons/element-water.svg) water | 3 | 6 | 2 | marsh | S |
-| MON-08 | Reef Serpent | ![](../art/icons/element-water.svg) water | 3 | 7 | 2 | coast, shallow-water | S B |
-| MON-09 | The Deepwater Maw *(unique)* | ![](../art/icons/element-water.svg) water | 5 | 12 | 4 | deep-water | S |
-| MON-10 | Rime Harpy | ![](../art/icons/element-air.svg) air | 2 | 5 | 1 | tundra, mountain | S E B |
-| MON-11 | Dust Devil | ![](../art/icons/element-air.svg) air | 2 | 4 | 2 | desert, grassland | S |
-| MON-12 | Storm Roc | ![](../art/icons/element-air.svg) air | 4 | 9 | 3 | mountain, coast | S D |
-| MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | ![](../art/icons/element-fire.svg) fire | 7 | 14 | 6 | mountain, hills, desert | S B |
-| MON-14 | The Hoarwyrm | ![](../art/icons/element-air.svg) air | 5 | 13 | 4 | tundra, mountain, coast | S D |
+| Code | Monster | Element | Str | Def | Health | Mana | Ground | Options |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| MON-01 | Cinder Wolf | ![](../art/icons/element-fire.svg) fire | 2 | 2 | 4 | 1 | desert, hills, grassland | S B D |
+| MON-02 | Ash Drake | ![](../art/icons/element-fire.svg) fire | 4 | 4 | 8 | 3 | mountain, desert | S E |
+| MON-03 | Forge Wight | ![](../art/icons/element-fire.svg) fire | 3 | 4 | 6 | 2 | mountain, hills | S E B |
+| MON-04 | Barrow Troll | ![](../art/icons/element-earth.svg) earth | 4 | 4 | 10 | 3 | hills, grassland | S E |
+| MON-05 | Stone Boar | ![](../art/icons/element-earth.svg) earth | 2 | 4 | 6 | 1 | forest, hills | S B D |
+| MON-06 | Gravel Wyrm | ![](../art/icons/element-earth.svg) earth | 3 | 6 | 8 | 2 | mountain, desert | S |
+| MON-07 | Mire Strangler | ![](../art/icons/element-water.svg) water | 3 | 2 | 6 | 2 | marsh | S |
+| MON-08 | Reef Serpent | ![](../art/icons/element-water.svg) water | 3 | 3 | 7 | 2 | coast, shallow-water | S B |
+| MON-09 | The Deepwater Maw *(unique)* | ![](../art/icons/element-water.svg) water | 5 | 5 | 12 | 4 | deep-water | S |
+| MON-10 | Rime Harpy | ![](../art/icons/element-air.svg) air | 2 | 1 | 5 | 1 | tundra, mountain | S E B |
+| MON-11 | Dust Devil | ![](../art/icons/element-air.svg) air | 2 | 3 | 4 | 2 | desert, grassland | S |
+| MON-12 | Storm Roc | ![](../art/icons/element-air.svg) air | 4 | 3 | 9 | 3 | mountain, coast | S D |
+| MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | ![](../art/icons/element-fire.svg) fire | 7 | 6 | 14 | 6 | mountain, hills, desert | S B |
+| MON-14 | The Hoarwyrm | ![](../art/icons/element-air.svg) air | 5 | 5 | 13 | 4 | tundra, mountain, coast | S D |
 
+
+In a fight: Shift the number you need: less your own strength, plus their defence. target = hitsOn + opponentDefence - yourStrength, clamped to
+2+ and 6+. Strength is what a thing swings with, defence is what makes
+you miss — a stone boar barely swings and still turns a sword.
 ## Character deck
 
-| Code | Character | People | Calling | Str | Health | Burden | Mana | Traits |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| CHR-01 | Corin Vale | human | Wayfarer | 3 | 10 | 12 kg | talisman | Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere. |
-| CHR-02 | Berga Understone | dwarf | Prospector | 4 | 12 | 13 kg | talisman | Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1. |
-| CHR-03 | Sylvae of the Duskmere | elf | Herbalist | 2 | 8 | 10 kg | 3 innate | Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross. |
-| CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 2 | 8 | 9 kg | talisman | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
-| CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 6 | 13 | 14 kg | talisman | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
-| CHR-06 | Doctor Elspeth Marrow | human | Physician | 2 | 9 | 10 kg | talisman | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
-| CHR-07 | Havik Coalbrand | dwarf | Engineer | 4 | 10 | 13 kg | talisman | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands. |
-| CHR-08 | Old Mother Keswick | human | Hedge-Witch | 2 | 7 | 8 kg | talisman | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
+The six boxes of the summary strip across the top of every character card,
+in the order they are printed in — and the same letters the player board
+calls its tracks, so setting up is reading across the strip and placing
+tokens left to right.
+
+| Code | Character | People | Calling | H | S | D | M | ¤ | KG | Traits |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CHR-01 | Corin Vale | human | Wayfarer | 10 | 3 | 3 | — | 45 | 9 | Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere. |
+| CHR-02 | Berga Understone | dwarf | Prospector | 12 | 4 | 3 | — | 55 | 12 | Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1. |
+| CHR-03 | Sylvae of the Duskmere | elf | Herbalist | 8 | 2 | 2 | 3 | 70 | 6 | Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross. |
+| CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 8 | 2 | 2 | — | 80 | 6 | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
+| CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 13 | 6 | 5 | — | 50 | 18 | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
+| CHR-06 | Doctor Elspeth Marrow | human | Physician | 9 | 2 | 2 | — | 65 | 6 | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
+| CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 4 | 3 | — | 60 | 12 | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands. |
+| CHR-08 | Old Mother Keswick | human | Hedge-Witch | 7 | 2 | 2 | — | 35 | 6 | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
 
 ## Quest deck
 
@@ -503,7 +518,7 @@ The other half of the arcane deck.
 | ENC-02 | Truename Stamp | ![](../art/icons/element-earth.svg) earth | 3 | one tool | The tool takes no wear. It can still be lost, sold or stolen - and it is the single most stolen object in the game. |
 | ENC-03 | Salt-Kept | ![](../art/icons/element-water.svg) water | 3 | one granary, warehouse or ship's hold | Nothing inside spoils, perishes or curdles. Milk keeps. So does everything else. |
 | ENC-04 | Keening Ward | ![](../art/icons/element-air.svg) air | 4 | one building | Cancel every theft, heist and robbery card aimed at this building. Each time it does, roll d6: on a 1 the ward is spent and the card comes off. |
-| ENC-05 | Weightless Hand | ![](../art/icons/element-air.svg) air | 5 | one character's pack, belt or cloak | +10 kg to that character's burden bar. The bar is walked as normal; the last ten kilograms simply do not pull. |
+| ENC-05 | Weightless Hand | ![](../art/icons/element-air.svg) air | 5 | one character's pack, belt or cloak | +10 kg on top of what that character's strength allows them to carry (rules.json carrying). The last ten kilograms simply do not pull. |
 | ENC-06 | Deeproot Footing | ![](../art/icons/element-earth.svg) earth | 5 | one building | The building ignores Earthquake, Flood and Landslip entirely, and takes half damage, rounded down, from every other source. |
 
 ## Modification deck
@@ -521,7 +536,7 @@ shipwright and a hedge-witch are competing for the same hull.
 | MOD-05 | Storm Shutters | hull | ship, barge, airship, train | 3 lumber + 2 leather + 1 ironware | Cargo aboard loses nothing to weather: ignore every cargo-loss effect from a weather or disaster event card. The vehicle itself still takes its damage. |
 | MOD-06 | Ice Runners | running-gear | cart, caravan, sled | 2 steel + 2 lumber | Shod runners that swap for the wheels in an hour. While the winter rule in travel.json is in force the vehicle moves at sled speeds; the rest of the year it is 70 kg of steel in the bed and does nothing at all. |
 | MOD-07 | Compound Boiler | powerplant | train, ship, airship | 4 steel + 3 copper + 2 ironware | Uses the same steam twice. Halve the vehicle's fuel per leg, rounded up, and +1 hex per leg. It is delicate: on any hazard or battle result, roll d6 and on a 1 the boiler is out until repaired at a steelworks. |
-| MOD-08 | Keelbound | enchantment | ship, barge | 5 water mana | She will not sink. A damage bar that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off. |
+| MOD-08 | Keelbound | enchantment | ship, barge | 5 water mana | She will not sink. A V track that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off. |
 | MOD-09 | Fleetfoot Binding | enchantment | any | 4 air mana | +2 hexes on every day leg, whatever the mode and whatever the ground. An airship instead re-rolls one wind roll per journey. |
 | MOD-10 | Warded Hold | enchantment | any | 4 earth mana | Nothing is taken from this vehicle that its owner did not hand over. Cancel every theft, robbery, piracy and heist card aimed at its cargo. A boarder who wins a battle may still take the vehicle entire - the ward is on the hold, not on the owner. |
 | MOD-11 | Salamander Grate | enchantment | train, ship, airship | 6 fire mana | The firebox burns without fuel: the vehicle pays no fuel per leg, ever. It also never runs cold - the vehicle may take a night leg with no light, because the glare from the grate is light enough. |

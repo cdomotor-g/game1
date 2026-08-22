@@ -30,6 +30,10 @@ const checkOnly = args.includes('--check');
 const mapPath = join(ROOT, 'data', 'maps', `${mapId}.json`);
 const map = JSON.parse(readFileSync(mapPath, 'utf8'));
 const palette = JSON.parse(readFileSync(join(ROOT, 'docs', 'art', 'palette.json'), 'utf8'));
+/* Only for the route tokens: a road bar is the length of the line between two
+   hex centres, which is a map dimension, so the map's build is where it is
+   worked out (see the print report at the foot of this file). */
+const components = JSON.parse(readFileSync(join(ROOT, 'data', 'components.json'), 'utf8'));
 
 /* ------------------------------------------------------- derived print sizes */
 
@@ -187,5 +191,21 @@ for (const preset of map.print.presets) {
       `${preset.orientation} -> ${preset.mapWidthMm} x ${preset.mapHeightMm} mm, ` +
       `${preset.hexAcrossFlatsMm} mm hex, ${d.dpi} dpi`
   );
+  /* A route token is a bar laid along the line between two hex centres, and for
+     a pointy-top hex that line is exactly acrossFlats long - so the token's size
+     is the MAP's business, not the token's, and this is where it gets worked
+     out. components.json states it as fractions and nothing anywhere types a
+     millimetre; print the map at a different preset and the bars follow.
+     A mini-map cell is the same hex, so a bar cut for the default preset fits a
+     mini-map lane too (components.json minimap). */
+  const route = components?.tokens?.route;
+  if (route) {
+    const len = round(preset.hexAcrossFlatsMm * route.lengthFraction);
+    const bars = ['road', 'rail', 'bridge']
+      .filter((k) => route[k])
+      .map((k) => `${k} ${len} x ${round(preset.hexAcrossFlatsMm * route[k].widthFraction)} mm`)
+      .join(', ');
+    console.log(`         route tokens  ${bars}`);
+  }
 }
 if (!checkOnly) console.log(`wrote docs/map/${mapId}-proof.png`);

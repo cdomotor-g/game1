@@ -50,15 +50,23 @@ for a 4-player game and are estimates, not a manufacturing spec.
 is data (`vehicles.json → cardIdScheme`), the numbering is this repository's own, and a
 fork is free to renumber.
 
-**The bar convention.** Any card that tracks a quantity does it with a **vertical
-numbered bar**, numbered from the bottom, walked by a token: **harm on the left edge**
-(a vehicle's damage, a monster's or character's health), **capacity on the right edge**
-(a vehicle's cargo, a character's burden in kilograms, a talisman's or character's
-mana). One convention, every deck, so a bar never needs explaining twice.
+**The summary strip.** Every number a card has is printed once, as a **maximum**, in a
+row of lettered boxes across the top of the card: `H 10  S 3  D 3  M 0  ¤ 45  KG 9`. Six
+boxes is what a 63 mm card holds at a legible size, and the letters are the **player
+board's own track letters**, so setting up is reading across the strip and putting tokens
+down left to right. Nothing on a card moves. Everything that moves is on the board.
 
-A character carries two capacities and the edge holds one bar, so **burden keeps the
-edge** — every character has one — and the mana bar moves inboard onto the portrait.
-That is deliberate: eight cards with one geometry beat eight cards with two.
+There used to be a bar convention — a vertical numbered ladder up each edge, harm left and
+capacity right, walked by a token. It was right for a card held in the hand and it stopped
+being right the day the player board arrived, because **a card in a recess is a card whose
+edges are under the board.** The tracks moved; the ladders became decoration that ate two
+columns of picture; and a character with two capacities needed a third bar laid over their
+own face. Taking them off gave the portrait the full width of the card and gave every deck
+one geometry instead of four.
+
+Where the element used to be a badge beside the name, pushing everything else a line down
+the card, it is now the last box of the strip: the same ring and mark, in a box the size
+of the numbers beside it.
 
 ## The player board
 
@@ -68,33 +76,44 @@ third is the one that earned it:
 - **A place for the hero.** A recess the character card drops into, and four more for
   whatever else is in play — a weapon, a lantern, a talisman, the vehicle being run, an
   accepted quest. Four, not five: a hero who wants a fifth thing has to put something
-  down, which is the argument the burden track is already making.
+  down, which is the same argument the strength limit is making.
 - **The turn reference**, printed from `rules.json` so it cannot fall out of step with
   the rules the way a hand-lettered one would.
-- **Six numbered tracks**, and this is the point. The bar convention above hangs harm
-  off a card's left edge and capacity off its right, which is exactly right for a card
-  held in the hand and no use at all for one lying in a recess with five others. So the
-  board takes the bars over.
+- **Six numbered tracks**, and this is the point. Everything that moves in front of one
+  player moves here, in one place, where it can be reached and knocked back to zero.
 
 | | Track | A rung is | Runs | Walked by |
 | --- | --- | --- | --- | --- |
-| **H** | Health | 1 | 0–14 | The hero, hit and rested |
-| **S** | Strength | 1 | 0–14 | Rarely — set from the character card, and read against whatever you are fighting |
-| **B** | Burden | 1 kg | 0–14 kg | Everything worn, wielded and stowed |
+| **H** | Health | 1 | 0–14 | The figure, hurt and mended — and only medical aid mends it |
+| **S** | Strength | 1 | 0–14 | Set from the card; a rung down for every night without a camp, all of it back after one night's sleep |
+| **D** | Defence | 1 | 0–14 | Set from the card. Your opponent reads it, not you |
 | **P** | Pace | 1 hex | 0–14 | Hexes left in this leg |
-| **D** | Damage | 1 | 0–14 | The vehicle being run |
+| **V** | Vehicle | 1 | 0–14 | Damage to the vehicle being run |
 | **M** | Mana | 1 | 0–14 | The body and every talisman in a slot |
 
-Four of the six are bars that already exist on cards. **Pace** is the board's own: a
-party counts hexes off a speed table every single round of the game and has never had
-anywhere to count them — set the token at the start of a leg, walk it down a rung a hex,
-halve it for a night leg under a lantern. At zero the leg is over and the discovery roll
-is where you stopped. It is called pace rather than speed because strength has the S.
+**Pace** is the board's own: a party counts hexes off a speed table every single round of
+the game and has never had anywhere to count them — set the token at the start of a leg,
+walk it down a rung a hex, halve it for a night leg under a lantern. At zero the leg is
+over and the discovery roll is where you stopped. It is called pace rather than speed
+because strength has the S — and the vehicle track takes the **V** because defence took
+the D. A player says "my defence" and "the wagon's damage"; only one of those is about the
+player, so the player gets the letter.
 
-**Strength** is the newest, and the only one that mostly sits still: set it from the
-character card at setup and leave it. It reads both ways at once — your token on the
-board, your opponent's number printed on the card in front of you — and the fight is the
-difference between them. See **Strength in a fight**, below.
+**Strength** swallowed burden. They were the same arm doing the same job under two
+numbers: what you swing with and what you can shoulder. One track now, and what a figure
+carries is `strength × 3` kilograms — printed on the card so nobody multiplies at the
+table, derived so it can never disagree with the strength beside it.
+
+**Defence** is new, and it is the half of the old strength that had no business being
+there. Strength used to sit on **both** sides of the attack roll — yours and theirs — which
+quietly made every strong thing armoured. A stone boar barely swings and turns a sword; an
+ash drake does both; a dust devil does neither and is still almost impossible to hit. Two
+numbers, two properties. See **A fight**, below.
+
+**The tracks are numbered and nothing else.** No rung glyph, no plus, no minus. Each rung
+used to carry a little ink-plate mark saying which *kind* of number it was, and at a shade
+over 11 mm a column it was competing with the figure for the same three millimetres. Which
+way a token walks is a sentence in the rulebook, where there is room to say it.
 
 **Every track runs 0 to 14, and that is the game's ceiling as well as the board's.** The
 zero rung matters: it is where a token starts and where it ends up, and a numbered rung
@@ -103,51 +122,85 @@ whole dataset has to keep — `data/playerboard.json` lists every number a token
 `tools/validate-data.mjs` sweeps the lot, so a fifteenth point of health fails the build
 rather than walking off the top of a board somebody has already printed.
 
-That ceiling is why the mass scale was halved. A hero carrying 28 kg cannot stand on a
-track that stops at 14, so the kilogram got smaller rather than the board getting longer:
-every `massKg`, every `carry.baseKg` and every `carryKg` came down by the same factor, and
-a burden rung is one kilogram now instead of two. Nothing changed about what fits in whose
-hands — a plate harness is still very nearly all a strong figure can shoulder.
+Kilograms are the one thing that never has to fit that ceiling, because nothing walks a
+token for them any more: a load is totalled and checked against the limit printed on the
+card, and a strength-6 caravan guard shouldering 18 kg is a sentence, not a ladder.
 
-The tracks are the only thing on the board carrying colour: **harm in oxide, capacity in
-slate, the leg in verdigris, a rating in ochre, mana in bruise** — the same inks the card
-edges use, so a bar never needs explaining twice. Mana is the only arcane subject on the
-sheet and the only thing that takes the slip.
+The tracks are the only thing on the board carrying colour: **harm in oxide, a rating in
+ochre and slate, the leg in verdigris, mana in bruise**. Mana is the only arcane subject on
+the sheet and the only thing that takes the slip.
 
-**One board, and every one identical.** Everything that differs between an orc and a
-halfling — strength, health, what they can shoulder — is printed on the character card
-lying in the recess, so the board underneath has no business knowing which of them is
-sitting there. A board that did would be five boards to print, five to keep in step, and
-four of them wrong for whoever picked it up.
+**One board, and every one identical — and print one more than there are players.**
+Everything that differs between an orc and a halfling is printed on the card lying in the
+recess, so the board underneath has no business knowing which of them is sitting there.
+The spare board is the **encounter board**: when a discovery roll turns up a monster or a
+stranger, their card is dealt onto it, its tracks are set from the card's summary strip,
+and for the length of the encounter it is a player who is not a person. Being generic is
+what makes that work.
 
 **There is no border.** A card has a frame because a card is held, fanned and cut out; a
 board is not. The 18 mm of paper the border used to take was doing nothing but making the
 middle narrower, and taking it off is what paid for the sixth track — the columns came out
 *wider* with six than they had been with five.
 
-### Strength in a fight
+### A fight
 
 Strength was already in the game, on every monster card, doing one job: a threat rating
 that some rules read as a threshold — a thug refuses a monster of strength 4 or more. It
-now does the other half of the job as well, and it is a **shift on the number you need**
-rather than a pile of extra dice:
+now does the other half of the job as well, and **defence** is the half it used to do
+badly. It is a **shift on the number you need** rather than a pile of extra dice:
 
-> Roll as before, one die per unit. Then shift the number you need by the difference in
-> strength: **less your own, plus your opponent's.** Equal strength hits on 4+, exactly as
-> it always did. A point stronger hits on 3+; two points weaker, on 6+. Never better than
-> 2+ and never worse than 6+.
+> Roll as before, one die per unit. Then shift the number you need: **less your own
+> strength, plus their defence.** Strength 3 against defence 3 hits on 4+, exactly as it
+> always did. Strength 5 against defence 3 hits on 2+; strength 2 against defence 5, on
+> 6+. Never better than 2+ and never worse than 6+.
 
-Three things fall out of that, and all three are why it is a difference rather than a
-score. Dice count stays where it was, so a strong figure is not a *faster* figure and a
-battle does not get longer because somebody is strong. Weapons and armour keep their job
-untouched — +1 combat die is still +1 combat die. And one number on the board serves both
-sides of the fight, because the other side's is already printed on the card you are
-looking at.
+Four things fall out of that. Dice count stays where it was, so a strong figure is not a
+*faster* figure and a battle does not get longer because somebody is strong. Weapons and
+armour keep their job untouched — +1 combat die is still +1 combat die, and armour still
+soaks hits *after* they land, which is a different thing from defence stopping them
+landing. One number on the board serves your whole side of the roll, because the other
+side's is printed on the card in front of you. And hitting hard and being hard to hurt
+have finally come apart: a stone boar barely swings and turns a sword, a rime harpy is
+neither and is very easy to kill, and Vhalrik is both and is the reason for the clamp.
 
-The clamp is doing real work at the top of the range. The Deepwater Maw is strength 7 and
-Ruk, the strongest character printed, is 6; without a floor and a ceiling on the target
-number a dragon would be arithmetic rather than a fight. With them, the halfling still
-lands one in six.
+The clamp is doing real work at the top of the range. Vhalrik is strength 7 and defence 6;
+Ruk, the strongest character printed, is 6 and 5. Without a floor and a ceiling on the
+target number a dragon would be arithmetic rather than a fight. With them, the halfling
+still lands one in six.
+
+### An encounter
+
+A discovery roll that turns up a living thing has always produced a monster and never said
+how to run one. It does now, and the answer is the furniture already on the table: **deal
+its card onto the spare player board.** Set that board's tracks from the card's summary
+strip — health, strength, defence, mana — and it has everything a player has and is run
+the same way, by whoever sits left of the player who drew it. When the encounter ends the
+card is put away, the tokens come off, and nothing is written down. A stranger met on the
+road is set up exactly like a hero, because that is exactly what they are to themselves.
+
+## The market board
+
+One A4 landscape sheet of price ladders, and **every ladder identical**. A town's price
+for a commodity is its base value times a band, and the band is the only part that moves —
+so the board prints the bands and nothing else, and you say *which* commodity a line is
+about by standing that commodity's hexagonal token on it. Where the token stands is the
+price; which token it is says what the price is of.
+
+| ×0.5 | ×0.75 | ×1 | ×1.25 | ×1.5 | ×2 |
+| --- | --- | --- | --- | --- | --- |
+
+Sixteen lines to a sheet — two blocks of eight — and nothing on it names a commodity, a
+town or a player. That is the design, not an omission: a line is not the grain line until
+somebody puts the grain token on it, and a name strip down the side would need a second
+token or a pencil to say what the token already says. One board serves any commodity, any
+town and any table, print more of the same sheet for more towns, and a game that adds a
+sixty-seventh commodity reprints nothing.
+
+The ×1 column rules heavier and carries a hairline hexagon in every line — the shape of the
+token that belongs in it — so setup is a shape-matching job and a reset board is one
+straight column of tokens. `tools/build-market.mjs` generates it from `data/marketboard.json`
+and the bands in `rules.json`; the geometry is `components.json marketBoard`.
 
 ## Tokens and bits
 
@@ -170,23 +223,53 @@ lands one in six.
   favour of cubes, since it costs nothing to print a hatch into a cell.
   See [../art/02-palette.md](../art/02-palette.md).
 
-- **~120 coins** in 1 / 5 / 20 denominations
-- **Bar tokens** — one small disc per printed bar in play, in the owning player's colour:
-  health and burden on every character card, mana where the card has it, damage and cargo
-  on every vehicle. A character in play is two discs minimum, and the burden disc moves
-  every time they pick something up
-- **Price band markers** — 11, one per commodity category, on a shared market track
+  **Cut pieces are hexagons; struck pieces are discs.** A hexagon shares its cuts: nested
+  on a laser bed, one straight line is the edge of two tokens, so a sheet of hexes yields
+  around a fifth more pieces than the same sheet of discs and the head travels a good deal
+  less. Commodity tokens are the ones there are hundreds of, so commodity tokens are
+  **18 mm flat-top hexagons**, and deposits are the same shape at 24 mm — size is what
+  tells them apart, since both live on the table.
+
+- **Coins** — round, because a coin that is not round is not a coin. There are far fewer of
+  them, they are the one piece a hand finds by feel while the eyes are elsewhere, and round
+  against hexagonal is the fastest distinction a hand can make in a heap. Three sizes —
+  16 / 19 / 22 mm for 1 / 5 / 25 — so a stack is countable by feel and in greyscale.
+- **Bar tokens** — one small 7 mm disc per track in play: six per player board, and one per
+  commodity line on a market board. None on any card, because no card has a track.
+- **Route tokens** — road and rail, laid on the map hex by hex, and the piece that puts a
+  player's name on what they paid for. A bar the length of the line between two hex
+  centres: at the default four-sheet Korvane Reach board that is **15 × 3.7 mm** for road
+  and **15 × 5.3 mm** for rail, and `tools/build-map.mjs` prints the figures for every
+  print preset, because the size is the map's business and not the token's. Ownership is
+  peg holes down the centre line — one for the first player, two for the second — as well
+  as colour, so the toll (see [economy](02-economy.md)) is never an argument.
 - **Round marker**, turn order markers, first player token
 
 ## Mini-maps
 
-Thirty-two A4 landscape sheets, each one large hexagon subdivided into 61 cells — the
-inside of a single campaign-map cell, for battles and for building. Four **Holdings**
-sheets (one per player), nine **Grounds** sheets (one per land terrain plus the
-shallows) and nineteen **Places** sheets (one per named Korvane Reach settlement).
-The spec and the art briefs are in [`docs/minimaps/`](../minimaps/README.md), and
-all thirty-two accepted artworks are committed at
-[`docs/minimaps/img/`](../minimaps/img/).
+One A4 landscape sheet per terrain: a hexagon of 61 hexagonal cells — the inside of a
+single campaign-map cell — with an encounter panel and a holdings panel in the space a
+hexagon on a rectangle leaves over.
+
+**A mini-map is a flat colour and a grid, and nothing else.** No render, no pattern, no
+hatch, no drawn ground. The field is the colour that terrain already prints in
+(`palette.json terrain[].wash`), the grid is ruled on top, and that is the whole sheet —
+so it needs no plate, no artist and no place in the mint queue. Drawn ground competes with
+the pieces standing on it, and every one of these sheets is a sheet somebody is standing
+pieces on.
+
+**A cell is a world hex — exactly.** 16.7 mm at the default four-sheet print preset, read
+off the map rather than chosen, so a figure based for the campaign board stands in a
+mini-map cell without being re-based, a route token cut for one fits the other, and one
+ruler measures both. Print the map bigger and the sheets follow. The scale is a fiction —
+the ground inside one hex is not sixty-one hexes of ground — and it is the right fiction,
+because everything physical about the two boards agrees.
+
+`tools/build-minimaps.mjs` generates them into [`docs/minimaps/sheets/`](../minimaps/index.html);
+the spec is [`docs/minimaps/README.md`](../minimaps/README.md) and `data/minimap.json`. The
+thirty-two hand-drawn sheets that preceded this — Holdings, Grounds and Places, part of the
+shelved tile board ([#18](https://github.com/cdomotor-g/game1/issues/18)) — stay committed
+at [`docs/minimaps/img/`](../minimaps/img/) and are not touched.
 
 ## Player aids
 
@@ -204,12 +287,18 @@ honest against the rules automatically, in the same way the web explorer already
 Two slices of it exist. `tools/build-cards.mjs` renders the adventure decks —
 characters, vehicles, monsters and talismans — into [`docs/cards/`](../cards/index.html)
 from the data and the accepted plates in `docs/art/renders/`, one card per accepted
-render, print page included. `tools/build-board.mjs` renders the player boards into
-[`docs/boards/`](../boards/index.html) — one board, at true A4 landscape.
+render, print page included. `tools/build-board.mjs` renders the player board into
+[`docs/boards/`](../boards/index.html), `tools/build-market.mjs` the market board into
+[`docs/markets/`](../markets/index.html), and `tools/build-minimaps.mjs` the mini-map
+sheets into [`docs/minimaps/`](../minimaps/index.html) — all at true A4 landscape.
 
-Neither generator holds a coordinate it did not work out. The board's track columns are
-whatever width is left once the card recesses have had theirs, which is why adding a
-sixth track narrows the columns instead of running off the paper.
+None of them holds a coordinate it did not work out. The player board's track columns are
+whatever width is left once the card recesses have had theirs, which is why adding a sixth
+track narrows the columns instead of running off the paper. A market board's band cells
+are what the blocks leave, and a line is exactly one commodity token tall, so a bigger
+token makes a taller line and fewer of them rather than a token that overhangs its cell. A
+mini-map cell is a world hex, so the field sizes itself and a field that would not fit the
+paper fails the build.
 
 The [two-plate system](../art/01-two-plate-system.md) is what makes that generator
 tractable: one layout pass emits a `#wash` group and an `#ink` group, the colour edition

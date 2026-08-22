@@ -88,6 +88,20 @@ jobs:
       - name: Fail if the committed player boards are stale
         run: node tools/build-board.mjs --check
 
+      # The market board is generated from data/marketboard.json, the shapes in
+      # data/components.json and the price bands in data/rules.json. Committed and
+      # checked for the same reason the player board is - and it fails outright,
+      # not just staly, if a band cell ever gets narrower than a commodity token.
+      - name: Fail if the committed market board is stale
+        run: node tools/build-market.mjs --check
+
+      # The mini-map sheets are a flat terrain colour and a hex grid whose cells are
+      # world-map hexes, generated from data/minimap.json, data/terrain.json and the
+      # map's own print preset. No art is involved, so nothing here waits on a plate -
+      # but the sheets are committed, so they can go stale like anything else.
+      - name: Fail if the committed mini-map sheets are stale
+        run: node tools/build-minimaps.mjs --check
+
       # The element marks are path data in data/arcana.json; the icons in
       # docs/art/icons/ are drawn from it and committed, like everything else the
       # site serves. A mark edited without re-running the tool means a card and a

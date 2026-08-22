@@ -177,14 +177,19 @@ table(
 say('## Peoples');
 say();
 table(
-  ['People', 'Die', 'Workers', 'Terrain comfort', 'Strength', 'Carries', 'Mana'],
+  ['People', 'Die', 'Workers', 'Terrain comfort', 'Strength', 'Defence', 'Carries', 'Mana'],
   peoples.peoples.map((p) => [
     p.name, p.effortDie, p.startingWorkers, list(p.terrainComfort),
     p.strength?.base,
-    `${p.carry?.baseKg} kg`,
+    p.defence?.base,
+    `${(p.strength?.base ?? 0) * rules.carrying.kgPerStrength} kg`,
     p.manaStorage?.innate ? `${p.manaStorage.innate} innate` : 'talisman only',
   ])
 );
+say();
+say('Carrying is not a separate number and has not been since strength swallowed');
+say(`burden: a figure lifts strength × ${rules.carrying.kgPerStrength} ${rules.carrying.unit}, and the column above is that`);
+say('sum rather than a value anybody chose.');
 say('### Traits');
 say();
 table(
@@ -203,12 +208,13 @@ table(
 /* -------------------------------------------------------------------- items */
 say('## Items');
 say();
-say(`Mass is what the thing weighs. It counts against the carrier's **burden** —`);
-say(`the ${rules.carrying.unit} bar up the right edge of every character card — and it is not`);
+say('Mass is what the thing weighs. It counts against what the carrier can lift —');
+say(`strength × ${rules.carrying.kgPerStrength} ${rules.carrying.unit}, printed on every character card — and it is not`);
 say('bulk: bulk is a commodity\'s storage and shipping cost, and no item has one.');
 say();
-say(`One rung of that bar is ${rules.carrying.barStepKg} ${rules.carrying.unit}, and it runs to what the player board holds:`);
-say(`no figure in the game shoulders more than ${Math.max(...peoples.peoples.map((p) => p.carry?.baseKg ?? 0), ...characters.characters.map((c) => c.carryKg))} ${rules.carrying.unit} unaided.`);
+say(`No figure in the game shoulders more than ${Math.max(...peoples.peoples.map((p) => (p.strength?.base ?? 0) * rules.carrying.kgPerStrength), ...characters.characters.map((c) => c.strength * rules.carrying.kgPerStrength))} ${rules.carrying.unit} unaided, and`);
+say('nothing walks a token for it: a load either fits under the printed limit or');
+say('it does not.');
 say();
 for (const cls of items.classes) {
   const rows = items.items.filter((i) => i.class === cls.id);
@@ -242,8 +248,9 @@ table(
 /* ----------------------------------------------------------------- vehicles */
 say('## Vehicle deck');
 say();
-say('Damage bar up the **left** edge, cargo bar up the **right** — harm left,');
-say('capacity right, on every deck in the game.');
+say('**V** is the damage boxes the hull holds, **C** the bulk of its hold — the two');
+say('boxes of a vehicle card\'s summary strip. Damage is walked on the player');
+say('board\'s V track; nothing is walked on the card.');
 say();
 table(
   ['Code', 'Vehicle', 'Kind', 'Cargo', 'Damage', 'Quirk'],
@@ -259,22 +266,32 @@ say('S = slay (always allowed), E = enslave, B = befriend, D = domesticate.');
 say('Slaying yields the mana; the other three trade mana away for a living asset.');
 say();
 table(
-  ['Code', 'Monster', 'Element', 'Str', 'Health', 'Mana', 'Ground', 'Options'],
+  ['Code', 'Monster', 'Element', 'Str', 'Def', 'Health', 'Mana', 'Ground', 'Options'],
   monsters.monsters.map((m) => [
-    m.cardCode, m.name + (m.unique ? ' *(unique)*' : ''), element(m.element), m.strength, m.health, m.manaYield,
+    m.cardCode, m.name + (m.unique ? ' *(unique)*' : ''), element(m.element), m.strength, m.defence, m.health, m.manaYield,
     list(m.terrains),
     'S' + (m.options.enslave ? ' E' : '') + (m.options.befriend ? ' B' : '') + (m.options.domesticate ? ' D' : ''),
   ])
 );
+say();
+say(`In a fight: ${rules.conflict.attack.rule} ${rules.conflict.attack.formula}, clamped to`);
+say(`${rules.conflict.attack.clamp[0]}+ and ${rules.conflict.attack.clamp[1]}+. Strength is what a thing swings with, defence is what makes`);
+say('you miss — a stone boar barely swings and still turns a sword.');
 
 /* --------------------------------------------------------------- characters */
 say('## Character deck');
 say();
+say('The six boxes of the summary strip across the top of every character card,');
+say('in the order they are printed in — and the same letters the player board');
+say('calls its tracks, so setting up is reading across the strip and placing');
+say('tokens left to right.');
+say();
 table(
-  ['Code', 'Character', 'People', 'Calling', 'Str', 'Health', 'Burden', 'Mana', 'Traits'],
+  ['Code', 'Character', 'People', 'Calling', 'H', 'S', 'D', 'M', rules.currency.symbol, 'KG', 'Traits'],
   characters.characters.map((c) => [
-    c.cardCode, c.name, c.people, c.calling, c.strength, c.health, `${c.carryKg} kg`,
-    c.manaCapacity ? `${c.manaCapacity} innate` : 'talisman',
+    c.cardCode, c.name, c.people, c.calling,
+    c.health, c.strength, c.defence, c.manaCapacity || '—', c.startingGold,
+    c.strength * rules.carrying.kgPerStrength,
     (c.traits || []).join(' '),
   ])
 );

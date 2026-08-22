@@ -1,5 +1,24 @@
 # 03 — The map, terrain and movement
 
+## Why the grid is hexagonal
+
+For the record, because it gets re-litigated every time somebody notices that a square grid
+would be easier to draw: **the grid is hexagonal to give movement more, and more equal,
+options.** A hex has six neighbours and every one of them is the same distance away. A
+square has four at one distance and four more at root two, so a square grid either lies
+about its diagonals or forbids them.
+
+Six equal exits is what makes a route a *choice* rather than a staircase. It is why a road
+can bend without costing more than a road that does not; why flanking is a real position
+rather than an arithmetic exception; and why a party fleeing a monster has five ways out
+instead of three. The cost is one: a hex grid is harder to draw and harder to describe in
+prose. `tools/lib/hexgrid.mjs` pays that cost once and nothing else in the game pays it
+again.
+
+`terrain.json` keeps `tileShape: hex` and lists `square` as an alternative it does not use.
+A mini-map's own grid is hexagonal for exactly the same reason — plus one more, which is
+that a mini-map cell has to line up with a world hex.
+
 ## Tiles
 
 > **The tile board is shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** What is below stays true as
@@ -98,6 +117,53 @@ that nobody ever builds it.
 
 **Bridges** (16 points) carry a road or rail across one shallow-water tile. Deep water
 cannot be bridged by anyone, ever, and that is what makes the sea lanes matter.
+
+### A road is yours, and it pays
+
+Roads were the one thing in the game you built for everybody and were paid for by
+nobody. The Network victory condition scored them at the very end and nothing scored them
+in the twenty rounds before that, so a road only ever got built where its builder happened
+to want to walk. Three returns fix that, in the order a player feels them:
+
+- **A toll.** Every hex of your road another player's leg enters pays you **1 coin**; rail
+  pays **2**. Collected from them, not from a bank, the moment that leg ends — capped at
+  **6 a leg**, so a trunk road across the continent is worth building and is never a tax
+  gate. Your own figures pay nothing. A player may decline to pay and go round; they may
+  not decline to pay and go through.
+- **Haulage.** Cargo that starts or ends its journey in a settlement your own road or rail
+  reaches sells for **a tenth more** than the town price. This is where the real money is,
+  and it is why the sensible first road runs from your mine to your market rather than
+  towards anybody else.
+- **The points**, unchanged: Network still scores towns joined by routes you built, and
+  rail still scores a victory point per tile as it is laid.
+
+The numbers are meant to be small. A road hex costs one stone and three build points — call
+it 5 coin and an hour — so a stretch repays itself after five foreign crossings, which in a
+four-player game is a handful of rounds on any road worth building. Rail costs 2 steel and
+2 lumber, about 70 coin a hex, and will never repay that in tolls: rail is repaid by the
+train that runs on it, and the toll is a gratuity. Full numbers in
+`rules.json → infrastructure`.
+
+None of this makes a road a private road. Anyone may walk it, and paying the toll is the
+price of the walk — which is exactly the relationship a turnpike had with the people who
+used it.
+
+### Route tokens
+
+A road is marked on the map as it is laid, and the token **is** the record: an unmarked
+road belongs to nobody. A route token is a **bar**, not a chit — it lies along the line
+between two hex centres, which is where a road actually is, and it is the length of that
+line, so a run of them reads as a continuous road rather than as a row of counters.
+
+The size is the map's business, not the token's. A pointy-top hex's centre-to-centre
+distance *is* its flat-to-flat width, so the bar is nine tenths of whatever the map's print
+preset makes a hex — **15 × 3.7 mm** for road and **15 × 5.3 mm** for rail on the default
+four-sheet Korvane Reach board, and `tools/build-map.mjs` prints the figures for every
+preset rather than anybody typing them. Rail carries sleepers across its width so it reads
+as rail at arm's length; ownership is peg holes down the centre line — one for the first
+player, two for the second — as well as colour, so a table that cannot use the colour can
+still see whose road it is. A mini-map cell is the same hex, so a bar cut for the campaign
+board fits a mini-map lane too.
 
 ## Water
 

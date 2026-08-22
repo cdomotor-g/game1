@@ -80,6 +80,6 @@
     { "id": "soldier", "name": "Soldier", "movePoints": 3, "cost": 30,
       "summary": "Fights, escorts caravans, garrisons towns. Eats 1 food per round whether it fights or not.", "carries": 2 },
     { "id": "hero", "name": "Hero", "movePoints": 5, "cost": 0,
-      "summary": "One per player, free at setup. Carries potions and equipment, rolls an extra combat die, and never starves. A character card from data/characters.json gives the hero a name, a face, a health bar and sometimes mana.", "carries": 3, "unique": true }
+      "summary": "One per player, free at setup. Carries potions and equipment, rolls an extra combat die, and never starves. A character card from data/characters.json gives the hero a name, a face, and the summary strip every other number is read off.", "carries": 3, "unique": true }
   ]
 }

@@ -101,18 +101,27 @@ cancels hits. Both sides apply hits at once, so attacking is never free. One rou
 battle, with retreat allowed — the intent is a sharp exchange, not a wargame inside a
 economy game.
 
-**Strength.** The 4+ is not fixed: shift it by the difference in strength — less your
-own, plus your opponent's. Equal strength hits on 4+, a point stronger hits on 3+, two
-points weaker on 6+, and it never goes better than 2+ or worse than 6+. Every monster
-has carried a strength since the deck was written and some rules already read it as a
-threshold (a thug refuses anything of strength 4 or more); this is the other half of the
-job. Characters carry one too, printed on the card and set on the player board's **S**
-track, which is the only track a player sets once and mostly leaves alone.
+**Strength and defence.** The 4+ is not fixed: shift it by **less your own strength, plus
+their defence**. Strength 3 against defence 3 hits on 4+, strength 5 against defence 3 on
+2+, strength 2 against defence 5 on 6+, and it never goes better than 2+ or worse than 6+.
+Every figure in the game carries both — characters, monsters and the hirelings on the
+inn's board — and they are printed in the card's summary strip and set on the player
+board's **S** and **D** tracks.
+
+Strength used to sit on *both* sides of that roll, which quietly made every strong thing
+armoured for no better reason than that it hit hard. Splitting it lets a stone boar barely
+swing and still turn a sword, a rime harpy be neither and be very easy to kill, and
+Vhalrik be both, which is what the clamp is for. Defence is not armour: armour cancels
+hits after they land, defence stops them landing, and a figure in plate has both.
+
+Strength keeps its older job unchanged — the threshold some rules read off a monster card,
+where a thug refuses anything of strength 4 or more — and it picked up a new one, since it
+is also what a figure can carry (`strength × 3` kilograms). One arm, one number.
 
 It is a *difference*, not a score, and it never adds dice. That keeps a battle one round
 long however strong the people in it are, leaves +1 combat die meaning exactly what it
-always meant, and lets one number on the board serve both sides of the fight — because
-the other side's is already printed on the card in front of you.
+always meant, and lets one number on the board serve your whole side of the fight —
+because the other side's is already printed on the card in front of you.
 
 **Equipment.** A sword is +1 die. Steel doubles that and hits on 3+. A bow rolls before
 the enemy does but needs arrows. A war hammer ignores armour entirely. Plate harness
@@ -142,6 +151,9 @@ livestock you own. Not everything can be tamed, and the ones that cannot are the
 the campaigns are built around. The deck and the option rules live in
 `data/monsters.json`; the reasoning is in [13-adventure.md](13-adventure.md).
 
-**Hired muscle.** Between a soldier's standing cost and a war's, there is the inn:
-thugs, militiamen and hired blades escort one journey for a flat fee and eat nothing.
-Costs in `rules.json → hirelings`.
+**Hired muscle.** Between a soldier's standing cost and a war's, there is the inn: thugs,
+militiamen and hired blades escort one journey for a flat fee and eat nothing. They fight
+at the strength and defence printed on the inn's board, and what you are paying for is
+which of the two you get — the thug is strong and careless (4/2), the militiaman is
+neither and is wearing a coat of plates (3/4), the blade is better at both (5/4). Costs in
+`rules.json → hirelings`.

@@ -102,11 +102,11 @@ board for every player — by `tools/build-board.mjs` into
 - **Card recesses**, not printed pictures of cards: a groove, corner brackets, and the
   name of what belongs there set faintly in the middle — which a card covers the moment
   one is played, and which is exactly when it stops being needed
-- **Six numbered tracks up the middle**, drawn to the same convention as a card's edge
-  bar and no other: numbered from the bottom, walked by a bar token, harm in oxide,
-  capacity in slate, a rating in ochre, mana in bruise. The board is not allowed a second
-  convention, so a player who has learned to read a card has already learned to read the
-  board
+- **Six numbered tracks up the middle** — and they are the only ladders left in the game.
+  Cards used to carry one up each edge; the tracks came here and the cards took a lettered
+  summary strip instead, because a card in a recess is a card whose edges are under the
+  board. Numbered from the bottom, walked by a bar token, harm in oxide, a rating in ochre
+  and slate, the leg in verdigris, mana in bruise
 - **Every track runs the same range, 0 to 14**, so the six columns are one grid rather
   than six scales to keep straight. The bottom rung is zero — where a token starts and
   where it ends up — which is a numbered rung rather than the separate seat ring it used
@@ -117,10 +117,12 @@ board for every player — by `tools/build-board.mjs` into
 - A column is 11 mm wide and STRENGTH is eight letters, so the head sets the **letter**
   at full size with the **word running up beside it** and the unit under it. Nothing on
   the board drops below the 6 pt floor in `palette.json`
-- Each track's ink-plate **mark repeats on every rung** — notch-down for harm, notch-flat
-  for a capacity, notch-up for the leg, a **pip** for a rating, which goes neither up nor
-  down because it is a value a figure *has*. Mana is the only arcane subject on the sheet,
-  so it is the only thing that takes the
+- **Figures, and nothing else in the column.** No rung glyph, no plus, no minus. Every
+  rung used to carry an ink-plate mark saying which *kind* of number it was — notch-down
+  for harm, a pip for a rating — and at eleven millimetres a column it was competing with
+  the number for the same three millimetres and winning often enough to matter. Which way a
+  token walks is a sentence in the rulebook, where there is room to say it. Mana is the
+  only arcane subject on the sheet, so it is the only thing that takes the
   [slip](01-two-plate-system.md#the-third-plate-the-slip) — well inside the 3% ration
 
 Still to come, and belonging to the settlement half of the game rather than the hero's:
@@ -141,30 +143,32 @@ be. It is also the [tally motif](00-art-direction.md#motifs) doing component dut
 
 ## The adventure decks — vehicles, monsters, characters, talismans
 
-Four decks share one anatomy, so a bar never needs explaining twice:
+Four decks share one anatomy, so a card never needs explaining twice:
 
-- **Vertical numbered bars**, numbered from the bottom, walked by a token.
-- **Harm on the LEFT edge** — a vehicle's damage, a monster's or character's health.
-  Bar rules in oxide; the ink-plate mark is the notch-down.
-- **Capacity on the RIGHT edge** — a vehicle's cargo, a character's burden in kilograms,
-  a talisman's or character's mana. Cargo and burden bars rule in slate; mana bars in
-  bruise (talismans and mana are arcane subjects, and the only cards in these decks
-  permitted the slip).
-- **A second capacity comes inboard, onto the portrait.** A character has burden and may
-  also have mana, and the edge holds one bar. Burden keeps the edge — every character has
-  one — and the mana bar moves in over the plate, laying down its own paper first so the
-  ladder is read off paper and not off a drawing. That paper is wash, which costs the
-  black-and-white edition nothing: the portrait is wash too, so the ink plate has bare
-  paper there already. The inboard bar stops at the foot of the portrait window, because
-  below that the rules text is already using the width.
-- **A bar that counts something names its unit**, on a second, smaller label line under
-  the first. `BURDEN` over `kg`; a bar counting hit points or charges needs no line.
-- **Portrait across the middle, name and card code at the top, story text low.** The
-  card code (`VEH-03`, `MON-09`) sets in the same small caps as a maker's mark.
+- **Name and card code at the top**, the code (`VEH-03`, `MON-09`) in the same small caps
+  as a maker's mark, and a one-line kicker under the name.
+- **A summary strip under that**: one boxed cell per number, the letter in a tinted square
+  at the left of the cell and the figure at the right — `H 10`, `S 3`, `KG 9`. Six cells is
+  what a 63 mm card holds at a legible size, and the letters are the **player board's own
+  track letters**, so a player setting up reads across the strip and places tokens left to
+  right. Each cell washes in its own ink — harm oxide, strength ochre, defence and mass
+  slate, mana and yield bruise, coin ochre — and every one of them survives the wash coming
+  off, because the letter and the figure are ink.
+- **The strip prints the MAXIMUM, and nothing on a card moves.** There are no bars. There
+  were, up both edges, walked by tokens; that was right for a card held in the hand and
+  wrong the day the player board arrived, because a card in a recess is a card whose edges
+  are under the board. The tracks went to the board and the ladders came off.
+- **The element is the last cell**, where a deck has one: the same ring and mark, in a box
+  the size of the numbers beside it. It used to be a badge beside the name, which pushed
+  every other line on the card down.
+- **Portrait across the full width the frame allows**, then the rules text, then the story
+  low. The picture gained the whole width the two bars used to take, and lost about six
+  millimetres of height to the strip.
 
-A card with no bar on an edge leaves the edge quiet — the frame does not print an empty
-track. In black-and-white the bars survive as ruled, numbered ladders; the wash only
-ever repeats what the numbering already says.
+A deck with fewer numbers leaves the right end of its strip empty rather than sharing the
+width out — every box in the game is the size a full strip's box would be, or a two-stat
+vehicle card would print boxes three times the size of a six-stat character's and the eye
+would read that as three times as important.
 
 ## Tokens, cubes and meeples
 

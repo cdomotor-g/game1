@@ -115,8 +115,9 @@ it in the body. Elves carry up to 3 innately; humans, dwarves, halflings and
 orcs carry none at all. Everyone else's mana lives in a **talisman**
 (`items.json`, class `talisman`): a bone charm holds 2, a copper amulet 4, a
 crystal phylactery 10. Talismans are items — made, bought from merchants, sold,
-and stolen with everything that implies. The card carries a vertical numbered
-mana bar; a token on the bar tracks the charge.
+and stolen with everything that implies. The card prints the capacity in the
+**M** box of its summary strip; the charge is walked on the player board's M
+track, like every other number that moves.
 
 All six talisman studies are accepted — the only deck that gets the violet, and
 the violet is a printing error, exactly as
@@ -193,9 +194,10 @@ Two more decks give the moving pieces names:
 ship, caravan and horse. A card is a specific vehicle with a story and a quirk:
 the Reach Flyer is fast and takes passengers, Old Smoke is cheap and limps, the
 Fenway Wagons cross marsh that stops everything else on wheels. Each card
-carries a vertical **damage bar up the left edge** and a **cargo bar up the
-right**, numbered from the bottom, tracked with tokens. A wrecked vehicle spills
-its cargo on the hex, and salvage is whoever reaches it first.
+prints two boxes in its summary strip — **V** for the damage boxes the hull
+holds, **C** for the bulk of its hold. Damage is walked on the player board's V
+track. A wrecked vehicle spills its cargo on the hex, and salvage is whoever
+reaches it first.
 
 Eleven of the twelve catalogue plates are accepted
 ([`docs/art/prompts/vehicles.md`](../art/prompts/vehicles.md)); the Varl
@@ -213,31 +215,36 @@ Wagonrow (VEH-09) is still to be drawn:
 | *Steppe Pony (VEH-11)* | *Black Malchior (VEH-12)* | |
 
 **Characters** (`characters.json`) — eight named adventurers; each player's hero
-figure takes one at setup for a face, a **health bar (left edge)** and a
-**burden bar (right edge)**. Same convention on every deck in the game:
-*harm left, capacity right.*
+figure takes one at setup for a face and a **summary strip** across the top of
+the card, which is every number they have, printed once:
 
-### Burden — what a character can carry
+| H | S | D | M | ¤ | KG |
+| --- | --- | --- | --- | --- | --- |
+| health | strength | defence | mana held in the body | coin at setup | what they can shoulder |
 
-Every item in `items.json` now carries a **mass in kilograms**, and every
-character card carries the other half of that arithmetic: a numbered **burden
-bar** up the right edge, one kilogram a rung, topping out at what that character
-can shoulder unaided. A tunic is half a kilogram, a sword three-quarters, a plate
-harness 12.5. Ruk of the Red Road carries 14 kg, the most of anyone — and the
-most the board allows anyone; Old Mother Keswick carries 8.
+Those are the player board's own track letters, so setting up is reading across
+the strip and putting tokens down left to right. Nothing on the card moves —
+there is no bar on any card any more — and the portrait gets the full width of
+the card because there is nothing beside it.
 
-The bar is *played*, not printed and forgotten. Stand a token on it, total the
-mass of everything the character is carrying — worn, wielded and stowed alike —
-and move the token to the first mark at or above that total as they pick things
-up and put them down. A character may not take up an item that would push the
-token past the top of the bar: load it onto a vehicle, hand it to someone with
-room, or leave it where it lies. A character carried to a settlement at 0 health
-loses the lot, and the token goes back to zero.
+### Strength — one arm, one number
 
-The numbers start from the people — `peoples.json → carry.baseKg`, 8 kg for a
-halfling up to 14 for an orc — and the card adjusts that for build and calling.
-A dwarf out-carries a taller people all day; the point of Tilly Goodbarrel is
-that her wagon does the hauling, not her back.
+Every item in `items.json` carries a **mass in kilograms**, and strength is the
+other half of that arithmetic. There is no burden number and no burden track:
+what a character can shoulder is **strength × 3 kilograms**, printed in the KG
+box so nobody multiplies at the table and derived so it can never disagree with
+the strength beside it. Ruk of the Red Road is strength 6 and carries 18 kg, the
+most of anyone; Old Mother Keswick is strength 2 and carries 6. A tunic is half a
+kilogram, a sword three-quarters, a plate harness 12.5 — which is to say plate is
+for figures of strength 5 and up, and always was.
+
+Nothing is walked for it. Total what the character is wearing, wielding and
+stowing, and it either fits under the printed limit or it does not: load the rest
+onto a vehicle, hand it to someone with room, or leave it where it lies. A
+character carried to a settlement at 0 health loses the lot on the way.
+
+Burden and strength were the same arm doing the same job under two numbers, and
+one of them was a track a player moved every time they picked up a rope.
 
 **Mass is not bulk.** Bulk is a commodity's storage-slot and shipping cost and
 belongs to the cart; mass is what a thing weighs and belongs to whoever is
@@ -245,11 +252,34 @@ holding it. They never convert into each other, and nothing in the data has
 both. Full rules in `rules.json → carrying`; the whole item table with masses is
 in the [annex](14-annex.md#items).
 
-Where a character also has innate mana, the mana bar cannot have the right edge
-too — burden owns it, because every character has burden and only some have
-mana. So the **mana bar moves inboard and sits on the portrait**, on its own
-patch of paper. That keeps one geometry across all eight cards instead of two
-layouts, and the portrait loses a strip it was not using.
+### Defence — what makes a blow miss
+
+Every character and every monster now carries a **defence** as well as a
+strength, and the attack roll is the difference between the two: *less your own
+strength, plus their defence*, clamped to 2+ and 6+. Strength used to sit on both
+sides of that roll, which quietly made every strong thing armoured — a stone boar
+barely swings and turns a sword, and until now it had no way to say so. Defence
+is not armour: armour soaks hits after they land, defence stops them landing, and
+a figure in plate has both.
+
+### Eating and sleeping
+
+Two kinds of hurt, mended two different ways, and the split is what makes a
+night's camp a decision rather than a formality:
+
+- **A round that ends with a figure unfed costs 1 health.** Every round it goes
+  on. Being fed again does not put it back.
+- **A night without a camp costs 1 strength** — travel a night leg, or push on
+  past dark, and every figure in the party loses a point. Two hard nights turn a
+  caravan guard into a passenger.
+- **One night's sleep restores strength in full**, wherever it is taken: a camp
+  on open ground does it as well as a bed at an inn.
+- **Sleeping mends no health at all.** Health comes back only under medical aid —
+  a healer, an infirmary, a physician standing there, or a potion.
+
+That is why a lantern, a granary, an inn, a stretch of salted meat and Doctor
+Elspeth Marrow are all worth their coin, and why the shorter leg with a camp at
+the end of it often beats the longer one without.
 
 All eight character plates are accepted
 ([`docs/art/prompts/characters.md`](../art/prompts/characters.md)):
@@ -321,7 +351,8 @@ The adventure layer arrived one card at a time — a health bar here, a burden b
 there, a mana bar inboard of that one — and every bar was on an edge, which is
 the right place for a card you are holding and the wrong place for one lying on
 the table. The [player board](08-components.md#the-player-board) is where they
-all end up.
+all ended up, and taking them off the cards is what gave the portraits the full
+width of the card.
 
 One A4 landscape sheet each and every one identical, printed at
 [`docs/boards/`](../boards/index.html). The hero's card drops into a recess top
@@ -330,17 +361,18 @@ under the character, and six numbered tracks run up the middle:
 
 | | Track | A rung is | Runs | Walked by |
 | --- | --- | --- | --- | --- |
-| **H** | Health | 1 | 0–14 | The hero, hit and rested |
-| **S** | Strength | 1 | 0–14 | Rarely — set from the character card, and read against whatever you are fighting |
-| **B** | Burden | 1 kg | 0–14 kg | Everything worn, wielded and stowed |
+| **H** | Health | 1 | 0–14 | The figure, hurt and mended — medical aid only |
+| **S** | Strength | 1 | 0–14 | Set from the card; a rung down for every night without a camp |
+| **D** | Defence | 1 | 0–14 | Set from the card. Read by whoever is attacking you |
 | **P** | Pace | 1 hex | 0–14 | Hexes left in this leg |
-| **D** | Damage | 1 | 0–14 | The vehicle being run |
+| **V** | Vehicle | 1 | 0–14 | Damage to the vehicle being run |
 | **M** | Mana | 1 | 0–14 | The body and every talisman in a slot |
 
-Four of them are bars that already exist on cards, so nothing new has to be
-learned: the ladders are numbered from the bottom and walked by a token exactly
-as a card's edge is, and they rule in the same inks — harm oxide, capacity
-slate, mana bruise.
+The ladders are numbered from the bottom and walked by a token, and they are
+numbered and **nothing else** — no rung glyph, no plus, no minus. At a shade over
+11 mm a column, a little mark saying which *kind* of number this is was competing
+with the figure for the same three millimetres. Which way a token walks is a
+sentence in the rulebook, where there is room to say it.
 
 **Pace is the board's own**, and it is the one that was missing. A party looks
 its day-leg speed up in [`travel.json`](../../data/travel.json) every single
@@ -349,19 +381,29 @@ start of a leg, walk it down a rung per hex entered, halve it for a night leg
 under a lantern. At zero the leg is over, and the discovery roll happens
 wherever it stopped. It is pace rather than speed because strength has the S.
 
-**Strength is the one that changed the game rather than recording it.** It was
-already printed on every monster card as a threat rating, and now it settles
-attack rolls as well: shift the number you need by the difference between your
-strength and your opponent's — less yours, plus theirs — so equal strength still
-hits on 4+ and a point of advantage is worth exactly one pip. It never adds
-dice; dice are what weapons and armour give you. The full rule, and why it is a
-difference rather than a score, is in
-[08-components.md](08-components.md#strength-in-a-fight).
+**Strength and defence are the pair that changed the game rather than recording
+it.** Strength was already printed on every monster card as a threat rating; it
+now settles attack rolls as well, and it swallowed burden while it was at it —
+what a figure carries is strength × 3 kilograms and there is no second track for
+it. Defence is its opposite number: shift the number you need by *less your own
+strength, plus their defence*, so an even fight still hits on 4+ and a point of
+advantage is worth exactly one pip. Neither ever adds dice; dice are what weapons
+and armour give you. The full rule is in
+[08-components.md](08-components.md#a-fight).
 
-**Every track runs 0 to 14, and so does the game.** That is what set the ceiling
-on everything a token walks — health, burden, damage, mana, strength — and what
-halved the mass scale to get burden under it. Nothing about what fits in whose
-hands changed; the kilogram did.
+**Every track runs 0 to 14, and so does the game.** That is the ceiling on
+everything a token walks — health, strength, defence, vehicle damage, mana — and
+`tools/validate-data.mjs` sweeps the whole dataset against it, so a fifteenth
+point of health fails the build rather than walking off a board somebody has
+already printed. Kilograms are the one thing exempt, because nothing walks a
+token for them.
+
+**Print one more board than there are players.** The spare is the encounter
+board: a discovery roll that turns up a monster or a stranger deals their card
+onto it, its tracks are set from the card's summary strip, and it is played like
+any other seat at the table until the encounter is over. That is what being
+generic is for — the furniture does not care whether a person or a wolf is
+sitting behind it.
 
 The board is otherwise furniture, not a fifth deck. What it fixes is that a hero
 in play was four tokens on three cards and a number somebody was holding in

@@ -24,6 +24,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXAMPLES = join(ROOT, 'docs', 'art', 'examples');
 const CARDS = join(ROOT, 'docs', 'cards');
 const BOARDS = join(ROOT, 'docs', 'boards');
+const MARKETS = join(ROOT, 'docs/markets');
+const MINIMAPS = join(ROOT, 'docs/minimaps/sheets');
 
 const palette = JSON.parse(readFileSync(join(ROOT, 'docs/art/palette.json'), 'utf8'));
 
@@ -45,11 +47,16 @@ const INK_PLATE = new Set([
 ]);
 
 /* Hand-built examples and every generated component - card fronts, card backs,
-   player boards - are held to the same contract. A generator is not a licence to
-   invent a colour. */
+   player boards, market boards, mini-map sheets - are held to the same contract.
+   A generator is not a licence to invent a colour.
+
+   The mini-map sheets are the one place a terrain colour reaches a printed
+   component directly, which is exactly why they are swept: terrain.json's
+   colours are in the palette under `terrain`, and a sheet that painted itself
+   any other green would be a sheet nobody could match a tile to. */
 const files = process.argv.slice(2).length
   ? process.argv.slice(2)
-  : [EXAMPLES, CARDS, BOARDS].filter(existsSync).flatMap(dir =>
+  : [EXAMPLES, CARDS, BOARDS, MARKETS, MINIMAPS].filter(existsSync).flatMap(dir =>
       readdirSync(dir).filter(f => f.endsWith('.svg')).map(f => join(dir, f)));
 
 /** hex codes appearing as paint attribute values, not as text content */

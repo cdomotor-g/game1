@@ -78,7 +78,7 @@ The queue reports three separate things, because three different people fix them
 
 The split is real, not ceremonial. The designer can write a perfect brief and
 cannot produce a plate; the artist can produce a beautiful plate and has no idea
-what a burden bar is, or why hills and marsh must never share a wash. Neither can
+what a summary strip is, or why hills and marsh must never share a wash. Neither can
 finish a subject alone, which is why the handover has to be written down.
 
 **How to actually set the two of them up, and what to paste where, is

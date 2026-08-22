@@ -9,6 +9,11 @@
   const D = global.GameData;
   const R = D.rules;
 
+  /* Strength is the carrying limit as well as the swinging one, so kilograms are
+     derived here rather than stored anywhere: rules.json owns the factor and
+     every card, table and drawer in the game multiplies by the same one. */
+  const carryKg = (strength) => (strength || 0) * R.carrying.kgPerStrength;
+
   let open = () => {};           // set by app.js — opens the detail drawer
   const setOpener = (fn) => { open = fn; };
 
@@ -472,7 +477,7 @@
     const { from, to } = shape.track;
 
     /* `stepFrom` is a dotted path into the data rather than a number copied out
-       of it — the burden track steps in whatever rules.json says it steps in. */
+       of it, for any track that would rather read its step than restate it. */
     const stepOf = (t) => {
       if (typeof t.step === 'number') return t.step;
       let node = D.raw;
@@ -514,17 +519,21 @@
     ] : []);
 
     return el('div', [
-      pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. Harm bars sit on a card’s left edge, capacity bars on its right, on every deck in the game — and where a character carries two capacities, burden keeps the edge and mana comes inboard onto the portrait. Plates are the accepted renders from docs/art/prompts.'),
+      pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. No card carries a bar any more: every number a card has is printed once, as a maximum, in the lettered summary strip across its top, and the tracks that move are on the player board. The letters are the board’s own — H, S, D, M, V — so setting up is reading across the strip. Plates are the accepted renders from docs/art/prompts.'),
       el('div.flow', { style: 'margin-bottom:6px' }, [
         el('a.btn', { href: 'cards/index.html' }, 'Open the card fronts'),
         el('a.btn.small', { href: 'boards/index.html' }, 'The player board'),
+        el('a.btn.small', { href: 'markets/index.html' }, 'The market board'),
         el('a.btn.small', { href: 'book/index.html' }, 'Read the rulebook'),
       ]),
       boardPanel(),
-      ...section('Characters', 'Each player’s hero figure takes one at setup. The burden bar is what they can carry, in kilograms.', q(D.characters).map((c) =>
+      ...section('Characters', 'Each player’s hero figure takes one at setup. Strength is both halves of what an arm does: what they swing with, and what they can shoulder.', q(D.characters).map((c) =>
         deckCard('character', c, `${D.name('people', c.people)} · ${c.calling}`, [
           pill(`health ${c.health}`, 'bad'),
-          pill(`carries ${c.carryKg} kg`),
+          pill(`strength ${c.strength}`),
+          pill(`defence ${c.defence}`),
+          pill(`carries ${carryKg(c.strength)} kg`),
+          pill(`${c.startingGold}${R.currency.symbol} to start`),
           c.manaCapacity ? pill(`mana ${c.manaCapacity}`, 'accent') : null,
         ])
       )),
@@ -535,10 +544,11 @@
           pill(`damage ${v.damageBoxes}`, 'bad'),
         ])
       )),
-      ...section('Monsters', 'Drawn when a discovery roll says monster and the card’s terrain list includes the hex.', q(D.monsters).map((m) =>
+      ...section('Monsters', 'Drawn when a discovery roll says monster and the card’s terrain list includes the hex. Deal the card onto the spare player board and run it like a player who is not a person.', q(D.monsters).map((m) =>
         deckCard('monster', m, m.story, [
           elementPill(m.element),
           pill(`str ${m.strength}`),
+          pill(`def ${m.defence}`),
           pill(`health ${m.health}`, 'bad'),
           pill(`mana ${m.manaYield}`, 'accent'),
         ])
@@ -1046,7 +1056,7 @@
       el('section', [el('h4', 'Effects'), el('ul', { style: 'padding-left:18px;font-size:13.5px' }, (i.effects || []).map((e) => el('li', e)))]),
       el('section', [el('h4', 'Value and mass'), el('div.deflist', [
         el('dt', 'Base'), el('dd', `${i.baseValue}${R.currency.symbol}`),
-        el('dt', 'Mass'), el('dd', `${i.massKg} kg — counts against the carrier's burden`),
+        el('dt', 'Mass'), el('dd', `${i.massKg} kg — counts against what the carrier's strength lets them lift`),
       ])]),
     ];
   };
@@ -1061,9 +1071,10 @@
       el('section', [
         el('h4', 'Numbers'),
         el('div.deflist', [
-          el('dt', 'Strength'), el('dd', String(m.strength)),
-          el('dt', 'Health'), el('dd', `${m.health} — harm bar, left edge`),
-          el('dt', 'Mana yield'), el('dd', `${m.manaYield} ${m.element} mana, split among the slayers`),
+          el('dt', 'S — strength'), el('dd', `${m.strength}. What it swings with.`),
+          el('dt', 'D — defence'), el('dd', `${m.defence}. Add it to the number you need to hit.`),
+          el('dt', 'H — health'), el('dd', String(m.health)),
+          el('dt', 'Y — mana yield'), el('dd', `${m.manaYield} ${m.element} mana, split among the slayers`),
           el('dt', 'Home ground'), el('dd', m.terrains.map((t) => D.name('terrain', t)).join(', ')),
         ]),
       ]),
@@ -1103,11 +1114,14 @@
       plateFull(D.art('character', c), c.name),
       el('p.prose', c.story),
       el('section', [
-        el('h4', 'The card'),
+        el('h4', 'The summary strip'),
         el('div.deflist', [
-          el('dt', 'Health'), el('dd', `${c.health} — harm bar, left edge`),
-          el('dt', 'Burden'), el('dd', `${c.carryKg} kg — capacity bar, right edge. Walk a token up it as ${c.name.split(' ')[0]} picks things up.`),
-          el('dt', 'Mana'), el('dd', c.manaCapacity ? `${c.manaCapacity} — capacity bar, inboard of the burden bar` : 'none held in the body — talismans only'),
+          el('dt', 'H — health'), el('dd', `${c.health}. Only medical aid puts it back; sleeping does not.`),
+          el('dt', 'S — strength'), el('dd', `${c.strength}. What ${c.name.split(' ')[0]} swings with, and ${carryKg(c.strength)} kg of what they can shoulder.`),
+          el('dt', 'D — defence'), el('dd', `${c.defence}. Read by whoever is attacking them, never by them.`),
+          el('dt', 'M — mana'), el('dd', c.manaCapacity ? `${c.manaCapacity} held in the body.` : 'none held in the body — talismans only.'),
+          el('dt', `${R.currency.symbol} — gold`), el('dd', `${c.startingGold} to start.`),
+          el('dt', 'KG — carries'), el('dd', `${carryKg(c.strength)} kg. Derived, not designed: strength × ${R.carrying.kgPerStrength}.`),
           ...(c.manaNote ? [el('dt', 'Note'), el('dd', c.manaNote)] : []),
         ]),
       ]),

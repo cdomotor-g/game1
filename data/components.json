@@ -1,6 +1,6 @@
 {
-  "$comment": "How a physical game element is built - stated once, here, and pointed at from everywhere that draws one. This file holds no content: no card says anything here, no monster is named here. It says what shape a card is, where its bars hang, how thick the frame is drawn, what a deck's back looks like. tools/build-cards.mjs reads it instead of carrying those numbers in its head, which is the point: change the corner radius here and the fronts, the backs, the print sheet and the explorer previews all move together. Adding a deck is an entry under `decks` plus its content file - not a new set of numbers copied out of this one. See docs/design/08-components.md for the bill of materials and docs/art/06-components.md for why each convention is what it is.",
-  "version": "0.1.0",
+  "$comment": "How a physical game element is built - stated once, here, and pointed at from everywhere that draws one. This file holds no content: no card says anything here, no monster is named here. It says what shape a card is, how its summary strip is set, how thick the frame is drawn, what a deck's back looks like, what shape a token is cut, and how the player board, the market board and a mini-map sheet are laid out. tools/build-cards.mjs reads it instead of carrying those numbers in its head, which is the point: change the corner radius here and the fronts, the backs, the print sheet and the explorer previews all move together. Adding a deck is an entry under `decks` plus its content file - not a new set of numbers copied out of this one. See docs/design/08-components.md for the bill of materials and docs/art/06-components.md for why each convention is what it is.",
+  "version": "0.2.0",
 
   "$structure": {
     "$comment": "The tiny type system this file uses, so the next thing that reads it does not have to guess. Every length is in millimetres unless the key says otherwise. A `ref` is a dotted path into this file or another dataset, and means 'use that definition, do not restate it'.",
@@ -27,15 +27,32 @@
     "rivets": { "inset": 15, "radius": 3.6 }
   },
 
-  "bars": {
-    "$comment": "The vertical numbered bars. Harm always left, capacity always right - the convention is load-bearing across four decks and is stated in docs/art/06-components.md. A bar is numbered from the bottom and walked by a token. `maxCells` is the most rungs the edge will hold; `steps` is the ladder of step sizes a scale may choose from, smallest first, so a 100-bulk hold still fits a walkable bar.",
-    "width": 30,
-    "maxCells": 14,
-    "steps": [1, 2, 5, 10, 20, 50],
-    "harm": { "edge": "left", "ink": "oxide", "inkPlateMark": "notch-down", "never": "skip-counts - a harm track is always step 1" },
-    "capacity": { "edge": "right", "ink": "slate" },
-    "arcaneCapacity": { "edge": "right", "ink": "bruise", "note": "mana bars only - mana is an arcane subject" },
-    "inboard": { "note": "A second capacity comes in over the portrait and lays its own paper first.", "offsetFromRight": 104 }
+  "statStrip": {
+    "$comment": "The row of lettered boxes across the top of every card, and what replaced the bars.\n\nA card used to hang a numbered ladder off each edge - harm left, capacity right - and a token walked it. That worked while a card was held in the hand. It stopped working the day the player board arrived, because a card in a recess is a card whose edges are under the board: the tracks moved to the board (playerboard.json) and the ladders on the cards became decoration that ate two columns of picture.\n\nSo a card now prints the MAXIMUM and nothing else. One box per number, the letter first and the figure after it - H 10, S 6, D 5 - and the letter is the same letter the board's track carries, so a player setting up reads across the strip and sets the tokens left to right. Nothing on a card moves any more; everything that moves is on the board.\n\nWhat the strip costs the picture is about six millimetres of height. What it pays back is the whole width of the card: the portrait window now runs frame to frame, because there is nothing beside it.",
+
+    "cells": { "max": 6, "heightMm": 5.75, "gap": 5, "pad": 4, "cornerRadius": 5,
+      "$maxNote": "Six is what a 63 mm card holds at a legible size - about 9 mm a box. A deck that wants a seventh number wants a smaller number of numbers." },
+    "letterBox": { "size": 34, "fill": "soot-tint-12", "$note": "A tinted square at the left of the box with the letter in it, so the letter reads as a label and not as part of the figure." },
+    "letter": { "size": 20, "family": "sans", "weight": "bold", "tracking": 0.4 },
+    "value": { "size": 22, "family": "sans", "weight": "bold", "minSize": 17,
+      "$minNote": "The figure shrinks to fit its box and stops at minSize, which is the 6 pt print floor in palette.json rules.minTypeSize (6 pt = 17 grid units). A number that will not fit at 6 pt is a number that does not belong on a card." },
+    "rule": { "strokeWidth": 1.4, "$note": "The strip sits in one boxed row under the kicker, each cell ruled, so it reads as a table and not as a sentence." },
+
+    "letters": {
+      "$comment": "The letter a stat is called by, across the whole game. The five that the player board also has a track for MUST match data/playerboard.json - tools/validate-data.mjs checks that they do, and fails the build if a card and a board ever start calling the same number by different names. The rest are card-only: a number that is printed and never walked has no track to borrow a letter from, so it gets one here.\n\nThese are conventions, not content: no card is named here and no value is stated here.",
+      "health": "H",
+      "strength": "S",
+      "defence": "D",
+      "mana": "M",
+      "vehicle": "V",
+      "gold": "\u00a4",
+      "carry": "KG",
+      "cargo": "C",
+      "yield": "Y",
+      "value": "\u00a4",
+      "mass": "KG",
+      "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so."
+    }
   },
 
   "board": {
@@ -233,9 +250,93 @@
   },
 
   "tokens": {
-    "$comment": "Round board tokens - the generic ones, which is all of them. A commodity's identity lives on its card; the token on the board only has to say which commodity family it belongs to and be findable in a heap. 18 mm is the chit tier in docs/art/04-iconography.md: silhouette and frame only. `engravable` marks the ones that are meant to survive being cut on a laser rather than printed - which means the mark has to work as a single-depth engraving with no tint at all.",
-    "commodity": { "diameterMm": 18, "shape": "round", "engravable": true, "carries": "the commodity family's mark and hatch, never a number" },
-    "deposit": { "diameterMm": 18, "shape": "round", "engravable": true, "carries": "the deposit's mark on one face, its yield on the other - deposits differ, see data/deposits.json tokenYields" },
-    "bar": { "diameterMm": 7, "shape": "round", "engravable": false, "carries": "nothing - it is the marker that walks a card's bar" }
+    "$comment": "Everything loose that is not a card. Two shapes and one reason for each: pieces that are CUT are hexagons, pieces that are STRUCK are discs.\n\nA hexagon shares its cuts. Nested on a sheet, one straight line is the edge of two tokens and every token but the outside row is bounded entirely by cuts somebody else already paid for, so a sheet of hexes yields around a fifth more pieces than the same sheet of discs and the laser travels a good deal less. Discs share nothing: every circle is cut alone and the waste between four of them is a piece of stock the size of a fifth. So the commodity tokens - the ones there are hundreds of - are hexagons, and it is worth the change of shape.\n\nCoins stay round, because a coin that is not round is not a coin. There are far fewer of them, they are the one piece a player handles by feel while looking somewhere else, and round against hexagonal is the fastest distinction a hand can make in a heap.",
+
+    "commodity": {
+      "shape": "hex", "orientation": "flat-top", "acrossFlatsMm": 18, "engravable": true,
+      "carries": "the commodity family's mark and hatch, never a number",
+      "nesting": { "rowPitchMm": 18, "columnPitchMm": 15.59, "sharedEdges": true,
+        "$note": "columnPitch is acrossFlats x 3/4 for a flat-top hex nested in a honeycomb: neighbouring columns interlock, and the cut between them is one line, not two." },
+      "$note": "The commodity's identity lives on its card; the token only has to say which family it belongs to and be findable in a heap. 18 mm is the chit tier in docs/art/04-iconography.md - silhouette and frame only - and the mark has to work as a single-depth engraving with no tint at all."
+    },
+    "deposit": {
+      "shape": "hex", "orientation": "flat-top", "acrossFlatsMm": 24, "engravable": true,
+      "carries": "the deposit's mark on one face, its yield on the other - deposits differ, see data/deposits.json tokenYields",
+      "$note": "Cut from the same stock and nested the same way, and bigger than a commodity token because it lies on a map hex rather than in a heap: size is what tells the two apart on the table, since both are hexes."
+    },
+    "coin": {
+      "shape": "round", "engravable": true,
+      "denominations": [
+        { "value": 1, "diameterMm": 16 },
+        { "value": 5, "diameterMm": 19 },
+        { "value": 25, "diameterMm": 22 }
+      ],
+      "carries": "the figure and the currency mark, from rules.json currency.symbol - a coin is the one token in the game that says a number out loud",
+      "$note": "Three sizes rather than three colours, so a stack is countable by feel and in the black-and-white edition. Round because a coin is round; see the block comment for why nothing else is."
+    },
+    "bar": {
+      "shape": "round", "diameterMm": 7, "engravable": false,
+      "carries": "nothing - it is the marker that walks a track on the player board or the market board",
+      "$note": "Six of these per player board, one per track, plus one per commodity line in play on the market board."
+    },
+
+    "route": {
+      "$comment": "Road and rail, laid on the map hex by hex, and the piece that finally puts a player's name on the thing they paid for (rules.json infrastructure). A route token is a BAR, not a chit: it lies along the line between two hex centres, which is where a road actually is, and it is the length of that line so a run of them reads as a continuous road rather than as a row of counters.\n\nThe sizing is not typed here, because it is not ours to type - a map hex is whatever the map's print preset makes it (data/maps/<id>.json print.presets[].hexAcrossFlatsMm), and the bar has to match. So the token is stated as fractions of the hex and tools/build-map.mjs prints the millimetres for every preset it derives. At the default four-sheet Korvane Reach board - a 16.7 mm hex - that is a 15 x 3.7 mm road bar and a 15 x 5.3 mm rail bar, both cuttable in 3 mm ply and both big enough to pick up.",
+      "lengthFraction": 0.9,
+      "$lengthNote": "Nine tenths of the centre-to-centre distance, which for a pointy-top hex IS acrossFlats. The missing tenth is the gap that keeps two abutting bars from looking like one long one, and it is what lets a finger get under an end.",
+      "road": { "widthFraction": 0.22, "engravable": true, "carries": "a plain metalled hatch along its length" },
+      "rail": { "widthFraction": 0.32, "engravable": true, "carries": "sleepers across its width - readable at arm's length as rail rather than road, which is the only thing the two shapes have to do" },
+      "bridge": { "widthFraction": 0.32, "engravable": true, "carries": "the same bar with its ends squared off and a parapet line, laid across one water hex" },
+      "ownership": {
+        "$comment": "Whose road it is decides who collects the toll, so it has to be readable across a table and readable by a player who cannot use the colour.",
+        "mark": "peg holes along the centre line: one hole for the first player, two for the second, and so on to five.",
+        "holeDiameterMm": 2,
+        "colour": "The owner's colour on the wash as well, for everyone it does work for."
+      },
+      "howMany": "One per hex of road or rail built. A player who runs out has run out of road, which is a real limit and a fair one."
+    }
+  },
+
+  "minimap": {
+    "$comment": "The zoom-in sheet: one hex of the world map, opened out. Play happens inside it and the result is written back to the big map.\n\nIt is a flat colour and a grid, and NOTHING else. No render, no pattern, no hatch, no drawn terrain: the field is a hexagon of hexagons filled with the plain colour that terrain already prints in, and the grid is ruled on top. That is the whole sheet. It needs no plate, no artist and no framing entry, which is why it is not in the mint queue and why it is not waiting on anything.\n\nThe cell is the load-bearing decision: a mini-map cell is EXACTLY the size of a world-map hex. A figure standing on the big board picks up and stands on a mini-map cell without being re-based, a route token cut for the world map fits a mini-map lane, and one ruler measures both. The scale is a fiction - the ground inside one hex is not nine hexes of ground - and it is the right fiction, because everything physical about the two boards already agrees.",
+    "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6, "$note": "A4 landscape, the same sheet as the player board." },
+    "marginMm": 8,
+    "cellsPerSide": 5,
+    "$cellsNote": "Five to a side is 61 cells and nine across the middle row - the most that fits on A4 once the cell is pinned to the world hex, and the number the shelved drawn sheets were laid out to.",
+    "cellFrom": "maps.<id>.print.presets[default].hexAcrossFlatsMm",
+    "$cellFromNote": "Not a number. The cell IS the world hex, so it is read from whichever map and preset the table is playing on, and a bigger printed map makes a bigger mini-map cell without anything here changing.",
+    "field": { "orientation": "pointy", "strokeWidth": 2.4, "$note": "Pointy-top cells, the same orientation as the world map's grid, so a lane of cells runs the same way on both boards. The field's edge is not a drawn hexagon: it is the outer edges of the outer cells, traced. A hexagon of hexes has a slightly stepped boundary and a smooth one drawn over it never quite lands on the cells - which is exactly the kind of half-millimetre nobody can see and everybody can feel." },
+    "grid": { "strokeWidth": 0.9, "opacity": 0.6, "coordinates": true,
+      "$note": "Ruled on the ink plate, exactly as the world map's overlay is - and for the same reason: never ask an image model for a grid. See docs/map/README.md. `coordinates` prints a row letter and a cell number in the corner of every cell, so a cell can be named across the table without anybody counting." },
+    "wash": {
+        "from": "palette.terrain[].wash",
+        "opacity": 1.0,
+        "$fromNote": "The PRINTED colour, not the screen one. data/terrain.json terrains[].colour is what the explorer paints a hex in; docs/art/palette.json terrain[].wash is what a press puts on paper, and it is already a tint because - as that file says - terrain is the largest printed area in the game and a full-strength ink across it is both ugly and expensive. A mini-map field is the largest printed area of all, so it takes the wash at full strength and the tint is already in it. It also means the ink grid ruled on top stays the darkest thing on the sheet, which the raw screen green did not.",
+        "$bwNote": "In the black-and-white edition the field is bare paper and the grid, the letter code and the panels carry the sheet on their own."
+      },
+    "panels": { "left": "encounter", "right": "holdings", "$note": "What a hexagon on a rectangle leaves over, either side of the field. Both print on every sheet, so no sheet is ever the wrong sheet." }
+  },
+
+  "marketBoard": {
+    "$comment": "The market board: one A4 sheet of price ladders, and every ladder identical.\n\nA town's price for a commodity is its base value times a band (rules.json market.priceBands), and the band is the only part that moves. So the board prints the bands and nothing else - no commodity is named on it, no base value is printed on it - and you say WHICH commodity a line is about by standing that commodity's hexagonal token on it. The token is both the label and the reading: where it stands is the price, and which token it is says what the price is of. One generic board serves any commodity, any town and any table, and a game that adds a sixty-seventh commodity reprints nothing.\n\nThere is no name strip down the side, and that is the design rather than an omission. A strip would need a second token, or a pencil, to say what a line was about - and the line already has a token saying exactly that.\n\nThe geometry is derived the way the player board's is: a band cell is what the paper leaves once the blocks and the gutter have taken theirs, and the sheet holds however many lines fit. Nothing below is a coordinate, and the one dimension that is not free is the token: a line is a token tall plus its clearance, so a bigger commodity token makes a taller line and fewer of them, and never a token that does not fit its cell.",
+    "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6 },
+    "marginMm": 8,
+    "gutterMm": 6,
+    "headMm": 14,
+    "footMm": 12,
+    "$headNote": "One head row, at the top of the sheet, carrying every block's band labels - not one head over every line. Sixteen repetitions of x0.5 x0.75 x1 down a page is sixteen chances for the eye to lose which column it is in; one row and a ruled column edge does the job.",
+    "$footNote": "A strip across the bottom for the three lines a market board has to say out loud (marketboard.json panel). It is the only prose on the sheet.",
+    "line": {
+      "$comment": "One commodity's price, read left to right, cheap to dear. A line is a row of band cells and nothing else.",
+      "clearanceMm": 1.5,
+      "$heightNote": "A line's height is not stated: it is the commodity token's acrossFlats plus a clearance either side, so the token can be picked up out of a cell without lifting its neighbours.",
+      "strokeWidth": 1.6,
+      "bandStrokeWidth": 0.9
+    },
+    "cell": { "minMm": 18, "$note": "A band cell has to be wider than a commodity token is across the CORNERS, which for a flat-top hex is acrossFlats x 2/root-3 - about 21 mm for an 18 mm token. tools/build-market.mjs checks it and fails rather than printing a board a token overhangs." },
+    "startBandRule": { "strokeWidth": 2.4, "$note": "The starting band (rules.json market.startingBandIndex) rules heavier and is where every token is placed at setup, so a board reset to nothing is a board with one straight column of tokens." },
+    "timber": { "boardWidthMm": 26, "seamStrokeWidth": 1.1, "grainStrokeWidth": 0.7, "grainOpacity": 0.5, "knots": 2,
+      "$note": "The same sawn ground as the player board. They are the same piece of furniture in two sizes and they should look it." }
   }
+
 }

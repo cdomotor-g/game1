@@ -89,17 +89,66 @@
     "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
   },
 
+  "infrastructure": {
+    "$comment": "What a player gets for laying road and rail, beyond the fact that their own carts go faster on it. Roads were the one thing in the game you built for everybody and were paid for by nobody: the network victory condition scored them at the very end and nothing scored them in the twenty rounds before that, so a road only ever got built where its builder happened to want to walk.\n\nThree returns, in the order a player feels them: a toll every time somebody else uses it, a better price for cargo that moves on your own network, and the network points that were already there. The toll is small on purpose - it is a reason to build, not a business - and it is collected from the table rather than paid into a bank, so every coin of it comes out of a rival.",
+    "ownership": "A road, rail line or bridge belongs to the player who paid for it, for the rest of the game. Mark it with that player's route tokens (components.json tokens.route) as it is laid - the token IS the record, and an unmarked road belongs to nobody.",
+    "toll": {
+      "roadPerHex": 1,
+      "railPerHex": 2,
+      "collectedBy": "The owner, from the moving player, the moment that leg ends.",
+      "capPerLeg": 6,
+      "capNote": "No leg pays more than this however long it is, so a trunk road across the continent is worth building and is never a tax gate.",
+      "waived": [
+        "The owner's own figures, parties and cargo - you do not pay yourself.",
+        "Any party carrying a quest the owner accepted.",
+        "Any hex whose road the moving player also owns a share of, where two networks meet."
+      ],
+      "refused": "A player may decline to pay and go round. They may not decline to pay and go through."
+    },
+    "haulage": {
+      "bonusPercent": 10,
+      "rule": "Cargo that starts or ends its journey in a settlement your own road or rail reaches sells for a tenth more than the town price.",
+      "why": "A road is worth more to the person who built it than the toll on it will ever be. This is where the real money is, and it is why the sensible first road runs from your mine to your market rather than towards anybody else."
+    },
+    "payback": {
+      "$comment": "The check that says the numbers are not decoration. A road hex costs 1 stone and 3 build points; stone is 5 coin, so call it 5 coin a hex and an hour a hex on top. At 1 coin a hex a stretch pays for itself after five foreign crossings, which in a four-player game is a handful of rounds on any road worth building. Rail costs 2 steel and 2 lumber - 70 coin a hex - and will never repay that in tolls alone: rail is repaid by the train that runs on it and by victoryPointsPerTile, and the toll is a gratuity.",
+      "roadHexCoin": 5,
+      "roadHexHours": 3,
+      "railHexCoin": 70,
+      "railHexHours": 8
+    },
+    "victory": "Unchanged: the Network condition still scores towns joined by road, rail and sea routes you built (victory.conditions network), and rail still scores victoryPointsPerTile as it is laid.",
+    "notes": "None of this makes a road a private road. Anyone may walk it, and paying the toll is the price of the walk - which is exactly the relationship a turnpike had with the people who used it."
+  },
+
   "carrying": {
-    "$comment": "What a figure carries on its own back, in kilograms. Mass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
+    "$comment": "What a figure carries on its own back, in kilograms - and there is no longer a second number for it. Strength IS the carrying limit: one rating does the lifting and the swinging, because they are the same arm. A character card prints the kilograms so nobody does arithmetic at the table, but the kilograms are derived, not designed - change a figure's strength and what they can shoulder changes with it.\n\nMass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
     "unit": "kg",
-    "barStepKg": 1,
-    "$scaleNote": "One kilogram a rung. The whole mass scale was halved when the player board settled on tracks of 0 to 14 - every massKg, every carry.baseKg and every carryKg came down by the same factor, so nothing about what fits in whose hands changed, only what it is counted in. A plate harness is still very nearly all a strong figure can shoulder.",
-    "carryLimit": "Printed on the character card as the BURDEN bar up the right edge. A character's limit is their people's carry.baseKg adjusted for build and calling; other figures use their people's base unmodified.",
-    "marker": "Stand a token on the burden bar and move it as the character picks things up and puts them down. Total the mass of everything they carry - worn, wielded and stowed alike - and stand the token on the first mark at or above that total.",
-    "limitRule": "A character may not take up an item that would push the token past the top of the bar. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
+    "kgPerStrength": 3,
+    "$scaleNote": "Three kilograms to the point. It is the factor that leaves the deck where it already was - a strength-2 hedge-witch shoulders 6 kg and a strength-6 caravan guard 18, which is roughly what their old burden bars said - and it puts the plate harness (12.5 kg) out of reach of anyone under strength 5, which is the right sentence for a suit of plate to be in.",
+    "limit": "strength x kgPerStrength, in kilograms. Characters use the strength on their card; any other figure uses its people's strength.base (peoples.json).",
+    "marker": "None. There is no burden track any more and no token to walk: total what the figure is wearing, wielding and stowing, and it either fits under the limit printed on the card or it does not.",
+    "limitRule": "A figure may not take up an item that would put its load over the limit. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
     "notCarried": ["Commodities in transit, which travel by transport mode and are measured in bulk.", "Coin.", "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."],
-    "onZeroHealth": "A character carried to a settlement at 0 health loses everything on the burden bar on the way; clear the token to zero.",
-    "notes": "The bar is a capacity bar, so it sits on the right edge like every other capacity bar in the game, and it is ruled in slate like a vehicle's cargo. Where a character also has innate mana, the mana bar moves inboard of it and sits on the portrait."
+    "onZeroHealth": "A figure carried to a settlement at 0 health loses everything it was carrying on the way.",
+    "notes": "Burden used to be a bar up the right edge of every character card and a track on the player board. Both are gone: the bar went when the cards took a summary strip across the top instead, and the track went when strength swallowed it."
+  },
+
+  "upkeep": {
+    "$comment": "What a figure spends by being alive and on the road, and which of its two numbers it spends. Food keeps HEALTH up; sleep keeps STRENGTH up. They are not interchangeable and neither is a substitute for the other, which is the whole design: a party can be well fed and exhausted, or rested and starving, and those are different problems with different answers.\n\nThe town-scale version of this - workers eating in the Feeding phase - is `population`. This block is the party-scale one, and it applies to every figure on the map that is not sitting in a town being fed by it.",
+    "food": {
+      "perFigurePerRound": 1,
+      "from": "What the party carries, or what it forages or buys that round.",
+      "shortfall": { "health": -1 },
+      "shortfallNote": "A round that ends with a figure unfed costs that figure 1 health, every round it goes on. Nothing about being fed again puts the health back - see rest.medicalAid. Going hungry is a wound like any other."
+    },
+    "night": {
+      "camp": "A party that stops before dark and makes camp restores every figure's strength to the number printed on its card. A bed at an inn does the same and costs rest.cost.",
+      "noCamp": { "strength": -1 },
+      "noCampNote": "A party that travels a night leg, or ends the round without stopping, loses 1 strength from every figure in it. That is on top of the extra discovery roll a night leg already draws (movement.legs.nightRisk).",
+      "cumulative": "Strength lost this way stacks night after night, and at 0 strength a figure does not fight and carries nothing (playerboard.json strength.atZero). Two hard nights turn a caravan guard into a passenger."
+    },
+    "notes": "This is the pressure that makes a lantern, a granary, an inn and a stretch of salted meat worth their coin - and the reason a shorter leg with a camp at the end of it often beats a longer one without."
   },
 
   "movement": {
@@ -123,27 +172,46 @@
       "when": "When a figure, party or vehicle ends its movement leg, roll once on the discovery table for the hex it stopped in - one roll for the leg, not one per hex crossed.",
       "tables": "data/discovery.json, one column per terrain letter code, with road and rail overrides",
       "placement": "Any result that persists - a monster, a trace, a cave, a quest site - is marked on the hex with a tile or figure so the whole table can see it.",
+      "encounter": {
+        "$comment": "What to DO with a discovery roll that turns up a living thing, which the tables have always produced and the rules have never said how to run. The answer is the one piece of furniture already on the table: a player board. The thing you met gets one, and for the length of the encounter it is a player - a player who is not a person.",
+        "rule": "Shuffle the deck the result names - monsters for a beast, characters for a stranger on the road - and deal one card face up onto a spare player board, into the character recess.",
+        "setUp": "Set that board's tracks from the card exactly as a player sets their own at setup: health, strength, defence and mana off the printed strip. It now has everything a player has and is run the same way, by whoever is to the left of the player who drew it.",
+        "boards": "Print one player board per player plus one for the table. The spare is the encounter board, and it is why the board is generic (playerboard.json board.generic): the furniture does not care whether a person or a wolf is sitting behind it.",
+        "afterwards": "When the encounter ends the card is put away - back into its deck, or onto the hex as a lair, or into the winner's hand if it was befriended, enslaved or domesticated (monsters.json encounterOptions). Clear the board's tokens. Nothing about the encounter is written down.",
+        "why": "A monster with a board is a monster whose health and strength are visible to everyone, walked down in front of the table rather than tracked in one player's head - and a stranger met on the road is set up exactly like a hero, because that is exactly what they are to themselves."
+      },
       "notes": "Discovery is what you find when you are NOT looking. Prospecting, foraging and hunting have their own recipes and roll tables, and a discovery roll never replaces a survey."
     },
     "notes": "A prospector entering a face-down tile flips it. Flipping reveals terrain immediately; deposits need a survey roll on top of that."
   },
 
   "rest": {
-    "where": "Any settlement with an inn - every printed settlement has one; a player-built town needs the inn building.",
-    "healthPerRound": 2,
-    "healthPerRoundWithHealer": 3,
-    "cost": { "coin": 5, "note": "Waived in your own town, and at any inn a quest reward names." },
+    "$comment": "Two different kinds of hurt, mended two different ways. Strength is spent, so sleep gives it back. Health is damage, so only a healer does. That split is what makes a night's camp a decision rather than a formality, and it is what makes a physician worth feeding.",
+    "where": "Any settlement with an inn - every printed settlement has one; a player-built town needs the inn building. A camp made on open ground counts for strength and for nothing else.",
+    "restoresStrength": "All of it. One night's sleep sets the strength token back to the number printed on the card, wherever that night is taken.",
+    "restoresHealth": "None. Sleeping through a wound does not close it - see medicalAid.",
+    "medicalAid": {
+      "$comment": "The only thing that puts health back. Everything on this list is a person, a building or a bottle: health is repaired by somebody, never by time.",
+      "healerPerRound": 3,
+      "infirmaryPerRound": 3,
+      "physicianPerRound": 2,
+      "physicianNote": "A character whose card says so - Doctor Elspeth Marrow, for one - mends this much anywhere they stand, with no infirmary and no town.",
+      "potion": "items.json potion-healing, which mends on the spot and is drunk doing it.",
+      "cost": { "coin": 5, "note": "Per round of care. Waived in your own town, and at any inn or infirmary a quest reward names." }
+    },
+    "cost": { "coin": 5, "note": "A bed for the night. Waived in your own town, and at any inn a quest reward names. A camp on open ground is free." },
     "notes": "A resting character does nothing else that round. Vehicle damage is repaired separately - 1 box per round in any settlement of town rank or better, paying 5 coin per box."
   },
 
   "hirelings": {
     "where": "Hired at any inn, in any settlement of village rank or better.",
+    "$statsNote": "Every figure in a fight needs a strength and a defence, hirelings included - conflict.attack reads both off whoever is swinging and whoever is being swung at, and a hireling with neither cannot be attacked by the rules as written. These are the numbers printed on the inn's board, and they are what you are paying for: the thug is strong and careless, the militiaman is neither and is wearing a coat of plates, and the blade is better at both than either.",
     "options": [
-      { "id": "thug", "name": "Thug", "coinPerJourney": 20, "combatDice": 1, "note": "Refuses to fight monsters of strength 4 or more. Counts as a soldier for escort purposes." },
-      { "id": "militia", "name": "Militiaman", "coinPerJourney": 35, "combatDice": 1, "armourValue": 1, "note": "Steady. Fights anything." },
-      { "id": "blade", "name": "Hired Blade", "coinPerJourney": 60, "combatDice": 2, "note": "Fights anything, and rolls first like a bow." }
+      { "id": "thug", "name": "Thug", "coinPerJourney": 20, "strength": 4, "defence": 2, "combatDice": 1, "note": "Refuses to fight monsters of strength 4 or more. Counts as a soldier for escort purposes." },
+      { "id": "militia", "name": "Militiaman", "coinPerJourney": 35, "strength": 3, "defence": 4, "combatDice": 1, "armourValue": 1, "note": "Steady. Fights anything." },
+      { "id": "blade", "name": "Hired Blade", "coinPerJourney": 60, "strength": 5, "defence": 4, "combatDice": 2, "note": "Fights anything, and rolls first like a bow." }
     ],
-    "notes": "A hireling escorts one journey - a travelling party or a cargo in transit - then goes home. Hirelings eat no food; the fee is everything. An escorted cargo drops its theft risk to 0, same as a soldier escort."
+    "notes": "A hireling escorts one journey - a travelling party or a cargo in transit - then goes home. Hirelings eat no food; the fee is everything. An escorted cargo drops its theft risk to 0, same as a soldier escort. They do not eat and they do not sleep on your account either, so upkeep never touches them."
   },
 
   "conflict": {
@@ -153,17 +221,29 @@
     "retreatAllowed": true,
     "lootFraction": 0.25,
     "strength": {
-      "$comment": "Strength was already in the game, on every monster card, doing one job: a threat rating that some rules read as a threshold. This is the other half of it - what strength does when the dice come out - and it is a shift on the number you need rather than a pile of extra dice. Dice count stays where it was, one per unit, so a strong figure is not a faster figure and a battle does not get longer because somebody is strong.\n\nThe shift is a DIFFERENCE, which is the whole point: strength 6 means nothing on its own, it means something against strength 3. That also lets one number on the board serve both sides of a fight - yours on the track, theirs on the card in front of you.",
-      "rule": "Shift the number you need by the strength difference: less your own, plus your opponent's.",
-      "formula": "target = hitsOn + opponentStrength - yourStrength",
-      "worked": "Equal strength 4+. A point stronger, 3+. Two weaker, 6+.",
-      "clamp": [2, 6],
-      "clampNote": "Never better than 2+ and never worse than 6+. A fight is never decided before the dice are thrown - the dragon at strength 7 is terrifying, not arithmetic, and the halfling still lands one in six.",
-      "appliesTo": "Any figure with a strength: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the strength printed on the inn's board.",
+      "$comment": "One number, three jobs, and it is the only number a figure brings to a fight of its own. Strength is what you SWING WITH - it shifts the number you need to hit. It is what you CARRY WITH - see carrying.kgPerStrength. And it is still the threat threshold some rules read off a monster card. It is also the number a hard night takes off you (upkeep.night), which is what ties the three together: an exhausted figure hits worse and carries less, and that is one token moving down one track.",
+      "scale": "0 to the board's ceiling (components.json board.track). Characters run 2 to 6, monsters 2 to 7.",
+      "carries": "strength x carrying.kgPerStrength kilograms. The card prints the kilograms; the track holds the strength.",
       "notDice": "Strength never adds dice. Weapons and armour add dice and soak hits, exactly as they did; +1 combat die is still +1 combat die.",
-      "threshold": "The older job is unchanged and still reads off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges."
+      "threshold": "Unchanged and read off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges.",
+      "atZero": "A figure at 0 strength does not fight and carries nothing."
     },
-    "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour, and hit on the number the strength difference leaves them needing. Both sides apply hits simultaneously."
+    "defence": {
+      "$comment": "The other half, and new. Strength used to sit on both sides of the attack roll - yours off the board, theirs off the card - which made a strong thing hard to hurt for no reason other than that it hit hard. Those are different properties and they now have different numbers: an ash drake is strong AND armoured, a dust devil is neither and is still almost impossible to land a blow on, and a stone boar barely swings at all and turns a sword.",
+      "scale": "0 to the board's ceiling, same as every other track. Characters run 2 to 5, monsters 1 to 6.",
+      "isNot": "Armour. Armour is items.json armourValue and still soaks hits after they land; defence is what makes them miss in the first place. A figure can have both, and a figure in plate usually does.",
+      "atZero": "Nothing between the blow and you. An attacker needs only its own hitsOn, less its strength."
+    },
+    "attack": {
+      "$comment": "The one line of arithmetic printed on the player board, because it is the only one a player needs while a monster card is face up in front of them. It is a DIFFERENCE, which is what lets one number on the board and one number on the card settle the whole roll.",
+      "rule": "Shift the number you need: less your own strength, plus their defence.",
+      "formula": "target = hitsOn + opponentDefence - yourStrength",
+      "worked": "Strength 3 against defence 3: 4+. Strength 5 against defence 3: 2+. Strength 2 against defence 5: 6+.",
+      "clamp": [2, 6],
+      "clampNote": "Never better than 2+ and never worse than 6+. A fight is never decided before the dice are thrown - Vhalrik at defence 6 is terrifying, not arithmetic, and the halfling still lands one in six.",
+      "appliesTo": "Any figure with a strength and a defence: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the numbers printed on the inn's board."
+    },
+    "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour, and hit on the number the strength-against-defence difference leaves them needing. Both sides apply hits simultaneously."
   },
 
   "victory": {

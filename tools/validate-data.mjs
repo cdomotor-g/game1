@@ -218,50 +218,58 @@ for (const r of recipes) {
   }
 }
 
-// Mass and burden are one system: an item weighs, a figure carries, and the
-// burden bar has to print a ladder that tops out at exactly the limit.
+// Mass and strength are one system: an item weighs, a figure lifts, and what a
+// figure lifts is its strength times a factor - there is no second number for it
+// any more and no bar to print it on, so the checks are about whether the factor
+// leaves the deck playable rather than about whether a ladder fits.
 const carrying = datasets.rules?.carrying;
 const peoples = datasets.peoples?.peoples ?? [];
 const characters = datasets.characters?.characters ?? [];
 const itemList = datasets.items?.items ?? [];
-const step = carrying?.barStepKg;
+const kgPerStrength = carrying?.kgPerStrength;
 
 if (!carrying) errors.push('rules: no "carrying" block - items have mass and nothing says what it is for');
+if (typeof kgPerStrength !== 'number' || kgPerStrength <= 0) {
+  errors.push('rules: carrying.kgPerStrength is what turns a strength into kilograms - without it no card can print a limit');
+}
 for (const i of itemList) {
   if (typeof i.massKg !== 'number') errors.push(`items: "${i.id}" has no massKg`);
   else if (i.massKg <= 0) errors.push(`items: "${i.id}" has massKg ${i.massKg} - an item weighs something`);
 }
-for (const p of peoples) {
-  if (typeof p.carry?.baseKg !== 'number') errors.push(`peoples: "${p.id}" has no carry.baseKg`);
-}
 
 const massOf = new Map(itemList.map((i) => [i.id, i.massKg]));
-const carryOf = new Map(peoples.map((p) => [p.id, p.carry?.baseKg]));
-const biggestCarry = Math.max(0, ...characters.map((c) => c.carryKg || 0), ...carryOf.values());
+const carryOf = (strength) => (strength ?? 0) * (kgPerStrength ?? 0);
+const biggestCarry = Math.max(
+  0,
+  ...characters.map((c) => carryOf(c.strength)),
+  ...peoples.map((p) => carryOf(p.strength?.base)),
+);
 
 for (const c of characters) {
-  if (typeof c.carryKg !== 'number' || c.carryKg <= 0) {
-    errors.push(`characters: "${c.id}" has no carryKg - every character card prints a burden bar`);
-    continue;
-  }
-  /* barScale picks the step; a limit off the step prints a top mark ABOVE the
-     limit, which is a card that lies about what it can carry. */
-  if (step && c.carryKg % step !== 0) {
-    errors.push(`characters: "${c.id}" carries ${c.carryKg}kg, which is not a multiple of the ${step}kg bar step - the bar would print a mark past the limit`);
-  }
-  const base = carryOf.get(c.people);
-  if (typeof base === 'number' && Math.abs(c.carryKg - base) > 8) {
-    warnings.push(`characters: "${c.id}" carries ${c.carryKg}kg against a ${c.people} base of ${base}kg - a long way off their people`);
-  }
+  /* A character who cannot pick up the kit they are printed as starting with is
+     a character whose first turn is a rules argument. */
   const kit = (c.startsWith ?? []).reduce((sum, id) => sum + (massOf.get(id) ?? 0), 0);
-  if (kit > c.carryKg) {
-    errors.push(`characters: "${c.id}" starts with ${kit}kg of gear but can carry ${c.carryKg}kg`);
+  const limit = carryOf(c.strength);
+  if (kit > limit) {
+    errors.push(`characters: "${c.id}" starts with ${kit}kg of gear and strength ${c.strength} carries ${limit}kg`);
   }
 }
 
 for (const i of itemList) {
   if (typeof i.massKg === 'number' && i.massKg > biggestCarry) {
     warnings.push(`items: "${i.id}" weighs ${i.massKg}kg - more than any figure in the game can carry`);
+  }
+}
+
+// The summary strip on a card and the tracks on the board have to call a number
+// by the same name, or a player setting up reads H off a card and looks for a
+// letter that is not on the board.
+const stripLetters = datasets.components?.statStrip?.letters ?? {};
+for (const t of datasets.playerboard?.tracks ?? []) {
+  const onStrip = stripLetters[t.id];
+  if (onStrip === undefined) continue;
+  if (onStrip !== t.letter) {
+    errors.push(`components: the strip letters "${t.id}" ${onStrip} and the board letters it ${t.letter} - a card and a board may not call one number two things`);
   }
 }
 
@@ -394,7 +402,57 @@ for (const c of characters) {
 }
 for (const m of datasets.monsters?.monsters ?? []) {
   if (typeof m.strength !== 'number' || m.strength <= 0) {
-    errors.push(`monsters: "${m.id}" has no strength - it is half of every attack roll made against it`);
+    errors.push(`monsters: "${m.id}" has no strength - it is half of every attack roll it makes`);
+  }
+}
+
+// Defence is the other half, and the half a fight is actually resolved against:
+// the attacker adds it to the number they need. A figure without one cannot be
+// attacked by the rules as written, so every figure in the game has to carry it.
+for (const p of peoples) {
+  if (typeof p.defence?.base !== 'number') errors.push(`peoples: "${p.id}" has no defence.base - every attack roll adds a defence to the number it needs`);
+}
+const defenceOf = new Map(peoples.map((p) => [p.id, p.defence?.base]));
+for (const c of characters) {
+  if (typeof c.defence !== 'number' || c.defence <= 0) {
+    errors.push(`characters: "${c.id}" has no defence - the thing fighting them reads it off the card`);
+    continue;
+  }
+  const base = defenceOf.get(c.people);
+  if (typeof base === 'number' && Math.abs(c.defence - base) > 2) {
+    warnings.push(`characters: "${c.id}" is defence ${c.defence} against a ${c.people} base of ${base} - a long way off their people`);
+  }
+}
+for (const m of datasets.monsters?.monsters ?? []) {
+  if (typeof m.defence !== 'number' || m.defence <= 0) {
+    errors.push(`monsters: "${m.id}" has no defence - it is half of every attack roll made against it`);
+  }
+}
+
+// A hireling is a figure in a fight like any other, and conflict.attack reads a
+// strength and a defence off both sides of every roll.
+for (const h of datasets.rules?.hirelings?.options ?? []) {
+  if (typeof h.strength !== 'number' || typeof h.defence !== 'number') {
+    errors.push(`rules: hireling "${h.id}" has no strength/defence - the inn's board prints both, and a fight needs both`);
+  }
+}
+
+// Every character card prints what the character starts with in coin, and a
+// character who starts with nothing is a character who cannot buy a torch.
+for (const c of characters) {
+  if (typeof c.startingGold !== 'number' || c.startingGold <= 0) {
+    errors.push(`characters: "${c.id}" has no startingGold - it is a box on the summary strip and it has to have something in it`);
+  }
+}
+
+// The attack formula is printed on the player board straight out of the rules.
+// It has to exist, and it has to be a clamp a fight can survive.
+const attack = datasets.rules?.conflict?.attack;
+if (!attack) errors.push('rules: no conflict.attack - the player board prints this rule and cannot print a missing one');
+else {
+  const [best, worst] = attack.clamp ?? [];
+  if (typeof best !== 'number' || typeof worst !== 'number' || best < 2 || worst > 6 || best >= worst) {
+    errors.push(`rules: conflict.attack.clamp is ${JSON.stringify(attack.clamp)} - a d6 fight clamps somewhere inside 2..6 or it is decided before it is rolled`);
   }
 }
 

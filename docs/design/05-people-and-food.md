@@ -38,6 +38,28 @@ player whose economy has breadth over the one with a single deep silo.
 bread three. A granary stops perishing entirely for what it holds, which is most of
 what a granary is for.
 
+### On the road: food and sleep
+
+The rules above are the town's. A party out on the map has its own upkeep, and it spends
+two different numbers:
+
+- **1 food per figure per round**, from what the party carries, forages or buys. A round
+  that ends with a figure unfed costs that figure **1 health** — every round it goes on.
+  Being fed again does not put the health back.
+- **A night without a camp costs 1 strength.** Travel a night leg, or push on past dark,
+  and every figure in the party loses a point. It stacks night after night, and at 0
+  strength a figure does not fight and carries nothing.
+- **One night's sleep restores strength in full**, wherever it is taken — a camp on open
+  ground does it as well as a bed at an inn.
+- **Sleeping mends no health at all.** Health comes back only under medical aid: a healer
+  or an infirmary (3 a round), a physician who happens to be standing there (2), or a
+  potion.
+
+Strength is spent, so sleep gives it back; health is damage, so somebody has to repair it.
+Keeping those apart is what makes a night's camp a decision rather than a formality, a
+lantern and a stretch of salted meat worth their coin, and a physician worth feeding. Full
+numbers in `rules.json → upkeep` and `rules.json → rest`.
+
 ## Unrest
 
 Every mouth you cannot feed is 1 unrest.

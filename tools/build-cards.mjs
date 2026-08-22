@@ -9,30 +9,32 @@
  * (docs/art/01-two-plate-system.md): #wash carries the portrait and the flat
  * colour, #ink carries every rule, number and letter in soot alone, #grime
  * carries the wear. Dropping #wash is the black-and-white edition, which is why
- * the bars are numbered in ink and only *tinted* in wash.
+ * the strip is lettered and numbered in ink and only *tinted* in wash.
  *
  * Only cards whose plate exists are rendered — a card with no accepted render
  * is not a card yet. Output: docs/cards/<CODE>.svg, docs/cards/index.html and
  * docs/cards/print.html, the sheets you cut cards out of.
  *
- * Card anatomy (docs/art/06-components.md, "The adventure decks"):
- *   name and card code at the top · portrait across the middle · story low ·
- *   HARM bar on the LEFT edge (oxide) · CAPACITY bar on the RIGHT edge
- *   (slate for cargo and for a character's burden in kg, bruise for mana —
- *   mana is arcane) · numbered from the bottom, walked by a token · a card
- *   with no bar leaves the edge quiet.
+ * Card anatomy (data/components.json statStrip):
+ *   name and card code at the top · a SUMMARY STRIP of lettered boxes under
+ *   them · portrait across the full width the frame allows · story low.
  *
- * A character carries two capacities — kilograms and, sometimes, mana — and
- * the edge only holds one bar. Burden keeps the edge, because every character
- * has one; mana comes inboard and lies on the portrait, on its own paper.
+ * There are no bars. There were, up both edges, and a token walked them; that
+ * worked while a card was held in the hand and stopped working the day the
+ * player board arrived, because a card in a recess is a card whose edges are
+ * under the board. The tracks moved to the board and the card kept the one
+ * thing a card is good at: printing a number that never changes. So the strip
+ * says H 10 · S 6 · D 5 and the letters are the board's own track letters, so a
+ * player sets up by reading across the strip and placing tokens left to right.
  *
- * The portrait window is not a fixed box. A deck's plates have one shape (the
- * figures are drawn on A4 pages, the talismans square, the vehicles 3:2) and a
- * deck's cards need one amount of room for their words, so each deck gets the
- * tallest window its own worst card leaves free, in its own plates' proportion.
- * What goes *in* that window is a crop taken around the plate's subject, from
- * docs/art/framing.json — see tools/lib/framing.mjs. Framing on the middle of
- * the file is what used to put a character's chin at the top of their own card.
+ * What that bought the picture is the whole width of the card. The portrait
+ * window is not a fixed box: a deck's plates have one shape (the figures are
+ * drawn on A4 pages, the talismans square, the vehicles 3:2) and a deck's cards
+ * need one amount of room for their words, so each deck gets the tallest window
+ * its own worst card leaves free, in its own plates' proportion, across the full
+ * width. What goes *in* that window is a crop taken around the plate's subject,
+ * from docs/art/framing.json — see tools/lib/framing.mjs. Framing on the middle
+ * of the file is what used to put a character's chin at the top of their own card.
  *
  * Usage: node tools/build-cards.mjs [--check]
  */
@@ -115,16 +117,33 @@ const FRAME = components.frame;
 
 /* Type sits at or above the print floor: rules text ~6.5pt, story ~6pt, name
    ~11pt at the card's true 63x88mm (1pt = 2.83 units). Those sizes are what the
-   words cost; the picture gets whatever is left. */
-const FACT = { size: 18, lead: 22, wrap: 44 };
+   words cost; the picture gets whatever is left. The rules text wraps wider than
+   it did by exactly the width the right-hand bar used to take out of it; the
+   flavour panel is unchanged, because it always ran the full width of the card. */
+const FACT = { size: 18, lead: 22, wrap: 53 };
 const STORY = { size: 16.5, lead: 19.5, wrap: 58, max: 5 };
 const STORY_BASE = 694;            // baseline of the last line of flavour text
 const GAP = 26;                    // plate to rules, and rules to the flavour panel
-const PORTRAIT = { x: 88, w: 376 };  // the window runs between the two bars
+/* The window runs frame to frame. It used to run between two bars, which cost it
+   80 units of the 456 there are; the bars are on the player board now. */
+const PORTRAIT = { x: TRIM.x + 24, w: TRIM.w - 48 };
 /* The flattest a window may get. A 3:2 plate would rather be shown in a 3:2
    slot, but below about this the window stops reading as a plate on a page and
    starts reading as a letterbox slot cut in one. */
 const FLATTEST = 1.34;
+
+/* The summary strip, from data/components.json — geometry and letters both.
+   Nothing below invents a letter: a stat the player board has a track for uses
+   that track's letter, and validate-data.mjs fails the build if the two ever
+   disagree. */
+const STRIP = components.statStrip;
+const STRIP_H = STRIP.cells.heightMm * U;
+const STRIP_Y = 116;
+const LETTER_OF = STRIP.letters;
+/* One line of type below the name, then the strip, then everything else. */
+const CODE_Y = 56;
+const NAME_Y = 84;
+const KICKER_Y = 104;
 
 /* ------------------------------------------------------- shared card shapes */
 
@@ -135,7 +154,7 @@ const FLATTEST = 1.34;
  * circle to commodities. The mark is authored edge to edge on a 24-grid and is
  * pulled in about its centre here, or the ends of its ground line cross the ring.
  */
-function elementMark(id, cx, cy, r) {
+function elementMark(id, cx, cy, r, opts = {}) {
   const e = ELEMENTS.get(id);
   if (!e) throw new Error(`no such element: ${id}`);
   const k = (2 * r / 24) * MARK.onCard.insetInDisc;
@@ -146,7 +165,9 @@ function elementMark(id, cx, cy, r) {
       `<g transform="translate(${num(cx - 12 * k)} ${num(cy - 12 * k)}) scale(${num(k)})" fill="${MARK.fill}" ` +
       `stroke="${SOOT}" stroke-width="${MARK.strokeWidth}" stroke-linecap="${MARK.strokeLinecap}" ` +
       `stroke-linejoin="${MARK.strokeLinejoin}"><path d="${e.mark}"/></g>` +
-      `<text x="${cx + r + 9}" y="${cy + 5}" font-size="13" letter-spacing="1.5" font-family="${SANS}" fill="${T85}">${e.name.toUpperCase()}</text>`,
+      (opts.label === false
+        ? ''
+        : `<text x="${cx + r + 9}" y="${cy + 5}" font-size="13" letter-spacing="1.5" font-family="${SANS}" fill="${T85}">${e.name.toUpperCase()}</text>`),
   };
 }
 
@@ -218,54 +239,77 @@ function textBlock(lines, x, y, size, leading, attrs = '') {
 }
 
 /**
- * A vertical numbered bar: `cells` boxes of `step` each, numbered from the
- * bottom, hung between yTop and yBottom on the given edge. The wash tints the
- * column; the ink draws the ladder, so the bar survives the mono edition.
+ * One cell of the summary strip: a lettered box with a figure beside it.
  *
- * `unit` sets a second, smaller label line above the first — a bar counting
- * kilograms has to say so, and "BURDEN kg" on one line runs into the frame.
- * `onArt` is for a bar that hangs over the portrait rather than beside it: it
- * lays its own paper down first, because a ladder read off a drawing is not a
- * ladder. That paper is wash, which costs the mono edition nothing — the
- * portrait is wash too, so the ink plate has bare paper there already.
+ * The letter sits in a tinted square at the left so it reads as a label rather
+ * than as part of the number, and the figure takes the rest. The figure shrinks
+ * to fit and stops at the 6 pt print floor — a number that will not fit at 6 pt
+ * is a number that does not belong on a card.
+ *
+ * `mark` instead of a letter and a value puts an element badge in the box, which
+ * is where the element went when the strip took the top of the card.
  */
-function bar({ x, yTop, yBottom, cells, step, colour, label, unit, harm, onArt }) {
-  const wBox = 30;
-  const hAll = yBottom - yTop;
-  const hCell = hAll / cells;
-  const labels = unit ? [label, unit] : [label];
-  const labelTop = yTop - 8 - (labels.length - 1) * 12;
-  let wash = onArt
-    ? `<rect x="${x - 7}" y="${num(labelTop - 12)}" width="${wBox + 14}" height="${num(yBottom - labelTop + 19)}" fill="${TALLOW}" opacity="0.93"/>`
-    : '';
-  wash += `<rect x="${x}" y="${num(yTop)}" width="${wBox}" height="${num(hAll)}" fill="${colour}" opacity="0.28"/>`;
-  let ink = `<rect x="${x}" y="${num(yTop)}" width="${wBox}" height="${num(hAll)}" fill="none" stroke="${SOOT}" stroke-width="2"/>`;
-  const nums = [];
-  for (let i = 1; i <= cells; i++) {
-    const yLine = yBottom - i * hCell;
-    if (i < cells) ink += `<path d="M ${x},${num(yLine)} H ${x + wBox}" stroke="${SOOT}" stroke-width="1.1"/>`;
-    /* harm bars carry the notch-down mark on the ink plate (06-components.md),
-       so harm vs capacity survives the black-and-white edition */
-    if (harm) ink += `<path d="M ${x - 1},${num(yLine + hCell / 2 - 4)} l 5,4 l -5,4" fill="none" stroke="${SOOT}" stroke-width="1.4"/>`;
-    nums.push(`<text x="${x + wBox / 2 + (harm ? 3 : 0)}" y="${num(yBottom - (i - 0.5) * hCell + 4.5)}" font-size="13.5" text-anchor="middle" font-family="${SANS}">${i * step}</text>`);
+function statCell(cell, x, y, w) {
+  const C = STRIP.cells;
+  const box = STRIP.letterBox.size;
+  const wash = [];
+  const ink = [];
+
+  wash.push(`<rect x="${num(x)}" y="${num(y)}" width="${num(w)}" height="${num(STRIP_H)}" rx="${C.cornerRadius}" fill="${inkHex(cell.tint || 'soot-tint-12')}" opacity="0.55"/>`);
+  ink.push(`<rect x="${num(x)}" y="${num(y)}" width="${num(w)}" height="${num(STRIP_H)}" rx="${C.cornerRadius}" fill="none" stroke="${SOOT}" stroke-width="${STRIP.rule.strokeWidth}"/>`);
+
+  if (cell.element) {
+    const r = (STRIP_H - 2 * C.pad) / 2;
+    const badge = elementMark(cell.element, x + w / 2, y + STRIP_H / 2, r, { label: false });
+    return { wash: wash.join('') + badge.wash, ink: ink.join('') + badge.ink };
   }
-  ink += `<g fill="${SOOT}">${nums.join('')}</g>`;
-  ink += labels.map((line, i) =>
-    `<text x="${x + wBox / 2}" y="${num(labelTop + i * 12)}" font-size="${i && unit ? 9 : 10}" text-anchor="middle" letter-spacing="1.1" font-family="${SANS}" fill="${T70}">${esc(line)}</text>`
-  ).join('');
-  return { wash, ink };
+
+  const bx = x + C.pad;
+  const by = y + (STRIP_H - box) / 2;
+  wash.push(`<rect x="${num(bx)}" y="${num(by)}" width="${box}" height="${box}" rx="3" fill="${T25}" opacity="0.75"/>`);
+  ink.push(
+    `<rect x="${num(bx)}" y="${num(by)}" width="${box}" height="${box}" rx="3" fill="none" stroke="${SOOT}" stroke-width="0.9"/>` +
+    `<text x="${num(bx + box / 2)}" y="${num(by + box / 2 + STRIP.letter.size * 0.36)}" font-size="${num(letterSize(cell.letter))}" ` +
+    `text-anchor="middle" font-family="${SANS}" font-weight="${STRIP.letter.weight}">${esc(cell.letter)}</text>`
+  );
+
+  /* what is left of the box, and the figure sized to sit inside it */
+  const room = w - (bx + box - x) - 2 * C.pad;
+  const text = String(cell.value);
+  const size = Math.max(STRIP.value.minSize, Math.min(STRIP.value.size, (room / (text.length * 0.62))));
+  ink.push(
+    `<text x="${num(x + w - C.pad)}" y="${num(y + STRIP_H / 2 + size * 0.36)}" font-size="${num(size)}" text-anchor="end" ` +
+    `font-family="${SANS}" font-weight="${STRIP.value.weight}">${esc(text)}</text>`
+  );
+  return { wash: wash.join(''), ink: ink.join('') };
 }
 
-/** Nice step so a big capacity still fits a walkable ladder. 14 cells is the
-    most the edge holds, and every harm bar in the data fits it at step 1 —
-    a harm track must never skip-count. */
-function barScale(total) {
-  const { steps, maxCells } = components.bars;
-  for (const step of steps) {
-    if (total / step <= maxCells) return { cells: Math.ceil(total / step), step };
-  }
-  const last = steps[steps.length - 1];
-  return { cells: Math.ceil(total / last), step: last };
+/** A two-character letter ("KG") has to come down or it fills its own box — but
+    never below the 6 pt floor, which is the same floor the figures stop at. */
+function letterSize(letter) {
+  if (String(letter).length <= 1) return STRIP.letter.size;
+  return Math.max(STRIP.value.minSize, STRIP.letter.size * 0.72);
+}
+
+/**
+ * The summary strip: every number this card prints, in one boxed row.
+ *
+ * The cells share the width equally, because a strip whose boxes are different
+ * widths reads as a sentence and a strip whose boxes match reads as a table —
+ * and a table is what a player is scanning when they set their tokens up.
+ */
+function statStrip(cells) {
+  const C = STRIP.cells;
+  if (cells.length > C.max) throw new Error(`a card is asking for ${cells.length} stat cells; components.json allows ${C.max}`);
+  /* Every box in the game is the width a FULL strip's box would be, whatever
+     this card happens to carry - so a vehicle with two numbers gets two boxes
+     the size of a character's six and the right end of its strip is simply
+     empty. Sharing the width out instead would make a two-stat card's boxes
+     three times the size of a six-stat card's, and the eye would read that as
+     three times as important. */
+  const w = (PORTRAIT.w - (C.max - 1) * C.gap) / C.max;
+  const drawn = cells.map((cell, i) => statCell(cell, PORTRAIT.x + i * (w + C.gap), STRIP_Y, w));
+  return { wash: drawn.map((d) => d.wash).join(''), ink: drawn.map((d) => d.ink).join('') };
 }
 
 /* ------------------------------------------------------------------ framing */
@@ -300,8 +344,10 @@ function deckGeometry(deck) {
 
   const storyY = STORY_BASE - (storyMax - 1) * STORY.lead;
   const panelTop = storyY - GAP;
-  /* Under the kicker — which sits a line lower on a card carrying an element. */
-  const top = (deck[0].element ? 124 : 102) + GAP;
+  /* Under the strip, which is the same height on every card in every deck —
+     which is why there is no longer a deck that starts its picture lower than
+     its neighbour because it happens to carry an element. */
+  const top = STRIP_Y + STRIP_H + GAP;
   /* The last line of rules text may come down to a line's clearance of the panel. */
   const factFloor = panelTop - FACT.lead;
 
@@ -344,20 +390,11 @@ function card(spec, geom) {
   const P = geom.window;
   const art = portraitCrop(spec, P);
   const artHref = `../art/renders/${spec.portrait}.png`;
-
-  const bars = [];
-  if (spec.left) bars.push(bar({ x: TRIM.x + 24, yTop: P.y + 26, yBottom: 576, ...barScale(spec.left.total), colour: OXIDE, label: spec.left.label, harm: true }));
-  if (spec.right) bars.push(bar({ x: TRIM.x + TRIM.w - 54, yTop: P.y + 26, yBottom: 576, ...barScale(spec.right.total), colour: spec.right.colour, label: spec.right.label, unit: spec.right.unit }));
-  /* A second capacity bar has nowhere on the edge left to go, so it comes
-     inboard and lies on the portrait — and it stops at the foot of the window,
-     because below that the rules text is already using the width. */
-  if (spec.inner) bars.push(bar({ x: TRIM.x + TRIM.w - 104, yTop: P.y + 26, yBottom: P.y + P.h - 26, ...barScale(spec.inner.total), colour: spec.inner.colour, label: spec.inner.label, onArt: true }));
-
-  const elementBadge = spec.element ? elementMark(spec.element, TRIM.x + 24 + MARK.onCard.radius, 68, MARK.onCard.radius) : null;
+  const strip = statStrip(spec.stats);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="${SERIF}">
 <title>${esc(spec.name)} — ${esc(spec.code)}</title>
-<desc>${esc(spec.desc)} Generated by tools/build-cards.mjs from data/*.json — do not edit. 63x88mm at 8 units/mm, 3mm bleed. The portrait is cropped on the plate's subject, from docs/art/framing.json. The ink plate alone is the black-and-white edition.</desc>
+<desc>${esc(spec.desc)} Generated by tools/build-cards.mjs from data/*.json — do not edit. 63x88mm at 8 units/mm, 3mm bleed. Every number is a printed maximum in the summary strip; nothing on this card is walked by a token, because the tracks are on the player board. The portrait is cropped on the plate's subject, from docs/art/framing.json. The ink plate alone is the black-and-white edition.</desc>
 <defs>
   <clipPath id="portrait-window"><rect x="${P.x}" y="${P.y}" width="${P.w}" height="${P.h}"/></clipPath>
 </defs>
@@ -368,8 +405,7 @@ function card(spec, geom) {
   <g clip-path="url(#portrait-window)">
     <image href="${artHref}" x="${art.x}" y="${art.y}" width="${art.w}" height="${art.h}" preserveAspectRatio="xMidYMid slice"/>
   </g>
-  ${bars.map((b) => b.wash).join('\n  ')}
-  ${elementBadge ? elementBadge.wash : ''}
+  ${strip.wash}
   <rect x="${TRIM.x}" y="${num(geom.panelTop)}" width="${TRIM.w}" height="${num(TRIM.y + TRIM.h - geom.panelTop + 2)}" fill="${T12}" opacity="0.5"/>
 </g>
 
@@ -382,15 +418,15 @@ function card(spec, geom) {
   ${rivets()}
 
   <!-- name and card code, maker's-mark small -->
-  <text x="${TRIM.x + 24}" y="${spec.element ? 102 : 80}" font-size="31" font-weight="bold">${esc(spec.name)}</text>
-  <text x="${TRIM.x + TRIM.w - 24}" y="60" font-size="15" text-anchor="end" letter-spacing="2" font-family="${SANS}">${esc(spec.code)}</text>
-  <text x="${TRIM.x + 24}" y="${spec.element ? 102 + 22 : 102}" font-size="15.5" font-style="italic" fill="${T85}">${esc(spec.kicker)}</text>
-  ${elementBadge ? elementBadge.ink : ''}
+  <text x="${PORTRAIT.x}" y="${NAME_Y}" font-size="31" font-weight="bold">${esc(spec.name)}</text>
+  <text x="${TRIM.x + TRIM.w - 24}" y="${CODE_Y}" font-size="15" text-anchor="end" letter-spacing="2" font-family="${SANS}">${esc(spec.code)}</text>
+  <text x="${PORTRAIT.x}" y="${KICKER_Y}" font-size="15.5" font-style="italic" fill="${T85}">${esc(spec.kicker)}</text>
+
+  <!-- the summary strip: every number this card has, and none of them moves -->
+  ${strip.ink}
 
   <!-- portrait window rule: the wash bleeds, the ink holds the line -->
   <rect x="${P.x}" y="${P.y}" width="${P.w}" height="${P.h}" fill="none" stroke="${SOOT}" stroke-width="2.4"/>
-
-  ${bars.map((b) => b.ink).join('\n  ')}
 
   <!-- the card's working text -->
   <g font-size="${FACT.size}">
@@ -525,6 +561,20 @@ const monsters = read('monsters.json').monsters;
 const characters = read('characters.json').characters;
 const peoplesById = new Map(read('peoples.json').peoples.map((p) => [p.id, p]));
 const talismans = read('items.json').items.filter((i) => i.class === 'talisman');
+const rules = read('rules.json');
+const boardTracks = read('playerboard.json').tracks;
+
+/* The card and the board have to call a number by the same name. The board's
+   letters are the ones a player says out loud, so where a stat has a track the
+   card borrows that track's letter rather than components.json's copy of it —
+   and validate-data.mjs fails the build if the two ever drift apart. */
+const trackLetter = new Map(boardTracks.map((t) => [t.id, t.letter]));
+const letterFor = (stat) => trackLetter.get(stat) ?? LETTER_OF[stat];
+const cell = (stat, value, tint) => ({ letter: letterFor(stat), value, tint });
+
+/* Strength is the carrying limit as well as the swinging one — the card prints
+   the kilograms so nobody multiplies at the table (rules.json carrying). */
+const carryKg = (strength) => strength * rules.carrying.kgPerStrength;
 
 const hasRender = (id) => existsSync(join(RENDERS, `${id}.png`));
 
@@ -534,17 +584,22 @@ const skipped = [];
 for (const c of characters) {
   const render = plateIdFor(deckByPrefix('CHR'), c);
   if (!hasRender(render)) { skipped.push(c.cardCode); continue; }
+  const kg = carryKg(c.strength);
   specs.push({
     code: c.cardCode, name: c.name, portrait: render,
-    /* Strength sits in the kicker rather than on a bar: it is a rating, not a
-       quantity that moves, and it is read off the card by whoever is fighting
-       this character as often as by the player holding it - exactly the way a
-       monster card carries its own. The board's S track is set from here. */
-    kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling} · strength ${c.strength}`,
-    desc: `Character card: ${c.name}, ${c.calling}, strength ${c.strength}. Health up the left edge, ${c.carryKg}kg of burden up the right${c.manaCapacity ? ', mana inboard of it' : ''}.`,
-    left: { total: c.health, label: 'HEALTH' },
-    right: { total: c.carryKg, label: 'BURDEN', unit: 'kg', colour: SLATE },
-    inner: c.manaCapacity ? { total: c.manaCapacity, label: 'MANA', colour: BRUISE } : null,
+    kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling}`,
+    desc: `Character card: ${c.name}, ${c.calling}. Health ${c.health}, strength ${c.strength}, defence ${c.defence}, ${kg}kg carried, ${c.startingGold} coin to start.`,
+    /* Six boxes, the most a 63 mm card holds: what they are, what they swing
+       and turn a blow with, what they can hold and what they start with. The
+       kilograms are the only derived number on any card in the game. */
+    stats: [
+      cell('health', c.health, 'oxide'),
+      cell('strength', c.strength, 'ochre'),
+      cell('defence', c.defence, 'slate'),
+      cell('mana', c.manaCapacity, 'bruise'),
+      cell('gold', c.startingGold, 'ochre'),
+      cell('carry', kg, 'slate'),
+    ],
     facts: c.traits,
     story: c.story,
   });
@@ -556,9 +611,11 @@ for (const v of vehicles) {
   specs.push({
     code: v.cardCode, name: v.name, portrait: render,
     kicker: v.mode === 'mounted' ? 'horse' : v.mode,
-    desc: `Vehicle card: ${v.name} (${v.mode}).`,
-    left: { total: v.damageBoxes, label: 'DAMAGE' },
-    right: { total: v.cargoCapacity, label: 'CARGO', colour: SLATE },
+    desc: `Vehicle card: ${v.name} (${v.mode}). ${v.damageBoxes} damage boxes, ${v.cargoCapacity} bulk of hold.`,
+    stats: [
+      cell('vehicle', v.damageBoxes, 'oxide'),
+      cell('cargo', v.cargoCapacity, 'slate'),
+    ],
     facts: [v.quirk],
     story: v.story,
   });
@@ -570,11 +627,18 @@ for (const m of monsters) {
   const opts = ['Slay', m.options.enslave && 'Enslave', m.options.befriend && 'Befriend', m.options.domesticate && 'Domesticate'].filter(Boolean);
   specs.push({
     code: m.cardCode, name: m.name + (m.unique ? ' — unique' : ''), portrait: render,
-    kicker: `strength ${m.strength} · yields ${m.manaYield} ${m.element} mana · ${m.terrains.join(', ')}`,
-    element: m.element,
-    desc: `Monster card: ${m.name}, ${m.element}.`,
-    left: { total: m.health, label: 'HEALTH' },
-    right: null,
+    kicker: `${m.element} · ${m.terrains.join(', ')}`,
+    desc: `Monster card: ${m.name}, ${m.element}. Health ${m.health}, strength ${m.strength}, defence ${m.defence}, yields ${m.manaYield} mana.`,
+    /* The element used to be a badge beside the name and pushed everything else
+       a line down the card. It is the last box of the strip now: the same ring
+       and mark, in a box the same size as the numbers next to it. */
+    stats: [
+      cell('health', m.health, 'oxide'),
+      cell('strength', m.strength, 'ochre'),
+      cell('defence', m.defence, 'slate'),
+      cell('yield', m.manaYield, 'bruise'),
+      { element: m.element, tint: 'soot-tint-12' },
+    ],
     facts: [
       `Options: ${opts.join(' · ')}.`,
       ...(m.gift ? [`Gift to befriend: ${m.gift}.`] : []),
@@ -591,10 +655,13 @@ for (const t of talismans) {
   if (!hasRender(render)) { skipped.push(t.cardCode); continue; }
   specs.push({
     code: t.cardCode, name: t.name, portrait: render,
-    kicker: `talisman · made at the ${t.madeAt} · ${t.baseValue} coin · ${t.massKg} kg`,
-    desc: `Talisman card: ${t.name}. An arcane subject - the mana bar rules in bruise.`,
-    left: null,
-    right: { total: t.manaCapacity, label: 'MANA', colour: BRUISE },
+    kicker: `talisman · made at the ${t.madeAt}`,
+    desc: `Talisman card: ${t.name}. An arcane subject — the mana box rules in bruise.`,
+    stats: [
+      cell('mana', t.manaCapacity, 'bruise'),
+      cell('value', t.baseValue, 'ochre'),
+      cell('mass', t.massKg, 'slate'),
+    ],
     facts: t.effects,
     story: t.story,
   });
@@ -631,6 +698,7 @@ const index = `<!doctype html>
   <a href="../index.html">← Explorer</a>
   <a href="../book/index.html">The rulebook</a>
   <a href="../boards/index.html">The player board</a>
+  <a href="../markets/index.html">The market board</a>
   <a href="../mint/index.html">The mint</a>
   <a class="primary" href="print.html">Print &amp; cut the cards →</a>
 </div>

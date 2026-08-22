@@ -29,6 +29,10 @@
  * black-and-white edition — the tracks survive as numbered ladders, because the
  * numbering was never the colour's job.
  *
+ * The ladders are numbered and nothing else: no rung glyph, no plus, no minus.
+ * A column is a shade over eleven millimetres wide and a mark saying "this is a
+ * harm track" was competing with the number for the same three of them.
+ *
  * Usage: node tools/build-board.mjs [--check]
  */
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync } from 'node:fs';
@@ -231,26 +235,6 @@ function slot(x, y, label) {
 }
 
 /**
- * The ink-plate mark a track carries on every rung — from palette.json's
- * semantic marks, because roughly one player in twelve cannot use the colour
- * and the ladder has to say which kind of number it is without it.
- */
-function rungMark(mark, x, y) {
-  const s = mm(0.9);
-  const line = `fill="none" stroke="${SOOT}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"`;
-  if (mark === 'notch-down') return `<path d="M ${num(x - s)},${num(y - s)} L ${num(x)},${num(y + s * 0.7)} L ${num(x + s)},${num(y - s)}" ${line}/>`;
-  if (mark === 'notch-up') return `<path d="M ${num(x - s)},${num(y + s)} L ${num(x)},${num(y - s * 0.7)} L ${num(x + s)},${num(y + s)}" ${line}/>`;
-  if (mark === 'notch-flat') return `<path d="M ${num(x - s)},${num(y)} H ${num(x + s)}" ${line}/>`;
-  /* a rating goes neither up nor down - it is a value a figure has, so it gets
-     a pip rather than a direction */
-  if (mark === 'pip') return `<circle cx="${num(x)}" cy="${num(y)}" r="${num(s * 0.62)}" fill="${SOOT}"/>`;
-  /* the slip: two ticks struck a shade out of register, which is what the
-     arcane does to this world's presses */
-  if (mark === 'slip') return `<path d="M ${num(x - s * 0.9)},${num(y - s * 0.8)} V ${num(y + s * 0.4)} M ${num(x + s * 0.3)},${num(y - s * 0.4)} V ${num(y + s * 0.8)}" ${line}/>`;
-  return '';
-}
-
-/**
  * One numbered track: a head, and a ladder from the board's floor to its
  * ceiling, numbered from the bottom.
  *
@@ -272,6 +256,13 @@ function track(t, index) {
   const ink = [];
   ink.push(`<rect x="${num(col.x)}" y="${num(top)}" width="${num(col.w)}" height="${num(bottom - top)}" rx="${num(mm(1.2))}" fill="none" stroke="${SOOT}" stroke-width="2"/>`);
 
+  /* Plain figures, and nothing else in the column. Every rung used to carry a
+     little ink-plate glyph saying which KIND of number it was - a notch down for
+     harm, a pip for a rating - and at eleven millimetres a column it fought the
+     number for the same three millimetres and won often enough to matter. There
+     is no glyph now, and no sign either: no plus, no minus. Which way a token
+     walks is on the track's `walks` line in data/playerboard.json and in the
+     rulebook, where a sentence has room to say it properly. */
   const numbers = [];
   for (let i = 0; i < RUNGS; i++) {
     const value = (B.track.from + i) * step;
@@ -281,7 +272,6 @@ function track(t, index) {
       ink.push(`<path d="M ${num(col.x)},${num(yLine)} H ${num(col.x + col.w)}" stroke="${SOOT}" stroke-width="${major ? 1.8 : 0.9}" opacity="${major ? 1 : 0.75}"/>`);
     }
     const midY = bottom - (i + 0.5) * CELL_H;
-    ink.push(rungMark(t.mark, col.x + mm(1.6), midY));
     numbers.push(
       `<text x="${num(cx + mm(0.7))}" y="${num(midY + mm(1.1))}" font-size="${num(mm(3))}" text-anchor="middle" ` +
       `font-family="${SANS}"${major ? ' font-weight="bold"' : ''}>${value}</text>`
@@ -329,7 +319,9 @@ function track(t, index) {
 function panel() {
   const rules = datasets.rules;
   const phases = rules.round.phases;
-  const fight = rules.conflict.strength;
+  /* Whichever rule the board says it is printing - the path is in the data, so
+     moving the arithmetic inside rules.json does not silently print the old one. */
+  const fight = dotted(spec.panel.aside.source);
   const pad = mm(4);
   const x = PANEL.x;
   const y = PANEL.y;
@@ -356,8 +348,8 @@ function panel() {
   let cursor = top + phases.length * rowH + mm(5);
   out.push(`<text x="${num(x + pad)}" y="${num(cursor)}" font-size="${num(mm(2.6))}" font-style="italic" fill="${T85}">${esc(spec.panel.foot)}</text>`);
 
-  /* The strength track is the new one, and the difference it makes is the one
-     thing on this board a player will not already know. */
+  /* Strength against defence is the new arithmetic, and it is the one thing on
+     this board a player will not already know. */
   cursor += mm(5.8);
   out.push(`<path d="M ${num(x + pad)},${num(cursor - mm(3.6))} H ${num(x + PANEL.w - pad)}" stroke="${SOOT}" stroke-width="1.2"/>`);
   out.push(`<text x="${num(x + pad)}" y="${num(cursor)}" font-size="${num(mm(2.7))}" letter-spacing="${num(mm(0.7))}" font-family="${SANS}" fill="${T70}">${esc(spec.panel.aside.title)}</text>`);
@@ -524,6 +516,8 @@ const index = `<!doctype html>
   <a href="../index.html">← Explorer</a>
   <a href="../book/index.html">The rulebook</a>
   <a href="../cards/index.html">The card fronts</a>
+  <a href="../markets/index.html">The market board</a>
+  <a href="../minimaps/index.html">The mini-map sheets</a>
   <a href="../map/index.html">The map</a>
   <a class="primary" href="#" onclick="window.print();return false;">Print the board →</a>
 </div>

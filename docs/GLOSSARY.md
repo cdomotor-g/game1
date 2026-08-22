@@ -45,15 +45,22 @@ verb of a player's turn.
 **Batch** — one execution of a recipe: its full effort cost, its full inputs, its full
 outputs. You cannot run half a batch.
 
-**Burden** — what a character is carrying right now, in kilograms, and the bar that
-tracks it up the right edge of their card. The top of the bar is that character's
-carry limit; a token walks up it as they pick things up and back down as they put
-things down. Burden is a *capacity* bar, so it sits on the right like every other
-capacity in the game, and it rules in slate like a vehicle's cargo. See
-`rules.json → carrying`.
+**Burden** — gone. It was a number, and then a bar, and then a track, for what a
+character was carrying; **strength** does that job now. What a figure can shoulder is
+`strength × 3` kilograms, printed in the KG box of their card's summary strip, and
+nothing walks a token for it: a load either fits under the printed limit or it does
+not. See `rules.json → carrying`.
+
+**Defence** — what makes a blow miss. Whoever is attacking a figure *adds* that
+figure's defence to the number they need on the die, exactly as they subtract their
+own strength. It is not armour: armour (`items.json → armourValue`) soaks hits after
+they land, and a figure in plate has both. Every character and every monster has one.
+See `rules.json → conflict.defence`.
 
 **Character** — a named adventurer card that a player's hero figure takes on: a face,
-a health bar, a burden bar, sometimes mana. Defined in `data/characters.json`. A
+health, strength, defence, sometimes mana, and the coin they start with — all of
+it printed in the summary strip across the top of the card. Defined in
+`data/characters.json`. A
 character is not a worker and rolls no effort die.
 
 **Build-point** — one hour of construction work banked on a building's progress track.
@@ -121,6 +128,17 @@ plain workers cannot run.
 another player. A trading house or a merchant removes it.
 
 **Stockpile** — a town's held commodities, limited by storage slots.
+
+**Strength** — one number doing the whole job of an arm: what a figure swings with
+(the attacker *subtracts* their own strength from the number they need) and what a
+figure can shoulder (`strength × 3` kilograms). It is also the threat threshold some
+rules read off a monster card. A night without a camp costs a point; one night's sleep
+puts all of it back. See `rules.json → conflict.strength` and `rules.json → carrying`.
+
+**Summary strip** — the row of lettered boxes across the top of every card: one box per
+number, the letter first and the figure after it, `H 10  S 3  D 3`. It prints maximums
+and nothing else, because nothing on a card moves — the tracks are on the player board,
+and the strip's letters are the board's track letters so the two cannot be confused.
 
 **Talisman** — an item that stores mana, tracked with a token on the card's vertical
 mana bar. Most peoples cannot hold mana any other way. Defined in `data/items.json`,

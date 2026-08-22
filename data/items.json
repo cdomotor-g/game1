@@ -1,5 +1,5 @@
 {
-  "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use. Every item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, and the BURDEN bar up the right edge of every character card. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. Talisman cards carry a vertical numbered mana bar on the RIGHT edge (capacity bars always sit right; harm bars always sit left - the convention is stated in docs/art/06-components.md).",
+  "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use. Every item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, where the limit is strength x kgPerStrength and a character card prints the kilograms in its summary strip. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. A talisman card prints its capacity as an M box in the strip like everything else; the mana itself is walked on the player board's M track, because that is where every track in the game lives now (data/playerboard.json).",
   "version": "0.3.0",
   "classes": [
     { "id": "clothing", "name": "Clothing", "summary": "Protects against weather and event penalties." },
@@ -7,7 +7,7 @@
     { "id": "weapon", "name": "Weapon", "summary": "Adds or improves combat dice." },
     { "id": "potion", "name": "Potion", "summary": "One-shot consumable, usually spent during the Labour Roll or a battle." },
     { "id": "light", "name": "Light", "summary": "Lets a party travel at night and enter caves. See travel.json." },
-    { "id": "talisman", "name": "Talisman", "summary": "Stores mana. Most peoples cannot hold mana in the body at all - see peoples.json manaStorage. Track stored mana with a token on the card's mana bar." }
+    { "id": "talisman", "name": "Talisman", "summary": "Stores mana. Most peoples cannot hold mana in the body at all - see peoples.json manaStorage. Track stored mana on the player board's M track - the card prints the capacity and nothing more." }
   ],
   "items": [
     { "id": "tunic", "name": "Tunic", "class": "clothing", "slot": "body", "madeAt": "tailor",
@@ -145,7 +145,7 @@
     { "id": "talisman-bone-charm", "name": "Bone Charm", "class": "talisman", "cardCode": "TAL-01", "madeAt": "carpenter", "manaCapacity": 2,
       "inputs": [{ "commodity": "lumber", "qty": 1 }, { "commodity": "leather", "qty": 1 }], "effortHours": 2, "baseValue": 30, "massKg": 0.25,
       "story": "Knucklebones and a thong of hide, carved by someone's grandmother against the dark. It works, which is more than can be said for most of what grandmothers carve.",
-      "effects": ["Stores up to 2 mana. Track with a token on the mana bar."] },
+      "effects": ["Stores up to 2 mana."] },
     { "id": "talisman-weavers-knot", "name": "Weaver's Knot", "class": "talisman", "cardCode": "TAL-02", "madeAt": "weaver", "manaCapacity": 3,
       "inputs": [{ "commodity": "yarn", "qty": 2 }], "effortHours": 3, "baseValue": 45, "massKg": 0.25,
       "story": "A cord tied in a knot with no beginning. Weavers make them in the winter and do not discuss the pattern.",

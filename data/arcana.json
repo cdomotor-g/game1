@@ -1,5 +1,5 @@
 {
-  "$comment": "Mana, elements and spells. Mana is NOT a commodity: it has no bulk, sits in no stockpile, and cannot be crated. It lives in bodies (rarely - see peoples.json manaStorage) and in talismans (items.json, class talisman), tracked with a token on the talisman's mana bar. Mana crystals in commodities.json are a different thing: frozen mana as a trade good and potion ingredient - a crystal can be shattered by its holder to yield 2 mana of any one element, but mana can never be pressed back into a crystal.",
+  "$comment": "Mana, elements and spells. Mana is NOT a commodity: it has no bulk, sits in no stockpile, and cannot be crated. It lives in bodies (rarely - see peoples.json manaStorage) and in talismans (items.json, class talisman), tracked with a token on the player board's M track, against the capacity the talisman's card prints. Mana crystals in commodities.json are a different thing: frozen mana as a trade good and potion ingredient - a crystal can be shattered by its holder to yield 2 mana of any one element, but mana can never be pressed back into a crystal.",
   "version": "0.1.0",
 
   "elementMarks": {
@@ -91,7 +91,7 @@
         "story": "It screams. That is the whole enchantment. It screams in a voice the owner cannot hear and the thief cannot stop hearing for about a week." },
       { "id": "weightless-hand", "cardCode": "ENC-05", "name": "Weightless Hand", "element": "air", "cost": 5,
         "boundTo": "one character's pack, belt or cloak",
-        "effect": "+10 kg to that character's burden bar. The bar is walked as normal; the last ten kilograms simply do not pull.",
+        "effect": "+10 kg on top of what that character's strength allows them to carry (rules.json carrying). The last ten kilograms simply do not pull.",
         "story": "Not lighter - the pack weighs what it weighs, and a scale will say so. It just declines to be heavy on the person carrying it, which mule drivers consider a distinction without a difference and porters consider the point." },
       { "id": "deeproot-footing", "cardCode": "ENC-06", "name": "Deeproot Footing", "element": "earth", "cost": 5,
         "boundTo": "one building",

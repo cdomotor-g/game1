@@ -18,6 +18,21 @@ cards shove them harder — an iron shortage moves metals two bands for three ro
 Bands are per family, not per commodity, so a shortage is a *market* event you can plan
 around, not a lookup table you have to memorise.
 
+### The market board
+
+The bands used to be a number in a rulebook and a sum done in somebody's head. They are a
+sheet now: one A4 landscape **market board** of identical six-cell ladders, one line per
+commodity in play, and the commodity's own hexagonal token standing on the band that is its
+price today. Where the token stands is the price; which token it is says what the price is
+of. Look at the table and you can see what everything is worth.
+
+**No line is labelled**, and that is the design. A line is not the grain line until somebody
+puts the grain token on it, so one generic board serves any commodity, any town and any
+table — print another sheet for another town's market, and a sixty-seventh commodity
+reprints nothing. The ×1 column rules heavier and carries a hairline hexagon in every line,
+so setup is one straight column of tokens. Sixteen lines to a sheet; see
+[08-components.md](08-components.md#the-market-board).
+
 ## Who may trade with whom
 
 This was an open question in the brief — merchant figure, trading house, or both. The
@@ -60,9 +75,10 @@ three hexes short of. A city is a real shop. The numbers live in
 ## Inns
 
 Every printed settlement keeps an inn, and a player town can build one. Four jobs:
-**rest** (heal 2 a round, 3 with a healer in town), **hirelings** (escorts for one
-journey, flat fee, no food), **rumours** (5 coin, draw a quest card), and the old one —
-**drinks**, clearing unrest by the recipe. The inn is where the adventure layer and
+**a bed** (which restores strength in full and mends no health at all — health needs a
+healer or an infirmary, 3 a round), **hirelings** (escorts for one journey, flat fee, no
+food), **rumours** (5 coin, draw a quest card), and the old one — **drinks**, clearing
+unrest by the recipe. The inn is where the adventure layer and
 the economy shake hands.
 
 Brokering, minding a market and loading a caravan all cost effort. Trade competes with

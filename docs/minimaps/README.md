@@ -1,42 +1,102 @@
 # Mini-maps
 
-> **Shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** These sheets are part of the tile-based board,
-> which is paused. Nothing here is deleted or regenerated: all 32 accepted
-> artworks stay committed and stay on the site, and this document stays as the
-> spec they were drawn to. **No further sheets are commissioned** until the
-> game-set split ([#10](https://github.com/cdomotor-g/game1/issues/10)) has decided how a set supplies a board, at which
-> point a tile set is exactly what these are for. The mint reports the shelved
-> line every run — see [`../MINT.md`](../MINT.md).
-
 Some moments need more board than a single hex: a battle, a monster encounter, a
 farm growing into a walled town. Those moments zoom in — one cell of the
 campaign map opens out onto a **mini-map**, play happens inside it, and the
 result is written back to the big map.
 
-A mini-map is an **A4 landscape sheet**. One large regular hexagon dominates the
-middle of the page — the inside of a single campaign-map cell — flanked by two
-working panels in the space a hexagon on a rectangle leaves over.
+## A mini-map is a flat colour and a grid
+
+That is the whole specification, and it replaced a drawn one. **No render, no
+pattern, no hatch, no drawn ground.** The field is one hexagon of hexagonal cells
+filled with the colour that terrain already prints in, the grid is ruled on top,
+and two working panels sit either side. Nothing else is on the sheet.
+
+Which means a mini-map needs **no plate, no artist, no framing entry and no place
+in the mint queue.** It is generated: `node tools/build-minimaps.mjs` writes one
+sheet per terrain into [`sheets/`](sheets/) from
+[`data/minimap.json`](../../data/minimap.json) (what the sheets are for),
+[`data/components.json`](../../data/components.json) `minimap` (how they are
+drawn) and [`data/terrain.json`](../../data/terrain.json) (which terrains exist).
+The rendered index is [`index.html`](index.html).
+
+Why flat: drawn ground competes with the pieces standing on it, and every one of
+these sheets is a sheet somebody is standing pieces on. The colour comes from
+`docs/art/palette.json` `terrain[].wash` rather than from `terrain.json`'s
+`colour` — the palette's is the *printed* one and is already a tint, because
+terrain is the largest printed area in the game and a mini-map field is the
+largest area of all.
+
+## The cell is a world hex — exactly
+
+This is the decision the rest follows from. A mini-map cell is the same size as a
+hex on the campaign map, read off that map's own print preset rather than chosen
+here: **16.7 mm** on the Korvane Reach at its default four-sheet layout. So a
+figure based for the big board stands in a mini-map cell without being re-based,
+a route token cut for one fits the other, and one ruler measures both. Print the
+map at a bigger preset and these sheets follow it.
+
+The scale is a fiction — the ground inside one hex is not sixty-one hexes of
+ground — and it is the right fiction, because everything *physical* about the two
+boards agrees.
 
 ## The sheet, exactly
 
 | Property | Value |
 | --- | --- |
 | Paper | A4 landscape, 297 × 210 mm, 8 mm margin |
-| Field | One regular hexagon, flat side up, 194 mm across the flats — as large as A4 allows |
-| Cells | The field subdivides into a hex board 5 cells on a side: 61 cells, ~22 mm each, big enough to stand a meeple in |
-| Left panel | **Encounter tracker** — initiative order, round count, morale boxes |
-| Right panel | **Holdings ledger** — buildings, garrison, stores on this ground |
-| Footer | The sheet's code, its campaign-map cell (written in when placed), and the terrain letter code |
+| Field | A hexagon of hexes, 5 cells to a side: 61 cells, 9 across, 150 × 135 mm |
+| Cell | The world hex — 16.7 mm across the flats at the default preset |
+| Edge | Traced, not drawn: every cell edge with no cell on the other side of it |
+| Cells named | A1 … I5 — a row letter and a cell number in the corner of every cell |
+| Left panel | **Encounter** — order of acting, round count, morale boxes |
+| Right panel | **Holdings** — what is built here, the garrison, the stores |
+| Footer | The terrain and its letter code, and a ruled blank for the map hex |
 
 Both panels print on every sheet, so no sheet is ever the wrong sheet: a battle
 uses the left panel and ignores the right; a settlement lives out of the right
 panel and only needs the left the day it is attacked.
 
-**The cell grid is an overlay, exactly as on the campaign map.** The artwork
-fills the hexagonal field with terrain and features; the 61-cell grid, the
-panels' rule lines and all type are drawn on the ink plate at layout time. Never
-ask an image model for the grid — see the same rule, for the same reasons, in
-[`docs/map/README.md`](../map/README.md).
+**The grid is ruled at layout time, never drawn by an image model** — the same
+rule, for the same reasons, as [`docs/map/README.md`](../map/README.md).
+
+## Why the grid is hexagonal
+
+For the record. The grid is hexagonal rather than square **to give movement more,
+and more equal, options**: a hex has six neighbours and every one of them is the
+same distance away, where a square has four at one distance and four more at root
+two, so a square grid either lies about its diagonals or forbids them. Six equal
+exits is what makes a route a choice rather than a staircase. The cost is that a
+hex grid is harder to draw; `tools/lib/hexgrid.mjs` pays it once. A mini-map's
+grid is hexagonal for that reason plus one more: a cell has to line up with a
+world hex.
+
+---
+
+# The drawn sheets that came before
+
+> **Shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** Everything
+> below describes the *drawn* mini-maps, which were part of the tile-based board.
+> Nothing here is deleted or regenerated: all 32 accepted artworks stay committed
+> and stay on the site, and this stays as the spec they were drawn to. **No
+> further sheets are commissioned.** The generated sheets above supersede them for
+> play and are not blocked on [#10](https://github.com/cdomotor-g/game1/issues/10),
+> because they need no art at all. The mint reports the shelved line every run —
+> see [`../MINT.md`](../MINT.md).
+
+A drawn mini-map was an **A4 landscape sheet**: one large regular hexagon
+dominating the middle of the page — the inside of a single campaign-map cell —
+flanked by two working panels, with the terrain and its features *painted* into
+the hexagonal field and the 61-cell grid ruled over the top.
+
+| Property | Value |
+| --- | --- |
+| Paper | A4 landscape, 297 × 210 mm, 8 mm margin |
+| Field | One regular hexagon, flat side up, 194 mm across the flats |
+| Cells | 61 cells, ~22 mm each — chosen for the sheet, not matched to the world hex |
+| Left panel | Encounter tracker |
+| Right panel | Holdings ledger |
+| Footer | The sheet's code, its campaign-map cell, and the terrain letter code |
 
 ## The three series
 

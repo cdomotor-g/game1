@@ -1,75 +1,79 @@
 {
-  "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds their character card, four cards of whatever kit they have in play, and the six numbered tracks a hero and their gear walk a token along.\n\nOne board, not one per people. Everything that differs between an orc and a halfling is printed on the cards that lie in the recesses - their strength, their health, what they can shoulder - so the board underneath them has no business knowing which of them is sitting there. A board that did would be five boards to print, five to keep in step, and four of them wrong for whoever picked it up.\n\nWhy the board carries tracks at all, when the cards already have bars: a card in a recess is a card whose edges you cannot reach. The bar convention (docs/design/08-components.md) hangs harm off a card's left edge and capacity off its right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board takes the bars over. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
-  "version": "0.3.0",
+  "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds their character card, four cards of whatever kit they have in play, and the six numbered tracks a figure and their gear walk a token along.\n\nOne board, not one per people, and not one per SPECIES either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, defence, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter): the furniture does not care.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
+  "version": "0.4.0",
 
   "board": {
     "id": "player-board",
     "name": "Player Board",
     "sheet": "A4 landscape",
-    "summary": "One per player, and every one identical. The character card top left, six tracks up the middle, four cards of kit on the right, and the round's phases under the character.",
+    "summary": "One per player and one for the table, and every one identical. The character card top left, six tracks up the middle, four cards of kit on the right, and the round's phases under the character.",
+    "spare": "Print one more than there are players. The spare is the ENCOUNTER board: when a discovery roll turns up a monster or a stranger, their card is dealt onto it, its tracks are set from the card's summary strip, and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter).",
     "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, which is what let a sixth track on without anything getting narrower.",
-    "generic": "The board says nothing about who is playing it. Race, calling, health, strength and burden limits are all printed on the character card, which is the thing that changes between players; the board is the furniture that card sits in."
+    "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person. People, calling, health, strength, defence and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster and a stranger met on the road."
   },
 
   "$trackKeys": {
-    "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, the way every bar in the game is numbered. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the six columns are one grid rather than six scales a player has to keep straight.",
+    "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, and numbered in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the six columns are one grid rather than six scales a player has to keep straight.",
     "letter": "the single letter printed at the head of the column - what a player calls the track across the table",
     "label": "the full name, printed beside the letter",
-    "unit": "printed under the letter where the track counts something - a bar that counts kilograms has to say so",
+    "unit": "printed under the letter where the track counts something other than itself - hexes, on the one track that does",
     "step": "how much one rung is worth; `stepFrom` instead means 'read it from that dotted path in the data, do not restate it'",
-    "kind": "harm | capacity | leg | rating - decides the ink and the ink-plate mark, exactly as it does on a card edge",
-    "covers": "the largest value the printed game can reach, so the ceiling can be checked against it. `path` is where that number comes from, and tools/validate-data.mjs recomputes it: a character with 15 health fails the check rather than running off the top of the track",
-    "mark": "the ink-plate mark on every rung, from palette.json semantic - because one player in twelve cannot use the colour"
+    "kind": "harm | capacity | leg | rating - decides the ink the column washes in",
+    "covers": "the largest value the printed game can reach, so the ceiling can be checked against it. `paths` is where that number comes from, and tools/validate-data.mjs recomputes it: a character with 15 health fails the check rather than running off the top of the track",
+    "reads": "who reads the number and which way round - defence is read by your opponent, not by you",
+    "$marksNote": "There is no `mark` any more. Every rung used to carry a little ink-plate glyph saying which KIND of number it was - a notch down for harm, a pip for a rating - and at 11 mm a column it fought the number for the same three millimetres and won often enough to matter. The columns are numbered and nothing else: no glyph, no plus, no minus. Which way a token walks is on the track's `walks` line and in the rulebook, where a sentence has room to say it."
   },
 
   "tracks": [
     {
       "id": "health", "name": "Health", "letter": "H", "label": "HEALTH", "unit": null,
-      "kind": "harm", "ink": "oxide", "mark": "notch-down", "step": 1,
-      "covers": { "value": 13, "paths": ["characters.characters[].health"], "note": "Ruk of the Red Road, the toughest character printed." },
-      "walks": "Down as the hero takes hits, up as they rest - 2 a round at an inn, 3 where there is a healer.",
-      "atZero": "The hero is carried to the nearest settlement and rests until healed to half. Everything on the burden track is lost on the way: knock that token down to zero too.",
-      "rule": "rules.json rest, characters.json health"
+      "kind": "harm", "ink": "oxide", "step": 1,
+      "covers": { "value": 14, "paths": ["characters.characters[].health", "monsters.monsters[].health"], "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met." },
+      "walks": "Down as the figure takes hits, and up under medical aid alone - 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A round that ends with nothing to eat costs 1.",
+      "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way.",
+      "rule": "rules.json rest, rules.json upkeep.food, characters.json health, monsters.json health"
     },
     {
       "id": "strength", "name": "Strength", "letter": "S", "label": "STRENGTH", "unit": null,
-      "kind": "rating", "ink": "ochre", "mark": "pip", "step": 1,
-      "covers": { "value": 7, "paths": ["monsters.monsters[].strength", "characters.characters[].strength"], "note": "The Deepwater Maw. No character reaches it - Ruk, the strongest, is 6." },
-      "walks": "Rarely. It is the one track that mostly sits still: set it from the character card at setup and move it only when something lends or takes strength.",
-      "atZero": "Nothing left to swing with. A figure at 0 strength does not fight.",
-      "reads": "Both ways at once. Your token is on the board, your opponent's number is printed on the card in front of you, and the fight is the difference between them: subtract yours, add theirs, and that is the number you need on a d6. Equal strength still hits on 4+, the way it always did.",
-      "note": "Strength was already on every monster card as a threat rating, and rules read it as a threshold - a thug refuses a monster of strength 4 or more. It now does the other half of the job as well, without ever adding a die: dice are what weapons and armour give you.",
-      "rule": "rules.json conflict.strength, monsters.json strength, characters.json strength, peoples.json strength.base"
+      "kind": "rating", "ink": "ochre", "step": 1,
+      "covers": { "value": 7, "paths": ["monsters.monsters[].strength", "characters.characters[].strength"], "note": "Vhalrik. No character reaches it - Ruk, the strongest, is 6." },
+      "walks": "Set it from the card at setup and knock it down a rung for every night the party does not make camp. One night's sleep puts all of it back, wherever that night is taken.",
+      "atZero": "Nothing left to swing with, and nothing left to shoulder. A figure at 0 strength does not fight and carries nothing.",
+      "reads": "Both ways at once. Your strength is on this track and the thing you are fighting has its defence printed in front of you; the roll is the difference. It is also what you can carry: strength x rules.carrying.kgPerStrength kilograms, and the character card prints the kilograms so nobody multiplies at the table.",
+      "note": "Strength swallowed burden. They were the same arm doing the same job with two numbers and two tracks, and one of them was a track a player moved every time they picked up a rope.",
+      "rule": "rules.json conflict.strength, rules.json carrying, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
     },
     {
-      "id": "burden", "name": "Burden", "letter": "B", "label": "BURDEN", "unit": "kg",
-      "kind": "capacity", "ink": "slate", "mark": "notch-flat", "stepFrom": "rules.carrying.barStepKg",
-      "covers": { "value": 14, "paths": ["characters.characters[].carryKg"], "note": "Ruk again - nobody in the deck carries more, and nobody can, because 14 is the top of the board." },
-      "walks": "Total the mass of everything the hero is wearing, wielding and carrying, and stand the token on the first mark at or above that total.",
-      "atZero": "Empty-handed.",
-      "limit": "A hero may not take up an item that would push the token past their own limit, which is printed on their character card - not past the top of this track. The track is the same length for everyone, on purpose: it is the same board whoever is sitting behind it.",
-      "rule": "rules.json carrying, characters.json carryKg"
+      "id": "defence", "name": "Defence", "letter": "D", "label": "DEFENCE", "unit": null,
+      "kind": "rating", "ink": "slate", "step": 1,
+      "covers": { "value": 6, "paths": ["monsters.monsters[].defence", "characters.characters[].defence"], "note": "The gravel wyrm's plated shale, and Vhalrik's hide - the two hardest things in the game to land a blow on." },
+      "walks": "Rarely. Set it from the card at setup; a spell, a shield wall or a piece of ground may lend or take a point for a fight.",
+      "atZero": "Nothing between the blow and you.",
+      "reads": "Your opponent reads it, not you: they add your defence to the number they need. Armour is a separate thing and always was - it soaks hits after they land (items.json armourValue), where defence stops them landing.",
+      "note": "New, and it is the half of the old strength that had no business being there. Strength used to sit on both sides of the attack roll, which quietly made every strong thing armoured; a stone boar barely swings and turns a sword, and now it can say so.",
+      "rule": "rules.json conflict.defence, rules.json conflict.attack, monsters.json defence, characters.json defence, peoples.json defence.base"
     },
     {
       "id": "pace", "name": "Pace", "letter": "P", "label": "PACE", "unit": "hexes",
-      "kind": "leg", "ink": "verdigris", "mark": "notch-up", "step": 1,
+      "kind": "leg", "ink": "verdigris", "step": 1,
       "covers": { "value": 8, "note": "Mounted on a road - the fastest anything crosses country in a day leg (travel.json speeds.overrides road)." },
       "walks": "Set it at the start of a leg to the speed in travel.json for the mode and the ground, then walk it down a rung per hex entered. Halve it for a night leg under a lantern; a torch buys one hex, two on a road.",
       "atZero": "The leg is over. Roll for discovery where you stopped.",
-      "note": "The one track that is not a bar off a card. A party counts hexes every single round of the game and has had nowhere to count them, which is what a board is for. It rules in verdigris - the ground you cross - so it cannot be mistaken for harm or for capacity at a glance. It is called pace rather than speed because strength has the S.",
+      "note": "The one track that is not a number off a card. A party counts hexes every single round of the game and has had nowhere to count them, which is what a board is for. It rules in verdigris - the ground you cross - so it cannot be mistaken for harm or for a rating at a glance. It is called pace rather than speed because strength has the S.",
       "rule": "travel.json speeds, rules.json movement.legs"
     },
     {
-      "id": "damage", "name": "Damage", "letter": "D", "label": "DAMAGE", "unit": null,
-      "kind": "harm", "ink": "oxide", "mark": "notch-down", "step": 1,
+      "id": "vehicle", "name": "Vehicle Damage", "letter": "V", "label": "VEHICLE", "unit": null,
+      "kind": "harm", "ink": "oxide", "step": 1,
       "covers": { "value": 12, "paths": ["vehicles.vehicles[].damageBoxes"], "note": "The sturdiest hull in the vehicle deck." },
       "walks": "The vehicle the player is running - the train, the ship, the wagon, the horse. Up as it is damaged, down as it is repaired: one box a round in any settlement of town rank or better, at 5 coin a box.",
       "atZero": "Sound. At the top the vehicle is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
+      "note": "It takes the V rather than the D because defence took the D. A player says 'my defence' and 'the wagon's damage', and only one of those two is about the player - so the letter goes to the player and the vehicle is named outright.",
       "rule": "rules.json rest, vehicles.json damageBoxes"
     },
     {
       "id": "mana", "name": "Mana", "letter": "M", "label": "MANA", "unit": null,
-      "kind": "capacity", "arcane": true, "ink": "bruise", "mark": "slip", "step": 1,
+      "kind": "capacity", "arcane": true, "ink": "bruise", "step": 1,
       "covers": { "value": 10, "paths": ["items.items[].manaCapacity", "peoples.peoples[].manaStorage.innate"], "note": "The crystal phylactery, the deepest vessel in the game." },
       "walks": "Everything the hero can hold at once: what their body holds innately, plus every talisman in a slot. Slaying a monster fills it; casting spends it.",
       "atZero": "Empty. Mana crystals are frozen mana - shatter one for 2 of any element - but mana never freezes back.",
@@ -83,15 +87,16 @@
     "paths": [
       "characters.characters[].health",
       "characters.characters[].strength",
-      "characters.characters[].carryKg",
+      "characters.characters[].defence",
       "characters.characters[].manaCapacity",
       "monsters.monsters[].health",
       "monsters.monsters[].strength",
+      "monsters.monsters[].defence",
+      "monsters.monsters[].manaYield",
       "vehicles.vehicles[].damageBoxes",
       "items.items[].manaCapacity",
-      "items.items[].massKg",
-      "peoples.peoples[].carry.baseKg",
       "peoples.peoples[].strength.base",
+      "peoples.peoples[].defence.base",
       "peoples.peoples[].manaStorage.innate"
     ]
   },
@@ -105,7 +110,7 @@
     {
       "id": "kit", "name": "Kit slots", "label": "ITEM", "count": 4,
       "takes": ["items", "vehicles", "modifications", "quests"],
-      "note": "Whatever the hero has in play and needs to see: a weapon, a lantern, a talisman, the vehicle they are running, the quest they have accepted. Four, because five cards on the table is a hand and four is a kit - and because a hero who wants a fifth thing has to put something down, which is the same argument the burden track is making."
+      "note": "Whatever the hero has in play and needs to see: a weapon, a lantern, a talisman, the vehicle they are running, the quest they have accepted. Four, because five cards on the table is a hand and four is a kit - and because a hero who wants a fifth thing has to put something down, which is the same argument the strength limit is making."
     }
   ],
 
@@ -117,7 +122,7 @@
     "foot": "Turn order passes to the left.",
     "aside": {
       "title": "IN A FIGHT",
-      "source": "rules.conflict.strength",
+      "source": "rules.conflict.attack",
       "note": "Printed from the rule rather than restated, so the board and the rulebook cannot drift."
     }
   }

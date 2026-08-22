@@ -27,11 +27,16 @@ existing file.
 
 ## How a component looks is declared once, in `data/components.json`
 
-Card size, corner radius, frame weights, bar conventions, deck backs, the element
-mark's grid and the token sizes live there and nowhere else. `build-cards.mjs`
-reads it rather than carrying the numbers, which is the point: change the corner
-radius in one place and the fronts, the backs, the print sheet and the explorer
-previews all move together.
+Card size, corner radius, frame weights, the summary strip, deck backs, the element
+mark's grid, the token shapes and the three board layouts live there and nowhere
+else. `build-cards.mjs` reads it rather than carrying the numbers, which is the
+point: change the corner radius in one place and the fronts, the backs, the print
+sheet and the explorer previews all move together.
+
+**No card carries a bar.** Every number a card has is printed once, as a maximum,
+in the lettered strip across its top, and the letters are the player board's own
+track letters — `validate-data.mjs` fails the build if the two ever disagree.
+Everything that moves is on a board.
 
 That file holds **no content**. No card says anything in it, no monster is named
 in it. If you are about to write a name or a number that belongs to one specific
@@ -42,7 +47,7 @@ The same rule runs down: an element's *mark* is data on the element
 `tools/build-icons.mjs` turns the two into `docs/art/icons/`. Nothing draws an
 element mark by hand.
 
-## The player board is computed, not laid out
+## Every board is computed, not laid out
 
 `tools/build-board.mjs` holds no coordinates. The track columns are the width left over
 once the card recesses and the gutters have taken theirs; the rungs are the height left
@@ -59,7 +64,16 @@ one more point of health fails the build rather than walking a token off the top
 board somebody already printed.
 
 The board is generic on purpose. Anything that differs between one player and the next
-belongs on the character card in the recess, never printed into the board.
+belongs on the character card in the recess, never printed into the board — and that is
+also why a monster met on the road is dealt onto a spare one and run like a player.
+
+The same division holds for the other two boards. `tools/build-market.mjs` +
+`data/marketboard.json`: identical price ladders, nothing on the sheet names a
+commodity, and a line is exactly one commodity token tall — a bigger token makes a
+taller line and fewer of them, never a token that overhangs. `tools/build-minimaps.mjs`
++ `data/minimap.json`: a flat terrain colour and a hex grid, no art at all, and **a
+mini-map cell is a world-map hex read off the map's own print preset** — not a number
+anybody types.
 
 ## The mint is a multi-tool, and the queue is computed
 
@@ -131,6 +145,8 @@ node tools/build-data.mjs      # rebuild the web bundle
 node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
 node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + components
+node tools/build-market.mjs    # regenerate docs/markets/ from marketboard + components
+node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap + terrain
 node tools/build-book.mjs      # regenerate docs/book/ from docs/design/*.md
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md
 node tools/build-mint.mjs      # regenerate docs/mint/ from MINT*.md + QUEUE.md
