@@ -58,6 +58,12 @@ drawn smoke rising off its spine. Where it has walked, the grass is rendered
 as burnt stubble in a neat trail of rings. Scale object: a scorched shepherd's
 crook abandoned on the ground line. Wash: rust red inside the ribcage and on
 the burnt trail, flat, no glow.
+
+FRAMING. A4 portrait plate, whole page drawn edge to edge.
+Head, ribcage and the shepherd's crook inside the middle 70% of the page
+height; the full width survives the crop. The burnt trail and the smoke off
+the spine may run to the margins. Head low, turned three-quarters toward the
+centre of the page.
 ```
 
 ## monster-ash-drake — Ash Drake *(fire, MON-02)*
@@ -71,6 +77,12 @@ bow-wave at its chest. Plated hide drawn as overlapping ash-grey scutes,
 cracked at the joints where the hatching goes coal-dark. A thin line of smoke
 from each nostril. Scale object: a miner's abandoned pick bent double.
 Wash: rust red in the hide cracks, grey-ochre on the scree, flat.
+
+FRAMING. A4 portrait plate, whole page drawn edge to edge.
+Head, the bow-wave at the chest and the bent pick inside the middle 70% of the
+page height; the full width survives the crop. The tail and the outer scree
+may run to the margins. Head at the near end, low and turned toward the
+centre.
 ```
 
 ## monster-forge-wight — Forge Wight *(fire, MON-03)*
@@ -85,6 +97,11 @@ hatched deep-dark with a heat that is drawn, never glowing. Its head is a
 smith's hood with nothing visible inside. Around it: neat rows of mended
 tools, laid out like offerings. Wash: rust red on the seams and the mended
 iron, cold slate on the tunnel stone, flat.
+
+FRAMING. A4 portrait plate, whole page drawn edge to edge.
+The hood, both hands and the mended cart rail inside the middle 70% of the
+page height; the full width survives the crop. The tunnel roof and the outer
+rows of tools may run to the margins. Hood turned down to the work.
 ```
 
 ## monster-barrow-troll — Barrow Troll *(earth, MON-04)*
@@ -99,6 +116,12 @@ bush from one shoulder. Ancient grave-goods - a torc, a broken sword - hang
 tangled in its chest hair. The face is heavy, patient and very hungry.
 Scale object: a toppled standing stone. Wash: dusty grey-green on the turf
 and hide, ochre on the bared earth, flat.
+
+FRAMING. A4 portrait plate, whole page drawn edge to edge.
+Face, both shoulders, the grave-goods at the chest and the toppled standing
+stone inside the middle 70% of the page height; the full width survives the
+crop. The mound and the shed slabs may run to the margins. Face level and
+turned toward the reader.
 ```
 
 ## monster-stone-boar — Stone Boar *(earth, MON-05)*
@@ -112,6 +135,12 @@ has turned is drawn deep and neat as plough-work. Small bright eye, tusks
 like worn pick-heads. Scale object: an upturned foraging basket spilling
 mushrooms beside the furrow. Wash: dusty grey-green moss over grey hide,
 ochre in the turned earth, flat.
+
+FRAMING. A4 portrait plate, whole page drawn edge to edge.
+Head, tusks, the turned furrow and the spilled basket inside the middle 70% of
+the page height; the full width survives the crop. The oak's crown and the far
+end of the furrow may run to the margins. Head down to the ground, the eye
+still visible.
 ```
 
 ## monster-gravel-wyrm — Gravel Wyrm *(earth, MON-06)*
@@ -223,8 +252,9 @@ his claws. Wash: rust red between the chest plates and along the hoard, ochre
 on the coin, flat, no glow.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
-Head, crown, both forelimbs and the wagon wheel inside the middle 84% of the
-page. The tail and the far wing may run to the margins. Head turned
+Head, crown, both forelimbs and the wagon wheel inside the middle 70% of the
+page height; the full width survives the crop. The tail and the far wing may
+run to the margins. Head turned
 three-quarters toward the centre of the page.
 ```
 
@@ -246,7 +276,8 @@ in the sky only, a single pale grey-green note on the frost; the wyrm itself
 takes no wash at all.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
-Head, neck ruff and the first undulation of the body inside the middle 84% of
-the page, with the head in the UPPER half. The far coils and the reindeer may
+Head, neck ruff and the first undulation of the body inside the middle 70% of
+the page height, with the head in the UPPER half; the full width survives the
+crop. The far coils and the reindeer may
 run to the margins. Low horizon in the bottom third.
 ```

@@ -141,6 +141,12 @@ Four wagons climbing a hatched upland track in switchbacks, double ox-teams
 leaning into the grade, wheel-chocks swinging ready on chains, the last wagon
 fitted with a screw brake a crewman rides full-time. Cargo netted low.
 Wash: warm ochre track and hides, grey-green upland grass, flat.
+
+FRAMING. A4 landscape plate, whole page drawn edge to edge.
+The lead ox-team, the last wagon's screw brake and the crewman riding it
+inside the middle 84% of the page width; the full height survives the crop.
+The upper switchbacks may run to the margins. Low horizon in the bottom
+third.
 ```
 
 ## vehicle-veh-10 — Bay Courser *(horse)*

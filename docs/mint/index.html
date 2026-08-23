@@ -373,15 +373,15 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
 <p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
 <p><strong>cards 32/56 · maps 1/2</strong></p>
-<blockquote><p><strong>Note.</strong> cards: 32 of 56 plates are under the 4000 px long side this line asks for — smallest is <code>TAL-01</code> at 1254 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
-<blockquote><p><strong>Note.</strong> maps: 1 of 2 plates are under the 4000 px long side this line asks for — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
+<blockquote><p><strong>Note.</strong> cards: every plate clears the 1110 px floor (a 94 mm card at 300 dpi), and 32 of 56 are under the 2220 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> maps: 1 of 2 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
 <p><strong>32 of 56 minted.</strong> 0 waiting on a brief, 24 waiting on art, 0 waiting on frame.</p>
 <h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="2-draw-the-artist-24-cards">2 · DRAW — the artist — 24 cards</h3>
-<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, 4000 px on the long side or better, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, undefined px on the long side or better, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
 <tbody><tr><td><code>VEH-09</code></td><td>The Varl Wagonrow</td><td>Vehicles</td><td><code>vehicle-veh-09</code></td><td>✓</td><td>·</td><td>·</td></tr>
@@ -428,7 +428,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h3 id="1-write-the-designer-1">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="2-draw-the-artist-1-map">2 · DRAW — the artist — 1 map</h3>
-<p>The brief is written and there is no plate. Generate it at <strong>landscape, root-two (1.414) inside a plain frame with a visible inner rule</strong>, 4000 px on the long side or better, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/map/&lt;plate&gt;.png</code>.</p>
+<p>The brief is written and there is no plate. Generate it at <strong>landscape, root-two (1.414) inside a plain frame with a visible inner rule</strong>, undefined px on the long side or better, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/map/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Map</th><th>Grid</th><th>Plate</th><th>brief</th><th>plate</th><th>trace</th></tr></thead>
 <tbody><tr><td><code>sundering-isles</code></td><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>

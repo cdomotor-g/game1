@@ -199,6 +199,65 @@ function aimOf(root, line, row) {
  *   notes     an observation that is true and is nobody's turn. A plate under
  *             the declared size renders fine and caps how large it can print.
  */
+/* ------------------------------------------------------------ plate minimums */
+
+const mmToPx = (mm, dpi) => Math.round((mm / 25.4) * dpi);
+
+/* components.json, once per process rather than once per subject. */
+let stockCache = null;
+const cardStock = (root) => (stockCache ??= readJson(join(root, 'data', 'components.json')).stock);
+
+/**
+ * How many pixels a plate on this line needs on its long side - DERIVED from
+ * what the finished artefact is physically printed at, not typed into
+ * data/mint.json.
+ *
+ * Same reasoning as tools/build-board.mjs deriving a track column from the
+ * paper: a number somebody types is a number that goes stale the day the thing
+ * it describes changes size. The cards line carried a flat 4000 px for exactly
+ * that reason - it is an A1 MAP's requirement, and it was reporting every card
+ * plate ever accepted as a failure against a contract cards never had.
+ *
+ * One branch per line, like subjectsOf and aimOf, and for the same reason.
+ *
+ * Returns { min, want, from } in pixels; a zero means this line does not
+ * constrain the plate's size.
+ */
+export function minLongSideFor(root, line, row) {
+  const spec = line.plate?.minLongSide;
+  if (!spec) {
+    return { min: line.plate?.minLongSidePx ?? 0, want: line.plate?.wantLongSidePx ?? 0, from: 'declared' };
+  }
+
+  if (line.id === 'cards') {
+    /* A plate fills a card, so a card's own trim plus the bleed that gets cut
+       off is every pixel it can ever use. */
+    const { card } = cardStock(root);
+    const longMm = Math.max(card.widthMm, card.heightMm) + 2 * (card.bleedMm ?? 0);
+    return {
+      min: mmToPx(longMm, spec.dpi),
+      want: mmToPx(longMm, spec.wantDpi),
+      from: `a ${longMm} mm card at ${spec.dpi} dpi`,
+    };
+  }
+
+  if (line.id === 'maps') {
+    /* The widest sheet layout this map says it can be printed at. A generated
+       plate is vector, so it has no long side and nothing to fall short of. */
+    if (row?.subject?.plate?.kind === 'generated') return { min: 0, want: 0, from: 'generated, vector' };
+    const presets = row?.subject?.print?.presets ?? [];
+    const longMm = Math.max(0, ...presets.map((p) => p.mapWidthMm ?? 0));
+    if (!longMm) return { min: 0, want: 0, from: 'no print preset yet' };
+    return {
+      min: mmToPx(longMm, spec.dpi),
+      want: mmToPx(longMm, spec.wantDpi),
+      from: `a ${longMm} mm sheet at ${spec.dpi} dpi`,
+    };
+  }
+
+  return { min: 0, want: 0, from: 'no rule' };
+}
+
 export function survey(root = HERE) {
   const mint = readMintFile(root);
   const out = { mint, lines: [], problems: [], notes: [] };
@@ -206,6 +265,8 @@ export function survey(root = HERE) {
   for (const line of mint.lines) {
     const entry = { line, rows: [], deferred: [], shelved: line.status === 'shelved' };
     const undersized = [];
+    const belowWant = [];
+    let bound = null;
     if (!entry.shelved) {
       const { rows, deferred } = subjectsOf(root, line);
       entry.deferred = deferred;
@@ -223,10 +284,14 @@ export function survey(root = HERE) {
         const aim = aimOf(root, line, row);
 
         let longSide = 0;
-        if (hasPlate && line.plate.minLongSidePx) {
-          const { width, height } = pngSize(file);
-          longSide = Math.max(width, height);
-          if (longSide < line.plate.minLongSidePx) undersized.push({ code: row.code, longSide });
+        if (hasPlate) {
+          bound = minLongSideFor(root, line, row);
+          if (bound.min) {
+            const { width, height } = pngSize(file);
+            longSide = Math.max(width, height);
+            if (longSide < bound.min) undersized.push({ code: row.code, longSide });
+            else if (bound.want && longSide < bound.want) belowWant.push({ code: row.code, longSide });
+          }
         }
 
         entry.rows.push({
@@ -244,12 +309,19 @@ export function survey(root = HERE) {
          and it is the SAME finding every time - re-render for print, or accept
          that these are screen plates - so it is reported once, with the count and
          the worst of them, rather than once per subject. */
-      if (undersized.length) {
+      if (undersized.length && bound) {
         const worst = undersized.reduce((a, b) => (a.longSide <= b.longSide ? a : b));
         out.notes.push(
-          `${line.id}: ${undersized.length} of ${entry.rows.length} plates are under the ${line.plate.minLongSidePx} px long side ` +
-            `this line asks for — smallest is \`${worst.code}\` at ${worst.longSide} px. ` +
+          `${line.id}: ${undersized.length} of ${entry.rows.length} plates are under the ${bound.min} px long side ` +
+            `this line needs — ${bound.from} — smallest is \`${worst.code}\` at ${worst.longSide} px. ` +
             `They render fine on screen and they are the limit on how large the artefact can be printed.`
+        );
+      } else if (belowWant.length && bound) {
+        const worst = belowWant.reduce((a, b) => (a.longSide <= b.longSide ? a : b));
+        out.notes.push(
+          `${line.id}: every plate clears the ${bound.min} px floor (${bound.from}), and ${belowWant.length} of ` +
+            `${entry.rows.length} are under the ${bound.want} px this line would want for print — smallest is ` +
+            `\`${worst.code}\` at ${worst.longSide} px. That is an aspiration, not a fault.`
         );
       }
     }

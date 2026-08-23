@@ -17,9 +17,9 @@ catches that in CI.
 
 **cards 32/56 · maps 1/2**
 
-> **Note.** cards: 32 of 56 plates are under the 4000 px long side this line asks for — smallest is `TAL-01` at 1254 px. They render fine on screen and they are the limit on how large the artefact can be printed.
+> **Note.** cards: every plate clears the 1110 px floor (a 94 mm card at 300 dpi), and 32 of 56 are under the 2220 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
-> **Note.** maps: 1 of 2 plates are under the 4000 px long side this line asks for — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
+> **Note.** maps: 1 of 2 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
 
 ## Cards
@@ -34,7 +34,7 @@ Nothing waiting.
 
 ### 2 · DRAW — the artist — 24 cards
 
-The brief is written and there is no plate. Generate it at **the deck’s declared format**, 4000 px on the long side or better, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
+The brief is written and there is no plate. Generate it at **the deck’s declared format**, undefined px on the long side or better, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
@@ -98,7 +98,7 @@ Nothing waiting.
 
 ### 2 · DRAW — the artist — 1 map
 
-The brief is written and there is no plate. Generate it at **landscape, root-two (1.414) inside a plain frame with a visible inner rule**, 4000 px on the long side or better, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/map/<plate>.png`.
+The brief is written and there is no plate. Generate it at **landscape, root-two (1.414) inside a plain frame with a visible inner rule**, undefined px on the long side or better, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/map/<plate>.png`.
 
 | Code | Map | Grid | Plate | brief | plate | trace |
 | --- | --- | --- | --- | :-: | :-: | :-: |
