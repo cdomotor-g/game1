@@ -136,6 +136,19 @@ Draw `subject` **loose** — a couple of per cent outside what you think. The cr
 grows this box; it never shrinks it, so being generous costs you scenery and being
 mean costs you the subject.
 
+Then **look at what you chose**:
+
+```bash
+node tools/aim-preview.mjs MOD-01
+```
+
+It cuts the plate exactly as the card window and the explorer thumbnail will —
+same `crop()`, and the card window is read off the built card rather than guessed
+— and writes both to `docs/art/aim/` (git-ignored) for you to open. If something
+the card names is cut, grow `subject`; if the crop is centred on the wrong thing,
+move `focal`. A plate with no entry previews on the whole page, which is the
+fastest way to see what an entry is for.
+
 ### The framing checklist
 
 - [ ] Entry exists in `framing.json`, in the same commit as the PNG

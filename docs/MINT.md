@@ -182,7 +182,8 @@ Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt
 Pulls the branch and does the line's third step:
 
 - **cards** — adds the plate's `subject`, `focal` and `note` to
-  `docs/art/framing.json`
+  `docs/art/framing.json`, checking the crop with
+  `node tools/aim-preview.mjs <code>` before settling on the numbers
 - **maps** — measures `plate.field` off the inner frame rule, runs
   `node tools/trace-map.mjs <id> --write`, then corrects `rows` by hand against
   the proof sheet, and adds the settlements, regions and routes

@@ -5,5 +5,11 @@
 # the proof locally and look at that.
 docs/map/*-proof.png
 
+# Aim previews are the same kind of thing for a card: `node tools/aim-preview.mjs
+# <code>` cuts a plate the way its card window and the explorer thumbnail will, so
+# you can look at the crop before committing the three numbers that chose it. A few
+# megabytes each, regenerated on demand, and worth nothing in history.
+docs/art/aim/
+
 node_modules/
 .DS_Store
