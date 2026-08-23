@@ -156,6 +156,11 @@
         "dir": "docs/map",
         "ext": ".png",
         "idFrom": "the map's own id",
+        "kind": {
+          "$comment": "A map plate is one of two kinds and the difference is one field on the map, plate.kind.\n\nDRAWN is the original line and the one docs/MINT.md describes: a person paints a country, tools/trace-map.mjs samples the pixels, and three or four rounds of hand-correction against a proof sheet turn a guess into `rows`. Everything for it is intact — the commission contract, the brief in docs/art/prompts/maps.md, the TRACEABILITY block, the seven rules in docs/map/README.md — and it comes back by setting the field.\n\nGENERATED is the other way round, and the way everything else in this repository already works: `rows` is grown from the commission and the picture is drawn from `rows` by tools/draw-map.mjs. There is no artist, so there is no handover, so a generated map is not a mint subject at all — the queue reports it and chases nobody, exactly as tools/build-minimaps.mjs puts it: generated, not commissioned.\n\nWhy maps went this way and cards did not: an A1 sheet wants 4857 px and one image call gives 1536, and a coastline generated in quadrants does not meet in the middle. A vector plate has no long side, so the nine-sheet preset that korvane-reach.json calls \"a layout waiting on a larger plate\" is simply printable. External map commissioning is paused, not deleted.",
+          "values": ["drawn", "generated"],
+          "default": "drawn"
+        },
         "format": "landscape, root-two (1.414) inside a plain frame with a visible inner rule",
         "minLongSide": {
           "from": "map.print.presets",

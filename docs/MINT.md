@@ -19,7 +19,7 @@ they needed no new machinery, only a new entry in
 | Line | Subject | Brief | Plate | Aimed by | Status |
 | --- | --- | --- | --- | --- | --- |
 | **Cards** | one card in an adventure deck | `art/prompts/<deck>.md` | `art/renders/<plate>.png` | **FRAME** — a subject box and a focal point in `art/framing.json` | active |
-| **Maps** | one drawn map plate and the board read off it | `art/prompts/maps.md` | `map/<id>.png` | **TRACE** — the board in `data/maps/<id>.json` | active |
+| **Maps** | one drawn map plate and the board read off it | `art/prompts/maps.md` | `map/<id>.png` | **TRACE** — the board in `data/maps/<id>.json` | **paused** — see *Generated maps* |
 | **Tiles** | a printed hex tile face and its zoom-in sheet | — | — | — | **shelved**, [#18](https://github.com/cdomotor-g/game1/issues/18) |
 
 A line is declared in `data/mint.json` and nowhere else. That file holds no
@@ -36,6 +36,37 @@ supplying a board*: a plate set gives you one drawn map, a tile set gives you a
 bag. Nothing is deleted; the 32 accepted sheets stay committed and stay on the
 site. The queue prints the shelved line every run, so it is visible from the tool
 rather than remembered.
+
+## Generated maps
+
+A map plate is one of two kinds and the difference is one field, `plate.kind` on the map.
+
+**Drawn** is everything above: somebody paints a country, `tools/trace-map.mjs` samples the
+pixels, and three or four rounds of hand-correction against a proof sheet turn a guess into
+`rows`. `korvane-reach` is one.
+
+**Generated** turns the line around. `rows` is grown from the commission by
+`tools/draw-map.mjs`, and the plate is drawn *from* `rows` as an SVG — the board is the
+source and the picture is the output, which is how every other artefact here already works.
+There is no artist, so there is no handover, so a generated map **is not a mint subject**:
+the queue reports it and chases nobody, exactly as
+[`build-minimaps.mjs`](../tools/build-minimaps.mjs) already puts it — *generated, not
+commissioned*. There is also no TRACE step, because nothing was guessed.
+
+Two reasons it went this way and cards did not:
+
+- **Size.** An A1 sheet wants 4857 px and one image call gives 1536, and a coastline
+  generated in quadrants does not meet in the middle. A vector plate has no long side at
+  all, so the nine-sheet preset that `data/maps/korvane-reach.json` calls *"a layout waiting
+  on a larger plate"* is simply printable.
+- **Ink.** `build-minimaps.mjs` settled this at mini-map scale: *"drawn ground competes with
+  the pieces standing on it"*. A campaign map is the largest surface anybody stands pieces
+  on.
+
+**Commissioning a drawn map is paused, not retired.** The commission contract, the brief in
+[`art/prompts/maps.md`](art/prompts/maps.md), the `TRACEABILITY.` block, `trace-map.mjs` and
+the seven rules in [`map/README.md`](map/README.md) are all intact and unused. Setting a
+map's `plate.kind` back to `"drawn"` puts it in the queue at DRAW exactly as before.
 
 ## The four steps
 
@@ -97,6 +128,12 @@ the way it does.
 Two PRs and a cross-posting protocol were the original sketch. One is better: the
 branch is the shared state, the thread is the conversation, and neither agent has
 to discover the other's PR number.
+
+**The pull request is the TWO-AGENT form.** It buys a thread, and a thread is only
+worth having when two parties have to talk. Where one person is the courier — or
+where `tools/mint-draw.mjs` is — there is nobody to talk to, and committing straight
+to `main` is correct and is what [`../CLAUDE.md`](../CLAUDE.md) asks for. Neither
+document is wrong; they are describing different runs.
 
 ### The round trip
 
@@ -193,7 +230,7 @@ are checked, and `validate-map.mjs` says which it is looking at.
 | **In** | `data/maps/<id>.json` with a `commission` block: `why`, `landmass`, `terrainBudget`, `settlements`, `plate.minWidthPx`, plus the `grid` and the `legend` the board will be read on. All of it is required and all of it is checked |
 | **Brief** | an `## <map-id>` section in `docs/art/prompts/maps.md`, written **from the commission and nothing else**. If the two disagree, the commission is right and the prompt is stale |
 | **Plate id** | the map's own id. A map's plate is named after the map |
-| **Out** | `docs/map/<id>.png` — landscape, root-two, a plain frame with a visible inner rule, 4000 px minimum and 7000 for A1. Committed as supplied and never re-encoded by any tool here |
+| **Out** | *drawn:* `docs/map/<id>.png` — landscape, root-two, a plain frame with a visible inner rule, at the pixel floor the map's own largest print preset derives. Committed as supplied and never re-encoded by any tool here. *generated:* `docs/map/<id>.svg`, drawn by `tools/draw-map.mjs`, a build output with no pixel floor to meet |
 | **Aim** | the board: a measured `plate` block, a full `rows`, and the `settlements`, `regions`, `routes` and `print` presets |
 | **Builds** | the proof sheet and the derived print sizes via `build-map.mjs`; the viewer, the print sheets and the explorer via `build-data.mjs` |
 
@@ -253,6 +290,7 @@ up.
 
 ```bash
 node tools/validate-data.mjs    # the subject is referentially sound
+node tools/draw-map.mjs <id>    # generated maps: regrow the board, redraw the plate
 node tools/validate-map.mjs     # boards against terrain.json and themselves
 node tools/validate-art.mjs     # palette and the two-plate contract
 node tools/build-map.mjs        # proof sheets and the derived print sizes

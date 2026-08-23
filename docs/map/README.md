@@ -30,6 +30,23 @@ checks and says out loud that it did. See [`../MINT.md`](../MINT.md), and
 
 ---
 
+## This document is the DRAWN kind
+
+A map plate is one of two kinds and the difference is one field, `plate.kind` on the
+map. Everything below is the **drawn** kind: a painted plate that `rows` is traced
+off, which is `korvane-reach` and which is **paused rather than retired** — the
+contract, the brief, the `TRACEABILITY.` block and `tools/trace-map.mjs` are all
+intact, and setting a map's `plate.kind` back to `"drawn"` brings it back.
+
+The **generated** kind runs the other way: `rows` is grown from the commission by
+`tools/draw-map.mjs` and the plate is drawn from `rows` as an SVG. The board is the
+source and the picture is the output, so there is no artist, no handover and no
+trace step — and no pixel floor, because a vector plate has no long side. The seven
+traceability rules below do not apply to it: they exist to make a *sampler's* job
+possible, and nothing samples a generated plate. See **Generated maps** in
+[`../MINT.md`](../MINT.md).
+
+
 ## The board format
 
 ```json

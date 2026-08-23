@@ -90,6 +90,25 @@ if (drift.length) {
   for (const line of drift) console.log(`corrected ${line}`);
 }
 
+/* A GENERATED plate needs no proof. The proof sheet exists to check a board that
+   was TRACED off artwork - it draws the grid and the read terrain back over the
+   pixels so 832 hexes can be eyeballed without trusting a tally. A generated
+   board is not read off anything: the rows are the source and the picture is
+   drawn from them, so a proof would only be checking the renderer against
+   itself. The print presets above are still derived, because those are geometry
+   and the geometry is the same either way. */
+if (map.plate?.kind === 'generated') {
+  console.log(`${map.name}: generated plate — ${map.plate.file}, vector, no proof sheet`);
+  for (const preset of map.print.presets) {
+    console.log(
+      `  print ${preset.id.padEnd(11)} ${preset.sheetCols}x${preset.sheetRows} ${preset.sheet} ` +
+        `${preset.orientation} -> ${preset.mapWidthMm} x ${preset.mapHeightMm} mm, ${preset.hexAcrossFlatsMm} mm hex, any dpi`
+    );
+  }
+  console.log('  Vector: every preset prints at full quality. The dpi column is what a raster plate would have managed.');
+  process.exit(0);
+}
+
 /* ------------------------------------------------------------- proof render */
 
 const { cols, rows: rowCount } = map.grid;

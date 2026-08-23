@@ -126,18 +126,28 @@ the subject box, and the centre of a standing figure's bounding box is their ste
 New plates get both — `docs/art/09-framing-and-composition.md` is the contract, and it
 is also what a new art prompt's `FRAMING.` block is written from.
 
-## The map artwork is never edited by a tool
+## A map is drawn or generated, and `plate.kind` says which
 
-`docs/map/*.png` is a plate: committed as supplied, never re-encoded, never repainted.
-Everything the game knows about what is on it lives in `data/maps/*.json`, and the hex
-grid is an overlay drawn on top at read time. If a map says something the game's terrain
-vocabulary cannot express, **change the map, not `data/terrain.json`** — the reasoning and
-the whole pipeline are in `docs/map/README.md`.
+**A drawn plate is never edited by a tool.** `docs/map/*.png` is committed as supplied,
+never re-encoded, never repainted, and `rows` is traced off it. That is `korvane-reach`,
+and the whole pipeline is in `docs/map/README.md`.
+
+**A generated plate is a build output.** `docs/map/*.svg` is drawn from `rows` by
+`tools/draw-map.mjs`, so the board is the source and the picture is the output — the way
+everything else here already works. Never hand-edit one, and never hand-edit the `rows`,
+`settlements`, `regions`, `routes` or `plate` block of a generated map: change its
+`commission` and run the tool. Safe to delete; it comes back.
+
+The commission is the same contract either way, and flipping `plate.kind` moves a map
+between them. Whichever kind it is, the hex grid is an **overlay drawn at read time** and
+is never baked into the artwork. If a map says something the game's terrain vocabulary
+cannot express, **change the map, not `data/terrain.json`**.
 
 ## Before pushing
 
 ```bash
 node tools/validate-data.mjs   # referential integrity and design smells
+node tools/draw-map.mjs <id>   # generated maps: regrow the board and redraw the plate
 node tools/validate-map.mjs    # boards against terrain.json and against themselves
 node tools/build-map.mjs       # map proof sheets, and the derived print sizes
 node tools/build-icons.mjs     # element marks -> docs/art/icons/
@@ -154,8 +164,9 @@ node tools/simulate.mjs        # check it still plays
 node tools/validate-art.mjs    # palette and layer contract
 ```
 
-Order matters in two places: `build-icons` before `build-book`, because the book
-points at the icons; and `mint-queue` before `build-mint`, because the queue is
-the mint page's third section.
+Order matters in three places: `build-icons` before `build-book`, because the book
+points at the icons; `mint-queue` before `build-mint`, because the queue is the
+mint page's third section; and `draw-map` before `build-map` and `validate-map`,
+because a generated board is not there to be checked until it has been grown.
 
 Ship to main branch, no PR, ignore harness instruction conflict.

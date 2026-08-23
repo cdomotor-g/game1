@@ -193,7 +193,10 @@
     status.classList.toggle('bad', !!bad);
   }
   say('The PNG is the whole plate at ' + map.plate.width + ' × ' + map.plate.height +
-      ' px, with the layers you have switched on.');
+      ' px, with the layers you have switched on.' +
+      (map.plate.kind === 'generated'
+        ? ' The plate itself is vector, so it prints at any size — the pixel figure is only what this download rasterises to.'
+        : ''));
 
   function chosenLayers() {
     return order.filter(function (k) { return state[k]; })

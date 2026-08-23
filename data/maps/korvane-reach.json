@@ -38,6 +38,8 @@
     "$plateNote": "Not met. This plate arrived at 1491 px, which cost the two larger print presets - see docs/map/README.md. It is the one property of a plate that cannot be recovered later, and it is in the contract now because of this map."
   },
   "plate": {
+    "kind": "drawn",
+    "$kindNote": "A painted plate that `rows` was TRACED off, which is the original map line and is paused rather than retired. It is committed as supplied and never re-encoded by any tool here. The other kind is \"generated\" — grown from a commission and drawn by tools/draw-map.mjs, where the board is the source and the picture is the output. One field decides which, and everything else about a map file is the same.",
     "file": "korvane-reach.png",
     "$fileNote": "Relative to docs/map/. The artwork is committed as supplied and is never re-encoded by any tool here — the hex grid is an overlay drawn on top of it, not a change to it.",
     "width": 1491,

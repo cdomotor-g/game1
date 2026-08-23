@@ -43,6 +43,13 @@ jobs:
       - name: Validate data
         run: node tools/validate-data.mjs
 
+      # A generated map's board and plate are outputs of its own commission, so both
+      # are checked the way every other generated file here is. With no map id the
+      # tool sweeps every map whose plate.kind is "generated"; a second one needs no
+      # edit to this workflow. A drawn map has nothing to regrow and is skipped.
+      - name: Check the generated maps
+        run: node tools/draw-map.mjs --check
+
       # Boards are checked against terrain.json and against themselves: a coastline
       # with deep water against the beach, or a harbour standing inland, fails here.
       - name: Validate maps

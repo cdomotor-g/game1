@@ -29,7 +29,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { survey, at } from './lib/mint.mjs';
+import { survey, at, minLongSideFor } from './lib/mint.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = join(ROOT, 'docs', 'art', 'mint');
@@ -67,6 +67,17 @@ function section(entry, step, heading, blurb) {
   );
 }
 
+/* The pixel floor is derived per line and, for maps, per subject - see
+   minLongSideFor in tools/lib/mint.mjs. Asking a line for one number is only
+   meaningful where every subject on it shares one, which cards do and maps
+   do not, so the blurb reports the first row's and says where it came from. */
+function sizeAsk(entry) {
+  const row = at(entry, 'draw')[0] ?? entry.rows[0];
+  const { min, want, from } = minLongSideFor(ROOT, entry.line, row);
+  if (!min) return 'at whatever size the line asks for';
+  return `at least ${min} px on the long side (${from})` + (want ? `, ${want} px if it can be had` : '');
+}
+
 const STEP_NUMBER = { write: '1', draw: '2', aim: '3' };
 const cap = (s) => s[0].toUpperCase() + s.slice(1);
 
@@ -92,7 +103,7 @@ function lineReport(entry) {
   const draw = section(
     entry, 'draw', 'DRAW — the artist',
     `The brief is written and there is no plate. Generate it at **${line.plate.format ?? 'the deck’s declared format'}**, ` +
-      `${line.plate.minLongSidePx} px on the long side or better, check it against the acceptance checklist in ` +
+      `${sizeAsk(entry)}, check it against the acceptance checklist in ` +
       `[\`../07-ai-agent-brief.md\`](../07-ai-agent-brief.md), and commit \`${line.plate.dir}/<plate>${line.plate.ext}\`.`
   );
   const aim = section(
@@ -114,6 +125,14 @@ function lineReport(entry) {
       : minted.length
         ? `\nEvery minted ${line.unit} is fully aimed: ${line.aim.produces}.\n`
         : '') +
+    (entry.generated?.length
+      ? `\n### Generated, not commissioned\n\nDrawn by a tool from its own data, so there is no handover to track and no ` +
+        `step anybody is waiting on. It is reported here every run rather than disappearing, the same way a shelved line is: ` +
+        `a decision with a reason attached is not an absence. Run \`node tools/draw-map.mjs <id>\` to regrow one, and set ` +
+        `\`plate.kind\` back to \`"drawn"\` to put it back in the worklist above.\n\n` +
+        `| ${cap(line.unit)} | Grid | Plate |\n| --- | --- | --- |\n` +
+        entry.generated.map((g) => `| ${g.name} | ${g.grid} | \`${g.plate}\` |`).join('\n') + '\n'
+      : '') +
     (entry.deferred.length
       ? `\n### Not being minted yet\n\nDeclared, numbered, backed — and simply not being illustrated this round. ` +
         `Set \`minting: true\` on one to bring it into the queue above.\n\n` +
@@ -208,6 +227,11 @@ if (checkOnly) {
     }
   }
   for (const entry of shelved) console.log(`  ${entry.line.id.padEnd(6)} shelved — see issue #${entry.line.issue}`);
+  for (const entry of lines) {
+    for (const g of entry.generated ?? []) {
+      console.log(`  ${entry.line.id.padEnd(6)} drawn by tools/draw-map.mjs: ${g.id} (${g.grid}) — generated, not commissioned`);
+    }
+  }
   for (const n of notes) console.log(`  note: ${n}`);
   for (const p of problems) console.warn(`  problem: ${p}`);
   if (problems.length) console.warn(`  ${problems.length} contract problem(s) — the queue lists them under "Contract problems".`);

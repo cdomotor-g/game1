@@ -273,19 +273,56 @@ so — style drifts slowly enough that you will not notice inside a session.
 
 ## The run sheet
 
-Everything above, on one screen.
+Everything above, on one screen. **Take the short sheet unless something is wrong
+with it** — the long one is what the short one falls back to, not a different job.
+
+### Cards — the short sheet
+
+```
+/mint MOD-01
+```
+
+That is the whole thing. `.claude/commands/mint.md` carries the briefing that used
+to be pasted out of §1 of this document, so the instruction is a role and a
+subject and nothing else. It runs the queue, writes the card and its brief if
+either is missing, draws the plate with `tools/mint-draw.mjs`, reads the result,
+writes the framing entry, runs the tools and commits.
+
+`/mint --deck modifications` does a whole deck, one subject at a time, so the
+style cannot drift. `/mint a new fire monster, a cinder-crowned stag` starts from
+nothing.
+
+### Maps
+
+```
+node tools/draw-map.mjs sundering-isles
+```
+
+A map is generated, not commissioned: the board is grown from its `commission`
+block and the plate is drawn from the board. No artist, no tracing, no proof-sheet
+rounds. `node tools/validate-map.mjs` is the check that matters — it knows about
+harbours inland and rail across unbridged rivers. See **Generated maps** in
+[`MINT.md`](MINT.md).
+
+### Cards — the long sheet
+
+Two agents, for when the API is unreachable, when the result is not good enough,
+or when you would rather draw it yourself.
 
 ```
 1.  node tools/mint-queue.mjs              see who owes what
-2.  designer: branch mint/<run>, write the briefs, open the PR
-3.  you:      copy one MINT REQUEST → paste into the artist
+2.  node tools/mint-request.mjs MOD-01     the complete commission, assembled
+3.  you:      paste it into the artist (standing instructions once, up top)
 4.  artist:   render, report pixel size and any wording changes
-5.  you:      save under the EXACT filename, commit, push,
-              reply PLATE READY · <code>
-6.  designer: frame (cards) or trace (maps), run the tools, commit
+5.  you:      save under the EXACT filename, commit, push
+6.  designer: frame it, run the tools, commit
 7.  node tools/mint-queue.mjs              should now say minted
-8.  merge
 ```
+
+`tools/mint-draw.mjs` drops to step 2 by itself when it cannot reach the model, so
+you get the commission printed rather than an error. Nothing is lost — the long
+sheet is the version that definitely works, and the short one is a shortcut
+through it.
 
 **The three things that get a plate rejected:** wrong pixel size, ignored aim
 block, anything from the banned list. Everything else is negotiable.

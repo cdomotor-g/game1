@@ -12642,6 +12642,14 @@ window.GAME_DATA = {
           "dir": "docs/map",
           "ext": ".png",
           "idFrom": "the map's own id",
+          "kind": {
+            "$comment": "A map plate is one of two kinds and the difference is one field on the map, plate.kind.\n\nDRAWN is the original line and the one docs/MINT.md describes: a person paints a country, tools/trace-map.mjs samples the pixels, and three or four rounds of hand-correction against a proof sheet turn a guess into `rows`. Everything for it is intact — the commission contract, the brief in docs/art/prompts/maps.md, the TRACEABILITY block, the seven rules in docs/map/README.md — and it comes back by setting the field.\n\nGENERATED is the other way round, and the way everything else in this repository already works: `rows` is grown from the commission and the picture is drawn from `rows` by tools/draw-map.mjs. There is no artist, so there is no handover, so a generated map is not a mint subject at all — the queue reports it and chases nobody, exactly as tools/build-minimaps.mjs puts it: generated, not commissioned.\n\nWhy maps went this way and cards did not: an A1 sheet wants 4857 px and one image call gives 1536, and a coastline generated in quadrants does not meet in the middle. A vector plate has no long side, so the nine-sheet preset that korvane-reach.json calls \"a layout waiting on a larger plate\" is simply printable. External map commissioning is paused, not deleted.",
+            "values": [
+              "drawn",
+              "generated"
+            ],
+            "default": "drawn"
+          },
           "format": "landscape, root-two (1.414) inside a plain frame with a visible inner rule",
           "minLongSide": {
             "from": "map.print.presets",
@@ -13100,6 +13108,8 @@ window.GAME_DATA = {
         "$plateNote": "Not met. This plate arrived at 1491 px, which cost the two larger print presets - see docs/map/README.md. It is the one property of a plate that cannot be recovered later, and it is in the contract now because of this map."
       },
       "plate": {
+        "kind": "drawn",
+        "$kindNote": "A painted plate that `rows` was TRACED off, which is the original map line and is paused rather than retired. It is committed as supplied and never re-encoded by any tool here. The other kind is \"generated\" — grown from a commission and drawn by tools/draw-map.mjs, where the board is the source and the picture is the output. One field decides which, and everything else about a map file is the same.",
         "file": "korvane-reach.png",
         "$fileNote": "Relative to docs/map/. The artwork is committed as supplied and is never re-encoded by any tool here — the hex grid is an overlay drawn on top of it, not a change to it.",
         "width": 1491,
@@ -13864,7 +13874,7 @@ window.GAME_DATA = {
       }
     },
     {
-      "$comment": "A COMMISSION, not a board. The plate has not been drawn yet, so this file has no `plate` block and its `rows` are empty. What it does have is a complete `commission`: what the map is for, what country it is, what the terrain budget is and how many settlements of what rank — the map mint's input contract, in data/mint.json under lines.maps.subjectRequires. Run `node tools/mint-queue.mjs` to see where it has got to. The whole pipeline, and who does what, is in docs/MINT.md; docs/map/README.md is the six steps of turning a plate into a board.",
+      "$comment": "A GENERATED board. The `commission` below is still the input contract and is still the only thing anybody writes by hand — what the map is for, what country it is, what the terrain budget is, how many settlements of what rank, where the anchors are and what every place is called. Everything after it is grown from that by `node tools/draw-map.mjs sundering-isles`, which also draws the plate: `rows`, `settlements`, `regions`, `routes` and the `plate` block are OUTPUTS. Do not hand-edit them — change the commission and run the tool.\n\nThis is the opposite way round from the Korvane Reach, which is a DRAWN plate that `rows` was traced off. Both are supported and the difference is one field, plate.kind. docs/MINT.md is the pipeline; docs/map/README.md is the drawn kind, which is paused rather than retired.",
       "version": "0.1.0",
       "id": "sundering-isles",
       "name": "The Sundering Isles",
@@ -13942,12 +13952,279 @@ window.GAME_DATA = {
           "display lettering over any island — the big names go on the sea, where a mis-read costs nothing",
           "a second colour of ochre: the desert wash and the marsh wash must not be the same, which is the mistake the Reach's plate made"
         ],
+        "landform": {
+          "$comment": "The prose above says what this country IS; this says where it is, and it is the only positional thing anybody types. tools/draw-map.mjs grows the board from these anchors - it is the same division as everywhere else in this repository: a person decides that there are three chains running north-east to south-west and that the volcano is on the largest island, and the tool works out which 331 hexes that comes to. If you find yourself typing a hex that is not an anchor, it belongs in the generator instead.",
+          "seed": 20260823,
+          "$seedNote": "The growth is random but not arbitrary. Same seed, same board, every run - which is what lets docs/map/ be a committed build output and --check mean anything.",
+          "shareIsRelative": true,
+          "$shareNote": "An island's `share` is a WEIGHT, not a fraction of the grid. The tool normalises the set of them to the land total the terrainBudget already asks for, so adding an island does not silently make the board more land - it makes every other island slightly smaller, which is the honest reading of a fixed country.",
+          "islands": [
+            {
+              "id": "vharsel",
+              "name": "Vharsel",
+              "chain": "north",
+              "at": [
+                20,
+                5
+              ],
+              "share": 0.16,
+              "relief": "volcanic"
+            },
+            {
+              "id": "kelnholm",
+              "name": "Kelnholm",
+              "chain": "north",
+              "at": [
+                26,
+                2
+              ],
+              "share": 0.03
+            },
+            {
+              "id": "orrin",
+              "name": "Orrin",
+              "chain": "north",
+              "at": [
+                15,
+                8
+              ],
+              "share": 0.04
+            },
+            {
+              "id": "thass",
+              "name": "Thass",
+              "chain": "reef",
+              "at": [
+                26,
+                10
+              ],
+              "share": 0.035
+            },
+            {
+              "id": "marrowcay",
+              "name": "Marrowcay",
+              "chain": "reef",
+              "at": [
+                22,
+                13
+              ],
+              "share": 0.03
+            },
+            {
+              "id": "saltrow",
+              "name": "Saltrow",
+              "chain": "reef",
+              "at": [
+                18,
+                15
+              ],
+              "share": 0.035
+            },
+            {
+              "id": "drownstep",
+              "name": "Drownstep",
+              "chain": "reef",
+              "at": [
+                14,
+                18
+              ],
+              "share": 0.025
+            },
+            {
+              "id": "vellhome",
+              "name": "Vellhome",
+              "chain": "south",
+              "at": [
+                9,
+                15
+              ],
+              "share": 0.035
+            },
+            {
+              "id": "brackmoor",
+              "name": "Brackmoor",
+              "chain": "south",
+              "at": [
+                6,
+                19
+              ],
+              "share": 0.03
+            },
+            {
+              "id": "tidewrack",
+              "name": "Tidewrack",
+              "chain": "south",
+              "at": [
+                2,
+                22
+              ],
+              "share": 0.02
+            }
+          ],
+          "$islandNote": "Three chains running north-east to south-west, as the landmass paragraph asks. `relief: volcanic` is what puts the one mountain worth the name on the largest island, and the crater lake in it - the board's only fresh water.",
+          "links": [
+            {
+              "from": "thass",
+              "to": "marrowcay",
+              "as": "shallow-water"
+            },
+            {
+              "from": "marrowcay",
+              "to": "saltrow",
+              "as": "shallow-water"
+            },
+            {
+              "from": "saltrow",
+              "to": "drownstep",
+              "as": "shallow-water"
+            }
+          ],
+          "$linkNote": "The drowned road. A reef is water that a hull can cross and a keel cannot ignore, so it is drawn as shallows chaining the middle group together - the thing the subtitle is named for.",
+          "edges": {
+            "north": "shelf",
+            "south": "deep",
+            "east": "deep",
+            "west": "deep"
+          },
+          "$edgeNote": "A shelf edge is shallow running off the frame, so the board reads as being south of somewhere. A deep edge is open sea. Deep water never touches land on any board - tools/validate-map.mjs enforces it - so the tool keeps a shallow margin round every coast whatever the edges say.",
+          "shelfWidth": 1,
+          "$shelfWidthNote": "How many hexes of shallow water wrap a coastline before the deep starts. One is the honest minimum: it is what the no-deep-water-against-a-beach rule actually requires, and on a board of ten scattered islands a two-hex halo round every one of them turns the whole sea shallow — the deep water the budget asks for has nowhere left to be."
+        },
+        "places": [
+          {
+            "id": "vharsel",
+            "name": "Vharsel",
+            "rank": "seat",
+            "harbour": true,
+            "island": "vharsel",
+            "note": "Seat of the isles, under the volcano, on the one deep-water road in."
+          },
+          {
+            "id": "thass-gate",
+            "name": "Thass Gate",
+            "rank": "city",
+            "harbour": true,
+            "island": "thass",
+            "note": "Where the freight changes hulls: nothing crosses the reef without stopping here."
+          },
+          {
+            "id": "kelnholm",
+            "name": "Kelnholm",
+            "rank": "town",
+            "harbour": true,
+            "island": "kelnholm",
+            "note": "The northern landfall, first light off the shelf."
+          },
+          {
+            "id": "orrinmouth",
+            "name": "Orrinmouth",
+            "rank": "town",
+            "harbour": true,
+            "island": "orrin",
+            "note": "A wide anchorage and not much behind it."
+          },
+          {
+            "id": "marrowcay",
+            "name": "Marrowcay",
+            "rank": "town",
+            "harbour": true,
+            "island": "marrowcay",
+            "note": "Built on the reef itself, half of it on piles."
+          },
+          {
+            "id": "saltrow",
+            "name": "Saltrow",
+            "rank": "town",
+            "harbour": true,
+            "island": "saltrow",
+            "note": "Salt pans and a long quay."
+          },
+          {
+            "id": "vellhome",
+            "name": "Vellhome",
+            "rank": "town",
+            "harbour": true,
+            "island": "vellhome",
+            "note": "The southern chain's only real market."
+          },
+          {
+            "id": "cinderfoot",
+            "name": "Cinderfoot",
+            "rank": "village",
+            "harbour": false,
+            "island": "vharsel",
+            "note": "Inland, on the ash. Pays someone else's freight and resents it."
+          },
+          {
+            "id": "ashford",
+            "name": "Ashford",
+            "rank": "village",
+            "harbour": false,
+            "island": "vharsel",
+            "note": "The crater track's last water before the climb."
+          },
+          {
+            "id": "longstrand",
+            "name": "Longstrand",
+            "rank": "village",
+            "harbour": true,
+            "island": "vharsel",
+            "note": "A beach, a jetty and forty boats."
+          },
+          {
+            "id": "coldkeel",
+            "name": "Coldkeel",
+            "rank": "village",
+            "harbour": true,
+            "island": "saltrow",
+            "note": "A careening beach, and the only one for a day's sail."
+          },
+          {
+            "id": "drownstep",
+            "name": "Drownstep",
+            "rank": "village",
+            "harbour": true,
+            "island": "drownstep",
+            "note": "The reef's far end, and the name is a warning."
+          },
+          {
+            "id": "brackmoor",
+            "name": "Brackmoor",
+            "rank": "village",
+            "harbour": true,
+            "island": "brackmoor",
+            "note": "Peat, marsh and a channel that silts every winter."
+          },
+          {
+            "id": "tidewrack",
+            "name": "Tidewrack",
+            "rank": "village",
+            "harbour": true,
+            "island": "tidewrack",
+            "note": "The last land before the open south. Salvage, mostly."
+          }
+        ],
+        "$placesNote": "Names and ranks are content and are decided here; WHERE each one stands is computed by tools/draw-map.mjs, which knows which hexes of its island are waterside and which are not. Twelve harbours, two inland, as the settlement block asks - and both inland places are on Vharsel, because the largest island is the only one with an inland to be in.",
         "plate": {
           "minWidthPx": 4000,
           "wantWidthPx": 7000,
           "aspect": "root-two landscape",
           "$note": "Ask for the width before anything else. It is the one property of a plate that cannot be recovered later, and the Reach is on its second plate at 1491 px, which cost it the two larger print presets."
         }
+      },
+      "plate": {
+        "kind": "generated",
+        "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
+        "file": "sundering-isles.svg",
+        "width": 4000,
+        "height": 2830,
+        "field": {
+          "x": 34,
+          "y": 34,
+          "width": 3932,
+          "height": 2762
+        },
+        "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line."
       },
       "grid": {
         "shape": "hex",
@@ -13971,7 +14248,10 @@ window.GAME_DATA = {
             "sheetRows": 2,
             "marginMm": 8,
             "overlapMm": 0,
-            "note": "Two by two, printed landscape. The working size for a table."
+            "note": "Two by two, printed landscape. The working size for a table.",
+            "mapWidthMm": 548.4,
+            "mapHeightMm": 388,
+            "hexAcrossFlatsMm": 18
           },
           {
             "id": "nine-sheet",
@@ -13982,7 +14262,10 @@ window.GAME_DATA = {
             "sheetRows": 3,
             "marginMm": 8,
             "overlapMm": 0,
-            "note": "Three by three. Worth printing only if the plate arrives at 7000 px."
+            "note": "Three by three. Worth printing only if the plate arrives at 7000 px.",
+            "mapWidthMm": 822.6,
+            "mapHeightMm": 582,
+            "hexAcrossFlatsMm": 27
           },
           {
             "id": "one-sheet",
@@ -13993,7 +14276,10 @@ window.GAME_DATA = {
             "sheetRows": 1,
             "marginMm": 8,
             "overlapMm": 0,
-            "note": "The whole board on one page, for reading rather than playing."
+            "note": "The whole board on one page, for reading rather than playing.",
+            "mapWidthMm": 274.2,
+            "mapHeightMm": 194,
+            "hexAcrossFlatsMm": 9
           }
         ]
       },
@@ -14011,8 +14297,866 @@ window.GAME_DATA = {
         "t": "tundra",
         "d": "desert"
       },
-      "rows": [],
-      "$rowsNote": "Empty until the plate exists and tools/trace-map.mjs has read it. A map with no rows is a commission, not a board: tools/validate-map.mjs skips the board checks and says so, the explorer shows it as commissioned, and tools/mint-queue.mjs puts it on the step it has actually reached."
+      "rows": [
+        "---------d.mf.fff...m..-m...--",
+        "~~~~~~~-.ffffffffffffff-.hfm--",
+        "~~~~~~~-ff^^^fffff^^^f.-.hhhdf",
+        "~~~~~--.f^^^ffm..ff^^h.-.fh..-",
+        "~~~~~-m-.f^ff.---.mh^^^f-...--",
+        "~~~~~-..f^fmf-..--.hl^h.--f-~~",
+        "~~~~~~-mf^ff--.h..-.f^ff-----~",
+        "~~~~~~-fff.-..hh.-.hff.-.--f-~",
+        "~~~~~~~-.f.-.hhhhd-f..f-d....-",
+        "~~~~~~~-..f-ffhhff-f---fhhh.--",
+        "~~~~~~~~--m.-.d...-.-.m-.hhh..",
+        "~~~~~~~------f-.----.h.-..hh.-",
+        "~~~~~~~-.mmf------.--.h.--..m-",
+        "~~~~~~-fhhf.-~~-f...-.hf.----~",
+        "~~~~~~--.hh.----fhhh.-ffh.-~~~",
+        "~~~~--f.hhf.-m--.hhh.-dhm-~~~~",
+        "~~~~-.--m.f.-.m.-.hf.-f.m-~~~~",
+        "~~~-f..--..-.hh.-.hhf---.-~~~~",
+        "~~~~-.h.m-f-.fhh.-...-~~--~~~~",
+        "----.hhh.---....-----~~~~~~~~~",
+        "..m.-.hhd-~~-.-.-~~~~~~~~~~~~~",
+        ".hf.-.m..-~~----~~~~~~~~~~~~~~",
+        "..hf--.-.-~~~~~~~~~~~~~~~~~~~~",
+        "-f.f-----~~~~~~~~~~~~~~~~~~~~~"
+      ],
+      "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+      "regions": [
+        {
+          "id": "vharsel",
+          "name": "Vharsel",
+          "terrain": "forest",
+          "labelAt": [
+            20,
+            5
+          ],
+          "summary": "120 hexes of the north chain, mostly forest. Vharsel, Cinderfoot, Ashford, Longstrand."
+        },
+        {
+          "id": "kelnholm",
+          "name": "Kelnholm",
+          "terrain": "grassland",
+          "labelAt": [
+            26,
+            2
+          ],
+          "summary": "23 hexes of the north chain, mostly grassland. Kelnholm."
+        },
+        {
+          "id": "orrin",
+          "name": "Orrin",
+          "terrain": "grassland",
+          "labelAt": [
+            15,
+            8
+          ],
+          "summary": "30 hexes of the north chain, mostly grassland. Orrinmouth."
+        },
+        {
+          "id": "thass",
+          "name": "Thass",
+          "terrain": "grassland",
+          "labelAt": [
+            26,
+            10
+          ],
+          "summary": "26 hexes of the reef chain, mostly grassland. Thass Gate."
+        },
+        {
+          "id": "marrowcay",
+          "name": "Marrowcay",
+          "terrain": "grassland",
+          "labelAt": [
+            22,
+            13
+          ],
+          "summary": "23 hexes of the reef chain, mostly grassland. Marrowcay."
+        },
+        {
+          "id": "saltrow",
+          "name": "Saltrow",
+          "terrain": "grassland",
+          "labelAt": [
+            18,
+            15
+          ],
+          "summary": "26 hexes of the reef chain, mostly grassland. Saltrow, Coldkeel."
+        },
+        {
+          "id": "drownstep",
+          "name": "Drownstep",
+          "terrain": "grassland",
+          "labelAt": [
+            14,
+            18
+          ],
+          "summary": "19 hexes of the reef chain, mostly grassland. Drownstep."
+        },
+        {
+          "id": "vellhome",
+          "name": "Vellhome",
+          "terrain": "grassland",
+          "labelAt": [
+            9,
+            15
+          ],
+          "summary": "26 hexes of the south chain, mostly grassland. Vellhome."
+        },
+        {
+          "id": "brackmoor",
+          "name": "Brackmoor",
+          "terrain": "grassland",
+          "labelAt": [
+            6,
+            19
+          ],
+          "summary": "23 hexes of the south chain, mostly grassland. Brackmoor."
+        },
+        {
+          "id": "tidewrack",
+          "name": "Tidewrack",
+          "terrain": "grassland",
+          "labelAt": [
+            2,
+            22
+          ],
+          "summary": "15 hexes of the south chain, mostly grassland. Tidewrack."
+        }
+      ],
+      "settlements": [
+        {
+          "id": "vharsel",
+          "name": "Vharsel",
+          "col": 18,
+          "row": 7,
+          "rank": "seat",
+          "harbour": true,
+          "note": "Seat of the isles, under the volcano, on the one deep-water road in."
+        },
+        {
+          "id": "thass-gate",
+          "name": "Thass Gate",
+          "col": 28,
+          "row": 11,
+          "rank": "city",
+          "harbour": true,
+          "note": "Where the freight changes hulls: nothing crosses the reef without stopping here."
+        },
+        {
+          "id": "kelnholm",
+          "name": "Kelnholm",
+          "col": 27,
+          "row": 0,
+          "rank": "town",
+          "harbour": true,
+          "note": "The northern landfall, first light off the shelf."
+        },
+        {
+          "id": "orrinmouth",
+          "name": "Orrinmouth",
+          "col": 12,
+          "row": 8,
+          "rank": "town",
+          "harbour": true,
+          "note": "A wide anchorage and not much behind it."
+        },
+        {
+          "id": "marrowcay",
+          "name": "Marrowcay",
+          "col": 22,
+          "row": 16,
+          "rank": "town",
+          "harbour": true,
+          "note": "Built on the reef itself, half of it on piles."
+        },
+        {
+          "id": "saltrow",
+          "name": "Saltrow",
+          "col": 16,
+          "row": 14,
+          "rank": "town",
+          "harbour": true,
+          "note": "Salt pans and a long quay."
+        },
+        {
+          "id": "vellhome",
+          "name": "Vellhome",
+          "col": 6,
+          "row": 15,
+          "rank": "town",
+          "harbour": true,
+          "note": "The southern chain's only real market."
+        },
+        {
+          "id": "cinderfoot",
+          "name": "Cinderfoot",
+          "col": 10,
+          "row": 1,
+          "rank": "village",
+          "note": "Inland, on the ash. Pays someone else's freight and resents it."
+        },
+        {
+          "id": "ashford",
+          "name": "Ashford",
+          "col": 18,
+          "row": 1,
+          "rank": "village",
+          "note": "The crater track's last water before the climb."
+        },
+        {
+          "id": "longstrand",
+          "name": "Longstrand",
+          "col": 23,
+          "row": 5,
+          "rank": "village",
+          "harbour": true,
+          "note": "A beach, a jetty and forty boats."
+        },
+        {
+          "id": "coldkeel",
+          "name": "Coldkeel",
+          "col": 19,
+          "row": 18,
+          "rank": "village",
+          "harbour": true,
+          "note": "A careening beach, and the only one for a day's sail."
+        },
+        {
+          "id": "drownstep",
+          "name": "Drownstep",
+          "col": 13,
+          "row": 20,
+          "rank": "village",
+          "harbour": true,
+          "note": "The reef's far end, and the name is a warning."
+        },
+        {
+          "id": "brackmoor",
+          "name": "Brackmoor",
+          "col": 6,
+          "row": 22,
+          "rank": "village",
+          "harbour": true,
+          "note": "Peat, marsh and a channel that silts every winter."
+        },
+        {
+          "id": "tidewrack",
+          "name": "Tidewrack",
+          "col": 0,
+          "row": 20,
+          "rank": "village",
+          "harbour": true,
+          "note": "The last land before the open south. Salvage, mostly."
+        }
+      ],
+      "routes": {
+        "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.",
+        "shipping": [
+          {
+            "id": "vharsel-thass-gate",
+            "name": "Vharsel to Thass Gate",
+            "hexes": [
+              [
+                18,
+                6
+              ],
+              [
+                17,
+                7
+              ],
+              [
+                18,
+                8
+              ],
+              [
+                18,
+                9
+              ],
+              [
+                18,
+                10
+              ],
+              [
+                18,
+                11
+              ],
+              [
+                19,
+                11
+              ],
+              [
+                20,
+                10
+              ],
+              [
+                20,
+                9
+              ],
+              [
+                21,
+                9
+              ],
+              [
+                22,
+                9
+              ],
+              [
+                23,
+                10
+              ],
+              [
+                23,
+                11
+              ],
+              [
+                24,
+                12
+              ],
+              [
+                25,
+                12
+              ],
+              [
+                25,
+                13
+              ],
+              [
+                26,
+                13
+              ],
+              [
+                27,
+                13
+              ],
+              [
+                28,
+                13
+              ],
+              [
+                29,
+                12
+              ],
+              [
+                29,
+                11
+              ]
+            ]
+          },
+          {
+            "id": "orrinmouth-marrowcay",
+            "name": "Orrinmouth to Marrowcay",
+            "hexes": [
+              [
+                11,
+                7
+              ],
+              [
+                11,
+                8
+              ],
+              [
+                11,
+                9
+              ],
+              [
+                12,
+                10
+              ],
+              [
+                12,
+                11
+              ],
+              [
+                13,
+                12
+              ],
+              [
+                14,
+                12
+              ],
+              [
+                15,
+                12
+              ],
+              [
+                16,
+                12
+              ],
+              [
+                17,
+                12
+              ],
+              [
+                17,
+                11
+              ],
+              [
+                18,
+                11
+              ],
+              [
+                19,
+                11
+              ],
+              [
+                20,
+                12
+              ],
+              [
+                20,
+                13
+              ],
+              [
+                21,
+                14
+              ],
+              [
+                21,
+                15
+              ]
+            ]
+          },
+          {
+            "id": "marrowcay-saltrow",
+            "name": "Marrowcay to Saltrow",
+            "hexes": [
+              [
+                21,
+                15
+              ],
+              [
+                21,
+                14
+              ],
+              [
+                20,
+                13
+              ],
+              [
+                20,
+                12
+              ],
+              [
+                19,
+                11
+              ],
+              [
+                18,
+                11
+              ],
+              [
+                17,
+                11
+              ],
+              [
+                16,
+                11
+              ],
+              [
+                16,
+                12
+              ],
+              [
+                15,
+                13
+              ]
+            ]
+          },
+          {
+            "id": "saltrow-vellhome",
+            "name": "Saltrow to Vellhome",
+            "hexes": [
+              [
+                15,
+                13
+              ],
+              [
+                15,
+                12
+              ],
+              [
+                14,
+                12
+              ],
+              [
+                13,
+                12
+              ],
+              [
+                12,
+                11
+              ],
+              [
+                11,
+                11
+              ],
+              [
+                10,
+                11
+              ],
+              [
+                9,
+                11
+              ],
+              [
+                8,
+                11
+              ],
+              [
+                7,
+                11
+              ],
+              [
+                7,
+                12
+              ],
+              [
+                6,
+                13
+              ],
+              [
+                7,
+                14
+              ]
+            ]
+          },
+          {
+            "id": "vellhome-longstrand",
+            "name": "Vellhome to Longstrand",
+            "hexes": [
+              [
+                7,
+                14
+              ],
+              [
+                6,
+                13
+              ],
+              [
+                7,
+                12
+              ],
+              [
+                7,
+                11
+              ],
+              [
+                8,
+                11
+              ],
+              [
+                9,
+                11
+              ],
+              [
+                10,
+                11
+              ],
+              [
+                11,
+                11
+              ],
+              [
+                12,
+                11
+              ],
+              [
+                13,
+                12
+              ],
+              [
+                14,
+                12
+              ],
+              [
+                15,
+                12
+              ],
+              [
+                16,
+                12
+              ],
+              [
+                17,
+                12
+              ],
+              [
+                17,
+                11
+              ],
+              [
+                18,
+                11
+              ],
+              [
+                19,
+                11
+              ],
+              [
+                20,
+                10
+              ],
+              [
+                20,
+                9
+              ],
+              [
+                21,
+                9
+              ],
+              [
+                22,
+                9
+              ],
+              [
+                23,
+                8
+              ],
+              [
+                23,
+                7
+              ],
+              [
+                24,
+                6
+              ],
+              [
+                24,
+                5
+              ]
+            ]
+          },
+          {
+            "id": "longstrand-coldkeel",
+            "name": "Longstrand to Coldkeel",
+            "hexes": [
+              [
+                24,
+                5
+              ],
+              [
+                24,
+                6
+              ],
+              [
+                23,
+                7
+              ],
+              [
+                23,
+                8
+              ],
+              [
+                22,
+                9
+              ],
+              [
+                21,
+                9
+              ],
+              [
+                20,
+                9
+              ],
+              [
+                20,
+                10
+              ],
+              [
+                19,
+                11
+              ],
+              [
+                20,
+                12
+              ],
+              [
+                20,
+                13
+              ],
+              [
+                21,
+                14
+              ],
+              [
+                21,
+                15
+              ],
+              [
+                21,
+                16
+              ],
+              [
+                21,
+                17
+              ],
+              [
+                21,
+                18
+              ],
+              [
+                20,
+                19
+              ],
+              [
+                19,
+                19
+              ],
+              [
+                18,
+                19
+              ]
+            ]
+          },
+          {
+            "id": "coldkeel-drownstep",
+            "name": "Coldkeel to Drownstep",
+            "hexes": [
+              [
+                18,
+                19
+              ],
+              [
+                17,
+                19
+              ],
+              [
+                16,
+                19
+              ],
+              [
+                16,
+                20
+              ],
+              [
+                15,
+                21
+              ],
+              [
+                14,
+                21
+              ],
+              [
+                14,
+                20
+              ]
+            ]
+          },
+          {
+            "id": "drownstep-brackmoor",
+            "name": "Drownstep to Brackmoor",
+            "hexes": [
+              [
+                14,
+                20
+              ],
+              [
+                13,
+                21
+              ],
+              [
+                12,
+                21
+              ],
+              [
+                11,
+                21
+              ],
+              [
+                10,
+                21
+              ],
+              [
+                9,
+                21
+              ],
+              [
+                9,
+                22
+              ],
+              [
+                8,
+                23
+              ],
+              [
+                7,
+                23
+              ],
+              [
+                7,
+                22
+              ]
+            ]
+          },
+          {
+            "id": "brackmoor-tidewrack",
+            "name": "Brackmoor to Tidewrack",
+            "hexes": [
+              [
+                7,
+                22
+              ],
+              [
+                6,
+                23
+              ],
+              [
+                5,
+                23
+              ],
+              [
+                5,
+                22
+              ],
+              [
+                4,
+                21
+              ],
+              [
+                4,
+                20
+              ],
+              [
+                3,
+                19
+              ],
+              [
+                2,
+                19
+              ],
+              [
+                1,
+                19
+              ],
+              [
+                0,
+                19
+              ]
+            ]
+          }
+        ],
+        "road": [
+          {
+            "from": "vharsel",
+            "to": "cinderfoot"
+          },
+          {
+            "from": "cinderfoot",
+            "to": "ashford"
+          },
+          {
+            "from": "ashford",
+            "to": "longstrand"
+          },
+          {
+            "from": "saltrow",
+            "to": "coldkeel"
+          }
+        ]
+      }
     }
   ],
   "art": {

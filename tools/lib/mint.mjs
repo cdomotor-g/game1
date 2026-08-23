@@ -167,6 +167,7 @@ function cardsOfDeck(root, deck) {
 function subjectsOf(root, line) {
   const rows = [];
   const deferred = [];
+  const generated = [];
 
   if (line.id === 'cards') {
     const components = readJson(join(root, 'data', 'components.json'));
@@ -189,14 +190,24 @@ function subjectsOf(root, line) {
         });
       }
     }
-    return { rows, deferred };
+    return { rows, deferred, generated };
   }
 
   if (line.id === 'maps') {
     const dir = join(root, 'data', line.subjectsFrom.dir);
-    if (!existsSync(dir)) return { rows, deferred };
+    if (!existsSync(dir)) return { rows, deferred, generated };
     for (const file of readdirSync(dir).filter((f) => f.endsWith(line.subjectsFrom.ext)).sort()) {
       const map = readJson(join(dir, file));
+      /* A GENERATED map has no handover to track. There is no artist, so there
+         is no step anybody is waiting on: tools/draw-map.mjs grows it from its
+         own commission and draws it. It is reported rather than chased - the
+         posture build-minimaps.mjs already takes for a sheet, "generated, not
+         commissioned". Setting plate.kind back to "drawn" puts it in the queue
+         at DRAW exactly as before. */
+      if (map.plate?.kind === 'generated') {
+        generated.push({ id: map.id, name: map.name, grid: `${map.grid?.cols ?? '?'} × ${map.grid?.rows ?? '?'}`, plate: map.plate.file });
+        continue;
+      }
       rows.push({
         id: map.id,
         code: map.id,
@@ -208,12 +219,12 @@ function subjectsOf(root, line) {
         subject: map,
       });
     }
-    return { rows, deferred };
+    return { rows, deferred, generated };
   }
 
   /* A shelved line has no source to read, which is the point of it being
      shelved: nothing is enumerated and nothing is chased. */
-  return { rows, deferred };
+  return { rows, deferred, generated };
 }
 
 /* --------------------------------------------------------------------- probes */
@@ -323,13 +334,14 @@ export function survey(root = HERE) {
   const out = { mint, lines: [], problems: [], notes: [] };
 
   for (const line of mint.lines) {
-    const entry = { line, rows: [], deferred: [], shelved: line.status === 'shelved' };
+    const entry = { line, rows: [], deferred: [], generated: [], shelved: line.status === 'shelved' };
     const undersized = [];
     const belowWant = [];
     let bound = null;
     if (!entry.shelved) {
-      const { rows, deferred } = subjectsOf(root, line);
+      const { rows, deferred, generated } = subjectsOf(root, line);
       entry.deferred = deferred;
+      entry.generated = generated;
 
       for (const row of rows) {
         for (const gap of missing(row.subject, line.subjectRequires)) {

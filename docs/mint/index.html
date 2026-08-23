@@ -241,16 +241,24 @@ git push</code></pre>
 <p><strong>Work a deck at a time.</strong> Generate one reference render, accept it, then match the rest of the deck to it. Re-check against the reference every ten renders or so — style drifts slowly enough that you will not notice inside a session.</p>
 <hr>
 <h2 id="the-run-sheet">The run sheet</h2>
-<p>Everything above, on one screen.</p>
+<p>Everything above, on one screen. <strong>Take the short sheet unless something is wrong with it</strong> — the long one is what the short one falls back to, not a different job.</p>
+<h3 id="cards-the-short-sheet">Cards — the short sheet</h3>
+<pre><code>/mint MOD-01</code></pre>
+<p>That is the whole thing. <code>.claude/commands/mint.md</code> carries the briefing that used to be pasted out of §1 of this document, so the instruction is a role and a subject and nothing else. It runs the queue, writes the card and its brief if either is missing, draws the plate with <code>tools/mint-draw.mjs</code>, reads the result, writes the framing entry, runs the tools and commits.</p>
+<p><code>/mint --deck modifications</code> does a whole deck, one subject at a time, so the style cannot drift. <code>/mint a new fire monster, a cinder-crowned stag</code> starts from nothing.</p>
+<h3 id="maps">Maps</h3>
+<pre><code>node tools/draw-map.mjs sundering-isles</code></pre>
+<p>A map is generated, not commissioned: the board is grown from its <code>commission</code> block and the plate is drawn from the board. No artist, no tracing, no proof-sheet rounds. <code>node tools/validate-map.mjs</code> is the check that matters — it knows about harbours inland and rail across unbridged rivers. See <strong>Generated maps</strong> in <a href="#s-mint"><code>MINT.md</code></a>.</p>
+<h3 id="cards-the-long-sheet">Cards — the long sheet</h3>
+<p>Two agents, for when the API is unreachable, when the result is not good enough, or when you would rather draw it yourself.</p>
 <pre><code>1.  node tools/mint-queue.mjs              see who owes what
-2.  designer: branch mint/&lt;run&gt;, write the briefs, open the PR
-3.  you:      copy one MINT REQUEST → paste into the artist
+2.  node tools/mint-request.mjs MOD-01     the complete commission, assembled
+3.  you:      paste it into the artist (standing instructions once, up top)
 4.  artist:   render, report pixel size and any wording changes
-5.  you:      save under the EXACT filename, commit, push,
-              reply PLATE READY · &lt;code&gt;
-6.  designer: frame (cards) or trace (maps), run the tools, commit
-7.  node tools/mint-queue.mjs              should now say minted
-8.  merge</code></pre>
+5.  you:      save under the EXACT filename, commit, push
+6.  designer: frame it, run the tools, commit
+7.  node tools/mint-queue.mjs              should now say minted</code></pre>
+<p><code>tools/mint-draw.mjs</code> drops to step 2 by itself when it cannot reach the model, so you get the commission printed rather than an error. Nothing is lost — the long sheet is the version that definitely works, and the short one is a shortcut through it.</p>
 <p><strong>The three things that get a plate rejected:</strong> wrong pixel size, ignored aim block, anything from the banned list. Everything else is negotiable.</p>
 <p><strong>The one thing to ask for first:</strong> the width. It is the only property of a plate that cannot be recovered later.</p>
 </section>
@@ -264,10 +272,18 @@ git push</code></pre>
 <div class="table-wrap"><table>
 <thead><tr><th>Line</th><th>Subject</th><th>Brief</th><th>Plate</th><th>Aimed by</th><th>Status</th></tr></thead>
 <tbody><tr><td><strong>Cards</strong></td><td>one card in an adventure deck</td><td><code>art/prompts/&lt;deck&gt;.md</code></td><td><code>art/renders/&lt;plate&gt;.png</code></td><td><strong>FRAME</strong> — a subject box and a focal point in <code>art/framing.json</code></td><td>active</td></tr>
-<tr><td><strong>Maps</strong></td><td>one drawn map plate and the board read off it</td><td><code>art/prompts/maps.md</code></td><td><code>map/&lt;id&gt;.png</code></td><td><strong>TRACE</strong> — the board in <code>data/maps/&lt;id&gt;.json</code></td><td>active</td></tr>
+<tr><td><strong>Maps</strong></td><td>one drawn map plate and the board read off it</td><td><code>art/prompts/maps.md</code></td><td><code>map/&lt;id&gt;.png</code></td><td><strong>TRACE</strong> — the board in <code>data/maps/&lt;id&gt;.json</code></td><td><strong>paused</strong> — see <em>Generated maps</em></td></tr>
 <tr><td><strong>Tiles</strong></td><td>a printed hex tile face and its zoom-in sheet</td><td>—</td><td>—</td><td>—</td><td><strong>shelved</strong>, <a href="https://github.com/cdomotor-g/game1/issues/18">#18</a></td></tr></tbody></table></div>
 <p>A line is declared in <code>data/mint.json</code> and nowhere else. That file holds no content — no card says anything in it, no map is described in it — exactly like <code>data/components.json</code>. It says what a line <em>is</em>: where its subjects come from, where its briefs live, what a plate has to be, and what ties the plate back to the data.</p>
 <p><strong>Tiles are shelved, not cancelled.</strong> The tile-based board — 61 hex tiles dealt face down, and the Holdings / Grounds / Places sheets in <a href="../minimaps/README.md"><code>minimaps/</code></a> — is paused pending the game-set split (<a href="https://github.com/cdomotor-g/game1/issues/10">#10</a>), where it fits as a <em>way of supplying a board</em>: a plate set gives you one drawn map, a tile set gives you a bag. Nothing is deleted; the 32 accepted sheets stay committed and stay on the site. The queue prints the shelved line every run, so it is visible from the tool rather than remembered.</p>
+<h2 id="generated-maps">Generated maps</h2>
+<p>A map plate is one of two kinds and the difference is one field, <code>plate.kind</code> on the map.</p>
+<p><strong>Drawn</strong> is everything above: somebody paints a country, <code>tools/trace-map.mjs</code> samples the pixels, and three or four rounds of hand-correction against a proof sheet turn a guess into <code>rows</code>. <code>korvane-reach</code> is one.</p>
+<p><strong>Generated</strong> turns the line around. <code>rows</code> is grown from the commission by <code>tools/draw-map.mjs</code>, and the plate is drawn <em>from</em> <code>rows</code> as an SVG — the board is the source and the picture is the output, which is how every other artefact here already works. There is no artist, so there is no handover, so a generated map <strong>is not a mint subject</strong>: the queue reports it and chases nobody, exactly as <a href="../../tools/build-minimaps.mjs"><code>build-minimaps.mjs</code></a> already puts it — <em>generated, not commissioned</em>. There is also no TRACE step, because nothing was guessed.</p>
+<p>Two reasons it went this way and cards did not:</p>
+<ul><li><strong>Size.</strong> An A1 sheet wants 4857 px and one image call gives 1536, and a coastline generated in quadrants does not meet in the middle. A vector plate has no long side at all, so the nine-sheet preset that <code>data/maps/korvane-reach.json</code> calls <em>&quot;a layout waiting on a larger plate&quot;</em> is simply printable.</li>
+<li><strong>Ink.</strong> <code>build-minimaps.mjs</code> settled this at mini-map scale: <em>&quot;drawn ground competes with the pieces standing on it&quot;</em>. A campaign map is the largest surface anybody stands pieces on.</li></ul>
+<p><strong>Commissioning a drawn map is paused, not retired.</strong> The commission contract, the brief in <a href="../art/prompts/maps.md"><code>art/prompts/maps.md</code></a>, the <code>TRACEABILITY.</code> block, <code>trace-map.mjs</code> and the seven rules in <a href="../map/README.md"><code>map/README.md</code></a> are all intact and unused. Setting a map's <code>plate.kind</code> back to <code>&quot;drawn&quot;</code> puts it in the queue at DRAW exactly as before.</p>
 <h2 id="the-four-steps">The four steps</h2>
 <pre><code>   data/*.json          art/prompts/            the plate            the tie-back
    the subject      ──▶ the brief          ──▶  the drawing     ──▶  to the data    ──▶  MINTED
@@ -292,6 +308,7 @@ git push</code></pre>
 <h2 id="where-the-handover-happens">Where the handover happens</h2>
 <p><strong>One pull request per minting run</strong>, on a branch named <code>mint/&lt;what&gt;</code> — say <code>mint/dragons-and-airships</code>, or <code>mint/sundering-isles</code>. Both agents work on that one branch and talk in its comment thread. The PR is the workbench: the brief is posted on it, the plate is pushed to it, the finished thing is built on it, and the whole exchange is readable afterwards by whoever wonders why something looks the way it does.</p>
 <p>Two PRs and a cross-posting protocol were the original sketch. One is better: the branch is the shared state, the thread is the conversation, and neither agent has to discover the other's PR number.</p>
+<p><strong>The pull request is the TWO-AGENT form.</strong> It buys a thread, and a thread is only worth having when two parties have to talk. Where one person is the courier — or where <code>tools/mint-draw.mjs</code> is — there is nobody to talk to, and committing straight to <code>main</code> is correct and is what <a href="../../CLAUDE.md"><code>../CLAUDE.md</code></a> asks for. Neither document is wrong; they are describing different runs.</p>
 <h3 id="the-round-trip">The round trip</h3>
 <p><strong>1 · The designer opens the run.</strong></p>
 <p>Adds or edits the subjects in <code>data/</code>, writes a brief per subject into the line's prompt file, runs the tools, pushes the branch and opens the PR. Then posts one comment per subject — the commission:</p>
@@ -336,7 +353,7 @@ Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt</code></pre>
 <tbody><tr><td><strong>In</strong></td><td><code>data/maps/&lt;id&gt;.json</code> with a <code>commission</code> block: <code>why</code>, <code>landmass</code>, <code>terrainBudget</code>, <code>settlements</code>, <code>plate.minWidthPx</code>, plus the <code>grid</code> and the <code>legend</code> the board will be read on. All of it is required and all of it is checked</td></tr>
 <tr><td><strong>Brief</strong></td><td>an <code>## &lt;map-id&gt;</code> section in <code>docs/art/prompts/maps.md</code>, written <strong>from the commission and nothing else</strong>. If the two disagree, the commission is right and the prompt is stale</td></tr>
 <tr><td><strong>Plate id</strong></td><td>the map's own id. A map's plate is named after the map</td></tr>
-<tr><td><strong>Out</strong></td><td><code>docs/map/&lt;id&gt;.png</code> — landscape, root-two, a plain frame with a visible inner rule, 4000 px minimum and 7000 for A1. Committed as supplied and never re-encoded by any tool here</td></tr>
+<tr><td><strong>Out</strong></td><td><em>drawn:</em> <code>docs/map/&lt;id&gt;.png</code> — landscape, root-two, a plain frame with a visible inner rule, at the pixel floor the map's own largest print preset derives. Committed as supplied and never re-encoded by any tool here. <em>generated:</em> <code>docs/map/&lt;id&gt;.svg</code>, drawn by <code>tools/draw-map.mjs</code>, a build output with no pixel floor to meet</td></tr>
 <tr><td><strong>Aim</strong></td><td>the board: a measured <code>plate</code> block, a full <code>rows</code>, and the <code>settlements</code>, <code>regions</code>, <code>routes</code> and <code>print</code> presets</td></tr>
 <tr><td><strong>Builds</strong></td><td>the proof sheet and the derived print sizes via <code>build-map.mjs</code>; the viewer, the print sheets and the explorer via <code>build-data.mjs</code></td></tr></tbody></table></div>
 <p><strong>Ask for the width before you ask for anything else.</strong> It is the one property of a plate that cannot be recovered later: a coastline can be re-traced, a legend can be drawn over, a label can be argued with, but pixels that were never drawn are gone. The Korvane Reach arrived at 1491 px and it cost the two larger print presets permanently.</p>
@@ -355,6 +372,7 @@ Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt</code></pre>
 <p>Nothing else. The queue, the CI check, the site page and the handover all pick it up.</p>
 <h2 id="before-merging-a-mint-run">Before merging a mint run</h2>
 <pre><code>node tools/validate-data.mjs    # the subject is referentially sound
+node tools/draw-map.mjs &lt;id&gt;    # generated maps: regrow the board, redraw the plate
 node tools/validate-map.mjs     # boards against terrain.json and themselves
 node tools/validate-art.mjs     # palette and the two-plate contract
 node tools/build-map.mjs        # proof sheets and the derived print sizes
@@ -372,16 +390,16 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h1 id="the-mint-queue">The mint queue</h1>
 <p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
 <p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
-<p><strong>cards 32/56 · maps 1/2</strong></p>
+<p><strong>cards 32/56 · maps 1/1</strong></p>
 <blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 32 of 56 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
-<blockquote><p><strong>Note.</strong> maps: 1 of 2 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
+<blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
 <p><strong>32 of 56 minted.</strong> 0 waiting on a brief, 24 waiting on art, 0 waiting on frame.</p>
 <h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="2-draw-the-artist-24-cards">2 · DRAW — the artist — 24 cards</h3>
-<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, undefined px on the long side or better, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
 <tbody><tr><td><code>VEH-09</code></td><td>The Varl Wagonrow</td><td>Vehicles</td><td><code>vehicle-veh-09</code></td><td>✓</td><td>·</td><td>·</td></tr>
@@ -424,19 +442,21 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <hr>
 <h2 id="maps">Maps</h2>
 <p>One drawn map plate, and the hex board read off it. Briefs in <a href="../art/prompts/maps.md"><code>docs/art/prompts/maps.md</code></a>, plates in <code>docs/map/</code>, aimed by <strong>TRACE</strong> in <code>data/maps/{id}.json</code>.</p>
-<p><strong>1 of 2 minted.</strong> 0 waiting on a brief, 1 waiting on art, 0 waiting on trace.</p>
+<p><strong>1 of 1 minted.</strong> 0 waiting on a brief, 0 waiting on art, 0 waiting on trace.</p>
 <h3 id="1-write-the-designer-1">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
-<h3 id="2-draw-the-artist-1-map">2 · DRAW — the artist — 1 map</h3>
-<p>The brief is written and there is no plate. Generate it at <strong>landscape, root-two (1.414) inside a plain frame with a visible inner rule</strong>, undefined px on the long side or better, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/map/&lt;plate&gt;.png</code>.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Code</th><th>Map</th><th>Grid</th><th>Plate</th><th>brief</th><th>plate</th><th>trace</th></tr></thead>
-<tbody><tr><td><code>sundering-isles</code></td><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
+<h3 id="2-draw-the-artist">2 · DRAW — the artist</h3>
+<p>Nothing waiting.</p>
 <h3 id="3-trace-designer">3 · TRACE — designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="minted-1">Minted</h3>
 <p>1 map complete: <code>korvane-reach</code>.</p>
 <p>Every minted map is fully aimed: the measured <code>plate</code> block and a full <code>rows</code> board, hand-corrected against the proof sheet.</p>
+<h3 id="generated-not-commissioned">Generated, not commissioned</h3>
+<p>Drawn by a tool from its own data, so there is no handover to track and no step anybody is waiting on. It is reported here every run rather than disappearing, the same way a shelved line is: a decision with a reason attached is not an absence. Run <code>node tools/draw-map.mjs &lt;id&gt;</code> to regrow one, and set <code>plate.kind</code> back to <code>&quot;drawn&quot;</code> to put it back in the worklist above.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Map</th><th>Grid</th><th>Plate</th></tr></thead>
+<tbody><tr><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles.svg</code></td></tr></tbody></table></div>
 <hr>
 <h2 id="shelved-lines">Shelved lines</h2>
 <p>Declared, reported here every run, and chased by nobody. A shelved line is a decision with a reason attached, not an absence — which is why it prints rather than disappearing.</p>

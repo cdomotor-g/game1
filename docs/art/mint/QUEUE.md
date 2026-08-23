@@ -15,11 +15,11 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 32/56 · maps 1/2**
+**cards 32/56 · maps 1/1**
 
 > **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 32 of 56 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
-> **Note.** maps: 1 of 2 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
+> **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
 
 ## Cards
@@ -34,7 +34,7 @@ Nothing waiting.
 
 ### 2 · DRAW — the artist — 24 cards
 
-The brief is written and there is no plate. Generate it at **the deck’s declared format**, undefined px on the long side or better, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
+The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
@@ -90,19 +90,15 @@ Declared, numbered, backed — and simply not being illustrated this round. Set 
 
 One drawn map plate, and the hex board read off it. Briefs in [`docs/art/prompts/maps.md`](../prompts/maps.md), plates in `docs/map/`, aimed by **TRACE** in `data/maps/{id}.json`.
 
-**1 of 2 minted.** 0 waiting on a brief, 1 waiting on art, 0 waiting on trace.
+**1 of 1 minted.** 0 waiting on a brief, 0 waiting on art, 0 waiting on trace.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 1 map
+### 2 · DRAW — the artist
 
-The brief is written and there is no plate. Generate it at **landscape, root-two (1.414) inside a plain frame with a visible inner rule**, undefined px on the long side or better, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/map/<plate>.png`.
-
-| Code | Map | Grid | Plate | brief | plate | trace |
-| --- | --- | --- | --- | :-: | :-: | :-: |
-| `sundering-isles` | The Sundering Isles | 30 × 24 | `sundering-isles` | ✓ | · | · |
+Nothing waiting.
 
 ### 3 · TRACE — designer
 
@@ -113,6 +109,14 @@ Nothing waiting.
 1 map complete: `korvane-reach`.
 
 Every minted map is fully aimed: the measured `plate` block and a full `rows` board, hand-corrected against the proof sheet.
+
+### Generated, not commissioned
+
+Drawn by a tool from its own data, so there is no handover to track and no step anybody is waiting on. It is reported here every run rather than disappearing, the same way a shelved line is: a decision with a reason attached is not an absence. Run `node tools/draw-map.mjs <id>` to regrow one, and set `plate.kind` back to `"drawn"` to put it back in the worklist above.
+
+| Map | Grid | Plate |
+| --- | --- | --- |
+| The Sundering Isles | 30 × 24 | `sundering-isles.svg` |
 
 ---
 
