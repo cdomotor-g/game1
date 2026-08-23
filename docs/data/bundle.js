@@ -12064,7 +12064,7 @@ window.GAME_DATA = {
       }
     },
     "storyRail": {
-      "$comment": "The story, turned on its side and stood up the right-hand edge of the card.\n\nA card's flavour used to be a panel across the bottom - full width, four or five lines, and about fifteen millimetres of the eighty-eight a card has. It was the cheapest fifteen millimetres on the card and it was taking them from the only thing on a card nobody can regenerate: the picture. Rotated ninety degrees it costs WIDTH instead, and width is the one dimension a portrait plate has to spare - a figure drawn on an A4 page is taller than it is wide, so a card that shows one wants to be taller than it is wide too, and the window on these decks was landscape because the words underneath had taken the height.\n\nSo the story runs up the side, bottom to top, and the picture goes portrait and grows into what the panel was using. Which decks do it is on the deck (`decks[].storyRail`), because it is a decision about a plate's shape and not about the card stock: the talismans are drawn square and the vehicles 3:2, and neither of them wants a taller window.",
+      "$comment": "The story, turned on its side and stood up the right-hand edge of the card.\n\nA card's flavour used to be a panel across the bottom - full width, four or five lines, and about fifteen millimetres of the eighty-eight a card has. It was the cheapest fifteen millimetres on the card and it was taking them from the only thing on a card nobody can regenerate: the picture. Rotated ninety degrees it costs WIDTH instead, and width is the one dimension a portrait plate has to spare - a figure drawn on an A4 page is taller than it is wide, so a card that shows one wants to be taller than it is wide too, and the window on these decks was landscape because the words underneath had taken the height.\n\nSo the story runs up the side, bottom to top, and the picture goes portrait and grows into what the panel was using. Which decks do it is on the deck (`decks[].storyRail`), because it is a decision about a plate's shape and not about the card stock: the talismans are drawn square and the vehicles 3:2, and neither of them wants a taller window.\n\nThere is a second reason a deck reaches for it, and the modifications are the first deck to use it: not the shape of the PLATE but the length of the WORDS. A modification's rules text is conditional - what it does, and when it stops doing it - and with the story in a panel underneath, the wordiest card in the deck left a picture window at 1.89, flatter than the 1.34 that build-cards calls the flattest a window may get. Its plates are square, so by the paragraph above it should not want the rail at all; what it wanted was its height back. On the rail the same deck is 1.03, which is what a square plate was asking for in the first place. The rule is the same one either way - the story is the cheapest thing on the card, so it is the thing that moves.",
       "gap": 12,
       "pad": 6,
       "maxLines": 5,
@@ -12232,6 +12232,7 @@ window.GAME_DATA = {
       },
       {
         "prefix": "MOD",
+        "storyRail": true,
         "plateId": "modification-{id}",
         "promptFile": "modifications.md",
         "plateFormat": "square",

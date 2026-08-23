@@ -669,6 +669,10 @@ const monsters = read('monsters.json').monsters;
 const characters = read('characters.json').characters;
 const peoplesById = new Map(read('peoples.json').peoples.map((p) => [p.id, p]));
 const talismans = read('items.json').items.filter((i) => i.class === 'talisman');
+const modData = read('modifications.json');
+const modifications = modData.modifications;
+const modClassName = new Map(modData.classes.map((c) => [c.id, c.name.toLowerCase()]));
+const commodityName = new Map(read('commodities.json').commodities.map((c) => [c.id, c.name.toLowerCase()]));
 const rules = read('rules.json');
 const boardTracks = read('playerboard.json').tracks;
 
@@ -780,6 +784,65 @@ for (const t of talismans) {
     ],
     facts: t.effects,
     story: t.story,
+  });
+}
+
+/* A modification is a FITTING, and the deck splits in two down its own `class`.
+
+   Seven of them are built out of commodities and weigh something, so they end on
+   the two boxes a talisman ends on: what it is worth and what it weighs. The four
+   enchantments are bound out of mana instead — no recipe, no value, no mass, and
+   printing `¤ 0 · KG 0` on one would be three lies in nine millimetres — so they
+   print what the binding costs and the element it is drawn from, which is exactly
+   the last box the monster deck already uses for the same job.
+
+   What it FITS is the identity of a fitting, so it goes in the kicker beside the
+   class; where it is made is a rule rather than a label — modifications.json slots
+   has the vehicle standing at that building for a whole round — so it goes in the
+   rules text with the recipe. */
+const fitsOf = (m) => (m.fits.includes('any') ? 'fits anything' : `fits ${m.fits.join(', ')}`);
+
+/* Who has to be standing there, when that is not simply the building's own name.
+   Half this deck is made where the tradesman IS the building - a weaver at the
+   weaver, a carpenter at the carpenter - and "made at the weaver by a weaver" is
+   a card saying the same word twice. */
+const hand = (m) => (m.specialist && m.specialist !== m.madeAt
+  ? ` by a${/^[aeiou]/i.test(m.specialist) ? 'n' : ''} ${m.specialist}`
+  : '');
+
+/* The one-per-vehicle limit is on every enchantment card because it is the rule a
+   player breaks by accident, and it is read off slots rather than typed here. */
+const ENCHANTMENT_LIMIT = modData.slots.enchantmentLimit === 1
+  ? 'At most one enchantment on a vehicle.'
+  : `At most ${modData.slots.enchantmentLimit} enchantments on a vehicle.`;
+
+for (const m of modifications) {
+  const render = plateIdFor(deckByPrefix('MOD'), m);
+  if (!hasRender(render)) { skipped.push(m.cardCode); continue; }
+  const bound = m.class === 'enchantment';
+  const recipe = (m.inputs || []).map((i) => `${i.qty} ${commodityName.get(i.commodity) || i.commodity}`).join(', ');
+  specs.push({
+    code: m.cardCode, name: m.name, portrait: render,
+    kicker: `${modClassName.get(m.class) || m.class} · ${fitsOf(m)}`,
+    desc: bound
+      ? `Modification card: ${m.name}, ${m.element} enchantment. Costs ${m.manaCost} mana to bind, ${fitsOf(m)}.`
+      : `Modification card: ${m.name}, ${m.class}. Worth ${m.baseValue}, weighs ${m.massKg}kg, ${fitsOf(m)}.`,
+    stats: bound
+      ? [
+        cell('mana', m.manaCost, 'bruise'),
+        { element: m.element, tint: 'soot-tint-12' },
+      ]
+      : [
+        cell('value', m.baseValue, 'ochre'),
+        cell('mass', m.massKg, 'slate'),
+      ],
+    facts: [
+      m.effect,
+      bound
+        ? `Bound at the ${m.madeAt}. ${ENCHANTMENT_LIMIT}`
+        : `Made at the ${m.madeAt}${hand(m)}: ${recipe} · ${m.effortHours} h.`,
+    ],
+    story: m.story,
   });
 }
 
