@@ -183,7 +183,8 @@ Pulls the branch and does the line's third step:
 
 - **cards** — adds the plate's `subject`, `focal` and `note` to
   `docs/art/framing.json`, checking the crop with
-  `node tools/aim-preview.mjs <code>` before settling on the numbers
+  `node tools/aim-preview.mjs <code>` before settling on the numbers, and showing
+  the built card with `node tools/card-proof.mjs <code>` after
 - **maps** — measures `plate.field` off the inner frame rule, runs
   `node tools/trace-map.mjs <id> --write`, then corrects `rows` by hand against
   the proof sheet, and adds the settlements, regions and routes

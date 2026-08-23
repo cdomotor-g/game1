@@ -11,5 +11,10 @@ docs/map/*-proof.png
 # megabytes each, regenerated on demand, and worth nothing in history.
 docs/art/aim/
 
+# And `node tools/card-proof.mjs <code>` photographs the finished card so it can be
+# put in front of somebody. The card is docs/cards/<code>.svg; this is a picture of
+# it, and a picture of a generated file has no business in history either.
+docs/art/proofs/
+
 node_modules/
 .DS_Store

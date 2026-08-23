@@ -46,8 +46,18 @@ say so and stop. Do not guess which card was meant.
    `docs/art/framing.json`. `subject` is the veto — what may not be cut. `focal`
    is the aim — the one point the picture is of, a face or an eye. Both, always;
    a subject box alone centres the crop on a standing figure's sternum.
+   Check the numbers by looking at them, not by imagining them:
+   `node tools/aim-preview.mjs <code>` cuts the plate the way the card window and
+   the explorer thumbnail actually will. Grow `subject` if something the card
+   names is cut; move `focal` if the crop is centred on the wrong thing.
 4. **Build and check** with the list at the foot of `CLAUDE.md`, in that order.
-5. **Commit.** Re-run `node tools/mint-queue.mjs` and confirm it says minted.
+5. **Show it.** `node tools/card-proof.mjs <code>` renders the finished card —
+   frame, strip, picture, rules, story rail — to `docs/art/proofs/<code>.png`.
+   **Put that image in the reply**, so the run ends with the card in front of the
+   person who asked for it rather than a paragraph about the card. Look at it
+   yourself first: a proof you did not read is not a check. This is a review, not
+   a gate — show it and carry on to 6 unless the user has said to wait.
+6. **Commit.** Re-run `node tools/mint-queue.mjs` and confirm it says minted.
 
 ## Maps
 
@@ -72,3 +82,7 @@ A map whose `plate.kind` is `"drawn"` is the old two-agent path and still works;
   vocabulary. Waterside is a relationship read off the board, not a terrain.
 - **Ask rather than invent.** If a subject cannot be briefed without a design
   decision the user has not made, ask them.
+- **Show the thing, not a description of it.** `tools/aim-preview.mjs` and
+  `tools/card-proof.mjs` both write PNGs meant to be looked at and put in front of
+  somebody. Their output is git-ignored — a proof is a photograph of the artefact,
+  never the artefact, and `docs/cards/<code>.svg` remains the card.

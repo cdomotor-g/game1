@@ -143,6 +143,30 @@ between them. Whichever kind it is, the hex grid is an **overlay drawn at read t
 is never baked into the artwork. If a map says something the game's terrain vocabulary
 cannot express, **change the map, not `data/terrain.json`**.
 
+## Nothing here draws the thing you are about to ship — so look at it
+
+Every check in this repository proves something about the numbers. None of them
+looks at the artefact, which is how a card can be built, validated, committed and
+never once seen. Two tools close that, both writing PNGs to be looked at and both
+git-ignored, on the same reasoning as the map proof sheets — a proof is a
+photograph of the artefact, never the artefact.
+
+```bash
+node tools/aim-preview.mjs <code>   # the CROP, before the framing numbers are settled
+node tools/card-proof.mjs  <code>   # the CARD as built, after
+```
+
+`aim-preview` cuts a plate exactly as the card window and the explorer thumbnail
+will — same `crop()`, and the card window is read off the built card rather than
+recomputed, so it cannot disagree with the card. `card-proof` renders the finished
+SVG with a locally installed Chromium; it is the one thing here that is not pure
+node, nothing in the build depends on it, and a machine without a browser gets a
+message rather than a stack trace.
+
+**When you finish a card, put its proof in the reply.** A run that ends with a
+paragraph about a card, and no card, has not shown its work — and a proof nobody
+read, yourself included, is not a check.
+
 ## Before pushing
 
 ```bash
