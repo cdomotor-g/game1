@@ -12568,9 +12568,23 @@ window.GAME_DATA = {
             "from": "components.stock.card",
             "dpi": 300,
             "wantDpi": 600,
-            "$note": "DERIVED, not typed. tools/lib/mint.mjs works this out from components.stock.card, the way tools/build-board.mjs works out a track column from the paper: a number somebody types is a number that goes stale the day the thing it describes changes size.\n\nThis line used to say a flat 4000 px. That is the MAP's number - an A1 sheet wants it - and it was inherited by a card that prints at 94 mm on its long side and never did. Every plate ever accepted here was reported as failing a contract cards did not have.\n\n`dpi` is the floor a card must clear; `wantDpi` is the print aspiration, the same two-number shape the maps line uses. Both are measured against the WHOLE plate, which is generous: a card window is a crop and keeps about 78% of a portrait page's height, so a plate that only just clears the floor is tighter than the number looks."
+            "$note": "DERIVED, not typed. tools/lib/mint.mjs works this out from components.stock.card, the way tools/build-board.mjs works out a track column from the paper: a number somebody types is a number that goes stale the day the thing it describes changes size.\n\nThis line used to say a flat 4000 px. That is the MAP's number - an A1 sheet wants it - and it was inherited by a card that prints at 94 mm on its long side and never did. Every plate ever accepted here was reported as failing a contract cards did not have.\n\n`dpi` is the floor a card must clear; `wantDpi` is the print aspiration, the same two-number shape the maps line uses. The size is the card's SAFE AREA, not its trim and not its bleed: a plate is shown in a picture window, and the window can never be bigger than the safe area because the frame, the stat strip and the story rail take theirs first. Asking for the trim size would be asking for pixels no window has room to spend. It is still generous - the window is smaller again, and a crop keeps about 78% of a portrait page's height - so a plate that only just clears the floor is tighter than the number looks."
           },
           "frozenWording": "docs/art/renders/{plate}.txt"
+        },
+        "draw": {
+          "$comment": "Where a plate on this line comes from when nobody is holding a pen. The mint's split - somebody who can write and cannot draw hands over to somebody who can draw and does not know the rules - does not say the second pair of hands has to be human, only that it has to be a different pair. An image model reached over the wire is the artist; tools/mint-draw.mjs is the courier that used to be a person with a clipboard.\n\nA card can be drawn this way because a card is small: 94 mm across the bleed wants 1110 px at 300 dpi and one call supplies more than that. The maps line has no draw block for the same reason in reverse - an A1 sheet wants 4857 px, one call cannot reach it, and a coastline generated in quadrants does not meet in the middle. See lines.maps.plate.kind.",
+          "provider": "openai",
+          "model": "gpt-image-1",
+          "endpoint": "https://api.openai.com/v1/images/generations",
+          "keyEnv": "OPENAI_API_KEY",
+          "sizeByFormat": {
+            "square": "1024x1024",
+            "A4 portrait": "1024x1536",
+            "A4 landscape, 3:2": "1536x1024"
+          },
+          "$sizeNote": "Keyed by the deck's own plateFormat in components.json, so a new deck picks up a size without this tool learning anything about it. A format with no entry here is not drawable and mint-draw says so rather than guessing a shape - the plate proportion is what the framing arithmetic is built on.",
+          "$degradeNote": "No key, no route, or anything other than a 200 and mint-draw prints the commission and exits 0. The pipeline is not allowed to depend on this block working: docs/MINT.md's two-agent handover is the version that is definitely going to work, and this is a shortcut through it."
         },
         "aim": {
           "step": "FRAME",

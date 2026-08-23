@@ -17,7 +17,7 @@ catches that in CI.
 
 **cards 32/56 · maps 1/2**
 
-> **Note.** cards: every plate clears the 1110 px floor (a 94 mm card at 300 dpi), and 32 of 56 are under the 2220 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 32 of 56 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 2 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 

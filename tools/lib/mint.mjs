@@ -77,6 +77,63 @@ function briefedIn(root, dir, file) {
   return briefCache.get(path);
 }
 
+/**
+ * The three fenced blocks that make up one subject's prompt, pulled out of the
+ * line's brief file: the shared preamble at the top, the negative prompt beside
+ * it, and this subject's own section.
+ *
+ * A brief file is written to be read by a person, so the section headings are
+ * the index and the fences are the content - the same fact briefedIn relies on.
+ * Assembling them is a separate job from finding them, because two callers want
+ * it: tools/mint-request.mjs, which pastes the result into a chat, and
+ * tools/mint-draw.mjs, which posts it to an image model.
+ *
+ * `subject` still carries its literal [PREAMBLE] marker; use assemble() to get
+ * the finished prompt.
+ */
+export function briefFor(root, dir, file, plateId) {
+  const path = join(root, dir, file);
+  if (!existsSync(path)) return null;
+  const lines = readFileSync(path, 'utf8').split('\n');
+
+  /* The fenced block that follows a heading matching `test`. */
+  const blockAfter = (test) => {
+    const start = lines.findIndex((l) => l.startsWith('## ') && test(l.slice(3).trim()));
+    if (start < 0) return null;
+    let open = -1;
+    for (let i = start + 1; i < lines.length; i++) {
+      if (lines[i].startsWith('## ')) break;
+      if (lines[i].startsWith('\`\`\`')) { open = i; break; }
+    }
+    if (open < 0) return null;
+    const close = lines.findIndex((l, i) => i > open && l.startsWith('\`\`\`'));
+    if (close < 0) return null;
+    return lines.slice(open + 1, close).join('\n').trim();
+  };
+
+  const subject = blockAfter((h) => h === plateId || h.startsWith(`${plateId} `));
+  if (subject == null) return null;
+
+  return {
+    preamble: blockAfter((h) => /^shared preamble/i.test(h)),
+    negative: blockAfter((h) => /^negative prompt/i.test(h)),
+    subject,
+    aimBlock: /^FRAMING\.|^TRACEABILITY\./m.test(subject),
+    file: join(dir, file),
+  };
+}
+
+/**
+ * One brief, as the single block of text an artist is actually given. The
+ * subject section carries a literal [PREAMBLE] where the shared style goes -
+ * that is what keeps a prompt file readable - so this is where it is spent.
+ */
+export function assemble(brief) {
+  if (!brief) return null;
+  const body = brief.preamble ? brief.subject.replace('[PREAMBLE]', brief.preamble) : brief.subject;
+  return brief.negative ? `${body}\n\nNEGATIVE PROMPT.\n${brief.negative}` : body;
+}
+
 /* ------------------------------------------------------------------ subjects */
 
 /**
@@ -230,14 +287,17 @@ export function minLongSideFor(root, line, row) {
   }
 
   if (line.id === 'cards') {
-    /* A plate fills a card, so a card's own trim plus the bleed that gets cut
-       off is every pixel it can ever use. */
+    /* A plate is shown in a card's picture window, and the window can never be
+       larger than the safe area - the frame, the stat strip and the story rail
+       all take theirs first. So the safe area's long side is the most pixels a
+       plate can ever be asked for, and asking for the trim size or the bleed
+       would be asking for pixels no window has room to spend. */
     const { card } = cardStock(root);
-    const longMm = Math.max(card.widthMm, card.heightMm) + 2 * (card.bleedMm ?? 0);
+    const longMm = Math.max(card.widthMm, card.heightMm) - 2 * (card.safeMarginMm ?? 0);
     return {
       min: mmToPx(longMm, spec.dpi),
       want: mmToPx(longMm, spec.wantDpi),
-      from: `a ${longMm} mm card at ${spec.dpi} dpi`,
+      from: `a ${longMm} mm card window at ${spec.dpi} dpi`,
     };
   }
 
