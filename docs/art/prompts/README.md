@@ -34,12 +34,30 @@ in `data/maps/` and it appears there the moment the tool is run — see
 | [`vehicles.md`](vehicles.md) | The 17 vehicle cards | A4 landscape plate, full profile |
 | [`talismans.md`](talismans.md) | The 6 talisman cards | Single object study |
 | [`modifications.md`](modifications.md) | The 11 modification cards | Single object study |
+| [`items.md`](items.md) | The 10 item cards — the armour and the weapons | Single object study |
+| [`tools.md`](tools.md) | The 5 tool cards | Single object study |
 | [`maps.md`](maps.md) | Every board in `data/maps/` | Whole map plate, landscape root-two |
 
 The plates are drawn as pages from a **field naturalist's folio**: the same worn
 1600s-almanac register as everything else, but sheet-sized — a specimen study
 with the wear of a book that travelled. That matches the campaign map's own
 manner: hand-drawn, a little grimy, tattered from time in the field.
+
+## A brief for a plate that is already drawn
+
+Two of these files brief a deck whose plates are **generated** — [`items.md`](items.md)
+and [`tools.md`](tools.md). `data/components.json` gives those decks
+`plateKind: "generated"`, and [`../../../tools/draw-item.mjs`](../../../tools/draw-item.mjs)
+draws each plate from the parts the card carries in its own `plate` block, the
+way `tools/draw-map.mjs` draws a generated map. Nobody is waiting on an artist
+for them, and `node tools/mint-queue.mjs` says so in as many words.
+
+The briefs are written and kept current anyway, because a generated plate is not
+a decision about the deck for ever. **Delete a card's `plate` block and that one
+card is back at DRAW**: the tool then has nothing to draw it from, so it can
+never overwrite what arrives, and the prompt in these files is what the artist is
+handed. Per card, not per deck — one hand-drawn sword can sit in a deck of
+generated ones. A brief left to go stale is a switch that cannot be thrown.
 
 ## Where renders land
 

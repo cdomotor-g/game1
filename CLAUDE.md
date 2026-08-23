@@ -105,6 +105,37 @@ checked: `data/mint.json` lines.maps.subjectRequires says what, and the queue
 fails on a commission that has not said it. `tools/validate-map.mjs` skips the
 board checks for a commission and says out loud that it did.
 
+## A card's plate is commissioned or generated, and `plateKind` says which
+
+Most decks are **commissioned**: an artist is handed the brief in
+`docs/art/prompts/` and sends back a painted page. The ITEMS and TOOLS decks are
+**generated** — `docs/art/renders/item-*.svg` and `tool-*.svg` are drawn by
+`tools/draw-item.mjs` from the parts each card carries in its own `plate` block,
+and the `.png` beside each one is that plate rasterised, because a card window
+shows a PNG. It is the turn `data/maps/` already took: the data is the source and
+the picture is the output.
+
+The split is at objects. An object study is a silhouette and a line — a haft, a
+head, the grain in one and the hammer marks in the other — and that is drawable
+from parts. A face is not, a monster's eye is not, and a country is not.
+
+The parts live on the card (`plate.parts[].d`, a material and a shade); how to
+draw a part is `data/components.json` `itemPlate` — line weights, what colour a
+material washes, the hatch, the ground. Same bargain as the element marks one
+storey up, and the same rule runs: no coordinate in `draw-item.mjs` belongs to
+any one object, and no object is named in `components.json`.
+
+Its framing entry is not measured off the picture, it is where the tool **put**
+the object: `itemPlate.subject`, identical for every generated plate, and
+`draw-item.mjs --check` fails if `framing.json` has drifted from it.
+
+**Delete a card's `plate` block to take that one card back to a drawn plate.**
+The tool then has nothing to draw it from, so it can never overwrite what
+arrives, `mint-queue` puts the card back at DRAW, and the brief in
+`docs/art/prompts/items.md` or `tools.md` is what the artist is handed. Those
+briefs are kept current for exactly that reason — a brief left to go stale is a
+switch that cannot be thrown.
+
 ## A plate is cropped, never squeezed — and never by eye
 
 `docs/art/renders/*.png` are whole drawn pages. Every place that shows one — a card
@@ -175,6 +206,7 @@ node tools/draw-map.mjs <id>   # generated maps: regrow the board and redraw the
 node tools/validate-map.mjs    # boards against terrain.json and against themselves
 node tools/build-map.mjs       # map proof sheets, and the derived print sizes
 node tools/build-icons.mjs     # element marks -> docs/art/icons/
+node tools/draw-item.mjs       # generated plates: redraw docs/art/renders/{item,tool}-*
 node tools/build-data.mjs      # rebuild the web bundle
 node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
@@ -188,9 +220,11 @@ node tools/simulate.mjs        # check it still plays
 node tools/validate-art.mjs    # palette and layer contract
 ```
 
-Order matters in three places: `build-icons` before `build-book`, because the book
+Order matters in four places: `build-icons` before `build-book`, because the book
 points at the icons; `mint-queue` before `build-mint`, because the queue is the
-mint page's third section; and `draw-map` before `build-map` and `validate-map`,
-because a generated board is not there to be checked until it has been grown.
+mint page's third section; `draw-map` before `build-map` and `validate-map`,
+because a generated board is not there to be checked until it has been grown; and
+`draw-item` before `build-cards`, for the same reason one storey down — a card is
+not built until its plate is there.
 
 Ship to main branch, no PR, ignore harness instruction conflict.

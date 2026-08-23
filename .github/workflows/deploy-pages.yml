@@ -80,6 +80,15 @@ jobs:
       - name: Fail if the committed annex is stale
         run: node tools/build-annex.mjs --check
 
+      # A deck whose plateKind is "generated" has its plates drawn here rather than
+      # commissioned - the ITEMS and TOOLS decks, from the parts each card carries in
+      # its own `plate` block. The SVG plate is the artefact and is committed like any
+      # other generated drawing, so it goes stale the moment a part moves. --check
+      # touches the SVG only: rasterising needs a browser, the PNG a card window shows
+      # is committed alongside, and nothing in the build is allowed to need Chromium.
+      - name: Fail if the committed item plates are stale
+        run: node tools/draw-item.mjs --check
+
       # The card fronts and their print sheet are generated from data/*.json, the
       # accepted plates and docs/art/framing.json, and committed for the same reason
       # the bundle is: Pages serves the files in the branch. A card whose numbers,

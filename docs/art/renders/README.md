@@ -17,6 +17,33 @@ the contract:
 Re-render something, drop it in under the same name, re-run the two build
 tools, and everything that shows it updates.
 
+## Two kinds of plate live here, and the extension says which
+
+**A drawn plate is a `.png` and nothing here ever touches it.** It arrives as the
+artist supplied it, it is committed byte for byte, and no tool in this repository
+re-encodes, repaints or crops it. Cropping happens at read time from
+`framing.json`, which is why a printed card and a thumbnail of the same plate
+cannot disagree about where the subject is.
+
+**A generated plate is a `.svg` with a `.png` beside it**, and both are written
+by [`../../../tools/draw-item.mjs`](../../../tools/draw-item.mjs) from the parts
+the card carries in its own `plate` block. Never hand-edit either one; change the
+parts in `data/items.json` or `data/tools.json` and run the tool. They are safe
+to delete — they come back.
+
+The pair is not redundant. The **SVG is the plate**: it carries the two-plate
+contract like every other generated drawing here, `tools/validate-art.mjs` sweeps
+it, and `node tools/draw-item.mjs --check` fails the build when it has gone
+stale — all in pure node, with no browser anywhere near it. The **PNG is the
+plate rasterised**, because a card window shows a PNG and the framing arithmetic
+measures one; making it needs a locally installed Chromium, which is exactly why
+it is a separate step and why the result is committed rather than rebuilt.
+
+Which decks are generated is `plateKind` on the deck in `data/components.json`,
+and `node tools/mint-queue.mjs` reports it every run. To take one card back to a
+drawn plate, delete that card's `plate` block — see
+[`../prompts/README.md`](../prompts/README.md).
+
 ## And an entry in framing.json
 
 Every one of these files is shown cropped somewhere — a card window, a deck

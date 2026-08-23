@@ -18,7 +18,7 @@ they needed no new machinery, only a new entry in
 
 | Line | Subject | Brief | Plate | Aimed by | Status |
 | --- | --- | --- | --- | --- | --- |
-| **Cards** | one card in an adventure deck | `art/prompts/<deck>.md` | `art/renders/<plate>.png` | **FRAME** — a subject box and a focal point in `art/framing.json` | active |
+| **Cards** | one card in an adventure deck | `art/prompts/<deck>.md` | `art/renders/<plate>.png` | **FRAME** — a subject box and a focal point in `art/framing.json` | active — two decks *generated*, see below |
 | **Maps** | one drawn map plate and the board read off it | `art/prompts/maps.md` | `map/<id>.png` | **TRACE** — the board in `data/maps/<id>.json` | **paused** — see *Generated maps* |
 | **Tiles** | a printed hex tile face and its zoom-in sheet | — | — | — | **shelved**, [#18](https://github.com/cdomotor-g/game1/issues/18) |
 
@@ -67,6 +67,37 @@ Two reasons it went this way and cards did not:
 [`art/prompts/maps.md`](art/prompts/maps.md), the `TRACEABILITY.` block, `trace-map.mjs` and
 the seven rules in [`map/README.md`](map/README.md) are all intact and unused. Setting a
 map's `plate.kind` back to `"drawn"` puts it in the queue at DRAW exactly as before.
+
+## Generated card plates
+
+The same field, one line down. A **deck** in `data/components.json` carries
+`plateKind`, and a deck whose plates are `"generated"` has them drawn by
+[`../tools/draw-item.mjs`](../tools/draw-item.mjs) from the parts each card holds
+in its own `plate` block, rather than commissioned from an artist. The ITEMS and
+TOOLS decks are the two, and the queue reports them as generated every run —
+*generated, not commissioned*, exactly as the maps line puts it.
+
+Why it stops there, and why it stopped at objects rather than at cards:
+[`art/09-framing-and-composition.md`](art/09-framing-and-composition.md) calls a
+talisman plate *"a single object study, lit on a table"*, and a study of a made
+thing is a silhouette and a line — a haft, a head, the grain in one and the
+hammer marks in the other. That is drawable from parts. A character's face is
+not, a monster's eye is not, and neither will be.
+
+A generated card is still a mint subject and still goes through all four steps:
+it has a brief, it has a plate, and it has a FRAMING entry — which for these is
+not measured off the picture but is where the tool *put* the object, so
+`node tools/draw-item.mjs --check` fails if `art/framing.json` has drifted from
+`components.json` `itemPlate.subject`.
+
+**Turning one card back over to an artist is one deletion.** Delete that card's
+`plate` block and the tool has nothing to draw it from, so it can never overwrite
+what arrives; `mint-queue` puts the card back at DRAW; and the brief in
+[`art/prompts/items.md`](art/prompts/items.md) or
+[`art/prompts/tools.md`](art/prompts/tools.md) is what gets pasted into the
+thread. Per card, not per deck, so one hand-drawn sword can sit in a deck of
+generated ones — which is why those briefs are written and kept current for
+plates that already exist.
 
 ## The four steps
 

@@ -160,6 +160,22 @@
     "people-human": {
       "subject": [0.13, 0.10, 0.74, 0.62],
       "note": "The builder with the maul up and the frame he is raising behind him."
-    }
+    },
+
+    "item-leather-jerkin": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A sleeveless jerkin of two hides, laced up the chest, belted at the waist. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-chain-mail": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A knee-length hauberk of riveted rings, short-sleeved, split at the hem for riding, with a leather collar. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-plate-harness": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A breastplate with a raised centre ridge, three fauld lames below it, and a pauldron on each shoulder. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-helm": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A one-piece skull with a riveted brow band and a nasal bar down the face. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-shield": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A round shield of boards, iron-rimmed, with a domed boss over the hand-hole. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-sword": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A straight double-edged blade, a short quillon guard, a wrapped grip and a disc pommel. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-war-axe": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A bearded axe: a small poll, a bit drawn out to a curved edge, and a beard hanging below the eye. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-bow": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A self bow of one stave, horn-nocked at both ends, the grip bound with cord. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-war-hammer": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A steel head on a long haft: a flat face on one cheek, a drawn-out fluke on the other, a wrapped grip at the butt. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-crossbow": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A steel prod lashed across the nose of a wooden tiller, the string at rest, the nut and trigger set behind it. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "tool-axe": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A felling axe: a narrow eye, cheeks that swell, and a bit ground to a long curved edge. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "tool-saw": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A tapered plate with raked teeth, riveted into an open grip shaped for four fingers. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "tool-pick": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A double-ended pick head, drawn to a point at each end, wedged on a straight haft. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "tool-hammer": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A smith's hammer: a flat face on one cheek and a cross pein on the other, wedged on a short haft. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "tool-scythe": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A long curved blade tanged into the head of a bent snaith, with two nibs set for the mower's hands. Drawn into this box by tools/draw-item.mjs, not measured off it." }
   }
 }

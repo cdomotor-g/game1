@@ -99,6 +99,7 @@
         "$sizeNote": "Keyed by the deck's own plateFormat in components.json, so a new deck picks up a size without this tool learning anything about it. A format with no entry here is not drawable and mint-draw says so rather than guessing a shape - the plate proportion is what the framing arithmetic is built on.",
         "$degradeNote": "No key, no route, or anything other than a 200 and mint-draw prints the commission and exits 0. The pipeline is not allowed to depend on this block working: docs/MINT.md's two-agent handover is the version that is definitely going to work, and this is a shortcut through it."
       },
+      "$plateKindNote": "A card plate is commissioned or generated, and the DECK says which - plateKind in data/components.json, the same field and the same reason as a map plate.kind. A generated deck (ITEMS, TOOLS) has tools/draw-item.mjs draw each plate from the parts the card carries in its own plate block; it is still a mint subject, still has a brief and still has a FRAMING entry, and it is simply nobody's turn to draw. The line stops at OBJECTS on purpose: a study of a made thing is a silhouette and a line, and a face is not. Delete a card's plate block and that one card is back at DRAW with an artist. See docs/MINT.md.",
       "aim": {
         "step": "FRAME",
         "owner": "whoever accepts the plate",

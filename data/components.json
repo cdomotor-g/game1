@@ -51,6 +51,8 @@
       "yield": "Y",
       "value": "\u00a4",
       "mass": "KG",
+      "wear": "W",
+      "$wearNote": "How much work is left in a tool before it is finished - tools.json baseDurability. It is the one printed maximum in the game with no track under it, and it is not going to get one: it runs past twenty, the board stops at fourteen, and an axe wearing out is counted on the axe rather than walked on the board (data/playerboard.json ceiling).",
       "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so."
     }
   },
@@ -143,12 +145,66 @@
     }
   },
 
+  "itemPlate": {
+    "$comment": "How the plate for an OBJECT card is drawn, in the case where it is drawn HERE rather than commissioned from an artist. A deck says which it is with plateKind; tools/draw-item.mjs is the tool that does it.\n\nThe bargain is the marks' one, one storey up. A mark's PATH is data on the thing the mark is of - an element in arcana.json, a terrain in terrain.json - and this file says how to draw one. An object's PARTS are data on the object - a haft, a head, a strap, in items.json and tools.json - and this says how to draw those: how thick the line is, what colour the wash under a given material is, how a shaded part is hatched, what it stands on. Change the line weight here and every plate moves together, which is the whole point.\n\nIt holds no content, like the rest of this file. No axe is named here and no blade is drawn here. What IS here is the small vocabulary the parts draw from - a material, a shade, a ground - so that two objects made of iron and wood are made of the same iron and the same wood.\n\nWhy an object can be drawn this way and a face cannot: docs/art/09-framing-and-composition.md calls a talisman plate 'a single object study, lit on a table', and a study of a made thing is a silhouette and a line. A character is not. The generated line stops at objects on purpose.",
+    "pathsFrom": "items.items[].plate.parts[].d and tools.tools[].plate.parts[].d",
+    "viewBox": "0 0 100 100",
+    "$viewBoxNote": "The page. Every object is authored on this same square and fitted into the subject box uniformly, so no plate stretches its own subject and the same stroke weight means the same thing on all of them.",
+    "subject": [0.15, 0.15, 0.7, 0.7],
+    "$subjectNote": "Where the object sits on the page, as fractions of it - which makes this the framing entry as well, because the tool PUTS it there rather than finding it there afterwards. 15 per cent clear on every side is the margin docs/art/09-framing-and-composition.md asks a plate to leave for the crop to slide in; it asks for 8, and a drawn object costs nothing to give more.",
+    "line": {
+      "$comment": "The ink plate carries everything (docs/art/01-two-plate-system.md, law 1), so these are the only weights on a plate: the edge of a part, and everything drawn inside one. Two weights and not five - docs/art/03-line-and-texture.md.",
+      "outline": 0.52,
+      "detail": 0.26,
+      "linecap": "round",
+      "linejoin": "round"
+    },
+    "materials": {
+      "$comment": "What a part is made of, and so what colour the wash under it is. The wash never speaks: drop the whole plate and the object is still an axe, because the line drew it. This is category-at-a-glance and nothing more - which is why iron and steel are one ink at two strengths rather than two colours nobody could tell apart.",
+      "iron": { "ink": "slate", "opacity": 0.5 },
+      "steel": { "ink": "slate", "opacity": 0.33 },
+      "wood": { "ink": "ochre", "opacity": 0.46 },
+      "leather": { "ink": "oxide", "opacity": 0.48 },
+      "cord": { "ink": "ochre", "opacity": 0.28 },
+      "cloth": { "ink": "verdigris", "opacity": 0.24 },
+      "horn": { "ink": "ochre", "opacity": 0.2 },
+      "glass": { "ink": "verdigris", "opacity": 0.16 },
+      "stone": { "ink": "soot-tint-25", "opacity": 0.55 }
+    },
+    "shading": {
+      "$comment": "Interior tone is HATCHING and never a darker tint, because a tint is on the wash and the wash is not allowed to say anything. A part says how dark it is; the tool rules parallel lines across the whole page and clips them to that part, so nobody draws a hatch by hand and no two parts hatch at different angles.",
+      "angleDeg": 34,
+      "crossAngleDeg": -54,
+      "strokeWidth": 0.2,
+      "opacity": 0.42,
+      "spacing": { "light": 2.5, "medium": 1.7, "deep": 1.15 },
+      "crossFrom": "deep",
+      "$crossNote": "Only the deepest shade is crossed. Cross-hatching everything is how a woodcut turns into a smudge at card size, and a card window is about 20 mm of this plate."
+    },
+    "ground": {
+      "$comment": "The short line the object stands on, and the flat shadow it throws along it. One horizon, low - rule 5 in docs/art/09-framing-and-composition.md - and it is what stops an object study reading as a cut-out floating on paper.",
+      "y": 0.845,
+      "halfWidth": 0.3,
+      "strokeWidth": 0.55,
+      "shadow": { "ink": "soot-tint-25", "opacity": 0.45, "halfWidth": 0.21, "height": 0.018 }
+    },
+    "grime": {
+      "$comment": "The third plate. A few specks of press dirt so the sheet reads as printed rather than as exported - the same handful the card fronts carry and no more, because grime that can be counted at card size is decoration.",
+      "specks": 9,
+      "radius": 0.32,
+      "opacity": 0.07
+    }
+  },
+
   "$deckKeys": {
     "$comment": "What each deck entry means. plateId is the template that turns a card into the name of the plate it needs - {id} and {cardCode} are fields of the card, |lower lowercases. It lives here rather than in the tools because three different tools need to agree on it: the card builder looks for the plate, the mint queue reports which are missing, and the art prompts are filed under exactly these names. minting says whether this deck is in the mint queue yet; a deck with minting false is declared, numbered and backed, and simply not being illustrated this month.",
     "prefix": "the card code prefix - see vehicles.json cardIdScheme",
     "plateId": "template for the render filename under docs/art/renders/, without the .png",
     "promptFile": "which file in docs/art/prompts/ holds this deck's briefs",
     "plateFormat": "the page the artist draws - see docs/art/09-framing-and-composition.md",
+    "plateKind": "drawn, and an artist supplies the plate; or generated, and a tool in this repository draws it from the card's own data. The same field, and the same reason, as a map's plate.kind in data/maps/ - see itemPlate below and tools/draw-item.mjs. Absent means drawn.",
+    "drawnBy": "the tool that draws a generated deck's plates, so the mint queue can name it instead of asking for an artist who is not coming",
+    "filter": "which cards of the source file this deck deals, where one file holds more than one deck's worth. Prose: the enumeration lives in cardsOfDeck in tools/lib/mint.mjs, one dull branch per deck, and this says what that branch is for.",
     "minting": "true if tools/mint-queue.mjs should chase this deck's missing plates",
     "storyRail": "true if this deck's story runs up the right-hand edge instead of across the bottom - see storyRail. The decks drawn on a portrait page take it, because that is where a taller window pays.",
     "back": "how this deck's card back is drawn - word, motif and ink"
@@ -249,14 +305,32 @@
     },
     {
       "prefix": "ITM",
+      "storyRail": true,
       "plateId": "item-{id}",
       "promptFile": "items.md",
       "plateFormat": "square",
-      "minting": false,
+      "plateKind": "generated",
+      "drawnBy": "tools/draw-item.mjs",
+      "minting": true,
       "id": "items",
       "name": "Items",
       "source": "items.json",
+      "filter": "class != talisman - a talisman is an arcane subject and deals in its own deck",
       "back": { "word": "ITEMS", "motif": "rivet", "ink": "slate" }
+    },
+    {
+      "prefix": "TOL",
+      "storyRail": true,
+      "plateId": "tool-{id}",
+      "promptFile": "tools.md",
+      "plateFormat": "square",
+      "plateKind": "generated",
+      "drawnBy": "tools/draw-item.mjs",
+      "minting": true,
+      "id": "tools",
+      "name": "Tools",
+      "source": "tools.json",
+      "back": { "word": "TOOLS", "motif": "socket", "ink": "verdigris" }
     }
   ],
 
@@ -278,7 +352,9 @@
       "wheel": "M12 2.6a9.4 9.4 0 1 0 .001 0zM12 8.6a3.4 3.4 0 1 0 .001 0zM12 2.6V8.6M12 15.4V21.4M2.6 12H8.6M15.4 12H21.4M5.35 5.35 9.6 9.6M14.4 14.4l4.25 4.25M18.65 5.35 14.4 9.6M9.6 14.4 5.35 18.65",
       "eye": "M2.4 12s4.1-6.2 9.6-6.2S21.6 12 21.6 12s-4.1 6.2-9.6 6.2S2.4 12 2.4 12zM12 8.4a3.6 3.6 0 1 0 .001 0zM12 2.6V5M12 19V21.4",
       "rayed": "M12 2.4V21.6M2.4 12H21.6M5.2 5.2 18.8 18.8M18.8 5.2 5.2 18.8M12 8.2a3.8 3.8 0 1 0 .001 0z",
-      "$compassNote": "The compass is the one motif drawn to the edge of the grid. The rose keeps the 2.4 margin the others stop at; the bezel sits outside it, so the cardinal points meet the rim rather than stopping short of it.",
+      "$socketNote": "The one thing every tool in the deck has in common: a head with an eye through it, and a haft through the eye. Drawn on the family's construction - a ring, and what the thing does to it - and top-to-bottom symmetric like the rest, because the back mirrors the motif across the card's centre line.",
+    "socket": "M12 2.6a9.4 9.4 0 1 0 .001 0zM12 8.2a3.8 3.8 0 1 0 .001 0zM8.6 2.6V21.4M15.4 2.6V21.4",
+    "$compassNote": "The compass is the one motif drawn to the edge of the grid. The rose keeps the 2.4 margin the others stop at; the bezel sits outside it, so the cardinal points meet the rim rather than stopping short of it.",
       "compass": "M12 0.6a11.4 11.4 0 1 0 .001 0zM21.6 12 14.96 13.22 16.17 16.17 13.22 14.96 12 21.6 10.78 14.96 7.83 16.17 9.04 13.22 2.4 12 9.04 10.78 7.83 7.83 10.78 9.04 12 2.4 13.22 9.04 16.17 7.83 14.96 10.78Z"
     }
   },

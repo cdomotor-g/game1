@@ -3,28 +3,73 @@
   "version": "0.1.0",
   "tools": [
     {
-      "id": "axe", "name": "Axe", "family": "edged",
+      "id": "axe", "name": "Axe", "cardCode": "TOL-01", "family": "edged",
       "summary": "Fells trees standing on forest tiles.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
       "baseValue": 30, "baseDurability": 24, "sizes": ["small", "medium", "large"],
-      "enables": ["fell-timber", "clear-forest", "hew-timber"]
+      "story": "The first tool a settlement buys and the last one it will let go. Forest into lumber, and lumber into everything else there is.",
+      "enables": ["fell-timber", "clear-forest", "hew-timber"],
+      "plate": {
+        "note": "A felling axe: a narrow eye, cheeks that swell, and a bit ground to a long curved edge.",
+        "parts": [
+          { "material": "wood", "shade": "light", "d": "M59.18 3.29L38.95 45.24L21.93 73.09L12.19 96.55L19.04 99.29L27.93 76.14L44.34 48.05L64.08 5.61Z" },
+          { "material": "iron", "shade": "light", "d": "M48.3 13.33L60.75 19.95L64.97 25.88L77.6 25.23L87.81 24.51L87.57 34.21L83.43 44.3L77.38 53.37L69.48 58.99L64.36 50.13L57.84 39.29L50.57 39.11L38.12 32.49Z" }
+        ],
+        "lines": [
+          "M60.45 20.53L50.77 38.72",
+          "M64.97 25.88L57.84 39.29",
+          "M83.92 24.9L84.19 33.64L80.37 42.67L75.02 50.88L67.62 55.55",
+          "M65.87 28.81L77.99 29.12",
+          "M60.78 38.39L67.81 48.27",
+          "M15.98 87.06L19.62 88.99",
+          "M37.06 51.58L26.43 72.95"
+        ] }
     },
     {
-      "id": "saw", "name": "Saw", "family": "edged",
+      "id": "saw", "name": "Saw", "cardCode": "TOL-02", "family": "edged",
       "summary": "Turns logs into lumber at a sawmill.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
       "baseValue": 32, "baseDurability": 26, "sizes": ["small", "medium", "large"],
-      "enables": ["saw-lumber", "build-timber-frame"]
+      "story": "An axe takes the tree down; a saw decides what it becomes. The teeth are the expensive part and the reason it sleeps indoors.",
+      "enables": ["saw-lumber", "build-timber-frame"],
+      "plate": {
+        "note": "A tapered plate with raked teeth, riveted into an open grip shaped for four fingers.",
+        "parts": [
+          { "material": "wood", "shade": "deep", "d": "M20.15 45.36L31.38 52.49L35.24 62.63L30.33 76.2L20.02 86.9L7.23 87.03L2 77.31L7.44 60.56Z" },
+          { "material": "steel", "shade": "light", "d": "M30.62 64.79L98 90.22L95.49 99.29L95.49 99.29L95.13 95.71L92.64 98.3L92.29 94.72L89.8 97.32L89.44 93.74L86.95 96.33L86.59 92.75L84.1 95.35L83.74 91.77L81.25 94.36L80.9 90.79L78.41 93.38L78.05 89.8L75.56 92.4L75.2 88.82L72.71 91.41L72.35 87.83L69.86 90.43L69.51 86.85L67.01 89.44L66.66 85.86L64.17 88.46L63.81 84.88L61.32 87.47L60.96 83.9L58.47 86.49L58.12 82.91L55.62 85.5L55.27 81.93L52.78 84.52L52.42 80.94L49.93 83.54L49.57 79.96L47.08 82.55L46.73 78.97L44.23 81.57L43.88 77.99L41.39 80.58L41.03 77L38.54 79.6L38.18 76.02L35.69 78.61L35.34 75.04L32.84 77.63L32.49 74.05L30 76.65L29.64 73.07L27.15 75.66Z" }
+        ],
+        "lines": [
+          "M35.07 69.47L95.9 91.99",
+          "M33.63 72.17L95.37 95.17",
+          "M12.14 67.69a6.53 9.8 0 1 0 13.06 0a6.53 9.8 0 1 0 -13.06 0Z",
+          "M28.37 68.24a1.94 1.94 0 1 0 3.88 0a1.94 1.94 0 1 0 -3.88 0Z",
+          "M25.94 73.6a1.94 1.94 0 1 0 3.88 0a1.94 1.94 0 1 0 -3.88 0Z"
+        ] }
     },
     {
-      "id": "pick", "name": "Pick", "family": "digging",
+      "id": "pick", "name": "Pick", "cardCode": "TOL-03", "family": "digging",
       "summary": "Breaks rock. Required for coal, ore and stone.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 2 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 4 },
       "baseValue": 42, "baseDurability": 20, "sizes": ["small", "medium", "large"],
-      "enables": ["mine-coal", "mine-iron-ore", "mine-copper-ore", "mine-gold-ore", "mine-gems", "mine-salt", "mine-mana-crystal", "quarry-stone"]
+      "story": "Everything under the hills comes up through the eye of one of these. Miners name theirs, which tells you most of what you need to know about mining.",
+      "enables": ["mine-coal", "mine-iron-ore", "mine-copper-ore", "mine-gold-ore", "mine-gems", "mine-salt", "mine-mana-crystal", "quarry-stone"],
+      "plate": {
+        "note": "A double-ended pick head, drawn to a point at each end, wedged on a straight haft.",
+        "parts": [
+          { "material": "wood", "shade": "light", "d": "M59.49 14.61L15.69 94.88L23.98 99.29L66.03 18.09Z" },
+          { "material": "iron", "shade": "light", "d": "M2 14.83L29.32 5.57L53.01 8.37L74.83 19.97L90.41 38.05L98 65.88L91.9 66.83L84.16 44.53L70.19 28.7L48.37 17.1L27.44 14.36L4.62 20.43Z" },
+          { "material": "iron", "shade": "medium", "d": "M55.99 10.66L71.27 18.78L64.02 32.41L48.74 24.29Z" }
+        ],
+        "lines": [
+          "M52.51 17.2L67.79 25.32",
+          "M10.73 19.47L20.75 16.41",
+          "M89.27 61.24L86.21 51.21",
+          "M51.3 32.65L19.98 91.56",
+          "M20.77 86.38L26.01 89.17"
+        ] }
     },
     {
       "id": "shovel", "name": "Shovel", "family": "digging",
@@ -35,12 +80,27 @@
       "enables": ["dig-clay", "dig-sand", "cut-peat", "gather-stone", "lay-roadbed", "sink-mineshaft", "dig-ember-root"]
     },
     {
-      "id": "hammer", "name": "Hammer", "family": "smithing",
+      "id": "hammer", "name": "Hammer", "cardCode": "TOL-04", "family": "smithing",
       "summary": "The general construction tool, and the smith's own tool.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 2 },
       "baseValue": 24, "baseDurability": 30, "sizes": ["small", "medium", "large"],
-      "enables": ["forge-ironware", "forge-tool", "repair-tool", "build-generic", "lay-rail"]
+      "story": "The tool that makes the tools. A smithy is a fire, an anvil and this, and the first two can be borrowed.",
+      "enables": ["forge-ironware", "forge-tool", "repair-tool", "build-generic", "lay-rail"],
+      "plate": {
+        "note": "A smith's hammer: a flat face on one cheek and a cross pein on the other, wedged on a short haft.",
+        "parts": [
+          { "material": "wood", "shade": "light", "d": "M61.66 12.27L16.26 95.8L22.82 99.29L66.68 14.94Z" },
+          { "material": "iron", "shade": "light", "d": "M42.43 3.29L56 8.02L71.38 18.68L83.74 32.67L80.66 38.46L62.14 36.04L44.72 29.25L33.2 20.65Z" }
+        ],
+        "lines": [
+          "M45.61 5.47L36.78 22.06",
+          "M57.78 9.34L46.8 29.99",
+          "M71.38 18.68L62.14 36.04",
+          "M66.76 27.36L81.23 35.05",
+          "M49.93 35.74L19.67 92.66",
+          "M20.56 88.18L25.19 90.64"
+        ] }
     },
     {
       "id": "knife", "name": "Knife", "family": "edged",
@@ -59,13 +119,29 @@
       "enables": ["shear-sheep"]
     },
     {
-      "id": "scythe", "name": "Scythe", "family": "edged",
+      "id": "scythe", "name": "Scythe", "cardCode": "TOL-05", "family": "edged",
       "summary": "Harvests ripe crops.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
-      "baseValue": 30, "baseDurability": 22, "sizes": ["small", "medium", "large"],
+      "baseValue": 30, "baseDurability": 22, "sizes": ["small", "medium", "large"], "optional": true,
+      "story": "Set the nibs to the man, never the man to the snaith. A harvest is won in the fitting and lost in the sharpening.",
       "enables": ["harvest-grain", "harvest-flax", "harvest-hops", "harvest-vegetables", "harvest-cotton"],
-      "optional": true, "optionalNote": "Harvesting is possible bare-handed; a scythe doubles the yield."
+      "optionalNote": "Harvesting is possible bare-handed; a scythe doubles the yield.",
+      "plate": {
+        "note": "A long curved blade tanged into the head of a bent snaith, with two nibs set for the mower's hands.",
+        "parts": [
+          { "material": "wood", "shade": "light", "d": "M47.94 99.29L53.5 77.59L60.41 55.65L69 37.15L78.29 23.81L84.58 18.18L80.72 13.81L73.68 19.97L63.64 34.1L54.51 53.36L47.26 75.78L41.49 97.6Z" },
+          { "material": "wood", "shade": "medium", "d": "M66.26 44.54L51.46 27.67L47.96 30.63L62.12 48.03Z" },
+          { "material": "wood", "shade": "medium", "d": "M55.27 74.08L40.47 57.21L36.97 60.17L51.13 77.58Z" },
+          { "material": "steel", "shade": "light", "d": "M86.88 14.71L74.98 6.02L58.74 3.29L40.98 5.64L22.61 13.56L13.12 20.31L23.79 22.44L39.28 17.71L54.71 15.3L68.19 16.57L79.72 21.52L81.99 23.9Z" }
+        ],
+        "lines": [
+          "M80.75 17.35L70.21 10.56L56.73 9.29L41.29 11.7L26.23 17.85L18.7 20.92",
+          "M50.06 29.81L47.2 32.54",
+          "M39.07 59.35L36.21 62.08",
+          "M45.8 88.41L50.03 90.66",
+          "M76.38 24.46L63.73 46.04"
+        ] }
     },
     {
       "id": "plough", "name": "Plough", "family": "farming",

@@ -23,6 +23,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readPalette, inkHex } from './lib/palette.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = join(ROOT, 'docs', 'art', 'icons');
@@ -30,21 +31,14 @@ const checkOnly = process.argv.includes('--check');
 
 const arcana = JSON.parse(readFileSync(join(ROOT, 'data/arcana.json'), 'utf8'));
 const components = JSON.parse(readFileSync(join(ROOT, 'data/components.json'), 'utf8'));
-const palette = JSON.parse(readFileSync(join(ROOT, 'docs/art/palette.json'), 'utf8'));
+const palette = readPalette(ROOT);
 
 const SOOT = palette.ink.soot.hex;
 const TALLOW = palette.paper.tallow.hex;
 
-/** "oxide" -> the named ink; "soot-tint-40" -> that tint. The elements name
-    their ink in data/arcana.json and this is the only place that resolves it. */
-export function inkHex(name) {
-  const tint = /^soot-tint-(\d+)$/.exec(name);
-  if (tint) return palette.ink.tints[tint[1]].hex;
-  if (name === 'soot') return SOOT;
-  const ink = palette.inks[name];
-  if (!ink) throw new Error(`data names an ink the palette does not declare: ${name}`);
-  return ink.hex;
-}
+/** "oxide" -> the named ink; "soot-tint-40" -> that tint. One resolver, in
+    tools/lib/palette.mjs, because tools/draw-item.mjs needs the same one. */
+const ink = (name) => inkHex(name, palette);
 
 const spec = components.marks.element;
 const num = (n) => Number(n.toFixed(2));
@@ -67,7 +61,7 @@ function markGroup(element, x, y, size, { disc = true } = {}) {
   const r = 11.4 * (size / 24);
   return {
     wash: disc
-      ? `<circle cx="${num(cx)}" cy="${num(cy)}" r="${num(r)}" fill="${inkHex(element.ink)}" opacity="${spec.onCard.washOpacity}"/>`
+      ? `<circle cx="${num(cx)}" cy="${num(cy)}" r="${num(r)}" fill="${ink(element.ink)}" opacity="${spec.onCard.washOpacity}"/>`
       : '',
     ink:
       (disc ? `<circle cx="${num(cx)}" cy="${num(cy)}" r="${num(r)}" fill="none" stroke="${SOOT}" stroke-width="${num(1.5 * (size / 24))}"/>` : '') +

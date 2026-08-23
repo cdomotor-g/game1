@@ -26,6 +26,7 @@ const CARDS = join(ROOT, 'docs', 'cards');
 const BOARDS = join(ROOT, 'docs', 'boards');
 const MARKETS = join(ROOT, 'docs/markets');
 const MINIMAPS = join(ROOT, 'docs/minimaps/sheets');
+const PLATES = join(ROOT, 'docs/art/renders');
 
 const palette = JSON.parse(readFileSync(join(ROOT, 'docs/art/palette.json'), 'utf8'));
 
@@ -53,10 +54,18 @@ const INK_PLATE = new Set([
    The mini-map sheets are the one place a terrain colour reaches a printed
    component directly, which is exactly why they are swept: terrain.json's
    colours are in the palette under `terrain`, and a sheet that painted itself
-   any other green would be a sheet nobody could match a tile to. */
+   any other green would be a sheet nobody could match a tile to.
+
+   docs/art/renders/ is the one directory here that holds both kinds of thing. A
+   drawn plate is a PNG, arrives as an artist supplied it and is not this tool's
+   business - nothing here has ever looked inside one, and the two-plate contract
+   on a painted page is a matter for the acceptance checklist and a pair of eyes.
+   A GENERATED plate is an SVG written by tools/draw-item.mjs, which makes it a
+   generated component like any other, and a generator is not a licence to invent
+   a colour. Sweeping the .svg and ignoring the .png draws exactly that line. */
 const files = process.argv.slice(2).length
   ? process.argv.slice(2)
-  : [EXAMPLES, CARDS, BOARDS, MARKETS, MINIMAPS].filter(existsSync).flatMap(dir =>
+  : [EXAMPLES, CARDS, BOARDS, MARKETS, MINIMAPS, PLATES].filter(existsSync).flatMap(dir =>
       readdirSync(dir).filter(f => f.endsWith('.svg')).map(f => join(dir, f)));
 
 /** hex codes appearing as paint attribute values, not as text content */

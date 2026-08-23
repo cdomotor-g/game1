@@ -1666,6 +1666,7 @@ window.GAME_DATA = {
       {
         "id": "axe",
         "name": "Axe",
+        "cardCode": "TOL-01",
         "family": "edged",
         "summary": "Fells trees standing on forest tiles.",
         "madeAt": "blacksmith",
@@ -1689,15 +1690,41 @@ window.GAME_DATA = {
           "medium",
           "large"
         ],
+        "story": "The first tool a settlement buys and the last one it will let go. Forest into lumber, and lumber into everything else there is.",
         "enables": [
           "fell-timber",
           "clear-forest",
           "hew-timber"
-        ]
+        ],
+        "plate": {
+          "note": "A felling axe: a narrow eye, cheeks that swell, and a bit ground to a long curved edge.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "light",
+              "d": "M59.18 3.29L38.95 45.24L21.93 73.09L12.19 96.55L19.04 99.29L27.93 76.14L44.34 48.05L64.08 5.61Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M48.3 13.33L60.75 19.95L64.97 25.88L77.6 25.23L87.81 24.51L87.57 34.21L83.43 44.3L77.38 53.37L69.48 58.99L64.36 50.13L57.84 39.29L50.57 39.11L38.12 32.49Z"
+            }
+          ],
+          "lines": [
+            "M60.45 20.53L50.77 38.72",
+            "M64.97 25.88L57.84 39.29",
+            "M83.92 24.9L84.19 33.64L80.37 42.67L75.02 50.88L67.62 55.55",
+            "M65.87 28.81L77.99 29.12",
+            "M60.78 38.39L67.81 48.27",
+            "M15.98 87.06L19.62 88.99",
+            "M37.06 51.58L26.43 72.95"
+          ]
+        }
       },
       {
         "id": "saw",
         "name": "Saw",
+        "cardCode": "TOL-02",
         "family": "edged",
         "summary": "Turns logs into lumber at a sawmill.",
         "madeAt": "blacksmith",
@@ -1721,14 +1748,38 @@ window.GAME_DATA = {
           "medium",
           "large"
         ],
+        "story": "An axe takes the tree down; a saw decides what it becomes. The teeth are the expensive part and the reason it sleeps indoors.",
         "enables": [
           "saw-lumber",
           "build-timber-frame"
-        ]
+        ],
+        "plate": {
+          "note": "A tapered plate with raked teeth, riveted into an open grip shaped for four fingers.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "deep",
+              "d": "M20.15 45.36L31.38 52.49L35.24 62.63L30.33 76.2L20.02 86.9L7.23 87.03L2 77.31L7.44 60.56Z"
+            },
+            {
+              "material": "steel",
+              "shade": "light",
+              "d": "M30.62 64.79L98 90.22L95.49 99.29L95.49 99.29L95.13 95.71L92.64 98.3L92.29 94.72L89.8 97.32L89.44 93.74L86.95 96.33L86.59 92.75L84.1 95.35L83.74 91.77L81.25 94.36L80.9 90.79L78.41 93.38L78.05 89.8L75.56 92.4L75.2 88.82L72.71 91.41L72.35 87.83L69.86 90.43L69.51 86.85L67.01 89.44L66.66 85.86L64.17 88.46L63.81 84.88L61.32 87.47L60.96 83.9L58.47 86.49L58.12 82.91L55.62 85.5L55.27 81.93L52.78 84.52L52.42 80.94L49.93 83.54L49.57 79.96L47.08 82.55L46.73 78.97L44.23 81.57L43.88 77.99L41.39 80.58L41.03 77L38.54 79.6L38.18 76.02L35.69 78.61L35.34 75.04L32.84 77.63L32.49 74.05L30 76.65L29.64 73.07L27.15 75.66Z"
+            }
+          ],
+          "lines": [
+            "M35.07 69.47L95.9 91.99",
+            "M33.63 72.17L95.37 95.17",
+            "M12.14 67.69a6.53 9.8 0 1 0 13.06 0a6.53 9.8 0 1 0 -13.06 0Z",
+            "M28.37 68.24a1.94 1.94 0 1 0 3.88 0a1.94 1.94 0 1 0 -3.88 0Z",
+            "M25.94 73.6a1.94 1.94 0 1 0 3.88 0a1.94 1.94 0 1 0 -3.88 0Z"
+          ]
+        }
       },
       {
         "id": "pick",
         "name": "Pick",
+        "cardCode": "TOL-03",
         "family": "digging",
         "summary": "Breaks rock. Required for coal, ore and stone.",
         "madeAt": "blacksmith",
@@ -1752,6 +1803,7 @@ window.GAME_DATA = {
           "medium",
           "large"
         ],
+        "story": "Everything under the hills comes up through the eye of one of these. Miners name theirs, which tells you most of what you need to know about mining.",
         "enables": [
           "mine-coal",
           "mine-iron-ore",
@@ -1761,7 +1813,34 @@ window.GAME_DATA = {
           "mine-salt",
           "mine-mana-crystal",
           "quarry-stone"
-        ]
+        ],
+        "plate": {
+          "note": "A double-ended pick head, drawn to a point at each end, wedged on a straight haft.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "light",
+              "d": "M59.49 14.61L15.69 94.88L23.98 99.29L66.03 18.09Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M2 14.83L29.32 5.57L53.01 8.37L74.83 19.97L90.41 38.05L98 65.88L91.9 66.83L84.16 44.53L70.19 28.7L48.37 17.1L27.44 14.36L4.62 20.43Z"
+            },
+            {
+              "material": "iron",
+              "shade": "medium",
+              "d": "M55.99 10.66L71.27 18.78L64.02 32.41L48.74 24.29Z"
+            }
+          ],
+          "lines": [
+            "M52.51 17.2L67.79 25.32",
+            "M10.73 19.47L20.75 16.41",
+            "M89.27 61.24L86.21 51.21",
+            "M51.3 32.65L19.98 91.56",
+            "M20.77 86.38L26.01 89.17"
+          ]
+        }
       },
       {
         "id": "shovel",
@@ -1802,6 +1881,7 @@ window.GAME_DATA = {
       {
         "id": "hammer",
         "name": "Hammer",
+        "cardCode": "TOL-04",
         "family": "smithing",
         "summary": "The general construction tool, and the smith's own tool.",
         "madeAt": "blacksmith",
@@ -1825,13 +1905,37 @@ window.GAME_DATA = {
           "medium",
           "large"
         ],
+        "story": "The tool that makes the tools. A smithy is a fire, an anvil and this, and the first two can be borrowed.",
         "enables": [
           "forge-ironware",
           "forge-tool",
           "repair-tool",
           "build-generic",
           "lay-rail"
-        ]
+        ],
+        "plate": {
+          "note": "A smith's hammer: a flat face on one cheek and a cross pein on the other, wedged on a short haft.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "light",
+              "d": "M61.66 12.27L16.26 95.8L22.82 99.29L66.68 14.94Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M42.43 3.29L56 8.02L71.38 18.68L83.74 32.67L80.66 38.46L62.14 36.04L44.72 29.25L33.2 20.65Z"
+            }
+          ],
+          "lines": [
+            "M45.61 5.47L36.78 22.06",
+            "M57.78 9.34L46.8 29.99",
+            "M71.38 18.68L62.14 36.04",
+            "M66.76 27.36L81.23 35.05",
+            "M49.93 35.74L19.67 92.66",
+            "M20.56 88.18L25.19 90.64"
+          ]
+        }
       },
       {
         "id": "knife",
@@ -1889,6 +1993,7 @@ window.GAME_DATA = {
       {
         "id": "scythe",
         "name": "Scythe",
+        "cardCode": "TOL-05",
         "family": "edged",
         "summary": "Harvests ripe crops.",
         "madeAt": "blacksmith",
@@ -1912,6 +2017,8 @@ window.GAME_DATA = {
           "medium",
           "large"
         ],
+        "optional": true,
+        "story": "Set the nibs to the man, never the man to the snaith. A harvest is won in the fitting and lost in the sharpening.",
         "enables": [
           "harvest-grain",
           "harvest-flax",
@@ -1919,8 +2026,39 @@ window.GAME_DATA = {
           "harvest-vegetables",
           "harvest-cotton"
         ],
-        "optional": true,
-        "optionalNote": "Harvesting is possible bare-handed; a scythe doubles the yield."
+        "optionalNote": "Harvesting is possible bare-handed; a scythe doubles the yield.",
+        "plate": {
+          "note": "A long curved blade tanged into the head of a bent snaith, with two nibs set for the mower's hands.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "light",
+              "d": "M47.94 99.29L53.5 77.59L60.41 55.65L69 37.15L78.29 23.81L84.58 18.18L80.72 13.81L73.68 19.97L63.64 34.1L54.51 53.36L47.26 75.78L41.49 97.6Z"
+            },
+            {
+              "material": "wood",
+              "shade": "medium",
+              "d": "M66.26 44.54L51.46 27.67L47.96 30.63L62.12 48.03Z"
+            },
+            {
+              "material": "wood",
+              "shade": "medium",
+              "d": "M55.27 74.08L40.47 57.21L36.97 60.17L51.13 77.58Z"
+            },
+            {
+              "material": "steel",
+              "shade": "light",
+              "d": "M86.88 14.71L74.98 6.02L58.74 3.29L40.98 5.64L22.61 13.56L13.12 20.31L23.79 22.44L39.28 17.71L54.71 15.3L68.19 16.57L79.72 21.52L81.99 23.9Z"
+            }
+          ],
+          "lines": [
+            "M80.75 17.35L70.21 10.56L56.73 9.29L41.29 11.7L26.23 17.85L18.7 20.92",
+            "M50.06 29.81L47.2 32.54",
+            "M39.07 59.35L36.21 62.08",
+            "M45.8 88.41L50.03 90.66",
+            "M76.38 24.46L63.73 46.04"
+          ]
+        }
       },
       {
         "id": "plough",
@@ -8693,6 +8831,7 @@ window.GAME_DATA = {
         "id": "leather-jerkin",
         "name": "Leather Jerkin",
         "class": "armour",
+        "cardCode": "ITM-01",
         "slot": "body",
         "madeAt": "tailor",
         "inputs": [
@@ -8704,15 +8843,54 @@ window.GAME_DATA = {
         "effortHours": 3,
         "baseValue": 50,
         "massKg": 2.5,
+        "story": "Two hides, a winter of waxing, and the honest admission that it will stop a knife once and then go back to being a coat.",
         "effects": [
           "Ignore the first hit in each battle."
         ],
-        "armourValue": 1
+        "armourValue": 1,
+        "plate": {
+          "note": "A sleeveless jerkin of two hides, laced up the chest, belted at the waist.",
+          "parts": [
+            {
+              "material": "leather",
+              "shade": "medium",
+              "d": "M29.93 16L38.32 5.89L48.37 3.29L54.73 12.5L62.87 4.81L72.15 9.45L78.25 21.08L81.56 36.09L75.14 39.08L72.73 62.03L74.01 96.36L55.38 99.29L36.05 97.25L18.44 90.52L26.83 57.2L29.24 34.25L23.58 29.99Z"
+            },
+            {
+              "material": "leather",
+              "shade": "deep",
+              "d": "M24.64 59.42L74.41 64.65L72.66 75.45L24.1 70.35Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M43.67 59.58L55.75 60.85L54.23 75.35L42.15 74.08Z"
+            }
+          ],
+          "lines": [
+            "M47.7 15.43L60.48 21.66",
+            "M46.76 24.37L59.54 30.6",
+            "M45.82 33.31L58.6 39.54",
+            "M44.89 42.25L57.67 48.47",
+            "M43.95 51.19L56.73 57.41",
+            "M60.99 16.83L47.2 20.26",
+            "M60.05 25.76L46.26 29.2",
+            "M59.11 34.7L45.32 38.14",
+            "M58.17 43.64L44.38 47.08",
+            "M57.23 52.58L43.44 56.02",
+            "M54.73 12.5L49.78 59.61",
+            "M38.67 8.37L31.91 32.09",
+            "M71.29 11.8L72.98 36.41",
+            "M21.62 83.52L72.35 88.86",
+            "M46.28 67.47a2.67 2.67 0 1 0 5.34 0a2.67 2.67 0 1 0 -5.34 0Z"
+          ]
+        }
       },
       {
         "id": "chain-mail",
         "name": "Chain Mail",
         "class": "armour",
+        "cardCode": "ITM-04",
         "slot": "body",
         "madeAt": "blacksmith",
         "inputs": [
@@ -8728,15 +8906,50 @@ window.GAME_DATA = {
         "effortHours": 5,
         "baseValue": 130,
         "massKg": 6,
+        "story": "Twenty thousand rings, every one of them closed by hand. Smiths price a hauberk by the month rather than by the pound, and nobody has ever argued.",
         "effects": [
           "Ignore the first two hits in each battle."
         ],
-        "armourValue": 2
+        "armourValue": 2,
+        "plate": {
+          "note": "A knee-length hauberk of riveted rings, short-sleeved, split at the hem for riding, with a leather collar.",
+          "parts": [
+            {
+              "material": "iron",
+              "shade": "deep",
+              "d": "M23.84 16.68L33.46 5.61L45.78 3.29L53.26 12.53L62.5 5.04L74.07 9.88L81.18 22.71L85.39 40.06L76.65 42.76L73.58 60.56L74.34 99.29L49 99.04L47.49 90.43L42.71 89.92L39.44 98.03L14.61 93.01L23.4 55.28L24.09 37.24L16.11 32.78Z"
+            },
+            {
+              "material": "leather",
+              "shade": "medium",
+              "d": "M44.52 3.76L63.63 5.77L60.18 15.67L45.84 14.16Z"
+            },
+            {
+              "material": "leather",
+              "shade": "deep",
+              "d": "M22.93 55.23L74.05 60.61L72.57 70.11L22.4 64.84Z"
+            }
+          ],
+          "lines": [
+            "M26.68 21.81L77.33 27.13",
+            "M25.2 31.32L76.8 36.74",
+            "M23.72 40.82L76.28 46.35",
+            "M22.23 50.33L75.75 55.95",
+            "M20.81 71.92L72.65 77.37",
+            "M20.28 81.53L71.17 86.88",
+            "M19.76 91.13L69.69 96.38",
+            "M53.01 14.92L48.49 57.92",
+            "M47.49 67.48L45.1 90.17",
+            "M36.79 8.38L28.05 34.03",
+            "M70.24 11.9L73.45 38.8"
+          ]
+        }
       },
       {
         "id": "plate-harness",
         "name": "Plate Harness",
         "class": "armour",
+        "cardCode": "ITM-05",
         "slot": "body",
         "madeAt": "blacksmith",
         "inputs": [
@@ -8753,16 +8966,66 @@ window.GAME_DATA = {
         "baseValue": 320,
         "massKg": 12.5,
         "specialist": "smith",
+        "story": "Fitted to one body and worth a farm. It turns a blade and it turns an arrow, and it turns a running man into a walking one.",
         "effects": [
           "Ignore the first three hits in each battle.",
           "-1 move point."
         ],
-        "armourValue": 3
+        "armourValue": 3,
+        "plate": {
+          "note": "A breastplate with a raised centre ridge, three fauld lames below it, and a pauldron on each shoulder.",
+          "parts": [
+            {
+              "material": "steel",
+              "shade": "light",
+              "d": "M27.92 13.54L40.29 6.68L51.21 13.65L63.34 9.1L74.02 18.38L78.99 37.54L72.44 55.5L64.56 63.99L27.69 60.11L21.74 50.17L19.07 31.25Z"
+            },
+            {
+              "material": "steel",
+              "shade": "medium",
+              "d": "M15.49 9.9L30.16 3.29L42.23 10.38L38.23 26.27L21.62 29.18L11.97 21.18Z"
+            },
+            {
+              "material": "steel",
+              "shade": "medium",
+              "d": "M86.93 17.41L73.95 7.89L60.67 12.32L61.28 28.69L76.93 35L88.03 29.17Z"
+            },
+            {
+              "material": "steel",
+              "shade": "light",
+              "d": "M27.57 61.27L64.44 65.14L65.66 75.75L24.17 71.39Z"
+            },
+            {
+              "material": "steel",
+              "shade": "light",
+              "d": "M24.05 72.55L65.53 76.91L66.75 87.52L20.66 82.68Z"
+            },
+            {
+              "material": "steel",
+              "shade": "medium",
+              "d": "M20.53 83.83L66.63 88.67L67.84 99.29L17.14 93.96Z"
+            }
+          ],
+          "lines": [
+            "M51.09 14.81L46.12 62.05",
+            "M41.63 16.14L34.18 53.8",
+            "M60.07 18.08L59.53 56.47",
+            "M18.83 33.55L25.74 34.28",
+            "M78.75 39.85L71.84 39.12",
+            "M29.66 66.94a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
+            "M43.49 68.39a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
+            "M57.32 69.84a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
+            "M28.45 78.46a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
+            "M42.28 79.91a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
+            "M56.11 81.37a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z"
+          ]
+        }
       },
       {
         "id": "helm",
         "name": "Helm",
         "class": "armour",
+        "cardCode": "ITM-02",
         "slot": "head",
         "madeAt": "blacksmith",
         "inputs": [
@@ -8774,15 +9037,49 @@ window.GAME_DATA = {
         "effortHours": 2,
         "baseValue": 45,
         "massKg": 1.25,
+        "story": "A helm is cheap and a head is not. Every recruiting sergeant in the world has made that speech and none of them has ever had to improve it.",
         "effects": [
           "Once per battle, cancel one hit."
         ],
-        "armourValue": 1
+        "armourValue": 1,
+        "plate": {
+          "note": "A one-piece skull with a riveted brow band and a nasal bar down the face.",
+          "parts": [
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M9.39 61.73L10.92 51.97L13.42 42.56L16.83 33.72L21.05 25.68L25.99 18.63L31.53 12.75L37.53 8.18L43.83 5.03L50.3 3.39L56.76 3.29L63.06 4.73L69.04 7.68L74.55 12.07L79.47 17.79L83.66 24.69L87.03 32.61L89.49 41.36L90.98 50.71L91.47 60.44L90.94 70.31L89.95 79.72L8.4 71.14Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M46.42 62.46L54.57 63.31L49.84 99.29L43.57 98.63Z"
+            },
+            {
+              "material": "iron",
+              "shade": "medium",
+              "d": "M9.27 53.79L92.71 62.56L90.73 81.38L7.29 72.61Z"
+            }
+          ],
+          "lines": [
+            "M20.91 54.68L23.5 45.84L27.16 37.79L31.72 30.87L37.02 25.33L42.84 21.42L48.95 19.27L55.11 18.97L61.07 20.54L66.6 23.91L71.48 28.96L75.51 35.47L78.54 43.19L80.44 51.82L81.14 61.02",
+            "M56.43 6.42L50.99 58.18",
+            "M12.34 63.96a3.15 3.15 0 1 0 6.31 0a3.15 3.15 0 1 0 -6.31 0Z",
+            "M24.89 65.28a3.15 3.15 0 1 0 6.31 0a3.15 3.15 0 1 0 -6.31 0Z",
+            "M37.44 66.6a3.15 3.15 0 1 0 6.31 0a3.15 3.15 0 1 0 -6.31 0Z",
+            "M56.26 68.58a3.15 3.15 0 1 0 6.31 0a3.15 3.15 0 1 0 -6.31 0Z",
+            "M68.8 69.9a3.15 3.15 0 1 0 6.31 0a3.15 3.15 0 1 0 -6.31 0Z",
+            "M81.35 71.22a3.15 3.15 0 1 0 6.31 0a3.15 3.15 0 1 0 -6.31 0Z",
+            "M47.59 78.44L45.78 95.69",
+            "M50.1 78.7L48.29 95.95"
+          ]
+        }
       },
       {
         "id": "shield",
         "name": "Shield",
         "class": "armour",
+        "cardCode": "ITM-03",
         "slot": "off-hand",
         "madeAt": "carpenter",
         "inputs": [
@@ -8798,15 +9095,48 @@ window.GAME_DATA = {
         "effortHours": 2,
         "baseValue": 40,
         "massKg": 2,
+        "story": "Boards, hide glue, a rim and a boss. The cheapest thing in the armoury and the last one anybody puts down.",
         "effects": [
           "+1 defence die."
         ],
-        "armourValue": 1
+        "armourValue": 1,
+        "plate": {
+          "note": "A round shield of boards, iron-rimmed, with a domed boss over the hand-hole.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "light",
+              "d": "M2 51.29a48 48 0 1 0 96 0a48 48 0 1 0 -96 0Z"
+            },
+            {
+              "material": "iron",
+              "shade": "medium",
+              "d": "M2 51.29a48 48 0 1 1 96 0a48 48 0 1 1 -96 0ZM7.74 51.29a42.26 42.26 0 1 0 84.52 0a42.26 42.26 0 1 0 -84.52 0Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M36.96 51.29a13.04 13.04 0 1 0 26.09 0a13.04 13.04 0 1 0 -26.09 0Z"
+            }
+          ],
+          "lines": [
+            "M25.27 17.01L18.69 79.67",
+            "M40.16 10.19L31.83 89.44",
+            "M68.17 13.13L59.84 92.38",
+            "M81.31 22.9L74.73 85.56",
+            "M42.7 51.29a7.3 7.3 0 1 0 14.61 0a7.3 7.3 0 1 0 -14.61 0Z",
+            "M66.7 53.25a1.98 1.98 0 1 0 3.97 0a1.98 1.98 0 1 0 -3.97 0Z",
+            "M46.05 69.97a1.98 1.98 0 1 0 3.97 0a1.98 1.98 0 1 0 -3.97 0Z",
+            "M29.34 49.32a1.98 1.98 0 1 0 3.97 0a1.98 1.98 0 1 0 -3.97 0Z",
+            "M49.98 32.61a1.98 1.98 0 1 0 3.97 0a1.98 1.98 0 1 0 -3.97 0Z"
+          ]
+        }
       },
       {
         "id": "sword",
         "name": "Sword",
         "class": "weapon",
+        "cardCode": "ITM-06",
         "slot": "hand",
         "madeAt": "blacksmith",
         "inputs": [
@@ -8822,10 +9152,46 @@ window.GAME_DATA = {
         "effortHours": 4,
         "baseValue": 95,
         "massKg": 0.75,
+        "story": "Every smith makes one and most never make another. Iron for the blade, leather for the grip, and a week of somebody’s life in the edge.",
         "effects": [
           "+1 combat die."
         ],
-        "combatDice": 1
+        "combatDice": 1,
+        "plate": {
+          "note": "A straight double-edged blade, a short quillon guard, a wrapped grip and a disc pommel.",
+          "parts": [
+            {
+              "material": "steel",
+              "d": "M76.89 3.29L72.43 18.14L47.38 67.96L39.77 63.91L67.06 15.28Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M26.44 57.68L36.98 62.14L50.41 69.28L60 75.53L57.62 80L47.08 75.55L33.65 68.41L24.06 62.16Z"
+            },
+            {
+              "material": "leather",
+              "shade": "medium",
+              "d": "M37.02 69.63L31.11 79.4L27.84 87.7L34.33 91.15L39.39 83.8L44.18 73.43Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M23.11 93.46a5.83 5.83 0 1 0 11.66 0a5.83 5.83 0 1 0 -11.66 0Z"
+            }
+          ],
+          "lines": [
+            "M67.22 18.23L44.95 60.93",
+            "M69.9 19.66L46.96 62",
+            "M26.93 60.81L57.13 76.88",
+            "M34.83 73.48L42.21 77.41",
+            "M33.22 76.5L40.6 80.43",
+            "M31.61 79.52L39 83.45",
+            "M30.01 82.54L37.39 86.47",
+            "M28.4 85.56L35.79 89.49",
+            "M26.41 93.46a2.53 2.53 0 1 0 5.07 0a2.53 2.53 0 1 0 -5.07 0Z"
+          ]
+        }
       },
       {
         "id": "steel-sword",
@@ -8856,6 +9222,7 @@ window.GAME_DATA = {
         "id": "war-axe",
         "name": "War Axe",
         "class": "weapon",
+        "cardCode": "ITM-07",
         "slot": "hand",
         "madeAt": "blacksmith",
         "inputs": [
@@ -8871,10 +9238,40 @@ window.GAME_DATA = {
         "effortHours": 3,
         "baseValue": 80,
         "massKg": 1.5,
+        "story": "A woodsman’s axe with the beard drawn out and the haft left long. It costs a third of what a sword costs, and nobody has ever raised that during a fight.",
         "effects": [
           "+1 combat die, +2 when attacking."
         ],
-        "combatDice": 1
+        "combatDice": 1,
+        "plate": {
+          "note": "A bearded axe: a small poll, a bit drawn out to a curved edge, and a beard hanging below the eye.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "light",
+              "d": "M62.08 3.29L38.08 48.89L11.9 95.81L18.25 99.29L43.7 51.88L66.96 5.8Z"
+            },
+            {
+              "material": "iron",
+              "shade": "light",
+              "d": "M50.08 13.02L61.7 19.2L65.97 25.19L77.78 24.02L88.1 23.29L87.86 33.11L82.71 42.79L74.2 49.45L61.81 54.05L49.42 58.65L42.7 52.59L50.43 38.06L40.8 30.45Z"
+            },
+            {
+              "material": "leather",
+              "shade": "deep",
+              "d": "M38.85 45.57L45.83 49.28L41.07 59.18L34.09 55.47Z"
+            }
+          ],
+          "lines": [
+            "M60.8 19.96L43.8 51.93",
+            "M65.66 25.78L57.21 41.66",
+            "M83.65 24.66L84.44 32.53L80.19 41.45L71.81 46.94L60.9 51.08",
+            "M66.88 28.16L77.66 28.92",
+            "M37.31 48.48L44.67 52.39",
+            "M35.25 52.35L42.61 56.27",
+            "M32.13 63.12L16.68 92.19"
+          ]
+        }
       },
       {
         "id": "pike",
@@ -8905,6 +9302,7 @@ window.GAME_DATA = {
         "id": "bow",
         "name": "Bow",
         "class": "weapon",
+        "cardCode": "ITM-09",
         "slot": "two-hand",
         "madeAt": "carpenter",
         "inputs": [
@@ -8920,12 +9318,43 @@ window.GAME_DATA = {
         "effortHours": 3,
         "baseValue": 65,
         "massKg": 0.5,
+        "story": "One stave, one string, and ten years learning to draw it. The bow sells for the price of a goat; the arm is not for sale.",
         "effects": [
           "Rolls its dice before the enemy rolls theirs.",
           "+1 output on Hunt Game.",
           "Needs a quiver to fight."
         ],
-        "combatDice": 1
+        "combatDice": 1,
+        "plate": {
+          "note": "A self bow of one stave, horn-nocked at both ends, the grip bound with cord.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "medium",
+              "d": "M80.84 3.29L64.1 7.47L46.08 16.35L32.63 26.45L25.17 35.11L21.99 46.11L20.96 62.95L23.53 82.96L29.27 99.29L34.86 97.28L29.14 81.64L26.55 62.69L27.37 46.87L29.81 37.57L36.03 30.22L48.63 20.54L65.79 11.9L81.97 7.71Z"
+            },
+            {
+              "material": "cord",
+              "shade": "medium",
+              "d": "M28.61 24L17.89 44.17L28.38 49.75L39.1 29.58Z"
+            },
+            {
+              "material": "cord",
+              "d": "M80.16 6.13L31.9 96.9L33.31 97.65L81.57 6.88Z"
+            }
+          ],
+          "lines": [
+            "M26.13 27.7L36.62 33.28",
+            "M24.59 30.61L35.07 36.18",
+            "M23.04 33.51L33.53 39.09",
+            "M21.5 36.42L31.99 41.99",
+            "M19.95 39.32L30.44 44.9",
+            "M76.23 7.92L82.11 7.82",
+            "M31.19 92.64L34.39 97.57",
+            "M56.69 13.06L58.57 19.24",
+            "M24.51 73.57L30.69 71.68"
+          ]
+        }
       },
       {
         "id": "quiver",
@@ -8975,6 +9404,7 @@ window.GAME_DATA = {
         "id": "war-hammer",
         "name": "War Hammer",
         "class": "weapon",
+        "cardCode": "ITM-08",
         "slot": "two-hand",
         "madeAt": "blacksmith",
         "inputs": [
@@ -8990,15 +9420,54 @@ window.GAME_DATA = {
         "effortHours": 5,
         "baseValue": 190,
         "massKg": 3,
+        "story": "Made for the century when armour won. It does not cut, it has never needed to, and it does not care in the least what you are wearing.",
         "effects": [
           "+2 combat dice. Ignores enemy armour entirely."
         ],
-        "combatDice": 2
+        "combatDice": 2,
+        "plate": {
+          "note": "A steel head on a long haft: a flat face on one cheek, a drawn-out fluke on the other, a wrapped grip at the butt.",
+          "parts": [
+            {
+              "material": "steel",
+              "shade": "medium",
+              "d": "M32.75 3.29L53.99 10.79L65.27 18.05L54.81 37.72L42.48 32.43L24.38 19.02Z"
+            },
+            {
+              "material": "steel",
+              "shade": "light",
+              "d": "M63.24 19.5L93.08 41.67L89.94 47.57L54.87 35.23Z"
+            },
+            {
+              "material": "wood",
+              "shade": "light",
+              "d": "M42.55 29.94L6.92 95.52L14 99.29L48.45 33.08Z"
+            },
+            {
+              "material": "leather",
+              "shade": "deep",
+              "d": "M21.76 68.09L28.64 71.75L15.64 97.63L8.75 93.97Z"
+            }
+          ],
+          "lines": [
+            "M36.37 5.97L28.21 21.31",
+            "M64.67 17.99L54.42 37.26",
+            "M60.04 27.89L90.53 44.1",
+            "M41.05 34.19L23.2 66.33",
+            "M46.55 37.12L29.69 69.78",
+            "M19.31 72.74L26.32 76.17",
+            "M16.96 77.54L23.96 80.97",
+            "M14.61 82.35L21.61 85.78",
+            "M12.26 87.15L19.26 90.58",
+            "M9.9 91.96L16.91 95.38"
+          ]
+        }
       },
       {
         "id": "crossbow",
         "name": "Crossbow",
         "class": "weapon",
+        "cardCode": "ITM-10",
         "slot": "two-hand",
         "madeAt": "blacksmith",
         "inputs": [
@@ -9019,12 +9488,46 @@ window.GAME_DATA = {
         "baseValue": 175,
         "massKg": 2.5,
         "specialist": "smith",
+        "story": "Steel prod, seasoned tiller, six months at a bench. Hand it to a farmhand on the Monday and by Friday he can kill a knight.",
         "effects": [
           "+3 combat dice, and ignores 1 point of enemy armour.",
           "Slow: it rolls in the first round of a battle and every second round after.",
           "Needs a quiver to fight."
         ],
-        "combatDice": 3
+        "combatDice": 3,
+        "plate": {
+          "note": "A steel prod lashed across the nose of a wooden tiller, the string at rest, the nut and trigger set behind it.",
+          "parts": [
+            {
+              "material": "wood",
+              "shade": "medium",
+              "d": "M2 75.86L8.99 62.67L22.09 60.22L94.42 65.11L98 67.97L95.87 78L48.46 74.21L46.55 83.23L40.32 82.96L42.23 73.93L19.32 73.25L8.74 83.58Z"
+            },
+            {
+              "material": "steel",
+              "shade": "light",
+              "d": "M83.22 40.4L89.35 49.79L92.02 60.05L90.73 70.62L87.62 80.79L80.99 89.08L71.58 95.16L74.26 99.29L84.3 92.73L91.96 83.1L95.54 71.64L96.93 59.71L93.85 47.8L87.34 37.72Z"
+            },
+            {
+              "material": "cord",
+              "d": "M84.87 40.02L72.93 96.18L74.33 96.48L86.27 40.32Z"
+            },
+            {
+              "material": "iron",
+              "shade": "medium",
+              "d": "M54.87 68.32a5.33 5.33 0 1 0 10.66 0a5.33 5.33 0 1 0 -10.66 0Z"
+            }
+          ],
+          "lines": [
+            "M9.78 63.89L93.99 67.12",
+            "M12.67 74.98L89.43 78.72",
+            "M84.44 65.19L97.48 67.96",
+            "M82.78 73.01L95.81 75.78",
+            "M57.84 68.32a2.36 2.36 0 1 0 4.72 0a2.36 2.36 0 1 0 -4.72 0Z",
+            "M4.86 72.28L8.38 80.36",
+            "M44.69 62.4L42.66 71.93"
+          ]
+        }
       },
       {
         "id": "harpoon",
@@ -12060,6 +12563,8 @@ window.GAME_DATA = {
         "yield": "Y",
         "value": "¤",
         "mass": "KG",
+        "wear": "W",
+        "$wearNote": "How much work is left in a tool before it is finished - tools.json baseDurability. It is the one printed maximum in the game with no track under it, and it is not going to get one: it runs past twenty, the board stops at fourteen, and an axe wearing out is counted on the axe rather than walked on the board (data/playerboard.json ceiling).",
         "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so."
       }
     },
@@ -12156,12 +12661,106 @@ window.GAME_DATA = {
         }
       }
     },
+    "itemPlate": {
+      "$comment": "How the plate for an OBJECT card is drawn, in the case where it is drawn HERE rather than commissioned from an artist. A deck says which it is with plateKind; tools/draw-item.mjs is the tool that does it.\n\nThe bargain is the marks' one, one storey up. A mark's PATH is data on the thing the mark is of - an element in arcana.json, a terrain in terrain.json - and this file says how to draw one. An object's PARTS are data on the object - a haft, a head, a strap, in items.json and tools.json - and this says how to draw those: how thick the line is, what colour the wash under a given material is, how a shaded part is hatched, what it stands on. Change the line weight here and every plate moves together, which is the whole point.\n\nIt holds no content, like the rest of this file. No axe is named here and no blade is drawn here. What IS here is the small vocabulary the parts draw from - a material, a shade, a ground - so that two objects made of iron and wood are made of the same iron and the same wood.\n\nWhy an object can be drawn this way and a face cannot: docs/art/09-framing-and-composition.md calls a talisman plate 'a single object study, lit on a table', and a study of a made thing is a silhouette and a line. A character is not. The generated line stops at objects on purpose.",
+      "pathsFrom": "items.items[].plate.parts[].d and tools.tools[].plate.parts[].d",
+      "viewBox": "0 0 100 100",
+      "$viewBoxNote": "The page. Every object is authored on this same square and fitted into the subject box uniformly, so no plate stretches its own subject and the same stroke weight means the same thing on all of them.",
+      "subject": [
+        0.15,
+        0.15,
+        0.7,
+        0.7
+      ],
+      "$subjectNote": "Where the object sits on the page, as fractions of it - which makes this the framing entry as well, because the tool PUTS it there rather than finding it there afterwards. 15 per cent clear on every side is the margin docs/art/09-framing-and-composition.md asks a plate to leave for the crop to slide in; it asks for 8, and a drawn object costs nothing to give more.",
+      "line": {
+        "$comment": "The ink plate carries everything (docs/art/01-two-plate-system.md, law 1), so these are the only weights on a plate: the edge of a part, and everything drawn inside one. Two weights and not five - docs/art/03-line-and-texture.md.",
+        "outline": 0.52,
+        "detail": 0.26,
+        "linecap": "round",
+        "linejoin": "round"
+      },
+      "materials": {
+        "$comment": "What a part is made of, and so what colour the wash under it is. The wash never speaks: drop the whole plate and the object is still an axe, because the line drew it. This is category-at-a-glance and nothing more - which is why iron and steel are one ink at two strengths rather than two colours nobody could tell apart.",
+        "iron": {
+          "ink": "slate",
+          "opacity": 0.5
+        },
+        "steel": {
+          "ink": "slate",
+          "opacity": 0.33
+        },
+        "wood": {
+          "ink": "ochre",
+          "opacity": 0.46
+        },
+        "leather": {
+          "ink": "oxide",
+          "opacity": 0.48
+        },
+        "cord": {
+          "ink": "ochre",
+          "opacity": 0.28
+        },
+        "cloth": {
+          "ink": "verdigris",
+          "opacity": 0.24
+        },
+        "horn": {
+          "ink": "ochre",
+          "opacity": 0.2
+        },
+        "glass": {
+          "ink": "verdigris",
+          "opacity": 0.16
+        },
+        "stone": {
+          "ink": "soot-tint-25",
+          "opacity": 0.55
+        }
+      },
+      "shading": {
+        "$comment": "Interior tone is HATCHING and never a darker tint, because a tint is on the wash and the wash is not allowed to say anything. A part says how dark it is; the tool rules parallel lines across the whole page and clips them to that part, so nobody draws a hatch by hand and no two parts hatch at different angles.",
+        "angleDeg": 34,
+        "crossAngleDeg": -54,
+        "strokeWidth": 0.2,
+        "opacity": 0.42,
+        "spacing": {
+          "light": 2.5,
+          "medium": 1.7,
+          "deep": 1.15
+        },
+        "crossFrom": "deep",
+        "$crossNote": "Only the deepest shade is crossed. Cross-hatching everything is how a woodcut turns into a smudge at card size, and a card window is about 20 mm of this plate."
+      },
+      "ground": {
+        "$comment": "The short line the object stands on, and the flat shadow it throws along it. One horizon, low - rule 5 in docs/art/09-framing-and-composition.md - and it is what stops an object study reading as a cut-out floating on paper.",
+        "y": 0.845,
+        "halfWidth": 0.3,
+        "strokeWidth": 0.55,
+        "shadow": {
+          "ink": "soot-tint-25",
+          "opacity": 0.45,
+          "halfWidth": 0.21,
+          "height": 0.018
+        }
+      },
+      "grime": {
+        "$comment": "The third plate. A few specks of press dirt so the sheet reads as printed rather than as exported - the same handful the card fronts carry and no more, because grime that can be counted at card size is decoration.",
+        "specks": 9,
+        "radius": 0.32,
+        "opacity": 0.07
+      }
+    },
     "$deckKeys": {
       "$comment": "What each deck entry means. plateId is the template that turns a card into the name of the plate it needs - {id} and {cardCode} are fields of the card, |lower lowercases. It lives here rather than in the tools because three different tools need to agree on it: the card builder looks for the plate, the mint queue reports which are missing, and the art prompts are filed under exactly these names. minting says whether this deck is in the mint queue yet; a deck with minting false is declared, numbered and backed, and simply not being illustrated this month.",
       "prefix": "the card code prefix - see vehicles.json cardIdScheme",
       "plateId": "template for the render filename under docs/art/renders/, without the .png",
       "promptFile": "which file in docs/art/prompts/ holds this deck's briefs",
       "plateFormat": "the page the artist draws - see docs/art/09-framing-and-composition.md",
+      "plateKind": "drawn, and an artist supplies the plate; or generated, and a tool in this repository draws it from the card's own data. The same field, and the same reason, as a map's plate.kind in data/maps/ - see itemPlate below and tools/draw-item.mjs. Absent means drawn.",
+      "drawnBy": "the tool that draws a generated deck's plates, so the mint queue can name it instead of asking for an artist who is not coming",
+      "filter": "which cards of the source file this deck deals, where one file holds more than one deck's worth. Prose: the enumeration lives in cardsOfDeck in tools/lib/mint.mjs, one dull branch per deck, and this says what that branch is for.",
       "minting": "true if tools/mint-queue.mjs should chase this deck's missing plates",
       "storyRail": "true if this deck's story runs up the right-hand edge instead of across the bottom - see storyRail. The decks drawn on a portrait page take it, because that is where a taller window pays.",
       "back": "how this deck's card back is drawn - word, motif and ink"
@@ -12293,17 +12892,39 @@ window.GAME_DATA = {
       },
       {
         "prefix": "ITM",
+        "storyRail": true,
         "plateId": "item-{id}",
         "promptFile": "items.md",
         "plateFormat": "square",
-        "minting": false,
+        "plateKind": "generated",
+        "drawnBy": "tools/draw-item.mjs",
+        "minting": true,
         "id": "items",
         "name": "Items",
         "source": "items.json",
+        "filter": "class != talisman - a talisman is an arcane subject and deals in its own deck",
         "back": {
           "word": "ITEMS",
           "motif": "rivet",
           "ink": "slate"
+        }
+      },
+      {
+        "prefix": "TOL",
+        "storyRail": true,
+        "plateId": "tool-{id}",
+        "promptFile": "tools.md",
+        "plateFormat": "square",
+        "plateKind": "generated",
+        "drawnBy": "tools/draw-item.mjs",
+        "minting": true,
+        "id": "tools",
+        "name": "Tools",
+        "source": "tools.json",
+        "back": {
+          "word": "TOOLS",
+          "motif": "socket",
+          "ink": "verdigris"
         }
       }
     ],
@@ -12325,6 +12946,8 @@ window.GAME_DATA = {
         "wheel": "M12 2.6a9.4 9.4 0 1 0 .001 0zM12 8.6a3.4 3.4 0 1 0 .001 0zM12 2.6V8.6M12 15.4V21.4M2.6 12H8.6M15.4 12H21.4M5.35 5.35 9.6 9.6M14.4 14.4l4.25 4.25M18.65 5.35 14.4 9.6M9.6 14.4 5.35 18.65",
         "eye": "M2.4 12s4.1-6.2 9.6-6.2S21.6 12 21.6 12s-4.1 6.2-9.6 6.2S2.4 12 2.4 12zM12 8.4a3.6 3.6 0 1 0 .001 0zM12 2.6V5M12 19V21.4",
         "rayed": "M12 2.4V21.6M2.4 12H21.6M5.2 5.2 18.8 18.8M18.8 5.2 5.2 18.8M12 8.2a3.8 3.8 0 1 0 .001 0z",
+        "$socketNote": "The one thing every tool in the deck has in common: a head with an eye through it, and a haft through the eye. Drawn on the family's construction - a ring, and what the thing does to it - and top-to-bottom symmetric like the rest, because the back mirrors the motif across the card's centre line.",
+        "socket": "M12 2.6a9.4 9.4 0 1 0 .001 0zM12 8.2a3.8 3.8 0 1 0 .001 0zM8.6 2.6V21.4M15.4 2.6V21.4",
         "$compassNote": "The compass is the one motif drawn to the edge of the grid. The rose keeps the 2.4 margin the others stop at; the bezel sits outside it, so the cardinal points meet the rim rather than stopping short of it.",
         "compass": "M12 0.6a11.4 11.4 0 1 0 .001 0zM21.6 12 14.96 13.22 16.17 16.17 13.22 14.96 12 21.6 10.78 14.96 7.83 16.17 9.04 13.22 2.4 12 9.04 10.78 7.83 7.83 10.78 9.04 12 2.4 13.22 9.04 16.17 7.83 14.96 10.78Z"
       }
@@ -12589,6 +13212,7 @@ window.GAME_DATA = {
           "$sizeNote": "Keyed by the deck's own plateFormat in components.json, so a new deck picks up a size without this tool learning anything about it. A format with no entry here is not drawable and mint-draw says so rather than guessing a shape - the plate proportion is what the framing arithmetic is built on.",
           "$degradeNote": "No key, no route, or anything other than a 200 and mint-draw prints the commission and exits 0. The pipeline is not allowed to depend on this block working: docs/MINT.md's two-agent handover is the version that is definitely going to work, and this is a shortcut through it."
         },
+        "$plateKindNote": "A card plate is commissioned or generated, and the DECK says which - plateKind in data/components.json, the same field and the same reason as a map plate.kind. A generated deck (ITEMS, TOOLS) has tools/draw-item.mjs draw each plate from the parts the card carries in its own plate block; it is still a mint subject, still has a brief and still has a FRAMING entry, and it is simply nobody's turn to draw. The line stops at OBJECTS on purpose: a study of a made thing is a silhouette and a line, and a face is not. Delete a card's plate block and that one card is back at DRAW with an artist. See docs/MINT.md.",
         "aim": {
           "step": "FRAME",
           "owner": "whoever accepts the plate",
@@ -15253,6 +15877,156 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "item-bow": {
+        "file": "art/renders/item-bow.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-chain-mail": {
+        "file": "art/renders/item-chain-mail.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-crossbow": {
+        "file": "art/renders/item-crossbow.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-helm": {
+        "file": "art/renders/item-helm.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-leather-jerkin": {
+        "file": "art/renders/item-leather-jerkin.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-plate-harness": {
+        "file": "art/renders/item-plate-harness.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-shield": {
+        "file": "art/renders/item-shield.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-sword": {
+        "file": "art/renders/item-sword.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-war-axe": {
+        "file": "art/renders/item-war-axe.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "item-war-hammer": {
+        "file": "art/renders/item-war-hammer.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
       "modification-spinnaker": {
         "file": "art/renders/modification-spinnaker.png",
         "width": 1254,
@@ -15453,6 +16227,81 @@ window.GAME_DATA = {
           0.08,
           0.7,
           0.84
+        ]
+      },
+      "tool-axe": {
+        "file": "art/renders/tool-axe.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "tool-hammer": {
+        "file": "art/renders/tool-hammer.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "tool-pick": {
+        "file": "art/renders/tool-pick.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "tool-saw": {
+        "file": "art/renders/tool-saw.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "tool-scythe": {
+        "file": "art/renders/tool-scythe.png",
+        "width": 1890,
+        "height": 1890,
+        "subject": [
+          0.15,
+          0.15,
+          0.7,
+          0.7
+        ],
+        "focal": [
+          0.5,
+          0.5
         ]
       },
       "vehicle-veh-01": {

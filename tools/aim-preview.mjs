@@ -39,6 +39,7 @@ import { fileURLToPath } from 'node:url';
 import { readPng, writePng } from './lib/png.mjs';
 import { crop, readFraming, WHOLE_PLATE } from './lib/framing.mjs';
 import { plateIdFor } from './lib/plates.mjs';
+import { cardsOfDeck } from './lib/mint.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const RENDERS = join(ROOT, 'docs/art/renders');
@@ -77,16 +78,20 @@ const components = readJson(join(ROOT, 'data/components.json'));
  * asks each deck to name the plates of the cards in its own source file and
  * matches on either end. A plate id that no deck claims is still previewable -
  * it just cannot report a card window, because there is no card.
+ *
+ * WHICH cards are a deck's is the mint's question and it is asked there.
+ * Reading "the first array in the file" got it wrong the moment two decks
+ * shared one: items.json holds the talismans and the items, the split between
+ * them is a class, and TAL-01 resolved through the items deck to a plate that
+ * has never existed.
  */
 function resolve(input) {
   for (const deck of components.decks) {
     if (!deck.source) continue;
-    const file = join(ROOT, 'data', deck.source);
-    if (!existsSync(file)) continue;
-    const data = readJson(file);
-    const cards = data[deck.id] || data[Object.keys(data).find((k) => Array.isArray(data[k]))] || [];
+    if (!existsSync(join(ROOT, 'data', deck.source))) continue;
+    let cards;
+    try { cards = cardsOfDeck(ROOT, deck); } catch { continue; }
     for (const card of cards) {
-      if (!card.cardCode) continue;
       let plate;
       try { plate = plateIdFor(deck, card); } catch { continue; }
       if (card.cardCode === input || plate === input) return { deck, card, plate, code: card.cardCode };

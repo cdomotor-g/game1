@@ -668,7 +668,17 @@ const vehicles = read('vehicles.json').vehicles;
 const monsters = read('monsters.json').monsters;
 const characters = read('characters.json').characters;
 const peoplesById = new Map(read('peoples.json').peoples.map((p) => [p.id, p]));
-const talismans = read('items.json').items.filter((i) => i.class === 'talisman');
+const itemData = read('items.json');
+const talismans = itemData.items.filter((i) => i.class === 'talisman');
+/* The other side of that split. items.json holds two decks and the line between
+   them is a class: a talisman is an arcane subject with its own back, its own
+   violet and its own prompt file, and everything else in the file - the armour
+   and the weapons today, the clothing and the potions when they are drawn - is
+   the ITEMS deck. tools/lib/mint.mjs draws the same line, once, for everybody. */
+const gear = itemData.items.filter((i) => i.class !== 'talisman' && i.cardCode);
+const itemClassName = new Map(itemData.classes.map((c) => [c.id, c.name.toLowerCase()]));
+const toolkit = read('tools.json').tools.filter((t) => t.cardCode);
+const recipeName = new Map(read('recipes.json').recipes.map((r) => [r.id, r.name]));
 const modData = read('modifications.json');
 const modifications = modData.modifications;
 const modClassName = new Map(modData.classes.map((c) => [c.id, c.name.toLowerCase()]));
@@ -843,6 +853,65 @@ for (const m of modifications) {
         : `Made at the ${m.madeAt}${hand(m)}: ${recipe} · ${m.effortHours} h.`,
     ],
     story: m.story,
+  });
+}
+
+/* An OBJECT card - a jerkin, a sword, an axe - prints what it is worth and what
+   it weighs, and says everything it DOES in words underneath.
+
+   That is deliberate and it is the same decision the modifications deck made. A
+   weapon has a combatDice and a piece of armour has an armourValue, and neither
+   of them is the whole truth: the war axe is "+1 combat die, +2 when attacking"
+   and the crossbow is three dice that also ignore a point of armour and only
+   roll every second round. Printing the bare 1 next to a letter would be a
+   smaller, wronger version of a sentence the card has room for anyway - and it
+   would put a number on the strip with no track under it, which is what the
+   strip stopped doing when the ladders came off (components.json statStrip). */
+const recipeLine = (madeAt, specialist, inputs, hours) => {
+  const bill = (inputs || []).map((i) => `${i.qty} ${commodityName.get(i.commodity) || i.commodity}`).join(', ');
+  return `Made at the ${madeAt}${specialist && specialist !== madeAt ? ` by a${/^[aeiou]/i.test(specialist) ? 'n' : ''} ${specialist}` : ''}: ${bill} · ${hours} h.`;
+};
+
+for (const i of gear) {
+  const render = plateIdFor(deckByPrefix('ITM'), i);
+  if (!hasRender(render)) { skipped.push(i.cardCode); continue; }
+  const kind = itemClassName.get(i.class) || i.class;
+  specs.push({
+    code: i.cardCode, name: i.name, portrait: render,
+    kicker: `${kind} · ${i.slot} · made at the ${i.madeAt}`,
+    desc: `Item card: ${i.name}, ${kind}. Worth ${i.baseValue}, weighs ${i.massKg}kg, worn in the ${i.slot} slot.`,
+    stats: [
+      cell('value', i.baseValue, 'ochre'),
+      cell('mass', i.massKg, 'slate'),
+    ],
+    facts: [...i.effects, recipeLine(i.madeAt, i.specialist, i.inputs, i.effortHours)],
+    story: i.story,
+  });
+}
+
+/* A TOOL prints its wear instead of its weight, because wear is the number that
+   runs out and weight is a number tools.json has never had. What it ENABLES is
+   the point of owning one, so the recipes it gates are named on the card rather
+   than left in the rulebook - by name, read off recipes.json, so a renamed job
+   renames itself here. */
+for (const t of toolkit) {
+  const render = plateIdFor(deckByPrefix('TOL'), t);
+  if (!hasRender(render)) { skipped.push(t.cardCode); continue; }
+  const jobs = (t.enables || []).map((r) => recipeName.get(r) || r);
+  specs.push({
+    code: t.cardCode, name: t.name, portrait: render,
+    kicker: `tool · ${t.family} · made at the ${t.madeAt}`,
+    desc: `Tool card: ${t.name}, ${t.family}. ${t.summary} Worth ${t.baseValue}, ${t.baseDurability} of wear in it.`,
+    stats: [
+      cell('wear', t.baseDurability, 'oxide'),
+      cell('value', t.baseValue, 'ochre'),
+    ],
+    facts: [
+      t.summary,
+      jobs.length ? `Gates: ${jobs.join(', ')}.` : null,
+      recipeLine(t.madeAt, t.specialist, t.craft?.inputs, t.craft?.effortHours),
+    ].filter(Boolean),
+    story: t.story,
   });
 }
 

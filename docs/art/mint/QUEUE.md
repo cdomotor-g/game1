@@ -15,9 +15,11 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 33/56 · maps 1/1**
+**cards 48/71 · maps 1/1**
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 33 of 56 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: 15 of 71 plates are GENERATED, not commissioned - Items and Tools, drawn by `node tools/draw-item.mjs` from the card's own data. They go through the same four steps as anything else and they are nobody's turn to draw: delete one and the tool puts it back.
+
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 33 of 71 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
@@ -26,7 +28,7 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**33 of 56 minted.** 0 waiting on a brief, 23 waiting on art, 0 waiting on frame.
+**48 of 71 minted.** 0 waiting on a brief, 23 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
@@ -68,7 +70,7 @@ Nothing waiting.
 
 ### Minted
 
-33 cards complete: `CHR-01`, `CHR-02`, `CHR-03`, `CHR-04`, `CHR-05`, `CHR-06`, `CHR-07`, `CHR-08`, `VEH-01`, `VEH-02`, `VEH-03`, `VEH-04`, `VEH-05`, `VEH-06`, `VEH-07`, `VEH-08`, `VEH-10`, `VEH-11`, `VEH-12`, `MON-06`, `MON-07`, `MON-08`, `MON-09`, `MON-10`, `MON-11`, `MON-12`, `TAL-01`, `TAL-02`, `TAL-03`, `TAL-04`, `TAL-05`, `TAL-06`, `MOD-01`.
+48 cards complete: `CHR-01`, `CHR-02`, `CHR-03`, `CHR-04`, `CHR-05`, `CHR-06`, `CHR-07`, `CHR-08`, `VEH-01`, `VEH-02`, `VEH-03`, `VEH-04`, `VEH-05`, `VEH-06`, `VEH-07`, `VEH-08`, `VEH-10`, `VEH-11`, `VEH-12`, `MON-06`, `MON-07`, `MON-08`, `MON-09`, `MON-10`, `MON-11`, `MON-12`, `TAL-01`, `TAL-02`, `TAL-03`, `TAL-04`, `TAL-05`, `TAL-06`, `MOD-01`, `ITM-01`, `ITM-04`, `ITM-05`, `ITM-02`, `ITM-03`, `ITM-06`, `ITM-07`, `ITM-09`, `ITM-08`, `ITM-10`, `TOL-01`, `TOL-02`, `TOL-03`, `TOL-04`, `TOL-05`.
 
 32 of them are framed but have no `focal` point — they predate it and are not broken, they are just aimed at the middle of their subject box. Adding one is a two-number improvement: `character-chr-01`, `character-chr-02`, `character-chr-03`, `character-chr-04`, `character-chr-05`, `character-chr-06`, `character-chr-07`, `character-chr-08`, `vehicle-veh-01`, `vehicle-veh-02`, `vehicle-veh-03`, `vehicle-veh-04`, `vehicle-veh-05`, `vehicle-veh-06`, `vehicle-veh-07`, `vehicle-veh-08`, `vehicle-veh-10`, `vehicle-veh-11`, `vehicle-veh-12`, `monster-gravel-wyrm`, `monster-mire-strangler`, `monster-reef-serpent`, `monster-deepwater-maw`, `monster-rime-harpy`, `monster-dust-devil`, `monster-storm-roc`, `talisman-tal-01`, `talisman-tal-02`, `talisman-tal-03`, `talisman-tal-04`, `talisman-tal-05`, `talisman-tal-06`.
 
@@ -81,7 +83,6 @@ Declared, numbered, backed — and simply not being illustrated this round. Set 
 | Spells | 14 | square |
 | Events | 51 | landscape scene |
 | Quests | 8 | landscape scene |
-| Items | 0 | square |
 
 ---
 

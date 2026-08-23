@@ -320,25 +320,25 @@ it does not.
 
 | Item | Made at | Inputs | Hours | Value | Mass | Effects |
 | --- | --- | --- | --- | --- | --- | --- |
-| Leather Jerkin | tailor | 2 leather | 3 | 50 | 2.5 kg | Ignore the first hit in each battle. |
-| Chain Mail | blacksmith | 2 ironware + 1 leather | 5 | 130 | 6 kg | Ignore the first two hits in each battle. |
-| Plate Harness | blacksmith | 3 steel + 2 leather | 8 | 320 | 12.5 kg | Ignore the first three hits in each battle. -1 move point. |
-| Helm | blacksmith | 1 ironware | 2 | 45 | 1.25 kg | Once per battle, cancel one hit. |
-| Shield | carpenter | 1 lumber + 1 ironware | 2 | 40 | 2 kg | +1 defence die. |
+| Leather Jerkin (ITM-01) | tailor | 2 leather | 3 | 50 | 2.5 kg | Ignore the first hit in each battle. |
+| Chain Mail (ITM-04) | blacksmith | 2 ironware + 1 leather | 5 | 130 | 6 kg | Ignore the first two hits in each battle. |
+| Plate Harness (ITM-05) | blacksmith | 3 steel + 2 leather | 8 | 320 | 12.5 kg | Ignore the first three hits in each battle. -1 move point. |
+| Helm (ITM-02) | blacksmith | 1 ironware | 2 | 45 | 1.25 kg | Once per battle, cancel one hit. |
+| Shield (ITM-03) | carpenter | 1 lumber + 1 ironware | 2 | 40 | 2 kg | +1 defence die. |
 
 ### Weapon
 
 | Item | Made at | Inputs | Hours | Value | Mass | Effects |
 | --- | --- | --- | --- | --- | --- | --- |
-| Sword | blacksmith | 2 pig-iron + 1 leather | 4 | 95 | 0.75 kg | +1 combat die. |
+| Sword (ITM-06) | blacksmith | 2 pig-iron + 1 leather | 4 | 95 | 0.75 kg | +1 combat die. |
 | Steel Sword | blacksmith | 2 steel + 1 leather | 5 | 210 | 0.75 kg | +2 combat dice, and hits on 3+ instead of 4+. |
-| War Axe | blacksmith | 2 pig-iron + 1 lumber | 3 | 80 | 1.5 kg | +1 combat die, +2 when attacking. |
+| War Axe (ITM-07) | blacksmith | 2 pig-iron + 1 lumber | 3 | 80 | 1.5 kg | +1 combat die, +2 when attacking. |
 | Pike | blacksmith | 1 pig-iron + 2 lumber | 3 | 70 | 2.25 kg | +2 combat dice when defending a town. Cannot be used with a shield. |
-| Bow | carpenter | 1 lumber + 1 rope | 3 | 65 | 0.5 kg | Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight. |
+| Bow (ITM-09) | carpenter | 1 lumber + 1 rope | 3 | 65 | 0.5 kg | Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight. |
 | Quiver of Arrows | carpenter | 1 lumber + 1 leather | 2 | 30 | 1 kg | Holds 3 uses. Each battle with a bow spends 1. |
 | Sling | weaver | 1 cloth | 1 | 12 | 0.25 kg | +1 combat die for halflings only. Everyone else may as well throw the stone. |
-| War Hammer | blacksmith | 2 steel + 1 lumber | 5 | 190 | 3 kg | +2 combat dice. Ignores enemy armour entirely. |
-| Crossbow | blacksmith | 1 steel + 2 lumber + 1 rope | 5 | 175 | 2.5 kg | +3 combat dice, and ignores 1 point of enemy armour. Slow: it rolls in the first round of a battle and every second round after. Needs a quiver to fight. |
+| War Hammer (ITM-08) | blacksmith | 2 steel + 1 lumber | 5 | 190 | 3 kg | +2 combat dice. Ignores enemy armour entirely. |
+| Crossbow (ITM-10) | blacksmith | 1 steel + 2 lumber + 1 rope | 5 | 175 | 2.5 kg | +3 combat dice, and ignores 1 point of enemy armour. Slow: it rolls in the first round of a battle and every second round after. Needs a quiver to fight. |
 | Harpoon | blacksmith | 1 pig-iron + 1 lumber + 2 rope | 3 | 75 | 2 kg | +1 combat die, and +3 instead against any water-element monster or anything bigger than a horse. A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round. +1 output on Fish. |
 | Dirk | blacksmith | 1 pig-iron | 2 | 35 | 0.4 kg | +1 combat die. Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls. |
 | Greatsword | blacksmith | 3 steel + 1 leather | 7 | 340 | 2 kg | +3 combat dice, and hits on 3+ instead of 4+. -1 move point, and it cannot be used with a shield. Worth 1 victory point at game end. |

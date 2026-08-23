@@ -139,9 +139,12 @@ export function assemble(brief) {
 /**
  * The cards of one deck, whatever file they live in and whatever they are called
  * in it. A deck names its source; this is the one place that knows how to open
- * one.
+ * one, which is why tools/aim-preview.mjs and tools/draw-item.mjs ask here
+ * rather than each guessing which array in a file is the deck. Two decks share
+ * items.json and the split between them is a class, so guessing gets it wrong:
+ * a talisman found by the items deck is aimed at a plate that does not exist.
  */
-function cardsOfDeck(root, deck) {
+export function cardsOfDeck(root, deck) {
   const file = readJson(join(root, 'data', deck.source));
   const pick = {
     characters: () => file.characters,
@@ -153,6 +156,7 @@ function cardsOfDeck(root, deck) {
     events: () => file.cards,
     quests: () => file.quests,
     items: () => file.items.filter((i) => i.class !== 'talisman'),
+    tools: () => file.tools,
   }[deck.id];
   if (!pick) throw new Error(`the mint does not know how to read the ${deck.id} deck`);
   return (pick() || []).filter((c) => c.cardCode);
@@ -186,6 +190,13 @@ function subjectsOf(root, line) {
           format: deck.plateFormat,
           plate: plateIdFor(deck, card),
           briefFile: deck.promptFile,
+          /* A deck whose plates are GENERATED still has every step a deck has -
+             a brief, a plate, a framing entry - and the queue reports it exactly
+             like any other. What changes is only who is waiting: a missing plate
+             on this deck is a tool that has not been run, not an artist who has
+             not answered, and the queue says which. Same field, same reason, as
+             a map plate.kind. */
+          drawnBy: deck.plateKind === 'generated' ? deck.drawnBy : null,
           subject: card,
         });
       }
@@ -375,6 +386,22 @@ export function survey(root = HERE) {
           aimExtra: aim.extra,
           step: !hasBrief && !hasPlate ? 'write' : !hasPlate ? 'draw' : !aim.done ? 'aim' : 'minted',
         });
+      }
+
+      /* Which of this line's subjects are drawn by a tool in this repository
+         rather than by somebody with a pen. One line, like the size note: it is
+         a standing fact about the line, and repeating it per subject would bury
+         the rows that are actually somebody's turn. */
+      const generatedRows = entry.rows.filter((r) => r.drawnBy);
+      if (generatedRows.length) {
+        const tools = [...new Set(generatedRows.map((r) => r.drawnBy))];
+        const decks = [...new Set(generatedRows.map((r) => r.group))];
+        out.notes.push(
+          `${line.id}: ${generatedRows.length} of ${entry.rows.length} plates are GENERATED, not commissioned - ` +
+            `${decks.join(' and ')}, drawn by ${tools.map((t) => `\`node ${t}\``).join(', ')} from the card's own data. ` +
+            `They go through the same four steps as anything else and they are nobody's turn to draw: ` +
+            `delete one and the tool puts it back.`
+        );
       }
 
       /* One line, not thirty. A plate under the declared size is a real finding
