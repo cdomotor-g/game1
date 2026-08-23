@@ -15250,6 +15250,21 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "modification-spinnaker": {
+        "file": "art/renders/modification-spinnaker.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.04,
+          0.03,
+          0.94,
+          0.77
+        ],
+        "focal": [
+          0.56,
+          0.32
+        ]
+      },
       "monster-deepwater-maw": {
         "file": "art/renders/monster-deepwater-maw.png",
         "width": 1055,

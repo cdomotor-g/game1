@@ -140,6 +140,11 @@
       "subject": [0.16, 0.08, 0.70, 0.84],
       "note": "Stopper to base of the flask, with the crystal caged inside it."
     },
+    "modification-spinnaker": {
+      "subject": [0.04, 0.03, 0.94, 0.77],
+      "focal": [0.56, 0.32],
+      "note": "The folded sail and the clew stretched out of it, with the spar and its bell fitting; the palm, the wax and the snuffer at the foot are scenery a flat window may spend."
+    },
     "people-dwarf": {
       "subject": [0.12, 0.10, 0.80, 0.62],
       "note": "Pick over the shoulder, lamp in the other hand, head between them."
