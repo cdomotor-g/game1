@@ -18,7 +18,7 @@
     { "key": "discovery", "file": "discovery.json", "collection": "tables", "idField": "id", "summary": "Discovery roll tables: one d20 column per terrain code, plus road, rail and cave." },
     { "key": "arcana", "file": "arcana.json", "collection": "spells", "idField": "id", "summary": "Elements, mana storage and the spell list." },
     { "key": "monsters", "file": "monsters.json", "collection": "monsters", "idField": "id", "summary": "The monster deck, three per element, with encounter options." },
-    { "key": "vehicles", "file": "vehicles.json", "collection": "vehicles", "idField": "id", "summary": "The vehicle deck: named trains, ships, caravans and horses, each printing its damage boxes and its hold." },
+    { "key": "vehicles", "file": "vehicles.json", "collection": "vehicles", "idField": "id", "summary": "The vehicle deck: named trains, ships, caravans and horses, each printing its hull and its hold." },
     { "key": "characters", "file": "characters.json", "collection": "characters", "idField": "id", "summary": "The character deck: named heroes with health, strength, defence, mana and the gold they start with." },
     { "key": "quests", "file": "quests.json", "collection": "quests", "idField": "id", "summary": "The quest deck: mini-quests and campaigns, accept or decline." },
     { "key": "modifications", "file": "modifications.json", "collection": "modifications", "idField": "id", "summary": "The modification deck: fittings and enchantments bolted onto a vehicle." },

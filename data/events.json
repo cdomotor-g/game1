@@ -50,7 +50,7 @@
         { "type": "crop", "op": "yield-multiplier", "value": 0.5, "target": "region" },
         { "type": "commodity-loss", "commodity": "water", "qty": 2, "target": "region-towns" }
       ],
-      "mitigations": ["A town with a well loses no water.", "Towns on a coast or marsh tile - anywhere with fresh water - are unaffected."] },
+      "mitigations": ["A town with a well loses no water.", "Towns on a marsh tile, or waterside on a river or a lake - anywhere with fresh water - are unaffected."] },
     { "id": "long-summer", "cardCode": "EVT-03", "name": "Long Summer", "category": "weather", "scope": "global", "copies": 2,
       "text": "A gift of a season.",
       "effects": [
@@ -68,7 +68,7 @@
       "text": "The river takes back its floodplain.",
       "effects": [
         { "type": "crop", "op": "destroy", "target": "region-farms" },
-        { "type": "building", "op": "halt", "rounds": 1, "target": "region-riverbank" },
+        { "type": "building", "op": "halt", "rounds": 1, "target": "region-river" },
         { "type": "commodity-gain", "commodity": "clay", "qty": 3, "target": "region-towns", "text": "Silt: a small consolation." }
       ] },
     { "id": "earthquake", "cardCode": "EVT-06", "name": "Earthquake", "category": "disaster", "scope": "local", "copies": 1,

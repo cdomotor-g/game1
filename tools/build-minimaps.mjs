@@ -4,14 +4,27 @@
  * data/components.json, data/terrain.json and whichever map the table is
  * playing on.
  *
- * A mini-map is a flat colour and a grid, and that is the whole specification.
- * One regular hexagon filled with the plain colour the terrain already declares,
- * a hexagonal grid of cells ruled on top, and two working panels in the space a
- * hexagon on a rectangle leaves over. There is no render, no pattern and no
- * hatch, so there is no plate, no artist, no framing entry and nothing in the
- * mint queue: a sheet is generated, not commissioned. Drawn ground competes with
- * the pieces standing on it, and every one of these sheets is a sheet somebody
- * is standing pieces on.
+ * A mini-map is a flat colour, a pattern and a grid, and that is the whole
+ * specification. One regular hexagon filled with the plain colour the terrain
+ * already declares, the terrain's own map mark scattered across the cells, a
+ * hexagonal grid ruled on top, and two working panels in the space a hexagon on
+ * a rectangle leaves over. There is no render and no plate, so there is no
+ * artist, no framing entry and nothing in the mint queue: a sheet is generated,
+ * not commissioned.
+ *
+ * The pattern is the world map's own. A terrain carries a MARK - a grass tuft, a
+ * conifer, two hummocks, a peak - as data (data/terrain.json terrains[].mark),
+ * exactly as an element carries one, and data/components.json marks.terrain says
+ * how to draw it and how thickly to scatter it. So the ground on a mini-map and
+ * the ground in the campaign map's legend are traced from one path and cannot
+ * drift apart.
+ *
+ * These sheets were a flat colour and nothing else, on the argument that drawn
+ * ground competes with the pieces standing on it. The argument was half right: a
+ * DRAWN sheet competes, and a mark at a third of a cell on the ink plate at a
+ * third of full strength does not. It does what the wash could not do on its own
+ * - say which ground this is from across the table - and it does it in the
+ * black-and-white edition too, where there is no wash at all.
  *
  * THE CELL IS THE WORLD HEX. Not approximately — exactly. It is read off the
  * campaign map's own print preset (data/maps/<id>.json print.presets), so a
@@ -25,9 +38,10 @@
  * the build rather than running off it.
  *
  * Two plates, as everywhere (docs/art/01-two-plate-system.md): #wash is the
- * terrain colour and nothing else, #ink is the grid, the panels and every letter
- * in soot alone, #grime is the wear. Drop #wash and the sheet still works: the
- * grid, the terrain code and the panels were never the colour's job.
+ * terrain colour and nothing else, #ink is the pattern, the grid, the panels and
+ * every letter in soot alone, #grime is the wear. Drop #wash and the sheet still
+ * works - better than it used to, because the mark saying which ground this is
+ * was never the colour's job either.
  *
  * Usage: node tools/build-minimaps.mjs [--check]
  */
@@ -45,6 +59,9 @@ const palette = JSON.parse(readFileSync(join(ROOT, 'docs/art/palette.json'), 'ut
 const components = read('components.json');
 const spec = read('minimap.json');
 const terrain = read('terrain.json');
+/* How a terrain's map mark is drawn and how thickly it is scattered. The PATH
+   is on the terrain; this is the only thing that knows how heavy the line is. */
+const MARK = components.marks.terrain;
 
 const SOOT = palette.ink.soot.hex;
 const TALLOW = palette.paper.tallow.hex;
@@ -222,6 +239,49 @@ function centreOf({ q, r }) {
 /* ------------------------------------------------------------- sheet pieces */
 
 /**
+ * The ground: one terrain's map mark, scattered across the cells of the field.
+ *
+ * Three marks to a cell (components.json marks.terrain.onField), set on a small
+ * triangle about the cell's centre and nudged by a fraction of their own size,
+ * so the field reads as ground rather than as wallpaper. The nudge is
+ * deterministic - seeded off the terrain and the cell's own coordinates - because
+ * --check compares the file byte for byte and a sheet nobody has touched has to
+ * come out the same twice.
+ *
+ * The triangle is what keeps the pattern honest on a hex grid: every mark sits
+ * well inside the cell's inradius, so nothing ever crosses a grid line and a
+ * player is never looking at half a tree wondering which cell it is in.
+ */
+function ground(t, list) {
+  const O = MARK.onField;
+  const size = mm(O.sizeMm);
+  const k = size / 24;                     // the 24-grid, scaled to the sheet
+  const ring = CELL_R * 0.42;              // how far the three marks stand out
+  const rand = rng(`ground-${t.id}`);
+  const out = [];
+
+  for (const c of list) {
+    const { x, y } = centreOf(c);
+    for (let i = 0; i < O.perCell; i++) {
+      const a = (Math.PI * 2 * i) / O.perCell - Math.PI / 2;
+      const jx = (rand() - 0.5) * 2 * O.jitter * size;
+      const jy = (rand() - 0.5) * 2 * O.jitter * size;
+      const cx = x + Math.cos(a) * ring + jx;
+      const cy = y + Math.sin(a) * ring + jy;
+      out.push(
+        `<g transform="translate(${num(cx - 12 * k)} ${num(cy - 12 * k)}) scale(${num(k)})">` +
+        `<path d="${t.mark.path}"/></g>`
+      );
+    }
+  }
+  return (
+    `<g fill="${MARK.fill}" stroke="${SOOT}" stroke-width="${MARK.strokeWidth}" ` +
+    `stroke-linecap="${MARK.strokeLinecap}" stroke-linejoin="${MARK.strokeLinejoin}" ` +
+    `opacity="${O.opacity}">\n    ${out.join('')}\n  </g>`
+  );
+}
+
+/**
  * One panel: a titled box of ruled rows.
  *
  * Both panels print on every sheet, so no sheet is ever the wrong sheet — a
@@ -316,6 +376,10 @@ function sheet(t) {
     return `<path d="${hexPath(x, y, CELL_R)}"/>`;
   }).join('');
 
+  /* The ground itself, on the ink plate under the grid: this terrain's own map
+     mark, the same path the campaign map's legend swatch traces. */
+  const pattern = ground(t, list);
+
   /* The field's edge, traced rather than drawn: every cell edge with no cell on
      the other side of it. A hexagon of hexes has a stepped boundary, and a
      smooth hexagon laid over it lands on none of the cells. */
@@ -336,7 +400,7 @@ function sheet(t) {
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${num(W)} ${num(H)}" width="${num(W)}" height="${num(H)}" font-family="${SERIF}">
 <title>Mini-map — ${esc(t.name)}</title>
-<desc>${esc(spec.board.summary)} This sheet is ${esc(t.name.toLowerCase())} (${esc(t.code)}): the field is that terrain's printed wash from palette.json and nothing else - no render, no pattern. ${ROWS} cells across, ${list.length} cells in all, each ${WORLD.mm} mm across the flats, which is a world-map hex on the ${esc(WORLD.map)} ${esc(WORLD.preset)} preset. Generated by tools/build-minimaps.mjs from data/minimap.json, data/components.json and data/terrain.json - do not edit. ${MM.sheet.widthMm} x ${MM.sheet.heightMm} mm at ${U} units/mm, ${MM.sheet.bleedMm} mm bleed. The ink plate alone is the black-and-white edition.</desc>
+<desc>${esc(spec.board.summary)} This sheet is ${esc(t.name.toLowerCase())} (${esc(t.code)}): the field is that terrain's printed wash from palette.json, patterned with that terrain's own map mark (${esc(t.mark.id)}) on the ink plate - no render, no plate. ${ROWS} cells across, ${list.length} cells in all, each ${WORLD.mm} mm across the flats, which is a world-map hex on the ${esc(WORLD.map)} ${esc(WORLD.preset)} preset. Generated by tools/build-minimaps.mjs from data/minimap.json, data/components.json and data/terrain.json - do not edit. ${MM.sheet.widthMm} x ${MM.sheet.heightMm} mm at ${U} units/mm, ${MM.sheet.bleedMm} mm bleed. The ink plate alone is the black-and-white edition.</desc>
 <defs>
   <clipPath id="sheet">${rect(inset(0), '')}</clipPath>
 </defs>
@@ -350,6 +414,11 @@ function sheet(t) {
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="${SOOT}">
+  <!-- the ground: this terrain's map mark from data/terrain.json, scattered by
+       data/components.json marks.terrain. It is on the ink plate, so the sheet
+       still says which ground it is with the wash dropped -->
+  ${pattern}
+
   <!-- the field's own edge, and the grid ruled inside it: never drawn by an
        image model, exactly as on the campaign map (docs/map/README.md) -->
   <g fill="none" stroke="${SOOT}" stroke-width="${MM.grid.strokeWidth}" opacity="${MM.grid.opacity}">
@@ -382,6 +451,9 @@ function sheet(t) {
 for (const t of terrain.terrains) {
   if (!palette.terrain?.[t.id]?.wash) {
     throw new Error(`palette.json declares no terrain wash for "${t.id}" - a mini-map field has nothing to print in`);
+  }
+  if (!t.mark?.path) {
+    throw new Error(`terrain.json declares no mark for "${t.id}" - a mini-map field has no ground to draw`);
   }
 }
 
@@ -428,6 +500,9 @@ const index = `<!doctype html>
 <h1>The mini-map sheets</h1>
 <p class="note">${esc(spec.board.summary)}</p>
 <p class="note">${esc(spec.board.note)}</p>
+<p class="note">The pattern on each field is that terrain's own <strong>map mark</strong>, from
+<code>data/terrain.json</code> — the same path the campaign map's legend swatch traces, drawn on the ink plate
+so a sheet still says which ground it is with the colour dropped.</p>
 <p class="note">Each cell is <strong>${WORLD.mm}&nbsp;mm across the flats</strong> — a world-map hex on the
 <code>${esc(WORLD.map)}</code> map at its <code>${esc(WORLD.preset)}</code> print preset, read from the map rather than
 typed here. ${ROWS} cells across, ${cells().length} cells in all. Generated by <code>tools/build-minimaps.mjs</code>

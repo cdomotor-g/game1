@@ -1,19 +1,19 @@
 {
-  "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds their character card, four cards of whatever kit they have in play, and the six numbered tracks a figure and their gear walk a token along.\n\nOne board, not one per people, and not one per SPECIES either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, defence, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter): the furniture does not care.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
+  "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, and the five numbered tracks it walks a token along.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, defence, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the five columns left over got wider.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
   "version": "0.4.0",
 
   "board": {
     "id": "player-board",
     "name": "Player Board",
     "sheet": "A4 landscape",
-    "summary": "One per player and one for the table, and every one identical. The character card top left, six tracks up the middle, four cards of kit on the right, and the round's phases under the character.",
-    "spare": "Print one more than there are players. The spare is the ENCOUNTER board: when a discovery roll turns up a monster or a stranger, their card is dealt onto it, its tracks are set from the card's summary strip, and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter).",
-    "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, which is what let a sixth track on without anything getting narrower.",
-    "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person. People, calling, health, strength, defence and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster and a stranger met on the road."
+    "summary": "One per player, one per vehicle in play, and one spare for the table, and every one identical. The card in play top left, five tracks up the middle, four cards of kit on the right, and the round's phases under it.",
+    "spare": "Print more than there are players: one spare for the ENCOUNTER, and one for every vehicle anybody expects to have on the road at once. The encounter board is the one a monster or a stranger is dealt onto when a discovery roll turns one up - its tracks are set from the card's summary strip and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter). A vehicle board is the same board doing the same job for a hull instead of a body.",
+    "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, and with five tracks rather than six each column is over two millimetres wider than it was.",
+    "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person, or alive. People, calling, health, strength, defence and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster, a stranger met on the road and the wagon they are all arguing about."
   },
 
   "$trackKeys": {
-    "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, and numbered in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the six columns are one grid rather than six scales a player has to keep straight.",
+    "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, and numbered in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the five columns are one grid rather than five scales a player has to keep straight.",
     "letter": "the single letter printed at the head of the column - what a player calls the track across the table",
     "label": "the full name, printed beside the letter",
     "unit": "printed under the letter where the track counts something other than itself - hexes, on the one track that does",
@@ -28,10 +28,11 @@
     {
       "id": "health", "name": "Health", "letter": "H", "label": "HEALTH", "unit": null,
       "kind": "harm", "ink": "oxide", "step": 1,
-      "covers": { "value": 14, "paths": ["characters.characters[].health", "monsters.monsters[].health"], "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met." },
-      "walks": "Down as the figure takes hits, and up under medical aid alone - 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A round that ends with nothing to eat costs 1.",
-      "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way.",
-      "rule": "rules.json rest, rules.json upkeep.food, characters.json health, monsters.json health"
+      "covers": { "value": 14, "paths": ["characters.characters[].health", "monsters.monsters[].health", "vehicles.vehicles[].hull"], "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met. The sturdiest hull in the vehicle deck reaches 12 on the same column." },
+      "walks": "Down as the figure takes hits, and up under medical aid alone - 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A round that ends with nothing to eat costs 1. A VEHICLE runs the same column and reads it as its hull: set it from the card, down as it is damaged, up as it is repaired - one rung a round in any settlement of town rank or better, at 5 coin a rung.",
+      "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way. A vehicle at zero is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
+      "note": "This column swallowed the vehicle track. There used to be a V beside it counting damage on somebody's wagon, printed on every board in the game whether or not anybody was running one - and counting UP, which is the only number on the board that did. A hull is a body: it has a maximum on its card, it takes hits, it is mended in town, and at nothing it is carried off. One column, one direction, and the wagon gets a board of its own to walk it on.",
+      "rule": "rules.json rest, rules.json upkeep.food, characters.json health, monsters.json health, vehicles.json hull"
     },
     {
       "id": "strength", "name": "Strength", "letter": "S", "label": "STRENGTH", "unit": null,
@@ -63,15 +64,6 @@
       "rule": "travel.json speeds, rules.json movement.legs"
     },
     {
-      "id": "vehicle", "name": "Vehicle Damage", "letter": "V", "label": "VEHICLE", "unit": null,
-      "kind": "harm", "ink": "oxide", "step": 1,
-      "covers": { "value": 12, "paths": ["vehicles.vehicles[].damageBoxes"], "note": "The sturdiest hull in the vehicle deck." },
-      "walks": "The vehicle the player is running - the train, the ship, the wagon, the horse. Up as it is damaged, down as it is repaired: one box a round in any settlement of town rank or better, at 5 coin a box.",
-      "atZero": "Sound. At the top the vehicle is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
-      "note": "It takes the V rather than the D because defence took the D. A player says 'my defence' and 'the wagon's damage', and only one of those two is about the player - so the letter goes to the player and the vehicle is named outright.",
-      "rule": "rules.json rest, vehicles.json damageBoxes"
-    },
-    {
       "id": "mana", "name": "Mana", "letter": "M", "label": "MANA", "unit": null,
       "kind": "capacity", "arcane": true, "ink": "bruise", "step": 1,
       "covers": { "value": 10, "paths": ["items.items[].manaCapacity", "peoples.peoples[].manaStorage.innate"], "note": "The crystal phylactery, the deepest vessel in the game." },
@@ -83,7 +75,7 @@
   ],
 
   "ceiling": {
-    "$comment": "The board's ceiling is the game's ceiling. Every number a token walks in this game has to fit between components.json board.track.from and .to, and these are all of them - tools/validate-data.mjs sweeps the lot and fails the build on anything that has grown past it. That is the whole reason the mass scale was halved: a hero carrying 28 kg could not stand on a track that stops at 14, so the kilogram got smaller rather than the board getting longer.\n\nWhat is deliberately NOT here: a vehicle's cargoCapacity, which runs to 100. Cargo is bulk in a hold, measured on the vehicle card's own bar at whatever step keeps it walkable (components.json bars.steps), and no player ever stands a token on the board for it. A number only belongs on this list if the board has a column for it.",
+    "$comment": "The board's ceiling is the game's ceiling. Every number a token walks in this game has to fit between components.json board.track.from and .to, and these are all of them - tools/validate-data.mjs sweeps the lot and fails the build on anything that has grown past it. That is the whole reason the mass scale was halved: a hero carrying 28 kg could not stand on a track that stops at 14, so the kilogram got smaller rather than the board getting longer.\n\nWhat is deliberately NOT here: a vehicle's cargoCapacity, which runs to 100. Cargo is bulk in a hold, printed once on the vehicle's card as a maximum, and counted by the cargo itself sitting in the kit slots - no token stands on a column for it. A number only belongs on this list if the board has a column for it.",
     "paths": [
       "characters.characters[].health",
       "characters.characters[].strength",
@@ -93,7 +85,7 @@
       "monsters.monsters[].strength",
       "monsters.monsters[].defence",
       "monsters.monsters[].manaYield",
-      "vehicles.vehicles[].damageBoxes",
+      "vehicles.vehicles[].hull",
       "items.items[].manaCapacity",
       "peoples.peoples[].strength.base",
       "peoples.peoples[].defence.base",
@@ -103,14 +95,14 @@
 
   "slots": [
     {
-      "id": "character", "name": "Character slot", "label": "CHARACTER", "count": 1,
-      "takes": ["characters"],
-      "note": "The hero, dealt or picked at setup. Their card is where everything particular about them lives - people, calling, health, strength, what they can shoulder - which is exactly why the board underneath is the same for everybody."
+      "id": "figure", "name": "The card in play", "label": "IN PLAY", "count": 1,
+      "takes": ["characters", "monsters", "vehicles"],
+      "note": "Whatever this board is being: a hero dealt or picked at setup, a monster or a stranger a discovery roll turned up, or a vehicle somebody is running. Its card is where everything particular lives - people, calling, health, strength, what it can shoulder, what its hull will take - which is exactly why the board underneath is the same for all three. The recess says IN PLAY rather than CHARACTER because it stopped being only a character's the day a wagon needed a pace track."
     },
     {
       "id": "kit", "name": "Kit slots", "label": "ITEM", "count": 4,
-      "takes": ["items", "vehicles", "modifications", "quests"],
-      "note": "Whatever the hero has in play and needs to see: a weapon, a lantern, a talisman, the vehicle they are running, the quest they have accepted. Four, because five cards on the table is a hand and four is a kit - and because a hero who wants a fifth thing has to put something down, which is the same argument the strength limit is making."
+      "takes": ["items", "modifications", "quests", "commodities"],
+      "note": "Whatever the thing in the recess has in play and needs to see. On a character's board that is a weapon, a lantern, a talisman, the quest they have accepted; on a vehicle's board it is the same four slots holding its cargo and the modifications bolted to it. Four, because five cards on the table is a hand and four is a kit - and because anybody who wants a fifth thing has to put something down, which is the same argument the strength limit is making. A vehicle card no longer sits here: it has a board of its own."
     }
   ],
 

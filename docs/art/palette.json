@@ -108,7 +108,8 @@
     "marsh": { "wash": "#8E9478", "ink": "verdigris", "tint": 55, "shade": 25 },
     "tundra": { "wash": "#D2D3CE", "ink": "slate", "tint": 18 },
     "desert": { "wash": "#DCC79C", "ink": "ochre", "tint": 35 },
-    "coast": { "wash": "#8FAEBF", "ink": "slate", "tint": 55 },
+    "river": { "wash": "#93B7CC", "ink": "slate", "tint": 48 },
+    "lake": { "wash": "#86ACC4", "ink": "slate", "tint": 58 },
     "shallow-water": { "wash": "#7BA0B5", "ink": "slate", "tint": 70 },
     "deep-water": { "wash": "#4E7189", "ink": "slate", "tint": 90 }
   },

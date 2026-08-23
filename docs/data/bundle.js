@@ -114,7 +114,7 @@ window.GAME_DATA = {
         "file": "vehicles.json",
         "collection": "vehicles",
         "idField": "id",
-        "summary": "The vehicle deck: named trains, ships, caravans and horses, each printing its damage boxes and its hold."
+        "summary": "The vehicle deck: named trains, ships, caravans and horses, each printing its hull and its hold."
       },
       {
         "key": "characters",
@@ -1566,7 +1566,7 @@ window.GAME_DATA = {
           "trade-good",
           "import-only"
         ],
-        "notes": "Nothing on this map grows spices. They arrive at coastal markets and event cards, and that scarcity is the point - they are the pure trading commodity."
+        "notes": "Nothing on this map grows spices. They arrive at harbour markets and event cards, and that scarcity is the point - they are the pure trading commodity."
       },
       {
         "id": "gems",
@@ -2347,7 +2347,7 @@ window.GAME_DATA = {
         "name": "Clay Pit",
         "category": "extraction",
         "tier": 1,
-        "summary": "Digs clay from marshes, shores and wet ground.",
+        "summary": "Digs clay from marshes, river banks and wet ground.",
         "cost": [
           {
             "commodity": "logs",
@@ -2359,8 +2359,7 @@ window.GAME_DATA = {
         "workerSlots": 3,
         "terrain": [
           "marsh",
-          "grassland",
-          "coast"
+          "grassland"
         ],
         "requiresDeposit": "clay-bed"
       },
@@ -2380,9 +2379,10 @@ window.GAME_DATA = {
         "minRounds": 1,
         "workerSlots": 3,
         "terrain": [
-          "desert",
-          "coast"
-        ]
+          "desert"
+        ],
+        "orWaterside": "any",
+        "$watersideNote": "Desert sand, OR the sand any water leaves on its bank - a sea shore, a lake rim, a river bar. `orWaterside` is an alternative to the terrain list, the way recipes.json site.orWaterside is; `waterside` on its own (the dock, the harbour) is a requirement on top of it. This is the pair of keys the coast terrain used to hide: coast was in the list and meant both things at once."
       },
       {
         "id": "mine",
@@ -2486,8 +2486,7 @@ window.GAME_DATA = {
         "workerSlots": 4,
         "fieldSlots": 4,
         "terrain": [
-          "grassland",
-          "coast"
+          "grassland"
         ]
       },
       {
@@ -2590,7 +2589,7 @@ window.GAME_DATA = {
         "name": "Dock",
         "category": "extraction",
         "tier": 1,
-        "summary": "Fishing, and the cheap end of water transport.",
+        "summary": "Fishing, and the cheap end of water transport. Goes on any land the water reaches - a sea shore, a lake rim or a river bank all do.",
         "cost": [
           {
             "commodity": "logs",
@@ -2604,16 +2603,14 @@ window.GAME_DATA = {
         "buildPoints": 8,
         "minRounds": 2,
         "workerSlots": 3,
-        "terrain": [
-          "coast"
-        ]
+        "waterside": "any"
       },
       {
         "id": "sawmill",
         "name": "Sawmill",
         "category": "production",
         "tier": 1,
-        "summary": "Logs into lumber. Doubles its rate on a coast tile - water drives the saw.",
+        "summary": "Logs into lumber. Doubles its rate on a waterside tile - water drives the saw.",
         "cost": [
           {
             "commodity": "logs",
@@ -2630,8 +2627,7 @@ window.GAME_DATA = {
         "terrain": [
           "forest",
           "grassland",
-          "hills",
-          "coast"
+          "hills"
         ]
       },
       {
@@ -2772,8 +2768,7 @@ window.GAME_DATA = {
         "terrain": [
           "grassland",
           "hills",
-          "desert",
-          "coast"
+          "desert"
         ]
       },
       {
@@ -2858,8 +2853,7 @@ window.GAME_DATA = {
         "terrain": [
           "grassland",
           "forest",
-          "hills",
-          "coast"
+          "hills"
         ]
       },
       {
@@ -2883,8 +2877,7 @@ window.GAME_DATA = {
         "workerSlots": 2,
         "terrain": [
           "grassland",
-          "marsh",
-          "coast"
+          "marsh"
         ]
       },
       {
@@ -2914,7 +2907,7 @@ window.GAME_DATA = {
         "name": "Mill",
         "category": "production",
         "tier": 1,
-        "summary": "Grain into flour. Free extra output on a hills or coast tile (wind and water).",
+        "summary": "Grain into flour. Free extra output on a hills tile or a waterside one (wind and water).",
         "cost": [
           {
             "commodity": "lumber",
@@ -2930,8 +2923,7 @@ window.GAME_DATA = {
         "workerSlots": 2,
         "terrain": [
           "grassland",
-          "hills",
-          "coast"
+          "hills"
         ]
       },
       {
@@ -3463,9 +3455,7 @@ window.GAME_DATA = {
         "buildPoints": 22,
         "minRounds": 3,
         "workerSlots": 2,
-        "terrain": [
-          "coast"
-        ],
+        "waterside": "sea",
         "requiresBuilding": "dock",
         "victoryPoints": 2
       },
@@ -3703,8 +3693,7 @@ window.GAME_DATA = {
           "terrain": [
             "hills",
             "mountain",
-            "tundra",
-            "coast"
+            "tundra"
           ]
         },
         "tool": "shovel",
@@ -3963,9 +3952,9 @@ window.GAME_DATA = {
         "site": {
           "building": "well",
           "orTerrain": [
-            "coast",
             "marsh"
-          ]
+          ],
+          "orWaterside": "fresh"
         },
         "effortHours": 1,
         "inputs": [
@@ -4593,7 +4582,7 @@ window.GAME_DATA = {
             "qty": 3
           }
         ],
-        "notes": "+1 lumber if the sawmill is on a coast tile."
+        "notes": "+1 lumber if the sawmill is on a waterside tile."
       },
       {
         "id": "burn-charcoal",
@@ -5722,7 +5711,11 @@ window.GAME_DATA = {
           "oil-field",
           "gold-deposit"
         ],
-        "startTile": true
+        "startTile": true,
+        "mark": {
+          "id": "tussock",
+          "path": "M6 19c0-3.6 1-6.2 3-8.2M12 19c0-5.2 0.7-8.8 2-11.6M18 19c0-3.6-1-6.2-3-8.2"
+        }
       },
       {
         "id": "forest",
@@ -5746,7 +5739,11 @@ window.GAME_DATA = {
           "mana-vein"
         ],
         "treeTokens": 6,
-        "startTile": true
+        "startTile": true,
+        "mark": {
+          "id": "conifer",
+          "path": "M12 21v-4.4M12 3.6 5.6 16.6h12.8z"
+        }
       },
       {
         "id": "hills",
@@ -5771,7 +5768,11 @@ window.GAME_DATA = {
           "gold-deposit",
           "gem-vein",
           "mana-vein"
-        ]
+        ],
+        "mark": {
+          "id": "hummock",
+          "path": "M2.5 17.5q4.6-7.4 9.2 0M11.6 17.5q4.6-6.4 9.2 0"
+        }
       },
       {
         "id": "mountain",
@@ -5797,7 +5798,11 @@ window.GAME_DATA = {
           "gold-deposit",
           "gem-vein",
           "mana-vein"
-        ]
+        ],
+        "mark": {
+          "id": "peak",
+          "path": "M2 19 9 7.6l4.4 6.8 3-4.4L22 19z"
+        }
       },
       {
         "id": "marsh",
@@ -5819,7 +5824,11 @@ window.GAME_DATA = {
           "clay-bed",
           "peat-bog",
           "oil-field"
-        ]
+        ],
+        "mark": {
+          "id": "reeds",
+          "path": "M3 18h18M8 18V8.2M12 18V5.2M16 18V9.6"
+        }
       },
       {
         "id": "tundra",
@@ -5841,7 +5850,11 @@ window.GAME_DATA = {
           "oil-field",
           "peat-bog"
         ],
-        "effortPenalty": -1
+        "effortPenalty": -1,
+        "mark": {
+          "id": "frost",
+          "path": "M12 4v16M5.2 8l13.6 8M18.8 8 5.2 16"
+        }
       },
       {
         "id": "desert",
@@ -5855,40 +5868,69 @@ window.GAME_DATA = {
         "railCostMultiplier": 2,
         "buildable": true,
         "features": [
-          "sand"
+          "sand",
+          "salt"
         ],
         "deposits": [
           "salt-dome",
           "oil-field",
           "gem-vein"
         ],
-        "requiresWaterForFarming": true
+        "requiresWaterForFarming": true,
+        "mark": {
+          "id": "dune",
+          "path": "M2 16.6q5.2-7.4 10.4-3.2M12.4 13.4q4 2.6 9.6 1.2M4.4 20.4q3.6-3 7.2-1.4"
+        }
       },
       {
-        "id": "coast",
-        "name": "Coast",
-        "code": "C",
-        "family": "land",
-        "colour": "#c9c193",
-        "summary": "Any shore - sea, lake or river mouth. The only place a harbour can go.",
-        "moveCost": 1,
-        "roadCostMultiplier": 1,
-        "railCostMultiplier": 2,
-        "buildable": true,
-        "waterAccess": true,
+        "id": "river",
+        "name": "River",
+        "code": "R",
+        "family": "water",
+        "colour": "#6ea7c6",
+        "summary": "A watercourse wide enough to be its own hex. Fresh water and fish, a barge lane running inland, and a wall across any road that has not been bridged.",
+        "moveCost": 99,
+        "roadCostMultiplier": 0,
+        "railCostMultiplier": 0,
+        "buildable": false,
+        "bridgeable": true,
         "features": [
           "fish",
-          "sand",
-          "salt",
-          "fresh-water"
+          "fresh-water",
+          "reeds"
         ],
-        "deposits": [
-          "salt-dome",
-          "sand-bar",
-          "clay-bed",
-          "gold-deposit"
+        "navigableBy": [
+          "barge"
         ],
-        "startTile": true
+        "mark": {
+          "id": "current",
+          "path": "M5 3.4v17.2M19 3.4v17.2M8 12.6q2-1.8 4 0t4 0"
+        }
+      },
+      {
+        "id": "lake",
+        "name": "Lake",
+        "code": "L",
+        "family": "water",
+        "colour": "#5f9cbe",
+        "summary": "Standing fresh water with land all round it. Barges work it, ships never reach it, and every tile on its rim is waterside.",
+        "moveCost": 99,
+        "roadCostMultiplier": 0,
+        "railCostMultiplier": 0,
+        "buildable": false,
+        "bridgeable": true,
+        "features": [
+          "fish",
+          "fresh-water",
+          "reeds"
+        ],
+        "navigableBy": [
+          "barge"
+        ],
+        "mark": {
+          "id": "pool",
+          "path": "M12 5.2c5.3 0 8.4 2.9 8.4 6.8s-3.1 6.8-8.4 6.8-8.4-2.9-8.4-6.8 3.1-6.8 8.4-6.8zM8 12.6q2-1.6 4 0t4 0"
+        }
       },
       {
         "id": "shallow-water",
@@ -5896,7 +5938,7 @@ window.GAME_DATA = {
         "code": "S",
         "family": "water",
         "colour": "#7fb6cf",
-        "summary": "Lakes, straits and inshore sea. Crossable by bridge, navigable by barge.",
+        "summary": "Straits, inshore sea and river mouths. Crossable by bridge, navigable by barge.",
         "moveCost": 99,
         "roadCostMultiplier": 0,
         "railCostMultiplier": 0,
@@ -5908,7 +5950,11 @@ window.GAME_DATA = {
         "navigableBy": [
           "barge",
           "ship"
-        ]
+        ],
+        "mark": {
+          "id": "shoal",
+          "path": "M2 8.6q5-3.4 10 0t10 0M5.6 15.4h4.8M13.6 15.4h4.8"
+        }
       },
       {
         "id": "deep-water",
@@ -5927,7 +5973,11 @@ window.GAME_DATA = {
         ],
         "navigableBy": [
           "ship"
-        ]
+        ],
+        "mark": {
+          "id": "swell",
+          "path": "M2 6.6q5-3.4 10 0t10 0M2 12.6q5-3.4 10 0t10 0M2 18.6q5-3.4 10 0t10 0"
+        }
       }
     ],
     "features": [
@@ -5992,6 +6042,44 @@ window.GAME_DATA = {
         "summary": "Discovery rolls here can reveal a cave mouth. Entering a cave needs a lit torch or lantern - see travel.json and discovery.json."
       }
     ],
+    "siting": {
+      "$comment": "Where the coast went.\n\nCoast was a terrain that meant 'the edge of the water', which quietly made a shore a KIND OF GROUND rather than something a piece of ground happens to be next to. It cost the map twice: a beach in front of a forest had to be drawn as neither forest nor beach, and a town on a lake could not have a dock at all unless the artist painted a ring of sand round the lake first. The edge of the water is a RELATIONSHIP, and it is stated as one here - read off the map the moment somebody asks, printed on no hex, and true of a river bank, a lake rim and a sea shore alike without three terrains to say so.",
+      "waterside": {
+        "id": "waterside",
+        "name": "Waterside",
+        "rule": "A land tile with at least one water tile beside it. It is not a terrain, it is never printed on a hex, and no map has to be redrawn to make one.",
+        "kinds": {
+          "$comment": "Which water counts, for the thing being sited. A harbour wants the sea; a tannery only wants water.",
+          "any": [
+            "river",
+            "lake",
+            "shallow-water",
+            "deep-water"
+          ],
+          "fresh": [
+            "river",
+            "lake"
+          ],
+          "sea": [
+            "shallow-water",
+            "deep-water"
+          ]
+        },
+        "grants": [
+          "fresh water without a well, beside a river or a lake",
+          "a dock, and the fishing on the water tile it reaches (features fish)",
+          "a harbour, beside the sea, and the shipping that comes with it",
+          "water power: a mill or a sawmill on a waterside tile takes the bonus its own line names"
+        ],
+        "declaredBy": {
+          "$comment": "Two keys, because there are two things a shore was doing. Both take one of the kinds above, and tools/validate-data.mjs fails the build on a value that is not one of them.",
+          "waterside": "a REQUIREMENT, on top of whatever ground the thing already needs: the dock and the harbour. Nothing else will do.",
+          "orWaterside": "an ALTERNATIVE to the terrain list, the way recipes.json site.orTerrain is an alternative to site.building: the sand pit is desert sand OR the sand any water leaves on its bank. Drawing water is a well, a marsh, or fresh water beside you.",
+          "note": "Coast in a terrain list used to mean both of these at once, and which one it meant depended on the building. That is the whole argument for splitting it."
+        },
+        "checked": "tools/validate-map.mjs: a settlement with a harbour has to stand on a tile the sea reaches, and a river or lake hex with no land beside it at all is not a river or a lake. tools/validate-data.mjs: every waterside and orWaterside value is one of the kinds above."
+      }
+    },
     "boardSetup": {
       "$comment": "Setup for a board dealt from a bag of TILES. That board is shelved - see https://github.com/cdomotor-g/game1/issues/18 - and this block is kept rather than removed, because it is still the right answer for a tile set and because tools/validate-map.mjs reads terrainMix and recommendedTiles to report what a DRAWN board actually holds against what the rules assume. Nothing here is a rule about a drawn map: a continent is not a shuffled tile bag, and validate-map reports the gap without ever failing on it.",
       "recommendedTiles": {
@@ -6003,14 +6091,15 @@ window.GAME_DATA = {
       "faceDownAtStart": "All tiles beyond each player's starting cluster of 3.",
       "startingCluster": "Each player places a town hall on a face-up start tile plus its two neighbours, at least 3 tiles from any other player.",
       "terrainMix": {
-        "grassland": 0.3,
+        "grassland": 0.32,
         "forest": 0.2,
         "hills": 0.14,
         "mountain": 0.08,
         "marsh": 0.06,
         "tundra": 0.04,
         "desert": 0.04,
-        "coast": 0.08,
+        "river": 0.04,
+        "lake": 0.02,
         "shallow-water": 0.04,
         "deep-water": 0.02
       }
@@ -6038,7 +6127,7 @@ window.GAME_DATA = {
           3
         ],
         "surveyDifficulty": 2,
-        "summary": "Common and shallow. Often visible without a survey on marsh and coast tiles."
+        "summary": "Common and shallow. Often visible without a survey on marsh and waterside tiles."
       },
       {
         "id": "sand-bar",
@@ -6338,7 +6427,8 @@ window.GAME_DATA = {
         "waterCapable": true,
         "waters": [
           "shallow-water",
-          "coast"
+          "river",
+          "lake"
         ]
       },
       {
@@ -6384,8 +6474,7 @@ window.GAME_DATA = {
         "waterCapable": true,
         "waters": [
           "shallow-water",
-          "deep-water",
-          "coast"
+          "deep-water"
         ],
         "notes": "Storm events can sink a ship outright. Insure it by splitting cargo across two."
       },
@@ -6520,7 +6609,7 @@ window.GAME_DATA = {
         ],
         "theftRisk": 0,
         "waterCapable": true,
-        "notes": "Ignores terrain entirely - there is no ground up there - but it is the only mode weather can stop dead, and the only one with nowhere to tie up. It must end each journey at a settlement or lose 1 damage box to the mooring. Cargo aboard an airship cannot be robbed on the road; it can be dropped."
+        "notes": "Ignores terrain entirely - there is no ground up there - but it is the only mode weather can stop dead, and the only one with nowhere to tie up. It must end each journey at a settlement or lose 1 hull to the mooring. Cargo aboard an airship cannot be robbed on the road; it can be dropped."
       }
     ],
     "routes": {
@@ -6592,8 +6681,8 @@ window.GAME_DATA = {
         "foodPreference": [],
         "terrainComfort": [
           "grassland",
-          "coast",
-          "forest"
+          "forest",
+          "hills"
         ],
         "strength": {
           "base": 3,
@@ -6738,8 +6827,7 @@ window.GAME_DATA = {
         ],
         "terrainComfort": [
           "grassland",
-          "forest",
-          "coast"
+          "forest"
         ],
         "strength": {
           "base": 2,
@@ -7100,7 +7188,7 @@ window.GAME_DATA = {
         ],
         "mitigations": [
           "A town with a well loses no water.",
-          "Towns on a coast or marsh tile - anywhere with fresh water - are unaffected."
+          "Towns on a marsh tile, or waterside on a river or a lake - anywhere with fresh water - are unaffected."
         ]
       },
       {
@@ -7175,7 +7263,7 @@ window.GAME_DATA = {
             "type": "building",
             "op": "halt",
             "rounds": 1,
-            "target": "region-riverbank"
+            "target": "region-river"
           },
           {
             "type": "commodity-gain",
@@ -9627,12 +9715,13 @@ window.GAME_DATA = {
       "B",
       "T",
       "D",
-      "C",
+      "R",
+      "L",
       "S",
       "O"
     ],
     "speeds": {
-      "$comment": "Hexes per day leg. Columns follow terrainCodes: G grassland, F forest, H hills, M mountain, B marsh, T tundra, D desert, C coast, S shallow water, O deep water. The road and rail rows override the terrain underneath: on a road use the road number whatever the ground; on rail a train moves at the rail number and nothing else moves at all.",
+      "$comment": "Hexes per day leg. Columns follow terrainCodes: G grassland, F forest, H hills, M mountain, B marsh, T tundra, D desert, R river, L lake, S shallow water, O deep water. The four water columns are 0 for every land mode: a river or a lake stops a cart the way the sea does, and the way across one is a bridge, where the road row rules instead. The road and rail rows override the terrain underneath: on a road use the road number whatever the ground; on rail a train moves at the rail number and nothing else moves at all.",
       "modes": [
         {
           "id": "on-foot",
@@ -9645,7 +9734,8 @@ window.GAME_DATA = {
             "B": 1,
             "T": 2,
             "D": 2,
-            "C": 4,
+            "R": 0,
+            "L": 0,
             "S": 0,
             "O": 0
           }
@@ -9661,7 +9751,8 @@ window.GAME_DATA = {
             "B": 1,
             "T": 3,
             "D": 3,
-            "C": 6,
+            "R": 0,
+            "L": 0,
             "S": 0,
             "O": 0
           },
@@ -9678,7 +9769,8 @@ window.GAME_DATA = {
             "B": 0,
             "T": 1,
             "D": 2,
-            "C": 3,
+            "R": 0,
+            "L": 0,
             "S": 0,
             "O": 0
           }
@@ -9694,7 +9786,8 @@ window.GAME_DATA = {
             "B": 0,
             "T": 1,
             "D": 2,
-            "C": 2,
+            "R": 0,
+            "L": 0,
             "S": 0,
             "O": 0
           }
@@ -9710,7 +9803,8 @@ window.GAME_DATA = {
             "B": 0,
             "T": 0,
             "D": 0,
-            "C": 3,
+            "R": 3,
+            "L": 3,
             "S": 3,
             "O": 0
           }
@@ -9726,7 +9820,8 @@ window.GAME_DATA = {
             "B": 0,
             "T": 0,
             "D": 0,
-            "C": 2,
+            "R": 0,
+            "L": 0,
             "S": 3,
             "O": 5
           }
@@ -9742,11 +9837,12 @@ window.GAME_DATA = {
             "B": 2,
             "T": 5,
             "D": 0,
-            "C": 1,
+            "R": 2,
+            "L": 2,
             "S": 2,
             "O": 0
           },
-          "note": "Runners want snow and ice. Tundra is its road; frozen marsh and shallow water carry it where nothing wheeled will go; on bare grass it is a heavy box being dragged. Shallow water only while a frost is on - see the winter rule below."
+          "note": "Runners want snow and ice. Tundra is its road; frozen marsh, river, lake and shallow water carry it where nothing wheeled will go; on bare grass it is a heavy box being dragged. The water columns count only while a frost is on - see the winter rule below."
         },
         {
           "id": "airship",
@@ -9759,7 +9855,8 @@ window.GAME_DATA = {
             "B": 5,
             "T": 5,
             "D": 5,
-            "C": 5,
+            "R": 5,
+            "L": 5,
             "S": 5,
             "O": 5
           },
@@ -9843,7 +9940,7 @@ window.GAME_DATA = {
     "winter": {
       "$comment": "A sled is the first mode in the game whose speeds depend on the season, so the season needs stating somewhere. It is stated here and nowhere else.",
       "when": "While a Hard Frost card (events.json) is in play, and on any tundra or mountain tile at any time.",
-      "effect": "Marsh, shallow water and coast tiles count as frozen: sleds cross them at the listed speed and no other land mode may enter shallow water at all. Barges and ships may not enter a frozen tile.",
+      "effect": "Marsh, river, lake and shallow water tiles count as frozen: sleds cross them at the listed speed and no other land mode may enter frozen water at all. Barges and ships may not enter a frozen tile.",
       "thaw": "When the frost lifts, any sled standing on a marsh or water tile is lost with its cargo. Move it before the round ends."
     },
     "caves": {
@@ -10195,30 +10292,69 @@ window.GAME_DATA = {
         }
       },
       {
-        "id": "coast",
-        "name": "Coast (C)",
-        "terrain": "coast",
-        "code": "C",
+        "id": "river",
+        "name": "River (R)",
+        "terrain": "river",
+        "code": "R",
+        "entries": [
+          {
+            "roll": "1-2",
+            "result": "hazard"
+          },
+          {
+            "roll": "3-5",
+            "result": "traveller"
+          },
+          {
+            "roll": "6-13",
+            "result": "nothing"
+          },
+          {
+            "roll": "14",
+            "result": "flotsam"
+          },
+          {
+            "roll": "15-16",
+            "result": "merchant"
+          },
+          {
+            "roll": "17-19",
+            "result": "monster"
+          },
+          {
+            "roll": "20",
+            "result": "quest-omen"
+          }
+        ],
+        "$note": "The busiest water in the game and the most dangerous underfoot. A river is the road everybody who cannot afford a road uses, so it grows merchants and ferrymen - and it is also rapids, a shifting bar and rotten ice, which is why the hazard band is two wide and no other water table's is.",
+        "elementWeights": {
+          "water": 3,
+          "earth": 2,
+          "air": 1,
+          "fire": 0
+        }
+      },
+      {
+        "id": "lake",
+        "name": "Lake (L)",
+        "terrain": "lake",
+        "code": "L",
         "entries": [
           {
             "roll": "1",
             "result": "hazard"
           },
           {
-            "roll": "2-4",
+            "roll": "2-3",
             "result": "traveller"
           },
           {
-            "roll": "5-12",
+            "roll": "4-13",
             "result": "nothing"
           },
           {
-            "roll": "13-14",
+            "roll": "14-15",
             "result": "flotsam"
-          },
-          {
-            "roll": "15",
-            "result": "merchant"
           },
           {
             "roll": "16-19",
@@ -10229,9 +10365,10 @@ window.GAME_DATA = {
             "result": "quest-omen"
           }
         ],
+        "$note": "Quiet water with land all round it: no pirates, because there is nowhere for them to run to, and a long empty band because most of a lake is most of a lake.",
         "elementWeights": {
           "water": 3,
-          "air": 2,
+          "air": 1,
           "earth": 1,
           "fire": 0
         }
@@ -10681,7 +10818,7 @@ window.GAME_DATA = {
     }
   },
   "monsters": {
-    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow.\n\nCard layout: name and card code at the top, a SUMMARY STRIP under them - H health, S strength, D defence, Y mana yield, and the element's mark in the last box - then the portrait across the full width the frame allows, and the story low. The strip prints maximums and nothing walks on the card: when this monster is met, its card is dealt onto a spare player board and its tracks are set from the strip, and from that moment it is run like a player who is not a person (rules.json exploration.discovery.encounter).\n\nStrength is what it swings with, defence is what makes you miss - two numbers now, where one used to do both jobs and made every strong thing armoured by accident. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
+    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow.\n\nCard layout: name and card code at the top, a SUMMARY STRIP under them - H health, S strength, D defence, Y mana yield, and the element's mark in the last box - then the portrait, and the story standing up the right-hand edge of the card (components.json storyRail). The portrait is taller than it is wide because of that: these plates are drawn on a portrait page, and the story panel that used to run across the bottom was taking the height the picture wanted.\n\nThe name on the card is the NAME. `unique` is a deck rule - there is one of this monster and it is not shuffled back in once it is resolved - and it lives here and in the annex, not printed after the creature's name where at card size it read as part of it. The strip prints maximums and nothing walks on the card: when this monster is met, its card is dealt onto a spare player board and its tracks are set from the strip, and from that moment it is run like a player who is not a person (rules.json exploration.discovery.encounter).\n\nStrength is what it swings with, defence is what makes you miss - two numbers now, where one used to do both jobs and made every strong thing armoured by accident. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
     "version": "0.2.0",
     "encounterOptions": {
       "$comment": "Meeting a monster is a choice, and the choice is the player's unless the card says otherwise. The card lists which of the four options it allows; slay is always allowed.",
@@ -10851,8 +10988,8 @@ window.GAME_DATA = {
         "health": 7,
         "manaYield": 2,
         "terrains": [
-          "coast",
-          "shallow-water"
+          "shallow-water",
+          "deep-water"
         ],
         "options": {
           "enslave": false,
@@ -10860,7 +10997,7 @@ window.GAME_DATA = {
           "domesticate": false
         },
         "gift": "2 fish, tipped over the gunwale at dusk",
-        "befriended": "While it patrols a shore hex of yours, pirates never trouble barges or ships that start or end there.",
+        "befriended": "While it patrols an inshore hex of yours, pirates never trouble barges or ships that start or end there.",
         "story": "Fishing villages paint its coils on their boats and spill it a share of every catch. Skippers who call the custom superstition are welcome to sail without it."
       },
       {
@@ -10936,7 +11073,7 @@ window.GAME_DATA = {
         "manaYield": 3,
         "terrains": [
           "mountain",
-          "coast"
+          "hills"
         ],
         "options": {
           "enslave": false,
@@ -10982,7 +11119,7 @@ window.GAME_DATA = {
         "terrains": [
           "tundra",
           "mountain",
-          "coast"
+          "lake"
         ],
         "options": {
           "enslave": false,
@@ -10995,7 +11132,7 @@ window.GAME_DATA = {
     ]
   },
   "vehicles": {
-    "$comment": "The vehicle deck: named, individual vehicles as cards - seventeen now, and every one of them a specific machine rather than a class of machine. A vehicle card is a specific machine with a history; transport.json modes are the generic rules it runs on (mode names which). Card layout: name and card code at the top, a summary strip under them - V for the damage boxes the hull holds, C for the bulk of its hold - then the picture across the full width the frame allows, and the story low. Nothing on the card is walked: damage runs up the player board's V track, and loaded bulk is counted against the printed C. A vehicle whose V track fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first. Art prompts in docs/art/prompts/vehicles.md.",
+    "$comment": "The vehicle deck: named, individual vehicles as cards - seventeen now, and every one of them a specific machine rather than a class of machine. A vehicle card is a specific machine with a history; transport.json modes are the generic rules it runs on (mode names which). Card layout: name and card code at the top, a summary strip under them - H for the hull, C for the bulk of its hold - then the picture across the full width the frame allows, and the story low. Nothing on the card is walked.\n\nA VEHICLE IN PLAY IS DEALT A PLAYER BOARD. It is run like a player who is not a person: its card lies in the recess, its cargo and its modifications lie in the four kit slots, and its hull walks the board's HEALTH track like anybody else's - set from the printed H, down as it takes damage, up as it is repaired, and wrecked at nothing, spilling its cargo on the hex for whoever reaches it first. There was a sixth track on every board in the game called V, about a wagon most players were not running; there is not now. See data/playerboard.json.",
     "version": "0.1.0",
     "cardIdScheme": {
       "$comment": "Every card in every deck carries a code: a deck prefix, a dash, a two-digit sequence. VEH vehicles, MON monsters, CHR characters, QST quests, TAL talismans, EVT events, ITM items, SPL spells. A revision suffix (VEH-03 v2) marks a reprinted card; unrevised cards carry no suffix. The numbering is this repository's own - anyone forking the game is free to renumber, which is why the code is data, not identity: the id field is the identity.",
@@ -11020,7 +11157,7 @@ window.GAME_DATA = {
         "name": "The Reach Flyer",
         "mode": "train",
         "cargoCapacity": 40,
-        "damageBoxes": 8,
+        "hull": 8,
         "quirk": "+1 hex per leg, and she carries 4 passengers (figures or characters) free among the mail sacks.",
         "story": "The pride of the Steppe Line, polished brass and impatience. She has made Vossgard to Brassford in a day and a night, and the fireman has the burns to prove it."
       },
@@ -11030,7 +11167,7 @@ window.GAME_DATA = {
         "name": "Steppe Hauler",
         "mode": "train",
         "cargoCapacity": 100,
-        "damageBoxes": 10,
+        "hull": 10,
         "quirk": "Burns 1 extra coal per leg. Nothing else on rails carries close to her hundred bulk.",
         "story": "Twelve trucks and a boiler like a chapel. When the Hauler passes a village, the village comes out to watch; when she is late, the ironworks stand idle and everybody knows why."
       },
@@ -11040,7 +11177,7 @@ window.GAME_DATA = {
         "name": "Old Smoke",
         "mode": "train",
         "cargoCapacity": 60,
-        "damageBoxes": 6,
+        "hull": 6,
         "quirk": "Costs half a train's price to buy. Each journey, roll a d6: on a 1 she limps, and the journey takes twice as long.",
         "story": "The first engine ever to cross the pass, sold on, patched, sold again. Every engineer in the Reach has driven her once and speaks of her the way you speak of a difficult grandmother."
       },
@@ -11050,7 +11187,7 @@ window.GAME_DATA = {
         "name": "Gullwing",
         "mode": "ship",
         "cargoCapacity": 30,
-        "damageBoxes": 8,
+        "hull": 8,
         "quirk": "+1 hex per leg, and she carries a rigged lantern: she may sail night legs at half speed.",
         "story": "A courier sloop built for the packet run, all sail and no patience. She has outrun two storms and one embargo, and her skipper mentions all three before you have sat down."
       },
@@ -11060,7 +11197,7 @@ window.GAME_DATA = {
         "name": "Saltreach Pride",
         "mode": "ship",
         "cargoCapacity": 80,
-        "damageBoxes": 12,
+        "hull": 12,
         "quirk": "Takes the first 2 hits of any battle or storm on her oak sides without marking damage.",
         "story": "The great trader of the western run, oak-ribbed and stubborn. She has been dismasted twice and come home twice, and Saltreach's harbour rates are set to whatever her master will pay."
       },
@@ -11070,7 +11207,7 @@ window.GAME_DATA = {
         "name": "Ember Coast Trader",
         "mode": "ship",
         "cargoCapacity": 55,
-        "damageBoxes": 10,
+        "hull": 10,
         "quirk": "Sells at +10% at any harbour on the southern coast - Dunhaven and Port Malchior know her flag and clear her berth.",
         "story": "A fat, cheerful coaster that has worked the southern run so long the reef serpents recognise her hull. Her hold smells of salt, spice and forty years of honest smuggling."
       },
@@ -11080,7 +11217,7 @@ window.GAME_DATA = {
         "name": "The Dunhaven Column",
         "mode": "caravan",
         "cargoCapacity": 28,
-        "damageBoxes": 8,
+        "hull": 8,
         "quirk": "Desert-wise: crosses desert at 2 hexes per leg, and hazard results in desert cost her nothing.",
         "story": "Forty years of the Kholvar crossing, water butts strapped three deep. The Column has never lost a wagon to the sand, and its masters intend to be buried saying so."
       },
@@ -11090,7 +11227,7 @@ window.GAME_DATA = {
         "name": "The Fenway Wagons",
         "mode": "caravan",
         "cargoCapacity": 20,
-        "damageBoxes": 6,
+        "hull": 6,
         "quirk": "Broad marsh-rigged wheels: may cross marsh at 1 hex per leg, which no other wheeled thing can do at all.",
         "story": "Wide-wheeled, willow-sprung, waterproofed with fen pitch. The Fenway crews sell the safe road through the Mirewash, and the toll is knowing which tussocks are lying."
       },
@@ -11100,7 +11237,7 @@ window.GAME_DATA = {
         "name": "The Varl Wagonrow",
         "mode": "caravan",
         "cargoCapacity": 24,
-        "damageBoxes": 7,
+        "hull": 7,
         "quirk": "Hill-country teams: crosses hills at 2 hexes per leg.",
         "story": "Ox-teams bred in the highlands, drivers born in the wagons. The Wagonrow takes the upland road the maps advise against and arrives, insufferably, early."
       },
@@ -11110,7 +11247,7 @@ window.GAME_DATA = {
         "name": "Bay Courser",
         "mode": "mounted",
         "cargoCapacity": 2,
-        "damageBoxes": 4,
+        "hull": 4,
         "quirk": "+1 hex on grassland legs. The fastest honest thing on four legs in the Reach.",
         "story": "A racing bay out of the Vossgard studs, all nerves and speed. She has carried three riders to fame and thrown two of them at the finish."
       },
@@ -11120,7 +11257,7 @@ window.GAME_DATA = {
         "name": "Steppe Pony",
         "mode": "mounted",
         "cargoCapacity": 3,
-        "damageBoxes": 5,
+        "hull": 5,
         "quirk": "Ignores tundra penalties and forages for herself: no feed, ever.",
         "story": "Shaggy, short-legged, unimpressed. The steppe pony has carried the mail through three winters that killed better-looking horses, and her opinion of better-looking horses is on record."
       },
@@ -11130,7 +11267,7 @@ window.GAME_DATA = {
         "name": "Black Malchior",
         "mode": "mounted",
         "cargoCapacity": 2,
-        "damageBoxes": 4,
+        "hull": 4,
         "quirk": "Night-eyed: may travel one night leg per journey with no light at all.",
         "story": "A tall black gelding the port is named after, or the other way round - the ostlers argue. He walks the dark road at an even pace, and riders swear he sees the ruts before the moon does."
       },
@@ -11140,7 +11277,7 @@ window.GAME_DATA = {
         "name": "Nine and the Drum",
         "mode": "sled",
         "cargoCapacity": 10,
-        "damageBoxes": 5,
+        "hull": 5,
         "quirk": "Nine dogs and a lead bitch called Drum. +2 hexes on any tundra leg, and the team smells a crevasse: ignore the first hazard result of every journey.",
         "story": "Eight in the traces, one spare running loose, and Drum out front deciding what the driver meant. She has brought two drivers home unconscious on the load and takes the view that this is the arrangement."
       },
@@ -11150,7 +11287,7 @@ window.GAME_DATA = {
         "name": "The Red Lantern",
         "mode": "ship",
         "cargoCapacity": 70,
-        "damageBoxes": 11,
+        "hull": 11,
         "quirk": "Junk-rigged and steam-fitted: sails free, or burns 1 coal per leg for +2 hexes and no wind roll at all. Her battened sails take no damage from storms.",
         "story": "Five battened sails the colour of dried blood, a squat iron funnel amidships, and a hull built in sealed compartments so a holed one is an inconvenience rather than a funeral. She came the long way round the southern ocean and her master has never once explained why."
       },
@@ -11160,7 +11297,7 @@ window.GAME_DATA = {
         "name": "The Carrion Queen",
         "mode": "ship",
         "cargoCapacity": 45,
-        "damageBoxes": 12,
+        "hull": 12,
         "quirk": "+3 combat dice at sea, and any ship she catches must hand over one cargo token or fight. Nobody legitimate will berth her: she may not use a harbour she does not own, and pays double at any market that takes her coin at all.",
         "story": "Black hull, black sails gone to ribbons, and a boiler bolted in below by somebody who did not care what it did to her lines. She makes eleven knots on a dead calm, which is the whole trick and the whole terror: outrunning the Queen used to be a matter of weather."
       },
@@ -11170,7 +11307,7 @@ window.GAME_DATA = {
         "name": "The Pilgrim's Patience",
         "mode": "airship",
         "cargoCapacity": 18,
-        "damageBoxes": 6,
+        "hull": 6,
         "quirk": "Goes over everything: no terrain costs her anything, and she cannot be robbed on the road. Roll the wind each leg (travel.json) - she has no answer to it.",
         "story": "A varnished silk envelope the length of a chapel, a wicker gondola, and a crew of four who have agreed not to discuss the drop. She carries mail, medicine and very expensive people, and has twice arrived somewhere nobody asked her to go."
       },
@@ -11180,7 +11317,7 @@ window.GAME_DATA = {
         "name": "The Sweep of Vossgard",
         "mode": "airship",
         "cargoCapacity": 14,
-        "damageBoxes": 7,
+        "hull": 7,
         "quirk": "Sweep-rigged: a fixed upper beam and a working lower one down each flank, rowed by the crew. Treat any Foul or Contrary wind as Contrary at full speed, for 1 extra crew fed that round. She cannot beat the wind - she can refuse to be beaten by it.",
         "story": "Havik Coalbrand drew the rig on the back of a timetable: fix the top spar, hinge the bottom one, and let eight strong people row the air. It looks absurd, it sounds like a mill, and it is the only airship in the Reach that has ever kept an appointment in a headwind."
       }
@@ -11320,7 +11457,7 @@ window.GAME_DATA = {
         "manaCapacity": 0,
         "traits": [
           "Linesman: a train Havik rides spends 1 less coal per leg.",
-          "Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands."
+          "Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands."
         ],
         "startsWith": [],
         "story": "Havik walked the whole Reach Line before it was laid, driving in the survey pegs by hand. He talks to engines in Old Dwarfish and maintains, with evidence, that they run better for it."
@@ -11788,7 +11925,7 @@ window.GAME_DATA = {
         "effortHours": 0,
         "baseValue": 0,
         "massKg": 0,
-        "effect": "She will not sink. A V track that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.",
+        "effect": "She will not sink. A hull run down to nothing leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.",
         "story": "Bound into the keel timber before she is planked, which means it is nearly always done to a new hull and nearly never to an old one. Insurers ask. Insurers charge less when the answer is yes."
       },
       {
@@ -11882,25 +12019,23 @@ window.GAME_DATA = {
       }
     },
     "statStrip": {
-      "$comment": "The row of lettered boxes across the top of every card, and what replaced the bars.\n\nA card used to hang a numbered ladder off each edge - harm left, capacity right - and a token walked it. That worked while a card was held in the hand. It stopped working the day the player board arrived, because a card in a recess is a card whose edges are under the board: the tracks moved to the board (playerboard.json) and the ladders on the cards became decoration that ate two columns of picture.\n\nSo a card now prints the MAXIMUM and nothing else. One box per number, the letter first and the figure after it - H 10, S 6, D 5 - and the letter is the same letter the board's track carries, so a player setting up reads across the strip and sets the tokens left to right. Nothing on a card moves any more; everything that moves is on the board.\n\nWhat the strip costs the picture is about six millimetres of height. What it pays back is the whole width of the card: the portrait window now runs frame to frame, because there is nothing beside it.",
+      "$comment": "The row of lettered boxes across the top of every card, and what replaced the bars.\n\nA card used to hang a numbered ladder off each edge - harm left, capacity right - and a token walked it. That worked while a card was held in the hand. It stopped working the day the player board arrived, because a card in a recess is a card whose edges are under the board: the tracks moved to the board (playerboard.json) and the ladders on the cards became decoration that ate two columns of picture.\n\nSo a card now prints the MAXIMUM and nothing else. One box per number, the letter first and the figure after it - H 10, S 6, D 5 - and the letter is the same letter the board's track carries, so a player setting up reads across the strip and sets the tokens left to right. Nothing on a card moves any more; everything that moves is on the board.\n\nONE BOX PER PAIR. Each cell used to hold a second, smaller box with the letter in it - a box inside a box, six times across the top of every card, and at nine millimetres a cell the inner rule was doing nothing the tint underneath was not already doing. Taking it out took a millimetre and a bit off the height of the whole strip, and the picture got it.",
       "cells": {
         "max": 6,
-        "heightMm": 5.75,
+        "heightMm": 4.6,
         "gap": 5,
-        "pad": 4,
-        "cornerRadius": 5,
-        "$maxNote": "Six is what a 63 mm card holds at a legible size - about 9 mm a box. A deck that wants a seventh number wants a smaller number of numbers."
-      },
-      "letterBox": {
-        "size": 34,
-        "fill": "soot-tint-12",
-        "$note": "A tinted square at the left of the box with the letter in it, so the letter reads as a label and not as part of the figure."
+        "pad": 5,
+        "cornerRadius": 4,
+        "$maxNote": "Six is what a 63 mm card holds at a legible size - about 9 mm a box. A deck that wants a seventh number wants a smaller number of numbers.",
+        "$heightNote": "It was 5.75 mm while every cell held a second box with the letter in it. ONE BOX PER PAIR: the letter and its figure share the cell, the letter set at the left and the figure at the right, and a box inside a box is a millimetre of ruling that only made the row look busy. The height came off the top of the picture."
       },
       "letter": {
         "size": 20,
         "family": "sans",
         "weight": "bold",
-        "tracking": 0.4
+        "tracking": 0.4,
+        "fill": "soot-tint-70",
+        "$fillNote": "One box, two jobs, so the letter separates itself from the figure by weight rather than by a rule round it: the label sits back in a tint and the number holds the ink."
       },
       "value": {
         "size": 22,
@@ -11911,7 +12046,7 @@ window.GAME_DATA = {
       },
       "rule": {
         "strokeWidth": 1.4,
-        "$note": "The strip sits in one boxed row under the kicker, each cell ruled, so it reads as a table and not as a sentence."
+        "$note": "The strip sits in one boxed row under the kicker, each cell ruled ONCE, so it reads as a table and not as a sentence. There is no second rule inside a cell: the letter and its figure are one pair in one box."
       },
       "letters": {
         "$comment": "The letter a stat is called by, across the whole game. The five that the player board also has a track for MUST match data/playerboard.json - tools/validate-data.mjs checks that they do, and fails the build if a card and a board ever start calling the same number by different names. The rest are card-only: a number that is printed and never walked has no track to borrow a letter from, so it gets one here.\n\nThese are conventions, not content: no card is named here and no value is stated here.",
@@ -11919,7 +12054,6 @@ window.GAME_DATA = {
         "strength": "S",
         "defence": "D",
         "mana": "M",
-        "vehicle": "V",
         "gold": "¤",
         "carry": "KG",
         "cargo": "C",
@@ -11929,8 +12063,20 @@ window.GAME_DATA = {
         "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so."
       }
     },
+    "storyRail": {
+      "$comment": "The story, turned on its side and stood up the right-hand edge of the card.\n\nA card's flavour used to be a panel across the bottom - full width, four or five lines, and about fifteen millimetres of the eighty-eight a card has. It was the cheapest fifteen millimetres on the card and it was taking them from the only thing on a card nobody can regenerate: the picture. Rotated ninety degrees it costs WIDTH instead, and width is the one dimension a portrait plate has to spare - a figure drawn on an A4 page is taller than it is wide, so a card that shows one wants to be taller than it is wide too, and the window on these decks was landscape because the words underneath had taken the height.\n\nSo the story runs up the side, bottom to top, and the picture goes portrait and grows into what the panel was using. Which decks do it is on the deck (`decks[].storyRail`), because it is a decision about a plate's shape and not about the card stock: the talismans are drawn square and the vehicles 3:2, and neither of them wants a taller window.",
+      "gap": 12,
+      "pad": 6,
+      "maxLines": 5,
+      "rule": {
+        "strokeWidth": 1.2,
+        "$note": "One hairline between the rail and the picture column, the same weight the horizontal rule over the old panel carried. It is what stops the words reading as a caption to the picture beside them."
+      },
+      "$linesNote": "A rail's WIDTH is its line count - one column of type per line - so a long story makes a wide rail and a narrow picture. maxLines is where that trade stops and the story is cut instead, and it is the same cap the bottom panel had. A rail line is far longer than a panel line was (it runs the height of the card, not the width), so the cap cuts less text than it did.",
+      "$directionNote": "Rotated -90, which reads bottom to top - the way a spine is lettered on this side of the Atlantic, and the way the board's own track labels already run (tools/build-board.mjs). Lines stack left to right, so the first line is the one nearest the picture."
+    },
     "board": {
-      "$comment": "The player board: one A4 sheet a player keeps in front of them, holding cards in recesses and tracks routed up the middle. Only the shapes are here - what the tracks COUNT and what the slots TAKE is content and lives in data/playerboard.json, the same division as everywhere else in this file.\n\nAlmost nothing below is a position. The board's geometry is DERIVED from four numbers - the sheet, the margin, the gutter, and the size of a card recess - so a track column is exactly the width left over once the cards have had theirs, and adding a track narrows the columns rather than running off the paper. tools/build-board.mjs does that arithmetic; see also tools/build-map.mjs, which derives its print sizes the same way and for the same reason.\n\nThere is no frame block, and that is deliberate. A card has a frame because a card is held, fanned and cut out; a board is not, and the border it used to carry was 18 mm of paper doing nothing but making the middle narrower. Taking it off is what paid for the sixth track.",
+      "$comment": "The player board: one A4 sheet a player keeps in front of them, holding cards in recesses and tracks routed up the middle. Only the shapes are here - what the tracks COUNT and what the slots TAKE is content and lives in data/playerboard.json, the same division as everywhere else in this file.\n\nAlmost nothing below is a position. The board's geometry is DERIVED from four numbers - the sheet, the margin, the gutter, and the size of a card recess - so a track column is exactly the width left over once the cards have had theirs, and adding a track narrows the columns rather than running off the paper. tools/build-board.mjs does that arithmetic; see also tools/build-map.mjs, which derives its print sizes the same way and for the same reason.\n\nThere is no frame block, and that is deliberate. A card has a frame because a card is held, fanned and cut out; a board is not, and the border it used to carry was 18 mm of paper doing nothing but making the middle narrower. Taking it off is what paid for a sixth track once; retiring that track - a vehicle is dealt a board of its own now and its damage is its health - gave the width straight back to the five that were left.",
       "sheet": {
         "widthMm": 297,
         "heightMm": 210,
@@ -11951,7 +12097,7 @@ window.GAME_DATA = {
         "$bracketNote": "Corner brackets rather than a fourth rule - the eye reads a bracket as a place to put something and a rule as a picture frame."
       },
       "track": {
-        "$comment": "The numbered ladders. Every track on the board runs the same range, from the same floor to the same ceiling, walked by a bar token - so the columns are one grid and not six scales a player has to keep straight. The ceiling is the game's ceiling too: tools/validate-data.mjs recomputes every value a track carries and fails the build if anything in data/ has grown past it.",
+        "$comment": "The numbered ladders. Every track on the board runs the same range, from the same floor to the same ceiling, walked by a bar token - so the columns are one grid and not five scales a player has to keep straight. The ceiling is the game's ceiling too: tools/validate-data.mjs recomputes every value a track carries and fails the build if anything in data/ has grown past it.",
         "from": 0,
         "to": 14,
         "headMm": 15,
@@ -11969,7 +12115,7 @@ window.GAME_DATA = {
       }
     },
     "marks": {
-      "$comment": "Drawn marks that are not pictures: they are read, like letters, and so they are held to one grid and one weight wherever they appear. The path data is not here - it belongs to the thing the mark is of. This says how to draw it.",
+      "$comment": "Drawn marks that are not pictures: they are read, like letters, and so they are held to one grid and one weight wherever they appear. The path data is not here - it belongs to the thing the mark is of, an element in data/arcana.json and a terrain in data/terrain.json. This says how to draw it.",
       "element": {
         "pathsFrom": "arcana.elements[].mark",
         "viewBox": "0 0 24 24",
@@ -11990,6 +12136,24 @@ window.GAME_DATA = {
           "insetInDisc": 0.78,
           "$insetNote": "The mark is authored edge to edge on its 24-grid. Inside a disc it is scaled down about the centre by this much, or the ends of the ground line run off the ring - which is what a mark drawn to a square and dropped in a circle always does."
         }
+      },
+      "terrain": {
+        "$comment": "The map symbol for a piece of ground: a grass tuft, a conifer, two hummocks, a peak, reeds standing in water, a frost star, a dune, a river between its banks, a pool, a shoal, a swell. The same bargain as the element marks - the PATH is data on the terrain (data/terrain.json terrains[].mark) and this says how to draw it - and for the same reason: the mini-map field, the campaign map's legend swatch and anything else that has to draw ground itself all trace one set of marks, so the sheet a player is standing figures on and the key on the big map cannot disagree about what grass looks like.\n\nThe marks are read off the drawn plate rather than invented. They are what the world map's artwork already says grass, hills and forest are, said in line weight instead of in paint - which is what makes a mini-map the same ground as the hex it opens out, rather than a second opinion about it.",
+        "pathsFrom": "terrain.terrains[].mark.path",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "strokeWidth": 1.9,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round",
+        "onField": {
+          "$comment": "How a mini-map cell is patterned. The marks go on the INK plate, like every other mark in the game, so the pattern survives the black-and-white edition - which is the whole test: a sheet with the wash dropped still has to say which ground it is.",
+          "sizeMm": 5.2,
+          "perCell": 3,
+          "jitter": 0.22,
+          "opacity": 0.34,
+          "$sizeNote": "About a third of a cell across. Three to a cell, set on a small triangle about the centre and nudged by `jitter` of their own size, so the field reads as ground rather than as wallpaper - and so no mark can reach the cell's edge and cross a grid line, which is the one thing a pattern on a hex grid must never do.",
+          "$opacityNote": "Quieter than the grid ruled over it (minimap.grid) and far quieter than a figure standing on it. The pattern says what the ground IS at a glance; the moment it competes with the pieces it has failed, and that is what the flat-colour sheet was protecting against."
+        }
       }
     },
     "$deckKeys": {
@@ -11999,11 +12163,13 @@ window.GAME_DATA = {
       "promptFile": "which file in docs/art/prompts/ holds this deck's briefs",
       "plateFormat": "the page the artist draws - see docs/art/09-framing-and-composition.md",
       "minting": "true if tools/mint-queue.mjs should chase this deck's missing plates",
+      "storyRail": "true if this deck's story runs up the right-hand edge instead of across the bottom - see storyRail. The decks drawn on a portrait page take it, because that is where a taller window pays.",
       "back": "how this deck's card back is drawn - word, motif and ink"
     },
     "decks": [
       {
         "prefix": "CHR",
+        "storyRail": true,
         "plateId": "character-{cardCode|lower}",
         "promptFile": "characters.md",
         "plateFormat": "A4 portrait",
@@ -12034,6 +12200,7 @@ window.GAME_DATA = {
       },
       {
         "prefix": "MON",
+        "storyRail": true,
         "plateId": "monster-{id}",
         "promptFile": "monsters.md",
         "plateFormat": "A4 portrait",
@@ -12239,7 +12406,7 @@ window.GAME_DATA = {
       }
     },
     "minimap": {
-      "$comment": "The zoom-in sheet: one hex of the world map, opened out. Play happens inside it and the result is written back to the big map.\n\nIt is a flat colour and a grid, and NOTHING else. No render, no pattern, no hatch, no drawn terrain: the field is a hexagon of hexagons filled with the plain colour that terrain already prints in, and the grid is ruled on top. That is the whole sheet. It needs no plate, no artist and no framing entry, which is why it is not in the mint queue and why it is not waiting on anything.\n\nThe cell is the load-bearing decision: a mini-map cell is EXACTLY the size of a world-map hex. A figure standing on the big board picks up and stands on a mini-map cell without being re-based, a route token cut for the world map fits a mini-map lane, and one ruler measures both. The scale is a fiction - the ground inside one hex is not nine hexes of ground - and it is the right fiction, because everything physical about the two boards already agrees.",
+      "$comment": "The zoom-in sheet: one hex of the world map, opened out. Play happens inside it and the result is written back to the big map.\n\nIt is a flat colour, a PATTERN and a grid. No render and no plate: the field is a hexagon of hexagons filled with the plain colour that terrain already prints in, with that terrain's own map mark scattered across the cells (marks.terrain) and the grid ruled on top. That is the whole sheet, and it is still generated rather than commissioned - it needs no artist and no framing entry, which is why it is not in the mint queue and why it is not waiting on anything.\n\nThe pattern is a reversal. These sheets were a flat colour and nothing else, on the argument that drawn ground competes with the pieces standing on it. The argument was half right: a DRAWN sheet competes, and a mark at a third of a cell, on the ink plate, at a third of full strength, does not. It does the job the wash was failing to do on its own - say which ground this is from across the table - and it does it in the black-and-white edition too, where the wash is not there at all. The marks are the world map's own, one set, from data/terrain.json.\n\nThe cell is the load-bearing decision: a mini-map cell is EXACTLY the size of a world-map hex. A figure standing on the big board picks up and stands on a mini-map cell without being re-based, a route token cut for the world map fits a mini-map lane, and one ruler measures both. The scale is a fiction - the ground inside one hex is not nine hexes of ground - and it is the right fiction, because everything physical about the two boards already agrees.",
       "sheet": {
         "widthMm": 297,
         "heightMm": 210,
@@ -12520,19 +12687,19 @@ window.GAME_DATA = {
     ]
   },
   "playerboard": {
-    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds their character card, four cards of whatever kit they have in play, and the six numbered tracks a figure and their gear walk a token along.\n\nOne board, not one per people, and not one per SPECIES either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, defence, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter): the furniture does not care.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
+    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, and the five numbered tracks it walks a token along.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, defence, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the five columns left over got wider.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
     "version": "0.4.0",
     "board": {
       "id": "player-board",
       "name": "Player Board",
       "sheet": "A4 landscape",
-      "summary": "One per player and one for the table, and every one identical. The character card top left, six tracks up the middle, four cards of kit on the right, and the round's phases under the character.",
-      "spare": "Print one more than there are players. The spare is the ENCOUNTER board: when a discovery roll turns up a monster or a stranger, their card is dealt onto it, its tracks are set from the card's summary strip, and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter).",
-      "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, which is what let a sixth track on without anything getting narrower.",
-      "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person. People, calling, health, strength, defence and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster and a stranger met on the road."
+      "summary": "One per player, one per vehicle in play, and one spare for the table, and every one identical. The card in play top left, five tracks up the middle, four cards of kit on the right, and the round's phases under it.",
+      "spare": "Print more than there are players: one spare for the ENCOUNTER, and one for every vehicle anybody expects to have on the road at once. The encounter board is the one a monster or a stranger is dealt onto when a discovery roll turns one up - its tracks are set from the card's summary strip and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter). A vehicle board is the same board doing the same job for a hull instead of a body.",
+      "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, and with five tracks rather than six each column is over two millimetres wider than it was.",
+      "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person, or alive. People, calling, health, strength, defence and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster, a stranger met on the road and the wagon they are all arguing about."
     },
     "$trackKeys": {
-      "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, and numbered in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the six columns are one grid rather than six scales a player has to keep straight.",
+      "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, and numbered in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the five columns are one grid rather than five scales a player has to keep straight.",
       "letter": "the single letter printed at the head of the column - what a player calls the track across the table",
       "label": "the full name, printed beside the letter",
       "unit": "printed under the letter where the track counts something other than itself - hexes, on the one track that does",
@@ -12556,13 +12723,15 @@ window.GAME_DATA = {
           "value": 14,
           "paths": [
             "characters.characters[].health",
-            "monsters.monsters[].health"
+            "monsters.monsters[].health",
+            "vehicles.vehicles[].hull"
           ],
-          "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met."
+          "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met. The sturdiest hull in the vehicle deck reaches 12 on the same column."
         },
-        "walks": "Down as the figure takes hits, and up under medical aid alone - 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A round that ends with nothing to eat costs 1.",
-        "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way.",
-        "rule": "rules.json rest, rules.json upkeep.food, characters.json health, monsters.json health"
+        "walks": "Down as the figure takes hits, and up under medical aid alone - 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A round that ends with nothing to eat costs 1. A VEHICLE runs the same column and reads it as its hull: set it from the card, down as it is damaged, up as it is repaired - one rung a round in any settlement of town rank or better, at 5 coin a rung.",
+        "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way. A vehicle at zero is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
+        "note": "This column swallowed the vehicle track. There used to be a V beside it counting damage on somebody's wagon, printed on every board in the game whether or not anybody was running one - and counting UP, which is the only number on the board that did. A hull is a body: it has a maximum on its card, it takes hits, it is mended in town, and at nothing it is carried off. One column, one direction, and the wagon gets a board of its own to walk it on.",
+        "rule": "rules.json rest, rules.json upkeep.food, characters.json health, monsters.json health, vehicles.json hull"
       },
       {
         "id": "strength",
@@ -12629,27 +12798,6 @@ window.GAME_DATA = {
         "rule": "travel.json speeds, rules.json movement.legs"
       },
       {
-        "id": "vehicle",
-        "name": "Vehicle Damage",
-        "letter": "V",
-        "label": "VEHICLE",
-        "unit": null,
-        "kind": "harm",
-        "ink": "oxide",
-        "step": 1,
-        "covers": {
-          "value": 12,
-          "paths": [
-            "vehicles.vehicles[].damageBoxes"
-          ],
-          "note": "The sturdiest hull in the vehicle deck."
-        },
-        "walks": "The vehicle the player is running - the train, the ship, the wagon, the horse. Up as it is damaged, down as it is repaired: one box a round in any settlement of town rank or better, at 5 coin a box.",
-        "atZero": "Sound. At the top the vehicle is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
-        "note": "It takes the V rather than the D because defence took the D. A player says 'my defence' and 'the wagon's damage', and only one of those two is about the player - so the letter goes to the player and the vehicle is named outright.",
-        "rule": "rules.json rest, vehicles.json damageBoxes"
-      },
-      {
         "id": "mana",
         "name": "Mana",
         "letter": "M",
@@ -12674,7 +12822,7 @@ window.GAME_DATA = {
       }
     ],
     "ceiling": {
-      "$comment": "The board's ceiling is the game's ceiling. Every number a token walks in this game has to fit between components.json board.track.from and .to, and these are all of them - tools/validate-data.mjs sweeps the lot and fails the build on anything that has grown past it. That is the whole reason the mass scale was halved: a hero carrying 28 kg could not stand on a track that stops at 14, so the kilogram got smaller rather than the board getting longer.\n\nWhat is deliberately NOT here: a vehicle's cargoCapacity, which runs to 100. Cargo is bulk in a hold, measured on the vehicle card's own bar at whatever step keeps it walkable (components.json bars.steps), and no player ever stands a token on the board for it. A number only belongs on this list if the board has a column for it.",
+      "$comment": "The board's ceiling is the game's ceiling. Every number a token walks in this game has to fit between components.json board.track.from and .to, and these are all of them - tools/validate-data.mjs sweeps the lot and fails the build on anything that has grown past it. That is the whole reason the mass scale was halved: a hero carrying 28 kg could not stand on a track that stops at 14, so the kilogram got smaller rather than the board getting longer.\n\nWhat is deliberately NOT here: a vehicle's cargoCapacity, which runs to 100. Cargo is bulk in a hold, printed once on the vehicle's card as a maximum, and counted by the cargo itself sitting in the kit slots - no token stands on a column for it. A number only belongs on this list if the board has a column for it.",
       "paths": [
         "characters.characters[].health",
         "characters.characters[].strength",
@@ -12684,7 +12832,7 @@ window.GAME_DATA = {
         "monsters.monsters[].strength",
         "monsters.monsters[].defence",
         "monsters.monsters[].manaYield",
-        "vehicles.vehicles[].damageBoxes",
+        "vehicles.vehicles[].hull",
         "items.items[].manaCapacity",
         "peoples.peoples[].strength.base",
         "peoples.peoples[].defence.base",
@@ -12693,14 +12841,16 @@ window.GAME_DATA = {
     },
     "slots": [
       {
-        "id": "character",
-        "name": "Character slot",
-        "label": "CHARACTER",
+        "id": "figure",
+        "name": "The card in play",
+        "label": "IN PLAY",
         "count": 1,
         "takes": [
-          "characters"
+          "characters",
+          "monsters",
+          "vehicles"
         ],
-        "note": "The hero, dealt or picked at setup. Their card is where everything particular about them lives - people, calling, health, strength, what they can shoulder - which is exactly why the board underneath is the same for everybody."
+        "note": "Whatever this board is being: a hero dealt or picked at setup, a monster or a stranger a discovery roll turned up, or a vehicle somebody is running. Its card is where everything particular lives - people, calling, health, strength, what it can shoulder, what its hull will take - which is exactly why the board underneath is the same for all three. The recess says IN PLAY rather than CHARACTER because it stopped being only a character's the day a wagon needed a pace track."
       },
       {
         "id": "kit",
@@ -12709,11 +12859,11 @@ window.GAME_DATA = {
         "count": 4,
         "takes": [
           "items",
-          "vehicles",
           "modifications",
-          "quests"
+          "quests",
+          "commodities"
         ],
-        "note": "Whatever the hero has in play and needs to see: a weapon, a lantern, a talisman, the vehicle they are running, the quest they have accepted. Four, because five cards on the table is a hand and four is a kit - and because a hero who wants a fifth thing has to put something down, which is the same argument the strength limit is making."
+        "note": "Whatever the thing in the recess has in play and needs to see. On a character's board that is a weapon, a lantern, a talisman, the quest they have accepted; on a vehicle's board it is the same four slots holding its cargo and the modifications bolted to it. Four, because five cards on the table is a hand and four is a kit - and because anybody who wants a fifth thing has to put something down, which is the same argument the strength limit is making. A vehicle card no longer sits here: it has a board of its own."
       }
     ],
     "panel": {
@@ -12770,16 +12920,16 @@ window.GAME_DATA = {
     }
   },
   "minimap": {
-    "$comment": "The mini-map: one hex of the world map, opened out onto a sheet you can put figures on.\n\nSome moments need more board than a single hex - a battle, a monster encounter, a farm growing into a walled town. Those moments zoom in: play happens inside the mini-map and the result is written back to the big map.\n\nWhat a mini-map IS, now: a flat colour and a grid. One regular hexagon filled with the plain colour the terrain already declares (terrain.json terrains[].colour), a hexagonal grid of cells ruled on top, and two working panels in the space a hexagon on a rectangle leaves over. No render. No pattern. No hatch. No drawn terrain of any kind - which means no plate, no artist, no framing entry and no place in the mint queue. A sheet is generated, not commissioned.\n\nThe cell is the decision the rest follows from: a mini-map cell is EXACTLY the size of a world-map hex, read off whichever map and print preset the table is playing on. A figure standing on the campaign board picks up and stands on a mini-map cell without being re-based; a route token cut for the world map fits a mini-map lane; one ruler measures both. The scale is a fiction - the ground inside one hex is not sixty-one hexes of ground - and it is the right fiction, because everything physical about the two boards agrees.\n\nThis file is content: what the sheets are for, what the panels hold, what the footer says. How a sheet is DRAWN - the paper, the margin, how many cells to a side, how the grid rules - is components.json minimap, the same division as the player board and the market board.",
+    "$comment": "The mini-map: one hex of the world map, opened out onto a sheet you can put figures on.\n\nSome moments need more board than a single hex - a battle, a monster encounter, a farm growing into a walled town. Those moments zoom in: play happens inside the mini-map and the result is written back to the big map.\n\nWhat a mini-map IS, now: a flat colour, a pattern and a grid. One regular hexagon filled with the plain colour the terrain already declares (terrain.json terrains[].colour), that terrain's own MAP MARK scattered across the cells, a hexagonal grid ruled on top, and two working panels in the space a hexagon on a rectangle leaves over. No render, no plate, no artist, no framing entry and no place in the mint queue. A sheet is generated, not commissioned.\n\nThe pattern is a reversal of what this file used to say, and the reasoning is worth keeping rather than quietly overwriting. It said: no pattern, because drawn ground competes with the pieces standing on it, and every one of these sheets is a sheet somebody is standing pieces on. That is half right. A DRAWN sheet competes. A grass tuft at a third of a cell, on the ink plate, at a third of full strength does not - and it does the one job the flat colour was failing at, which is saying which ground this is from across the table, and in the black-and-white edition, where there is no colour on the sheet at all. The marks are the world map's own (terrain.json terrains[].mark, drawn per components.json marks.terrain), so the ground on a mini-map is the ground on the hex it opens out and not a second opinion about it.\n\nThe cell is the decision the rest follows from: a mini-map cell is EXACTLY the size of a world-map hex, read off whichever map and print preset the table is playing on. A figure standing on the campaign board picks up and stands on a mini-map cell without being re-based; a route token cut for the world map fits a mini-map lane; one ruler measures both. The scale is a fiction - the ground inside one hex is not sixty-one hexes of ground - and it is the right fiction, because everything physical about the two boards agrees.\n\nThis file is content: what the sheets are for, what the panels hold, what the footer says. How a sheet is DRAWN - the paper, the margin, how many cells to a side, how the grid rules - is components.json minimap, the same division as the player board and the market board.",
     "version": "0.1.0",
     "board": {
       "id": "minimap",
       "name": "Mini-map",
       "sheet": "A4 landscape",
-      "summary": "One world hex, opened out: a plain-colour hexagonal field of 61 cells, each cell the size of a world-map hex, with an encounter panel and a holdings panel either side.",
+      "summary": "One world hex, opened out: a hexagonal field of 61 cells in the terrain's own colour and patterned with its own map mark, each cell the size of a world-map hex, with an encounter panel and a holdings panel either side.",
       "generic": "A sheet says nothing but its terrain. Which hex of which map it is standing in for is written in the footer in pencil when it is put down, and rubbed out when it is picked up.",
       "howMany": "One per terrain, printed once. A table needs whichever ground it is fighting or building on, which is rarely more than two sheets at a time.",
-      "note": "The flat colour is not a placeholder for artwork that has not been drawn. It is the specification. A drawn mini-map competes with the pieces standing on it, and every one of these sheets is a sheet somebody is standing pieces on."
+      "note": "The colour and the mark are not a placeholder for artwork that has not been drawn. They are the specification. A drawn mini-map competes with the pieces standing on it, and every one of these sheets is a sheet somebody is standing pieces on - so the ground is said in the lightest possible way that still says it: the terrain's own map mark, three to a cell, on the ink plate at a third strength, quieter than the grid ruled over it."
     },
     "hexGrid": {
       "$comment": "Kept for the record, because it is a decision that gets re-litigated every time somebody notices a square grid would be easier to draw.",
@@ -12868,6 +13018,10 @@ window.GAME_DATA = {
           },
           {
             "terrain": "grassland",
+            "share": 0.12
+          },
+          {
+            "terrain": "desert",
             "share": 0.11
           },
           {
@@ -12875,20 +13029,12 @@ window.GAME_DATA = {
             "share": 0.1
           },
           {
-            "terrain": "coast",
-            "share": 0.08
-          },
-          {
             "terrain": "mountain",
-            "share": 0.08
+            "share": 0.09
           },
           {
             "terrain": "forest",
             "share": 0.08
-          },
-          {
-            "terrain": "desert",
-            "share": 0.07
           },
           {
             "terrain": "marsh",
@@ -12899,7 +13045,7 @@ window.GAME_DATA = {
             "share": 0.01
           }
         ],
-        "$terrainBudgetNote": "Shares of the whole grid, water included, as built. A budget is an aim for the artist and a sanity check afterwards, never a rule: a drawn continent is not a shuffled tile bag. tools/validate-map.mjs reports the finished board against boardSetup.terrainMix in data/terrain.json for the same reason - a map with a quarter of the hills the rules assume is a map where iron is scarce, and that is worth knowing before anyone plays on it. This map is one of those: 0.8% hills against the 8% the rules assume.",
+        "$terrainBudgetNote": "Shares of the whole grid, water included, as built. Coast is not among them any more and neither is river or lake: the coast terrain was retired (terrain.json siting.waterside) and its 67 hexes went back to the ground they were a shore of, and this plate draws no inland water for a river or a lake hex to describe. A later plate that draws one gets the hexes; this one does not get them invented. A budget is an aim for the artist and a sanity check afterwards, never a rule: a drawn continent is not a shuffled tile bag. tools/validate-map.mjs reports the finished board against boardSetup.terrainMix in data/terrain.json for the same reason - a map with a quarter of the hills the rules assume is a map where iron is scarce, and that is worth knowing before anyone plays on it. This map is one of those: 0.8% hills against the 8% the rules assume.",
         "settlements": {
           "count": 19,
           "seat": 1,
@@ -13034,7 +13180,8 @@ window.GAME_DATA = {
         "$comment": "Character to terrain id, for the 'rows' block. Every id here must exist in data/terrain.json — that is checked by tools/validate-map.mjs. The characters are chosen to look like the thing at a glance so an unfamiliar reader can read the board out of the text.",
         "~": "deep-water",
         "-": "shallow-water",
-        "c": "coast",
+        "r": "river",
+        "l": "lake",
         ".": "grassland",
         "f": "forest",
         "h": "hills",
@@ -13046,30 +13193,30 @@ window.GAME_DATA = {
       "rows": [
         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
         "~~~~~~~~~~~~~---~~~~~~---------~",
-        "~~~---~--~~---cc--~~~~-tttttttt-",
-        "~~-^t--c---tttttt---~-tttttttttt",
-        "~~-^^^ttttttttttttcc-~-ttttttttt",
-        "~~--cc^tttttttttt..c---tfttttt^^",
-        "~~~~---cttttttttt...cc--f.ttt.^^",
-        "~~~~~-fftt^^ttt.......cc.hhhh^^-",
-        "~~~~~~-fff^^^^^t..........cch^^-",
-        "~~~~~-cffff^^^^..........c-chf-~",
-        "~~~~~-cfffffff^^^t........cch--~",
-        "~~~~-cfffffffff^^^^^........c--~",
-        "~~~~-f....fffffff..^^^^....^^^c-",
-        "~~~-fff...fffffff...^^^....^^^c-",
-        "~~~~-ffffcfffcffff.....^^^^^^..c",
+        "~~~---~--~~---tt--~~~~-tttttttt-",
+        "~~-^t--t---tttttt---~-tttttttttt",
+        "~~-^^^tttttttttttt..-~-ttttttttt",
+        "~~--^t^tttttttttt...---tfttttt^^",
+        "~~~~---tttttttttt.....--f.ttt.^^",
+        "~~~~~-fftt^^ttt..........hhhh^^-",
+        "~~~~~~-fff^^^^^t..........hhh^^-",
+        "~~~~~-fffff^^^^...........-hhf-~",
+        "~~~~~-ffffffff^^^t..........h--~",
+        "~~~~-ffffffffff^^^^^........^--~",
+        "~~~~-f....fffffff..^^^^....^^^h-",
+        "~~~-fff...fffffff...^^^....^^^^-",
+        "~~~~-fffffffffffff.....^^^^^^...",
         "~~~~----------ff..m....^^^^^^..f",
-        "--~~~~~~--~~~-ffmmmmmmddddd^^^.c",
-        "c----~~~~~~~~-fmmmmmdddccdd^^cc-",
-        "---f-~~~~~~~~-cmmmmccccc-cd^^c--",
-        "~~---~~~~~~~-cddddc---cccddc--~~",
-        "~~~~~~~~~~~~-cdddddccccddddc--~~",
-        "~~~~~~~~~~~-ddddddddddddddc--~~~",
-        "~~~~~~~~~~~-cdddddddddddddc-~~~~",
-        "~~~~~~~~~~~--cdddccccddddc--~~~~",
-        "~~~~~---~~-----------cc----~~~~~",
-        "~~~~~-c-~~-c-~~~~~~~----~~~~~~~~"
+        "--~~~~~~--~~~-ffmmmmmmddddd^^^..",
+        ".----~~~~~~~~-fmmmmmddddddd^^^.-",
+        "---f-~~~~~~~~-mmmmmmmddd-dd^^^--",
+        "~~---~~~~~~~-dddddm---ddddd^--~~",
+        "~~~~~~~~~~~~-ddddddddddddddd--~~",
+        "~~~~~~~~~~~-ddddddddddddddd--~~~",
+        "~~~~~~~~~~~-ddddddddddddddd-~~~~",
+        "~~~~~~~~~~~--ddddddddddddd--~~~~",
+        "~~~~~---~~-----------dd----~~~~~",
+        "~~~~~-.-~~-.-~~~~~~~----~~~~~~~~"
       ],
       "regions": [
         {
@@ -13195,7 +13342,7 @@ window.GAME_DATA = {
         {
           "id": "splinter-isles",
           "name": "The Splinter Isles",
-          "terrain": "coast",
+          "terrain": "grassland",
           "labelAt": [
             3,
             18
@@ -13715,20 +13862,20 @@ window.GAME_DATA = {
             "share": 0.22
           },
           {
-            "terrain": "coast",
-            "share": 0.15
+            "terrain": "lake",
+            "share": 0.02
           },
           {
             "terrain": "grassland",
-            "share": 0.11
+            "share": 0.19
           },
           {
             "terrain": "forest",
-            "share": 0.09
+            "share": 0.12
           },
           {
             "terrain": "hills",
-            "share": 0.05
+            "share": 0.07
           },
           {
             "terrain": "mountain",
@@ -13743,7 +13890,7 @@ window.GAME_DATA = {
             "share": 0.01
           }
         ],
-        "$terrainBudgetNote": "Shares of the whole grid, water included. Half the board is water on purpose and the land is nearly all within one hex of it, which is what makes coast the third-largest terrain here and what makes the board play differently from the Reach. Tundra is deliberately absent: this is a warm sea. It keeps a character in the legend anyway, because a legend that covers all ten terrains costs nothing and a board that later grows a cold rock should not need a legend edit to say so.",
+        "$terrainBudgetNote": "Shares of the whole grid, water included. Half the board is water on purpose and the land is nearly all within one hex of it, which is what makes this board play differently from the Reach — every island is waterside, so a dock will go almost anywhere and the question is only whether the sea beside it is worth a harbour (terrain.json siting.waterside). The share coast used to hold went back to the grassland and the forest it was a beach in front of. One lake, on the largest island, so the board has one hex of fresh water somewhere. Tundra is deliberately absent: this is a warm sea. It keeps a character in the legend anyway, because a legend that covers all eleven terrains costs nothing and a board that later grows a cold rock should not need a legend edit to say so.",
         "settlements": {
           "count": 14,
           "seat": 1,
@@ -13763,7 +13910,7 @@ window.GAME_DATA = {
           "three island groups, none of them touching, with the largest island about a sixth of the frame",
           "a reef drawn as a distinct paler shallow, chaining two groups together",
           "at least twelve harbours, and a named anchorage drawn at each",
-          "one volcanic peak on the largest island — the only mountain worth the name",
+          "one volcanic peak on the largest island — the only mountain worth the name, with a crater lake in it: the board's only fresh water",
           "a shelf running off the north edge, so the board reads as being south of somewhere"
         ],
         "mustNotHave": [
@@ -13832,7 +13979,8 @@ window.GAME_DATA = {
         "$comment": "Character to terrain id, for the 'rows' block. Fixed at commission so the tracer's output is readable the day it first runs, and identical to the Korvane Reach's so a board from either map reads the same in a text editor.",
         "~": "deep-water",
         "-": "shallow-water",
-        "c": "coast",
+        "r": "river",
+        "l": "lake",
         ".": "grassland",
         "f": "forest",
         "h": "hills",

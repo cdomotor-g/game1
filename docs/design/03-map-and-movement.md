@@ -34,19 +34,42 @@ that a mini-map cell has to line up with a world hex.
 The board is hex tiles, each one terrain type. 37 tiles for two players up to 75 for
 five. Everything beyond each player's starting cluster of three starts **face down**.
 
-Ten terrains, eight land and two water — riverbanks and lake shores were folded into
-grassland and coast, because two extra tile types bought complexity and paid nothing.
-Each terrain carries a **single-letter code**, printed in the bottom corner of every
-hex on every map, so there is never an argument about what a cell is when the artwork
-underneath straddles a grid line. The letter is the ruling.
+Eleven terrains, seven land and four water. Each carries a **single-letter code**,
+printed in the bottom corner of every hex on every map, so there is never an argument
+about what a cell is when the artwork underneath straddles a grid line. The letter is
+the ruling.
 
 | Code | Terrain | Move | Rail × | | Code | Terrain | Move | Rail × |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **G** | Grassland | 1 | 1 | | **T** | Tundra | 2 | 2 |
-| **F** | Forest | 2 | 2 | | **D** | Desert | 2 | 2 |
-| **H** | Hills | 2 | 3 | | **C** | Coast | 1 | 2 |
+| **G** | Grassland | 1 | 1 | | **D** | Desert | 2 | 2 |
+| **F** | Forest | 2 | 2 | | **R** | River | boat | — |
+| **H** | Hills | 2 | 3 | | **L** | Lake | boat | — |
 | **M** | Mountain | 4 | 6 | | **S** | Shallows | boat | — |
 | **B** | Marsh | 3 | 4 | | **O** | Deep water | boat | — |
+| **T** | Tundra | 2 | 2 | | | | | |
+
+### There is no shore terrain
+
+There was one, called **Coast**, and it meant "the edge of the water". That made a
+shore a *kind of ground*: a beach in front of a forest had to be drawn as neither, a
+town on a lake could not have a dock unless the artist painted a ring of sand round
+the lake first, and one terrain was quietly doing the work of sea shore, lake rim and
+river mouth at once.
+
+The edge of the water is a **relationship**, and it is stated as one. A land tile with
+any water tile beside it is **waterside** — read off the board the moment somebody
+asks, printed on no hex, and true of a river bank and a sea shore alike. A dock goes
+on any waterside tile; a harbour on one the *sea* reaches; fresh water is drawn beside
+a river or a lake without a well. `data/terrain.json siting.waterside` is where the
+three kinds — any, fresh, sea — are declared, and `tools/validate-map.mjs` fails a
+board whose harbour no sea can reach.
+
+Riverbanks and lake shores went the same way, and their water came back as terrain in
+its own right: **River** is a watercourse wide enough to be its own hex — a barge lane
+running inland, and a wall across any road that has not been bridged — and **Lake** is
+standing fresh water with land all round it. The two of them are what the old
+riverbank and lake-shore tiles were reaching for, and neither costs a shore tile to
+say it.
 
 Each terrain also carries road multipliers, buildability, **features** (trees, stone,
 fresh water, game, herbs, caves) and **deposits** — the full table is in the
@@ -167,9 +190,15 @@ board fits a mini-map lane too.
 
 ## Water
 
-Shallow water takes barges and ships; deep water takes ships only and cannot be
-bridged. Coast tiles — any shore: sea, lake or river mouth — are the only place a
-harbour can go.
+Four water terrains, and they are not interchangeable. **Rivers** and **lakes** are
+inland fresh water: barges work them, a bridge crosses them, and nothing wheeled
+gets over one until somebody builds that bridge. **Shallow water** takes barges and
+ships; **deep water** takes ships only and cannot be bridged at all.
+
+A **dock** goes on any waterside land — a sea shore, a lake rim or a river bank all
+do. A **harbour** needs the sea, because a harbour is for ships and a ship never
+reaches a lake. Neither is a terrain: waterside is read off the board (see above),
+and `tools/validate-map.mjs` fails a board whose harbour no sea can reach.
 
 Sea freight is slow to set up — a harbour is 22 build-points on top of a dock, and a
 ship is 280 coin or fourteen hours of shipwrighting — and then it is the cheapest bulk

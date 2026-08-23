@@ -1,5 +1,5 @@
 {
-  "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow.\n\nCard layout: name and card code at the top, a SUMMARY STRIP under them - H health, S strength, D defence, Y mana yield, and the element's mark in the last box - then the portrait across the full width the frame allows, and the story low. The strip prints maximums and nothing walks on the card: when this monster is met, its card is dealt onto a spare player board and its tracks are set from the strip, and from that moment it is run like a player who is not a person (rules.json exploration.discovery.encounter).\n\nStrength is what it swings with, defence is what makes you miss - two numbers now, where one used to do both jobs and made every strong thing armoured by accident. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
+  "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow.\n\nCard layout: name and card code at the top, a SUMMARY STRIP under them - H health, S strength, D defence, Y mana yield, and the element's mark in the last box - then the portrait, and the story standing up the right-hand edge of the card (components.json storyRail). The portrait is taller than it is wide because of that: these plates are drawn on a portrait page, and the story panel that used to run across the bottom was taking the height the picture wanted.\n\nThe name on the card is the NAME. `unique` is a deck rule - there is one of this monster and it is not shuffled back in once it is resolved - and it lives here and in the annex, not printed after the creature's name where at card size it read as part of it. The strip prints maximums and nothing walks on the card: when this monster is met, its card is dealt onto a spare player board and its tracks are set from the strip, and from that moment it is run like a player who is not a person (rules.json exploration.discovery.encounter).\n\nStrength is what it swings with, defence is what makes you miss - two numbers now, where one used to do both jobs and made every strong thing armoured by accident. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
   "version": "0.2.0",
 
   "encounterOptions": {
@@ -60,10 +60,10 @@
       "story": "Where the fen path forks and one fork is dry, the dry fork is the Strangler. It is patient the way water is patient, and it has been fed by three generations of shortcuts." },
     { "id": "reef-serpent", "cardCode": "MON-08", "name": "Reef Serpent", "element": "water",
       "strength": 3, "defence": 3, "health": 7, "manaYield": 2,
-      "terrains": ["coast", "shallow-water"],
+      "terrains": ["shallow-water", "deep-water"],
       "options": { "enslave": false, "befriend": true, "domesticate": false },
       "gift": "2 fish, tipped over the gunwale at dusk",
-      "befriended": "While it patrols a shore hex of yours, pirates never trouble barges or ships that start or end there.",
+      "befriended": "While it patrols an inshore hex of yours, pirates never trouble barges or ships that start or end there.",
       "story": "Fishing villages paint its coils on their boats and spill it a share of every catch. Skippers who call the custom superstition are welcome to sail without it." },
     { "id": "deepwater-maw", "cardCode": "MON-09", "name": "The Deepwater Maw", "element": "water",
       "strength": 5, "defence": 5, "health": 12, "manaYield": 4, "unique": true,
@@ -85,7 +85,7 @@
       "story": "A standing twist of wind and grit with something like intent in it. You cannot chain the wind, feed it, or pen it - you can only take its mana off it, or take a different road. Slain, it drops whatever it was carrying: also gain 1d6 coin in scoured-clean scrap." },
     { "id": "storm-roc", "cardCode": "MON-12", "name": "Storm Roc", "element": "air",
       "strength": 4, "defence": 3, "health": 9, "manaYield": 3,
-      "terrains": ["mountain", "coast"],
+      "terrains": ["mountain", "hills"],
       "options": { "enslave": false, "befriend": false, "domesticate": true },
       "domesticated": "The grandest mount in the game: one character may ride it - day legs of 8 in any terrain, ignoring ground entirely. It eats 2 meat per round and will not enter a battle.",
       "story": "Its wingbeats are the weather two valleys over. Nobody has befriended one - the roc does not take gifts - but a bird beaten fairly and fed patiently has, three times in recorded history, decided a rider was worth carrying." },
@@ -100,7 +100,7 @@
 
     { "id": "hoarwyrm", "cardCode": "MON-14", "name": "The Hoarwyrm", "element": "air",
       "strength": 5, "defence": 5, "health": 13, "manaYield": 4,
-      "terrains": ["tundra", "mountain", "coast"],
+      "terrains": ["tundra", "mountain", "lake"],
       "options": { "enslave": false, "befriend": false, "domesticate": true },
       "domesticated": "Two full winters at a pasture on tundra, fed 4 meat a round the whole time. Then it flies cargo: 12 bulk, 6 hexes a leg, over any terrain and any weather, and no wind roll. It will not fight, and it will not go south of the frost line.",
       "story": "White-scaled, wingless at rest and forty feet of it, riding the cold air off the ice the way a gull rides a cliff. It does not hoard gold - it hoards weather, or the herders think so, because where it winters the frost comes early and stays. Two families in the north have raised one from the shell. Neither will tell you how, and both are very rich." }

@@ -16,15 +16,15 @@
     "terrainBudget": [
       { "terrain": "deep-water", "share": 0.30 },
       { "terrain": "shallow-water", "share": 0.22 },
-      { "terrain": "coast", "share": 0.15 },
-      { "terrain": "grassland", "share": 0.11 },
-      { "terrain": "forest", "share": 0.09 },
-      { "terrain": "hills", "share": 0.05 },
+      { "terrain": "lake", "share": 0.02 },
+      { "terrain": "grassland", "share": 0.19 },
+      { "terrain": "forest", "share": 0.12 },
+      { "terrain": "hills", "share": 0.07 },
       { "terrain": "mountain", "share": 0.04 },
       { "terrain": "marsh", "share": 0.03 },
       { "terrain": "desert", "share": 0.01 }
     ],
-    "$terrainBudgetNote": "Shares of the whole grid, water included. Half the board is water on purpose and the land is nearly all within one hex of it, which is what makes coast the third-largest terrain here and what makes the board play differently from the Reach. Tundra is deliberately absent: this is a warm sea. It keeps a character in the legend anyway, because a legend that covers all ten terrains costs nothing and a board that later grows a cold rock should not need a legend edit to say so.",
+    "$terrainBudgetNote": "Shares of the whole grid, water included. Half the board is water on purpose and the land is nearly all within one hex of it, which is what makes this board play differently from the Reach — every island is waterside, so a dock will go almost anywhere and the question is only whether the sea beside it is worth a harbour (terrain.json siting.waterside). The share coast used to hold went back to the grassland and the forest it was a beach in front of. One lake, on the largest island, so the board has one hex of fresh water somewhere. Tundra is deliberately absent: this is a warm sea. It keeps a character in the legend anyway, because a legend that covers all eleven terrains costs nothing and a board that later grows a cold rock should not need a legend edit to say so.",
 
     "settlements": { "count": 14, "seat": 1, "city": 1, "town": 5, "village": 7, "harbours": 12 },
     "$settlementNote": "Twelve of the fourteen are harbours — on this board a settlement off the water is the exception and should look like a hard place to live. The seat is on the largest island; the city is on the reef chain, where the freight has to change hulls.",
@@ -36,7 +36,7 @@
       "three island groups, none of them touching, with the largest island about a sixth of the frame",
       "a reef drawn as a distinct paler shallow, chaining two groups together",
       "at least twelve harbours, and a named anchorage drawn at each",
-      "one volcanic peak on the largest island — the only mountain worth the name",
+      "one volcanic peak on the largest island — the only mountain worth the name, with a crater lake in it: the board's only fresh water",
       "a shelf running off the north edge, so the board reads as being south of somewhere"
     ],
     "mustNotHave": [
@@ -109,7 +109,8 @@
     "$comment": "Character to terrain id, for the 'rows' block. Fixed at commission so the tracer's output is readable the day it first runs, and identical to the Korvane Reach's so a board from either map reads the same in a text editor.",
     "~": "deep-water",
     "-": "shallow-water",
-    "c": "coast",
+    "r": "river",
+    "l": "lake",
     ".": "grassland",
     "f": "forest",
     "h": "hills",

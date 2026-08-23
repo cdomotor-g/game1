@@ -15,6 +15,9 @@
   const buildings = D.buildings.buildings;
   const recipes = D.recipes.recipes;
   const terrains = D.terrain.terrains;
+  /* Where the coast terrain went: the waterside relationship, which is not a
+     terrain and so is not in the list above. See data/terrain.json siting. */
+  const siting = D.terrain.siting || {};
   const deposits = D.deposits.deposits;
   const modes = D.transport.modes;
   const figures = D.transport.figures;
@@ -96,7 +99,14 @@
 
   /* The sheet codes are positional by design: SET-NN is the Nth settlement of the
      board, TBM-NN the Nth land terrain - the orders are fixed in
-     docs/minimaps/prompts/korvane-settlements.md and terrain-sheets.md. */
+     docs/minimaps/prompts/korvane-settlements.md and terrain-sheets.md.
+
+     The eighth entry is COAST, which is no longer a terrain (data/terrain.json
+     siting.waterside). It stays in the list because these sheets are shelved art
+     that is committed, not generated (issue #18): the position is what names the
+     file, so taking the retired name out would silently hand TBM-08's drawing to
+     shallow water. Nothing ever asks for it now, and that is the correct amount
+     of happening. */
   const TBM_TERRAINS = ['grassland', 'forest', 'hills', 'mountain', 'marsh', 'tundra', 'desert', 'coast', 'shallow-water'];
   const nn = (n) => String(n).padStart(2, '0');
 
@@ -276,7 +286,7 @@
   global.GameData = {
     raw: D,
     rules: D.rules,
-    commodities, tools, buildings, recipes, terrains, deposits,
+    commodities, tools, buildings, recipes, terrains, deposits, siting,
     modes, figures, peoples, professions, cards, items,
     monsters, vehicles, characters, quests, spells, talismans,
     elements, enchantments, modifications, playerboard,

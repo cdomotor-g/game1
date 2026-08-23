@@ -73,7 +73,7 @@
     { "id": "barrel", "name": "Barrel", "category": "container", "unit": "each", "bulk": 1, "baseValue": 8, "tags": ["reusable"], "notes": "Required to hold any liquid. Returned empty when the liquid is consumed." },
     { "id": "crate", "name": "Crate", "category": "container", "unit": "each", "bulk": 1, "baseValue": 6, "tags": ["reusable"] },
     { "id": "sack", "name": "Sack", "category": "container", "unit": "each", "bulk": 0.5, "baseValue": 3, "tags": ["reusable"] },
-    { "id": "spices", "name": "Spices", "category": "luxury", "unit": "chest", "bulk": 0.5, "baseValue": 45, "tags": ["trade-good", "import-only"], "notes": "Nothing on this map grows spices. They arrive at coastal markets and event cards, and that scarcity is the point - they are the pure trading commodity." },
+    { "id": "spices", "name": "Spices", "category": "luxury", "unit": "chest", "bulk": 0.5, "baseValue": 45, "tags": ["trade-good", "import-only"], "notes": "Nothing on this map grows spices. They arrive at harbour markets and event cards, and that scarcity is the point - they are the pure trading commodity." },
     { "id": "gems", "name": "Gems", "category": "luxury", "unit": "pouch", "bulk": 0.5, "baseValue": 60, "tags": ["trade-good", "theft-target"] },
     { "id": "jewellery", "name": "Jewellery", "category": "luxury", "unit": "case", "bulk": 0.5, "baseValue": 110, "tags": ["trade-good", "theft-target", "tier3"] },
     { "id": "arcane-herb", "name": "Arcane Herb", "category": "arcane", "unit": "bundle", "bulk": 0.5, "baseValue": 20, "tags": ["foraged", "potion-ingredient"] },

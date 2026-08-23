@@ -194,10 +194,11 @@ Two more decks give the moving pieces names:
 ship, caravan and horse. A card is a specific vehicle with a story and a quirk:
 the Reach Flyer is fast and takes passengers, Old Smoke is cheap and limps, the
 Fenway Wagons cross marsh that stops everything else on wheels. Each card
-prints two boxes in its summary strip — **V** for the damage boxes the hull
-holds, **C** for the bulk of its hold. Damage is walked on the player board's V
-track. A wrecked vehicle spills its cargo on the hex, and salvage is whoever
-reaches it first.
+prints two boxes in its summary strip — **H** for the hull, **C** for the bulk of
+its hold. A vehicle in play is dealt a **player board of its own** and run like a
+player who is not a person: its card in the recess, its cargo and modifications in
+the four kit slots, and its hull on that board's health track. At nothing it is
+wrecked — it spills its cargo on the hex, and salvage is whoever reaches it first.
 
 Eleven of the twelve catalogue plates are accepted
 ([`docs/art/prompts/vehicles.md`](../art/prompts/vehicles.md)); the Varl
@@ -355,9 +356,9 @@ all ended up, and taking them off the cards is what gave the portraits the full
 width of the card.
 
 One A4 landscape sheet each and every one identical, printed at
-[`docs/boards/`](../boards/index.html). The hero's card drops into a recess top
-left, four more recesses take whatever else is in play, the round's phases print
-under the character, and six numbered tracks run up the middle:
+[`docs/boards/`](../boards/index.html). The card in play drops into a recess top
+left, four more recesses take whatever that card has in play, the round's phases
+print underneath, and five numbered tracks run up the middle:
 
 | | Track | A rung is | Runs | Walked by |
 | --- | --- | --- | --- | --- |
@@ -365,12 +366,11 @@ under the character, and six numbered tracks run up the middle:
 | **S** | Strength | 1 | 0–14 | Set from the card; a rung down for every night without a camp |
 | **D** | Defence | 1 | 0–14 | Set from the card. Read by whoever is attacking you |
 | **P** | Pace | 1 hex | 0–14 | Hexes left in this leg |
-| **V** | Vehicle | 1 | 0–14 | Damage to the vehicle being run |
 | **M** | Mana | 1 | 0–14 | The body and every talisman in a slot |
 
 The ladders are numbered from the bottom and walked by a token, and they are
 numbered and **nothing else** — no rung glyph, no plus, no minus. At a shade over
-11 mm a column, a little mark saying which *kind* of number this is was competing
+13 mm a column, a little mark saying which *kind* of number this is was competing
 with the figure for the same three millimetres. Which way a token walks is a
 sentence in the rulebook, where there is room to say it.
 
@@ -380,6 +380,16 @@ round of the game and has never had anywhere to keep it: set the token at the
 start of a leg, walk it down a rung per hex entered, halve it for a night leg
 under a lantern. At zero the leg is over, and the discovery roll happens
 wherever it stopped. It is pace rather than speed because strength has the S.
+
+**A vehicle gets a board too.** It used to get a column — a sixth track called V,
+counting damage on a wagon most players were not running, printed on everybody's
+sheet. A vehicle in play is dealt one of these boards instead and run like a
+player who is not a person, exactly as a monster met on the road is: its card in
+the recess, its cargo and its modifications in the four kit slots, and its
+**hull on the health track**, set from the printed H, down as it is damaged, up
+as it is repaired at 5 coin a rung in any town, wrecked at nothing and spilling
+its cargo on the hex. A hull is a body, and the board never had to learn anything
+new to run one.
 
 **Strength and defence are the pair that changed the game rather than recording
 it.** Strength was already printed on every monster card as a threat rating; it
@@ -392,7 +402,7 @@ and armour give you. The full rule is in
 [08-components.md](08-components.md#a-fight).
 
 **Every track runs 0 to 14, and so does the game.** That is the ceiling on
-everything a token walks — health, strength, defence, vehicle damage, mana — and
+everything a token walks — health (a hull included), strength, defence, mana — and
 `tools/validate-data.mjs` sweeps the whole dataset against it, so a fifteenth
 point of health fails the build rather than walking off a board somebody has
 already printed. Kilograms are the one thing exempt, because nothing walks a

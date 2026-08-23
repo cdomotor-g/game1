@@ -34,7 +34,7 @@
       "story": "Trained at the Saltreach college, thrown out of it over a disagreement about leeches - she was against them. Her bag is oiled leather; her ledger lists every patient, and the margins list every fee still owed." },
     { "id": "havik-coalbrand", "cardCode": "CHR-07", "name": "Havik Coalbrand", "people": "dwarf", "calling": "Engineer",
       "strength": 4, "defence": 3, "health": 10, "startingGold": 60, "manaCapacity": 0,
-      "traits": ["Linesman: a train Havik rides spends 1 less coal per leg.", "Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands."],
+      "traits": ["Linesman: a train Havik rides spends 1 less coal per leg.", "Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands."],
       "startsWith": [],
       "story": "Havik walked the whole Reach Line before it was laid, driving in the survey pegs by hand. He talks to engines in Old Dwarfish and maintains, with evidence, that they run better for it." },
     { "id": "mother-keswick", "cardCode": "CHR-08", "name": "Old Mother Keswick", "people": "human", "calling": "Hedge-Witch",

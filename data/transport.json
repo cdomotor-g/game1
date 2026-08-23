@@ -28,13 +28,13 @@
       "capacity": 30, "speed": 3, "requires": "dock", "buyCost": 110, "effortToLoad": 2,
       "packaging": [{ "commodity": "crate", "qty": 8 }],
       "craft": { "building": "dock", "inputs": [{ "commodity": "lumber", "qty": 6 }, { "commodity": "rope", "qty": 2 }], "effortHours": 6 },
-      "upkeep": 1, "theftRisk": 2, "waterCapable": true, "waters": ["shallow-water", "coast"] },
+      "upkeep": 1, "theftRisk": 2, "waterCapable": true, "waters": ["shallow-water", "river", "lake"] },
     { "id": "ship", "name": "Ship", "tier": 3,
       "summary": "Sea freight between harbours. The cheapest bulk movement in the game once the harbours exist.",
       "capacity": 60, "speed": 4, "requires": "harbour", "buyCost": 280, "effortToLoad": 4,
       "packaging": [{ "commodity": "crate", "qty": 12 }],
       "craft": { "building": "harbour", "inputs": [{ "commodity": "lumber", "qty": 12 }, { "commodity": "rope", "qty": 4 }, { "commodity": "cloth", "qty": 3 }, { "commodity": "ironware", "qty": 2 }], "effortHours": 14 },
-      "upkeep": 3, "theftRisk": 3, "waterCapable": true, "waters": ["shallow-water", "deep-water", "coast"],
+      "upkeep": 3, "theftRisk": 3, "waterCapable": true, "waters": ["shallow-water", "deep-water"],
       "notes": "Storm events can sink a ship outright. Insure it by splitting cargo across two." },
     { "id": "train", "name": "Train", "tier": 3,
       "summary": "Rail freight between depots. Fast, huge, and it only runs where you laid the track.",
@@ -60,7 +60,7 @@
       "craft": { "building": "glassworks", "inputs": [{ "commodity": "fine-cloth", "qty": 8 }, { "commodity": "rope", "qty": 6 }, { "commodity": "lumber", "qty": 4 }, { "commodity": "ironware", "qty": 3 }], "effortHours": 18 },
       "upkeep": 5, "fuelPerTile": [{ "commodity": "charcoal", "qty": 1 }],
       "theftRisk": 0, "waterCapable": true,
-      "notes": "Ignores terrain entirely - there is no ground up there - but it is the only mode weather can stop dead, and the only one with nowhere to tie up. It must end each journey at a settlement or lose 1 damage box to the mooring. Cargo aboard an airship cannot be robbed on the road; it can be dropped." }
+      "notes": "Ignores terrain entirely - there is no ground up there - but it is the only mode weather can stop dead, and the only one with nowhere to tie up. It must end each journey at a settlement or lose 1 hull to the mooring. Cargo aboard an airship cannot be robbed on the road; it can be dropped." }
   ],
   "routes": {
     "$comment": "A route is a chain of tiles between two towns. Cargo moves along it at the mode's speed, spending the tile move cost.",

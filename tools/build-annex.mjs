@@ -248,14 +248,15 @@ table(
 /* ----------------------------------------------------------------- vehicles */
 say('## Vehicle deck');
 say();
-say('**V** is the damage boxes the hull holds, **C** the bulk of its hold — the two');
-say('boxes of a vehicle card\'s summary strip. Damage is walked on the player');
-say('board\'s V track; nothing is walked on the card.');
+say('**H** is the hull, **C** the bulk of its hold — the two boxes of a vehicle');
+say('card\'s summary strip. A vehicle in play is dealt a player board of its own and');
+say('run like a player who is not a person: the hull walks that board\'s health');
+say('track, and the cargo and modifications lie in its four kit slots.');
 say();
 table(
-  ['Code', 'Vehicle', 'Kind', 'Cargo', 'Damage', 'Quirk'],
+  ['Code', 'Vehicle', 'Kind', 'Cargo', 'Hull', 'Quirk'],
   vehicles.vehicles.map((v) => [
-    v.cardCode, v.name, v.mode, v.cargoCapacity, v.damageBoxes, v.quirk,
+    v.cardCode, v.name, v.mode, v.cargoCapacity, v.hull, v.quirk,
   ])
 );
 

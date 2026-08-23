@@ -63,6 +63,20 @@ it printed in the summary strip across the top of the card. Defined in
 `data/characters.json`. A
 character is not a worker and rolls no effort die.
 
+**Coast** — gone. It was a terrain that meant "the edge of the water", which made a
+shore a *kind of ground*: a beach in front of a forest had to be drawn as neither, and
+a town on a lake could not have a dock unless the map painted a ring of sand round the
+lake first. The edge of the water is a relationship — see **waterside** — and the water
+itself came back as two terrains of its own, **river** and **lake**. See
+`data/terrain.json → siting.waterside`.
+
+**Waterside** — a land tile with at least one water tile beside it. Not a terrain, never
+printed on a hex, and read off the board the moment somebody asks. Three kinds, because
+what needs a bank differs: *any* water, *fresh* (a river or a lake), or the *sea*. A dock
+is waterside on any water; a harbour on the sea; drawing water without a well is
+waterside on fresh. A building says which with `waterside` (a requirement) or
+`orWaterside` (an alternative to its terrain list). See `data/terrain.json → siting`.
+
 **Build-point** — one hour of construction work banked on a building's progress track.
 A building is finished when its track is full *and* its minimum-rounds floor has
 passed, so no amount of effort finishes a manor in one round.

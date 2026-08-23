@@ -6,22 +6,25 @@
  * The same bargain as tools/build-cards.mjs: the data says what the board is
  * for, components.json says what shape it is drawn into, and nothing here
  * invents a number that belongs to either. What this file owns is the
- * arrangement — character card top left, the round under it, the tracks up the
+ * arrangement — the card in play top left, the round under it, the tracks up the
  * middle, four cards of kit on the right — and even that is arithmetic rather
  * than a set of coordinates:
  *
- *   contentW - (character slot) - (two kit slots) - three gutters = the tracks
+ *   contentW - (the card slot) - (two kit slots) - three gutters = the tracks
  *   contentH - (the heads)                                       = the rungs
  *
- * Give the board a seventh track and the columns get narrower; give it a bigger
+ * Give the board a sixth track and the columns get narrower; give it a bigger
  * card and they get narrower still. Nothing moves off the paper, because nothing
- * was ever placed by hand. The sixth track was paid for by taking the border
- * off: 18 mm of paper that had been making the middle narrower.
+ * was ever placed by hand. There were six columns here until a vehicle stopped
+ * being a card on somebody else's board and started being dealt a board of its
+ * own — its damage is its health, the V went, and the five that were left simply
+ * got wider without a coordinate being touched.
  *
- * ONE BOARD, not one per people. Everything that differs between an orc and a
- * halfling — strength, health, what they can shoulder — is printed on the
- * character card lying in the recess, so the board underneath has no business
- * knowing which of them is sitting there.
+ * ONE BOARD, not one per people, and not one per kind of thing. Everything that
+ * differs between an orc and a halfling — strength, health, what they can
+ * shoulder — is printed on the card lying in the recess, so the board underneath
+ * has no business knowing which of them is sitting there; and a wagon has a hull
+ * that takes damage, a load, a pace and a hold, which is this board exactly.
  *
  * Two plates, as everywhere (docs/art/01-two-plate-system.md): #wash carries a
  * tint down each track, #ink carries every rule, number and letter in soot
@@ -30,8 +33,8 @@
  * numbering was never the colour's job.
  *
  * The ladders are numbered and nothing else: no rung glyph, no plus, no minus.
- * A column is a shade over eleven millimetres wide and a mark saying "this is a
- * harm track" was competing with the number for the same three of them.
+ * A column is a shade over thirteen millimetres wide and a mark saying "this is
+ * a harm track" was competing with the number for the same three of them.
  *
  * Usage: node tools/build-board.mjs [--check]
  */
@@ -154,8 +157,8 @@ const CELL_H = (TRACK_BLOCK.h - HEAD) / RUNGS;
 
 const KIT_X = CONTENT.x + CONTENT.w - KIT_W;
 /* Two card recesses come up short of the sheet by more than a gutter, so the kit
-   rows are spread rather than stacked: the top row lines up with the character
-   card and the bottom row with the foot of the round panel. Three columns of
+   rows are spread rather than stacked: the top row lines up with the card in
+   play and the bottom row with the foot of the round panel. Three columns of
    things, one top line and one bottom line - which is what stops the right-hand
    half reading as a block that has slipped. */
 const KIT_ROW_GAP = (CONTENT.h - 2 * SLOT.h) / (KIT_ROWS - 1);
@@ -280,7 +283,7 @@ function track(t, index) {
   ink.push(`<g fill="${SOOT}">${numbers.join('')}</g>`);
 
   /* The head, boxed like the header row of the sketch this board was drawn
-     from. A column is a shade over 11 mm wide and STRENGTH is eight letters:
+     from. A column is a shade over 13 mm wide and STRENGTH is eight letters:
      set flat, the word is wider than the track it names and runs into its
      neighbour. So the letter takes the middle at full size, the word runs UP
      the side of it, and the unit — never more than a few characters — sits
@@ -406,7 +409,7 @@ function grime(seed) {
 function board() {
   const cols = TRACKS.map((t, i) => track(t, i));
   const kit = spec.slots.find((s) => s.id === 'kit');
-  const character = spec.slots.find((s) => s.id === 'character');
+  const figure = spec.slots.find((s) => s.id === 'figure');
 
   const kitSlots = [];
   for (let i = 0; i < kit.count; i++) {
@@ -446,15 +449,16 @@ function board() {
     ${timber(spec.board.id)}
   </g>
 
-  <!-- the hero, and the round they are playing -->
-  ${slot(CONTENT.x, CONTENT.y, character.label)}
+  <!-- whatever is in play here - a hero, a monster, a wagon - and the round it
+       is playing -->
+  ${slot(CONTENT.x, CONTENT.y, figure.label)}
   ${panel()}
 
   <!-- the tracks: numbered from the bottom, walked by a token, exactly as a
        card's edge bar is - the board is not allowed a second convention -->
   ${cols.map((c) => c.ink).join('\n  ')}
 
-  <!-- what the hero has in play -->
+  <!-- its kit: gear and quests for a figure, cargo and modifications for a hull -->
   ${kitSlots.join('\n  ')}
 </g>
 

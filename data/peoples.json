@@ -9,7 +9,7 @@
         { "name": "Adaptable", "effect": "Ignore the first terrain effort penalty each round." },
         { "name": "Builders", "effect": "All housing costs 1 less of its bulkiest material." }
       ],
-      "foodPreference": [], "terrainComfort": ["grassland", "coast", "forest"],
+      "foodPreference": [], "terrainComfort": ["grassland", "forest", "hills"],
       "strength": { "base": 3, "note": "The middle of every scale, this one included - a human wins no fight on build alone." },
       "defence": { "base": 3, "note": "The middle of every scale, this one included - a human neither turns a blow nor invites one." },
       "manaStorage": { "innate": 0, "note": "A human body holds no mana. Every drop lives in a talisman." }
@@ -52,7 +52,7 @@
         { "name": "Second Breakfast", "effect": "A halfling town pays 2 extra food every Feeding phase, however many halflings live in it." },
         { "name": "Small", "effect": "-1 combat die per halfling unit." }
       ],
-      "foodPreference": ["bread", "cheese", "ale", "apples"], "terrainComfort": ["grassland", "forest", "coast"],
+      "foodPreference": ["bread", "cheese", "ale", "apples"], "terrainComfort": ["grassland", "forest"],
       "strength": { "base": 2, "note": "Small, and entirely uninterested in being told about it." },
       "defence": { "base": 3, "note": "A small target, and entirely willing to be one." },
       "manaStorage": { "innate": 0, "note": "Halflings hold no mana and are privately relieved about it." }

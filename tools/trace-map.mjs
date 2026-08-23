@@ -13,7 +13,7 @@
  * The sampler can honestly separate five things by colour: water, snow, grass,
  * wood and sand. It finds mountains by how much black ink is in the hex, and it
  * measures the drawn river blue as a statistic. Everything else — which sand is
- * a fen, which grass is a highland, where a coastline should become a beach
+ * a fen, which grass is a highland, where a lake is only a wide river
  * rather than a cliff — is a judgement, and judgements live in the data file.
  *
  * Usage:
@@ -285,25 +285,28 @@ for (let row = 0; row < rowCount; row++) {
     const t = base[row][col];
     const ns = neighbours(col, row).filter((n) => inBounds(n.col, n.row));
 
-    if (isWater(t)) {
-      const touchesLand = ns.some((n) => !isWater(base[n.row][n.col]));
-      /* Inland water is all shallow — a lake on this map is never a shipping lane. */
-      terrain[row][col] = !sea[row][col] || touchesLand ? 'shallow-water' : 'deep-water';
-      continue;
-    }
+    if (!isWater(t)) continue;
 
-    const touchesWater = ns.some((n) => isWater(base[n.row][n.col]));
+    /* Water the sea could not reach is a LAKE, and now it can say so: it has its
+       own terrain rather than being forced to shallow sea because that was the
+       nearest thing in the vocabulary. Sea water against land is shallow, and
+       only sea that touches nothing but sea is deep.
 
-    /* Only open ground becomes a shore, and only where the plate shows open
-       ground. An ice shelf, a dune field or a wooded shore keeps its own terrain:
-       this map's coastline is long and convoluted, and converting every hex that
-       touches the sea would repaint a fifth of the continent one colour and throw
-       away the thing the drawing is being read for. Harbours on an ice or dune
-       coast are placed by hand afterwards, where the plate actually draws one.
-       Coast covers every kind of shore - sea, lake and river mouth alike. */
-    if (touchesWater && t === 'grassland') {
-      terrain[row][col] = 'coast';
-    }
+       Nothing here ever proposes a RIVER. A river is a hex wide only where the
+       plate draws it a hex wide, and a colour vote on a blue line two pixels
+       across says "shallow water" every time. River hexes are placed by hand,
+       where the drawing actually shows a river worth a hex - which is the same
+       rule the harbours have always been placed under.
+
+       There is no shore terrain any more either. A beach was a KIND OF GROUND
+       when coast was a terrain, and converting every hex that touched the sea
+       repainted a fifth of a continent one colour; the edge of the water is a
+       relationship now (terrain.json siting.waterside), read off the finished
+       board, so the land here simply keeps whatever the plate says it is. */
+    const touchesLand = ns.some((n) => !isWater(base[n.row][n.col]));
+    terrain[row][col] = !sea[row][col]
+      ? 'lake'
+      : touchesLand ? 'shallow-water' : 'deep-water';
   }
 }
 

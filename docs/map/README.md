@@ -169,7 +169,7 @@ is dropped, because which hex you last clicked is not part of the map.
 
 ### The legend is replaced, not reprinted
 
-The overlay covers the plate's legend panel and prints the game's ten terrains in the
+The overlay covers the plate's legend panel and prints the game's eleven terrains in the
 same space — each as a **hexagon swatch with its letter code inside**, the same letter
 printed in the bottom corner of every cell — with move costs, alongside every mark from
 the original key. The artwork is not edited; the panel is simply drawn over.
@@ -177,14 +177,16 @@ the original key. The artwork is not edited; the panel is simply drawn over.
 The plate this was written for named four things the game had no terrain for — *tundra &
 steppe* was two terrains, *desert & dunes* two more, and hills and marsh did not appear on
 it at all — so the replacement was a correction. The current plate's key was drawn when
-the game had twelve terrains; the game now has ten (riverbank and lake shore folded into
-grassland and coast), which makes the override load-bearing again: it prints the real
-ten, the letter codes and the move costs, and the panel has to be occluded for the
-tracer either way.
+the game had twelve terrains; the game now has eleven — riverbank and lake shore became
+**river** and **lake**, the water itself rather than the ground beside it, and coast was
+retired outright because the edge of the water is a relationship and not a kind of ground
+(`data/terrain.json siting.waterside`). That makes the override load-bearing again: it
+prints the real eleven, the letter codes and the move costs, and the panel has to be
+occluded for the tracer either way.
 
 ### The letter codes
 
-Every terrain carries a single-letter code in `data/terrain.json` — G F H M B T D C S O
+Every terrain carries a single-letter code in `data/terrain.json` — G F H M B T D R L S O
 — and the overlay prints it in the bottom corner of every hex, on screen, on the print
 sheets and in the exports. The paint under a hex can straddle a grid line; the letter is
 the ruling. The codes also key the travel-speed table (`data/travel.json`) and the

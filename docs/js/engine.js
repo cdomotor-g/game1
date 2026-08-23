@@ -39,8 +39,23 @@
 
   /* ----------------------------------------------------------------- setup */
 
-  const STARTING_TERRAIN = ['grassland', 'forest', 'hills', 'coast'];
+  /* The ground the opening town stands on, and separately the water beside it.
+     Coast used to be the fourth entry in this list and did both jobs at once,
+     which is exactly why it stopped being a terrain: the edge of the water is a
+     relationship, not a kind of ground (data/terrain.json siting.waterside). So
+     the town has ground, and it has a list of the water its tile touches, and a
+     dock asks the second question rather than the first. */
+  const STARTING_TERRAIN = ['grassland', 'forest', 'hills'];
+  const STARTING_WATERS = ['shallow-water'];
   const STARTING_DEPOSITS = ['clay-bed', 'coal-seam', 'iron-deposit'];
+
+  /** Does the water beside this town answer for the kind a site asks for? */
+  function waterside(state, need) {
+    if (!need) return true;
+    const want = ((D.siting || {}).waterside || {}).kinds || {};
+    const list = want[need] || [];
+    return (state.waters || []).some((w) => list.indexOf(w) !== -1);
+  }
 
   function newGame(options) {
     const opts = options || {};
@@ -58,6 +73,7 @@
       specialists: [],
       unrest: 0,
       terrain: STARTING_TERRAIN.slice(),
+      waters: STARTING_WATERS.slice(),
       deposits: STARTING_DEPOSITS.slice(),
       // Deliberately under the starting storage cap — a town that begins in
       // overflow just bleeds goods before the player has made a single choice.
@@ -219,6 +235,17 @@
         if (!site.terrain.some((t) => state.terrain.includes(t))) {
           blockers.push(`needs ${site.terrain.map((t) => D.name('terrain', t)).join(' or ')}`);
         }
+      }
+
+      /* `orWaterside` is the other half of an `orTerrain`: drawing water needs a
+         well, or a marsh, or a river or a lake beside you. */
+      if (site.orWaterside && !waterside(state, site.orWaterside) &&
+          !(site.building && ownedBuilding(state, site.building)) &&
+          !(site.orTerrain || []).some((t) => state.terrain.includes(t))) {
+        blockers.push(`needs ${site.orWaterside} water beside the town`);
+      }
+      if (site.waterside && !waterside(state, site.waterside)) {
+        blockers.push(`needs ${site.waterside} water beside the town`);
       }
 
       if (site.deposit && !state.deposits.includes(site.deposit)) {
@@ -414,8 +441,12 @@
     if (def.requiresDepositAny && !def.requiresDepositAny.some((d) => state.deposits.includes(d))) {
       return fail(state, `${def.name} must be built on a revealed deposit.`);
     }
-    if (def.terrain && !def.terrain.some((t) => state.terrain.includes(t))) {
+    if (def.terrain && !def.terrain.some((t) => state.terrain.includes(t)) &&
+        !(def.orWaterside && waterside(state, def.orWaterside))) {
       return fail(state, `${def.name} cannot be built on this town's terrain.`);
+    }
+    if (def.waterside && !waterside(state, def.waterside)) {
+      return fail(state, `${def.name} has to stand waterside on ${def.waterside === 'sea' ? 'the sea' : def.waterside + ' water'}.`);
     }
     if (def.unique === 'per-town' && ownedBuilding(state, buildingId)) {
       return fail(state, `Only one ${def.name} per town.`);
@@ -778,7 +809,9 @@
         if (def.requiresBuilding && !ownedBuilding(state, def.requiresBuilding)) blockers.push(`needs a ${D.name('building', def.requiresBuilding)}`);
         if (def.requiresDeposit && !state.deposits.includes(def.requiresDeposit)) blockers.push(`needs a ${D.name('deposit', def.requiresDeposit)}`);
         if (def.requiresDepositAny && !def.requiresDepositAny.some((d) => state.deposits.includes(d))) blockers.push('needs a revealed deposit');
-        if (def.terrain && !def.terrain.some((t) => state.terrain.includes(t))) blockers.push('wrong terrain');
+        if (def.terrain && !def.terrain.some((t) => state.terrain.includes(t)) &&
+            !(def.orWaterside && waterside(state, def.orWaterside))) blockers.push('wrong terrain');
+        if (def.waterside && !waterside(state, def.waterside)) blockers.push(`not waterside on ${def.waterside === 'sea' ? 'the sea' : def.waterside + ' water'}`);
         if (def.unique === 'per-town' && ownedBuilding(state, def.id)) blockers.push('already built');
         const short = (def.cost || []).filter((c) => !has(state, c.commodity, c.qty));
         if (short.length) blockers.push('short of ' + short.map((c) => `${c.qty} ${D.name('commodity', c.commodity)}`).join(', '));

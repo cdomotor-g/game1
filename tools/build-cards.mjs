@@ -15,9 +15,10 @@
  * is not a card yet. Output: docs/cards/<CODE>.svg, docs/cards/index.html and
  * docs/cards/print.html, the sheets you cut cards out of.
  *
- * Card anatomy (data/components.json statStrip):
+ * Card anatomy (data/components.json statStrip and storyRail):
  *   name and card code at the top · a SUMMARY STRIP of lettered boxes under
- *   them · portrait across the full width the frame allows · story low.
+ *   them, ONE box per letter-and-figure pair · portrait · story low, or standing
+ *   up the right-hand edge on the decks whose plates are drawn portrait.
  *
  * There are no bars. There were, up both edges, and a token walked them; that
  * worked while a card was held in the hand and stopped working the day the
@@ -31,8 +32,16 @@
  * window is not a fixed box: a deck's plates have one shape (the figures are
  * drawn on A4 pages, the talismans square, the vehicles 3:2) and a deck's cards
  * need one amount of room for their words, so each deck gets the tallest window
- * its own worst card leaves free, in its own plates' proportion, across the full
- * width. What goes *in* that window is a crop taken around the plate's subject,
+ * its own worst card leaves free, in its own plates' proportion, across whatever
+ * width its words have left it.
+ *
+ * Which is the second thing: on the character and monster decks the story does
+ * not run across the bottom. It stands up the right-hand edge, rotated a quarter
+ * turn, reading bottom to top - so it costs the card WIDTH rather than HEIGHT,
+ * and a plate drawn on a portrait page finally gets a portrait window to be shown
+ * in. The picture on a character card is about ten millimetres taller than the
+ * full-width one it replaced, and the words did not get any smaller. Which decks
+ * do it is `storyRail` on the deck in components.json. What goes *in* that window is a crop taken around the plate's subject,
  * from docs/art/framing.json — see tools/lib/framing.mjs. Framing on the middle
  * of the file is what used to put a character's chin at the top of their own card.
  *
@@ -120,8 +129,8 @@ const FRAME = components.frame;
    words cost; the picture gets whatever is left. The rules text wraps wider than
    it did by exactly the width the right-hand bar used to take out of it; the
    flavour panel is unchanged, because it always ran the full width of the card. */
-const FACT = { size: 18, lead: 22, wrap: 53 };
-const STORY = { size: 16.5, lead: 19.5, wrap: 58, max: 5 };
+const FACT = { size: 18, lead: 22 };
+const STORY = { size: 16.5, lead: 19.5, max: 5 };
 const STORY_BASE = 694;            // baseline of the last line of flavour text
 const GAP = 26;                    // plate to rules, and rules to the flavour panel
 /* The window runs frame to frame. It used to run between two bars, which cost it
@@ -132,18 +141,36 @@ const PORTRAIT = { x: TRIM.x + 24, w: TRIM.w - 48 };
    starts reading as a letterbox slot cut in one. */
 const FLATTEST = 1.34;
 
+/* One glyph's width as a fraction of the type size, for this serif at this size.
+   Every wrap width in this file is a COLUMN, in units, run through here - because
+   a column's width is now a thing that varies: a deck whose story runs up the
+   side has a narrower one than a deck whose story runs across the bottom, and a
+   hand-counted character limit cannot follow that. */
+const GLYPH = 0.478;
+const charsIn = (w, size) => Math.max(8, Math.round(w / (size * GLYPH)));
+
+/* The story rail: the flavour text stood on end up the right-hand edge. Its
+   shape is components.json storyRail; which decks take it is on the deck. */
+const RAIL = components.storyRail;
+/* The foot of the card's working area - where a rail stands on, and how far the
+   rules text may run down now that nothing is printed under it. */
+const FOOT = TRIM.y + TRIM.h - FRAME.inner.inset - 10;
+
 /* The summary strip, from data/components.json — geometry and letters both.
    Nothing below invents a letter: a stat the player board has a track for uses
    that track's letter, and validate-data.mjs fails the build if the two ever
    disagree. */
 const STRIP = components.statStrip;
 const STRIP_H = STRIP.cells.heightMm * U;
-const STRIP_Y = 116;
+const STRIP_Y = 106;
 const LETTER_OF = STRIP.letters;
-/* One line of type below the name, then the strip, then everything else. */
-const CODE_Y = 56;
-const NAME_Y = 84;
-const KICKER_Y = 104;
+/* One line of type below the name, then the strip, then everything else. The
+   head is set ten units higher than it was and the strip is nine units shorter,
+   because a cell stopped carrying a second box round its letter. Nineteen units
+   is two and a half millimetres, and every one of them goes to the picture. */
+const CODE_Y = 52;
+const NAME_Y = 80;
+const KICKER_Y = 98;
 
 /* ------------------------------------------------------- shared card shapes */
 
@@ -251,7 +278,6 @@ function textBlock(lines, x, y, size, leading, attrs = '') {
  */
 function statCell(cell, x, y, w) {
   const C = STRIP.cells;
-  const box = STRIP.letterBox.size;
   const wash = [];
   const ink = [];
 
@@ -264,21 +290,24 @@ function statCell(cell, x, y, w) {
     return { wash: wash.join('') + badge.wash, ink: ink.join('') + badge.ink };
   }
 
-  const bx = x + C.pad;
-  const by = y + (STRIP_H - box) / 2;
-  wash.push(`<rect x="${num(bx)}" y="${num(by)}" width="${box}" height="${box}" rx="3" fill="${T25}" opacity="0.75"/>`);
+  /* The letter, set at the left of the cell and nothing round it. It used to sit
+     in a tinted square of its own - a box inside a box, six times across the top
+     of every card - and the square was doing nothing the weight below does not
+     do better: the label sits back in a tint, the figure holds the ink, and the
+     pair reads as one thing because it is in one box. */
+  const mid = y + STRIP_H / 2;
+  const letter = letterSize(cell.letter);
   ink.push(
-    `<rect x="${num(bx)}" y="${num(by)}" width="${box}" height="${box}" rx="3" fill="none" stroke="${SOOT}" stroke-width="0.9"/>` +
-    `<text x="${num(bx + box / 2)}" y="${num(by + box / 2 + STRIP.letter.size * 0.36)}" font-size="${num(letterSize(cell.letter))}" ` +
-    `text-anchor="middle" font-family="${SANS}" font-weight="${STRIP.letter.weight}">${esc(cell.letter)}</text>`
+    `<text x="${num(x + C.pad)}" y="${num(mid + letter * 0.36)}" font-size="${num(letter)}" ` +
+    `font-family="${SANS}" font-weight="${STRIP.letter.weight}" fill="${inkHex(STRIP.letter.fill)}">${esc(cell.letter)}</text>`
   );
 
   /* what is left of the box, and the figure sized to sit inside it */
-  const room = w - (bx + box - x) - 2 * C.pad;
+  const room = w - 2 * C.pad - letter * 0.62 * String(cell.letter).length - C.pad;
   const text = String(cell.value);
   const size = Math.max(STRIP.value.minSize, Math.min(STRIP.value.size, (room / (text.length * 0.62))));
   ink.push(
-    `<text x="${num(x + w - C.pad)}" y="${num(y + STRIP_H / 2 + size * 0.36)}" font-size="${num(size)}" text-anchor="end" ` +
+    `<text x="${num(x + w - C.pad)}" y="${num(mid + size * 0.36)}" font-size="${num(size)}" text-anchor="end" ` +
     `font-family="${SANS}" font-weight="${STRIP.value.weight}">${esc(text)}</text>`
   );
   return { wash: wash.join(''), ink: ink.join('') };
@@ -338,27 +367,65 @@ function frameOf(id) {
  * window, in the deck's own plate proportion where that fits, and the block of
  * window-plus-rules is then centred in the space it was given.
  */
-function deckGeometry(deck) {
-  const factMax = Math.max(...deck.map((s) => factLines(s).length));
-  const storyMax = Math.max(...deck.map((s) => storyLines(s).length));
-
-  const storyY = STORY_BASE - (storyMax - 1) * STORY.lead;
-  const panelTop = storyY - GAP;
+function deckGeometry(deck, deckDef) {
   /* Under the strip, which is the same height on every card in every deck —
      which is why there is no longer a deck that starts its picture lower than
      its neighbour because it happens to carry an element. */
   const top = STRIP_Y + STRIP_H + GAP;
+  const plate = plateSize(deck[0].portrait);
+
+  /* A deck whose story stands up the side (components.json storyRail) pays for
+     its words in WIDTH. The rail runs the height of the card, so a rail line is
+     four times the length a panel line was and the whole story fits in three or
+     four of them; each of those is one column of type wide, and what is left of
+     the card's width is the picture's. The picture then takes the whole height
+     between the strip and the rules text, which on a plate drawn portrait is a
+     portrait window — which is what the deck wanted in the first place, and what
+     the panel across the bottom had been quietly refusing it. */
+  if (deckDef?.storyRail) {
+    const railH = FOOT - top;
+    const chars = charsIn(railH, STORY.size);
+    const wrapped = deck.map((s) => wrap(s.story, chars).slice(0, RAIL.maxLines));
+    const lines = Math.max(...wrapped.map((w) => w.length));
+    const railW = lines * STORY.lead + RAIL.pad;
+    const colW = PORTRAIT.w - railW - RAIL.gap;
+    /* The deck's longest line, and where that leaves the type standing. Every
+       card in a deck starts its story at the same height, the way the panel
+       across the bottom set one horizon for the whole deck: a rail that began
+       wherever each card's own words ran out would deal as a set of cards rather
+       than as a deck. */
+    const longest = Math.max(...wrapped.flat().map((l) => l.length));
+    const foot = FOOT - Math.max(0, railH - longest * STORY.size * GLYPH) / 2;
+
+    const factMax = Math.max(...deck.map((s) => factLines(s, colW).length));
+    const room = (FOOT - top) - GAP - (factMax - 1) * FACT.lead;
+    const wanted = colW / (plate.width / plate.height);
+    const height = Math.round(Math.min(room, Math.max(wanted, colW / FLATTEST)));
+    const y = Math.round(top + (room - height) / 2);
+
+    return {
+      window: { x: PORTRAIT.x, y, w: colW, h: height },
+      factY: y + height + GAP,
+      wrap: colW,
+      rail: { x: PORTRAIT.x + PORTRAIT.w - railW, w: railW, top, bottom: FOOT, foot, chars, lines },
+    };
+  }
+
+  const factMax = Math.max(...deck.map((s) => factLines(s, PORTRAIT.w).length));
+  const storyMax = Math.max(...deck.map((s) => storyLines(s, charsIn(PORTRAIT.w, STORY.size)).length));
+
+  const storyY = STORY_BASE - (storyMax - 1) * STORY.lead;
+  const panelTop = storyY - GAP;
   /* The last line of rules text may come down to a line's clearance of the panel. */
   const factFloor = panelTop - FACT.lead;
 
-  const plate = plateSize(deck[0].portrait);
   const room = (factFloor - top) - GAP - (factMax - 1) * FACT.lead;
   const wanted = PORTRAIT.w / (plate.width / plate.height);
   const height = Math.round(Math.min(room, Math.max(wanted, PORTRAIT.w / FLATTEST)));
   const y = Math.round(top + (room - height) / 2);
 
   const window = { x: PORTRAIT.x, y, w: PORTRAIT.w, h: height };
-  return { window, factY: y + height + GAP, storyY, panelTop };
+  return { window, factY: y + height + GAP, storyY, panelTop, wrap: PORTRAIT.w };
 }
 
 /** The crop of this card's plate that fills its window, framed on the subject. */
@@ -377,8 +444,51 @@ function portraitCrop(spec, window) {
 
 /* --------------------------------------------------------------- the card */
 
-const factLines = (spec) => (spec.facts || []).flatMap((f) => wrap(f, FACT.wrap));
-const storyLines = (spec) => wrap(spec.story, STORY.wrap).slice(0, STORY.max);
+const factLines = (spec, colW) => (spec.facts || []).flatMap((f) => wrap(f, charsIn(colW, FACT.size)));
+const storyLines = (spec, chars) => wrap(spec.story, chars).slice(0, STORY.max);
+
+/**
+ * The story: a panel across the bottom, or a rail up the right-hand edge.
+ *
+ * The rail is the same words rotated -90 - reading bottom to top, the way a
+ * spine is lettered and the way the player board's own track labels already run.
+ * Lines stack left to right, so the first line is the one nearest the picture,
+ * and the rail's WIDTH is its line count: the story costs the card width rather
+ * than height, which is the whole point. A plate drawn on a portrait page has
+ * width to spare and no height at all, so the picture beside the rail is taller
+ * than the full-width one it replaced by a good ten millimetres.
+ *
+ * The arithmetic of the rotation, once, so nothing below has to hold it in its
+ * head: under `translate(TX,TY) rotate(-90)` a local point (x,y) lands at card
+ * (TX + y, TY - x). So local x runs UP the card from TY - which is why TY is the
+ * foot of the rail - and each successive line, one lead further along local y,
+ * lands one column further to the right.
+ */
+function storyRail(spec, geom) {
+  if (!geom.rail) {
+    const lines = storyLines(spec, charsIn(PORTRAIT.w, STORY.size));
+    return {
+      wash: `<rect x="${TRIM.x}" y="${num(geom.panelTop)}" width="${TRIM.w}" height="${num(TRIM.y + TRIM.h - geom.panelTop + 2)}" fill="${T12}" opacity="0.5"/>`,
+      ink:
+        `<path d="M ${TRIM.x + 24},${num(geom.storyY - 22)} H ${TRIM.x + TRIM.w - 24}" stroke="${SOOT}" stroke-width="1.2"/>\n  ` +
+        `<g font-style="italic" fill="${T85}">\n    ` +
+        textBlock(lines, TRIM.x + 26, geom.storyY, STORY.size, STORY.lead) +
+        `\n  </g>`,
+    };
+  }
+
+  const R = geom.rail;
+  const lines = wrap(spec.story, R.chars).slice(0, R.lines);
+  const tx = R.x + RAIL.pad + STORY.lead * 0.78;   // the first line's baseline
+  return {
+    wash: `<rect x="${num(R.x)}" y="${num(R.top)}" width="${num(TRIM.x + TRIM.w - R.x + 2)}" height="${num(TRIM.y + TRIM.h - R.top + 2)}" fill="${T12}" opacity="0.5"/>`,
+    ink:
+      `<path d="M ${num(R.x - RAIL.gap / 2)},${num(R.top)} V ${num(R.bottom)}" stroke="${SOOT}" stroke-width="${RAIL.rule.strokeWidth}"/>\n  ` +
+      `<g transform="translate(${num(tx)} ${num(R.foot)}) rotate(-90)" font-style="italic" fill="${T85}">\n    ` +
+      textBlock(lines, 0, 0, STORY.size, STORY.lead) +
+      `\n  </g>`,
+  };
+}
 
 /**
  * One card front. spec:
@@ -391,6 +501,7 @@ function card(spec, geom) {
   const art = portraitCrop(spec, P);
   const artHref = `../art/renders/${spec.portrait}.png`;
   const strip = statStrip(spec.stats);
+  const story = storyRail(spec, geom);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="${SERIF}">
 <title>${esc(spec.name)} — ${esc(spec.code)}</title>
@@ -406,7 +517,7 @@ function card(spec, geom) {
     <image href="${artHref}" x="${art.x}" y="${art.y}" width="${art.w}" height="${art.h}" preserveAspectRatio="xMidYMid slice"/>
   </g>
   ${strip.wash}
-  <rect x="${TRIM.x}" y="${num(geom.panelTop)}" width="${TRIM.w}" height="${num(TRIM.y + TRIM.h - geom.panelTop + 2)}" fill="${T12}" opacity="0.5"/>
+  ${story.wash}
 </g>
 
 <!-- ============================================================ INK -->
@@ -430,12 +541,9 @@ function card(spec, geom) {
 
   <!-- the card's working text -->
   <g font-size="${FACT.size}">
-    ${textBlock(factLines(spec), P.x + 2, geom.factY, FACT.size, FACT.lead)}
+    ${textBlock(factLines(spec, geom.wrap), P.x + 2, geom.factY, FACT.size, FACT.lead)}
   </g>
-  <path d="M ${TRIM.x + 24},${num(geom.storyY - 22)} H ${TRIM.x + TRIM.w - 24}" stroke="${SOOT}" stroke-width="1.2"/>
-  <g font-style="italic" fill="${T85}">
-    ${textBlock(storyLines(spec), TRIM.x + 26, geom.storyY, STORY.size, STORY.lead)}
-  </g>
+  ${story.ink}
 </g>
 
 <!-- ============================================================ GRIME -->
@@ -611,9 +719,12 @@ for (const v of vehicles) {
   specs.push({
     code: v.cardCode, name: v.name, portrait: render,
     kicker: v.mode === 'mounted' ? 'horse' : v.mode,
-    desc: `Vehicle card: ${v.name} (${v.mode}). ${v.damageBoxes} damage boxes, ${v.cargoCapacity} bulk of hold.`,
+    desc: `Vehicle card: ${v.name} (${v.mode}). Hull ${v.hull}, ${v.cargoCapacity} bulk of hold.`,
+    /* A hull's damage is its HEALTH, on the same letter and the same column a
+       character's is: a vehicle in play is dealt a player board of its own and
+       run like anybody else (data/playerboard.json). There is no V any more. */
     stats: [
-      cell('vehicle', v.damageBoxes, 'oxide'),
+      cell('health', v.hull, 'oxide'),
       cell('cargo', v.cargoCapacity, 'slate'),
     ],
     facts: [v.quirk],
@@ -626,7 +737,12 @@ for (const m of monsters) {
   if (!hasRender(render)) { skipped.push(m.cardCode); continue; }
   const opts = ['Slay', m.options.enslave && 'Enslave', m.options.befriend && 'Befriend', m.options.domesticate && 'Domesticate'].filter(Boolean);
   specs.push({
-    code: m.cardCode, name: m.name + (m.unique ? ' — unique' : ''), portrait: render,
+    /* The name is the name. A monster that is one-of-a-kind used to print
+       "— unique" after it, which read as part of the creature's name at card
+       size and was the only word on any card in the game doing rules work in the
+       title. Whether there is one of a thing is a deck rule (monsters.json
+       unique), and the deck is where it stays. */
+    code: m.cardCode, name: m.name, portrait: render,
     kicker: `${m.element} · ${m.terrains.join(', ')}`,
     desc: `Monster card: ${m.name}, ${m.element}. Health ${m.health}, strength ${m.strength}, defence ${m.defence}, yields ${m.manaYield} mana.`,
     /* The element used to be a badge beside the name and pushed everything else
@@ -1108,7 +1224,7 @@ const wanted = new Map();
 for (const deck of DECKS) {
   const cards = rendered(deck.prefix);
   if (cards.length) {
-    const geom = deckGeometry(cards);
+    const geom = deckGeometry(cards, deck);
     for (const spec of cards) wanted.set(`${spec.code}.svg`, card(spec, geom));
   }
   /* Every declared deck gets a back, cards or no cards. A deck that is still

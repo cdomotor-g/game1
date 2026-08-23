@@ -519,7 +519,7 @@
     ] : []);
 
     return el('div', [
-      pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. No card carries a bar any more: every number a card has is printed once, as a maximum, in the lettered summary strip across its top, and the tracks that move are on the player board. The letters are the board’s own — H, S, D, M, V — so setting up is reading across the strip. Plates are the accepted renders from docs/art/prompts.'),
+      pageHead('The adventure decks', 'Named vehicles, monsters, characters and talismans — the moving pieces of the open world. No card carries a bar any more: every number a card has is printed once, as a maximum, in the lettered summary strip across its top, and the tracks that move are on the player board. The letters are the board’s own — H, S, D, P, M — so setting up is reading across the strip. Plates are the accepted renders from docs/art/prompts.'),
       el('div.flow', { style: 'margin-bottom:6px' }, [
         el('a.btn', { href: 'cards/index.html' }, 'Open the card fronts'),
         el('a.btn.small', { href: 'boards/index.html' }, 'The player board'),
@@ -541,7 +541,7 @@
         deckCard('vehicle', v, v.quirk, [
           pill(D.name('mode', v.mode) || UI.titleize(v.mode)),
           pill(`cargo ${v.cargoCapacity}`),
-          pill(`damage ${v.damageBoxes}`, 'bad'),
+          pill(`hull ${v.hull}`, 'bad'),
         ])
       )),
       ...section('Monsters', 'Drawn when a discovery roll says monster and the card’s terrain list includes the hex. Deal the card onto the spare player board and run it like a player who is not a person.', q(D.monsters).map((m) =>
@@ -559,7 +559,7 @@
           pill(`${t.baseValue}${R.currency.symbol}`),
         ])
       )),
-      ...section('Modifications', 'Fittings and enchantments bolted onto a vehicle after it is built — the only one of the three a player makes during a game. They share the vehicle’s slots, so a shipwright and a hedge-witch compete for the same hull.', q(D.modifications).map((m) =>
+      ...section('Modifications', 'Fittings and enchantments bolted onto a vehicle after it is built — the only one of the three a player makes during a game. They lie in the kit slots of the vehicle’s own player board alongside its cargo, so a shipwright and a hedge-witch compete for the same four spaces.', q(D.modifications).map((m) =>
         el('button.card', { type: 'button', onclick: () => open('modification', m.id) }, [
           el('div.card-head', [el('span.card-title', m.name), el('span.card-code', m.cardCode)]),
           el('div.card-sub', m.effect),
@@ -904,6 +904,8 @@
           b.victoryPoints ? el('dt', 'Victory points') : null, b.victoryPoints ? el('dd', String(b.victoryPoints)) : null,
           b.specialist ? el('dt', 'Specialist') : null, b.specialist ? el('dd', D.name('profession', b.specialist)) : null,
           b.requiresBuilding ? el('dt', 'Requires') : null, b.requiresBuilding ? el('dd', D.name('building', b.requiresBuilding)) : null,
+          b.waterside ? el('dt', 'Waterside') : null, b.waterside ? el('dd', watersideText(b.waterside)) : null,
+          b.orWaterside ? el('dt', 'Or waterside') : null, b.orWaterside ? el('dd', watersideText(b.orWaterside).replace('must stand', 'may stand instead')) : null,
         ].filter(Boolean)),
       ]),
       b.terrain ? el('section', [el('h4', 'Terrain'), el('div.card-meta', b.terrain.map((t) => pill(D.name('terrain', t))))]) : null,
@@ -934,7 +936,23 @@
     ];
   };
 
+  /* "sea" -> the sentence a player reads. The three kinds are declared in
+     data/terrain.json siting.waterside.kinds; this only names them. */
+  function watersideText(kind) {
+    if (kind === 'sea') return 'must stand on land the sea reaches';
+    if (kind === 'fresh') return 'must stand on land a river or a lake reaches';
+    return 'must stand on land any water reaches';
+  }
+
   detail.terrain = function (t) {
+    const water = t.family === 'water';
+    /* Buildings that need a bank rather than a kind of ground. They are not in
+       any terrain's list, because waterside is a relationship and not a terrain
+       (data/terrain.json siting.waterside) - so a land tile shows them with the
+       condition attached, and a water tile shows them as what it makes possible
+       on the land around it. */
+    const wsBuildings = D.buildings.filter((b) => b.waterside || b.orWaterside);
+    const reaches = (b) => (D.siting.waterside.kinds[b.waterside || b.orWaterside] || []).includes(t.id);
     return [
       el('span.kicker', t.family),
       el('h2', t.name),
@@ -946,11 +964,17 @@
           el('dt', 'Road ×'), el('dd', String(t.roadCostMultiplier)),
           el('dt', 'Rail ×'), el('dd', String(t.railCostMultiplier)),
           el('dt', 'Buildable'), el('dd', t.buildable ? 'yes' : 'no'),
-        ]),
+          water ? el('dt', 'Bridgeable') : null, water ? el('dd', t.bridgeable ? 'yes' : 'no') : null,
+          t.navigableBy ? el('dt', 'Navigable by') : null,
+          t.navigableBy ? el('dd', t.navigableBy.map((m) => D.name('mode', m) || m).join(', ')) : null,
+        ].filter(Boolean)),
       ]),
       t.deposits ? linkSection('Possible deposits', t.deposits.map((d) => ['deposit', d, D.name('deposit', d), ''])) : null,
       linkSection('Worked here', D.recipesOnTerrain(t.id).map((r) => ['recipe', r.id, r.name, `${r.effortHours}h`])),
       linkSection('Buildable here', D.buildings.filter((b) => (b.terrain || []).includes(t.id)).map((b) => ['building', b.id, b.name, ''])),
+      water
+        ? linkSection('Waterside on it', wsBuildings.filter(reaches).map((b) => ['building', b.id, b.name, 'on the land beside']))
+        : linkSection('Waterside here', wsBuildings.map((b) => ['building', b.id, b.name, watersideText(b.waterside || b.orWaterside).replace('must stand on land ', '')])),
     ];
   };
 
@@ -1098,7 +1122,7 @@
       el('section', [
         el('h4', 'The card'),
         el('div.deflist', [
-          el('dt', 'Damage'), el('dd', `${v.damageBoxes} boxes — harm bar, left edge`),
+          el('dt', 'Hull'), el('dd', `${v.hull} — the H of its summary strip, walked on the health track of its own player board`),
           el('dt', 'Cargo'), el('dd', `${v.cargoCapacity} bulk — capacity bar, right edge`),
         ]),
         el('p.prose', `A vehicle whose damage bar fills is wrecked: cargo spills onto the hex, and salvage is whoever reaches it first.`),

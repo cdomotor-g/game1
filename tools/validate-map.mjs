@@ -25,6 +25,10 @@ const commissions = [];
 
 const terrainFile = JSON.parse(readFileSync(join(ROOT, 'data', 'terrain.json'), 'utf8'));
 const terrainById = new Map(terrainFile.terrains.map((t) => [t.id, t]));
+/* Which water counts as the sea, for a harbour. Declared once in
+   data/terrain.json siting.waterside.kinds - this file does not get to have
+   an opinion about it. */
+const SEA = new Set(terrainFile.siting?.waterside?.kinds?.sea ?? []);
 const palette = JSON.parse(readFileSync(join(ROOT, 'docs', 'art', 'palette.json'), 'utf8'));
 
 if (!existsSync(MAPS)) {
@@ -118,27 +122,33 @@ function checkMap(file) {
       .filter(Boolean);
 
   let deepTouchingLand = 0;
-  let coastWithoutWater = 0;
+  let inlandWithoutLand = 0;
   for (let row = 0; row < rowCount; row++) {
     for (let col = 0; col < cols; col++) {
       const id = at(col, row);
       const ring = around(col, row);
 
       /* Deep water is defined as unbridgeable and shipping-only. A deep hex against
-         a beach means a barge cannot reach a coastal town it is drawn next to. */
+         a beach means a barge cannot reach a waterside town it is drawn next to. */
       if (id === 'deep-water' && ring.some((n) => !isWater(n))) {
         deepTouchingLand++;
         if (deepTouchingLand <= 8) errors.push(`${where}: ${hexId(col, row)} is deep water touching land`);
       }
-      if (id === 'coast' && !ring.some(isWater)) {
-        coastWithoutWater++;
-        if (coastWithoutWater <= 8) errors.push(`${where}: ${hexId(col, row)} is coast with no water beside it`);
+      /* A river and a lake are inland water, and inland water has a bank. A hex
+         of either with nothing but water all round it is not a river or a lake -
+         it is sea, drawn as one and coded as the other. This is the check that
+         replaced "coast with no water beside it", and it is the same check
+         turned inside out: the old one asked whether a shore had any water, and
+         this one asks whether a watercourse has any shore. */
+      if ((id === 'river' || id === 'lake') && !ring.some((n) => !isWater(n))) {
+        inlandWithoutLand++;
+        if (inlandWithoutLand <= 8) errors.push(`${where}: ${hexId(col, row)} is ${id} with no land beside it`);
       }
     }
   }
   for (const [label, n] of [
     ['deep water touching land', deepTouchingLand],
-    ['coast with no water', coastWithoutWater],
+    ['inland water with no bank', inlandWithoutLand],
   ]) {
     if (n > 8) errors.push(`${where}: ...and ${n - 8} more hexes are ${label}`);
   }
@@ -178,8 +188,13 @@ function checkMap(file) {
       errors.push(`${where}: "${s.name}" and "${occupied.get(key)}" are both on ${key}`);
     }
     occupied.set(key, s.name);
-    if (s.harbour && id !== 'coast') {
-      errors.push(`${where}: "${s.name}" has a harbour but stands on ${id}, not a coast`);
+    /* A harbour is waterside on the SEA (terrain.json siting.waterside), which is
+       a relationship with the hexes around it rather than a property of the hex
+       it stands on. It used to be "this settlement is on a coast tile", which
+       meant a harbour could only exist where the artist had painted a strip of
+       beach - and meant a town on a lake could never have a dock at all. */
+    if (s.harbour && !isWater(id) && !around(s.col, s.row).some((n) => SEA.has(n))) {
+      errors.push(`${where}: "${s.name}" has a harbour but no sea reaches it - a harbour is waterside on the sea (terrain.json siting.waterside)`);
     }
     if (terrainById.get(id)?.housingAllowed === false) {
       errors.push(`${where}: "${s.name}" is on ${id}, which does not allow housing`);

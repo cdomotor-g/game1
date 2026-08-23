@@ -261,6 +261,68 @@ for (const i of itemList) {
   }
 }
 
+// Every terrain carries a MAP MARK, and no two carry the same one.
+//
+// The mark is the drawn symbol for that ground - a grass tuft, a conifer, a peak
+// - and it is data on the terrain exactly as an element's mark is data on the
+// element (components.json marks.terrain says how to draw one). A mini-map field
+// is patterned with it, so a terrain with no mark is a sheet with no ground; two
+// terrains sharing one is a sheet that lies about which ground it is.
+{
+  const seen = new Map();
+  for (const t of datasets.terrain?.terrains ?? []) {
+    const mark = t.mark;
+    if (!mark?.path) {
+      errors.push(`terrain: "${t.id}" has no mark - components.json marks.terrain has nothing to draw for it`);
+      continue;
+    }
+    if (!mark.id) errors.push(`terrain: "${t.id}" has a mark with no id`);
+    else if (seen.has(mark.id)) {
+      errors.push(`terrain: "${t.id}" and "${seen.get(mark.id)}" both draw the "${mark.id}" mark - one ground, one symbol`);
+    } else seen.set(mark.id, t.id);
+  }
+}
+
+// Waterside: the relationship that replaced the coast terrain.
+//
+// A shore is not a kind of ground, so nothing declares it as a terrain any more
+// (terrain.json siting.waterside). What a building or a recipe declares instead
+// is WHICH WATER it wants beside it - "any", "fresh" or "sea" - and those three
+// words are a vocabulary, which means they can be misspelt. This is the check
+// that catches a dock asking for "coastal" water and getting nothing.
+const waterside = datasets.terrain?.siting?.waterside;
+if (!waterside) {
+  errors.push('terrain: no siting.waterside - the coast terrain is gone and nothing says what took its job');
+} else {
+  const kinds = new Set(Object.keys(waterside.kinds ?? {}).filter((k) => !k.startsWith('$')));
+  const terrainIds = idsOf('terrain') ?? new Set();
+  for (const [kind, list] of Object.entries(waterside.kinds ?? {})) {
+    if (kind.startsWith('$')) continue;
+    for (const id of list) {
+      if (!terrainIds.has(id)) errors.push(`terrain: siting.waterside.kinds.${kind} names "${id}", which is not a terrain`);
+      else if (datasets.terrain.terrains.find((t) => t.id === id)?.family !== 'water') {
+        errors.push(`terrain: siting.waterside.kinds.${kind} names "${id}", which is not water - a waterside tile is beside WATER`);
+      }
+    }
+  }
+  const sited = [
+    ...(datasets.buildings?.buildings ?? []).flatMap((b) => [
+      [`buildings: "${b.id}" waterside`, b.waterside],
+      [`buildings: "${b.id}" orWaterside`, b.orWaterside],
+    ]),
+    ...(datasets.recipes?.recipes ?? []).flatMap((r) => [
+      [`recipes: "${r.id}" site.waterside`, r.site?.waterside],
+      [`recipes: "${r.id}" site.orWaterside`, r.site?.orWaterside],
+    ]),
+  ];
+  for (const [label, want] of sited) {
+    if (want === undefined) continue;
+    if (!kinds.has(want)) {
+      errors.push(`${label} wants "${want}" water beside it; terrain.json siting.waterside.kinds declares ${[...kinds].join(', ')}`);
+    }
+  }
+}
+
 // The summary strip on a card and the tracks on the board have to call a number
 // by the same name, or a player setting up reads H off a card and looks for a
 // letter that is not on the board.
@@ -276,8 +338,8 @@ for (const t of datasets.playerboard?.tracks ?? []) {
 // The player board, and the ceiling it puts on the whole game.
 //
 // Every track runs the same range, 0 to a printed maximum, and that maximum is
-// not the board's business alone: a character with 15 health or a hull with 15
-// damage boxes would walk its token off the top and nobody would notice until
+// not the board's business alone: a character with 15 health or a hull of 15
+// would walk its token off the top and nobody would notice until
 // it was printed. So the board declares what has to fit, and it is all checked
 // here rather than trusted.
 const boardSpec = datasets.playerboard;

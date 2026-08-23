@@ -91,17 +91,29 @@
         { "roll": "20", "result": "quest-omen" }
       ],
       "elementWeights": { "fire": 3, "earth": 2, "air": 2, "water": 0 } },
-    { "id": "coast", "name": "Coast (C)", "terrain": "coast", "code": "C",
+    { "id": "river", "name": "River (R)", "terrain": "river", "code": "R",
+      "entries": [
+        { "roll": "1-2", "result": "hazard" },
+        { "roll": "3-5", "result": "traveller" },
+        { "roll": "6-13", "result": "nothing" },
+        { "roll": "14", "result": "flotsam" },
+        { "roll": "15-16", "result": "merchant" },
+        { "roll": "17-19", "result": "monster" },
+        { "roll": "20", "result": "quest-omen" }
+      ],
+      "$note": "The busiest water in the game and the most dangerous underfoot. A river is the road everybody who cannot afford a road uses, so it grows merchants and ferrymen - and it is also rapids, a shifting bar and rotten ice, which is why the hazard band is two wide and no other water table's is.",
+      "elementWeights": { "water": 3, "earth": 2, "air": 1, "fire": 0 } },
+    { "id": "lake", "name": "Lake (L)", "terrain": "lake", "code": "L",
       "entries": [
         { "roll": "1", "result": "hazard" },
-        { "roll": "2-4", "result": "traveller" },
-        { "roll": "5-12", "result": "nothing" },
-        { "roll": "13-14", "result": "flotsam" },
-        { "roll": "15", "result": "merchant" },
+        { "roll": "2-3", "result": "traveller" },
+        { "roll": "4-13", "result": "nothing" },
+        { "roll": "14-15", "result": "flotsam" },
         { "roll": "16-19", "result": "monster" },
         { "roll": "20", "result": "quest-omen" }
       ],
-      "elementWeights": { "water": 3, "air": 2, "earth": 1, "fire": 0 } },
+      "$note": "Quiet water with land all round it: no pirates, because there is nowhere for them to run to, and a long empty band because most of a lake is most of a lake.",
+      "elementWeights": { "water": 3, "air": 1, "earth": 1, "fire": 0 } },
     { "id": "shallow-water", "name": "Shallow Water (S)", "terrain": "shallow-water", "code": "S",
       "entries": [
         { "roll": "1", "result": "hazard" },

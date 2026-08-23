@@ -80,6 +80,8 @@
         "livestockSlots": { "type": "integer" },
         "garrison": { "type": "integer" },
         "terrain": { "type": "array", "items": { "$ref": "#/$defs/id" }, "description": "Terrain ids it may be built on. Omit for anywhere buildable." },
+        "waterside": { "enum": ["any", "fresh", "sea"], "description": "Which water has to be beside the tile - the kinds declared in terrain.json siting.waterside.kinds. A shore is a relationship, not a terrain; there is no coast to put in a terrain list." },
+        "orWaterside": { "enum": ["any", "fresh", "sea"], "description": "An ALTERNATIVE to the terrain list rather than a requirement on top of it: desert sand, or the sand any water leaves on its bank." },
         "requiresBuilding": { "$ref": "#/$defs/id" },
         "requiresDeposit": { "type": ["string", "null"] },
         "requiresDepositAny": { "type": "array", "items": { "$ref": "#/$defs/id" } },
@@ -108,6 +110,8 @@
             "orBuilding": { "$ref": "#/$defs/id" },
             "terrain": { "type": "array", "items": { "$ref": "#/$defs/id" } },
             "orTerrain": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+            "waterside": { "enum": ["any", "fresh", "sea"] },
+            "orWaterside": { "enum": ["any", "fresh", "sea"] },
             "deposit": { "$ref": "#/$defs/id" },
             "figure": { "$ref": "#/$defs/id" },
             "fieldSlot": { "type": "boolean" },
@@ -158,6 +162,9 @@
         "buildable": { "type": "boolean" },
         "features": { "type": "array", "items": { "$ref": "#/$defs/id" } },
         "deposits": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "bridgeable": { "type": "boolean", "description": "Water only: a bridge token may be laid across one hex of it." },
+        "navigableBy": { "type": "array", "items": { "$ref": "#/$defs/id" }, "description": "Water only: the transport modes that may enter it." },
+        "mark": { "type": "object", "required": ["id", "path"], "description": "The drawn map symbol for this ground - a grass tuft, a conifer, a peak. Data on the terrain the way an element mark is data on the element; components.json marks.terrain says how to draw it. Every terrain has one and no two share.", "properties": { "id": { "$ref": "#/$defs/id" }, "path": { "type": "string", "description": "SVG path on a 24-grid, stroke only." } } },
         "effortPenalty": { "type": "number" }
       }
     },
@@ -255,14 +262,14 @@
     },
     "vehicle": {
       "type": "object",
-      "required": ["id", "cardCode", "name", "mode", "cargoCapacity", "damageBoxes", "quirk", "story"],
+      "required": ["id", "cardCode", "name", "mode", "cargoCapacity", "hull", "quirk", "story"],
       "properties": {
         "id": { "$ref": "#/$defs/id" },
         "cardCode": { "$ref": "#/$defs/cardCode" },
         "name": { "type": "string" },
         "mode": { "type": "string", "description": "A transport.json mode id, or 'mounted' for horses." },
         "cargoCapacity": { "type": "integer", "description": "The C box of the card's summary strip: the bulk of the hold." },
-        "damageBoxes": { "type": "integer", "description": "The V box, and the V track on the player board. Full = wrecked, cargo spills." },
+        "hull": { "type": "integer", "description": "The H box on the card, walked on the HEALTH track of the vehicle own player board - a vehicle in play is dealt one and run like a player who is not a person. At zero it is wrecked and the cargo spills." },
         "quirk": { "type": "string", "description": "The one rule that makes this vehicle itself." },
         "story": { "type": "string" }
       }

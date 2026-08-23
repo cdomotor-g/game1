@@ -78,7 +78,7 @@
     { "id": "keelbound", "cardCode": "MOD-08", "name": "Keelbound", "class": "enchantment", "element": "water",
       "fits": ["ship", "barge"], "madeAt": "alchemist", "manaCost": 5,
       "effortHours": 0, "baseValue": 0, "massKg": 0,
-      "effect": "She will not sink. A V track that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.",
+      "effect": "She will not sink. A hull run down to nothing leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.",
       "story": "Bound into the keel timber before she is planked, which means it is nearly always done to a new hull and nearly never to an old one. Insurers ask. Insurers charge less when the answer is yes." },
 
     { "id": "fleetfoot-binding", "cardCode": "MOD-09", "name": "Fleetfoot Binding", "class": "enchantment", "element": "air",

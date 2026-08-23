@@ -5,23 +5,45 @@ farm growing into a walled town. Those moments zoom in — one cell of the
 campaign map opens out onto a **mini-map**, play happens inside it, and the
 result is written back to the big map.
 
-## A mini-map is a flat colour and a grid
+## A mini-map is a colour, a pattern and a grid
 
 That is the whole specification, and it replaced a drawn one. **No render, no
-pattern, no hatch, no drawn ground.** The field is one hexagon of hexagonal cells
-filled with the colour that terrain already prints in, the grid is ruled on top,
-and two working panels sit either side. Nothing else is on the sheet.
+plate.** The field is one hexagon of hexagonal cells filled with the colour that
+terrain already prints in, with that terrain's own **map mark** scattered across
+the cells, the grid ruled on top, and two working panels either side. Nothing
+else is on the sheet.
 
 Which means a mini-map needs **no plate, no artist, no framing entry and no place
 in the mint queue.** It is generated: `node tools/build-minimaps.mjs` writes one
 sheet per terrain into [`sheets/`](sheets/) from
 [`data/minimap.json`](../../data/minimap.json) (what the sheets are for),
-[`data/components.json`](../../data/components.json) `minimap` (how they are
-drawn) and [`data/terrain.json`](../../data/terrain.json) (which terrains exist).
-The rendered index is [`index.html`](index.html).
+[`data/components.json`](../../data/components.json) `minimap` and
+`marks.terrain` (how they are drawn) and
+[`data/terrain.json`](../../data/terrain.json) (which terrains exist, and what
+each one's mark is). The rendered index is [`index.html`](index.html).
 
-Why flat: drawn ground competes with the pieces standing on it, and every one of
-these sheets is a sheet somebody is standing pieces on. The colour comes from
+### The pattern, and why it took a second go
+
+These sheets were a flat colour and nothing else. The argument was that drawn
+ground competes with the pieces standing on it, and every one of these sheets is
+a sheet somebody is standing pieces on. That argument is half right: a *drawn*
+sheet competes. A grass tuft at a third of a cell, on the ink plate, at a third
+of full strength does not — and it does the one thing the flat colour could not
+do on its own, which is say which ground this is from across the table. It says
+it in the black-and-white edition too, where there is no colour on the sheet at
+all.
+
+The marks are **the world map's own**. A terrain carries one as data
+(`terrain.json terrains[].mark`) exactly as an element carries its mark, and
+`components.json marks.terrain` says how heavy the line is and how thickly to
+scatter it — three to a cell, on a small triangle about the centre, nudged by a
+fraction of their own size and never reaching a grid line. So the ground on a
+mini-map and the ground in the campaign map's legend swatch trace one path and
+cannot drift apart.
+
+Why the colour is still flat underneath it: drawn ground competes with the pieces
+standing on it, and every one of these sheets is a sheet somebody is standing
+pieces on. The colour comes from
 `docs/art/palette.json` `terrain[].wash` rather than from `terrain.json`'s
 `colour` — the palette's is the *printed* one and is already a tint, because
 terrain is the largest printed area in the game and a mini-map field is the

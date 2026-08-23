@@ -257,14 +257,19 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <h2 id="tiles">Tiles</h2>
 <blockquote><p><strong>The tile board is shelved — <a href="https://github.com/cdomotor-g/game1/issues/18">#18</a>.</strong> What is below stays true as rules, and it is not what is being built. The board in play is a <strong>drawn map plate with the hex grid overlaid at read time</strong> — see <a href="../map/README.md"><code>../map/README.md</code></a> — where a mistake about the terrain is a one-character edit rather than a repaint. A bag of tiles is a different physical product with its own art contract and its own setup, and it comes back as a <em>tile set</em> once the game-set split (<a href="https://github.com/cdomotor-g/game1/issues/10">#10</a>) has decided how a set supplies a board. Terrain, move costs and the letter codes below are shared by both and are not affected.</p></blockquote>
 <p>The board is hex tiles, each one terrain type. 37 tiles for two players up to 75 for five. Everything beyond each player's starting cluster of three starts <strong>face down</strong>.</p>
-<p>Ten terrains, eight land and two water — riverbanks and lake shores were folded into grassland and coast, because two extra tile types bought complexity and paid nothing. Each terrain carries a <strong>single-letter code</strong>, printed in the bottom corner of every hex on every map, so there is never an argument about what a cell is when the artwork underneath straddles a grid line. The letter is the ruling.</p>
+<p>Eleven terrains, seven land and four water. Each carries a <strong>single-letter code</strong>, printed in the bottom corner of every hex on every map, so there is never an argument about what a cell is when the artwork underneath straddles a grid line. The letter is the ruling.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Terrain</th><th>Move</th><th>Rail ×</th><th></th><th>Code</th><th>Terrain</th><th>Move</th><th>Rail ×</th></tr></thead>
-<tbody><tr><td><strong>G</strong></td><td>Grassland</td><td>1</td><td>1</td><td></td><td><strong>T</strong></td><td>Tundra</td><td>2</td><td>2</td></tr>
-<tr><td><strong>F</strong></td><td>Forest</td><td>2</td><td>2</td><td></td><td><strong>D</strong></td><td>Desert</td><td>2</td><td>2</td></tr>
-<tr><td><strong>H</strong></td><td>Hills</td><td>2</td><td>3</td><td></td><td><strong>C</strong></td><td>Coast</td><td>1</td><td>2</td></tr>
+<tbody><tr><td><strong>G</strong></td><td>Grassland</td><td>1</td><td>1</td><td></td><td><strong>D</strong></td><td>Desert</td><td>2</td><td>2</td></tr>
+<tr><td><strong>F</strong></td><td>Forest</td><td>2</td><td>2</td><td></td><td><strong>R</strong></td><td>River</td><td>boat</td><td>—</td></tr>
+<tr><td><strong>H</strong></td><td>Hills</td><td>2</td><td>3</td><td></td><td><strong>L</strong></td><td>Lake</td><td>boat</td><td>—</td></tr>
 <tr><td><strong>M</strong></td><td>Mountain</td><td>4</td><td>6</td><td></td><td><strong>S</strong></td><td>Shallows</td><td>boat</td><td>—</td></tr>
-<tr><td><strong>B</strong></td><td>Marsh</td><td>3</td><td>4</td><td></td><td><strong>O</strong></td><td>Deep water</td><td>boat</td><td>—</td></tr></tbody></table></div>
+<tr><td><strong>B</strong></td><td>Marsh</td><td>3</td><td>4</td><td></td><td><strong>O</strong></td><td>Deep water</td><td>boat</td><td>—</td></tr>
+<tr><td><strong>T</strong></td><td>Tundra</td><td>2</td><td>2</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+<h3 id="there-is-no-shore-terrain">There is no shore terrain</h3>
+<p>There was one, called <strong>Coast</strong>, and it meant &quot;the edge of the water&quot;. That made a shore a <em>kind of ground</em>: a beach in front of a forest had to be drawn as neither, a town on a lake could not have a dock unless the artist painted a ring of sand round the lake first, and one terrain was quietly doing the work of sea shore, lake rim and river mouth at once.</p>
+<p>The edge of the water is a <strong>relationship</strong>, and it is stated as one. A land tile with any water tile beside it is <strong>waterside</strong> — read off the board the moment somebody asks, printed on no hex, and true of a river bank and a sea shore alike. A dock goes on any waterside tile; a harbour on one the <em>sea</em> reaches; fresh water is drawn beside a river or a lake without a well. <code>data/terrain.json siting.waterside</code> is where the three kinds — any, fresh, sea — are declared, and <code>tools/validate-map.mjs</code> fails a board whose harbour no sea can reach.</p>
+<p>Riverbanks and lake shores went the same way, and their water came back as terrain in its own right: <strong>River</strong> is a watercourse wide enough to be its own hex — a barge lane running inland, and a wall across any road that has not been bridged — and <strong>Lake</strong> is standing fresh water with land all round it. The two of them are what the old riverbank and lake-shore tiles were reaching for, and neither costs a shore tile to say it.</p>
 <p>Each terrain also carries road multipliers, buildability, <strong>features</strong> (trees, stone, fresh water, game, herbs, caves) and <strong>deposits</strong> — the full table is in the <a href="#c-14-annex">annex</a>, and the letter codes key the travel-speed and discovery tables in <a href="#c-13-adventure">13-adventure.md</a>.</p>
 <p>The rail multipliers are the ones to look at. Flat grassland is ×1. Hills are ×3. Mountains are ×6. A railroad through a mountain range costs 48 build-points a tile and is meant to be the kind of thing another player watches you attempt with interest.</p>
 <h2 id="exploration-and-fog">Exploration and fog</h2>
@@ -296,7 +301,8 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <p>A road is marked on the map as it is laid, and the token <strong>is</strong> the record: an unmarked road belongs to nobody. A route token is a <strong>bar</strong>, not a chit — it lies along the line between two hex centres, which is where a road actually is, and it is the length of that line, so a run of them reads as a continuous road rather than as a row of counters.</p>
 <p>The size is the map's business, not the token's. A pointy-top hex's centre-to-centre distance <em>is</em> its flat-to-flat width, so the bar is nine tenths of whatever the map's print preset makes a hex — <strong>15 × 3.7 mm</strong> for road and <strong>15 × 5.3 mm</strong> for rail on the default four-sheet Korvane Reach board, and <code>tools/build-map.mjs</code> prints the figures for every preset rather than anybody typing them. Rail carries sleepers across its width so it reads as rail at arm's length; ownership is peg holes down the centre line — one for the first player, two for the second — as well as colour, so a table that cannot use the colour can still see whose road it is. A mini-map cell is the same hex, so a bar cut for the campaign board fits a mini-map lane too.</p>
 <h2 id="water">Water</h2>
-<p>Shallow water takes barges and ships; deep water takes ships only and cannot be bridged. Coast tiles — any shore: sea, lake or river mouth — are the only place a harbour can go.</p>
+<p>Four water terrains, and they are not interchangeable. <strong>Rivers</strong> and <strong>lakes</strong> are inland fresh water: barges work them, a bridge crosses them, and nothing wheeled gets over one until somebody builds that bridge. <strong>Shallow water</strong> takes barges and ships; <strong>deep water</strong> takes ships only and cannot be bridged at all.</p>
+<p>A <strong>dock</strong> goes on any waterside land — a sea shore, a lake rim or a river bank all do. A <strong>harbour</strong> needs the sea, because a harbour is for ships and a ship never reaches a lake. Neither is a terrain: waterside is read off the board (see above), and <code>tools/validate-map.mjs</code> fails a board whose harbour no sea can reach.</p>
 <p>Sea freight is slow to set up — a harbour is 22 build-points on top of a dock, and a ship is 280 coin or fourteen hours of shipwrighting — and then it is the cheapest bulk movement in the game at 60 capacity. It is the long-game infrastructure play for anyone who started on the coast, and storms can sink the whole thing.</p>
 </section>
 
@@ -517,7 +523,7 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <li><strong>45 deposit tokens</strong> — placed face down under tiles at setup, flipped when surveyed. Counts per type in <code>data/deposits.json</code> (<code>tokensInSetup</code>).</li>
 <li><strong>~40 tree tokens</strong> — forest tiles carry 6 each; removed as they are felled.</li></ul>
 <h2 id="per-player-4">Per player (×4)</h2>
-<ul><li><strong>1 player board</strong> — A4 landscape, and every one identical. A recess for the hero's character card, four more for whatever they have in play, six numbered tracks up the middle and the round's phases under the character. Generated by <code>tools/build-board.mjs</code> into <a href="../boards/index.html"><code>docs/boards/</code></a>; the anatomy is below, under <strong>The player board</strong></li>
+<ul><li><strong>1 player board</strong> — A4 landscape, and every one identical. A recess for the card in play, four more for whatever that card has in play, five numbered tracks up the middle and the round's phases underneath. Print more than there are players: one spare as the encounter board, and one for every vehicle on the road. Generated by <code>tools/build-board.mjs</code> into <a href="../boards/index.html"><code>docs/boards/</code></a>; the anatomy is below, under <strong>The player board</strong></li>
 <li><strong>20 building markers</strong> in the player colour</li>
 <li><strong>12 worker meeples</strong>, 4 specialist meeples (distinct shape), 6 soldier meeples</li>
 <li><strong>4 figures</strong> — prospector, merchant, hero, and a spare</li>
@@ -545,9 +551,9 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <tr><td><strong>S</strong></td><td>Strength</td><td>1</td><td>0–14</td><td>Set from the card; a rung down for every night without a camp, all of it back after one night's sleep</td></tr>
 <tr><td><strong>D</strong></td><td>Defence</td><td>1</td><td>0–14</td><td>Set from the card. Your opponent reads it, not you</td></tr>
 <tr><td><strong>P</strong></td><td>Pace</td><td>1 hex</td><td>0–14</td><td>Hexes left in this leg</td></tr>
-<tr><td><strong>V</strong></td><td>Vehicle</td><td>1</td><td>0–14</td><td>Damage to the vehicle being run</td></tr>
 <tr><td><strong>M</strong></td><td>Mana</td><td>1</td><td>0–14</td><td>The body and every talisman in a slot</td></tr></tbody></table></div>
-<p><strong>Pace</strong> is the board's own: a party counts hexes off a speed table every single round of the game and has never had anywhere to count them — set the token at the start of a leg, walk it down a rung a hex, halve it for a night leg under a lantern. At zero the leg is over and the discovery roll is where you stopped. It is called pace rather than speed because strength has the S — and the vehicle track takes the <strong>V</strong> because defence took the D. A player says &quot;my defence&quot; and &quot;the wagon's damage&quot;; only one of those is about the player, so the player gets the letter.</p>
+<p><strong>Pace</strong> is the board's own: a party counts hexes off a speed table every single round of the game and has never had anywhere to count them — set the token at the start of a leg, walk it down a rung a hex, halve it for a night leg under a lantern. At zero the leg is over and the discovery roll is where you stopped. It is called pace rather than speed because strength has the S.</p>
+<p><strong>There is no V.</strong> There was: a sixth column called Vehicle, counting damage on the wagon the player was running — printed on every board in the game whether anybody was running one or not, and the only number on the board that walked <em>up</em>. A vehicle is a figure now. It is dealt a player board of its own and run like a player who is not a person: its card in the recess, its cargo and its modifications in the four kit slots, and its <strong>hull on the health track</strong>, set from the card, down as it is damaged, up as it is repaired, wrecked at nothing. A hull is a body. The five columns left over got the width back.</p>
 <p><strong>Strength</strong> swallowed burden. They were the same arm doing the same job under two numbers: what you swing with and what you can shoulder. One track now, and what a figure carries is <code>strength × 3</code> kilograms — printed on the card so nobody multiplies at the table, derived so it can never disagree with the strength beside it.</p>
 <p><strong>Defence</strong> is new, and it is the half of the old strength that had no business being there. Strength used to sit on <strong>both</strong> sides of the attack roll — yours and theirs — which quietly made every strong thing armoured. A stone boar barely swings and turns a sword; an ash drake does both; a dust devil does neither and is still almost impossible to hit. Two numbers, two properties. See <strong>A fight</strong>, below.</p>
 <p><strong>The tracks are numbered and nothing else.</strong> No rung glyph, no plus, no minus. Each rung used to carry a little ink-plate mark saying which <em>kind</em> of number it was, and at a shade over 11 mm a column it was competing with the figure for the same three millimetres. Which way a token walks is a sentence in the rulebook, where there is room to say it.</p>
@@ -555,7 +561,7 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <p>Kilograms are the one thing that never has to fit that ceiling, because nothing walks a token for them any more: a load is totalled and checked against the limit printed on the card, and a strength-6 caravan guard shouldering 18 kg is a sentence, not a ladder.</p>
 <p>The tracks are the only thing on the board carrying colour: <strong>harm in oxide, a rating in ochre and slate, the leg in verdigris, mana in bruise</strong>. Mana is the only arcane subject on the sheet and the only thing that takes the slip.</p>
 <p><strong>One board, and every one identical — and print one more than there are players.</strong> Everything that differs between an orc and a halfling is printed on the card lying in the recess, so the board underneath has no business knowing which of them is sitting there. The spare board is the <strong>encounter board</strong>: when a discovery roll turns up a monster or a stranger, their card is dealt onto it, its tracks are set from the card's summary strip, and for the length of the encounter it is a player who is not a person. Being generic is what makes that work.</p>
-<p><strong>There is no border.</strong> A card has a frame because a card is held, fanned and cut out; a board is not. The 18 mm of paper the border used to take was doing nothing but making the middle narrower, and taking it off is what paid for the sixth track — the columns came out <em>wider</em> with six than they had been with five.</p>
+<p><strong>There is no border.</strong> A card has a frame because a card is held, fanned and cut out; a board is not. The 18 mm of paper the border used to take was doing nothing but making the middle narrower, and taking it off is what paid for a sixth track — the columns came out <em>wider</em> with six than they had been with five. Retiring that track, when a vehicle started being dealt a board of its own, handed the width straight back: five columns, over 13 mm each, and not one coordinate typed to do it.</p>
 <h3 id="a-fight">A fight</h3>
 <p>Strength was already in the game, on every monster card, doing one job: a threat rating that some rules read as a threshold — a thug refuses a monster of strength 4 or more. It now does the other half of the job as well, and <strong>defence</strong> is the half it used to do badly. It is a <strong>shift on the number you need</strong> rather than a pile of extra dice:</p>
 <blockquote><p>Roll as before, one die per unit. Then shift the number you need: <strong>less your own strength, plus their defence.</strong> Strength 3 against defence 3 hits on 4+, exactly as it always did. Strength 5 against defence 3 hits on 2+; strength 2 against defence 5, on 6+. Never better than 2+ and never worse than 6+.</p></blockquote>
@@ -581,7 +587,8 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <li><strong>Round marker</strong>, turn order markers, first player token</li></ul>
 <h2 id="mini-maps">Mini-maps</h2>
 <p>One A4 landscape sheet per terrain: a hexagon of 61 hexagonal cells — the inside of a single campaign-map cell — with an encounter panel and a holdings panel in the space a hexagon on a rectangle leaves over.</p>
-<p><strong>A mini-map is a flat colour and a grid, and nothing else.</strong> No render, no pattern, no hatch, no drawn ground. The field is the colour that terrain already prints in (<code>palette.json terrain[].wash</code>), the grid is ruled on top, and that is the whole sheet — so it needs no plate, no artist and no place in the mint queue. Drawn ground competes with the pieces standing on it, and every one of these sheets is a sheet somebody is standing pieces on.</p>
+<p><strong>A mini-map is a colour, a pattern and a grid.</strong> No render and no plate. The field is the colour that terrain already prints in (<code>palette.json terrain[].wash</code>), patterned with that terrain's own <strong>map mark</strong> — a grass tuft, a conifer, two hummocks, a peak, reeds, a frost star, a dune, a river between its banks — with the grid ruled on top, and that is the whole sheet. It still needs no artist and no place in the mint queue.</p>
+<p>The sheet was a flat colour and nothing else, on the argument that drawn ground competes with the pieces standing on it, and every one of these sheets is a sheet somebody is standing pieces on. Half right: a <em>drawn</em> sheet competes. A mark at a third of a cell, on the ink plate at a third of full strength — quieter than the grid ruled over it — does not, and it does what the colour could not do alone: say which ground this is from across the table, and say it in the black-and-white edition too. The marks are the world map's own, carried as data on the terrain (<code>terrain.json terrains[].mark</code>) exactly as an element carries its mark, and drawn per <code>components.json marks.terrain</code>.</p>
 <p><strong>A cell is a world hex — exactly.</strong> 16.7 mm at the default four-sheet print preset, read off the map rather than chosen, so a figure based for the campaign board stands in a mini-map cell without being re-based, a route token cut for one fits the other, and one ruler measures both. Print the map bigger and the sheets follow. The scale is a fiction — the ground inside one hex is not sixty-one hexes of ground — and it is the right fiction, because everything physical about the two boards agrees.</p>
 <p><code>tools/build-minimaps.mjs</code> generates them into <a href="../minimaps/index.html"><code>docs/minimaps/sheets/</code></a>; the spec is <a href="../minimaps/README.md"><code>docs/minimaps/README.md</code></a> and <code>data/minimap.json</code>. The thirty-two hand-drawn sheets that preceded this — Holdings, Grounds and Places, part of the shelved tile board (<a href="https://github.com/cdomotor-g/game1/issues/18">#18</a>) — stay committed at <a href="../minimaps/img/"><code>docs/minimaps/img/</code></a> and are not touched.</p>
 <h2 id="player-aids">Player aids</h2>
@@ -847,7 +854,7 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <p>This is the part of the game designed to grow fattest over time. New quests are new cards; a new map brings its own; nothing else has to change.</p>
 <h2 id="vehicles-and-characters">Vehicles and characters</h2>
 <p>Two more decks give the moving pieces names:</p>
-<p><strong>Vehicles</strong> (<code>vehicles.json</code>) — twelve named machines, three each of train, ship, caravan and horse. A card is a specific vehicle with a story and a quirk: the Reach Flyer is fast and takes passengers, Old Smoke is cheap and limps, the Fenway Wagons cross marsh that stops everything else on wheels. Each card prints two boxes in its summary strip — <strong>V</strong> for the damage boxes the hull holds, <strong>C</strong> for the bulk of its hold. Damage is walked on the player board's V track. A wrecked vehicle spills its cargo on the hex, and salvage is whoever reaches it first.</p>
+<p><strong>Vehicles</strong> (<code>vehicles.json</code>) — twelve named machines, three each of train, ship, caravan and horse. A card is a specific vehicle with a story and a quirk: the Reach Flyer is fast and takes passengers, Old Smoke is cheap and limps, the Fenway Wagons cross marsh that stops everything else on wheels. Each card prints two boxes in its summary strip — <strong>H</strong> for the hull, <strong>C</strong> for the bulk of its hold. A vehicle in play is dealt a <strong>player board of its own</strong> and run like a player who is not a person: its card in the recess, its cargo and modifications in the four kit slots, and its hull on that board's health track. At nothing it is wrecked — it spills its cargo on the hex, and salvage is whoever reaches it first.</p>
 <p>Eleven of the twelve catalogue plates are accepted (<a href="../art/prompts/vehicles.md"><code>docs/art/prompts/vehicles.md</code></a>); the Varl Wagonrow (VEH-09) is still to be drawn:</p>
 <div class="table-wrap gallery"><table>
 <tbody><tr><td><img src="../art/renders/vehicle-veh-01.png" alt="The Reach Flyer" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-02.png" alt="Steppe Hauler" loading="lazy"></td><td><img src="../art/renders/vehicle-veh-03.png" alt="Old Smoke" loading="lazy"></td></tr>
@@ -900,19 +907,19 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td><em>Holdings: The River Meadow (PSM-01)</em></td><td><em>Grounds: marsh (TBM-05)</em></td><td><em>Places: Vossgard (SET-01)</em></td></tr></tbody></table></div>
 <h2 id="the-player-board">The player board</h2>
 <p>The adventure layer arrived one card at a time — a health bar here, a burden bar there, a mana bar inboard of that one — and every bar was on an edge, which is the right place for a card you are holding and the wrong place for one lying on the table. The <a href="#c-08-components">player board</a> is where they all ended up, and taking them off the cards is what gave the portraits the full width of the card.</p>
-<p>One A4 landscape sheet each and every one identical, printed at <a href="../boards/index.html"><code>docs/boards/</code></a>. The hero's card drops into a recess top left, four more recesses take whatever else is in play, the round's phases print under the character, and six numbered tracks run up the middle:</p>
+<p>One A4 landscape sheet each and every one identical, printed at <a href="../boards/index.html"><code>docs/boards/</code></a>. The card in play drops into a recess top left, four more recesses take whatever that card has in play, the round's phases print underneath, and five numbered tracks run up the middle:</p>
 <div class="table-wrap"><table>
 <thead><tr><th></th><th>Track</th><th>A rung is</th><th>Runs</th><th>Walked by</th></tr></thead>
 <tbody><tr><td><strong>H</strong></td><td>Health</td><td>1</td><td>0–14</td><td>The figure, hurt and mended — medical aid only</td></tr>
 <tr><td><strong>S</strong></td><td>Strength</td><td>1</td><td>0–14</td><td>Set from the card; a rung down for every night without a camp</td></tr>
 <tr><td><strong>D</strong></td><td>Defence</td><td>1</td><td>0–14</td><td>Set from the card. Read by whoever is attacking you</td></tr>
 <tr><td><strong>P</strong></td><td>Pace</td><td>1 hex</td><td>0–14</td><td>Hexes left in this leg</td></tr>
-<tr><td><strong>V</strong></td><td>Vehicle</td><td>1</td><td>0–14</td><td>Damage to the vehicle being run</td></tr>
 <tr><td><strong>M</strong></td><td>Mana</td><td>1</td><td>0–14</td><td>The body and every talisman in a slot</td></tr></tbody></table></div>
-<p>The ladders are numbered from the bottom and walked by a token, and they are numbered and <strong>nothing else</strong> — no rung glyph, no plus, no minus. At a shade over 11 mm a column, a little mark saying which <em>kind</em> of number this is was competing with the figure for the same three millimetres. Which way a token walks is a sentence in the rulebook, where there is room to say it.</p>
+<p>The ladders are numbered from the bottom and walked by a token, and they are numbered and <strong>nothing else</strong> — no rung glyph, no plus, no minus. At a shade over 13 mm a column, a little mark saying which <em>kind</em> of number this is was competing with the figure for the same three millimetres. Which way a token walks is a sentence in the rulebook, where there is room to say it.</p>
 <p><strong>Pace is the board's own</strong>, and it is the one that was missing. A party looks its day-leg speed up in <a href="../../data/travel.json"><code>travel.json</code></a> every single round of the game and has never had anywhere to keep it: set the token at the start of a leg, walk it down a rung per hex entered, halve it for a night leg under a lantern. At zero the leg is over, and the discovery roll happens wherever it stopped. It is pace rather than speed because strength has the S.</p>
+<p><strong>A vehicle gets a board too.</strong> It used to get a column — a sixth track called V, counting damage on a wagon most players were not running, printed on everybody's sheet. A vehicle in play is dealt one of these boards instead and run like a player who is not a person, exactly as a monster met on the road is: its card in the recess, its cargo and its modifications in the four kit slots, and its <strong>hull on the health track</strong>, set from the printed H, down as it is damaged, up as it is repaired at 5 coin a rung in any town, wrecked at nothing and spilling its cargo on the hex. A hull is a body, and the board never had to learn anything new to run one.</p>
 <p><strong>Strength and defence are the pair that changed the game rather than recording it.</strong> Strength was already printed on every monster card as a threat rating; it now settles attack rolls as well, and it swallowed burden while it was at it — what a figure carries is strength × 3 kilograms and there is no second track for it. Defence is its opposite number: shift the number you need by <em>less your own strength, plus their defence</em>, so an even fight still hits on 4+ and a point of advantage is worth exactly one pip. Neither ever adds dice; dice are what weapons and armour give you. The full rule is in <a href="#c-08-components">08-components.md</a>.</p>
-<p><strong>Every track runs 0 to 14, and so does the game.</strong> That is the ceiling on everything a token walks — health, strength, defence, vehicle damage, mana — and <code>tools/validate-data.mjs</code> sweeps the whole dataset against it, so a fifteenth point of health fails the build rather than walking off a board somebody has already printed. Kilograms are the one thing exempt, because nothing walks a token for them.</p>
+<p><strong>Every track runs 0 to 14, and so does the game.</strong> That is the ceiling on everything a token walks — health (a hull included), strength, defence, mana — and <code>tools/validate-data.mjs</code> sweeps the whole dataset against it, so a fifteenth point of health fails the build rather than walking off a board somebody has already printed. Kilograms are the one thing exempt, because nothing walks a token for them.</p>
 <p><strong>Print one more board than there are players.</strong> The spare is the encounter board: a discovery roll that turns up a monster or a stranger deals their card onto it, its tracks are set from the card's summary strip, and it is played like any other seat at the table until the encounter is over. That is what being generic is for — the furniture does not care whether a person or a wolf is sitting behind it.</p>
 <p>The board is otherwise furniture, not a fifth deck. What it fixes is that a hero in play was four tokens on three cards and a number somebody was holding in their head.</p>
 <h2 id="what-this-layer-deliberately-does-not-do">What this layer deliberately does not do</h2>
@@ -932,21 +939,22 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td><strong>M</strong></td><td>Mountain</td><td>4</td><td>4</td><td>6</td><td>stone, herbs, caves</td><td>coal-seam, iron-deposit, copper-deposit, gold-deposit, gem-vein, mana-vein</td></tr>
 <tr><td><strong>B</strong></td><td>Marsh</td><td>3</td><td>3</td><td>4</td><td>reeds, herbs, fresh-water</td><td>clay-bed, peat-bog, oil-field</td></tr>
 <tr><td><strong>T</strong></td><td>Tundra</td><td>2</td><td>2</td><td>2</td><td>game</td><td>coal-seam, iron-deposit, oil-field, peat-bog</td></tr>
-<tr><td><strong>D</strong></td><td>Desert</td><td>2</td><td>2</td><td>2</td><td>sand</td><td>salt-dome, oil-field, gem-vein</td></tr>
-<tr><td><strong>C</strong></td><td>Coast</td><td>1</td><td>1</td><td>2</td><td>fish, sand, salt, fresh-water</td><td>salt-dome, sand-bar, clay-bed, gold-deposit</td></tr>
+<tr><td><strong>D</strong></td><td>Desert</td><td>2</td><td>2</td><td>2</td><td>sand, salt</td><td>salt-dome, oil-field, gem-vein</td></tr>
+<tr><td><strong>R</strong></td><td>River</td><td>boat</td><td>—</td><td>—</td><td>fish, fresh-water, reeds</td><td>—</td></tr>
+<tr><td><strong>L</strong></td><td>Lake</td><td>boat</td><td>—</td><td>—</td><td>fish, fresh-water, reeds</td><td>—</td></tr>
 <tr><td><strong>S</strong></td><td>Shallow Water</td><td>boat</td><td>—</td><td>—</td><td>fish</td><td>—</td></tr>
 <tr><td><strong>O</strong></td><td>Deep Water</td><td>boat</td><td>—</td><td>—</td><td>fish</td><td>—</td></tr></tbody></table></div>
 <h2 id="travel-speeds-hexes-per-day-leg">Travel speeds — hexes per day leg</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Mode</th><th><strong>G</strong></th><th><strong>F</strong></th><th><strong>H</strong></th><th><strong>M</strong></th><th><strong>B</strong></th><th><strong>T</strong></th><th><strong>D</strong></th><th><strong>C</strong></th><th><strong>S</strong></th><th><strong>O</strong></th></tr></thead>
-<tbody><tr><td>On Foot</td><td>4</td><td>2</td><td>2</td><td>1</td><td>1</td><td>2</td><td>2</td><td>4</td><td>—</td><td>—</td></tr>
-<tr><td>Mounted</td><td>6</td><td>2</td><td>3</td><td>1</td><td>1</td><td>3</td><td>3</td><td>6</td><td>—</td><td>—</td></tr>
-<tr><td>Cart</td><td>3</td><td>1</td><td>1</td><td>—</td><td>—</td><td>1</td><td>2</td><td>3</td><td>—</td><td>—</td></tr>
-<tr><td>Caravan</td><td>2</td><td>1</td><td>1</td><td>—</td><td>—</td><td>1</td><td>2</td><td>2</td><td>—</td><td>—</td></tr>
-<tr><td>Barge</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>3</td><td>3</td><td>—</td></tr>
-<tr><td>Ship</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>2</td><td>3</td><td>5</td></tr>
-<tr><td>Sled</td><td>1</td><td>1</td><td>2</td><td>2</td><td>2</td><td>5</td><td>—</td><td>1</td><td>2</td><td>—</td></tr>
-<tr><td>Airship</td><td>5</td><td>5</td><td>5</td><td>4</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td></tr></tbody></table></div>
+<thead><tr><th>Mode</th><th><strong>G</strong></th><th><strong>F</strong></th><th><strong>H</strong></th><th><strong>M</strong></th><th><strong>B</strong></th><th><strong>T</strong></th><th><strong>D</strong></th><th><strong>R</strong></th><th><strong>L</strong></th><th><strong>S</strong></th><th><strong>O</strong></th></tr></thead>
+<tbody><tr><td>On Foot</td><td>4</td><td>2</td><td>2</td><td>1</td><td>1</td><td>2</td><td>2</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Mounted</td><td>6</td><td>2</td><td>3</td><td>1</td><td>1</td><td>3</td><td>3</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Cart</td><td>3</td><td>1</td><td>1</td><td>—</td><td>—</td><td>1</td><td>2</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Caravan</td><td>2</td><td>1</td><td>1</td><td>—</td><td>—</td><td>1</td><td>2</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Barge</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>3</td><td>3</td><td>3</td><td>—</td></tr>
+<tr><td>Ship</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>3</td><td>5</td></tr>
+<tr><td>Sled</td><td>1</td><td>1</td><td>2</td><td>2</td><td>2</td><td>5</td><td>—</td><td>2</td><td>2</td><td>2</td><td>—</td></tr>
+<tr><td>Airship</td><td>5</td><td>5</td><td>5</td><td>4</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td></tr></tbody></table></div>
 <p>Overrides: <strong>On a Road</strong> — on-foot 5, mounted 8, cart 6, caravan 4; <strong>On Rail</strong> — train 6.</p>
 <h2 id="night-legs">Night legs</h2>
 <div class="table-wrap"><table>
@@ -967,7 +975,8 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Marsh (B)</td><td>1 hazard · 2 traveller · 3-10 nothing · 11-12 commodity-trace · 13-19 monster · 20 quest-omen</td></tr>
 <tr><td>Tundra (T)</td><td>1-2 hazard · 3 traveller · 4-11 nothing · 12-13 commodity-trace · 14-19 monster · 20 quest-omen</td></tr>
 <tr><td>Desert (D)</td><td>1-2 hazard · 3 traveller · 4-9 nothing · 10-11 commodity-trace · 12-19 monster · 20 quest-omen</td></tr>
-<tr><td>Coast (C)</td><td>1 hazard · 2-4 traveller · 5-12 nothing · 13-14 flotsam · 15 merchant · 16-19 monster · 20 quest-omen</td></tr>
+<tr><td>River (R)</td><td>1-2 hazard · 3-5 traveller · 6-13 nothing · 14 flotsam · 15-16 merchant · 17-19 monster · 20 quest-omen</td></tr>
+<tr><td>Lake (L)</td><td>1 hazard · 2-3 traveller · 4-13 nothing · 14-15 flotsam · 16-19 monster · 20 quest-omen</td></tr>
 <tr><td>Shallow Water (S)</td><td>1 hazard · 2-3 flotsam · 4-13 nothing · 14-15 pirates · 16-19 monster · 20 quest-omen</td></tr>
 <tr><td>Deep Water (O)</td><td>1-2 hazard · 3 flotsam · 4-12 nothing · 13-15 pirates · 16-19 monster · 20 quest-omen</td></tr>
 <tr><td>On a Road</td><td>1-2 bandits · 3-7 merchant · 8-10 traveller · 11-17 nothing · 18-19 monster · 20 quest-omen</td></tr>
@@ -983,7 +992,8 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Marsh (B)</td><td>0</td><td>2</td><td>3</td><td>1</td></tr>
 <tr><td>Tundra (T)</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
 <tr><td>Desert (D)</td><td>3</td><td>2</td><td>0</td><td>2</td></tr>
-<tr><td>Coast (C)</td><td>0</td><td>1</td><td>3</td><td>2</td></tr>
+<tr><td>River (R)</td><td>0</td><td>2</td><td>3</td><td>1</td></tr>
+<tr><td>Lake (L)</td><td>0</td><td>1</td><td>3</td><td>1</td></tr>
 <tr><td>Shallow Water (S)</td><td>0</td><td>0</td><td>4</td><td>1</td></tr>
 <tr><td>Deep Water (O)</td><td>0</td><td>0</td><td>4</td><td>1</td></tr>
 <tr><td>On a Road</td><td>1</td><td>2</td><td>1</td><td>1</td></tr>
@@ -1085,29 +1095,29 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Manor</td><td>housing</td><td>4</td><td>8 brick + 4 stone + 2 glass + 1 fine-cloth</td><td>30</td><td>grassland, hills</td></tr>
 <tr><td>Lumber Camp</td><td>extraction</td><td>1</td><td>3 logs</td><td>6</td><td>forest</td></tr>
 <tr><td>Quarry</td><td>extraction</td><td>1</td><td>3 logs</td><td>8</td><td>hills, mountain</td></tr>
-<tr><td>Clay Pit</td><td>extraction</td><td>1</td><td>2 logs</td><td>5</td><td>marsh, grassland, coast</td></tr>
-<tr><td>Sand Pit</td><td>extraction</td><td>1</td><td>2 logs</td><td>5</td><td>desert, coast</td></tr>
+<tr><td>Clay Pit</td><td>extraction</td><td>1</td><td>2 logs</td><td>5</td><td>marsh, grassland</td></tr>
+<tr><td>Sand Pit</td><td>extraction</td><td>1</td><td>2 logs</td><td>5</td><td>desert</td></tr>
 <tr><td>Mine</td><td>extraction</td><td>2</td><td>4 lumber + 1 ironware</td><td>14</td><td>hills, mountain, tundra, desert, grassland</td></tr>
 <tr><td>Oil Derrick</td><td>extraction</td><td>4</td><td>4 steel + 4 lumber + 2 ironware</td><td>26</td><td>—</td></tr>
 <tr><td>Well</td><td>extraction</td><td>1</td><td>3 stone</td><td>6</td><td>grassland, forest, hills, desert, tundra, marsh</td></tr>
-<tr><td>Farm</td><td>extraction</td><td>1</td><td>3 logs</td><td>8</td><td>grassland, coast</td></tr>
+<tr><td>Farm</td><td>extraction</td><td>1</td><td>3 logs</td><td>8</td><td>grassland</td></tr>
 <tr><td>Pasture</td><td>extraction</td><td>1</td><td>3 logs + 1 rope</td><td>7</td><td>grassland, hills, tundra</td></tr>
 <tr><td>Orchard</td><td>extraction</td><td>2</td><td>2 logs + 2 water</td><td>10</td><td>grassland, hills</td></tr>
 <tr><td>Vineyard</td><td>extraction</td><td>2</td><td>3 logs + 2 water</td><td>12</td><td>hills, grassland</td></tr>
 <tr><td>Apiary</td><td>extraction</td><td>1</td><td>2 lumber</td><td>5</td><td>grassland, forest, hills</td></tr>
-<tr><td>Dock</td><td>extraction</td><td>1</td><td>4 logs + 1 rope</td><td>8</td><td>coast</td></tr>
-<tr><td>Sawmill</td><td>production</td><td>1</td><td>4 logs + 2 stone</td><td>10</td><td>forest, grassland, hills, coast</td></tr>
+<tr><td>Dock</td><td>extraction</td><td>1</td><td>4 logs + 1 rope</td><td>8</td><td>—</td></tr>
+<tr><td>Sawmill</td><td>production</td><td>1</td><td>4 logs + 2 stone</td><td>10</td><td>forest, grassland, hills</td></tr>
 <tr><td>Charcoal Kiln</td><td>production</td><td>1</td><td>3 clay + 2 stone</td><td>8</td><td>forest, grassland, hills</td></tr>
 <tr><td>Smelter</td><td>production</td><td>2</td><td>6 stone + 2 clay + 2 lumber</td><td>16</td><td>hills, grassland, mountain</td></tr>
 <tr><td>Steelworks</td><td>production</td><td>3</td><td>8 brick + 4 stone + 2 ironware</td><td>26</td><td>hills, grassland</td></tr>
 <tr><td>Brickworks</td><td>production</td><td>2</td><td>4 stone + 4 clay + 2 lumber</td><td>14</td><td>grassland, hills, marsh</td></tr>
-<tr><td>Glassworks</td><td>production</td><td>3</td><td>6 brick + 2 stone + 1 ironware</td><td>22</td><td>grassland, hills, desert, coast</td></tr>
+<tr><td>Glassworks</td><td>production</td><td>3</td><td>6 brick + 2 stone + 1 ironware</td><td>22</td><td>grassland, hills, desert</td></tr>
 <tr><td>Blacksmith</td><td>production</td><td>2</td><td>4 stone + 3 lumber + 1 clay</td><td>14</td><td>grassland, forest, hills, tundra, desert, marsh</td></tr>
 <tr><td>Carpenter's Shop</td><td>production</td><td>2</td><td>4 lumber + 1 stone</td><td>12</td><td>grassland, forest, hills</td></tr>
-<tr><td>Weaver's Shed</td><td>production</td><td>2</td><td>4 lumber + 1 stone</td><td>12</td><td>grassland, forest, hills, coast</td></tr>
-<tr><td>Tannery</td><td>production</td><td>2</td><td>3 lumber + 2 stone</td><td>11</td><td>grassland, marsh, coast</td></tr>
+<tr><td>Weaver's Shed</td><td>production</td><td>2</td><td>4 lumber + 1 stone</td><td>12</td><td>grassland, forest, hills</td></tr>
+<tr><td>Tannery</td><td>production</td><td>2</td><td>3 lumber + 2 stone</td><td>11</td><td>grassland, marsh</td></tr>
 <tr><td>Tailor</td><td>production</td><td>3</td><td>3 lumber + 2 brick</td><td>14</td><td>—</td></tr>
-<tr><td>Mill</td><td>production</td><td>1</td><td>3 lumber + 3 stone</td><td>10</td><td>grassland, hills, coast</td></tr>
+<tr><td>Mill</td><td>production</td><td>1</td><td>3 lumber + 3 stone</td><td>10</td><td>grassland, hills</td></tr>
 <tr><td>Bakery</td><td>production</td><td>2</td><td>4 brick + 1 lumber</td><td>12</td><td>—</td></tr>
 <tr><td>Butcher</td><td>production</td><td>1</td><td>3 lumber + 1 stone</td><td>9</td><td>—</td></tr>
 <tr><td>Dairy</td><td>production</td><td>2</td><td>3 lumber + 2 stone</td><td>11</td><td>—</td></tr>
@@ -1129,15 +1139,15 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Road</td><td>infrastructure</td><td>1</td><td>1 stone</td><td>3</td><td>—</td></tr>
 <tr><td>Railroad</td><td>infrastructure</td><td>3</td><td>2 steel + 2 lumber</td><td>8</td><td>—</td></tr>
 <tr><td>Bridge</td><td>infrastructure</td><td>2</td><td>4 stone + 4 lumber + 1 ironware</td><td>16</td><td>shallow-water</td></tr>
-<tr><td>Harbour</td><td>infrastructure</td><td>3</td><td>6 stone + 6 lumber + 2 rope</td><td>22</td><td>coast</td></tr>
+<tr><td>Harbour</td><td>infrastructure</td><td>3</td><td>6 stone + 6 lumber + 2 rope</td><td>22</td><td>—</td></tr>
 <tr><td>Rail Depot</td><td>infrastructure</td><td>3</td><td>4 brick + 2 steel + 2 lumber</td><td>18</td><td>—</td></tr></tbody></table></div>
 <h2 id="peoples">Peoples</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>People</th><th>Die</th><th>Workers</th><th>Terrain comfort</th><th>Strength</th><th>Defence</th><th>Carries</th><th>Mana</th></tr></thead>
-<tbody><tr><td>Humans</td><td>d6</td><td>2</td><td>grassland, coast, forest</td><td>3</td><td>3</td><td>9 kg</td><td>talisman only</td></tr>
+<tbody><tr><td>Humans</td><td>d6</td><td>2</td><td>grassland, forest, hills</td><td>3</td><td>3</td><td>9 kg</td><td>talisman only</td></tr>
 <tr><td>Dwarves</td><td>d6</td><td>2</td><td>mountain, hills, tundra</td><td>4</td><td>3</td><td>12 kg</td><td>talisman only</td></tr>
 <tr><td>Elves</td><td>d6</td><td>2</td><td>forest, hills, grassland</td><td>2</td><td>3</td><td>6 kg</td><td>3 innate</td></tr>
-<tr><td>Halflings</td><td>d6</td><td>3</td><td>grassland, forest, coast</td><td>2</td><td>3</td><td>6 kg</td><td>talisman only</td></tr>
+<tr><td>Halflings</td><td>d6</td><td>3</td><td>grassland, forest</td><td>2</td><td>3</td><td>6 kg</td><td>talisman only</td></tr>
 <tr><td>Orcs</td><td>d8</td><td>2</td><td>hills, marsh, tundra, mountain</td><td>5</td><td>4</td><td>15 kg</td><td>talisman only</td></tr></tbody></table></div>
 <p>Carrying is not a separate number and has not been since strength swallowed burden: a figure lifts strength × 3 kg, and the column above is that sum rather than a value anybody chose.</p>
 <h3 id="traits">Traits</h3>
@@ -1256,9 +1266,9 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Sled</td><td>2</td><td>10</td><td>3</td><td>—</td><td>90</td><td>2</td><td>★</td></tr>
 <tr><td>Airship</td><td>4</td><td>18</td><td>5</td><td>—</td><td>520</td><td>5</td><td>—</td></tr></tbody></table></div>
 <h2 id="vehicle-deck">Vehicle deck</h2>
-<p><strong>V</strong> is the damage boxes the hull holds, <strong>C</strong> the bulk of its hold — the two boxes of a vehicle card's summary strip. Damage is walked on the player board's V track; nothing is walked on the card.</p>
+<p><strong>H</strong> is the hull, <strong>C</strong> the bulk of its hold — the two boxes of a vehicle card's summary strip. A vehicle in play is dealt a player board of its own and run like a player who is not a person: the hull walks that board's health track, and the cargo and modifications lie in its four kit slots.</p>
 <div class="table-wrap"><table>
-<thead><tr><th>Code</th><th>Vehicle</th><th>Kind</th><th>Cargo</th><th>Damage</th><th>Quirk</th></tr></thead>
+<thead><tr><th>Code</th><th>Vehicle</th><th>Kind</th><th>Cargo</th><th>Hull</th><th>Quirk</th></tr></thead>
 <tbody><tr><td>VEH-01</td><td>The Reach Flyer</td><td>train</td><td>40</td><td>8</td><td>+1 hex per leg, and she carries 4 passengers (figures or characters) free among the mail sacks.</td></tr>
 <tr><td>VEH-02</td><td>Steppe Hauler</td><td>train</td><td>100</td><td>10</td><td>Burns 1 extra coal per leg. Nothing else on rails carries close to her hundred bulk.</td></tr>
 <tr><td>VEH-03</td><td>Old Smoke</td><td>train</td><td>60</td><td>6</td><td>Costs half a train's price to buy. Each journey, roll a d6: on a 1 she limps, and the journey takes twice as long.</td></tr>
@@ -1287,13 +1297,13 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>MON-05</td><td>Stone Boar</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>2</td><td>4</td><td>6</td><td>1</td><td>forest, hills</td><td>S B D</td></tr>
 <tr><td>MON-06</td><td>Gravel Wyrm</td><td><img src="../art/icons/element-earth.svg" alt="" loading="lazy"> earth</td><td>3</td><td>6</td><td>8</td><td>2</td><td>mountain, desert</td><td>S</td></tr>
 <tr><td>MON-07</td><td>Mire Strangler</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>3</td><td>2</td><td>6</td><td>2</td><td>marsh</td><td>S</td></tr>
-<tr><td>MON-08</td><td>Reef Serpent</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>3</td><td>3</td><td>7</td><td>2</td><td>coast, shallow-water</td><td>S B</td></tr>
+<tr><td>MON-08</td><td>Reef Serpent</td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>3</td><td>3</td><td>7</td><td>2</td><td>shallow-water, deep-water</td><td>S B</td></tr>
 <tr><td>MON-09</td><td>The Deepwater Maw <em>(unique)</em></td><td><img src="../art/icons/element-water.svg" alt="" loading="lazy"> water</td><td>5</td><td>5</td><td>12</td><td>4</td><td>deep-water</td><td>S</td></tr>
 <tr><td>MON-10</td><td>Rime Harpy</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>2</td><td>1</td><td>5</td><td>1</td><td>tundra, mountain</td><td>S E B</td></tr>
 <tr><td>MON-11</td><td>Dust Devil</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>2</td><td>3</td><td>4</td><td>2</td><td>desert, grassland</td><td>S</td></tr>
-<tr><td>MON-12</td><td>Storm Roc</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>4</td><td>3</td><td>9</td><td>3</td><td>mountain, coast</td><td>S D</td></tr>
+<tr><td>MON-12</td><td>Storm Roc</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>4</td><td>3</td><td>9</td><td>3</td><td>mountain, hills</td><td>S D</td></tr>
 <tr><td>MON-13</td><td>Vhalrik, the Cinder-Crowned <em>(unique)</em></td><td><img src="../art/icons/element-fire.svg" alt="" loading="lazy"> fire</td><td>7</td><td>6</td><td>14</td><td>6</td><td>mountain, hills, desert</td><td>S B</td></tr>
-<tr><td>MON-14</td><td>The Hoarwyrm</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>5</td><td>5</td><td>13</td><td>4</td><td>tundra, mountain, coast</td><td>S D</td></tr></tbody></table></div>
+<tr><td>MON-14</td><td>The Hoarwyrm</td><td><img src="../art/icons/element-air.svg" alt="" loading="lazy"> air</td><td>5</td><td>5</td><td>13</td><td>4</td><td>tundra, mountain, lake</td><td>S D</td></tr></tbody></table></div>
 <p>In a fight: Shift the number you need: less your own strength, plus their defence. target = hitsOn + opponentDefence - yourStrength, clamped to 2+ and 6+. Strength is what a thing swings with, defence is what makes you miss — a stone boar barely swings and still turns a sword.</p>
 <h2 id="character-deck">Character deck</h2>
 <p>The six boxes of the summary strip across the top of every character card, in the order they are printed in — and the same letters the player board calls its tracks, so setting up is reading across the strip and placing tokens left to right.</p>
@@ -1305,7 +1315,7 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>CHR-04</td><td>Tilly Goodbarrel</td><td>halfling</td><td>Provisioner</td><td>8</td><td>2</td><td>2</td><td>—</td><td>80</td><td>6</td><td>Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes.</td></tr>
 <tr><td>CHR-05</td><td>Ruk of the Red Road</td><td>orc</td><td>Caravan Guard</td><td>13</td><td>6</td><td>5</td><td>—</td><td>50</td><td>18</td><td>Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo.</td></tr>
 <tr><td>CHR-06</td><td>Doctor Elspeth Marrow</td><td>human</td><td>Physician</td><td>9</td><td>2</td><td>2</td><td>—</td><td>65</td><td>6</td><td>Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever.</td></tr>
-<tr><td>CHR-07</td><td>Havik Coalbrand</td><td>dwarf</td><td>Engineer</td><td>10</td><td>4</td><td>3</td><td>—</td><td>60</td><td>12</td><td>Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands.</td></tr>
+<tr><td>CHR-07</td><td>Havik Coalbrand</td><td>dwarf</td><td>Engineer</td><td>10</td><td>4</td><td>3</td><td>—</td><td>60</td><td>12</td><td>Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands.</td></tr>
 <tr><td>CHR-08</td><td>Old Mother Keswick</td><td>human</td><td>Hedge-Witch</td><td>7</td><td>2</td><td>2</td><td>—</td><td>35</td><td>6</td><td>Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck.</td></tr></tbody></table></div>
 <h2 id="quest-deck">Quest deck</h2>
 <div class="table-wrap"><table>
@@ -1364,7 +1374,7 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>MOD-05</td><td>Storm Shutters</td><td>hull</td><td>ship, barge, airship, train</td><td>3 lumber + 2 leather + 1 ironware</td><td>Cargo aboard loses nothing to weather: ignore every cargo-loss effect from a weather or disaster event card. The vehicle itself still takes its damage.</td></tr>
 <tr><td>MOD-06</td><td>Ice Runners</td><td>running-gear</td><td>cart, caravan, sled</td><td>2 steel + 2 lumber</td><td>Shod runners that swap for the wheels in an hour. While the winter rule in travel.json is in force the vehicle moves at sled speeds; the rest of the year it is 70 kg of steel in the bed and does nothing at all.</td></tr>
 <tr><td>MOD-07</td><td>Compound Boiler</td><td>powerplant</td><td>train, ship, airship</td><td>4 steel + 3 copper + 2 ironware</td><td>Uses the same steam twice. Halve the vehicle's fuel per leg, rounded up, and +1 hex per leg. It is delicate: on any hazard or battle result, roll d6 and on a 1 the boiler is out until repaired at a steelworks.</td></tr>
-<tr><td>MOD-08</td><td>Keelbound</td><td>enchantment</td><td>ship, barge</td><td>5 water mana</td><td>She will not sink. A V track that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.</td></tr>
+<tr><td>MOD-08</td><td>Keelbound</td><td>enchantment</td><td>ship, barge</td><td>5 water mana</td><td>She will not sink. A hull run down to nothing leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off.</td></tr>
 <tr><td>MOD-09</td><td>Fleetfoot Binding</td><td>enchantment</td><td>any</td><td>4 air mana</td><td>+2 hexes on every day leg, whatever the mode and whatever the ground. An airship instead re-rolls one wind roll per journey.</td></tr>
 <tr><td>MOD-10</td><td>Warded Hold</td><td>enchantment</td><td>any</td><td>4 earth mana</td><td>Nothing is taken from this vehicle that its owner did not hand over. Cancel every theft, robbery, piracy and heist card aimed at its cargo. A boarder who wins a battle may still take the vehicle entire - the ward is on the hold, not on the owner.</td></tr>
 <tr><td>MOD-11</td><td>Salamander Grate</td><td>enchantment</td><td>train, ship, airship</td><td>6 fire mana</td><td>The firebox burns without fuel: the vehicle pays no fuel per leg, ever. It also never runs cold - the vehicle may take a night leg with no light, because the glare from the grate is light enough.</td></tr></tbody></table></div>

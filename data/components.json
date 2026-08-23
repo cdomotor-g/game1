@@ -28,15 +28,16 @@
   },
 
   "statStrip": {
-    "$comment": "The row of lettered boxes across the top of every card, and what replaced the bars.\n\nA card used to hang a numbered ladder off each edge - harm left, capacity right - and a token walked it. That worked while a card was held in the hand. It stopped working the day the player board arrived, because a card in a recess is a card whose edges are under the board: the tracks moved to the board (playerboard.json) and the ladders on the cards became decoration that ate two columns of picture.\n\nSo a card now prints the MAXIMUM and nothing else. One box per number, the letter first and the figure after it - H 10, S 6, D 5 - and the letter is the same letter the board's track carries, so a player setting up reads across the strip and sets the tokens left to right. Nothing on a card moves any more; everything that moves is on the board.\n\nWhat the strip costs the picture is about six millimetres of height. What it pays back is the whole width of the card: the portrait window now runs frame to frame, because there is nothing beside it.",
+    "$comment": "The row of lettered boxes across the top of every card, and what replaced the bars.\n\nA card used to hang a numbered ladder off each edge - harm left, capacity right - and a token walked it. That worked while a card was held in the hand. It stopped working the day the player board arrived, because a card in a recess is a card whose edges are under the board: the tracks moved to the board (playerboard.json) and the ladders on the cards became decoration that ate two columns of picture.\n\nSo a card now prints the MAXIMUM and nothing else. One box per number, the letter first and the figure after it - H 10, S 6, D 5 - and the letter is the same letter the board's track carries, so a player setting up reads across the strip and sets the tokens left to right. Nothing on a card moves any more; everything that moves is on the board.\n\nONE BOX PER PAIR. Each cell used to hold a second, smaller box with the letter in it - a box inside a box, six times across the top of every card, and at nine millimetres a cell the inner rule was doing nothing the tint underneath was not already doing. Taking it out took a millimetre and a bit off the height of the whole strip, and the picture got it.",
 
-    "cells": { "max": 6, "heightMm": 5.75, "gap": 5, "pad": 4, "cornerRadius": 5,
-      "$maxNote": "Six is what a 63 mm card holds at a legible size - about 9 mm a box. A deck that wants a seventh number wants a smaller number of numbers." },
-    "letterBox": { "size": 34, "fill": "soot-tint-12", "$note": "A tinted square at the left of the box with the letter in it, so the letter reads as a label and not as part of the figure." },
-    "letter": { "size": 20, "family": "sans", "weight": "bold", "tracking": 0.4 },
+    "cells": { "max": 6, "heightMm": 4.6, "gap": 5, "pad": 5, "cornerRadius": 4,
+      "$maxNote": "Six is what a 63 mm card holds at a legible size - about 9 mm a box. A deck that wants a seventh number wants a smaller number of numbers.",
+      "$heightNote": "It was 5.75 mm while every cell held a second box with the letter in it. ONE BOX PER PAIR: the letter and its figure share the cell, the letter set at the left and the figure at the right, and a box inside a box is a millimetre of ruling that only made the row look busy. The height came off the top of the picture." },
+    "letter": { "size": 20, "family": "sans", "weight": "bold", "tracking": 0.4, "fill": "soot-tint-70",
+      "$fillNote": "One box, two jobs, so the letter separates itself from the figure by weight rather than by a rule round it: the label sits back in a tint and the number holds the ink." },
     "value": { "size": 22, "family": "sans", "weight": "bold", "minSize": 17,
       "$minNote": "The figure shrinks to fit its box and stops at minSize, which is the 6 pt print floor in palette.json rules.minTypeSize (6 pt = 17 grid units). A number that will not fit at 6 pt is a number that does not belong on a card." },
-    "rule": { "strokeWidth": 1.4, "$note": "The strip sits in one boxed row under the kicker, each cell ruled, so it reads as a table and not as a sentence." },
+    "rule": { "strokeWidth": 1.4, "$note": "The strip sits in one boxed row under the kicker, each cell ruled ONCE, so it reads as a table and not as a sentence. There is no second rule inside a cell: the letter and its figure are one pair in one box." },
 
     "letters": {
       "$comment": "The letter a stat is called by, across the whole game. The five that the player board also has a track for MUST match data/playerboard.json - tools/validate-data.mjs checks that they do, and fails the build if a card and a board ever start calling the same number by different names. The rest are card-only: a number that is printed and never walked has no track to borrow a letter from, so it gets one here.\n\nThese are conventions, not content: no card is named here and no value is stated here.",
@@ -44,7 +45,6 @@
       "strength": "S",
       "defence": "D",
       "mana": "M",
-      "vehicle": "V",
       "gold": "\u00a4",
       "carry": "KG",
       "cargo": "C",
@@ -55,8 +55,18 @@
     }
   },
 
+  "storyRail": {
+    "$comment": "The story, turned on its side and stood up the right-hand edge of the card.\n\nA card's flavour used to be a panel across the bottom - full width, four or five lines, and about fifteen millimetres of the eighty-eight a card has. It was the cheapest fifteen millimetres on the card and it was taking them from the only thing on a card nobody can regenerate: the picture. Rotated ninety degrees it costs WIDTH instead, and width is the one dimension a portrait plate has to spare - a figure drawn on an A4 page is taller than it is wide, so a card that shows one wants to be taller than it is wide too, and the window on these decks was landscape because the words underneath had taken the height.\n\nSo the story runs up the side, bottom to top, and the picture goes portrait and grows into what the panel was using. Which decks do it is on the deck (`decks[].storyRail`), because it is a decision about a plate's shape and not about the card stock: the talismans are drawn square and the vehicles 3:2, and neither of them wants a taller window.",
+    "gap": 12,
+    "pad": 6,
+    "maxLines": 5,
+    "rule": { "strokeWidth": 1.2, "$note": "One hairline between the rail and the picture column, the same weight the horizontal rule over the old panel carried. It is what stops the words reading as a caption to the picture beside them." },
+    "$linesNote": "A rail's WIDTH is its line count - one column of type per line - so a long story makes a wide rail and a narrow picture. maxLines is where that trade stops and the story is cut instead, and it is the same cap the bottom panel had. A rail line is far longer than a panel line was (it runs the height of the card, not the width), so the cap cuts less text than it did.",
+    "$directionNote": "Rotated -90, which reads bottom to top - the way a spine is lettered on this side of the Atlantic, and the way the board's own track labels already run (tools/build-board.mjs). Lines stack left to right, so the first line is the one nearest the picture."
+  },
+
   "board": {
-    "$comment": "The player board: one A4 sheet a player keeps in front of them, holding cards in recesses and tracks routed up the middle. Only the shapes are here - what the tracks COUNT and what the slots TAKE is content and lives in data/playerboard.json, the same division as everywhere else in this file.\n\nAlmost nothing below is a position. The board's geometry is DERIVED from four numbers - the sheet, the margin, the gutter, and the size of a card recess - so a track column is exactly the width left over once the cards have had theirs, and adding a track narrows the columns rather than running off the paper. tools/build-board.mjs does that arithmetic; see also tools/build-map.mjs, which derives its print sizes the same way and for the same reason.\n\nThere is no frame block, and that is deliberate. A card has a frame because a card is held, fanned and cut out; a board is not, and the border it used to carry was 18 mm of paper doing nothing but making the middle narrower. Taking it off is what paid for the sixth track.",
+    "$comment": "The player board: one A4 sheet a player keeps in front of them, holding cards in recesses and tracks routed up the middle. Only the shapes are here - what the tracks COUNT and what the slots TAKE is content and lives in data/playerboard.json, the same division as everywhere else in this file.\n\nAlmost nothing below is a position. The board's geometry is DERIVED from four numbers - the sheet, the margin, the gutter, and the size of a card recess - so a track column is exactly the width left over once the cards have had theirs, and adding a track narrows the columns rather than running off the paper. tools/build-board.mjs does that arithmetic; see also tools/build-map.mjs, which derives its print sizes the same way and for the same reason.\n\nThere is no frame block, and that is deliberate. A card has a frame because a card is held, fanned and cut out; a board is not, and the border it used to carry was 18 mm of paper doing nothing but making the middle narrower. Taking it off is what paid for a sixth track once; retiring that track - a vehicle is dealt a board of its own now and its damage is its health - gave the width straight back to the five that were left.",
 
     "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6,
       "$note": "A4 landscape. The corner is bigger than a card's because the sheet is bigger; a board cut square looks like a print-out, which is exactly what it would be." },
@@ -76,7 +86,7 @@
     },
 
     "track": {
-      "$comment": "The numbered ladders. Every track on the board runs the same range, from the same floor to the same ceiling, walked by a bar token - so the columns are one grid and not six scales a player has to keep straight. The ceiling is the game's ceiling too: tools/validate-data.mjs recomputes every value a track carries and fails the build if anything in data/ has grown past it.",
+      "$comment": "The numbered ladders. Every track on the board runs the same range, from the same floor to the same ceiling, walked by a bar token - so the columns are one grid and not five scales a player has to keep straight. The ceiling is the game's ceiling too: tools/validate-data.mjs recomputes every value a track carries and fails the build if anything in data/ has grown past it.",
       "from": 0,
       "to": 14,
       "headMm": 15,
@@ -96,7 +106,7 @@
   },
 
   "marks": {
-    "$comment": "Drawn marks that are not pictures: they are read, like letters, and so they are held to one grid and one weight wherever they appear. The path data is not here - it belongs to the thing the mark is of. This says how to draw it.",
+    "$comment": "Drawn marks that are not pictures: they are read, like letters, and so they are held to one grid and one weight wherever they appear. The path data is not here - it belongs to the thing the mark is of, an element in data/arcana.json and a terrain in data/terrain.json. This says how to draw it.",
     "element": {
       "pathsFrom": "arcana.elements[].mark",
       "viewBox": "0 0 24 24",
@@ -112,6 +122,24 @@
         "insetInDisc": 0.78,
         "$insetNote": "The mark is authored edge to edge on its 24-grid. Inside a disc it is scaled down about the centre by this much, or the ends of the ground line run off the ring - which is what a mark drawn to a square and dropped in a circle always does."
       }
+    },
+    "terrain": {
+      "$comment": "The map symbol for a piece of ground: a grass tuft, a conifer, two hummocks, a peak, reeds standing in water, a frost star, a dune, a river between its banks, a pool, a shoal, a swell. The same bargain as the element marks - the PATH is data on the terrain (data/terrain.json terrains[].mark) and this says how to draw it - and for the same reason: the mini-map field, the campaign map's legend swatch and anything else that has to draw ground itself all trace one set of marks, so the sheet a player is standing figures on and the key on the big map cannot disagree about what grass looks like.\n\nThe marks are read off the drawn plate rather than invented. They are what the world map's artwork already says grass, hills and forest are, said in line weight instead of in paint - which is what makes a mini-map the same ground as the hex it opens out, rather than a second opinion about it.",
+      "pathsFrom": "terrain.terrains[].mark.path",
+      "viewBox": "0 0 24 24",
+      "fill": "none",
+      "strokeWidth": 1.9,
+      "strokeLinecap": "round",
+      "strokeLinejoin": "round",
+      "onField": {
+        "$comment": "How a mini-map cell is patterned. The marks go on the INK plate, like every other mark in the game, so the pattern survives the black-and-white edition - which is the whole test: a sheet with the wash dropped still has to say which ground it is.",
+        "sizeMm": 5.2,
+        "perCell": 3,
+        "jitter": 0.22,
+        "opacity": 0.34,
+        "$sizeNote": "About a third of a cell across. Three to a cell, set on a small triangle about the centre and nudged by `jitter` of their own size, so the field reads as ground rather than as wallpaper - and so no mark can reach the cell's edge and cross a grid line, which is the one thing a pattern on a hex grid must never do.",
+        "$opacityNote": "Quieter than the grid ruled over it (minimap.grid) and far quieter than a figure standing on it. The pattern says what the ground IS at a glance; the moment it competes with the pieces it has failed, and that is what the flat-colour sheet was protecting against."
+      }
     }
   },
 
@@ -122,12 +150,14 @@
     "promptFile": "which file in docs/art/prompts/ holds this deck's briefs",
     "plateFormat": "the page the artist draws - see docs/art/09-framing-and-composition.md",
     "minting": "true if tools/mint-queue.mjs should chase this deck's missing plates",
+    "storyRail": "true if this deck's story runs up the right-hand edge instead of across the bottom - see storyRail. The decks drawn on a portrait page take it, because that is where a taller window pays.",
     "back": "how this deck's card back is drawn - word, motif and ink"
   },
 
   "decks": [
     {
       "prefix": "CHR",
+      "storyRail": true,
       "plateId": "character-{cardCode|lower}",
       "promptFile": "characters.md",
       "plateFormat": "A4 portrait",
@@ -150,6 +180,7 @@
     },
     {
       "prefix": "MON",
+      "storyRail": true,
       "plateId": "monster-{id}",
       "promptFile": "monsters.md",
       "plateFormat": "A4 portrait",
@@ -298,7 +329,7 @@
   },
 
   "minimap": {
-    "$comment": "The zoom-in sheet: one hex of the world map, opened out. Play happens inside it and the result is written back to the big map.\n\nIt is a flat colour and a grid, and NOTHING else. No render, no pattern, no hatch, no drawn terrain: the field is a hexagon of hexagons filled with the plain colour that terrain already prints in, and the grid is ruled on top. That is the whole sheet. It needs no plate, no artist and no framing entry, which is why it is not in the mint queue and why it is not waiting on anything.\n\nThe cell is the load-bearing decision: a mini-map cell is EXACTLY the size of a world-map hex. A figure standing on the big board picks up and stands on a mini-map cell without being re-based, a route token cut for the world map fits a mini-map lane, and one ruler measures both. The scale is a fiction - the ground inside one hex is not nine hexes of ground - and it is the right fiction, because everything physical about the two boards already agrees.",
+    "$comment": "The zoom-in sheet: one hex of the world map, opened out. Play happens inside it and the result is written back to the big map.\n\nIt is a flat colour, a PATTERN and a grid. No render and no plate: the field is a hexagon of hexagons filled with the plain colour that terrain already prints in, with that terrain's own map mark scattered across the cells (marks.terrain) and the grid ruled on top. That is the whole sheet, and it is still generated rather than commissioned - it needs no artist and no framing entry, which is why it is not in the mint queue and why it is not waiting on anything.\n\nThe pattern is a reversal. These sheets were a flat colour and nothing else, on the argument that drawn ground competes with the pieces standing on it. The argument was half right: a DRAWN sheet competes, and a mark at a third of a cell, on the ink plate, at a third of full strength, does not. It does the job the wash was failing to do on its own - say which ground this is from across the table - and it does it in the black-and-white edition too, where the wash is not there at all. The marks are the world map's own, one set, from data/terrain.json.\n\nThe cell is the load-bearing decision: a mini-map cell is EXACTLY the size of a world-map hex. A figure standing on the big board picks up and stands on a mini-map cell without being re-based, a route token cut for the world map fits a mini-map lane, and one ruler measures both. The scale is a fiction - the ground inside one hex is not nine hexes of ground - and it is the right fiction, because everything physical about the two boards already agrees.",
     "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6, "$note": "A4 landscape, the same sheet as the player board." },
     "marginMm": 8,
     "cellsPerSide": 5,

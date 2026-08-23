@@ -52,15 +52,16 @@
     },
     {
       "id": "clay-pit", "name": "Clay Pit", "category": "extraction", "tier": 1,
-      "summary": "Digs clay from marshes, shores and wet ground.",
+      "summary": "Digs clay from marshes, river banks and wet ground.",
       "cost": [{ "commodity": "logs", "qty": 2 }], "buildPoints": 5, "minRounds": 1,
-      "workerSlots": 3, "terrain": ["marsh", "grassland", "coast"], "requiresDeposit": "clay-bed"
+      "workerSlots": 3, "terrain": ["marsh", "grassland"], "requiresDeposit": "clay-bed"
     },
     {
       "id": "sand-pit", "name": "Sand Pit", "category": "extraction", "tier": 1,
       "summary": "Sand for glass.",
       "cost": [{ "commodity": "logs", "qty": 2 }], "buildPoints": 5, "minRounds": 1,
-      "workerSlots": 3, "terrain": ["desert", "coast"]
+      "workerSlots": 3, "terrain": ["desert"], "orWaterside": "any",
+      "$watersideNote": "Desert sand, OR the sand any water leaves on its bank - a sea shore, a lake rim, a river bar. `orWaterside` is an alternative to the terrain list, the way recipes.json site.orWaterside is; `waterside` on its own (the dock, the harbour) is a requirement on top of it. This is the pair of keys the coast terrain used to hide: coast was in the list and meant both things at once."
     },
     {
       "id": "mine", "name": "Mine", "category": "extraction", "tier": 2,
@@ -85,7 +86,7 @@
       "id": "farm", "name": "Farm", "category": "extraction", "tier": 1,
       "summary": "Four field slots. Each slot holds one sown crop through its growth track.",
       "cost": [{ "commodity": "logs", "qty": 3 }], "buildPoints": 8, "minRounds": 2,
-      "workerSlots": 4, "fieldSlots": 4, "terrain": ["grassland", "coast"]
+      "workerSlots": 4, "fieldSlots": 4, "terrain": ["grassland"]
     },
     {
       "id": "pasture", "name": "Pasture", "category": "extraction", "tier": 1,
@@ -113,16 +114,16 @@
     },
     {
       "id": "dock", "name": "Dock", "category": "extraction", "tier": 1,
-      "summary": "Fishing, and the cheap end of water transport.",
+      "summary": "Fishing, and the cheap end of water transport. Goes on any land the water reaches - a sea shore, a lake rim or a river bank all do.",
       "cost": [{ "commodity": "logs", "qty": 4 }, { "commodity": "rope", "qty": 1 }], "buildPoints": 8, "minRounds": 2,
-      "workerSlots": 3, "terrain": ["coast"]
+      "workerSlots": 3, "waterside": "any"
     },
 
     {
       "id": "sawmill", "name": "Sawmill", "category": "production", "tier": 1,
-      "summary": "Logs into lumber. Doubles its rate on a coast tile - water drives the saw.",
+      "summary": "Logs into lumber. Doubles its rate on a waterside tile - water drives the saw.",
       "cost": [{ "commodity": "logs", "qty": 4 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 10, "minRounds": 2,
-      "workerSlots": 3, "terrain": ["forest", "grassland", "hills", "coast"]
+      "workerSlots": 3, "terrain": ["forest", "grassland", "hills"]
     },
     {
       "id": "charcoal-kiln", "name": "Charcoal Kiln", "category": "production", "tier": 1,
@@ -152,7 +153,7 @@
       "id": "glassworks", "name": "Glassworks", "category": "production", "tier": 3,
       "summary": "Sand plus heavy fuel into glass. Hot, hungry and profitable.",
       "cost": [{ "commodity": "brick", "qty": 6 }, { "commodity": "stone", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "buildPoints": 22, "minRounds": 3,
-      "workerSlots": 3, "terrain": ["grassland", "hills", "desert", "coast"]
+      "workerSlots": 3, "terrain": ["grassland", "hills", "desert"]
     },
     {
       "id": "blacksmith", "name": "Blacksmith", "category": "production", "tier": 2,
@@ -170,13 +171,13 @@
       "id": "weaver", "name": "Weaver's Shed", "category": "production", "tier": 2,
       "summary": "Houses spinning wheels and looms. Fibre in, cloth out.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 12, "minRounds": 2,
-      "workerSlots": 3, "specialist": "weaver", "terrain": ["grassland", "forest", "hills", "coast"]
+      "workerSlots": 3, "specialist": "weaver", "terrain": ["grassland", "forest", "hills"]
     },
     {
       "id": "tannery", "name": "Tannery", "category": "production", "tier": 2,
       "summary": "Hide plus water into leather. Nobody wants it upwind of the town.",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 11, "minRounds": 2,
-      "workerSlots": 2, "terrain": ["grassland", "marsh", "coast"]
+      "workerSlots": 2, "terrain": ["grassland", "marsh"]
     },
     {
       "id": "tailor", "name": "Tailor", "category": "production", "tier": 3,
@@ -186,9 +187,9 @@
     },
     {
       "id": "mill", "name": "Mill", "category": "production", "tier": 1,
-      "summary": "Grain into flour. Free extra output on a hills or coast tile (wind and water).",
+      "summary": "Grain into flour. Free extra output on a hills tile or a waterside one (wind and water).",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 3 }], "buildPoints": 10, "minRounds": 2,
-      "workerSlots": 2, "terrain": ["grassland", "hills", "coast"]
+      "workerSlots": 2, "terrain": ["grassland", "hills"]
     },
     {
       "id": "bakery", "name": "Bakery", "category": "production", "tier": 2,
@@ -351,7 +352,7 @@
       "id": "harbour", "name": "Harbour", "category": "infrastructure", "tier": 3,
       "summary": "Lets ships load and unload. Sea routes are slow to set up and very cheap to run.",
       "cost": [{ "commodity": "stone", "qty": 6 }, { "commodity": "lumber", "qty": 6 }, { "commodity": "rope", "qty": 2 }], "buildPoints": 22, "minRounds": 3,
-      "workerSlots": 2, "terrain": ["coast"], "requiresBuilding": "dock", "victoryPoints": 2
+      "workerSlots": 2, "waterside": "sea", "requiresBuilding": "dock", "victoryPoints": 2
     },
     {
       "id": "rail-depot", "name": "Rail Depot", "category": "infrastructure", "tier": 3,

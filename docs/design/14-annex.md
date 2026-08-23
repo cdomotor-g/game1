@@ -18,23 +18,24 @@ travel and discovery tables below.
 | **M** | Mountain | 4 | 4 | 6 | stone, herbs, caves | coal-seam, iron-deposit, copper-deposit, gold-deposit, gem-vein, mana-vein |
 | **B** | Marsh | 3 | 3 | 4 | reeds, herbs, fresh-water | clay-bed, peat-bog, oil-field |
 | **T** | Tundra | 2 | 2 | 2 | game | coal-seam, iron-deposit, oil-field, peat-bog |
-| **D** | Desert | 2 | 2 | 2 | sand | salt-dome, oil-field, gem-vein |
-| **C** | Coast | 1 | 1 | 2 | fish, sand, salt, fresh-water | salt-dome, sand-bar, clay-bed, gold-deposit |
+| **D** | Desert | 2 | 2 | 2 | sand, salt | salt-dome, oil-field, gem-vein |
+| **R** | River | boat | — | — | fish, fresh-water, reeds | — |
+| **L** | Lake | boat | — | — | fish, fresh-water, reeds | — |
 | **S** | Shallow Water | boat | — | — | fish | — |
 | **O** | Deep Water | boat | — | — | fish | — |
 
 ## Travel speeds — hexes per day leg
 
-| Mode | **G** | **F** | **H** | **M** | **B** | **T** | **D** | **C** | **S** | **O** |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| On Foot | 4 | 2 | 2 | 1 | 1 | 2 | 2 | 4 | — | — |
-| Mounted | 6 | 2 | 3 | 1 | 1 | 3 | 3 | 6 | — | — |
-| Cart | 3 | 1 | 1 | — | — | 1 | 2 | 3 | — | — |
-| Caravan | 2 | 1 | 1 | — | — | 1 | 2 | 2 | — | — |
-| Barge | — | — | — | — | — | — | — | 3 | 3 | — |
-| Ship | — | — | — | — | — | — | — | 2 | 3 | 5 |
-| Sled | 1 | 1 | 2 | 2 | 2 | 5 | — | 1 | 2 | — |
-| Airship | 5 | 5 | 5 | 4 | 5 | 5 | 5 | 5 | 5 | 5 |
+| Mode | **G** | **F** | **H** | **M** | **B** | **T** | **D** | **R** | **L** | **S** | **O** |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| On Foot | 4 | 2 | 2 | 1 | 1 | 2 | 2 | — | — | — | — |
+| Mounted | 6 | 2 | 3 | 1 | 1 | 3 | 3 | — | — | — | — |
+| Cart | 3 | 1 | 1 | — | — | 1 | 2 | — | — | — | — |
+| Caravan | 2 | 1 | 1 | — | — | 1 | 2 | — | — | — | — |
+| Barge | — | — | — | — | — | — | — | 3 | 3 | 3 | — |
+| Ship | — | — | — | — | — | — | — | — | — | 3 | 5 |
+| Sled | 1 | 1 | 2 | 2 | 2 | 5 | — | 2 | 2 | 2 | — |
+| Airship | 5 | 5 | 5 | 4 | 5 | 5 | 5 | 5 | 5 | 5 | 5 |
 
 Overrides: **On a Road** — on-foot 5, mounted 8, cart 6, caravan 4; **On Rail** — train 6.
 
@@ -66,7 +67,8 @@ hex with a tile or figure.
 | Marsh (B) | 1 hazard · 2 traveller · 3-10 nothing · 11-12 commodity-trace · 13-19 monster · 20 quest-omen |
 | Tundra (T) | 1-2 hazard · 3 traveller · 4-11 nothing · 12-13 commodity-trace · 14-19 monster · 20 quest-omen |
 | Desert (D) | 1-2 hazard · 3 traveller · 4-9 nothing · 10-11 commodity-trace · 12-19 monster · 20 quest-omen |
-| Coast (C) | 1 hazard · 2-4 traveller · 5-12 nothing · 13-14 flotsam · 15 merchant · 16-19 monster · 20 quest-omen |
+| River (R) | 1-2 hazard · 3-5 traveller · 6-13 nothing · 14 flotsam · 15-16 merchant · 17-19 monster · 20 quest-omen |
+| Lake (L) | 1 hazard · 2-3 traveller · 4-13 nothing · 14-15 flotsam · 16-19 monster · 20 quest-omen |
 | Shallow Water (S) | 1 hazard · 2-3 flotsam · 4-13 nothing · 14-15 pirates · 16-19 monster · 20 quest-omen |
 | Deep Water (O) | 1-2 hazard · 3 flotsam · 4-12 nothing · 13-15 pirates · 16-19 monster · 20 quest-omen |
 | On a Road | 1-2 bandits · 3-7 merchant · 8-10 traveller · 11-17 nothing · 18-19 monster · 20 quest-omen |
@@ -84,7 +86,8 @@ Monster element weights by table:
 | Marsh (B) | 0 | 2 | 3 | 1 |
 | Tundra (T) | 0 | 1 | 2 | 3 |
 | Desert (D) | 3 | 2 | 0 | 2 |
-| Coast (C) | 0 | 1 | 3 | 2 |
+| River (R) | 0 | 2 | 3 | 1 |
+| Lake (L) | 0 | 1 | 3 | 1 |
 | Shallow Water (S) | 0 | 0 | 4 | 1 |
 | Deep Water (O) | 0 | 0 | 4 | 1 |
 | On a Road | 1 | 2 | 1 | 1 |
@@ -192,29 +195,29 @@ Monster element weights by table:
 | Manor | housing | 4 | 8 brick + 4 stone + 2 glass + 1 fine-cloth | 30 | grassland, hills |
 | Lumber Camp | extraction | 1 | 3 logs | 6 | forest |
 | Quarry | extraction | 1 | 3 logs | 8 | hills, mountain |
-| Clay Pit | extraction | 1 | 2 logs | 5 | marsh, grassland, coast |
-| Sand Pit | extraction | 1 | 2 logs | 5 | desert, coast |
+| Clay Pit | extraction | 1 | 2 logs | 5 | marsh, grassland |
+| Sand Pit | extraction | 1 | 2 logs | 5 | desert |
 | Mine | extraction | 2 | 4 lumber + 1 ironware | 14 | hills, mountain, tundra, desert, grassland |
 | Oil Derrick | extraction | 4 | 4 steel + 4 lumber + 2 ironware | 26 | — |
 | Well | extraction | 1 | 3 stone | 6 | grassland, forest, hills, desert, tundra, marsh |
-| Farm | extraction | 1 | 3 logs | 8 | grassland, coast |
+| Farm | extraction | 1 | 3 logs | 8 | grassland |
 | Pasture | extraction | 1 | 3 logs + 1 rope | 7 | grassland, hills, tundra |
 | Orchard | extraction | 2 | 2 logs + 2 water | 10 | grassland, hills |
 | Vineyard | extraction | 2 | 3 logs + 2 water | 12 | hills, grassland |
 | Apiary | extraction | 1 | 2 lumber | 5 | grassland, forest, hills |
-| Dock | extraction | 1 | 4 logs + 1 rope | 8 | coast |
-| Sawmill | production | 1 | 4 logs + 2 stone | 10 | forest, grassland, hills, coast |
+| Dock | extraction | 1 | 4 logs + 1 rope | 8 | — |
+| Sawmill | production | 1 | 4 logs + 2 stone | 10 | forest, grassland, hills |
 | Charcoal Kiln | production | 1 | 3 clay + 2 stone | 8 | forest, grassland, hills |
 | Smelter | production | 2 | 6 stone + 2 clay + 2 lumber | 16 | hills, grassland, mountain |
 | Steelworks | production | 3 | 8 brick + 4 stone + 2 ironware | 26 | hills, grassland |
 | Brickworks | production | 2 | 4 stone + 4 clay + 2 lumber | 14 | grassland, hills, marsh |
-| Glassworks | production | 3 | 6 brick + 2 stone + 1 ironware | 22 | grassland, hills, desert, coast |
+| Glassworks | production | 3 | 6 brick + 2 stone + 1 ironware | 22 | grassland, hills, desert |
 | Blacksmith | production | 2 | 4 stone + 3 lumber + 1 clay | 14 | grassland, forest, hills, tundra, desert, marsh |
 | Carpenter's Shop | production | 2 | 4 lumber + 1 stone | 12 | grassland, forest, hills |
-| Weaver's Shed | production | 2 | 4 lumber + 1 stone | 12 | grassland, forest, hills, coast |
-| Tannery | production | 2 | 3 lumber + 2 stone | 11 | grassland, marsh, coast |
+| Weaver's Shed | production | 2 | 4 lumber + 1 stone | 12 | grassland, forest, hills |
+| Tannery | production | 2 | 3 lumber + 2 stone | 11 | grassland, marsh |
 | Tailor | production | 3 | 3 lumber + 2 brick | 14 | — |
-| Mill | production | 1 | 3 lumber + 3 stone | 10 | grassland, hills, coast |
+| Mill | production | 1 | 3 lumber + 3 stone | 10 | grassland, hills |
 | Bakery | production | 2 | 4 brick + 1 lumber | 12 | — |
 | Butcher | production | 1 | 3 lumber + 1 stone | 9 | — |
 | Dairy | production | 2 | 3 lumber + 2 stone | 11 | — |
@@ -236,17 +239,17 @@ Monster element weights by table:
 | Road | infrastructure | 1 | 1 stone | 3 | — |
 | Railroad | infrastructure | 3 | 2 steel + 2 lumber | 8 | — |
 | Bridge | infrastructure | 2 | 4 stone + 4 lumber + 1 ironware | 16 | shallow-water |
-| Harbour | infrastructure | 3 | 6 stone + 6 lumber + 2 rope | 22 | coast |
+| Harbour | infrastructure | 3 | 6 stone + 6 lumber + 2 rope | 22 | — |
 | Rail Depot | infrastructure | 3 | 4 brick + 2 steel + 2 lumber | 18 | — |
 
 ## Peoples
 
 | People | Die | Workers | Terrain comfort | Strength | Defence | Carries | Mana |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Humans | d6 | 2 | grassland, coast, forest | 3 | 3 | 9 kg | talisman only |
+| Humans | d6 | 2 | grassland, forest, hills | 3 | 3 | 9 kg | talisman only |
 | Dwarves | d6 | 2 | mountain, hills, tundra | 4 | 3 | 12 kg | talisman only |
 | Elves | d6 | 2 | forest, hills, grassland | 2 | 3 | 6 kg | 3 innate |
-| Halflings | d6 | 3 | grassland, forest, coast | 2 | 3 | 6 kg | talisman only |
+| Halflings | d6 | 3 | grassland, forest | 2 | 3 | 6 kg | talisman only |
 | Orcs | d8 | 2 | hills, marsh, tundra, mountain | 5 | 4 | 15 kg | talisman only |
 
 
@@ -395,11 +398,12 @@ it does not.
 
 ## Vehicle deck
 
-**V** is the damage boxes the hull holds, **C** the bulk of its hold — the two
-boxes of a vehicle card's summary strip. Damage is walked on the player
-board's V track; nothing is walked on the card.
+**H** is the hull, **C** the bulk of its hold — the two boxes of a vehicle
+card's summary strip. A vehicle in play is dealt a player board of its own and
+run like a player who is not a person: the hull walks that board's health
+track, and the cargo and modifications lie in its four kit slots.
 
-| Code | Vehicle | Kind | Cargo | Damage | Quirk |
+| Code | Vehicle | Kind | Cargo | Hull | Quirk |
 | --- | --- | --- | --- | --- | --- |
 | VEH-01 | The Reach Flyer | train | 40 | 8 | +1 hex per leg, and she carries 4 passengers (figures or characters) free among the mail sacks. |
 | VEH-02 | Steppe Hauler | train | 100 | 10 | Burns 1 extra coal per leg. Nothing else on rails carries close to her hundred bulk. |
@@ -433,13 +437,13 @@ Slaying yields the mana; the other three trade mana away for a living asset.
 | MON-05 | Stone Boar | ![](../art/icons/element-earth.svg) earth | 2 | 4 | 6 | 1 | forest, hills | S B D |
 | MON-06 | Gravel Wyrm | ![](../art/icons/element-earth.svg) earth | 3 | 6 | 8 | 2 | mountain, desert | S |
 | MON-07 | Mire Strangler | ![](../art/icons/element-water.svg) water | 3 | 2 | 6 | 2 | marsh | S |
-| MON-08 | Reef Serpent | ![](../art/icons/element-water.svg) water | 3 | 3 | 7 | 2 | coast, shallow-water | S B |
+| MON-08 | Reef Serpent | ![](../art/icons/element-water.svg) water | 3 | 3 | 7 | 2 | shallow-water, deep-water | S B |
 | MON-09 | The Deepwater Maw *(unique)* | ![](../art/icons/element-water.svg) water | 5 | 5 | 12 | 4 | deep-water | S |
 | MON-10 | Rime Harpy | ![](../art/icons/element-air.svg) air | 2 | 1 | 5 | 1 | tundra, mountain | S E B |
 | MON-11 | Dust Devil | ![](../art/icons/element-air.svg) air | 2 | 3 | 4 | 2 | desert, grassland | S |
-| MON-12 | Storm Roc | ![](../art/icons/element-air.svg) air | 4 | 3 | 9 | 3 | mountain, coast | S D |
+| MON-12 | Storm Roc | ![](../art/icons/element-air.svg) air | 4 | 3 | 9 | 3 | mountain, hills | S D |
 | MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | ![](../art/icons/element-fire.svg) fire | 7 | 6 | 14 | 6 | mountain, hills, desert | S B |
-| MON-14 | The Hoarwyrm | ![](../art/icons/element-air.svg) air | 5 | 5 | 13 | 4 | tundra, mountain, coast | S D |
+| MON-14 | The Hoarwyrm | ![](../art/icons/element-air.svg) air | 5 | 5 | 13 | 4 | tundra, mountain, lake | S D |
 
 
 In a fight: Shift the number you need: less your own strength, plus their defence. target = hitsOn + opponentDefence - yourStrength, clamped to
@@ -460,7 +464,7 @@ tokens left to right.
 | CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 8 | 2 | 2 | — | 80 | 6 | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
 | CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 13 | 6 | 5 | — | 50 | 18 | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
 | CHR-06 | Doctor Elspeth Marrow | human | Physician | 9 | 2 | 2 | — | 65 | 6 | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
-| CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 4 | 3 | — | 60 | 12 | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 vehicle damage box per round, free, wherever the vehicle stands. |
+| CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 4 | 3 | — | 60 | 12 | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands. |
 | CHR-08 | Old Mother Keswick | human | Hedge-Witch | 7 | 2 | 2 | — | 35 | 6 | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
 
 ## Quest deck
@@ -536,7 +540,7 @@ shipwright and a hedge-witch are competing for the same hull.
 | MOD-05 | Storm Shutters | hull | ship, barge, airship, train | 3 lumber + 2 leather + 1 ironware | Cargo aboard loses nothing to weather: ignore every cargo-loss effect from a weather or disaster event card. The vehicle itself still takes its damage. |
 | MOD-06 | Ice Runners | running-gear | cart, caravan, sled | 2 steel + 2 lumber | Shod runners that swap for the wheels in an hour. While the winter rule in travel.json is in force the vehicle moves at sled speeds; the rest of the year it is 70 kg of steel in the bed and does nothing at all. |
 | MOD-07 | Compound Boiler | powerplant | train, ship, airship | 4 steel + 3 copper + 2 ironware | Uses the same steam twice. Halve the vehicle's fuel per leg, rounded up, and +1 hex per leg. It is delicate: on any hazard or battle result, roll d6 and on a 1 the boiler is out until repaired at a steelworks. |
-| MOD-08 | Keelbound | enchantment | ship, barge | 5 water mana | She will not sink. A V track that fills leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off. |
+| MOD-08 | Keelbound | enchantment | ship, barge | 5 water mana | She will not sink. A hull run down to nothing leaves her swamped to the gunwales on her hex instead of wrecked - cargo is lost, the crew are not, and one round of repairs at any harbour has her afloat. Once used, the binding is spent and the card comes off. |
 | MOD-09 | Fleetfoot Binding | enchantment | any | 4 air mana | +2 hexes on every day leg, whatever the mode and whatever the ground. An airship instead re-rolls one wind roll per journey. |
 | MOD-10 | Warded Hold | enchantment | any | 4 earth mana | Nothing is taken from this vehicle that its owner did not hand over. Cancel every theft, robbery, piracy and heist card aimed at its cargo. A boarder who wins a battle may still take the vehicle entire - the ward is on the hold, not on the owner. |
 | MOD-11 | Salamander Grate | enchantment | train, ship, airship | 6 fire mana | The firebox burns without fuel: the vehicle pays no fuel per leg, ever. It also never runs cold - the vehicle may take a night leg with no light, because the glare from the grate is light enough. |
