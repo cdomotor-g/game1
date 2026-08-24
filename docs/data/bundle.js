@@ -1767,34 +1767,7 @@ window.GAME_DATA = {
           "mine-salt",
           "mine-mana-crystal",
           "quarry-stone"
-        ],
-        "plate": {
-          "note": "A double-ended pick head, drawn to a point at each end, wedged on a straight haft.",
-          "parts": [
-            {
-              "material": "wood",
-              "shade": "light",
-              "d": "M59.49 14.61L15.69 94.88L23.98 99.29L66.03 18.09Z"
-            },
-            {
-              "material": "iron",
-              "shade": "light",
-              "d": "M2 14.83L29.32 5.57L53.01 8.37L74.83 19.97L90.41 38.05L98 65.88L91.9 66.83L84.16 44.53L70.19 28.7L48.37 17.1L27.44 14.36L4.62 20.43Z"
-            },
-            {
-              "material": "iron",
-              "shade": "medium",
-              "d": "M55.99 10.66L71.27 18.78L64.02 32.41L48.74 24.29Z"
-            }
-          ],
-          "lines": [
-            "M52.51 17.2L67.79 25.32",
-            "M10.73 19.47L20.75 16.41",
-            "M89.27 61.24L86.21 51.21",
-            "M51.3 32.65L19.98 91.56",
-            "M20.77 86.38L26.01 89.17"
-          ]
-        }
+        ]
       },
       {
         "id": "shovel",
@@ -15870,17 +15843,17 @@ window.GAME_DATA = {
       },
       "tool-pick": {
         "file": "art/renders/tool-pick.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.22,
+          0.08,
+          0.68,
+          0.83
         ],
         "focal": [
-          0.5,
-          0.5
+          0.58,
+          0.2
         ]
       },
       "tool-saw": {
