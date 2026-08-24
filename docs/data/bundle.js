@@ -9182,40 +9182,7 @@ window.GAME_DATA = {
           "Slow: it rolls in the first round of a battle and every second round after.",
           "Needs a quiver to fight."
         ],
-        "combatDice": 3,
-        "plate": {
-          "note": "A steel prod lashed across the nose of a wooden tiller, the string at rest, the nut and trigger set behind it.",
-          "parts": [
-            {
-              "material": "wood",
-              "shade": "medium",
-              "d": "M2 75.86L8.99 62.67L22.09 60.22L94.42 65.11L98 67.97L95.87 78L48.46 74.21L46.55 83.23L40.32 82.96L42.23 73.93L19.32 73.25L8.74 83.58Z"
-            },
-            {
-              "material": "steel",
-              "shade": "light",
-              "d": "M83.22 40.4L89.35 49.79L92.02 60.05L90.73 70.62L87.62 80.79L80.99 89.08L71.58 95.16L74.26 99.29L84.3 92.73L91.96 83.1L95.54 71.64L96.93 59.71L93.85 47.8L87.34 37.72Z"
-            },
-            {
-              "material": "cord",
-              "d": "M84.87 40.02L72.93 96.18L74.33 96.48L86.27 40.32Z"
-            },
-            {
-              "material": "iron",
-              "shade": "medium",
-              "d": "M54.87 68.32a5.33 5.33 0 1 0 10.66 0a5.33 5.33 0 1 0 -10.66 0Z"
-            }
-          ],
-          "lines": [
-            "M9.78 63.89L93.99 67.12",
-            "M12.67 74.98L89.43 78.72",
-            "M84.44 65.19L97.48 67.96",
-            "M82.78 73.01L95.81 75.78",
-            "M57.84 68.32a2.36 2.36 0 1 0 4.72 0a2.36 2.36 0 1 0 -4.72 0Z",
-            "M4.86 72.28L8.38 80.36",
-            "M44.69 62.4L42.66 71.93"
-          ]
-        }
+        "combatDice": 3
       },
       {
         "id": "harpoon",
@@ -15597,17 +15564,17 @@ window.GAME_DATA = {
       },
       "item-crossbow": {
         "file": "art/renders/item-crossbow.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.04,
+          0.17,
+          0.94,
+          0.73
         ],
         "focal": [
-          0.5,
-          0.5
+          0.53,
+          0.27
         ]
       },
       "item-helm": {
