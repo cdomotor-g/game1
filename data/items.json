@@ -38,30 +38,7 @@
       "inputs": [{ "commodity": "steel", "qty": 3 }, { "commodity": "leather", "qty": 2 }], "effortHours": 8, "baseValue": 320, "massKg": 12.5,
       "specialist": "smith",
       "story": "Fitted to one body and worth a farm. It turns a blade and it turns an arrow, and it turns a running man into a walking one.",
-      "effects": ["Ignore the first three hits in each battle.", "-1 move point."], "armourValue": 3,
-      "plate": {
-        "note": "A breastplate with a raised centre ridge, three fauld lames below it, and a pauldron on each shoulder.",
-        "parts": [
-          { "material": "steel", "shade": "light", "d": "M27.92 13.54L40.29 6.68L51.21 13.65L63.34 9.1L74.02 18.38L78.99 37.54L72.44 55.5L64.56 63.99L27.69 60.11L21.74 50.17L19.07 31.25Z" },
-          { "material": "steel", "shade": "medium", "d": "M15.49 9.9L30.16 3.29L42.23 10.38L38.23 26.27L21.62 29.18L11.97 21.18Z" },
-          { "material": "steel", "shade": "medium", "d": "M86.93 17.41L73.95 7.89L60.67 12.32L61.28 28.69L76.93 35L88.03 29.17Z" },
-          { "material": "steel", "shade": "light", "d": "M27.57 61.27L64.44 65.14L65.66 75.75L24.17 71.39Z" },
-          { "material": "steel", "shade": "light", "d": "M24.05 72.55L65.53 76.91L66.75 87.52L20.66 82.68Z" },
-          { "material": "steel", "shade": "medium", "d": "M20.53 83.83L66.63 88.67L67.84 99.29L17.14 93.96Z" }
-        ],
-        "lines": [
-          "M51.09 14.81L46.12 62.05",
-          "M41.63 16.14L34.18 53.8",
-          "M60.07 18.08L59.53 56.47",
-          "M18.83 33.55L25.74 34.28",
-          "M78.75 39.85L71.84 39.12",
-          "M29.66 66.94a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
-          "M43.49 68.39a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
-          "M57.32 69.84a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
-          "M28.45 78.46a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
-          "M42.28 79.91a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z",
-          "M56.11 81.37a1.97 1.97 0 1 0 3.94 0a1.97 1.97 0 1 0 -3.94 0Z"
-        ] } },
+      "effects": ["Ignore the first three hits in each battle.", "-1 move point."], "armourValue": 3 },
     { "id": "helm", "name": "Helm", "class": "armour", "cardCode": "ITM-02", "slot": "head", "madeAt": "blacksmith",
       "inputs": [{ "commodity": "ironware", "qty": 1 }], "effortHours": 2, "baseValue": 45, "massKg": 1.25,
       "story": "A helm is cheap and a head is not. Every recruiting sergeant in the world has made that speech and none of them has ever had to improve it.",
