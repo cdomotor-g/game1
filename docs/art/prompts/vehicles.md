@@ -190,18 +190,29 @@ Wash: cold slate blue on the night, flat; the horse nearly all ink.
 [PREAMBLE]
 
 A long freight sled on steel-shod runners, low and narrow, lashed under a
-canvas with a rope net over the load. Nine dogs in a single gang line ahead of
-it, deep-chested and thick-coated, harness and tug lines drawn taut and true;
-the lead dog turning her head back along the line. A driver standing on the
-runners at the rear, hooded, one hand on the handlebar and the other on the
-snow hook. Ground line of wind-scoured hard snow with sastrugi ridges hatched
-across it. Wash: cold slate on the snow shadow, ochre on the canvas, rust red
-on the harness, flat.
+canvas with a rope net over the load, drawn large and near at the rear of the
+team. NINE dogs harnessed in a single gang line ahead of it - eight in the
+traces and the lead bitch out in front of them, nine harnessed animals to be
+counted - deep-chested and thick-coated, harness and tug lines drawn taut and
+true; the lead dog turning her head back along the line. A TENTH dog runs
+loose alongside the gang line, plainly unharnessed and carrying no tug line -
+the spare. A driver standing on the runners at the rear, hooded, one hand on
+the handlebar and the other on the snow hook. The gang line is NOT a flat
+frieze across the page: it recedes, the near dogs drawn large and low and the
+lead dog smaller and higher, so the team climbs from the bottom left towards
+the upper right. Ground of wind-scoured hard snow with sastrugi ridges hatched
+across it, worked right down to the bottom edge. Wash: cold slate on the snow
+shadow, ochre on the canvas, rust red on the harness, flat.
 
 FRAMING. A4 landscape plate, whole page drawn edge to edge.
-The sled, the driver and the lead dog all well inside the middle 84% of the
-page; the middle of the gang line may run to the margin. Low horizon in the
-bottom third. Clear, quiet page above.
+The sled, the driver, the loose spare and the lead dog ALL inside the middle
+84% of the page width - nothing the card names may sit against the left or
+right margin.
+The team and its ground FILL THE PAGE. The sled and the near dogs stand in the
+bottom half, the lead dog sits no lower than the middle of the page, and no
+more than the top quarter is empty sky. A page that is half blank paper is a
+rejected page: the card window is 1.34 and takes the whole height, so empty
+sky here is empty sky on the card.
 ```
 
 ## vehicle-veh-14 — The Red Lantern *(steam junk, ship)*
