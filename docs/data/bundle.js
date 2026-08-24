@@ -9079,37 +9079,7 @@ window.GAME_DATA = {
           "+1 output on Hunt Game.",
           "Needs a quiver to fight."
         ],
-        "combatDice": 1,
-        "plate": {
-          "note": "A self bow of one stave, horn-nocked at both ends, the grip bound with cord.",
-          "parts": [
-            {
-              "material": "wood",
-              "shade": "medium",
-              "d": "M80.84 3.29L64.1 7.47L46.08 16.35L32.63 26.45L25.17 35.11L21.99 46.11L20.96 62.95L23.53 82.96L29.27 99.29L34.86 97.28L29.14 81.64L26.55 62.69L27.37 46.87L29.81 37.57L36.03 30.22L48.63 20.54L65.79 11.9L81.97 7.71Z"
-            },
-            {
-              "material": "cord",
-              "shade": "medium",
-              "d": "M28.61 24L17.89 44.17L28.38 49.75L39.1 29.58Z"
-            },
-            {
-              "material": "cord",
-              "d": "M80.16 6.13L31.9 96.9L33.31 97.65L81.57 6.88Z"
-            }
-          ],
-          "lines": [
-            "M26.13 27.7L36.62 33.28",
-            "M24.59 30.61L35.07 36.18",
-            "M23.04 33.51L33.53 39.09",
-            "M21.5 36.42L31.99 41.99",
-            "M19.95 39.32L30.44 44.9",
-            "M76.23 7.92L82.11 7.82",
-            "M31.19 92.64L34.39 97.57",
-            "M56.69 13.06L58.57 19.24",
-            "M24.51 73.57L30.69 71.68"
-          ]
-        }
+        "combatDice": 1
       },
       {
         "id": "quiver",
@@ -15597,16 +15567,16 @@ window.GAME_DATA = {
       },
       "item-bow": {
         "file": "art/renders/item-bow.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.42,
+          0.04,
+          0.26,
+          0.92
         ],
         "focal": [
-          0.5,
+          0.55,
           0.5
         ]
       },
