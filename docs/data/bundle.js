@@ -8975,42 +8975,7 @@ window.GAME_DATA = {
         "effects": [
           "+1 combat die."
         ],
-        "combatDice": 1,
-        "plate": {
-          "note": "A straight double-edged blade, a short quillon guard, a wrapped grip and a disc pommel.",
-          "parts": [
-            {
-              "material": "steel",
-              "d": "M76.89 3.29L72.43 18.14L47.38 67.96L39.77 63.91L67.06 15.28Z"
-            },
-            {
-              "material": "iron",
-              "shade": "light",
-              "d": "M26.44 57.68L36.98 62.14L50.41 69.28L60 75.53L57.62 80L47.08 75.55L33.65 68.41L24.06 62.16Z"
-            },
-            {
-              "material": "leather",
-              "shade": "medium",
-              "d": "M37.02 69.63L31.11 79.4L27.84 87.7L34.33 91.15L39.39 83.8L44.18 73.43Z"
-            },
-            {
-              "material": "iron",
-              "shade": "light",
-              "d": "M23.11 93.46a5.83 5.83 0 1 0 11.66 0a5.83 5.83 0 1 0 -11.66 0Z"
-            }
-          ],
-          "lines": [
-            "M67.22 18.23L44.95 60.93",
-            "M69.9 19.66L46.96 62",
-            "M26.93 60.81L57.13 76.88",
-            "M34.83 73.48L42.21 77.41",
-            "M33.22 76.5L40.6 80.43",
-            "M31.61 79.52L39 83.45",
-            "M30.01 82.54L37.39 86.47",
-            "M28.4 85.56L35.79 89.49",
-            "M26.41 93.46a2.53 2.53 0 1 0 5.07 0a2.53 2.53 0 1 0 -5.07 0Z"
-          ]
-        }
+        "combatDice": 1
       },
       {
         "id": "steel-sword",
@@ -15803,17 +15768,17 @@ window.GAME_DATA = {
       },
       "item-sword": {
         "file": "art/renders/item-sword.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.21,
+          0.01,
+          0.76,
+          0.98
         ],
         "focal": [
-          0.5,
-          0.5
+          0.44,
+          0.72
         ]
       },
       "item-war-axe": {
