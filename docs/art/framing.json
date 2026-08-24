@@ -163,7 +163,7 @@
     },
 
     "item-leather-jerkin": { "subject": [0.12, 0.04, 0.72, 0.94], "focal": [0.58, 0.63], "note": "The whole jerkin, shoulders to hem, with the belt and both skirt panels. Focal on the buckle. Drawn plate - measured off the picture, unlike its generated neighbours." },
-    "item-chain-mail": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A knee-length hauberk of riveted rings, short-sleeved, split at the hem for riding, with a leather collar. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-chain-mail": { "subject": [0.13, 0.04, 0.76, 0.92], "focal": [0.42, 0.53], "note": "Collar to the split hem, both sleeves and the belt. Focal on the buckle. Drawn plate - measured off the picture." },
     "item-plate-harness": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A breastplate with a raised centre ridge, three fauld lames below it, and a pauldron on each shoulder. Drawn into this box by tools/draw-item.mjs, not measured off it." },
     "item-helm": { "subject": [0.1, 0.15, 0.8, 0.73], "focal": [0.39, 0.6], "note": "Crown to the tip of the nasal, brow band and every rivet. Focal where the nasal meets the band. Drawn plate - measured off the picture." },
     "item-shield": { "subject": [0.08, 0.04, 0.86, 0.9], "focal": [0.5, 0.49], "note": "The whole disc, rim to rim, with the stapled split top-left. Focal on the boss. Drawn plate - measured off the picture." },

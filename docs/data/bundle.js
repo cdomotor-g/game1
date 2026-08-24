@@ -8873,40 +8873,7 @@ window.GAME_DATA = {
         "effects": [
           "Ignore the first two hits in each battle."
         ],
-        "armourValue": 2,
-        "plate": {
-          "note": "A knee-length hauberk of riveted rings, short-sleeved, split at the hem for riding, with a leather collar.",
-          "parts": [
-            {
-              "material": "iron",
-              "shade": "deep",
-              "d": "M23.84 16.68L33.46 5.61L45.78 3.29L53.26 12.53L62.5 5.04L74.07 9.88L81.18 22.71L85.39 40.06L76.65 42.76L73.58 60.56L74.34 99.29L49 99.04L47.49 90.43L42.71 89.92L39.44 98.03L14.61 93.01L23.4 55.28L24.09 37.24L16.11 32.78Z"
-            },
-            {
-              "material": "leather",
-              "shade": "medium",
-              "d": "M44.52 3.76L63.63 5.77L60.18 15.67L45.84 14.16Z"
-            },
-            {
-              "material": "leather",
-              "shade": "deep",
-              "d": "M22.93 55.23L74.05 60.61L72.57 70.11L22.4 64.84Z"
-            }
-          ],
-          "lines": [
-            "M26.68 21.81L77.33 27.13",
-            "M25.2 31.32L76.8 36.74",
-            "M23.72 40.82L76.28 46.35",
-            "M22.23 50.33L75.75 55.95",
-            "M20.81 71.92L72.65 77.37",
-            "M20.28 81.53L71.17 86.88",
-            "M19.76 91.13L69.69 96.38",
-            "M53.01 14.92L48.49 57.92",
-            "M47.49 67.48L45.1 90.17",
-            "M36.79 8.38L28.05 34.03",
-            "M70.24 11.9L73.45 38.8"
-          ]
-        }
+        "armourValue": 2
       },
       {
         "id": "plate-harness",
@@ -15794,17 +15761,17 @@ window.GAME_DATA = {
       },
       "item-chain-mail": {
         "file": "art/renders/item-chain-mail.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.13,
+          0.04,
+          0.76,
+          0.92
         ],
         "focal": [
-          0.5,
-          0.5
+          0.42,
+          0.53
         ]
       },
       "item-crossbow": {
