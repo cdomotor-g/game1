@@ -9179,44 +9179,7 @@ window.GAME_DATA = {
         "effects": [
           "+2 combat dice. Ignores enemy armour entirely."
         ],
-        "combatDice": 2,
-        "plate": {
-          "note": "A steel head on a long haft: a flat face on one cheek, a drawn-out fluke on the other, a wrapped grip at the butt.",
-          "parts": [
-            {
-              "material": "steel",
-              "shade": "medium",
-              "d": "M32.75 3.29L53.99 10.79L65.27 18.05L54.81 37.72L42.48 32.43L24.38 19.02Z"
-            },
-            {
-              "material": "steel",
-              "shade": "light",
-              "d": "M63.24 19.5L93.08 41.67L89.94 47.57L54.87 35.23Z"
-            },
-            {
-              "material": "wood",
-              "shade": "light",
-              "d": "M42.55 29.94L6.92 95.52L14 99.29L48.45 33.08Z"
-            },
-            {
-              "material": "leather",
-              "shade": "deep",
-              "d": "M21.76 68.09L28.64 71.75L15.64 97.63L8.75 93.97Z"
-            }
-          ],
-          "lines": [
-            "M36.37 5.97L28.21 21.31",
-            "M64.67 17.99L54.42 37.26",
-            "M60.04 27.89L90.53 44.1",
-            "M41.05 34.19L23.2 66.33",
-            "M46.55 37.12L29.69 69.78",
-            "M19.31 72.74L26.32 76.17",
-            "M16.96 77.54L23.96 80.97",
-            "M14.61 82.35L21.61 85.78",
-            "M12.26 87.15L19.26 90.58",
-            "M9.9 91.96L16.91 95.38"
-          ]
-        }
+        "combatDice": 2
       },
       {
         "id": "crossbow",
@@ -15769,17 +15732,17 @@ window.GAME_DATA = {
       },
       "item-war-hammer": {
         "file": "art/renders/item-war-hammer.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.11,
+          0.04,
+          0.85,
+          0.91
         ],
         "focal": [
-          0.5,
-          0.5
+          0.6,
+          0.17
         ]
       },
       "modification-spinnaker": {
