@@ -281,17 +281,35 @@ const wanted = targets.length
   ? drawable.filter((s) => targets.some((t) => t.toUpperCase() === s.card.cardCode || t === s.plateId || t === s.card.id))
   : drawable;
 
-if (byHand.length) {
+/* Which cards have been taken back by hand, said proportionately. Naming three
+   of them is useful; naming every card in the deck, every run, is noise, and
+   the all-by-hand case has a better line of its own below. */
+if (byHand.length && byHand.length < subjects.length) {
   console.error(`draw-item: ${byHand.map((s) => s.card.cardCode).join(', ')} ` +
     `${byHand.length === 1 ? 'has' : 'have'} no plate block, so ${byHand.length === 1 ? 'it is' : 'they are'} ` +
-    `drawn by hand — the brief is in docs/art/prompts/ and the queue is waiting on an artist.`);
+    `drawn by hand — the brief is in docs/art/prompts/.`);
 }
 
+/* Nothing to draw is not the same as nothing to draw FROM.
+   A deck whose cards have ALL had their plate block deleted is a finished
+   state, not a failure: the escape hatch worked, once per card, and every plate
+   in the deck is now an artist's. Continuous integration runs --check on every
+   commit, so that state has to exit clean or the switch this tool exists to
+   offer could only ever be thrown a few times. A deck with no cardCodes at all
+   is a different thing and is still an error. */
 if (!wanted.length) {
-  console.error(targets.length
-    ? `draw-item: none of ${targets.join(', ')} is a card in a generated deck.`
-    : 'draw-item: no cards to draw — the generated decks have no cardCodes yet.');
-  process.exit(1);
+  if (targets.length) {
+    console.error(`draw-item: none of ${targets.join(', ')} is a card in a generated deck with a plate block to draw from.`);
+    process.exit(1);
+  }
+  if (!subjects.length) {
+    console.error('draw-item: the generated decks have no cards with a cardCode yet, so there is nothing to draw.');
+    process.exit(1);
+  }
+  console.log(`Nothing to generate: all ${subjects.length} cards in ` +
+    `${[...new Set(subjects.map((s) => s.deck.name))].join(' and ')} have had their plate block deleted, ` +
+    `so every plate in them is drawn by hand now. docs/art/prompts/ is what those cards are briefed from.`);
+  process.exit(0);
 }
 
 /* The print aspiration this line derives from the card's own safe area, rather

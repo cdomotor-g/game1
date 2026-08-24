@@ -1930,39 +1930,7 @@ window.GAME_DATA = {
           "harvest-vegetables",
           "harvest-cotton"
         ],
-        "optionalNote": "Harvesting is possible bare-handed; a scythe doubles the yield.",
-        "plate": {
-          "note": "A long curved blade tanged into the head of a bent snaith, with two nibs set for the mower's hands.",
-          "parts": [
-            {
-              "material": "wood",
-              "shade": "light",
-              "d": "M47.94 99.29L53.5 77.59L60.41 55.65L69 37.15L78.29 23.81L84.58 18.18L80.72 13.81L73.68 19.97L63.64 34.1L54.51 53.36L47.26 75.78L41.49 97.6Z"
-            },
-            {
-              "material": "wood",
-              "shade": "medium",
-              "d": "M66.26 44.54L51.46 27.67L47.96 30.63L62.12 48.03Z"
-            },
-            {
-              "material": "wood",
-              "shade": "medium",
-              "d": "M55.27 74.08L40.47 57.21L36.97 60.17L51.13 77.58Z"
-            },
-            {
-              "material": "steel",
-              "shade": "light",
-              "d": "M86.88 14.71L74.98 6.02L58.74 3.29L40.98 5.64L22.61 13.56L13.12 20.31L23.79 22.44L39.28 17.71L54.71 15.3L68.19 16.57L79.72 21.52L81.99 23.9Z"
-            }
-          ],
-          "lines": [
-            "M80.75 17.35L70.21 10.56L56.73 9.29L41.29 11.7L26.23 17.85L18.7 20.92",
-            "M50.06 29.81L47.2 32.54",
-            "M39.07 59.35L36.21 62.08",
-            "M45.8 88.41L50.03 90.66",
-            "M76.38 24.46L63.73 46.04"
-          ]
-        }
+        "optionalNote": "Harvesting is possible bare-handed; a scythe doubles the yield."
       },
       {
         "id": "plough",
@@ -15850,17 +15818,17 @@ window.GAME_DATA = {
       },
       "tool-scythe": {
         "file": "art/renders/tool-scythe.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.25,
+          0.03,
+          0.43,
+          0.93
         ],
         "focal": [
-          0.5,
-          0.5
+          0.58,
+          0.1
         ]
       },
       "vehicle-veh-01": {

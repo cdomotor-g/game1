@@ -176,6 +176,6 @@
     "tool-saw": { "subject": [0.03, 0.33, 0.96, 0.47], "focal": [0.27, 0.56], "note": "Toe, the whole toothed edge, both saw nuts and the tote. A wide flat subject on a square page, so the crop brings paper above and below. Focal on the heel where the tote meets the plate. Drawn plate - measured off the picture." },
     "tool-pick": { "subject": [0.22, 0.08, 0.68, 0.83], "focal": [0.58, 0.2], "note": "Both ends of the head - the drawn point and the mushroomed one - the wedged eye, and the haft to the butt. Focal on the eye. Drawn plate - measured off the picture." },
     "tool-hammer": { "subject": [0.27, 0.02, 0.53, 0.95], "focal": [0.53, 0.15], "note": "Face and pein across the head, both wedges in the eye, and the haft to the butt. Focal on the eye. Drawn plate - measured off the picture." },
-    "tool-scythe": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A long curved blade tanged into the head of a bent snaith, with two nibs set for the mower's hands. Drawn into this box by tools/draw-item.mjs, not measured off it." }
+    "tool-scythe": { "subject": [0.25, 0.03, 0.43, 0.93], "focal": [0.58, 0.1], "note": "Blade tip to collar, both nibs, and the snaith to its butt. A tall narrow subject on a square page, so the crop brings paper either side. Focal on the collar where the tang is bolted. Drawn plate - measured off the picture." }
   }
 }
