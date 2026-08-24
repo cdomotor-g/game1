@@ -9030,38 +9030,7 @@ window.GAME_DATA = {
         "effects": [
           "+1 defence die."
         ],
-        "armourValue": 1,
-        "plate": {
-          "note": "A round shield of boards, iron-rimmed, with a domed boss over the hand-hole.",
-          "parts": [
-            {
-              "material": "wood",
-              "shade": "light",
-              "d": "M2 51.29a48 48 0 1 0 96 0a48 48 0 1 0 -96 0Z"
-            },
-            {
-              "material": "iron",
-              "shade": "medium",
-              "d": "M2 51.29a48 48 0 1 1 96 0a48 48 0 1 1 -96 0ZM7.74 51.29a42.26 42.26 0 1 0 84.52 0a42.26 42.26 0 1 0 -84.52 0Z"
-            },
-            {
-              "material": "iron",
-              "shade": "light",
-              "d": "M36.96 51.29a13.04 13.04 0 1 0 26.09 0a13.04 13.04 0 1 0 -26.09 0Z"
-            }
-          ],
-          "lines": [
-            "M25.27 17.01L18.69 79.67",
-            "M40.16 10.19L31.83 89.44",
-            "M68.17 13.13L59.84 92.38",
-            "M81.31 22.9L74.73 85.56",
-            "M42.7 51.29a7.3 7.3 0 1 0 14.61 0a7.3 7.3 0 1 0 -14.61 0Z",
-            "M66.7 53.25a1.98 1.98 0 1 0 3.97 0a1.98 1.98 0 1 0 -3.97 0Z",
-            "M46.05 69.97a1.98 1.98 0 1 0 3.97 0a1.98 1.98 0 1 0 -3.97 0Z",
-            "M29.34 49.32a1.98 1.98 0 1 0 3.97 0a1.98 1.98 0 1 0 -3.97 0Z",
-            "M49.98 32.61a1.98 1.98 0 1 0 3.97 0a1.98 1.98 0 1 0 -3.97 0Z"
-          ]
-        }
+        "armourValue": 1
       },
       {
         "id": "sword",
@@ -15900,17 +15869,17 @@ window.GAME_DATA = {
       },
       "item-shield": {
         "file": "art/renders/item-shield.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.08,
+          0.04,
+          0.86,
+          0.9
         ],
         "focal": [
           0.5,
-          0.5
+          0.49
         ]
       },
       "item-sword": {
