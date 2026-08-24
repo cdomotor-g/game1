@@ -15919,6 +15919,17 @@ window.GAME_DATA = {
           0.54
         ]
       },
+      "vehicle-veh-09": {
+        "file": "art/renders/vehicle-veh-09.png",
+        "width": 1492,
+        "height": 1054,
+        "subject": [
+          0.02,
+          0.02,
+          0.96,
+          0.95
+        ]
+      },
       "vehicle-veh-10": {
         "file": "art/renders/vehicle-veh-10.png",
         "width": 1536,

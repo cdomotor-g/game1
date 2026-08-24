@@ -104,6 +104,10 @@
       "subject": [0.03, 0.26, 0.95, 0.54],
       "note": "The wagons on the causeway and the reeds they are crossing."
     },
+    "vehicle-veh-09": {
+      "subject": [0.02, 0.02, 0.96, 0.95],
+      "note": "All four switchbacks, the lead team at the top to the screw brake and its crewman at the bottom."
+    },
     "vehicle-veh-10": {
       "subject": [0.03, 0.15, 0.94, 0.72],
       "note": "The courser at full gallop, nose to tail."
