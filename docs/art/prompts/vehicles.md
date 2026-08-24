@@ -220,21 +220,28 @@ sky here is empty sky on the card.
 ```text
 [PREAMBLE]
 
-A large ocean-going junk in full profile: high transom stern, flat bow, three
-masts carrying fully battened lugsails - every batten drawn as a hard
-horizontal line across the sail, the sails hauled taut and shown from the lee
-side. A squat riveted iron funnel amidships between the main and mizzen,
-trailing a flat hatched smoke plume laid along the wind. Hull built in
-bulkheaded sections with the compartment lines visible above the waterline; a
-big balanced rudder shipped through the stern. Deck cargo lashed under
-matting; a single paper lantern hung at the break of the poop. Wash: rust red
-on the sails and the lantern, ochre on the hull timber, cold slate on the
-funnel and the sea, flat.
+A large ocean-going junk in full profile: high transom stern, flat bow, FIVE
+masts, each carrying one fully battened lugsail - five sails to be counted,
+the tall ones amidships and shorter ones at the ends. Every batten drawn as a
+hard horizontal line across the sail, the sails hauled taut and shown from the
+lee side. A squat riveted iron funnel amidships, bolted to a deck plinth and
+guyed, plainly fitted to a wooden ship after she was built, trailing a flat
+hatched smoke plume laid along the wind. Hull built in bulkheaded sections
+with the compartment lines visible above the waterline; a big balanced rudder
+shipped through the stern. Deck cargo lashed under matting; a single paper
+lantern hung at the break of the poop. Wash: rust red on the sails and the
+lantern, ochre on the hull timber, cold slate on the funnel and the sea, flat.
 
 FRAMING. A4 landscape plate, whole page drawn edge to edge.
-The hull, the funnel and the lowest third of the sails inside the middle 84%
-of the page; mast tops may run to the top margin. Low horizon in the bottom
-third.
+The hull, the funnel, all five sails and the stern lantern inside the middle
+84% of the page width - nothing the card names against the left or right
+margin.
+The ship FILLS THE PAGE: the hull sits across the lower third and the rig
+carries to the top quarter, so the sails occupy the height rather than leaving
+it as sky. Sea worked right down to the bottom edge. No more than the top
+eighth of the page is empty air. A page that is half blank paper is a rejected
+page: the card window is 1.39 and takes the whole height, so empty sky here is
+empty sky on the card.
 ```
 
 ## vehicle-veh-15 — The Carrion Queen *(pirate steamer, ship)*
