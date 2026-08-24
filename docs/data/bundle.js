@@ -15995,6 +15995,17 @@ window.GAME_DATA = {
           0.97,
           0.87
         ]
+      },
+      "vehicle-veh-16": {
+        "file": "art/renders/vehicle-veh-16.png",
+        "width": 1492,
+        "height": 1054,
+        "subject": [
+          0.03,
+          0.09,
+          0.94,
+          0.9
+        ]
       }
     },
     "minimaps": {
