@@ -30,7 +30,7 @@ Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading,
 no lens effects. No text, no letters, no livery lettering, no border rule.
 ```
 
-## Negative prompt — for all twelve
+## Negative prompt — for every plate below, except where a plate says otherwise
 
 ```text
 gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
@@ -246,23 +246,41 @@ empty sky on the card.
 
 ## vehicle-veh-15 — The Carrion Queen *(pirate steamer, ship)*
 
+**This plate overrides the shared negative prompt**: drop `ruined` and
+`wrecked` from it. They would otherwise fight the one thing the card is about.
+Keep `grimdark` and everything else — she is a working ship with ruined
+canvas, not a ghost.
+
 ```text
 [PREAMBLE]
 
+EXCEPTION TO THE PREAMBLE. The preamble asks for a vehicle in daily use, well
+maintained and never ruined. That holds for this ship's HULL, her gun and her
+gear - hard-used, but kept, and she is at sea earning. It does NOT hold for
+her SAILS, which are ruined and must be drawn ruined.
+
 A rakish three-masted ship in full profile, hull rendered near-solid black
 with dense cross-hatching, only the sheer line and the gunports left as bare
-paper. Sails black and ruined - long ragged tears, missing panels, edges
-frayed into streamers, patched twice with cloth of a different weave and
+paper. Sails black and gone to ribbons - long ragged tears, missing panels,
+edges frayed into streamers, patched twice with cloth of a different weave and
 patched badly. A tall thin iron funnel wedged in behind the foremast where it
-plainly does not belong, guyed with wire, trailing flat hatched smoke. Bow
-chase gun run out; boarding grapnels racked along the rail. No flag, and an
-empty flag halyard drawn slack. Wash: cold slate on the sea and the smoke,
-one small note of rust red at the waterline, flat. The hull takes no wash -
-the black line does all of it.
+plainly does not belong, guyed with wire, trailing flat hatched smoke laid
+along the wind: the boiler was bolted in below by somebody who did not care
+what it did to her lines, so the rig must look interfered with rather than
+designed. Bow chase gun run out; boarding grapnels racked along the rail. No
+flag, and an empty flag halyard drawn slack. Wash: cold slate on the sea and
+the smoke, one small note of rust red at the waterline, flat. The hull takes
+no wash - the black line does all of it.
 
 FRAMING. A4 landscape plate, whole page drawn edge to edge.
-Hull, funnel and the lower half of the rigging inside the middle 84% of the
-page. Low horizon in the bottom third.
+Hull, funnel, bow chase gun and the whole of the ragged rig inside the middle
+84% of the page width - nothing the card names against the left or right
+margin.
+The ship FILLS THE PAGE: the hull sits across the lower third and the rig
+carries to the top quarter. Sea worked right down to the bottom edge, and no
+more than the top eighth of the page is empty air. A page that is half blank
+paper is a rejected page: the card window takes the whole height, so empty sky
+here is empty sky on the card.
 ```
 
 ## vehicle-veh-16 — The Pilgrim's Patience *(airship)*
@@ -270,19 +288,25 @@ page. Low horizon in the bottom third.
 ```text
 [PREAMBLE]
 
-A large airship in full profile: a long varnished-silk envelope with a
-lengthwise seam and a hatched net of rigging over the whole of it, gathered
-into catenary lines that carry a slender wicker gondola slung well below.
-Gondola glazed along its length, a small propeller on an outrigger at the
-stern, mail sacks and a strapped crate visible through the open cargo door.
-Mooring lines trailing; a hatched cloud bank far below and behind, and the
-ground drawn very small and very far down at the bottom edge. Wash: ochre on
-the envelope, cold slate on the cloud, flat.
+A large airship in full profile: a long varnished-silk envelope the length of
+a chapel, with a lengthwise seam and a hatched net of rigging over the whole
+of it, gathered into catenary lines that carry a slender wicker gondola slung
+well below. Gondola glazed along its length, a small propeller on an outrigger
+at the stern. A CREW OF FOUR aboard and all four visible - four, to be counted
+- at the glazing, at the wheel and at the open cargo door. Through that door:
+mail sacks, a strapped medicine chest with a cross-braced lid, and one very
+well-dressed passenger with a hat box, because she carries mail, medicine and
+expensive people and the page should say which. Mooring lines trailing. Wash:
+ochre on the envelope, cold slate on the cloud, flat.
 
 FRAMING. A4 landscape plate, whole page drawn edge to edge.
-Envelope and gondola inside the middle 84% of the page. The horizon sits in
-the BOTTOM eighth of the page and is drawn tiny - the subject is in the air,
-and the page has to say so.
+Envelope, gondola, propeller and all four crew inside the middle 84% of the
+page width - nothing the card names against the left or right margin.
+She FILLS THE PAGE: the envelope spans nearly the whole width of it and the
+gondola hangs well below, so between them they occupy the height. The ground
+is a hatched cloud bank and a horizon drawn tiny in the BOTTOM EIGHTH - she is
+in the air and the page has to say so - and no more than the top eighth is
+bare paper. A page that is half blank paper is a rejected page.
 ```
 
 ## vehicle-veh-17 — The Sweep of Vossgard *(sweep-rigged airship)*
@@ -294,16 +318,22 @@ An airship in full profile, smaller and more angular than a passenger craft,
 with the sweep rig that is the whole point of the card: down each flank, a
 long FIXED upper spar running the length of the gondola, and below it a
 HINGED lower spar pivoting at the bow end, with a tall trapezoid of sailcloth
-laced between the two. Four crew at handles along the gondola side, caught
-mid-stroke, the lower spar swung well aft of the upper one so the sail is
-raked - it is being rowed through the air. Draw the hinge, the pivot pin and
-the guy lines plainly; this is a mechanism, not a decoration. A second sweep
-on the far side just visible past the hull. Small propeller at the stern.
-Wash: dusty grey-green on the sail, ochre on the envelope, rust red on the
-ironwork at the hinges, flat.
+laced between the two. EIGHT crew row her, and the page must show eight: four
+at the handles along the NEAR gondola side, drawn full and caught mid-stroke,
+and the other four at the far flank's handles with their heads and shoulders
+over the gondola coaming, so the count reads as eight rather than four. The
+lower spar is swung well aft of the upper one so the sail is raked - it is
+being rowed through the air. Draw the hinge, the pivot pin and the guy lines
+plainly; this is a mechanism, not a decoration. The far sweep just visible
+past the hull. Small propeller at the stern. Wash: dusty grey-green on the
+sail, ochre on the envelope, rust red on the ironwork at the hinges, flat.
 
 FRAMING. A4 landscape plate, whole page drawn edge to edge.
 The gondola, the crew at the handles, and the whole of the near sweep - upper
-spar, lower spar, hinge - inside the middle 84% of the page. The envelope may
-run to the top margin. Horizon in the bottom eighth, drawn tiny.
+spar, lower spar, hinge - inside the middle 84% of the page width; nothing the
+card names against the left or right margin.
+She FILLS THE PAGE: envelope and gondola together occupy the height, the
+envelope running nearly the full width. Horizon tiny in the bottom eighth, and
+no more than the top eighth bare paper. A page that is half blank paper is a
+rejected page.
 ```
