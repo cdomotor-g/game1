@@ -1839,30 +1839,7 @@ window.GAME_DATA = {
           "repair-tool",
           "build-generic",
           "lay-rail"
-        ],
-        "plate": {
-          "note": "A smith's hammer: a flat face on one cheek and a cross pein on the other, wedged on a short haft.",
-          "parts": [
-            {
-              "material": "wood",
-              "shade": "light",
-              "d": "M61.66 12.27L16.26 95.8L22.82 99.29L66.68 14.94Z"
-            },
-            {
-              "material": "iron",
-              "shade": "light",
-              "d": "M42.43 3.29L56 8.02L71.38 18.68L83.74 32.67L80.66 38.46L62.14 36.04L44.72 29.25L33.2 20.65Z"
-            }
-          ],
-          "lines": [
-            "M45.61 5.47L36.78 22.06",
-            "M57.78 9.34L46.8 29.99",
-            "M71.38 18.68L62.14 36.04",
-            "M66.76 27.36L81.23 35.05",
-            "M49.93 35.74L19.67 92.66",
-            "M20.56 88.18L25.19 90.64"
-          ]
-        }
+        ]
       },
       {
         "id": "knife",
@@ -15828,17 +15805,17 @@ window.GAME_DATA = {
       },
       "tool-hammer": {
         "file": "art/renders/tool-hammer.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.27,
+          0.02,
+          0.53,
+          0.95
         ],
         "focal": [
-          0.5,
-          0.5
+          0.53,
+          0.15
         ]
       },
       "tool-pick": {
