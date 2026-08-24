@@ -195,8 +195,13 @@ function subjectsOf(root, line) {
              like any other. What changes is only who is waiting: a missing plate
              on this deck is a tool that has not been run, not an artist who has
              not answered, and the queue says which. Same field, same reason, as
-             a map plate.kind. */
-          drawnBy: deck.plateKind === 'generated' ? deck.drawnBy : null,
+             a map plate.kind.
+
+             Per CARD, not per deck: the escape hatch is deleting one card's
+             plate block, and a card with no parts to draw from is an artist's
+             again - tools/draw-item.mjs will not touch it, so nothing else may
+             call it generated either. */
+          drawnBy: deck.plateKind === 'generated' && card.plate?.parts?.length ? deck.drawnBy : null,
           subject: card,
         });
       }

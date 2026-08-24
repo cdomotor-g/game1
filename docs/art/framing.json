@@ -162,7 +162,7 @@
       "note": "The builder with the maul up and the frame he is raising behind him."
     },
 
-    "item-leather-jerkin": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A sleeveless jerkin of two hides, laced up the chest, belted at the waist. Drawn into this box by tools/draw-item.mjs, not measured off it." },
+    "item-leather-jerkin": { "subject": [0.12, 0.04, 0.72, 0.94], "focal": [0.58, 0.63], "note": "The whole jerkin, shoulders to hem, with the belt and both skirt panels. Focal on the buckle. Drawn plate - measured off the picture, unlike its generated neighbours." },
     "item-chain-mail": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A knee-length hauberk of riveted rings, short-sleeved, split at the hem for riding, with a leather collar. Drawn into this box by tools/draw-item.mjs, not measured off it." },
     "item-plate-harness": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A breastplate with a raised centre ridge, three fauld lames below it, and a pauldron on each shoulder. Drawn into this box by tools/draw-item.mjs, not measured off it." },
     "item-helm": { "subject": [0.15, 0.15, 0.7, 0.7], "focal": [0.5, 0.5], "note": "A one-piece skull with a riveted brow band and a nasal bar down the face. Drawn into this box by tools/draw-item.mjs, not measured off it." },

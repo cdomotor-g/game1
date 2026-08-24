@@ -8847,44 +8847,7 @@ window.GAME_DATA = {
         "effects": [
           "Ignore the first hit in each battle."
         ],
-        "armourValue": 1,
-        "plate": {
-          "note": "A sleeveless jerkin of two hides, laced up the chest, belted at the waist.",
-          "parts": [
-            {
-              "material": "leather",
-              "shade": "medium",
-              "d": "M29.93 16L38.32 5.89L48.37 3.29L54.73 12.5L62.87 4.81L72.15 9.45L78.25 21.08L81.56 36.09L75.14 39.08L72.73 62.03L74.01 96.36L55.38 99.29L36.05 97.25L18.44 90.52L26.83 57.2L29.24 34.25L23.58 29.99Z"
-            },
-            {
-              "material": "leather",
-              "shade": "deep",
-              "d": "M24.64 59.42L74.41 64.65L72.66 75.45L24.1 70.35Z"
-            },
-            {
-              "material": "iron",
-              "shade": "light",
-              "d": "M43.67 59.58L55.75 60.85L54.23 75.35L42.15 74.08Z"
-            }
-          ],
-          "lines": [
-            "M47.7 15.43L60.48 21.66",
-            "M46.76 24.37L59.54 30.6",
-            "M45.82 33.31L58.6 39.54",
-            "M44.89 42.25L57.67 48.47",
-            "M43.95 51.19L56.73 57.41",
-            "M60.99 16.83L47.2 20.26",
-            "M60.05 25.76L46.26 29.2",
-            "M59.11 34.7L45.32 38.14",
-            "M58.17 43.64L44.38 47.08",
-            "M57.23 52.58L43.44 56.02",
-            "M54.73 12.5L49.78 59.61",
-            "M38.67 8.37L31.91 32.09",
-            "M71.29 11.8L72.98 36.41",
-            "M21.62 83.52L72.35 88.86",
-            "M46.28 67.47a2.67 2.67 0 1 0 5.34 0a2.67 2.67 0 1 0 -5.34 0Z"
-          ]
-        }
+        "armourValue": 1
       },
       {
         "id": "chain-mail",
@@ -15939,17 +15902,17 @@ window.GAME_DATA = {
       },
       "item-leather-jerkin": {
         "file": "art/renders/item-leather-jerkin.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.12,
+          0.04,
+          0.72,
+          0.94
         ],
         "focal": [
-          0.5,
-          0.5
+          0.58,
+          0.63
         ]
       },
       "item-plate-harness": {
