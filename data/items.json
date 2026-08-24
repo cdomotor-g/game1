@@ -58,23 +58,7 @@
     { "id": "war-axe", "name": "War Axe", "class": "weapon", "cardCode": "ITM-07", "slot": "hand", "madeAt": "blacksmith",
       "inputs": [{ "commodity": "pig-iron", "qty": 2 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3, "baseValue": 80, "massKg": 1.5,
       "story": "A woodsman’s axe with the beard drawn out and the haft left long. It costs a third of what a sword costs, and nobody has ever raised that during a fight.",
-      "effects": ["+1 combat die, +2 when attacking."], "combatDice": 1,
-      "plate": {
-        "note": "A bearded axe: a small poll, a bit drawn out to a curved edge, and a beard hanging below the eye.",
-        "parts": [
-          { "material": "wood", "shade": "light", "d": "M62.08 3.29L38.08 48.89L11.9 95.81L18.25 99.29L43.7 51.88L66.96 5.8Z" },
-          { "material": "iron", "shade": "light", "d": "M50.08 13.02L61.7 19.2L65.97 25.19L77.78 24.02L88.1 23.29L87.86 33.11L82.71 42.79L74.2 49.45L61.81 54.05L49.42 58.65L42.7 52.59L50.43 38.06L40.8 30.45Z" },
-          { "material": "leather", "shade": "deep", "d": "M38.85 45.57L45.83 49.28L41.07 59.18L34.09 55.47Z" }
-        ],
-        "lines": [
-          "M60.8 19.96L43.8 51.93",
-          "M65.66 25.78L57.21 41.66",
-          "M83.65 24.66L84.44 32.53L80.19 41.45L71.81 46.94L60.9 51.08",
-          "M66.88 28.16L77.66 28.92",
-          "M37.31 48.48L44.67 52.39",
-          "M35.25 52.35L42.61 56.27",
-          "M32.13 63.12L16.68 92.19"
-        ] } },
+      "effects": ["+1 combat die, +2 when attacking."], "combatDice": 1 },
     { "id": "pike", "name": "Pike", "class": "weapon", "slot": "two-hand", "madeAt": "blacksmith",
       "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 2 }], "effortHours": 3, "baseValue": 70, "massKg": 2.25,
       "effects": ["+2 combat dice when defending a town.", "Cannot be used with a shield."], "combatDice": 1 },

@@ -9026,36 +9026,7 @@ window.GAME_DATA = {
         "effects": [
           "+1 combat die, +2 when attacking."
         ],
-        "combatDice": 1,
-        "plate": {
-          "note": "A bearded axe: a small poll, a bit drawn out to a curved edge, and a beard hanging below the eye.",
-          "parts": [
-            {
-              "material": "wood",
-              "shade": "light",
-              "d": "M62.08 3.29L38.08 48.89L11.9 95.81L18.25 99.29L43.7 51.88L66.96 5.8Z"
-            },
-            {
-              "material": "iron",
-              "shade": "light",
-              "d": "M50.08 13.02L61.7 19.2L65.97 25.19L77.78 24.02L88.1 23.29L87.86 33.11L82.71 42.79L74.2 49.45L61.81 54.05L49.42 58.65L42.7 52.59L50.43 38.06L40.8 30.45Z"
-            },
-            {
-              "material": "leather",
-              "shade": "deep",
-              "d": "M38.85 45.57L45.83 49.28L41.07 59.18L34.09 55.47Z"
-            }
-          ],
-          "lines": [
-            "M60.8 19.96L43.8 51.93",
-            "M65.66 25.78L57.21 41.66",
-            "M83.65 24.66L84.44 32.53L80.19 41.45L71.81 46.94L60.9 51.08",
-            "M66.88 28.16L77.66 28.92",
-            "M37.31 48.48L44.67 52.39",
-            "M35.25 52.35L42.61 56.27",
-            "M32.13 63.12L16.68 92.19"
-          ]
-        }
+        "combatDice": 1
       },
       {
         "id": "pike",
@@ -15783,17 +15754,17 @@ window.GAME_DATA = {
       },
       "item-war-axe": {
         "file": "art/renders/item-war-axe.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.21,
+          0.06,
+          0.66,
+          0.85
         ],
         "focal": [
-          0.5,
-          0.5
+          0.62,
+          0.28
         ]
       },
       "item-war-hammer": {
