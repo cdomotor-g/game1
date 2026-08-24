@@ -1695,31 +1695,7 @@ window.GAME_DATA = {
           "fell-timber",
           "clear-forest",
           "hew-timber"
-        ],
-        "plate": {
-          "note": "A felling axe: a narrow eye, cheeks that swell, and a bit ground to a long curved edge.",
-          "parts": [
-            {
-              "material": "wood",
-              "shade": "light",
-              "d": "M59.18 3.29L38.95 45.24L21.93 73.09L12.19 96.55L19.04 99.29L27.93 76.14L44.34 48.05L64.08 5.61Z"
-            },
-            {
-              "material": "iron",
-              "shade": "light",
-              "d": "M48.3 13.33L60.75 19.95L64.97 25.88L77.6 25.23L87.81 24.51L87.57 34.21L83.43 44.3L77.38 53.37L69.48 58.99L64.36 50.13L57.84 39.29L50.57 39.11L38.12 32.49Z"
-            }
-          ],
-          "lines": [
-            "M60.45 20.53L50.77 38.72",
-            "M64.97 25.88L57.84 39.29",
-            "M83.92 24.9L84.19 33.64L80.37 42.67L75.02 50.88L67.62 55.55",
-            "M65.87 28.81L77.99 29.12",
-            "M60.78 38.39L67.81 48.27",
-            "M15.98 87.06L19.62 88.99",
-            "M37.06 51.58L26.43 72.95"
-          ]
-        }
+        ]
       },
       {
         "id": "saw",
@@ -15886,17 +15862,17 @@ window.GAME_DATA = {
       },
       "tool-axe": {
         "file": "art/renders/tool-axe.png",
-        "width": 1890,
-        "height": 1890,
+        "width": 1254,
+        "height": 1254,
         "subject": [
-          0.15,
-          0.15,
-          0.7,
-          0.7
+          0.16,
+          0.02,
+          0.74,
+          0.92
         ],
         "focal": [
-          0.5,
-          0.5
+          0.55,
+          0.21
         ]
       },
       "tool-hammer": {
