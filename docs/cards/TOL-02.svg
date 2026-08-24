@@ -9,7 +9,7 @@
 <g id="wash">
   <rect x="0" y="0" width="552" height="752" fill="#EDE4D1"/>
   <g clip-path="url(#portrait-window)">
-    <image href="../art/renders/tool-saw.png" x="-14.95" y="103.8" width="505.39" height="505.39" preserveAspectRatio="xMidYMid slice"/>
+    <image href="../art/renders/tool-saw.png" x="43.47" y="159.97" width="384.03" height="384.03" preserveAspectRatio="xMidYMid slice"/>
   </g>
   <rect x="48" y="106" width="71.83" height="36.8" rx="4" fill="#A33B26" opacity="0.55"/><rect x="124.83" y="106" width="71.83" height="36.8" rx="4" fill="#C4882B" opacity="0.55"/>
   <rect x="439.5" y="168.8" width="90.5" height="561.2" fill="#D8CEBE" opacity="0.5"/>
