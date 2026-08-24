@@ -17,9 +17,9 @@ catches that in CI.
 
 **cards 48/71 · maps 1/1**
 
-> **Note.** cards: 14 of 71 plates are GENERATED, not commissioned - Items and Tools, drawn by `node tools/draw-item.mjs` from the card's own data. They go through the same four steps as anything else and they are nobody's turn to draw: delete one and the tool puts it back.
+> **Note.** cards: 13 of 71 plates are GENERATED, not commissioned - Items and Tools, drawn by `node tools/draw-item.mjs` from the card's own data. They go through the same four steps as anything else and they are nobody's turn to draw: delete one and the tool puts it back.
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 34 of 71 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 35 of 71 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
