@@ -16059,6 +16059,21 @@ window.GAME_DATA = {
           0.32
         ]
       },
+      "monster-ash-drake": {
+        "file": "art/renders/monster-ash-drake.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.088,
+          0.175,
+          0.827,
+          0.535
+        ],
+        "focal": [
+          0.285,
+          0.592
+        ]
+      },
       "monster-cinder-wolf": {
         "file": "art/renders/monster-cinder-wolf.png",
         "width": 1055,

@@ -44,6 +44,11 @@
       "subject": [0.16, 0.08, 0.72, 0.58],
       "note": "Old Mother Keswick shelling into the bowl. The cat comes along below if there is room."
     },
+    "monster-ash-drake": {
+      "subject": [0.088, 0.175, 0.827, 0.535],
+      "focal": [0.285, 0.592],
+      "note": "Snout at the near corner to the far curve of the tail - the whole animal, laid diagonally across the page. Both windows grow it downward, which brings the bent pick in whole on the card and spends only its haft on the thumbnail. The smoke off the nostril is on the left margin and survives at card width."
+    },
     "monster-cinder-wolf": {
       "subject": [0.107, 0.235, 0.845, 0.442],
       "focal": [0.171, 0.450],
