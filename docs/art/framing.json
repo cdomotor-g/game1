@@ -68,6 +68,11 @@
       "subject": [0.14, 0.09, 0.76, 0.62],
       "note": "Head to talons, both wings. The nest at the foot of the crag is scenery."
     },
+    "monster-stone-boar": {
+      "subject": [0.04, 0.2265, 0.85, 0.545],
+      "focal": [0.685, 0.60],
+      "note": "Rump to snout: the whole animal, because the boulder hide IS the card. The animal is 0.56 of the page tall and a 5:4 thumbnail can only hold 0.565, so the box stops just under the tallest dorsal spikes and lets the pad carry them - spend a spike tip before you spend the nose, which is the half of the picture the story is about. The oak, the furrow and the spilled basket are scale."
+    },
     "monster-storm-roc": {
       "subject": [0.02, 0.05, 0.96, 0.42],
       "note": "The spread wings and the lamb; the sea stack below carries as much as fits."

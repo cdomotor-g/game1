@@ -16125,6 +16125,21 @@ window.GAME_DATA = {
           0.62
         ]
       },
+      "monster-stone-boar": {
+        "file": "art/renders/monster-stone-boar.png",
+        "width": 1054,
+        "height": 1492,
+        "subject": [
+          0.04,
+          0.2265,
+          0.85,
+          0.545
+        ],
+        "focal": [
+          0.685,
+          0.6
+        ]
+      },
       "monster-storm-roc": {
         "file": "art/renders/monster-storm-roc.png",
         "width": 1055,
