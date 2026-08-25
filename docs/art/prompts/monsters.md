@@ -254,8 +254,7 @@ on the coin, flat, no glow.
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
 Head, crown, both forelimbs and the wagon wheel inside the middle 70% of the
 page height; the full width survives the crop. The tail and the far wing may
-run to the margins. Head turned
-three-quarters toward the centre of the page.
+run to the margins. Head turned three-quarters toward the centre of the page.
 ```
 
 ## monster-hoarwyrm — The Hoarwyrm *(air, MON-14)*
@@ -276,8 +275,10 @@ in the sky only, a single pale grey-green note on the frost; the wyrm itself
 takes no wash at all.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
-Head, neck ruff and the first undulation of the body inside the middle 70% of
-the page height, with the head in the UPPER half; the full width survives the
-crop. The far coils and the reindeer may
-run to the margins. Low horizon in the bottom third.
+The card window this plate will be cut down to is WIDE AND SHORT: it keeps the
+full width of the page but only the middle 64% of its height. So the head, the
+neck ruff and the first undulation of the body must ALL sit between 20% and
+80% down the page - outside that band nothing can be relied on. Head in the
+upper half of that band, low and forward. The far coils, the reindeer and the
+sky may run to the margins. Horizon about three-quarters down the page.
 ```

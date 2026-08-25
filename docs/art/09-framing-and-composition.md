@@ -144,10 +144,30 @@ node tools/aim-preview.mjs MOD-01
 
 It cuts the plate exactly as the card window and the explorer thumbnail will —
 same `crop()`, and the card window is read off the built card rather than guessed
-— and writes both to `docs/art/aim/` (git-ignored) for you to open. If something
-the card names is cut, grow `subject`; if the crop is centred on the wrong thing,
-move `focal`. A plate with no entry previews on the whole page, which is the
-fastest way to see what an entry is for.
+— and stacks both crops on one sheet in `docs/art/aim/` (git-ignored) for you to
+open. If something the card names is cut, grow `subject`; if the crop is centred
+on the wrong thing, move `focal`. A plate with no entry previews on the whole
+page, which is the fastest way to see what an entry is for.
+
+It also prints, per window, the one number no subject box can argue with:
+
+```
+card 1.10  holds at most 64.2% of the page height, 100.0% of its width
+           (box + pad wants 75.5%) - TRIMS 9.5% off the bottom
+```
+
+**A window's height budget is the plate's width divided by the window's aspect**,
+and it is fixed before anybody writes a number here. A subject spanning 79% of an
+A4 page cannot be framed whole by a 1.10 window at any position, however the box
+is drawn — so when the budget is smaller than the subject, the question stops
+being "where do I put the box" and becomes "what am I spending", which is a
+decision, and belongs in the `note`.
+
+Nothing checks whether a trim was decided or merely happened. What
+`tools/validate-framing.mjs` checks is that no trim is a **surprise**: it runs
+the same `crop()` over every framed plate against its deck's current window, so a
+deck whose window changed shape cannot silently re-crop the plates already aimed
+in it.
 
 ### The framing checklist
 
@@ -158,7 +178,9 @@ fastest way to see what an entry is for.
       for a monster, the eye
 - [ ] The plate has at least 8% clear on every side for the crop to slide in
 - [ ] Cropped to 1:1 the subject still reads. Cropped to 5:4 it still reads
-- [ ] `note` says in one line what the box is around, for the next person
+- [ ] `note` says in one line what the box is around, for the next person — and,
+      if the window trims it, what you chose to spend and why
+- [ ] `node tools/validate-framing.mjs` reports the trim you expected and no others
 
 ## Plate formats
 

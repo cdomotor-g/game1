@@ -16056,6 +16056,51 @@ window.GAME_DATA = {
           0.32
         ]
       },
+      "monster-ash-drake": {
+        "file": "art/renders/monster-ash-drake.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.088,
+          0.175,
+          0.827,
+          0.535
+        ],
+        "focal": [
+          0.285,
+          0.592
+        ]
+      },
+      "monster-barrow-troll": {
+        "file": "art/renders/monster-barrow-troll.png",
+        "width": 1054,
+        "height": 1492,
+        "subject": [
+          0.06,
+          0.1186,
+          0.88,
+          0.72
+        ],
+        "focal": [
+          0.548,
+          0.169
+        ]
+      },
+      "monster-cinder-wolf": {
+        "file": "art/renders/monster-cinder-wolf.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.107,
+          0.235,
+          0.845,
+          0.442
+        ],
+        "focal": [
+          0.171,
+          0.45
+        ]
+      },
       "monster-deepwater-maw": {
         "file": "art/renders/monster-deepwater-maw.png",
         "width": 1055,
@@ -16078,6 +16123,21 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "monster-forge-wight": {
+        "file": "art/renders/monster-forge-wight.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.17,
+          0.195,
+          0.72,
+          0.7
+        ],
+        "focal": [
+          0.4,
+          0.306
+        ]
+      },
       "monster-gravel-wyrm": {
         "file": "art/renders/monster-gravel-wyrm.png",
         "width": 1055,
@@ -16087,6 +16147,21 @@ window.GAME_DATA = {
           0.1,
           0.82,
           0.63
+        ]
+      },
+      "monster-hoarwyrm": {
+        "file": "art/renders/monster-hoarwyrm.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.07,
+          0.099,
+          0.85,
+          0.63
+        ],
+        "focal": [
+          0.222,
+          0.568
         ]
       },
       "monster-mire-strangler": {
@@ -16122,6 +16197,21 @@ window.GAME_DATA = {
           0.62
         ]
       },
+      "monster-stone-boar": {
+        "file": "art/renders/monster-stone-boar.png",
+        "width": 1054,
+        "height": 1492,
+        "subject": [
+          0.04,
+          0.2265,
+          0.85,
+          0.545
+        ],
+        "focal": [
+          0.685,
+          0.6
+        ]
+      },
       "monster-storm-roc": {
         "file": "art/renders/monster-storm-roc.png",
         "width": 1055,
@@ -16131,6 +16221,21 @@ window.GAME_DATA = {
           0.05,
           0.96,
           0.42
+        ]
+      },
+      "monster-vhalrik-the-cinder-crowned": {
+        "file": "art/renders/monster-vhalrik-the-cinder-crowned.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.1,
+          0.1074,
+          0.82,
+          0.72
+        ],
+        "focal": [
+          0.419,
+          0.238
         ]
       },
       "people-dwarf": {

@@ -48,8 +48,16 @@ say so and stop. Do not guess which card was meant.
    a subject box alone centres the crop on a standing figure's sternum.
    Check the numbers by looking at them, not by imagining them:
    `node tools/aim-preview.mjs <code>` cuts the plate the way the card window and
-   the explorer thumbnail actually will. Grow `subject` if something the card
-   names is cut; move `focal` if the crop is centred on the wrong thing.
+   the explorer thumbnail actually will, onto one sheet. Grow `subject` if
+   something the card names is cut; move `focal` if the crop is centred on the
+   wrong thing.
+   **Read its budget line before you write any numbers at all.** A window holds
+   at most the plate's width over the window's aspect — 64.2% of an A4 page on
+   the monsters deck — and no subject box can raise that. If the subject spans
+   more than the budget, the job is not to find the right box, it is to choose
+   what to spend, and the `note` is where that choice is written down.
+   `node tools/validate-framing.mjs` then confirms the trim you meant and no
+   others.
 4. **Build and check** with the list at the foot of `CLAUDE.md`, in that order.
 5. **Show it.** `node tools/card-proof.mjs <code>` renders the finished card —
    frame, strip, picture, rules, story rail — to `docs/art/proofs/<code>.png`.
