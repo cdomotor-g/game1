@@ -1907,27 +1907,28 @@ window.GAME_DATA = {
       "start": 0,
       "reads": "Add it to the swing before the elasticity multiplies.",
       "tally": {
-        "$comment": "The counter beside the memory track, six cells, walked by a second bar. It is the BOARD'S OWN STOCK of that commodity: sell to the board and the bar walks up, buy from the board and it walks back down. What a full tally does is the model's business - it is a glut in one and a worked-out seam in another - but it fills the same way in both, from trades that actually happened.\n\nHype does not use it, and the board prints it anyway, for the same reason the player board prints a mana track for a character with no magic: a generic sheet prints the furniture and the piece standing on it says what is being played.",
+        "$comment": "The counter beside the memory track, five cells, walked by a second bar. It is the BOARD'S OWN STOCK of that commodity: sell to the board and the bar walks up, buy from the board and it walks back down. What a full tally does is the model's business - it is a glut in one and a worked-out seam in another - but it fills the same way in both, from trades that actually happened.\n\nHype does not use it, and the board prints it anyway, for the same reason the player board prints a mana track for a character with no magic: a generic sheet prints the furniture and the piece standing on it says what is being played.",
         "from": 0,
-        "to": 5,
+        "to": 4,
         "start": 0,
+        "$cellsNote": "Five resting cells, 0 to 4, and the fifth token has nowhere left to stand - which is what makes it a carry rather than a clamp. The capacity is the number of cells, so lengthening the strip by one cell is five tokens per memory step becoming six, and nothing else in the game has to hear about it.",
         "fills": "One cell per token sold to the board; one cell back per token bought from it.",
-        "discharge": "A tally that fills discharges the moment it fills, not at the end of anything: walk the bar up as the tokens change hands, and when it would step past the top cell take it back to empty, move the memory one cell in the model's direction, and stand it on the cells that are left over. Five tokens is one step of the memory and the sixth begins the next five - so a player who sells eleven in one round moves the memory twice and leaves the bar on 1, and nothing is lost to a bar that had nowhere further to go."
+        "discharge": "A tally that fills discharges the moment it fills, not at the end of anything: walk the bar up as the tokens change hands, and the token that would take it off the end of the strip instead takes it back to empty, moves the memory one cell in the model's direction, and stands it on what is left over. Five tokens is one step of the memory and the sixth begins the next five - so a player who sells eleven in one round moves the memory twice and leaves the bar on 1, and nothing is lost to a bar that had nowhere further to go."
       }
     },
     "stockCap": {
       "$comment": "What stops a player emptying a market. The board will sell at most this round's supply roll, across everybody, and it is the reason the blue dice are worth watching even when you are not buying.",
       "rule": "supply",
-      "means": "The board sells at most Supply tokens of that commodity this round, first come first served in turn order. It will buy any quantity - a market always has room for more of what nobody wants."
+      "means": "The board sells at most Supply tokens of that commodity before the next Market phase, first come first served in turn order through the Actions phase. It will buy any quantity - a market always has room for more of what nobody wants."
     },
     "round": {
-      "$comment": "Where this sits in the round. It is the Market phase of rules.json round.phases, opened out.",
+      "$comment": "Where this sits in the round. It is the Market phase of rules.json round.phases, opened out.\n\nThe Market phase does NOT contain a trading window, and that is deliberate. Trading is an action like any other and it happens in the Actions phase, against the price the board is already showing - so a player can see what a thing is worth before they spend the hours getting it to market. What this phase does is fix the price everybody will trade at NEXT round, off the tallies this round's trading left behind. You act on a known price and find out afterwards what your acting did to it, which is the only honest way round for a market to work.",
       "phase": "market-turn",
       "steps": [
         {
           "id": "roll",
           "name": "Roll",
-          "does": "Roll two red, two blue and one green for the first line, and again for each line on the board. One player rolls for the whole table."
+          "does": "Roll two red, two blue and one green for a line, and again for each line on the board. One player rolls for the whole table."
         },
         {
           "id": "read",
@@ -1937,21 +1938,17 @@ window.GAME_DATA = {
         {
           "id": "fix",
           "name": "Fix the price",
-          "does": "Find the net on the swing ruler and walk the price token that many bands. That is the price until this time next round."
-        },
-        {
-          "id": "trade",
-          "name": "Trade",
-          "does": "In turn order, buy and sell against the board at the new price plus the spread. The board sells no more of a commodity than its supply roll."
+          "does": "Find the net on the swing ruler and walk the price token that many bands. That is the price everyone trades at until this time next round, and the supply roll is what the board has to sell at it."
         },
         {
           "id": "update",
           "name": "Update the memory",
-          "does": "Walk each tally to where the round's trades left it, discharge any that is full, and move a hype line's memory in the same gesture as its price token. Nothing is written down."
+          "does": "A glut line whose tally did not fill this round walks its memory one cell toward zero. A hype line moves its memory in the same gesture as its price token, or one toward zero if the token did not move. A depletion line does nothing: its memory only ever moves when its tally fills, and that happens in the Actions phase, in the hand of whoever sold."
         }
-      ]
+      ],
+      "elsewhere": "The tally moves in the ACTIONS phase, as the trades happen, and it discharges there too - in the hand of the player who filled it. Nothing about it waits for this phase."
     },
-    "$modelsNote": "Each model says the same thing twice on purpose: once in prose for whoever is reading the rulebook, and once in numbers - onSell, onBuy, dischargeStep, followsPrice, decayToZero - for whatever is reading the data. docs/js/engine.js plays the game off the numbers and tools/build-annex.mjs prints the prose, so a model cannot be changed in one place and left saying the old thing in the other. `decayToZero` is when the memory walks one cell back toward nothing: `empty-tally` at the end of a round the board is holding none, `no-move` at the end of a round the price did not move, and null for a ratchet, which is the whole of the depletion model.",
+    "$modelsNote": "Each model says the same thing twice on purpose: once in prose for whoever is reading the rulebook, and once in numbers - onSell, onBuy, dischargeStep, followsPrice, decayToZero - for whatever is reading the data. docs/js/engine.js plays the game off the numbers and tools/build-annex.mjs prints the prose, so a model cannot be changed in one place and left saying the old thing in the other. `decayToZero` is when the memory walks one cell back toward nothing: `quiet-tally` at the end of a round the tally did not fill, `no-move` at the end of a round the price did not move, and null for a ratchet, which is the whole of the depletion model.",
     "models": [
       {
         "id": "glut",
@@ -1970,9 +1967,9 @@ window.GAME_DATA = {
           "from": -3,
           "to": 0,
           "followsPrice": false,
-          "decayToZero": "empty-tally",
+          "decayToZero": "quiet-tally",
           "moves": "Down one cell each time the tally fills.",
-          "decays": "Up one cell toward zero at the end of any Market phase that ends with an empty tally. A market forgets last year's glut as soon as it runs short.",
+          "decays": "Up one cell toward zero at the end of any Market phase in which the tally did NOT fill. A market forgets last year's glut as soon as it stops being dumped on - and the test is whether it was dumped on, not what the bar happens to be standing on, because a tally that has just discharged is standing on empty for the opposite of that reason.",
           "note": "A glut memory never goes above zero. Wanting a thing badly is not this model's business; it is the swing's, and the red dice do it every round."
         },
         "assigns": "Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned.",
@@ -13547,7 +13544,7 @@ window.GAME_DATA = {
     "memory": {
       "$comment": "The second strip, and the only thing on the table that remembers anything. Its number is added to the swing before the green die multiplies, so in a volatile season a market's history counts double - like everything else about that season.",
       "is": "A modifier from -3 to +3, walked by a bar. Read it straight: a bar on -2 takes two off the swing this round and every round until something moves it.",
-      "moves": "What moves it is the commodity's model, and the model arrives on the token: a glut sinks when the board is left holding stock, a hype climbs after its own price, a depletion ratchets up as the seam is worked out and never comes back down. data/pricing.json models.",
+      "moves": "What moves it is the commodity's model, and the model arrives on the token: a glut sinks each time the board is left holding a full tally and eases back on any round it is not, a hype climbs after its own price, a depletion ratchets up as the seam is worked out and never comes back down. data/pricing.json models.",
       "why": "This is what replaced the drift. Prices used to move for no reason anybody at the table had caused; now a market that has been dumped on stays cheap, and the player who dumped on it did that."
     },
     "tokens": {

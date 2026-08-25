@@ -598,7 +598,7 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <p>One A4 landscape sheet of market lines, and <strong>every line identical</strong>. A line is three strips read left to right:</p>
 <div class="table-wrap"><table>
 <thead><tr><th>TALLY</th><th></th><th>MEMORY</th><th></th><th>PRICE</th></tr></thead>
-<tbody><tr><td><code>0 1 2 3 4 5</code></td><td></td><td><code>−3 −2 −1 0 +1 +2 +3</code></td><td></td><td><code>×0.5 ×0.75 ×1 ×1.25 ×1.5 ×2</code></td></tr>
+<tbody><tr><td><code>0 1 2 3 4</code></td><td></td><td><code>−3 −2 −1 0 +1 +2 +3</code></td><td></td><td><code>×0.5 ×0.75 ×1 ×1.25 ×1.5 ×2</code></td></tr>
 <tr><td>what the board is holding</td><td></td><td>added to the swing</td><td></td><td>base value × this</td></tr>
 <tr><td>a bar walks it</td><td></td><td>a bar walks it</td><td></td><td>the commodity's own hexagon walks it</td></tr></tbody></table></div>
 <p>Where the hexagon stands is the price; which hexagon it is says what the price is of; and the mark engraved in its corner says which of the three market-memory models the two strips are running under. The token is the label, the reading and the rulebook — see <a href="#c-04-trade">04-trade.md</a>.</p>
@@ -1051,12 +1051,44 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td></td><td>crash</td><td>slump</td><td>soften</td><td>hold</td><td>firm</td><td>rally</td><td>spike</td></tr></tbody></table></div>
 <p>The board sells no more of a commodity in a round than that round's supply roll, first come first served in turn order. It will buy any quantity.</p>
 <h3 id="what-a-market-remembers">What a market remembers</h3>
-<p>Each line carries a tally of the board's own stock — up one cell per token sold to the board, down one per token bought off it — and a modifier from −3 to +3 that the tally moves. Every 5 tokens the tally fills, which takes it back to empty and steps the modifier one cell. Which way it steps is the commodity's own model, and the model's mark is engraved in the corner of that commodity's token.</p>
+<p>Each line carries a tally of the board's own stock — up one cell per token sold to the board, down one per token bought off it — and a modifier from −3 to +3 that the tally moves. Every 4 tokens the tally fills, which takes it back to empty and steps the modifier one cell. Which way it steps is the commodity's own model, and the model's mark is engraved in the corner of that commodity's token.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Model</th><th>Memory</th><th>Tally</th><th>What it is</th></tr></thead>
 <tbody><tr><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>−3 to 0</td><td>−1 when full</td><td><strong>What does not sell rots.</strong> Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned.</td></tr>
 <tr><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>−3 to +3</td><td>—</td><td><strong>It is bought because it is going up.</strong> The luxury trade: low bulk, high value, wanted for what it is rather than for what it does.</td></tr>
 <tr><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>0 to +3</td><td>+1 when full</td><td><strong>The easy ore came out first.</strong> Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry.</td></tr></tbody></table></div>
+<h2 id="three-markets-played">Three markets, played</h2>
+<p>One scenario per model, with the dice chosen to show what each one does. Everything after the dice is worked from the tables above rather than transcribed, so these cannot drift out of true. Trading happens in the <strong>Actions</strong> phase at the price already on the board; the Market phase then fixes the price for the round to come.</p>
+<h3 id="a-good-harvest-grain-articonspricing-glutsvg-glut">A good harvest — Grain · <img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</h3>
+<p>Bram has a farm and a surplus, and sells it into his own town three rounds running. Base value 5¤; every token starts on ×1, memory 0, tally 0.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Actions phase</th><th>D − S</th><th>Mem</th><th>Green</th><th>Net</th><th>Bands</th><th>Price now</th><th>Mem after</th><th>Tally</th></tr></thead>
+<tbody><tr><td>1</td><td>sells <strong>3</strong> at 4.25¤ = <strong>12.75¤</strong> · tally 3</td><td>7 − 11</td><td>0</td><td>×1</td><td>−4</td><td>−1</td><td><strong>×0.75</strong> (3.75¤)</td><td>0</td><td>3</td></tr>
+<tr><td>2</td><td>sells <strong>3</strong> at 3.19¤ = <strong>9.56¤</strong> · tally fills → memory <strong>−1</strong>, tally 1</td><td>11 − 5</td><td>−1</td><td>×2</td><td>10</td><td>+2</td><td><strong>×1.25</strong> (6.25¤)</td><td>−1</td><td>1</td></tr>
+<tr><td>3</td><td>sells <strong>4</strong> at 5.31¤ = <strong>21.25¤</strong> · tally fills → memory <strong>−2</strong>, tally 0</td><td>6 − 8</td><td>−2</td><td>×1</td><td>−4</td><td>−1</td><td><strong>×1</strong> (5.00¤)</td><td>−2</td><td>0</td></tr>
+<tr><td>4</td><td>—</td><td>9 − 7</td><td>−2</td><td>×2</td><td>0</td><td>hold</td><td><strong>×1</strong> (5.00¤)</td><td>−1</td><td>0</td></tr>
+<tr><td>5</td><td>—</td><td>12 − 3</td><td>−1</td><td>×2</td><td>16</td><td>+3</td><td><strong>×2</strong> (10.00¤)</td><td>0</td><td>0</td></tr></tbody></table></div>
+<p><strong>After five rounds:</strong> ×2 — Grain at 10.00¤ a sack — with the memory on 0. What does not sell rots.</p>
+<h3 id="a-run-on-gold-gold-articonspricing-hypesvg-hype">A run on gold — Gold · <img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</h3>
+<p>Nobody trades a single ingot. A hype line does all of this on its own. Base value 40¤; every token starts on ×1, memory 0, tally 0.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Actions phase</th><th>D − S</th><th>Mem</th><th>Green</th><th>Net</th><th>Bands</th><th>Price now</th><th>Mem after</th><th>Tally</th></tr></thead>
+<tbody><tr><td>1</td><td>—</td><td>11 − 5</td><td>0</td><td>×1</td><td>6</td><td>+1</td><td><strong>×1.25</strong> (50.00¤)</td><td>+1</td><td>—</td></tr>
+<tr><td>2</td><td>—</td><td>9 − 6</td><td>+1</td><td>×1</td><td>4</td><td>+1</td><td><strong>×1.5</strong> (60.00¤)</td><td>+2</td><td>—</td></tr>
+<tr><td>3</td><td>—</td><td>7 − 8</td><td>+2</td><td>×1</td><td>1</td><td>hold</td><td><strong>×1.5</strong> (60.00¤)</td><td>+1</td><td>—</td></tr>
+<tr><td>4</td><td>—</td><td>4 − 11</td><td>+1</td><td>×2</td><td>−12</td><td>−2</td><td><strong>×1</strong> (40.00¤)</td><td>0</td><td>—</td></tr>
+<tr><td>5</td><td>—</td><td>6 − 9</td><td>0</td><td>×2</td><td>−6</td><td>−1</td><td><strong>×0.75</strong> (30.00¤)</td><td>−1</td><td>—</td></tr></tbody></table></div>
+<p><strong>After five rounds:</strong> ×0.75 — Gold at 30.00¤ a ingot — with the memory on −1. It is bought because it is going up.</p>
+<h3 id="the-seam-runs-out-iron-ore-articonspricing-depletesvg-depletion">The seam runs out — Iron Ore · <img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</h3>
+<p>Ilsa opens a mine and ships everything she digs. The rolls are ordinary throughout. Base value 6¤; every token starts on ×1, memory 0, tally 0.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Actions phase</th><th>D − S</th><th>Mem</th><th>Green</th><th>Net</th><th>Bands</th><th>Price now</th><th>Mem after</th><th>Tally</th></tr></thead>
+<tbody><tr><td>1</td><td>sells <strong>4</strong> at 5.10¤ = <strong>20.40¤</strong> · tally 4</td><td>8 − 9</td><td>0</td><td>×1</td><td>−1</td><td>hold</td><td><strong>×1</strong> (6.00¤)</td><td>0</td><td>4</td></tr>
+<tr><td>2</td><td>sells <strong>4</strong> at 5.10¤ = <strong>20.40¤</strong> · tally fills → memory <strong>+1</strong>, tally 3</td><td>8 − 7</td><td>+1</td><td>×1</td><td>2</td><td>+1</td><td><strong>×1.25</strong> (7.50¤)</td><td>+1</td><td>3</td></tr>
+<tr><td>3</td><td>sells <strong>4</strong> at 6.38¤ = <strong>25.50¤</strong> · tally fills → memory <strong>+2</strong>, tally 2</td><td>9 − 8</td><td>+2</td><td>×1</td><td>3</td><td>+1</td><td><strong>×1.5</strong> (9.00¤)</td><td>+2</td><td>2</td></tr>
+<tr><td>4</td><td>sells <strong>3</strong> at 7.65¤ = <strong>22.95¤</strong> · tally fills → memory <strong>+3</strong>, tally 0</td><td>7 − 10</td><td>+3</td><td>×1</td><td>0</td><td>hold</td><td><strong>×1.5</strong> (9.00¤)</td><td>+3</td><td>0</td></tr>
+<tr><td>5</td><td>—</td><td>7 − 8</td><td>+3</td><td>×1</td><td>2</td><td>+1</td><td><strong>×2</strong> (12.00¤)</td><td>+3</td><td>0</td></tr></tbody></table></div>
+<p><strong>After five rounds:</strong> ×2 — Iron Ore at 12.00¤ a load — with the memory on +3. The easy ore came out first.</p>
 <h2 id="commodities">Commodities</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Commodity</th><th>Category</th><th>Bulk</th><th>Value</th><th>Prices by</th><th>Perishes</th><th>Tags</th></tr></thead>

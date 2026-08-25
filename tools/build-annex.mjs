@@ -205,6 +205,153 @@ table(
   ])
 );
 
+/* ------------------------------------------------------------ worked markets */
+/*
+ * Three markets played out, one per model. The DICE are chosen — a worked
+ * example shows the interesting case, not a random one — and every number
+ * downstream of them is computed from data/pricing.json, so this section cannot
+ * quietly stop being true when a ruler bin moves. That is the same bargain the
+ * rest of the annex makes; it is just doing arithmetic rather than transcribing.
+ */
+const WORKED = [
+  {
+    title: 'A good harvest',
+    commodity: 'grain',
+    blurb: 'Bram has a farm and a surplus, and sells it into his own town three rounds running.',
+    rounds: [
+      { note: 'His first surplus.', sell: 3, red: [4, 3], blue: [5, 6], green: 2 },
+      { note: 'A thin market — and he sells into it anyway.', sell: 3, red: [6, 5], blue: [3, 2], green: 4 },
+      { note: 'And again.', sell: 4, red: [3, 3], blue: [4, 4], green: 1 },
+      { note: 'Nobody sells. The memory bites.', red: [5, 4], blue: [4, 3], green: 3 },
+      { note: 'A famine year, and the market has just about forgotten him.', red: [6, 6], blue: [2, 1], green: 4 },
+    ],
+  },
+  {
+    title: 'A run on gold',
+    commodity: 'gold',
+    blurb: 'Nobody trades a single ingot. A hype line does all of this on its own.',
+    rounds: [
+      { note: 'Gold firms.', red: [5, 6], blue: [2, 3], green: 2 },
+      { note: 'And firms again. The run is building.', red: [4, 5], blue: [3, 3], green: 1 },
+      { note: 'A roll that says nothing — but the hype carries it.', red: [3, 4], blue: [4, 4], green: 1 },
+      { note: 'The turn.', red: [2, 2], blue: [6, 5], green: 4 },
+      { note: 'And it runs the other way just as fast.', red: [3, 3], blue: [5, 4], green: 4 },
+    ],
+  },
+  {
+    title: 'The seam runs out',
+    commodity: 'iron-ore',
+    blurb: 'Ilsa opens a mine and ships everything she digs. The rolls are ordinary throughout.',
+    rounds: [
+      { note: 'She opens the mine.', sell: 4, red: [4, 4], blue: [4, 5], green: 1 },
+      { note: 'Another four out of the ground.', sell: 4, red: [5, 3], blue: [3, 4], green: 2 },
+      { note: 'And another four.', sell: 4, red: [4, 5], blue: [4, 4], green: 1 },
+      { note: 'A bad roll — and look what it does not do.', sell: 3, red: [3, 4], blue: [5, 5], green: 1 },
+      { note: 'Nobody mines at all this round.', red: [4, 3], blue: [4, 4], green: 2 },
+    ],
+  },
+];
+
+const BANDS = rules.market.priceBands;
+const TALLY = pricing.memory.tally;
+const CAPACITY = TALLY.to - TALLY.from + 1;
+const clampTo = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const towardZero = (n) => (n < 0 ? Math.ceil(n) : Math.floor(n));
+const signOf = (n) => (n > 0 ? `+${n}` : n < 0 ? `\u2212${Math.abs(n)}` : '0');
+const coin = (n) => `${n.toFixed(2)}${rules.currency.symbol}`;
+
+/** One scenario, played. Returns the markdown rows and the closing line. */
+function play(scene) {
+  const c = commodities.commodities.find((x) => x.id === scene.commodity);
+  const model = pricing.models.find((m) => m.id === c.pricing);
+  let band = rules.market.startingBandIndex;
+  let mem = pricing.memory.start;
+  let tally = TALLY.start;
+  let filled = false;
+  const rows = [];
+
+  for (const [i, r] of scene.rounds.entries()) {
+    /* Actions phase: the trade happens at the price already on the board, and
+       the tally walks — and discharges — in the hand of whoever traded. */
+    let did = '—';
+    if (r.sell) {
+      const each = c.baseValue * BANDS[band] * (1 + rules.market.sellSpread);
+      did = `sells **${r.sell}** at ${coin(each)} = **${coin(each * r.sell)}**`;
+      const t = model.tally;
+      if (t.uses && t.onSell) {
+        let n = tally + t.onSell * r.sell;
+        let steps = 0;
+        while (n > TALLY.to) { n -= CAPACITY; steps += 1; }
+        tally = Math.max(TALLY.from, n);
+        if (steps) {
+          filled = true;
+          mem = clampTo(mem + steps * t.dischargeStep, model.memory.from, model.memory.to);
+          did += ` · tally fills → memory **${signOf(mem)}**, tally ${tally}`;
+        } else {
+          did += ` · tally ${tally}`;
+        }
+      }
+    }
+
+    /* Market phase: roll, fix the price for next round, then update the memory. */
+    const D = r.red[0] + r.red[1];
+    const S = r.blue[0] + r.blue[1];
+    const step = pricing.elasticity.steps.find((e) => e.faces.includes(r.green));
+    const memAtRoll = mem;
+    const net = towardZero((D - S + mem) * step.multiply);
+    const bin = pricing.ruler.bins.find((b) => net >= b.from && net <= b.to);
+    const was = band;
+    band = clampTo(band + bin.move, 0, BANDS.length - 1);
+    const moved = band - was;
+
+    if (model.memory.followsPrice) {
+      if (moved > 0) mem += 1;
+      else if (moved < 0) mem -= 1;
+      else if (model.memory.decayToZero === 'no-move') mem -= Math.sign(mem);
+    } else if (model.tally.uses && model.memory.decayToZero === 'quiet-tally' && !filled) {
+      mem -= Math.sign(mem);
+    }
+    filled = false;
+    mem = clampTo(mem, model.memory.from, model.memory.to);
+
+    rows.push([
+      i + 1,
+      did,
+      `${D} − ${S}`,
+      signOf(memAtRoll),
+      step.label,
+      net < 0 ? `\u2212${Math.abs(net)}` : String(net),
+      bin.move === 0 ? 'hold' : signOf(bin.move),
+      `**×${BANDS[band]}** (${coin(c.baseValue * BANDS[band])})`,
+      signOf(mem),
+      model.tally.uses ? String(tally) : '—',
+    ]);
+  }
+  return { c, model, rows, band, mem };
+}
+
+say('## Three markets, played');
+say();
+say('One scenario per model, with the dice chosen to show what each one does. Everything');
+say('after the dice is worked from the tables above rather than transcribed, so these');
+say('cannot drift out of true. Trading happens in the **Actions** phase at the price');
+say('already on the board; the Market phase then fixes the price for the round to come.');
+say();
+
+for (const scene of WORKED) {
+  const { c, model, rows, band, mem } = play(scene);
+  say(`### ${scene.title} — ${c.name} · ${priceModel(model.id)}`);
+  say();
+  say(`${scene.blurb} Base value ${c.baseValue}${rules.currency.symbol}; every token starts on ×${BANDS[rules.market.startingBandIndex]}, memory 0, tally 0.`);
+  say();
+  table(
+    ['#', 'Actions phase', 'D − S', 'Mem', 'Green', 'Net', 'Bands', 'Price now', 'Mem after', 'Tally'],
+    rows
+  );
+  say(`**After five rounds:** ×${BANDS[band]} — ${c.name} at ${coin(c.baseValue * BANDS[band])} a ${c.unit} — with the memory on ${signOf(mem)}. ${model.line}`);
+  say();
+}
+
 /* -------------------------------------------------------------- commodities */
 say('## Commodities');
 say();

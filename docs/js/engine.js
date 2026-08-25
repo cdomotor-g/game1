@@ -100,6 +100,7 @@
       bands: {},
       memory: {},
       tally: {},
+      discharged: {},
       marketStock: {},
       log: [],
       uid: 100,
@@ -551,6 +552,7 @@
       state.bands[c.id] = R.market.startingBandIndex;
       state.memory[c.id] = P.memory.start;
       state.tally[c.id] = P.memory.tally.start;
+      state.discharged[c.id] = false;
       state.marketStock[c.id] = rollDice(state, diceSet('supply'));
     }
   }
@@ -590,13 +592,13 @@
       if (moved > 0) mem += 1;
       else if (moved < 0) mem -= 1;
       else if (range.decayToZero === 'no-move') mem -= Math.sign(mem);
-    } else if (t.uses && range.decayToZero === 'empty-tally'
-               && (state.tally[commodityId] ?? 0) <= P.memory.tally.from) {
-      /* Glut: a market forgets last year's glut as soon as it runs short. The
-         discharge itself is not here — it happened in the trade that caused it
-         (walkTally), which is where a hand would have done it. */
+    } else if (t.uses && range.decayToZero === 'quiet-tally' && !state.discharged[commodityId]) {
+      /* Glut: a market forgets last year's glut as soon as it stops being dumped
+         on. The discharge itself is not here — it happened in the trade that
+         caused it (walkTally), which is where a hand would have done it. */
       mem -= Math.sign(mem);
     }
+    state.discharged[commodityId] = false;
     state.memory[commodityId] = clamp(mem, range.from, range.to);
   }
 
@@ -663,16 +665,21 @@
     const t = model.tally;
     if (!t.uses || !t[when]) return;
     const { from, to } = P.memory.tally;
+    const capacity = to - from + 1;
     let n = (state.tally[commodityId] ?? from) + t[when] * qty;
-    /* A ratchet, not a clamp. Every `to` tokens the bar steps past the end of
-       the strip, which takes it back to empty and moves the memory one cell —
-       and whatever is left over starts the next tally, so nothing is lost to a
-       bar that had nowhere further to go. */
+    /* A ratchet, not a clamp. The token that would take the bar off the end of
+       the strip instead takes it back to empty and moves the memory one cell,
+       and whatever is left over starts the next tally — so the capacity is the
+       number of CELLS, and nothing is lost to a bar with nowhere further to go. */
     while (n > to) {
-      n -= to - from;
+      n -= capacity;
       state.memory[commodityId] = clamp(
         (state.memory[commodityId] ?? 0) + t.dischargeStep, model.memory.from, model.memory.to
       );
+      /* Remembered only until the next Market phase reads it. A tally that has
+         just discharged is standing on empty for the OPPOSITE reason to a tally
+         nobody touched, and the decay below must be able to tell them apart. */
+      state.discharged[commodityId] = true;
     }
     state.tally[commodityId] = Math.max(from, n);
   }
