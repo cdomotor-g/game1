@@ -26,7 +26,7 @@
   "tally": {
     "$comment": "The first strip: what the board is holding. It is not an abstraction and nothing has to be remembered to keep it right - it is a count of trades that just happened, walked as they happen.",
     "is": "The board's own stock of that commodity. Sell a token to the board and the bar walks up one; buy one off the board and it walks back down one.",
-    "full": "A tally standing on its top cell at the end of the Market phase discharges: clear it to empty and step the memory one cell in the direction the commodity's model says. Which direction that is is the only thing the three models disagree about here.",
+    "full": "A tally discharges the moment it fills, in the same gesture that filled it: when the bar would step past the top cell, take it back to empty, move the memory one cell in the direction the commodity's model says, and stand it on whatever is left over. Which direction that is is the only thing the three models disagree about here.",
     "unused": "A hype line never uses it - its memory is the price's own last move. The strip prints on every line anyway, exactly as the player board prints a mana track for a character with no magic: a generic sheet prints the furniture and the piece standing on it says what is being played."
   },
 

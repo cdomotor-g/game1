@@ -34,6 +34,10 @@
   const enchantments = (D.arcana.enchantments || {}).cards || [];
   const modifications = D.modifications.modifications;
   const playerboard = D.playerboard;
+  /* The pricing system whole, not unpacked: engine.js reads the dice, the
+     ruler and the models straight off it, and nothing here is derived from it
+     that the engine could not derive itself. */
+  const pricing = D.pricing;
   const talismans = items.filter((i) => i.class === 'talisman');
 
   const index = (arr) => new Map(arr.map((x) => [x.id, x]));
@@ -58,6 +62,7 @@
     vehicle: index(vehicles),
     character: index(characters),
     quest: index(quests),
+    pricing: index(pricing.models),
     spell: index(spells),
   };
 
@@ -289,7 +294,7 @@
     commodities, tools, buildings, recipes, terrains, deposits, siting,
     modes, figures, peoples, professions, cards, items,
     monsters, vehicles, characters, quests, spells, talismans,
-    elements, enchantments, modifications, playerboard,
+    elements, enchantments, modifications, playerboard, pricing,
     art, artPlacement, placeSheet, groundSheet, holdingSheets,
     categories: {
       commodity: D.commodities.categories,

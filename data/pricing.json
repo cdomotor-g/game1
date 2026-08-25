@@ -87,7 +87,7 @@
       "to": 5,
       "start": 0,
       "fills": "One cell per token sold to the board; one cell back per token bought from it.",
-      "discharge": "A tally standing on its top cell at the end of the Market phase discharges: clear it to 0 and step the memory one cell in the model's direction."
+      "discharge": "A tally that fills discharges the moment it fills, not at the end of anything: walk the bar up as the tokens change hands, and when it would step past the top cell take it back to empty, move the memory one cell in the model's direction, and stand it on the cells that are left over. Five tokens is one step of the memory and the sixth begins the next five - so a player who sells eleven in one round moves the memory twice and leaves the bar on 1, and nothing is lost to a bar that had nowhere further to go."
     }
   },
 
@@ -109,6 +109,8 @@
     ]
   },
 
+  "$modelsNote": "Each model says the same thing twice on purpose: once in prose for whoever is reading the rulebook, and once in numbers - onSell, onBuy, dischargeStep, followsPrice, decayToZero - for whatever is reading the data. docs/js/engine.js plays the game off the numbers and tools/build-annex.mjs prints the prose, so a model cannot be changed in one place and left saying the old thing in the other. `decayToZero` is when the memory walks one cell back toward nothing: `empty-tally` at the end of a round the board is holding none, `no-move` at the end of a round the price did not move, and null for a ratchet, which is the whole of the depletion model.",
+
   "models": [
     {
       "id": "glut",
@@ -117,12 +119,17 @@
       "history": "The oldest story in any market that grows things. A good harvest is a bad year: the stuff turns up whether anybody wants it or not, it keeps badly, and what is still in the warehouse when the season turns has to be shifted at whatever it will fetch. Two good years running and the price is on the floor before the third is planted.",
       "tally": {
         "uses": true,
+        "onSell": 1,
+        "onBuy": -1,
+        "dischargeStep": -1,
         "means": "The board's unsold stock. Every token sold to the board goes on it; every token bought off the board comes back down.",
-        "full": "Clear the tally and step the memory one cell DOWN. The stock rotted and the market has had its fill."
+        "full": "Take the bar back to empty and step the memory one cell DOWN. The stock rotted and the market has had its fill."
       },
       "memory": {
         "from": -3,
         "to": 0,
+        "followsPrice": false,
+        "decayToZero": "empty-tally",
         "moves": "Down one cell each time the tally fills.",
         "decays": "Up one cell toward zero at the end of any Market phase that ends with an empty tally. A market forgets last year's glut as soon as it runs short.",
         "note": "A glut memory never goes above zero. Wanting a thing badly is not this model's business; it is the swing's, and the red dice do it every round."
@@ -141,12 +148,17 @@
       "history": "The market that runs on its own reputation. Nobody needs a jewel, a bolt of fine cloth or a famous horse - they want it because of what owning it says, and what it says is loudest when everybody can see the price climbing. So a rise makes buyers and buyers make a rise, until the day it does not and the whole thing runs the other way just as fast.",
       "tally": {
         "uses": false,
+        "onSell": 0,
+        "onBuy": 0,
+        "dischargeStep": 0,
         "means": "Not used. A hype line's memory is the price's own last move, and a token that has just moved is its own counter - there is nothing left to count.",
         "full": null
       },
       "memory": {
         "from": -3,
         "to": 3,
+        "followsPrice": true,
+        "decayToZero": "no-move",
         "moves": "One cell in whatever direction the price token just went, moved in the same gesture: your hand is already on the line, push the memory bar the way you pushed the price.",
         "decays": "One cell toward zero on any round the price token did not move at all.",
         "note": "This is the only model whose memory moves every single round, and the only one that can be strongly negative and strongly positive in the same game. A hype line is where the money is and where the ruin is."
@@ -165,12 +177,17 @@
       "history": "The rule for anything that comes out of a hole. The first seam is at the surface and the last one is under water at the bottom of a shaft, so every ton that leaves makes the next ton dearer to win - and none of it grows back inside a lifetime. A mining town's prices only ever go one way, and the boom is the part before everybody notices.",
       "tally": {
         "uses": true,
+        "onSell": 1,
+        "onBuy": 0,
+        "dischargeStep": 1,
         "means": "The depletion grid. Every token sold to the board came out of the ground and is gone; it goes on the tally and never comes off, because nobody can put it back.",
-        "full": "Clear the tally and step the memory one cell UP. That step is permanent."
+        "full": "Take the bar back to empty and step the memory one cell UP. That step is permanent, and it is the only mark in this game that is."
       },
       "memory": {
         "from": 0,
         "to": 3,
+        "followsPrice": false,
+        "decayToZero": null,
         "moves": "Up one cell each time the tally fills.",
         "decays": "Never. This is the only track in the game that does not come back, and it is the whole point of the model.",
         "note": "At +3 the seam is as good as worked out: the line spends the rest of the game bid up by three before a die is thrown, and the town that owns the last deposit owns the market."

@@ -250,21 +250,31 @@
     return el('div.panel', [
       el('h3', 'Market'),
       el('p.hint', hasMarket
-        ? `Prices are base value × band. The board takes ${Math.round(R.market.buySpread * 100)}% unless you have a trading house or a merchant.`
+        ? `Prices are base value × band. The board takes ${Math.round(R.market.buySpread * 100)}% unless you have a trading house or a merchant. ` +
+          'Stock is what this round\u2019s supply roll left the board to sell; memory and tally are the two strips on that commodity\u2019s line of the market board.'
         : 'Build a Market before you can trade with the board.'),
       el('div.table-wrap', el('table', [
-        el('thead', el('tr', [el('th', 'Commodity'), el('th.num', 'Held'), el('th.num', 'Buy'), el('th.num', 'Sell'), el('th', '')])),
+        el('thead', el('tr', [
+          el('th', 'Commodity'), el('th', 'Prices by'), el('th.num', 'Held'),
+          el('th.num', 'Stock'), el('th.num', 'Tally'), el('th.num', 'Memory'),
+          el('th.num', 'Buy'), el('th.num', 'Sell'), el('th', ''),
+        ])),
         el('tbody', rows.map((c) => {
           const { base } = Engine.priceOf(s, c.id);
+          const m = Engine.marketOf(s, c.id);
           const buy = Math.round(base * (1 + R.market.buySpread));
           const sell = Math.round(base * (1 + R.market.sellSpread));
           return el('tr', [
             el('td', c.name),
+            el('td', { title: m.model.line }, el('span.hint', m.model.name)),
             el('td.num', String(s.stock[c.id] || 0)),
+            el('td.num', String(m.stock)),
+            el('td.num', m.model.tally.uses ? String(m.tally) : '—'),
+            el('td.num', m.memory ? (m.memory > 0 ? `+${m.memory}` : String(m.memory)) : '0'),
             el('td.num', String(buy)),
             el('td.num', String(sell)),
             el('td', { style: 'text-align:right;white-space:nowrap' }, [
-              el('button.btn.small', { disabled: !hasMarket || s.coin < buy, onclick: act(() => Engine.trade(s, c.id, 1, 'buy')) }, 'Buy 1'),
+              el('button.btn.small', { disabled: !hasMarket || s.coin < buy || m.stock < 1, onclick: act(() => Engine.trade(s, c.id, 1, 'buy')) }, 'Buy 1'),
               ' ',
               el('button.btn.small', { disabled: !hasMarket || !(s.stock[c.id] > 0), onclick: act(() => Engine.trade(s, c.id, 1, 'sell')) }, 'Sell 1'),
             ]),
