@@ -133,7 +133,7 @@ first come first served in turn order. It will buy any quantity.
 
 Each line carries a tally of the board's own stock — up one cell per token sold to
 the board, down one per token bought off it — and a modifier from −3 to
-+3 that the tally moves. Every 5 tokens the tally fills, which takes it
++3 that the tally moves. Every 4 tokens the tally fills, which takes it
 back to empty and steps the modifier one cell. Which way it steps is the
 commodity's own model, and the model's mark is engraved in the corner of that
 commodity's token.
@@ -143,6 +143,55 @@ commodity's token.
 | ![](../art/icons/pricing-glut.svg) Glut | −3 to 0 | −1 when full | **What does not sell rots.** Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned. |
 | ![](../art/icons/pricing-hype.svg) Hype | −3 to +3 | — | **It is bought because it is going up.** The luxury trade: low bulk, high value, wanted for what it is rather than for what it does. |
 | ![](../art/icons/pricing-deplete.svg) Depletion | 0 to +3 | +1 when full | **The easy ore came out first.** Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry. |
+
+## Three markets, played
+
+One scenario per model, with the dice chosen to show what each one does. Everything
+after the dice is worked from the tables above rather than transcribed, so these
+cannot drift out of true. Trading happens in the **Actions** phase at the price
+already on the board; the Market phase then fixes the price for the round to come.
+
+### A good harvest — Grain · ![](../art/icons/pricing-glut.svg) Glut
+
+Bram has a farm and a surplus, and sells it into his own town three rounds running. Base value 5¤; every token starts on ×1, memory 0, tally 0.
+
+| # | Actions phase | D − S | Mem | Green | Net | Bands | Price now | Mem after | Tally |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | sells **3** at 4.25¤ = **12.75¤** · tally 3 | 7 − 11 | 0 | ×1 | −4 | −1 | **×0.75** (3.75¤) | 0 | 3 |
+| 2 | sells **3** at 3.19¤ = **9.56¤** · tally fills → memory **−1**, tally 1 | 11 − 5 | −1 | ×2 | 10 | +2 | **×1.25** (6.25¤) | −1 | 1 |
+| 3 | sells **4** at 5.31¤ = **21.25¤** · tally fills → memory **−2**, tally 0 | 6 − 8 | −2 | ×1 | −4 | −1 | **×1** (5.00¤) | −2 | 0 |
+| 4 | — | 9 − 7 | −2 | ×2 | 0 | hold | **×1** (5.00¤) | −1 | 0 |
+| 5 | — | 12 − 3 | −1 | ×2 | 16 | +3 | **×2** (10.00¤) | 0 | 0 |
+
+**After five rounds:** ×2 — Grain at 10.00¤ a sack — with the memory on 0. What does not sell rots.
+
+### A run on gold — Gold · ![](../art/icons/pricing-hype.svg) Hype
+
+Nobody trades a single ingot. A hype line does all of this on its own. Base value 40¤; every token starts on ×1, memory 0, tally 0.
+
+| # | Actions phase | D − S | Mem | Green | Net | Bands | Price now | Mem after | Tally |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | — | 11 − 5 | 0 | ×1 | 6 | +1 | **×1.25** (50.00¤) | +1 | — |
+| 2 | — | 9 − 6 | +1 | ×1 | 4 | +1 | **×1.5** (60.00¤) | +2 | — |
+| 3 | — | 7 − 8 | +2 | ×1 | 1 | hold | **×1.5** (60.00¤) | +1 | — |
+| 4 | — | 4 − 11 | +1 | ×2 | −12 | −2 | **×1** (40.00¤) | 0 | — |
+| 5 | — | 6 − 9 | 0 | ×2 | −6 | −1 | **×0.75** (30.00¤) | −1 | — |
+
+**After five rounds:** ×0.75 — Gold at 30.00¤ a ingot — with the memory on −1. It is bought because it is going up.
+
+### The seam runs out — Iron Ore · ![](../art/icons/pricing-deplete.svg) Depletion
+
+Ilsa opens a mine and ships everything she digs. The rolls are ordinary throughout. Base value 6¤; every token starts on ×1, memory 0, tally 0.
+
+| # | Actions phase | D − S | Mem | Green | Net | Bands | Price now | Mem after | Tally |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | sells **4** at 5.10¤ = **20.40¤** · tally 4 | 8 − 9 | 0 | ×1 | −1 | hold | **×1** (6.00¤) | 0 | 4 |
+| 2 | sells **4** at 5.10¤ = **20.40¤** · tally fills → memory **+1**, tally 3 | 8 − 7 | +1 | ×1 | 2 | +1 | **×1.25** (7.50¤) | +1 | 3 |
+| 3 | sells **4** at 6.38¤ = **25.50¤** · tally fills → memory **+2**, tally 2 | 9 − 8 | +2 | ×1 | 3 | +1 | **×1.5** (9.00¤) | +2 | 2 |
+| 4 | sells **3** at 7.65¤ = **22.95¤** · tally fills → memory **+3**, tally 0 | 7 − 10 | +3 | ×1 | 0 | hold | **×1.5** (9.00¤) | +3 | 0 |
+| 5 | — | 7 − 8 | +3 | ×1 | 2 | +1 | **×2** (12.00¤) | +3 | 0 |
+
+**After five rounds:** ×2 — Iron Ore at 12.00¤ a load — with the memory on +3. The easy ore came out first.
 
 ## Commodities
 

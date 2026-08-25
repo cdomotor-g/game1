@@ -33,7 +33,7 @@
   "memory": {
     "$comment": "The second strip, and the only thing on the table that remembers anything. Its number is added to the swing before the green die multiplies, so in a volatile season a market's history counts double - like everything else about that season.",
     "is": "A modifier from -3 to +3, walked by a bar. Read it straight: a bar on -2 takes two off the swing this round and every round until something moves it.",
-    "moves": "What moves it is the commodity's model, and the model arrives on the token: a glut sinks when the board is left holding stock, a hype climbs after its own price, a depletion ratchets up as the seam is worked out and never comes back down. data/pricing.json models.",
+    "moves": "What moves it is the commodity's model, and the model arrives on the token: a glut sinks each time the board is left holding a full tally and eases back on any round it is not, a hype climbs after its own price, a depletion ratchets up as the seam is worked out and never comes back down. data/pricing.json models.",
     "why": "This is what replaced the drift. Prices used to move for no reason anybody at the table had caused; now a market that has been dumped on stays cheap, and the player who dumped on it did that."
   },
 
