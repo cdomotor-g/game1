@@ -254,8 +254,7 @@ on the coin, flat, no glow.
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
 Head, crown, both forelimbs and the wagon wheel inside the middle 70% of the
 page height; the full width survives the crop. The tail and the far wing may
-run to the margins. Head turned
-three-quarters toward the centre of the page.
+run to the margins. Head turned three-quarters toward the centre of the page.
 ```
 
 ## monster-hoarwyrm — The Hoarwyrm *(air, MON-14)*
