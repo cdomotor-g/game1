@@ -16059,6 +16059,21 @@ window.GAME_DATA = {
           0.32
         ]
       },
+      "monster-cinder-wolf": {
+        "file": "art/renders/monster-cinder-wolf.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.107,
+          0.235,
+          0.845,
+          0.442
+        ],
+        "focal": [
+          0.171,
+          0.45
+        ]
+      },
       "monster-deepwater-maw": {
         "file": "art/renders/monster-deepwater-maw.png",
         "width": 1055,

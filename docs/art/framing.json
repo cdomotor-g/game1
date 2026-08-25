@@ -44,6 +44,11 @@
       "subject": [0.16, 0.08, 0.72, 0.58],
       "note": "Old Mother Keswick shelling into the bowl. The cat comes along below if there is room."
     },
+    "monster-cinder-wolf": {
+      "subject": [0.107, 0.235, 0.845, 0.442],
+      "focal": [0.171, 0.450],
+      "note": "Ear tips to front paw, muzzle to tail: the whole animal, with the banked coals behind the ribs inside it. Wide enough that both windows grow it downward, which is what brings the smoke off the spine and the burnt rings in the grass along for free. The shepherd's crook is scale and the card can spend its lower shaft."
+    },
     "monster-deepwater-maw": {
       "subject": [0.02, 0.36, 0.96, 0.52],
       "note": "The eye and the ring of teeth. The ship on the horizon is scale, not subject - it goes."
