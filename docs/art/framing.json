@@ -49,6 +49,11 @@
       "focal": [0.285, 0.592],
       "note": "Snout at the near corner to the far curve of the tail - the whole animal, laid diagonally across the page. Both windows grow it downward, which brings the bent pick in whole on the card and spends only its haft on the thumbnail. The smoke off the nostril is on the left margin and survives at card width."
     },
+    "monster-barrow-troll": {
+      "subject": [0.06, 0.1186, 0.88, 0.72],
+      "focal": [0.548, 0.169],
+      "note": "Both shoulders wall to wall, the torc and the broken sword in the chest thatch, and down to the toppled stone. A 0.96 window on an A4 page can be at most 0.736 of it tall and this troll wants 0.742 from crown to the stone's base, so the box hands the pad three pixels of turf dome and three of buried stone - neither of which anyone will miss. The thumbnail keeps head, shoulders and grave-goods and leaves the stone to the card."
+    },
     "monster-cinder-wolf": {
       "subject": [0.107, 0.235, 0.845, 0.442],
       "focal": [0.171, 0.450],

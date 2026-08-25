@@ -16074,6 +16074,21 @@ window.GAME_DATA = {
           0.592
         ]
       },
+      "monster-barrow-troll": {
+        "file": "art/renders/monster-barrow-troll.png",
+        "width": 1054,
+        "height": 1492,
+        "subject": [
+          0.06,
+          0.1186,
+          0.88,
+          0.72
+        ],
+        "focal": [
+          0.548,
+          0.169
+        ]
+      },
       "monster-cinder-wolf": {
         "file": "art/renders/monster-cinder-wolf.png",
         "width": 1055,
