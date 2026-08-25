@@ -16111,6 +16111,21 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "monster-forge-wight": {
+        "file": "art/renders/monster-forge-wight.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.17,
+          0.195,
+          0.72,
+          0.7
+        ],
+        "focal": [
+          0.4,
+          0.306
+        ]
+      },
       "monster-gravel-wyrm": {
         "file": "art/renders/monster-gravel-wyrm.png",
         "width": 1055,
