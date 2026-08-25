@@ -183,6 +183,71 @@ function cutOut(image, rect) {
   return { width, height, rgb };
 }
 
+/**
+ * What the window could hold, said out loud before you go looking at pictures.
+ *
+ * A window's height budget is not a property of the subject box and no amount
+ * of editing one changes it: a crop of `aspect` on a plate can never be taller
+ * than `plateWidth / aspect`, because the plate runs out of paper. On the
+ * monsters deck that is 64.2% of an A4 page, and a subject spanning 79% of it
+ * cannot be framed whole by any three numbers anybody writes here.
+ *
+ * That fact used to be reachable only by tracing docs/js/framing.js by hand and
+ * then being surprised by the preview. It is one division. It belongs on screen.
+ */
+function budgetLine(box, rect, aspect) {
+  const maxH = Math.min(1, image.width / aspect / image.height);
+  const maxW = Math.min(1, (image.height * aspect) / image.width);
+  const room = framing.pad * Math.min(box[2] * image.width, box[3] * image.height);
+  const wants = box[3] + (2 * room) / image.height;
+
+  const lost = [
+    [rect.x - box[0], 'left'],
+    [rect.y - box[1], 'top'],
+    [box[0] + box[2] - (rect.x + rect.w), 'right'],
+    [box[1] + box[3] - (rect.y + rect.h), 'bottom'],
+  ].filter(([amount]) => amount > 0.0005);
+
+  const budget = `holds at most ${pct(maxH)} of the page height, ${pct(maxW)} of its width (box + pad wants ${pct(wants)})`;
+  if (lost.length) return `${budget} - TRIMS ${lost.map(([a, e]) => `${pct(a)} off the ${e}`).join(', ')}`;
+  /* Wanting more than the window holds and losing nothing is not a contradiction
+     and should not read as one: `pad` is breathing room, not part of the veto,
+     so it is the first thing spent and often the only thing. */
+  return wants > maxH
+    ? `${budget} - subject kept whole; the pad gave up the difference`
+    : `${budget} - subject kept whole`;
+}
+
+/**
+ * Both crops on one sheet.
+ *
+ * They used to be two files, which meant opening two things to answer one
+ * question - and the question is always comparative, because the card window
+ * and the thumbnail disagree about what they can hold and the entry has to
+ * satisfy both. Stacked in window order with a hard rule between them, a glance
+ * does what two glances did.
+ */
+function contactSheet(images) {
+  const RULE = 10;
+  const INK = [38, 34, 30];
+  const width = Math.max(...images.map((i) => i.width));
+  const height = images.reduce((n, i) => n + i.height, 0) + RULE * (images.length - 1);
+  const rgb = new Uint8Array(width * height * 3);
+  for (let i = 0; i < width * height; i++) {
+    rgb[i * 3] = INK[0]; rgb[i * 3 + 1] = INK[1]; rgb[i * 3 + 2] = INK[2];
+  }
+  let top = 0;
+  for (const img of images) {
+    const left = Math.floor((width - img.width) / 2);
+    for (let y = 0; y < img.height; y++) {
+      const from = y * img.width * 3;
+      rgb.set(img.rgb.subarray(from, from + img.width * 3), ((top + y) * width + left) * 3);
+    }
+    top += img.height + RULE;
+  }
+  return { width, height, rgb };
+}
+
 /* ------------------------------------------------------------------- output */
 
 const framing = readFraming(ROOT);
@@ -206,25 +271,32 @@ windows.push({ name: 'thumb', aspect: THUMB_ASPECT, note: 'the explorer thumbnai
 
 mkdirSync(OUT_DIR, { recursive: true });
 
+const pct = (n) => `${(n * 100).toFixed(1)}%`;
+const cuts = [];
+
 for (const window of windows) {
+  const box = entry?.subject || WHOLE_PLATE;
   const rect = crop(
     image,
-    entry?.subject || WHOLE_PLATE,
+    box,
     window.aspect,
     framing.pad,
     entry?.focal,
     entry?.focalTargetOverride || framing.focalTarget
   );
-  const out = join(OUT_DIR, `${plate}-${window.name}.png`);
-  writePng(out, scaleTo(cutOut(image, rect), MAX_WIDTH));
-  const pct = (n) => `${(n * 100).toFixed(1)}%`;
+  cuts.push({ name: window.name, image: scaleTo(cutOut(image, rect), MAX_WIDTH) });
   console.log(
     `  ${window.name.padEnd(6)} ${window.aspect.toFixed(2)}  keeps x ${pct(rect.x)}–${pct(rect.x + rect.w)}, ` +
-      `y ${pct(rect.y)}–${pct(rect.y + rect.h)}  ->  docs/art/aim/${plate}-${window.name}.png`
+      `y ${pct(rect.y)}–${pct(rect.y + rect.h)}`
   );
   console.log(`         ${window.note}`);
+  console.log(`         ${budgetLine(box, rect, window.aspect)}`);
 }
 
-console.log('\nLook at both. The subject box is a veto and the focal point is an aim:');
+const sheet = join(OUT_DIR, `${plate}.png`);
+writePng(sheet, contactSheet(cuts.map((c) => c.image)));
+console.log(`\n  ${cuts.map((c) => c.name).join(', then ')}  ->  docs/art/aim/${plate}.png`);
+
+console.log('\nLook at it. The subject box is a veto and the focal point is an aim:');
 console.log('if something the card names is cut, grow `subject`; if the crop is centred on');
 console.log('the wrong thing, move `focal`. Previews are git-ignored - regenerate, never commit.');

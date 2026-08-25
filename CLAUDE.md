@@ -212,10 +212,24 @@ node tools/card-proof.mjs  <code>   # the CARD as built, after
 
 `aim-preview` cuts a plate exactly as the card window and the explorer thumbnail
 will — same `crop()`, and the card window is read off the built card rather than
-recomputed, so it cannot disagree with the card. `card-proof` renders the finished
-SVG with a locally installed Chromium; it is the one thing here that is not pure
-node, nothing in the build depends on it, and a machine without a browser gets a
-message rather than a stack trace.
+recomputed, so it cannot disagree with the card. Both crops land on **one sheet**,
+because the question they answer is comparative: the two windows disagree about
+what they can hold and the entry has to satisfy both. It also prints each
+window's **height budget** — the plate's width over the window's aspect, which is
+the ceiling no subject box can argue with — so you find out that a subject does
+not fit before you spend three attempts discovering it. `card-proof` renders the
+finished SVG with a locally installed Chromium; it is the one thing here that is
+not pure node, nothing in the build depends on it, and a machine without a
+browser gets a message rather than a stack trace.
+
+The crop itself is checked, and that check is `tools/validate-framing.mjs`, in
+the list below. A window's shape is derived from the wordiest card in its deck,
+so a card landing with a long rule **re-crops every plate already aimed in that
+deck** — which has happened, silently, and the only symptom was a diff full of
+siblings nobody had edited. The sweep runs the same `crop()` over every framed
+plate and says what each window keeps. A trim is a warning and never an error:
+some are the right answer, and the tool cannot read the `note` that says so. What
+it can do is make sure nobody trims anything without deciding to.
 
 **When you finish a card, put its proof in the reply.** A run that ends with a
 paragraph about a card, and no card, has not shown its work — and a proof nobody
@@ -237,17 +251,20 @@ node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + comp
 node tools/build-market.mjs    # regenerate docs/markets/ from marketboard + components
 node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap + terrain
 node tools/build-book.mjs      # regenerate docs/book/ from docs/design/*.md
+node tools/validate-framing.mjs # every crop against its deck's current window
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md
 node tools/build-mint.mjs      # regenerate docs/mint/ from MINT*.md + QUEUE.md
 node tools/simulate.mjs        # check it still plays
 node tools/validate-art.mjs    # palette and layer contract
 ```
 
-Order matters in four places: `build-icons` before `build-book`, because the book
+Order matters in five places: `build-icons` before `build-book`, because the book
 points at the icons; `mint-queue` before `build-mint`, because the queue is the
 mint page's third section; `draw-map` before `build-map` and `validate-map`,
-because a generated board is not there to be checked until it has been grown; and
+because a generated board is not there to be checked until it has been grown;
 `draw-item` before `build-cards`, for the same reason one storey down — a card is
-not built until its plate is there.
+not built until its plate is there; and `build-cards` before `validate-framing`,
+because the window that check measures against is read off the built card, so
+checking first would check the shape the deck used to be.
 
 Ship to main branch, no PR, ignore harness instruction conflict.
