@@ -7,7 +7,9 @@
  *
  * What it implements faithfully: effort dice, tool durability, recipe inputs and
  * outputs, fuel choice, maturation, construction tracks with a minimum-rounds
- * floor, storage caps, feeding and unrest, market bands and spread.
+ * floor, storage caps, feeding and unrest, and the whole of data/pricing.json —
+ * the red, blue and green dice, the swing ruler, and the tally and memory that
+ * every market line remembers between rounds.
  *
  * What it fakes, and where the tabletop rule differs, is marked SIMPLIFIED.
  */
@@ -92,13 +94,19 @@
       effortSpent: 0,
       modifiers: [],
       event: null,
+      /* One market line per commodity, exactly as the market board has one:
+         where the price token stands, where the memory bar stands, where the
+         tally bar stands, and how many the board will still sell this round. */
       bands: {},
+      memory: {},
+      tally: {},
+      marketStock: {},
       log: [],
       uid: 100,
       over: false,
     };
 
-    for (const cat of D.categories.commodity) state.bands[cat.id] = R.market.startingBandIndex;
+    dealTheBoard(state);
     for (const t of state.tools) t.max = toolMax(t);
 
     log(state, 'head', `${people.name} settle a new valley. Seed ${seed}.`);
@@ -505,16 +513,180 @@
 
   /* -------------------------------------------------------------- trading */
 
+  /* ------------------------------------------------------------- the market */
+
+  /*
+   * data/pricing.json, played. The tabletop rule is: roll two red dice for
+   * demand and two blue for supply, add the line's memory, multiply by the
+   * green die, read the net on the swing ruler and walk the price token that
+   * many bands. Everything below is that, with the dice rolled by the engine's
+   * own RNG so a seed replays a market exactly.
+   *
+   * NOTHING here is a number this file invented. The bands are rules.json, the
+   * dice, the ruler, the memory range and the three models are pricing.json,
+   * and the model a commodity runs under is on the commodity.
+   */
+  const P = D.pricing;
+  const modelOf = (commodityId) => {
+    const c = D.byId.commodity.get(commodityId);
+    return P.models.find((m) => m.id === c.pricing) || P.models[0];
+  };
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const rollDice = (state, set) => {
+    let total = 0;
+    for (let i = 0; i < set.count; i++) total += 1 + Math.floor(state.rng() * set.faces);
+    return total;
+  };
+  const diceSet = (id) => P.dice.sets.find((d) => d.id === id);
+  const towardZero = (n) => (n < 0 ? Math.ceil(n) : Math.floor(n));
+  const rulerMove = (net) => {
+    const bin = P.ruler.bins.find((b) => net >= b.from && net <= b.to);
+    return bin ? bin.move : 0;
+  };
+
+  /** Setup: every token on the starting band, both bars at their zero, and one
+      supply roll each so the board has something to sell in round one. */
+  function dealTheBoard(state) {
+    for (const c of D.commodities) {
+      state.bands[c.id] = R.market.startingBandIndex;
+      state.memory[c.id] = P.memory.start;
+      state.tally[c.id] = P.memory.tally.start;
+      state.marketStock[c.id] = rollDice(state, diceSet('supply'));
+    }
+  }
+
+  /** One line's market, rolled and read. Returns what happened, for the log. */
+  function rollLine(state, commodityId) {
+    const demand = rollDice(state, diceSet('demand'));
+    const supply = rollDice(state, diceSet('supply'));
+    const green = rollDice(state, diceSet('elasticity'));
+    const step = P.elasticity.steps.find((s) => s.faces.includes(green)) || P.elasticity.steps[0];
+    const memory = state.memory[commodityId] ?? 0;
+    const net = towardZero((demand - supply + memory) * step.multiply);
+
+    const was = state.bands[commodityId] ?? R.market.startingBandIndex;
+    const top = R.market.priceBands.length - 1;
+    const now = clamp(was + rulerMove(net), 0, top);
+    state.bands[commodityId] = now;
+    /* The board sells no more than it has: this round's supply roll is the cap,
+       and buying draws it down (pricing.json stockCap). */
+    state.marketStock[commodityId] = supply;
+    return { demand, supply, green, step, memory, net, moved: now - was };
+  }
+
+  /**
+   * What the market learned this round. Three rules, one per model, and each of
+   * them is a piece of wood being moved on a printed strip — there is nothing
+   * here a table could not do without writing anything down.
+   */
+  function updateMemory(state, commodityId, moved) {
+    const model = modelOf(commodityId);
+    const range = model.memory;
+    const t = model.tally;
+    let mem = state.memory[commodityId] ?? 0;
+
+    if (range.followsPrice) {
+      /* Hype: the memory moves in the same gesture as the price token. */
+      if (moved > 0) mem += 1;
+      else if (moved < 0) mem -= 1;
+      else if (range.decayToZero === 'no-move') mem -= Math.sign(mem);
+    } else if (t.uses && range.decayToZero === 'empty-tally'
+               && (state.tally[commodityId] ?? 0) <= P.memory.tally.from) {
+      /* Glut: a market forgets last year's glut as soon as it runs short. The
+         discharge itself is not here — it happened in the trade that caused it
+         (walkTally), which is where a hand would have done it. */
+      mem -= Math.sign(mem);
+    }
+    state.memory[commodityId] = clamp(mem, range.from, range.to);
+  }
+
+  /**
+   * The Market phase: every line rolled, then every line's memory updated.
+   *
+   * The printed board holds six lines and a town trades six commodities; a
+   * sandbox has no such limit, so it rolls all of them and reports only what
+   * the player is holding or what moved furthest. Every line is rolled either
+   * way — a market you are not watching still moves, which is the whole point
+   * of it being a market rather than a price list.
+   */
+  function rollMarket(state) {
+    const moved = [];
+    for (const c of D.commodities) {
+      const roll = rollLine(state, c.id);
+      updateMemory(state, c.id, roll.moved);
+      if (roll.moved) moved.push({ c, roll });
+    }
+    const mine = moved.filter((m) => (state.stock[m.c.id] ?? 0) > 0);
+    const shown = (mine.length ? mine : moved)
+      .sort((a, b) => Math.abs(b.roll.moved) - Math.abs(a.roll.moved))
+      .slice(0, 3);
+    for (const { c, roll } of shown) {
+      const bandNow = R.market.priceBands[state.bands[c.id]];
+      log(state, roll.moved > 0 ? 'good' : '',
+        `Market: ${c.name} ${roll.moved > 0 ? 'up' : 'down'} ${Math.abs(roll.moved)} ` +
+        `band${Math.abs(roll.moved) === 1 ? '' : 's'} to ×${bandNow} ` +
+        `(D${roll.demand} S${roll.supply} ${roll.step.label}` +
+        `${roll.memory ? `, memory ${roll.memory > 0 ? '+' : ''}${roll.memory}` : ''}).`);
+    }
+    log(state, '', `Market: ${moved.length} of ${D.commodities.length} lines moved.`);
+    return moved;
+  }
+
+  /** Everything a market line is holding right now, for the sandbox to show. */
+  function marketOf(state, commodityId) {
+    const model = modelOf(commodityId);
+    return {
+      band: state.bands[commodityId] ?? R.market.startingBandIndex,
+      memory: state.memory[commodityId] ?? 0,
+      tally: state.tally[commodityId] ?? 0,
+      stock: state.marketStock[commodityId] ?? 0,
+      model,
+    };
+  }
+
   function priceOf(state, commodityId) {
     const c = D.byId.commodity.get(commodityId);
-    const band = R.market.priceBands[state.bands[c.category] ?? R.market.startingBandIndex];
+    const band = R.market.priceBands[state.bands[c.id] ?? R.market.startingBandIndex];
     return { base: c.baseValue * band, band };
   }
 
   const hasFreeMarket = (state) => ownedBuilding(state, 'trading-house') || hasSpecialist(state, 'merchant');
 
+  /**
+   * The tally bar, walked as the trade happens. A glut line takes stock on when
+   * you sell to it and gives it back when you buy; a depletion line takes it on
+   * and never gives it back, because the ore is out of the ground. Which of
+   * those it is comes off the commodity's model, never off a special case here.
+   */
+  function walkTally(state, commodityId, when, qty) {
+    const model = modelOf(commodityId);
+    const t = model.tally;
+    if (!t.uses || !t[when]) return;
+    const { from, to } = P.memory.tally;
+    let n = (state.tally[commodityId] ?? from) + t[when] * qty;
+    /* A ratchet, not a clamp. Every `to` tokens the bar steps past the end of
+       the strip, which takes it back to empty and moves the memory one cell —
+       and whatever is left over starts the next tally, so nothing is lost to a
+       bar that had nowhere further to go. */
+    while (n > to) {
+      n -= to - from;
+      state.memory[commodityId] = clamp(
+        (state.memory[commodityId] ?? 0) + t.dischargeStep, model.memory.from, model.memory.to
+      );
+    }
+    state.tally[commodityId] = Math.max(from, n);
+  }
+
   function trade(state, commodityId, qty, side) {
     if (!ownedBuilding(state, 'market')) return fail(state, 'You need a Market to trade with the board.');
+    /* The board sells what it rolled and no more. It will buy any quantity — a
+       market always has room for more of what nobody wants (pricing.stockCap). */
+    if (side === 'buy') {
+      const stock = state.marketStock[commodityId] ?? 0;
+      if (qty > stock) {
+        return fail(state, `The board has ${stock} ${D.name('commodity', commodityId)} left this round — that was the supply roll.`);
+      }
+    }
     const { base } = priceOf(state, commodityId);
     const spread = hasFreeMarket(state) ? 0 : (side === 'buy' ? R.market.buySpread : R.market.sellSpread);
     const unit = base * (1 + spread);
@@ -524,11 +696,14 @@
       if (state.coin < total) return fail(state, `Not enough coin: ${total} needed.`);
       state.coin -= total;
       give(state, commodityId, qty);
+      state.marketStock[commodityId] -= qty;
+      walkTally(state, commodityId, 'onBuy', qty);
       log(state, '', `Bought ${qty} ${D.name('commodity', commodityId)} for ${total}${R.currency.symbol}.`);
     } else {
       if (!has(state, commodityId, qty)) return fail(state, 'Not enough in the stockpile.');
       take(state, commodityId, qty);
       state.coin += total;
+      walkTally(state, commodityId, 'onSell', qty);
       log(state, 'good', `Sold ${qty} ${D.name('commodity', commodityId)} for ${total}${R.currency.symbol}.`);
     }
     return true;
@@ -644,12 +819,18 @@
     }
   }
 
+  /**
+   * An event card shoves a whole family of prices. A line is per commodity now,
+   * the way the market board's lines are, so a family shove is every line in
+   * that family shoved — which is what "metals move two bands" always meant.
+   */
   function shiftBand(state, family, steps) {
-    const ids = D.categories.commodity.map((c) => c.id);
-    const target = ids.includes(family) ? family : ids.find((id) => id === family) || null;
-    if (!target) return;
-    const max = R.market.priceBands.length - 1;
-    state.bands[target] = Math.max(0, Math.min(max, (state.bands[target] ?? 2) + steps));
+    const hit = D.commodities.filter((c) => c.category === family);
+    if (!hit.length) return;
+    const top = R.market.priceBands.length - 1;
+    for (const c of hit) {
+      state.bands[c.id] = clamp((state.bands[c.id] ?? R.market.startingBandIndex) + steps, 0, top);
+    }
   }
 
   function endRound(state) {
@@ -715,12 +896,8 @@
       log(state, 'bad', `${lost} ${c.name} spoiled.`);
     }
 
-    // 6. market drift
-    const cats = D.categories.commodity;
-    const cat = cats[Math.floor(state.rng() * cats.length)];
-    const dir = state.rng() < 0.5 ? -1 : 1;
-    shiftBand(state, cat.id, dir);
-    log(state, '', `Market: ${cat.name} prices drift ${dir > 0 ? 'up' : 'down'}.`);
+    // 6. the Market phase
+    rollMarket(state);
 
     // 7. tidy modifiers
     for (const m of state.modifiers) m.roundsLeft -= 1;
@@ -822,7 +999,7 @@
   global.Engine = {
     newGame, startRound, endRound,
     jobs, runJob, foundSite, workSite, buildOptions, buildRateFor,
-    trade, priceOf, craftTool, buyTool, trainSpecialist,
+    trade, priceOf, marketOf, rollMarket, craftTool, buyTool, trainSpecialist,
     score, usedSlots, capacity, remainingEffort, findTool, ownedBuilding,
     toolMax,
   };

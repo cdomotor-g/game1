@@ -518,6 +518,155 @@ else {
   }
 }
 
+// The market, and the ruler that has to be able to read every roll it can make.
+//
+// A price is (Demand - Supply + Memory) x Elasticity, read on a seven-cell strip
+// printed across the foot of the market board. Every part of that sentence is a
+// number somebody can change, and three of the ways of changing it produce a
+// board that is quietly broken rather than loudly wrong: a ruler with a hole in
+// it (a roll nobody can read), a memory track a model can walk off, and a strip
+// wide enough to squeeze the price ladder narrower than the token that walks it.
+// None of the three shows up in a diff. All three show up here.
+{
+  const pricing = datasets.pricing;
+  const market = datasets.rules?.market;
+  if (!pricing) errors.push('pricing: no pricing.json - nothing says how a price is arrived at');
+  else {
+    const models = pricing.models ?? [];
+    const mem = pricing.memory ?? {};
+    const tally = mem.tally ?? {};
+    const bins = pricing.ruler?.bins ?? [];
+    const steps = pricing.elasticity?.steps ?? [];
+
+    /* Every commodity prices by something. The manifest reference check catches
+       a model that does not exist; this catches the one that was never named. */
+    for (const c of commodities) {
+      if (!c.pricing) errors.push(`commodities: "${c.id}" has no pricing model - every line on the market board runs under one of ${models.map((m) => m.id).join('/')}`);
+    }
+    for (const m of models) {
+      if (!commodities.some((c) => c.pricing === m.id)) {
+        warnings.push(`pricing: nothing prices by "${m.id}" - a model no commodity uses is a rule nobody will ever read`);
+      }
+    }
+
+    /* The green die has six faces and the elasticity strip has to account for
+       all of them, once each. A face nobody claimed is a roll with no ruling. */
+    const green = (pricing.dice?.sets ?? []).find((d) => d.id === pricing.elasticity?.die);
+    if (!green) errors.push(`pricing: elasticity reads the "${pricing.elasticity?.die}" die, which is not one of the dice`);
+    else {
+      const seen = new Map();
+      for (const step of steps) for (const f of step.faces ?? []) {
+        if (seen.has(f)) errors.push(`pricing: the green die's ${f} is claimed by both "${seen.get(f)}" and "${step.id}"`);
+        else seen.set(f, step.id);
+      }
+      for (let f = 1; f <= green.faces; f++) {
+        if (!seen.has(f)) errors.push(`pricing: nothing on the elasticity strip covers a green ${f}`);
+      }
+    }
+
+    /* What the dice and the tracks can actually produce, and whether the ruler
+       can read all of it. The reach is derived from the dice rather than read
+       off pricing.ruler.reach - that field is a restatement, and it is checked
+       against the derivation rather than trusted, exactly as a player board
+       track's `covers` is. */
+    const demand = (pricing.dice?.sets ?? []).find((d) => d.id === 'demand');
+    const supply = (pricing.dice?.sets ?? []).find((d) => d.id === 'supply');
+    if (demand && supply && steps.length && typeof mem.from === 'number') {
+      const swing = [demand.range[0] - supply.range[1], demand.range[1] - supply.range[0]];
+      const stated = pricing.ruler?.reach?.swing;
+      if (stated && (stated[0] !== swing[0] || stated[1] !== swing[1])) {
+        errors.push(`pricing: ruler.reach.swing says ${JSON.stringify(stated)}, and ${demand.count} ${demand.colour} against ${supply.count} ${supply.colour} reaches ${JSON.stringify(swing)}`);
+      }
+      const biggest = Math.max(...steps.map((st) => st.multiply));
+      const trim = (n) => (n < 0 ? Math.ceil(n) : Math.floor(n));
+      const lo = trim((swing[0] + mem.from) * biggest);
+      const hi = trim((swing[1] + mem.to) * biggest);
+
+      /* No hole and no overlap, cell by cell, across everything reachable. */
+      const sorted = [...bins].sort((a, b) => a.from - b.from);
+      for (let i = 1; i < sorted.length; i++) {
+        if (sorted[i].from !== sorted[i - 1].to + 1) {
+          errors.push(`pricing: the swing ruler ${sorted[i].from > sorted[i - 1].to + 1 ? 'has a hole' : 'overlaps'} between "${sorted[i - 1].id}" and "${sorted[i].id}" - ${sorted[i - 1].to} then ${sorted[i].from}`);
+        }
+      }
+      if (sorted.length) {
+        if (sorted[0].from > lo) errors.push(`pricing: a net of ${lo} is reachable and the swing ruler starts at ${sorted[0].from}`);
+        if (sorted[sorted.length - 1].to < hi) errors.push(`pricing: a net of ${hi} is reachable and the swing ruler stops at ${sorted[sorted.length - 1].to}`);
+      }
+
+      /* A cell that moves a token further than the ladder is long is a cell
+         nobody can obey - the clamp would swallow it whole, every time. */
+      const rungs = (market?.priceBands?.length ?? 1) - 1;
+      for (const bin of bins) {
+        if (Math.abs(bin.move) > rungs) {
+          errors.push(`pricing: the "${bin.id}" cell moves ${bin.move} bands and the ladder is ${rungs} long`);
+        }
+      }
+    }
+
+    /* A model may not walk its bar off the strip the board prints. */
+    for (const m of models) {
+      const r = m.memory ?? {};
+      if (typeof r.from !== 'number' || typeof r.to !== 'number') {
+        errors.push(`pricing: model "${m.id}" does not say how far its memory runs`);
+        continue;
+      }
+      if (r.from < mem.from || r.to > mem.to) {
+        errors.push(`pricing: model "${m.id}" runs ${r.from}..${r.to} and the memory strip is ${mem.from}..${mem.to} - its bar would walk off the board`);
+      }
+      if (!m.mark?.path) errors.push(`pricing: model "${m.id}" has no mark - every commodity token carries one in its corner`);
+      if (m.tally?.uses && typeof tally.to !== 'number') {
+        errors.push(`pricing: model "${m.id}" fills a tally and pricing.memory.tally does not say how long one is`);
+      }
+    }
+    {
+      const seen = new Map();
+      for (const m of models) {
+        const id = m.mark?.id;
+        if (!id) continue;
+        if (seen.has(id)) errors.push(`pricing: "${m.id}" and "${seen.get(id)}" both draw the "${id}" mark - one model, one symbol`);
+        else seen.set(id, m.id);
+      }
+    }
+
+    /* The rule of thumb, made checkable. Anything a deposit yields comes out of
+       a hole that does not refill, and a hole that does not refill is the whole
+       of the depletion model - so a deposit yield priced any other way is a seam
+       the game will let you mine forever at a steady price. */
+    const finite = new Set((datasets.deposits?.deposits ?? []).flatMap((d) => d.yields ?? []));
+    const byId = new Map(commodities.map((c) => [c.id, c]));
+    for (const id of finite) {
+      const c = byId.get(id);
+      if (c && c.pricing !== 'deplete') {
+        warnings.push(`commodities: "${id}" is yielded by a deposit and prices by "${c.pricing}" - a finite source usually wants the depletion model`);
+      }
+    }
+
+    /* The market board's own geometry, checked the way the player board's is:
+       the strips take a bar's width each, the ladder takes what is left, and
+       below the width of a commodity token the sheet has run out of middle. */
+    const MB = datasets.components?.marketBoard;
+    const bar = datasets.components?.tokens?.bar?.diameterMm;
+    const flats = datasets.components?.tokens?.commodity?.acrossFlatsMm;
+    if (MB && bar && flats && typeof mem.from === 'number' && typeof tally.from === 'number') {
+      const cells = (mem.to - mem.from + 1) + (tally.to - tally.from + 1);
+      const stripCell = bar + 2 * MB.strip.clearanceMm;
+      const stripsW = cells * stripCell + MB.strip.gutterMm;
+      const contentW = MB.sheet.widthMm - 2 * MB.marginMm;
+      const bandW = (contentW - stripsW - MB.strip.gutterMm) / (market?.priceBands?.length || 1);
+      const corners = flats * 2 / Math.sqrt(3);
+      if (bandW < corners) {
+        errors.push(`marketboard: the tally and the memory take ${stripsW.toFixed(1)}mm, leaving ${bandW.toFixed(1)}mm a band, and a ${flats}mm token is ${corners.toFixed(1)}mm across the corners - the sheet has run out of middle`);
+      }
+      const foot = MB.foot.rows.reduce((sum, r) => sum + r.heightMm + MB.foot.gapMm, 0);
+      const lineH = flats + 2 * MB.line.clearanceMm;
+      const lines = Math.floor((MB.sheet.heightMm - 2 * MB.marginMm - MB.headMm - foot) / lineH);
+      if (lines < 1) errors.push(`marketboard: the head and a ${foot}mm foot leave room for no line at all`);
+      else if (lines < 4) warnings.push(`marketboard: only ${lines} price lines fit the sheet - a town trades more than that`);
+    }
+  }
+}
+
 // A building nobody can reach is a design bug worth hearing about.
 const buildingUsed = new Set();
 for (const r of recipes) {

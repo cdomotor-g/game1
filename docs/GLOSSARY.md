@@ -124,7 +124,8 @@ single campaign-map hex, opened out for a battle or a growing settlement. See
 `docs/minimaps/`.
 
 **Price band** — the multiplier applied to a commodity's base value in a given town.
-Bands drift each round and events shove them around.
+Bands are rolled each round from supply and demand and bent by what the line remembers;
+events shove them around on top of that. See `data/pricing.json`.
 
 **Recipe** — the definition of one allocatable job: site + tool + effort + inputs →
 outputs. Every single thing a player can do with effort is a recipe, including

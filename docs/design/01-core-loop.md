@@ -21,7 +21,10 @@ growth, wine ageing, cargo in transit, livestock breeding.
 **5. Feeding.** Every town pays food upkeep from stock held in that town. Shortfalls
 become unrest.
 
-**6. Market.** Price bands drift, and turn order passes to the left.
+**6. Market.** Roll the market: two red dice for demand, two blue for supply and one green
+for elasticity, per commodity line in play, bent by what that line remembers. Trade at the
+new price, walk the tallies, and turn order passes to the left. See
+[04-trade.md](04-trade.md#how-a-price-is-arrived-at).
 
 ## Effort
 

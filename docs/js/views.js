@@ -196,7 +196,8 @@
     return collectionPage({
       key: 'commodities', query,
       title: 'Commodities',
-      blurb: 'Storable, tradeable goods. Bulk is the storage slot cost; value is what one unit fetches at price band 1.0 before the market takes its cut.',
+      blurb: 'Storable, tradeable goods. Bulk is the storage slot cost; value is what one unit fetches at price band 1.0 before the market takes its cut. '
+        + 'Every one of them runs under one of three market-memory models — glut, hype or depletion — and that is what its price does between rounds.',
       items: D.commodities,
       categories: D.categories.commodity,
       categoryOf: (c) => c.category,
@@ -207,6 +208,7 @@
           pill(`${c.baseValue}${R.currency.symbol}`, 'accent'),
           pill(`bulk ${c.bulk}`),
           pill(`tier ${D.tierOf(c.id)}`),
+          c.pricing ? pill(D.byId.pricing.get(c.pricing)?.name || c.pricing) : null,
           c.perishRounds ? pill(`perishes ${c.perishRounds}r`, 'warn') : null,
         ].filter(Boolean),
         () => open('commodity', c.id)
@@ -745,6 +747,43 @@
         section('Conflict', R.conflict),
       ]),
       el('div.panel', [
+        el('h3', 'The market roll'),
+        el('p.prose', `Every Market phase, per commodity line in play. ${D.pricing.formula.then}`),
+        el('p.prose', el('code', D.pricing.formula.net)),
+        el('div.cols', [
+          el('div', [
+            el('h4', 'The dice'),
+            el('div.table-wrap', el('table', [
+              el('thead', el('tr', [el('th', ''), el('th', 'Colour'), el('th.num', 'Range'), el('th', '')])),
+              el('tbody', D.pricing.dice.sets.map((d) => el('tr', [
+                el('td', `${d.count} d${d.faces}`), el('td', d.colour),
+                el('td.num', `${d.range[0]}–${d.range[1]}`), el('td', el('strong', d.name)),
+              ]))),
+            ])),
+            el('h4', { style: 'margin-top:12px' }, 'The green die'),
+            el('div.table-wrap', el('table', [
+              el('tbody', D.pricing.elasticity.steps.map((e) => el('tr', [
+                el('td', `${e.faces[0]}–${e.faces[e.faces.length - 1]}`),
+                el('td', el('strong', e.label)), el('td', e.name),
+              ]))),
+            ])),
+          ]),
+          el('div', [
+            el('h4', 'The swing ruler'),
+            el('div.table-wrap', el('table', [
+              el('thead', el('tr', [el('th', 'Net'), el('th.num', 'Bands'), el('th', '')])),
+              el('tbody', D.pricing.ruler.bins.map((b) => el('tr', [
+                el('td', b.label),
+                el('td.num', el('strong', b.move === 0 ? '—' : (b.move > 0 ? `+${b.move}` : String(b.move)))),
+                el('td', el('span.hint', b.name)),
+              ]))),
+            ])),
+            el('p.hint', { style: 'margin-top:8px' }, D.pricing.stockCap.means),
+            el('a.btn.small', { href: 'markets/index.html' }, 'The market board and its odds'),
+          ]),
+        ]),
+      ]),
+      el('div.panel', [
         el('h3', 'Tool sizes'),
         el('div.table-wrap', el('table', [
           el('thead', el('tr', [el('th', 'Size'), el('th.num', 'Output ×'), el('th.num', 'Durability ×'), el('th.num', 'Cost ×')])),
@@ -813,6 +852,38 @@
 
   const detail = {};
 
+  /**
+   * How this commodity's market behaves between rounds — the mark engraved in
+   * the corner of its token, and the rule that mark stands for.
+   *
+   * The mark comes from docs/art/icons/, which tools/build-icons.mjs draws from
+   * the same data/pricing.json this is reading, so the explorer says "glut"
+   * with the mark the token and the market board say it with.
+   */
+  function pricingSection(c) {
+    const m = D.byId.pricing.get(c.pricing);
+    if (!m) return null;
+    const P = D.pricing;
+    return el('section', [
+      el('h4', 'Its market'),
+      el('div', { style: 'display:flex;gap:10px;align-items:flex-start' }, [
+        el('img', { src: `art/icons/pricing-${m.id}.svg`, alt: '', width: 34, height: 34,
+                    style: 'flex:0 0 auto;margin-top:2px' }),
+        el('div', [
+          el('p.prose', { style: 'margin:0' }, [el('strong', m.name), ' — ', m.line]),
+          el('p.prose', { style: 'margin:4px 0 0' }, m.history),
+        ]),
+      ]),
+      el('div.deflist', { style: 'margin-top:8px' }, [
+        el('dt', 'Memory'), el('dd', `${m.memory.from} to ${m.memory.to > 0 ? '+' : ''}${m.memory.to} — ${m.memory.moves}`),
+        el('dt', 'Decays'), el('dd', m.memory.decays),
+        el('dt', 'Tally'), el('dd', m.tally.uses ? `${m.tally.means} ${m.tally.full}` : m.tally.means),
+      ]),
+      el('p.hint', { style: 'margin-top:8px' },
+        `Price is rolled every Market phase: ${P.formula.net}, read on the swing ruler in the foot of the market board.`),
+    ]);
+  }
+
   detail.commodity = function (c) {
     return [
       el('span.kicker', D.categories.commodity.find((x) => x.id === c.category)?.name || c.category),
@@ -831,6 +902,7 @@
           c.perishRounds ? el('dd', `${c.perishRounds} rounds`) : null,
         ].filter(Boolean)),
       ]),
+      pricingSection(c),
       c.tags && c.tags.length ? el('section', [el('h4', 'Tags'), el('div.card-meta', c.tags.map((t) => pill(t)))]) : null,
       linkSection('Produced by', D.producersOf(c.id).map((r) => ['recipe', r.id, r.name, siteText(r)])),
       linkSection('Consumed by', D.consumersOf(c.id).map((r) => ['recipe', r.id, r.name, siteText(r)])),

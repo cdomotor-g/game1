@@ -38,6 +38,7 @@ const characters = read('characters.json');
 const quests = read('quests.json');
 const arcana = read('arcana.json');
 const modifications = read('modifications.json');
+const pricing = read('pricing.json');
 
 const lines = [];
 const say = (s = '') => lines.push(s);
@@ -63,6 +64,14 @@ const list = (arr) => (arr && arr.length ? arr.join(', ') : '—');
  * rendered book, on GitHub, and in a plain markdown reader alike.
  */
 const elementMark = (id) => `![](../art/icons/element-${id}.svg)`;
+/* The same bargain for the three market-memory marks: one set of paths in
+   data/pricing.json, drawn once by tools/build-icons.mjs, and the annex says
+   "glut" with the mark that is engraved on the token. */
+const pricingMark = (id) => `![](../art/icons/pricing-${id}.svg)`;
+const priceModel = (id) => {
+  const m = pricing.models.find((x) => x.id === id);
+  return m ? `${pricingMark(m.id)} ${m.name}` : '—';
+};
 const element = (id) => `${elementMark(id)} ${id}`;
 const io = (arr) => (arr && arr.length ? arr.map((i) => `${i.qty} ${i.commodity}`).join(' + ') : '—');
 
@@ -142,12 +151,67 @@ table(
 );
 
 /* -------------------------------------------------------------- commodities */
+say('## The market');
+say();
+say('Every Market phase, per commodity line in play: roll two red dice for demand, two');
+say('blue for supply and one green for elasticity, add what the line remembers, and read');
+say('the result on the swing ruler printed across the foot of the market board.');
+say();
+say('```');
+say(pricing.formula.net);
+say('```');
+say();
+table(
+  ['Dice', 'Colour', 'Range', 'What it is'],
+  pricing.dice.sets.map((d) => [`${d.count} d${d.faces}`, d.colour, `${d.range[0]}–${d.range[1]}`, d.name])
+);
+table(
+  ['Green die', 'Elasticity', '', ''],
+  pricing.elasticity.steps.map((e) => [
+    `**${e.faces[0]}–${e.faces[e.faces.length - 1]}**`, `**${e.label}**`, e.name, e.means,
+  ])
+);
+say('Halving rounds toward zero, so an inelastic season can shrink a swing away to');
+say('nothing but can never turn it around.');
+say();
+say('### The swing ruler');
+say();
+table(
+  ['Net', ...pricing.ruler.bins.map((b) => `**${b.label}**`)],
+  [
+    ['Bands', ...pricing.ruler.bins.map((b) => (b.move === 0 ? 'hold' : b.move > 0 ? `+${b.move}` : `\u2212${Math.abs(b.move)}`))],
+    ['', ...pricing.ruler.bins.map((b) => b.name.toLowerCase())],
+  ]
+);
+say(`The board sells no more of a commodity in a round than that round's supply roll,`);
+say('first come first served in turn order. It will buy any quantity.');
+say();
+say('### What a market remembers');
+say();
+say(`Each line carries a tally of the board's own stock — up one cell per token sold to`);
+say(`the board, down one per token bought off it — and a modifier from \u2212${Math.abs(pricing.memory.from)} to`);
+say(`+${pricing.memory.to} that the tally moves. Every ${pricing.memory.tally.to} tokens the tally fills, which takes it`);
+say('back to empty and steps the modifier one cell. Which way it steps is the');
+say(`commodity's own model, and the model's mark is engraved in the corner of that`);
+say(`commodity's token.`);
+say();
+table(
+  ['Model', 'Memory', 'Tally', 'What it is'],
+  pricing.models.map((m) => [
+    priceModel(m.id),
+    `${m.memory.from < 0 ? `\u2212${Math.abs(m.memory.from)}` : m.memory.from} to ${m.memory.to > 0 ? '+' : ''}${m.memory.to}`,
+    m.tally.uses ? `${m.tally.dischargeStep > 0 ? '+' : '−'}1 when full` : '—',
+    `**${m.line}** ${m.assigns}`,
+  ])
+);
+
+/* -------------------------------------------------------------- commodities */
 say('## Commodities');
 say();
 table(
-  ['Commodity', 'Category', 'Bulk', 'Value', 'Perishes', 'Tags'],
+  ['Commodity', 'Category', 'Bulk', 'Value', 'Prices by', 'Perishes', 'Tags'],
   commodities.commodities.map((c) => [
-    c.name, c.category, c.bulk, c.baseValue,
+    c.name, c.category, c.bulk, c.baseValue, priceModel(c.pricing),
     c.perishRounds ? `${c.perishRounds} rounds` : '—', list(c.tags),
   ])
 );

@@ -10,7 +10,7 @@
       { "id": "actions", "name": "Actions", "summary": "In turn order, players spend effort, coin and commodities: allocate, build, move, trade, forage, fight." },
       { "id": "production-tick", "name": "Production Tick", "summary": "Advance every progress track: construction, crop growth, transport in transit, maturing goods." },
       { "id": "feeding", "name": "Feeding", "summary": "Each town must pay food upkeep from stock held in or near that town. Shortfalls cause unrest." },
-      { "id": "market-turn", "name": "Market", "summary": "Market prices drift, demand cards flip, turn order passes to the left." }
+      { "id": "market-turn", "name": "Market", "summary": "Roll the market for every line: two red, two blue, one green, plus what the line remembers. Trade at the new price, walk the tallies, and turn order passes to the left." }
     ],
     "turnOrder": "clockwise-rotating"
   },
@@ -79,14 +79,14 @@
     "startingBandIndex": 2,
     "buySpread": 0.15,
     "sellSpread": -0.15,
-    "driftPerRound": "Each town shifts one random commodity family up or down one band.",
+    "pricedBy": "data/pricing.json. Every Market phase each town rolls two red dice for demand, two blue for supply and one green for elasticity, per commodity line in play, and reads the result on the swing ruler printed across the foot of the market board. The line's own memory strip, -3 to +3, is added to the swing before the green die multiplies it, and what moves that strip is the commodity's pricing model.",
     "playerTradeIsFree": true,
     "merchantStock": {
       "$comment": "When a player meets a merchant - on the road via a discovery roll, or by visiting a settlement - shuffle the item deck and deal this many cards face up. That is what is for sale this visit, at base value +10%. Bigger places carry deeper stock.",
       "roadside": 2, "village": 3, "town": 5, "city": 7, "seat": 9,
       "notes": "Tools may be bought the same way at any settlement with a blacksmith rank town or better: deal from the tool list instead."
     },
-    "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
+    "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player. What moves a band is not here: it is data/pricing.json, because a die roll and a memory track are a system rather than a constant."
   },
 
   "infrastructure": {

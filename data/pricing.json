@@ -1,0 +1,209 @@
+{
+  "$comment": "How a price is arrived at, and what the market remembers.\n\nPrices used to drift: one random family, one band, every round, and nothing anybody did to a market had any bearing on it. A player could sell four hundred grain into one town and the grain price would not notice. So this is the other thing - a price that is ROLLED from supply and demand, and then bent by what the market has already been through.\n\nThree dice and two tracks. Two red dice are demand, two blue dice are supply, and the difference between them is the swing. One green die says how violently that swing is felt this season - stable, volatile, or inelastic. The market board translates the result into a number of bands to move, and the commodity's own line on that board carries the memory: a modifier from -3 to +3 that is added to the swing before it is read.\n\nWHAT MOVES THE MEMORY IS THE COMMODITY'S OWN MODEL, and every commodity has exactly one. Grain rots when it does not sell and the memory sinks. Gold is bought because it is going up and the memory climbs after it. Iron ore comes out of a hole that does not refill, and its memory ratchets one way for the rest of the game. Three rules, sixty-six commodities, one board.\n\nNothing here is written down in play and nothing is remembered in a head. The dice are rolled, the tracks are read, the tokens are moved, and the whole history of a market is three pieces of wood standing on a printed line.\n\nThis file is the SYSTEM. Which model a commodity runs under is on the commodity (data/commodities.json `pricing`); the bands the price token walks are rules.json market.priceBands; the board that prints all of it is data/marketboard.json and data/components.json marketBoard. No commodity is named below, and no board dimension is either.",
+  "version": "0.1.0",
+
+  "dice": {
+    "$comment": "Three colours, five dice, one roll. Colour is the whole interface: nobody has to remember which pair is which, because the red ones are the ones people want and the blue ones are the ones there are.",
+    "sets": [
+      {
+        "id": "demand",
+        "name": "Demand",
+        "colour": "red",
+        "count": 2,
+        "faces": 6,
+        "range": [2, 12],
+        "means": "How badly the town wants the stuff this season. Two dice rather than one because a market is a crowd, and a crowd averages: 7 is an ordinary appetite and 12 is a famine year."
+      },
+      {
+        "id": "supply",
+        "name": "Supply",
+        "colour": "blue",
+        "count": 2,
+        "faces": 6,
+        "range": [2, 12],
+        "means": "How much of it turned up. It is also the CAP on what the board will sell this round - see `stockCap` - so a low blue roll is a shortage twice over: dear, and rationed."
+      },
+      {
+        "id": "elasticity",
+        "name": "Elasticity",
+        "colour": "green",
+        "count": 1,
+        "faces": 6,
+        "range": [1, 6],
+        "means": "How hard the swing lands. Read on the elasticity strip printed on the market board; it multiplies the swing and nothing else."
+      }
+    ],
+    "note": "Five dice for the whole table, not five per player. One player rolls the market for every line on the board."
+  },
+
+  "elasticity": {
+    "$comment": "The green die, and the one number in the formula that is not a count of anything. It is why two identical supply-and-demand rolls can be a shrug in one season and a crash in the next.",
+    "die": "elasticity",
+    "steps": [
+      { "id": "stable", "name": "Stable", "faces": [1, 2], "multiply": 1, "label": "×1", "means": "An ordinary season. The swing is felt as it fell." },
+      { "id": "volatile", "name": "Volatile", "faces": [3, 4], "multiply": 2, "label": "×2", "means": "A thin market with nobody willing to stand in the middle of it. Every point of the swing counts double, and this is where crashes and spikes come from." },
+      { "id": "inelastic", "name": "Inelastic", "faces": [5, 6], "multiply": 0.5, "label": "÷2", "means": "The town needs it whatever it costs, or cannot use a second one at any price. Half the swing, dropped toward zero - most inelastic seasons do not move the price at all." }
+    ],
+    "rounding": "toward-zero",
+    "$roundingNote": "Halving rounds toward zero, so an inelastic season can shrink a swing away to nothing but can never turn it around. Nothing in this game rounds a loss into a gain."
+  },
+
+  "formula": {
+    "$comment": "The whole sum, and it is deliberately one line. Everything difficult about this system is in what moves the memory, not in what is arithmetic at the table.",
+    "net": "(Demand − Supply + Memory) × Elasticity",
+    "then": "Read the net on the swing ruler printed on the market board. It says how many bands to move the commodity's price token. Move it; that is the new price.",
+    "price": "The price itself is unchanged from what it always was: the commodity's base value × the band its token now stands on. This system decides where the token goes, never what a band is worth.",
+    "memoryFirst": "The memory is added BEFORE the elasticity multiplies, which is the difference between a modifier and a nudge: in a volatile season a market's history counts double, exactly like everything else about that season.",
+    "clamp": "A token at the top of the ladder that is told to go up stays where it is, and the same at the bottom. A market can be at its ceiling; it cannot be above it."
+  },
+
+  "ruler": {
+    "$comment": "The translation, and the reason the board exists rather than a table in a book. Seven cells across the foot of the market board: find the net in one of them and the cell says how far the price token moves.\n\nThe edges are not round numbers by accident. Two red dice against two blue is a triangular spread with its peak at nothing, so a hold band of one either side leaves the market moving in about two rounds in three - and a two-band move needs a swing of eight, which a stable season can only reach at the very ends of the dice and a volatile one reaches whenever the market is genuinely one-sided.",
+    "bins": [
+      { "id": "crash", "from": -99, "to": -16, "move": -3, "label": "≤ −16", "name": "Crash" },
+      { "id": "slump", "from": -15, "to": -8, "move": -2, "label": "−15 … −8", "name": "Slump" },
+      { "id": "soften", "from": -7, "to": -2, "move": -1, "label": "−7 … −2", "name": "Soften" },
+      { "id": "hold", "from": -1, "to": 1, "move": 0, "label": "−1 … +1", "name": "Hold" },
+      { "id": "firm", "from": 2, "to": 7, "move": 1, "label": "+2 … +7", "name": "Firm" },
+      { "id": "rally", "from": 8, "to": 15, "move": 2, "label": "+8 … +15", "name": "Rally" },
+      { "id": "spike", "from": 16, "to": 99, "move": 3, "label": "≥ +16", "name": "Spike" }
+    ],
+    "reach": {
+      "$comment": "The widest net the dice and the tracks can actually produce, checked by tools/validate-data.mjs against the bins above so the ruler can never have a hole in it.",
+      "swing": [-10, 10],
+      "note": "(2−12) at the extremes, plus a memory of ±3, all doubled by a volatile season: ±26."
+    }
+  },
+
+  "memory": {
+    "$comment": "The modifier track: one per line on the market board, seven cells, walked by a bar. Its number is added to the swing and it is the only thing on the table that remembers anything.\n\nThe range is ±3 because that is what the models need and no more. A memory of +3 turns a market that moved up in three rounds of ten into one that moves up in one round of two; a wider track would not make the market more interesting, it would make it decided.",
+    "from": -3,
+    "to": 3,
+    "start": 0,
+    "reads": "Add it to the swing before the elasticity multiplies.",
+    "tally": {
+      "$comment": "The counter beside the memory track, six cells, walked by a second bar. It is the BOARD'S OWN STOCK of that commodity: sell to the board and the bar walks up, buy from the board and it walks back down. What a full tally does is the model's business - it is a glut in one and a worked-out seam in another - but it fills the same way in both, from trades that actually happened.\n\nHype does not use it, and the board prints it anyway, for the same reason the player board prints a mana track for a character with no magic: a generic sheet prints the furniture and the piece standing on it says what is being played.",
+      "from": 0,
+      "to": 5,
+      "start": 0,
+      "fills": "One cell per token sold to the board; one cell back per token bought from it.",
+      "discharge": "A tally that fills discharges the moment it fills, not at the end of anything: walk the bar up as the tokens change hands, and when it would step past the top cell take it back to empty, move the memory one cell in the model's direction, and stand it on the cells that are left over. Five tokens is one step of the memory and the sixth begins the next five - so a player who sells eleven in one round moves the memory twice and leaves the bar on 1, and nothing is lost to a bar that had nowhere further to go."
+    }
+  },
+
+  "stockCap": {
+    "$comment": "What stops a player emptying a market. The board will sell at most this round's supply roll, across everybody, and it is the reason the blue dice are worth watching even when you are not buying.",
+    "rule": "supply",
+    "means": "The board sells at most Supply tokens of that commodity this round, first come first served in turn order. It will buy any quantity - a market always has room for more of what nobody wants."
+  },
+
+  "round": {
+    "$comment": "Where this sits in the round. It is the Market phase of rules.json round.phases, opened out.",
+    "phase": "market-turn",
+    "steps": [
+      { "id": "roll", "name": "Roll", "does": "Roll two red, two blue and one green for the first line, and again for each line on the board. One player rolls for the whole table." },
+      { "id": "read", "name": "Read the memory", "does": "Add the line's memory bar to the swing, then multiply by the green die on the elasticity strip." },
+      { "id": "fix", "name": "Fix the price", "does": "Find the net on the swing ruler and walk the price token that many bands. That is the price until this time next round." },
+      { "id": "trade", "name": "Trade", "does": "In turn order, buy and sell against the board at the new price plus the spread. The board sells no more of a commodity than its supply roll." },
+      { "id": "update", "name": "Update the memory", "does": "Walk each tally to where the round's trades left it, discharge any that is full, and move a hype line's memory in the same gesture as its price token. Nothing is written down." }
+    ]
+  },
+
+  "$modelsNote": "Each model says the same thing twice on purpose: once in prose for whoever is reading the rulebook, and once in numbers - onSell, onBuy, dischargeStep, followsPrice, decayToZero - for whatever is reading the data. docs/js/engine.js plays the game off the numbers and tools/build-annex.mjs prints the prose, so a model cannot be changed in one place and left saying the old thing in the other. `decayToZero` is when the memory walks one cell back toward nothing: `empty-tally` at the end of a round the board is holding none, `no-move` at the end of a round the price did not move, and null for a ratchet, which is the whole of the depletion model.",
+
+  "models": [
+    {
+      "id": "glut",
+      "name": "Glut",
+      "line": "What does not sell rots.",
+      "history": "The oldest story in any market that grows things. A good harvest is a bad year: the stuff turns up whether anybody wants it or not, it keeps badly, and what is still in the warehouse when the season turns has to be shifted at whatever it will fetch. Two good years running and the price is on the floor before the third is planted.",
+      "tally": {
+        "uses": true,
+        "onSell": 1,
+        "onBuy": -1,
+        "dischargeStep": -1,
+        "means": "The board's unsold stock. Every token sold to the board goes on it; every token bought off the board comes back down.",
+        "full": "Take the bar back to empty and step the memory one cell DOWN. The stock rotted and the market has had its fill."
+      },
+      "memory": {
+        "from": -3,
+        "to": 0,
+        "followsPrice": false,
+        "decayToZero": "empty-tally",
+        "moves": "Down one cell each time the tally fills.",
+        "decays": "Up one cell toward zero at the end of any Market phase that ends with an empty tally. A market forgets last year's glut as soon as it runs short.",
+        "note": "A glut memory never goes above zero. Wanting a thing badly is not this model's business; it is the swing's, and the red dice do it every round."
+      },
+      "assigns": "Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned.",
+      "mark": {
+        "id": "heaped-measure",
+        "path": "M 2.2 20.6 H 21.8 M 3.6 12.2 H 20.4 M 3.6 12.2 Q 12 4.4 20.4 12.2 M 6.2 12.2 L 8.2 20.6 M 17.8 12.2 L 15.8 20.6",
+        "$note": "A bushel measure standing on the ground line, its rim wider than it is, and the harvest heaped over the rim past both edges. The overhang is the whole message: read at chit size it is a container with more in it than it holds. The first draft closed the measure at the bottom and sprang the heap from its widest point, which is a bucket with a handle, and a bucket says nothing at all."
+      }
+    },
+    {
+      "id": "hype",
+      "name": "Hype",
+      "line": "It is bought because it is going up.",
+      "history": "The market that runs on its own reputation. Nobody needs a jewel, a bolt of fine cloth or a famous horse - they want it because of what owning it says, and what it says is loudest when everybody can see the price climbing. So a rise makes buyers and buyers make a rise, until the day it does not and the whole thing runs the other way just as fast.",
+      "tally": {
+        "uses": false,
+        "onSell": 0,
+        "onBuy": 0,
+        "dischargeStep": 0,
+        "means": "Not used. A hype line's memory is the price's own last move, and a token that has just moved is its own counter - there is nothing left to count.",
+        "full": null
+      },
+      "memory": {
+        "from": -3,
+        "to": 3,
+        "followsPrice": true,
+        "decayToZero": "no-move",
+        "moves": "One cell in whatever direction the price token just went, moved in the same gesture: your hand is already on the line, push the memory bar the way you pushed the price.",
+        "decays": "One cell toward zero on any round the price token did not move at all.",
+        "note": "This is the only model whose memory moves every single round, and the only one that can be strongly negative and strongly positive in the same game. A hype line is where the money is and where the ruin is."
+      },
+      "assigns": "The luxury trade: low bulk, high value, wanted for what it is rather than for what it does.",
+      "mark": {
+        "id": "rising-run",
+        "path": "M 3 19 L 8.5 13.5 L 12.5 16.5 L 20 7 M 20 7 L 14.5 7 M 20 7 L 20 12.5",
+        "$note": "A run of prices going up, with the arrow at the top of it. The one mark in the set that says which way it is pointing."
+      }
+    },
+    {
+      "id": "deplete",
+      "name": "Depletion",
+      "line": "The easy ore came out first.",
+      "history": "The rule for anything that comes out of a hole. The first seam is at the surface and the last one is under water at the bottom of a shaft, so every ton that leaves makes the next ton dearer to win - and none of it grows back inside a lifetime. A mining town's prices only ever go one way, and the boom is the part before everybody notices.",
+      "tally": {
+        "uses": true,
+        "onSell": 1,
+        "onBuy": 0,
+        "dischargeStep": 1,
+        "means": "The depletion grid. Every token sold to the board came out of the ground and is gone; it goes on the tally and never comes off, because nobody can put it back.",
+        "full": "Take the bar back to empty and step the memory one cell UP. That step is permanent, and it is the only mark in this game that is."
+      },
+      "memory": {
+        "from": 0,
+        "to": 3,
+        "followsPrice": false,
+        "decayToZero": null,
+        "moves": "Up one cell each time the tally fills.",
+        "decays": "Never. This is the only track in the game that does not come back, and it is the whole point of the model.",
+        "note": "At +3 the seam is as good as worked out: the line spends the rest of the game bid up by three before a die is thrown, and the town that owns the last deposit owns the market."
+      },
+      "assigns": "Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry.",
+      "mark": {
+        "id": "run-glass",
+        "path": "M 5.5 3 H 18.5 M 5.5 21 H 18.5 M 6.5 3 L 12 12 L 6.5 21 M 17.5 3 L 12 12 L 17.5 21 M 8.8 19.4 Q 12 16 15.2 19.4",
+        "$note": "A glass with the sand already down in the bottom bulb. Not a pick and not a shaft: what this model is about is the sand, not the digging - and not a trickle either, because a trickle drawn between two converging lines is invisible at the size this is engraved."
+      }
+    }
+  ],
+
+  "tokenMark": {
+    "$comment": "Where a player finds out which model a commodity runs under, without a lookup. The commodity's own hexagonal token carries its model's mark in a corner, beside the family mark it already carries - so the piece you are about to stand on a line tells you how that line behaves. The market board prints the three marks in its foot as a key, and never on a line, because a line is not about anything until a token is standing on it.",
+    "on": "components.json tokens.commodity",
+    "drawnBy": "components.json marks.pricing"
+  }
+}
