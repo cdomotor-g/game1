@@ -136,6 +136,26 @@ Draw `subject` **loose** — a couple of per cent outside what you think. The cr
 grows this box; it never shrinks it, so being generous costs you scenery and being
 mean costs you the subject.
 
+Better than drawing it: **measure the ink and let the arithmetic run backwards.**
+
+```bash
+node tools/plate-map.mjs  MON-13                       # where the ink is, as text
+node tools/aim-solve.mjs  MON-13 --keep 0.10,0.015,0.92,0.801 \
+                                 --focal 0.419,0.238 --spend top
+```
+
+`--keep` is the ink as EDGES, which is how a measurement reads off a page.
+`--spend` is the honest half: when a window's budget is smaller than the subject
+the question stops being *where does the box go* and becomes *what am I giving
+up*, and `aim-solve` will put the loss exactly where you say and tell you what it
+cost. It will not choose for you, and the `note` it writes says TODO until you do.
+
+It searches rather than inverting `crop()`, so it cannot drift from the crop the
+cards actually use — and it is not sentimental about the box. The box is a
+**control input**, not a description: on a subject that overflows its window the
+answer often starts below the top of the ink and lets `pad` carry the difference,
+which is a thing nobody would write by hand and which is exactly right.
+
 Then **look at what you chose**:
 
 ```bash

@@ -28,7 +28,7 @@
  */
 import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
-import { survey, platePath, briefFor, assemble, minLongSideFor } from './lib/mint.mjs';
+import { assemble, briefFor, minLongSideFor, platePath, survey, windowNote } from './lib/mint.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -72,7 +72,10 @@ for (const target of targets) {
     process.exit(1);
   }
 
-  const prompt = assemble(brief);
+  /* The window is appended to every commission, computed, because no brief can
+     know what shape the card it feeds will be - build-cards decides that from
+     the deck's wordiest rule, and it moves. See windowNote in lib/mint.mjs. */
+  const prompt = assemble(brief, windowNote(ROOT, line, row));
   const out = join(ROOT, platePath(line, row));
 
   if (existsSync(out) && !flag('force')) {

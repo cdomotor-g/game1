@@ -41,9 +41,16 @@ say so and stop. Do not guess which card was meant.
    route, a non-200 — it prints the commission instead and exits clean. Hand that
    to the user to paste into an image model, tell them the exact filename to save
    it as, and stop there. Do not pretend a plate exists.
-3. **Aim it.** Read the plate. Check it against the acceptance checklist in
-   `docs/art/07-ai-agent-brief.md`, then write `subject`, `focal` and `note` into
-   `docs/art/framing.json`. `subject` is the veto — what may not be cut. `focal`
+3. **Aim it.** Read the plate — once. Check it against the acceptance checklist
+   in `docs/art/07-ai-agent-brief.md`. Then measure rather than guess:
+   `node tools/plate-map.mjs <code>` prints the ink as a character map with
+   rulers, and `node tools/aim-solve.mjs <code> --keep x0,y0,x1,y1 --spend
+   top|bottom|even --write` turns that measurement into the entry. The
+   measurement only has to be close: the solver reports what every window does
+   with it in text, so correcting happens there rather than by opening the
+   picture again. Then write `subject`, `focal` and `note` into
+   `docs/art/framing.json` — or let `--write` do the first two and write the
+   `note` yourself, which is the only part no tool can. `subject` is the veto — what may not be cut. `focal`
    is the aim — the one point the picture is of, a face or an eye. Both, always;
    a subject box alone centres the crop on a standing figure's sternum.
    Check the numbers by looking at them, not by imagining them:
@@ -58,7 +65,9 @@ say so and stop. Do not guess which card was meant.
    what to spend, and the `note` is where that choice is written down.
    `node tools/validate-framing.mjs` then confirms the trim you meant and no
    others.
-4. **Build and check** with the list at the foot of `CLAUDE.md`, in that order.
+4. **Build and check.** `node tools/mint-build.mjs <code>` is the six tools a
+   landing plate needs, in order, and it proofs the card at the end. The full
+   list at the foot of `CLAUDE.md` is for when `data/` has moved.
 5. **Show it.** `node tools/card-proof.mjs <code>` renders the finished card —
    frame, strip, picture, rules, story rail — to `docs/art/proofs/<code>.png`.
    **Put that image in the reply**, so the run ends with the card in front of the

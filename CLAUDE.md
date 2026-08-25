@@ -206,9 +206,19 @@ git-ignored, on the same reasoning as the map proof sheets — a proof is a
 photograph of the artefact, never the artefact.
 
 ```bash
+node tools/plate-map.mjs   <code>   # WHERE THE INK IS, as text, before anything
+node tools/aim-solve.mjs   <code> --keep x0,y0,x1,y1 --spend top|bottom|even
 node tools/aim-preview.mjs <code>   # the CROP, before the framing numbers are settled
 node tools/card-proof.mjs  <code>   # the CARD as built, after
 ```
+
+`plate-map` prints the plate as a character map with rulers on it, so a subject
+can be measured without opening four magnified strips of it. `aim-solve` runs
+that measurement the other way through `crop()` — you say what the ink is and
+which edge you are willing to spend, it says what the box has to be. It does not
+invert the arithmetic, it searches, so it cannot drift from the crop the cards
+use; and it writes `note: TODO`, because where the loss goes is a decision and
+only somebody looking at the picture can make it.
 
 `aim-preview` cuts a plate exactly as the card window and the explorer thumbnail
 will — same `crop()`, and the card window is read off the built card rather than
@@ -236,6 +246,10 @@ paragraph about a card, and no card, has not shown its work — and a proof nobo
 read, yourself included, is not a check.
 
 ## Before pushing
+
+A plate landing is not a change to the data and does not need this list.
+`node tools/mint-build.mjs <code>` runs the six tools it does need, in order,
+and proofs the card. Everything below is for when `data/` has moved.
 
 ```bash
 node tools/validate-data.mjs   # referential integrity and design smells

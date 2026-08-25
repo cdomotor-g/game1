@@ -128,10 +128,89 @@ export function briefFor(root, dir, file, plateId) {
  * subject section carries a literal [PREAMBLE] where the shared style goes -
  * that is what keeps a prompt file readable - so this is where it is spent.
  */
-export function assemble(brief) {
+export function assemble(brief, extra) {
   if (!brief) return null;
-  const body = brief.preamble ? brief.subject.replace('[PREAMBLE]', brief.preamble) : brief.subject;
+  let body = brief.preamble ? brief.subject.replace('[PREAMBLE]', brief.preamble) : brief.subject;
+  if (extra) body = `${body}\n\n${extra}`;
   return brief.negative ? `${body}\n\nNEGATIVE PROMPT.\n${brief.negative}` : body;
+}
+
+/**
+ * What the card window will actually keep of this plate, in numbers, for the
+ * artist who cannot see the card.
+ *
+ * Every FRAMING block in docs/art/prompts/ names a band - "inside the middle 70%
+ * of the page height" - and that figure is typed, identical across every deck,
+ * and not derived from anything. It is also, on the monsters deck, wrong: a 1.10
+ * window on an A4 page keeps 64.2% of its height, so a brief promising 70% is
+ * promising room that does not exist. Vhalrik's crown was drawn to the top
+ * margin against a band that could never have held it, and the crop had to spend
+ * the tips of his horns.
+ *
+ * So the commission says the real number, worked out the way everything else
+ * here is worked out - the deck's own card window over the page the deck's own
+ * plateFormat asks for. It is appended rather than substituted into the briefs
+ * because there is no brief it does not apply to, and a marker every prompt file
+ * had to grow would be a marker somebody would forget.
+ *
+ * Silent when it cannot be sure: a deck with no card built yet has no window to
+ * read, and a guess here is worse than nothing.
+ */
+export function windowNote(root, line, row) {
+  const spec = line.draw?.sizeByFormat?.[row.format];
+  if (!spec || !row.group) return '';
+  const [pw, ph] = spec.split('x').map(Number);
+  if (!pw || !ph) return '';
+
+  const components = readJson(join(root, 'data', 'components.json'));
+  const deck = components.decks.find((d) => d.name === row.group);
+  if (!deck) return '';
+
+  let win = null;
+  for (const card of cardsOfDeck(root, deck)) {
+    const svg = join(root, 'docs', 'cards', `${card.cardCode}.svg`);
+    if (!existsSync(svg)) continue;
+    const m = readFileSync(svg, 'utf8')
+      .match(/id="portrait-window"><rect x="[\d.]+" y="[\d.]+" width="([\d.]+)" height="([\d.]+)"/);
+    if (m) { win = { w: Number(m[1]), h: Number(m[2]) }; break; }
+  }
+  if (!win) return '';
+
+  const aspect = win.w / win.h;
+  const keepW = Math.min(1, (ph * aspect) / pw);
+  const keepH = Math.min(1, pw / aspect / ph);
+  const round = (n) => Math.round(n * 100);
+  const band = (keep) => [round((1 - keep) / 2), 100 - round((1 - keep) / 2)];
+
+  /* Wrapped like everything else in a commission. These are pasted into image
+     models and read by people, and one 140-column line in a block of 75s reads
+     as something bolted on afterwards - which it is, and it should not look it. */
+  const wrap = (text, width = 75) => text.split(' ').reduce((lines, word) => {
+    const last = lines[lines.length - 1];
+    if (last && `${last} ${word}`.length <= width) lines[lines.length - 1] = `${last} ${word}`;
+    else lines.push(word);
+    return lines;
+  }, []).join('\n');
+
+  const provenance = `(Worked out from this deck's card window, ${win.w} x ${win.h}, ` +
+    `on the ${pw} x ${ph} page this deck is drawn at. It is not a rule of thumb.)`;
+
+  if (keepW > 0.995 && keepH > 0.995) {
+    return wrap('WINDOW. The card cut from this plate keeps very nearly the whole page, ' +
+      `so the FRAMING band above is the only constraint. ${provenance}`);
+  }
+  const parts = [];
+  if (keepH <= 0.995) {
+    parts.push(`only the middle ${round(keepH)}% of its height - everything that matters ` +
+      `must sit between ${band(keepH)[0]}% and ${band(keepH)[1]}% down the page`);
+  }
+  if (keepW <= 0.995) {
+    parts.push(`only the middle ${round(keepW)}% of its width - between ` +
+      `${band(keepW)[0]}% and ${band(keepW)[1]}% across`);
+  }
+  return wrap('WINDOW. This plate is cut down to a card, and the card keeps ' +
+    `${keepW > 0.995 ? 'the full width of the page but ' : ''}${parts.join(', and ')}. ` +
+    `Outside that band nothing can be relied on, whatever else this brief says. ${provenance}`);
 }
 
 /* ------------------------------------------------------------------ subjects */
