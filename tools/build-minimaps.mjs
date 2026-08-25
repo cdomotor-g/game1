@@ -474,16 +474,21 @@ const index = `<!doctype html>
   .bar a { color: ${T85}; }
   figure { margin: 0 0 18px; }
   figcaption { font-family: ${SANS}; font-size: 12.5px; color: ${T70}; margin-top: 4px; }
-  .sheets object { width: 100%; aspect-ratio: ${num(W)} / ${num(H)}; border: 1px solid ${T25};
-                   background: ${TALLOW}; border-radius: 10px; }
+  .sheets img { display: block; width: 100%; aspect-ratio: ${num(W)} / ${num(H)}; border: 1px solid ${T25};
+                background: ${TALLOW}; border-radius: 10px; }
   @media print {
     .wrap { max-width: none; margin: 0; padding: 0; }
-    .bar, h1, h2, p.note, figcaption { display: none; }
+    /* Nothing on the paper but the sheet. Naming what to hide goes stale the
+       first time the page grows a heading it has not heard of - which is exactly
+       how the market sheet came to print a second page carrying three stray
+       <h3>s - so this names what to KEEP instead, and cannot rot. */
+    .wrap > *:not(.sheets) { display: none; }
+    .sheets figcaption { display: none; }
     .sheets figure { position: relative; width: ${MM.sheet.widthMm}mm; height: ${MM.sheet.heightMm}mm; overflow: hidden;
                      break-after: page; page-break-after: always; margin: 0; }
-    .sheets object { position: absolute; left: -${MM.sheet.bleedMm}mm; top: -${MM.sheet.bleedMm}mm;
-                     width: ${num(MM.sheet.widthMm + 2 * MM.sheet.bleedMm)}mm; height: ${num(MM.sheet.heightMm + 2 * MM.sheet.bleedMm)}mm;
-                     border: 0; border-radius: 0; aspect-ratio: auto; }
+    .sheets img { position: absolute; left: -${MM.sheet.bleedMm}mm; top: -${MM.sheet.bleedMm}mm;
+                  width: ${num(MM.sheet.widthMm + 2 * MM.sheet.bleedMm)}mm; height: ${num(MM.sheet.heightMm + 2 * MM.sheet.bleedMm)}mm;
+                  border: 0; border-radius: 0; aspect-ratio: auto; }
     @page { size: A4 landscape; margin: 0; }
   }
 </style>
@@ -511,8 +516,15 @@ those, re-run the tool, and never these files.</p>
 <h2>Why the grid is hexagonal</h2>
 <p class="note">${esc(spec.hexGrid.why)}</p>
 <h2>The sheets</h2>
+<!-- <img>, not <object>. An <object> is a nested browsing context, and a nested
+     browsing context is the one thing a print preview is not obliged to paint. On
+     this page that is not a degraded print, it is a blank sheet: everything else is
+     display:none by then, so the sheet is the only thing on the paper. The card
+     sheet pays that price on purpose - an SVG in an <img> may not fetch the plate it
+     draws, and the plate is the card - but these sheets draw every mark themselves and
+     fetch nothing, so they have nothing to buy with it. -->
 <div class="sheets">
-${terrain.terrains.map((t) => `  <figure><object data="sheets/field-${t.id}.svg" type="image/svg+xml" aria-label="Mini-map: ${esc(t.name)}"></object><figcaption>${esc(t.name)} (${esc(t.code)}) — ${esc(palette.terrain[t.id].wash)}</figcaption></figure>`).join('\n')}
+${terrain.terrains.map((t) => `  <figure><img src="sheets/field-${t.id}.svg" alt="Mini-map: ${esc(t.name)}"><figcaption>${esc(t.name)} (${esc(t.code)}) — ${esc(palette.terrain[t.id].wash)}</figcaption></figure>`).join('\n')}
 </div>
 </div>
 </body>

@@ -13,16 +13,21 @@
   .bar a { color: #3D3630; }
   figure { margin: 0 0 18px; }
   figcaption { font-family: Helvetica, Arial, sans-serif; font-size: 12.5px; color: #5F564C; margin-top: 4px; }
-  .sheets object { width: 100%; aspect-ratio: 2424 / 1728; border: 1px solid #C0B7A9;
-                   background: #EDE4D1; border-radius: 10px; }
+  .sheets img { display: block; width: 100%; aspect-ratio: 2424 / 1728; border: 1px solid #C0B7A9;
+                background: #EDE4D1; border-radius: 10px; }
   @media print {
     .wrap { max-width: none; margin: 0; padding: 0; }
-    .bar, h1, h2, p.note, figcaption { display: none; }
+    /* Nothing on the paper but the sheet. Naming what to hide goes stale the
+       first time the page grows a heading it has not heard of - which is exactly
+       how the market sheet came to print a second page carrying three stray
+       <h3>s - so this names what to KEEP instead, and cannot rot. */
+    .wrap > *:not(.sheets) { display: none; }
+    .sheets figcaption { display: none; }
     .sheets figure { position: relative; width: 297mm; height: 210mm; overflow: hidden;
                      break-after: page; page-break-after: always; margin: 0; }
-    .sheets object { position: absolute; left: -3mm; top: -3mm;
-                     width: 303mm; height: 216mm;
-                     border: 0; border-radius: 0; aspect-ratio: auto; }
+    .sheets img { position: absolute; left: -3mm; top: -3mm;
+                  width: 303mm; height: 216mm;
+                  border: 0; border-radius: 0; aspect-ratio: auto; }
     @page { size: A4 landscape; margin: 0; }
   }
 </style>
@@ -50,18 +55,25 @@ those, re-run the tool, and never these files.</p>
 <h2>Why the grid is hexagonal</h2>
 <p class="note">The grid is hexagonal rather than square to give movement more, and more equal, options. A hex has six neighbours and every one of them is the same distance away; a square has four at one distance and four more at root two, so a square grid either lies about diagonals or forbids them. Six equal exits is what makes a route a choice rather than a staircase - it is why a road can bend without costing more than a road that does not, why flanking is a real position rather than an arithmetic exception, and why a party fleeing a monster has five ways out instead of three.</p>
 <h2>The sheets</h2>
+<!-- <img>, not <object>. An <object> is a nested browsing context, and a nested
+     browsing context is the one thing a print preview is not obliged to paint. On
+     this page that is not a degraded print, it is a blank sheet: everything else is
+     display:none by then, so the sheet is the only thing on the paper. The card
+     sheet pays that price on purpose - an SVG in an <img> may not fetch the plate it
+     draws, and the plate is the card - but these sheets draw every mark themselves and
+     fetch nothing, so they have nothing to buy with it. -->
 <div class="sheets">
-  <figure><object data="sheets/field-grassland.svg" type="image/svg+xml" aria-label="Mini-map: Grassland"></object><figcaption>Grassland (G) — #B9C9A8</figcaption></figure>
-  <figure><object data="sheets/field-forest.svg" type="image/svg+xml" aria-label="Mini-map: Forest"></object><figcaption>Forest (F) — #7E9E84</figcaption></figure>
-  <figure><object data="sheets/field-hills.svg" type="image/svg+xml" aria-label="Mini-map: Hills"></object><figcaption>Hills (H) — #C3AE8A</figcaption></figure>
-  <figure><object data="sheets/field-mountain.svg" type="image/svg+xml" aria-label="Mini-map: Mountain"></object><figcaption>Mountain (M) — #9AA3A8</figcaption></figure>
-  <figure><object data="sheets/field-marsh.svg" type="image/svg+xml" aria-label="Mini-map: Marsh"></object><figcaption>Marsh (B) — #8E9478</figcaption></figure>
-  <figure><object data="sheets/field-tundra.svg" type="image/svg+xml" aria-label="Mini-map: Tundra"></object><figcaption>Tundra (T) — #D2D3CE</figcaption></figure>
-  <figure><object data="sheets/field-desert.svg" type="image/svg+xml" aria-label="Mini-map: Desert"></object><figcaption>Desert (D) — #DCC79C</figcaption></figure>
-  <figure><object data="sheets/field-river.svg" type="image/svg+xml" aria-label="Mini-map: River"></object><figcaption>River (R) — #93B7CC</figcaption></figure>
-  <figure><object data="sheets/field-lake.svg" type="image/svg+xml" aria-label="Mini-map: Lake"></object><figcaption>Lake (L) — #86ACC4</figcaption></figure>
-  <figure><object data="sheets/field-shallow-water.svg" type="image/svg+xml" aria-label="Mini-map: Shallow Water"></object><figcaption>Shallow Water (S) — #7BA0B5</figcaption></figure>
-  <figure><object data="sheets/field-deep-water.svg" type="image/svg+xml" aria-label="Mini-map: Deep Water"></object><figcaption>Deep Water (O) — #4E7189</figcaption></figure>
+  <figure><img src="sheets/field-grassland.svg" alt="Mini-map: Grassland"><figcaption>Grassland (G) — #B9C9A8</figcaption></figure>
+  <figure><img src="sheets/field-forest.svg" alt="Mini-map: Forest"><figcaption>Forest (F) — #7E9E84</figcaption></figure>
+  <figure><img src="sheets/field-hills.svg" alt="Mini-map: Hills"><figcaption>Hills (H) — #C3AE8A</figcaption></figure>
+  <figure><img src="sheets/field-mountain.svg" alt="Mini-map: Mountain"><figcaption>Mountain (M) — #9AA3A8</figcaption></figure>
+  <figure><img src="sheets/field-marsh.svg" alt="Mini-map: Marsh"><figcaption>Marsh (B) — #8E9478</figcaption></figure>
+  <figure><img src="sheets/field-tundra.svg" alt="Mini-map: Tundra"><figcaption>Tundra (T) — #D2D3CE</figcaption></figure>
+  <figure><img src="sheets/field-desert.svg" alt="Mini-map: Desert"><figcaption>Desert (D) — #DCC79C</figcaption></figure>
+  <figure><img src="sheets/field-river.svg" alt="Mini-map: River"><figcaption>River (R) — #93B7CC</figcaption></figure>
+  <figure><img src="sheets/field-lake.svg" alt="Mini-map: Lake"><figcaption>Lake (L) — #86ACC4</figcaption></figure>
+  <figure><img src="sheets/field-shallow-water.svg" alt="Mini-map: Shallow Water"><figcaption>Shallow Water (S) — #7BA0B5</figcaption></figure>
+  <figure><img src="sheets/field-deep-water.svg" alt="Mini-map: Deep Water"><figcaption>Deep Water (O) — #4E7189</figcaption></figure>
 </div>
 </div>
 </body>

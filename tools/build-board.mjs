@@ -491,8 +491,8 @@ const index = `<!doctype html>
   .bar a.primary { color: ${SOOT}; font-weight: bold; }
   /* A4 landscape, corner and all: a preview with square corners is a preview of
      a board nobody is going to cut. */
-  .boards object { width: 100%; aspect-ratio: ${num(W)} / ${num(H)}; border: 1px solid ${T25};
-                   background: ${TALLOW}; border-radius: 10px; }
+  .boards img { display: block; width: 100%; aspect-ratio: ${num(W)} / ${num(H)}; border: 1px solid ${T25};
+                background: ${TALLOW}; border-radius: 10px; }
   figure { margin: 0; }
   table { border-collapse: collapse; font-size: 14px; margin: 8px 0 0; }
   th, td { text-align: left; padding: 5px 14px 5px 0; border-bottom: 1px solid ${T25}; vertical-align: top; }
@@ -505,11 +505,15 @@ const index = `<!doctype html>
      to the page instead and the board prints 2% small. */
   @media print {
     .wrap { max-width: none; margin: 0; padding: 0; }
-    .bar, h1, h2, p.note, table { display: none; }
+    /* Nothing on the paper but the board. Naming what to hide goes stale the
+       first time the page grows a heading it has not heard of - which is exactly
+       how the market sheet came to print a second page carrying three stray
+       <h3>s - so this names what to KEEP instead, and cannot rot. */
+    .wrap > *:not(.boards) { display: none; }
     .boards figure { position: relative; width: ${B.sheet.widthMm}mm; height: ${B.sheet.heightMm}mm; overflow: hidden; }
-    .boards object { position: absolute; left: -${B.sheet.bleedMm}mm; top: -${B.sheet.bleedMm}mm;
-                     width: ${num(B.sheet.widthMm + 2 * B.sheet.bleedMm)}mm; height: ${num(B.sheet.heightMm + 2 * B.sheet.bleedMm)}mm;
-                     border: 0; border-radius: 0; aspect-ratio: auto; }
+    .boards img { position: absolute; left: -${B.sheet.bleedMm}mm; top: -${B.sheet.bleedMm}mm;
+                  width: ${num(B.sheet.widthMm + 2 * B.sheet.bleedMm)}mm; height: ${num(B.sheet.heightMm + 2 * B.sheet.bleedMm)}mm;
+                  border: 0; border-radius: 0; aspect-ratio: auto; }
     @page { size: A4 landscape; margin: 0; }
   }
 </style>
@@ -546,7 +550,14 @@ ${TRACKS.map((t) => {
 
 <h2>The board</h2>
 <div class="boards">
-  <figure><object data="${BOARD_FILE}" type="image/svg+xml" aria-label="The player board"></object></figure>
+  <!-- <img>, not <object>. An <object> is a nested browsing context, and a nested
+       browsing context is the one thing a print preview is not obliged to paint. On
+       this page that is not a degraded print, it is a blank sheet: everything else is
+       display:none by then, so the board is the only thing on the paper. The card
+       sheet pays that price on purpose - an SVG in an <img> may not fetch the plate it
+       draws, and the plate is the card - but this board draws every mark itself and
+       fetches nothing, so it has nothing to buy with it. -->
+  <figure><img src="${BOARD_FILE}" alt="The player board"></figure>
 </div>
 </div>
 </body>
