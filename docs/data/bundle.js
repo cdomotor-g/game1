@@ -16211,6 +16211,21 @@ window.GAME_DATA = {
           0.42
         ]
       },
+      "monster-vhalrik-the-cinder-crowned": {
+        "file": "art/renders/monster-vhalrik-the-cinder-crowned.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.1,
+          0.1074,
+          0.82,
+          0.72
+        ],
+        "focal": [
+          0.419,
+          0.238
+        ]
+      },
       "people-dwarf": {
         "file": "art/renders/people-dwarf.png",
         "width": 1055,

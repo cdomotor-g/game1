@@ -97,6 +97,11 @@
       "subject": [0.02, 0.05, 0.96, 0.42],
       "note": "The spread wings and the lamb; the sea stack below carries as much as fits."
     },
+    "monster-vhalrik-the-cinder-crowned": {
+      "subject": [0.10, 0.1074, 0.82, 0.72],
+      "focal": [0.419, 0.238],
+      "note": "Crown down to the crossed forelimbs, wide enough to carry the wagon wheel. This plate ran its crown to the top margin rather than into the middle 70% the brief asked for, and MON-13 is a unique with a wordy rule, so its window is 1.10 and can hold only 0.643 of the page - the subject spans 0.79 and something the brief named had to go. The tips of the tallest horns go: the crown still reads as crown from 0.09 down, whereas a wheel cropped to a sliver reads as nothing at all."
+    },
     "vehicle-veh-01": {
       "subject": [0.03, 0.16, 0.94, 0.48],
       "note": "Locomotive to last carriage, with the smoke above the stack."
