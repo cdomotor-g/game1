@@ -16152,6 +16152,21 @@ window.GAME_DATA = {
           0.63
         ]
       },
+      "monster-hoarwyrm": {
+        "file": "art/renders/monster-hoarwyrm.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0.07,
+          0.099,
+          0.85,
+          0.63
+        ],
+        "focal": [
+          0.222,
+          0.568
+        ]
+      },
       "monster-mire-strangler": {
         "file": "art/renders/monster-mire-strangler.png",
         "width": 1055,

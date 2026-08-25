@@ -76,6 +76,11 @@
       "subject": [0.05, 0.10, 0.82, 0.63],
       "note": "The arch of plated back and the blind maw at the end of it."
     },
+    "monster-hoarwyrm": {
+      "subject": [0.07, 0.099, 0.85, 0.63],
+      "focal": [0.222, 0.568],
+      "note": "Tail tip to snout - all three undulations - and down past the horizon so the wyrm is seen to be flying over something. Whole at 0.539 of the page, which is the first plate in this deck small enough that both windows take the animal entire and nothing has to be traded. The white band and the reindeer leaving it are below any reachable crop; they are the story, not the subject. The box starts six thousandths below the tail tip and lets the pad carry it, because the lowest frost spikes on the ruff are the true bottom of the animal at 0.645 and the 5:4 thumbnail needs every pixel between the two."
+    },
     "monster-mire-strangler": {
       "subject": [0.04, 0.13, 0.92, 0.58],
       "note": "Both drowned trees, the bundle hung between them, and the first fan of roots."
