@@ -1,44 +1,84 @@
 {
-  "$comment": "The market board: the sheet the price of everything lives on.\n\nPrices were a number in a rulebook and a sum done in somebody's head - base value times a band, six bands, one town at a time - and nobody could see them. This is that sum, made physical: one line per commodity in play, six band cells to walk along it, and the commodity's own hexagonal token standing on the band that is its price today. Look at the table and you can see what everything is worth.\n\nEvery line is IDENTICAL and no commodity is named on the sheet. That is the whole design. A line is not the line for grain until somebody stands the grain token on it, and it stops being the grain line when they take it off. So one board serves a table of two or of five, any commodity, any town, and adding a sixty-seventh commodity to the game reprints nothing.\n\nThis file is content: what a line is for, what a token on it means, what the panel says. How the board is DRAWN - sheet, margin, how tall a line is cut, how wide a band cell gets - is declared once in components.json under `marketBoard`, the same division as the player board. The BANDS themselves are neither: they are rules.json market.priceBands, read at build time, because a board that restated them is a board that could disagree with the game.",
-  "version": "0.1.0",
+  "$comment": "The market board: the sheet the price of everything lives on, and now the sheet that decides it.\n\nPrices were a number in a rulebook and a sum done in somebody's head - base value times a band, six bands, drifting one step a round for one random family - and nobody could see them and nothing anybody did to a market had any bearing on it. This is that sum made physical AND made answerable. Five dice are thrown, the swing ruler across the foot says how far the price moves, and the two strips at the head of every line say what the market already knows: what the board is still holding, and how that has bent it.\n\nEvery line is IDENTICAL and no commodity is named on the sheet. That is still the whole design. A line is not the grain line until somebody stands the grain token on it, and it stops being the grain line when they take it off. The token brings everything particular with it - which commodity, what base value, and which of the three market-memory models the strips are running under, engraved in its corner. So one board serves a table of two or of five, any commodity, any town, and adding a sixty-seventh commodity to the game reprints nothing.\n\nThis file is content: what a line is for, what a token on it means, what the panel says. How the board is DRAWN - sheet, margin, how tall a line is cut, how wide a strip cell gets - is declared once in components.json under `marketBoard`, the same division as the player board. The BANDS are rules.json market.priceBands and the PRICING SYSTEM is data/pricing.json, both read at build time, because a board that restated them is a board that could disagree with the game.",
+  "version": "0.2.0",
 
   "board": {
     "id": "market-board",
     "name": "Market Board",
     "sheet": "A4 landscape",
-    "summary": "One sheet of identical price ladders. Stand a commodity's token on a band and that is what the commodity is worth; move it as the market drifts.",
+    "summary": "One sheet of identical market lines. Each carries a tally of what the board is holding, a memory from -3 to +3, and a price ladder walked by the commodity's own token - and the foot carries the dice, the elasticity strip and the swing ruler that move it.",
     "note": "The same sawn workbench as the player board (docs/art/06-components.md), routed with lines instead of columns. It carries no border, for the same reason the player board carries none: the paper the border took is another line.",
-    "generic": "Nothing on this board names a commodity, a town or a player. It is six numbers repeated until the paper runs out, and everything particular arrives on a token.",
-    "howMany": "One per town whose market the table is actually trading in - which in practice is one board for the neutral market plus one per player town that buys and sells. Print more of the same sheet."
+    "generic": "Nothing on this board names a commodity, a town or a player. It is three strips repeated until the paper runs out, and everything particular arrives on a token.",
+    "howMany": "One per town whose market the table is actually trading in - which in practice is one board for the neutral market plus one per player town that buys and sells. Six lines is a town's real traded list rather than its whole catalogue; a town dealing in more than six prints a second sheet.",
+    "dice": "Rolled on the table beside the board. The sheet carries what the dice MEAN - the roll key, the elasticity strip, the swing ruler - and does not pretend to be a tray it has no room to be."
   },
 
   "line": {
-    "$comment": "One commodity's price. Read left to right, cheap to dear.",
-    "identity": "The token IS the label. A line is not the grain line until somebody stands the grain token on it, and it stops being the grain line when they take it off - so a line has no name printed on it and needs none.",
-    "walks": "The commodity's own token (components.json tokens.commodity), one cell per band.",
+    "$comment": "One commodity's whole market, read left to right: what is left, what is remembered, what it costs.",
+    "identity": "The token IS the label. A line is not the grain line until somebody stands the grain token on it, and it stops being the grain line when they take it off - so a line has no name printed on it and needs none. The model mark on the token's corner says which of the three memory rules the strips on that line are running under, which is the other thing a name would have had to carry.",
+    "walks": "Three pieces: a bar on the tally, a bar on the memory, and the commodity's own hexagon on the ladder (components.json tokens).",
     "reads": "price = the commodity's baseValue x the band the token stands on. The base value is on the commodity's card and in the annex; the board holds the multiplier and only the multiplier.",
-    "setup": "Every token in play starts on the starting band (rules.json market.startingBandIndex) - the heavier-ruled cell - so a board at setup is a board with one straight column of tokens.",
-    "drift": "In the Market phase each town shifts one random commodity family up or down one band (rules.json market.driftPerRound). Move the tokens; nothing is written down.",
-    "spread": "What a player pays or receives when trading with the board rather than another player is the band price plus market.buySpread or plus market.sellSpread. The board does not print the spread - it is the same two numbers everywhere and it belongs in the rulebook, not on sixty-six lines."
+    "setup": "Every piece in play starts on the heavier-ruled cell of its strip: tallies empty, memories at zero, price tokens on the starting band (rules.json market.startingBandIndex). A board at setup is three straight columns.",
+    "moves": "In the Market phase, roll two red, two blue and one green for the line. Net = (Demand - Supply + Memory) x Elasticity, read the net on the swing ruler in the foot, and walk the price token that many bands. The whole sum is data/pricing.json formula.",
+    "spread": "What a player pays or receives when trading with the board rather than another player is the band price plus market.buySpread or plus market.sellSpread. The board does not print the spread - it is the same two numbers everywhere and it belongs in the rulebook, not on six lines."
+  },
+
+  "tally": {
+    "$comment": "The first strip: what the board is holding. It is not an abstraction and nothing has to be remembered to keep it right - it is a count of trades that just happened, walked as they happen.",
+    "is": "The board's own stock of that commodity. Sell a token to the board and the bar walks up one; buy one off the board and it walks back down one.",
+    "full": "A tally standing on its top cell at the end of the Market phase discharges: clear it to empty and step the memory one cell in the direction the commodity's model says. Which direction that is is the only thing the three models disagree about here.",
+    "unused": "A hype line never uses it - its memory is the price's own last move. The strip prints on every line anyway, exactly as the player board prints a mana track for a character with no magic: a generic sheet prints the furniture and the piece standing on it says what is being played."
+  },
+
+  "memory": {
+    "$comment": "The second strip, and the only thing on the table that remembers anything. Its number is added to the swing before the green die multiplies, so in a volatile season a market's history counts double - like everything else about that season.",
+    "is": "A modifier from -3 to +3, walked by a bar. Read it straight: a bar on -2 takes two off the swing this round and every round until something moves it.",
+    "moves": "What moves it is the commodity's model, and the model arrives on the token: a glut sinks when the board is left holding stock, a hype climbs after its own price, a depletion ratchets up as the seam is worked out and never comes back down. data/pricing.json models.",
+    "why": "This is what replaced the drift. Prices used to move for no reason anybody at the table had caused; now a market that has been dumped on stays cheap, and the player who dumped on it did that."
   },
 
   "tokens": {
     "$comment": "What stands on this board, and why it is that shape. The shapes themselves are components.json tokens.",
-    "commodity": "A hexagon, because there are hundreds of them and hexagons nest on a laser bed with shared cuts. It carries its family's mark and never a number - the number is where the token is standing.",
+    "commodity": "A hexagon, because there are hundreds of them and hexagons nest on a laser bed with shared cuts. It carries its family's mark and its pricing model's mark, and never a number - the number is where the token is standing.",
+    "bar": "A disc, and two per line: one on the tally and one on the memory. They carry nothing, which is right - a marker that said something would be a marker somebody had to put back the right way up.",
     "coin": "A disc, because a coin is round. Coins never go on this board; they cross the table when the trade is made.",
-    "note": "A player short of commodity tokens may stand a bar token on a line and remember what it is. They will not remember what it is."
+    "note": "A player short of commodity tokens may stand a bar token on a ladder and remember what it is. They will not remember what it is."
+  },
+
+  "foot": {
+    "$comment": "The working half of the sheet. The round is roll, read, move, and all three are printed here.",
+    "dice": {
+      "title": "THE ROLL",
+      "source": "pricing.dice",
+      "note": "Five dice for the whole table, not five per player. One player rolls the market for every line on the board."
+    },
+    "elasticity": {
+      "title": "ELASTICITY — THE GREEN DIE",
+      "source": "pricing.elasticity",
+      "note": "How hard the swing lands this season. Three cells, read straight off the green die."
+    },
+    "ruler": {
+      "title": "THE SWING",
+      "source": "pricing.ruler",
+      "note": "Find the net in a cell; the cell says how many bands the price token moves. This strip is the reason the board exists rather than a table in a book."
+    },
+    "models": {
+      "title": "WHAT A MARKET REMEMBERS",
+      "source": "pricing.models",
+      "note": "The key to the mark in the corner of every commodity token. Three rules, and a token tells you which one its line is running under."
+    }
   },
 
   "panel": {
-    "$comment": "The one thing a market board has to say out loud, printed from rules.json rather than restated here so the sheet and the rulebook cannot drift.",
+    "$comment": "The one thing a market board has to say out loud, printed from rules.json and pricing.json rather than restated here so the sheet and the rulebook cannot drift.",
     "id": "the-market",
     "title": "THE MARKET",
     "source": "rules.market",
     "lines": [
       "Town price = the commodity's base value × the band its token stands on.",
       "Buying from the board costs the spread on top; selling to it takes the spread off.",
-      "Cargo that starts or ends on your own road or rail sells for a tenth more (rules.json infrastructure.haulage)."
+      "The board sells no more of a commodity in a round than that round's supply roll. It will buy any quantity."
     ],
-    "foot": "Prices drift in the Market phase, one family a town, one band."
+    "foot": "Roll the market once per line, every Market phase."
   }
 }

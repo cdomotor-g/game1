@@ -142,6 +142,26 @@
         "$sizeNote": "About a third of a cell across. Three to a cell, set on a small triangle about the centre and nudged by `jitter` of their own size, so the field reads as ground rather than as wallpaper - and so no mark can reach the cell's edge and cross a grid line, which is the one thing a pattern on a hex grid must never do.",
         "$opacityNote": "Quieter than the grid ruled over it (minimap.grid) and far quieter than a figure standing on it. The pattern says what the ground IS at a glance; the moment it competes with the pieces it has failed, and that is what the flat-colour sheet was protecting against."
       }
+    },
+    "pricing": {
+      "$comment": "The three market-memory marks: a heaped measure, a rising run, a running glass. Same bargain as the element and terrain marks one storey up - the PATH is data on the model (data/pricing.json models[].mark) and this says how to draw it - and for the same reason. The mark is engraved in a corner of every commodity token and printed once in the foot of the market board as a key, so the piece in your hand and the sheet you are about to stand it on say `this is a glut good` the same way.\n\nThere are three of them and there will only ever be three, so they are held apart by SHAPE rather than by detail: a triangle sitting on a line, a line climbing to a point, an hourglass pinched in the middle. At token size the detail is gone and the silhouette is all that is left, which is the test every mark in this game is drawn to.",
+      "pathsFrom": "pricing.models[].mark.path",
+      "viewBox": "0 0 24 24",
+      "fill": "none",
+      "strokeWidth": 1.9,
+      "strokeLinecap": "round",
+      "strokeLinejoin": "round",
+      "onToken": {
+        "$comment": "The corner mark on a commodity token: small, low-contrast against the family mark it shares the face with, and engraved at the same single depth as everything else on an 18 mm chit.",
+        "sizeMm": 5.4,
+        "insetMm": 1.4,
+        "corner": "bottom-right",
+        "$note": "About a third of the token's width, tucked into the flat below the family mark. It is the second thing you read, never the first - the family mark says what it is and this says how its market behaves."
+      },
+      "onBoard": {
+        "$comment": "The key in the foot of the market board: the three marks in a row, each beside its model's name and its one line. It is the only place on the sheet where a mark appears at reading size.",
+        "sizeMm": 6.4
+      }
     }
   },
 
@@ -364,10 +384,10 @@
 
     "commodity": {
       "shape": "hex", "orientation": "flat-top", "acrossFlatsMm": 18, "engravable": true,
-      "carries": "the commodity family's mark and hatch, never a number",
+      "carries": "the commodity family's mark and hatch, and its pricing model's mark in the corner (marks.pricing.onToken) - never a number",
       "nesting": { "rowPitchMm": 18, "columnPitchMm": 15.59, "sharedEdges": true,
         "$note": "columnPitch is acrossFlats x 3/4 for a flat-top hex nested in a honeycomb: neighbouring columns interlock, and the cut between them is one line, not two." },
-      "$note": "The commodity's identity lives on its card; the token only has to say which family it belongs to and be findable in a heap. 18 mm is the chit tier in docs/art/04-iconography.md - silhouette and frame only - and the mark has to work as a single-depth engraving with no tint at all."
+      "$note": "The commodity's identity lives on its card; the token only has to say which family it belongs to, how its market behaves, and be findable in a heap. 18 mm is the chit tier in docs/art/04-iconography.md - silhouette and frame only - and both marks have to work as a single-depth engraving with no tint at all.\n\nThe pricing mark is the second thing on the face and it is there because the market board cannot carry it: a board line is not about anything until a token is standing on it, so the rule that line runs under has to arrive with the token. Pick up grain and you are holding a glut good; pick up iron ore and you are holding a hole in the ground."
     },
     "deposit": {
       "shape": "hex", "orientation": "flat-top", "acrossFlatsMm": 24, "engravable": true,
@@ -428,23 +448,53 @@
   },
 
   "marketBoard": {
-    "$comment": "The market board: one A4 sheet of price ladders, and every ladder identical.\n\nA town's price for a commodity is its base value times a band (rules.json market.priceBands), and the band is the only part that moves. So the board prints the bands and nothing else - no commodity is named on it, no base value is printed on it - and you say WHICH commodity a line is about by standing that commodity's hexagonal token on it. The token is both the label and the reading: where it stands is the price, and which token it is says what the price is of. One generic board serves any commodity, any town and any table, and a game that adds a sixty-seventh commodity reprints nothing.\n\nThere is no name strip down the side, and that is the design rather than an omission. A strip would need a second token, or a pencil, to say what a line was about - and the line already has a token saying exactly that.\n\nThe geometry is derived the way the player board's is: a band cell is what the paper leaves once the blocks and the gutter have taken theirs, and the sheet holds however many lines fit. Nothing below is a coordinate, and the one dimension that is not free is the token: a line is a token tall plus its clearance, so a bigger commodity token makes a taller line and fewer of them, and never a token that does not fit its cell.",
+    "$comment": "The market board: one A4 sheet of identical market lines, and every line the same three strips.\n\nA town's price for a commodity is its base value times a band (rules.json market.priceBands), and the band is the only part that moves. What MOVES it is data/pricing.json - two red dice, two blue, one green, bent by what the line has already been through. So a line is three strips read left to right: a TALLY of what the board is holding, a MEMORY from -3 to +3 that the tally moves, and the price LADDER the commodity's own token walks.\n\nNo commodity is named on any of it. You say which commodity a line is about by standing that commodity's hexagonal token on the ladder, and the token carries its pricing model's mark (marks.pricing.onToken) so it also says which of the three rules the tally and the memory are running under. The token is the label, the reading and the rulebook. One generic board serves any commodity, any town and any table, and a game that adds a sixty-seventh commodity reprints nothing.\n\nThere is no name strip down the side, and that is the design rather than an omission. A strip would need a second token, or a pencil, to say what a line was about - and the line already has a token saying exactly that.\n\nThe geometry is derived the way the player board's is, and there is not a coordinate below. The strips take a bar token's width plus its clearance; the ladder takes everything the strips and the gutters left; the sheet holds however many lines fit under the head and over the foot. A bigger commodity token makes a taller line and fewer of them. A seventh band narrows the ladder cells. An eighth ruler bin narrows the ruler. Nothing ever runs off the paper, and a cell too narrow for the piece that stands in it fails the build instead of printing.",
     "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6 },
     "marginMm": 8,
     "gutterMm": 6,
-    "headMm": 14,
-    "footMm": 12,
-    "$headNote": "One head row, at the top of the sheet, carrying every block's band labels - not one head over every line. Sixteen repetitions of x0.5 x0.75 x1 down a page is sixteen chances for the eye to lose which column it is in; one row and a ruled column edge does the job.",
-    "$footNote": "A strip across the bottom for the three lines a market board has to say out loud (marketboard.json panel). It is the only prose on the sheet.",
+    "headMm": 16,
+    "$headNote": "One head, at the top of the sheet, in two rows: the strip names and the band multipliers across the top, the per-cell numbers under them. Not one head over every line - six repetitions of 0 1 2 3 4 5 / -3 -2 -1 0 +1 +2 +3 / x0.5 x0.75 x1 down a page is six chances for the eye to lose which column it is in; one head and a ruled column edge does the job.",
+    "$footNote": "The foot is not a caption, it is the working half of the sheet: the dice, the elasticity strip that reads the green die, and the swing ruler that turns a roll into a number of bands. See `foot` below. Everything the round needs is on this one piece of paper.",
     "line": {
-      "$comment": "One commodity's price, read left to right, cheap to dear. A line is a row of band cells and nothing else.",
+      "$comment": "One commodity's whole market, read left to right: what the board is holding, what the market remembers, what it costs.",
       "clearanceMm": 1.5,
       "$heightNote": "A line's height is not stated: it is the commodity token's acrossFlats plus a clearance either side, so the token can be picked up out of a cell without lifting its neighbours.",
       "strokeWidth": 1.6,
       "bandStrokeWidth": 0.9
     },
+    "strip": {
+      "$comment": "The two memory strips at the head of every line - the tally and the modifier - each walked by a bar token rather than by the commodity's hexagon. That is why they are narrow: a bar is 7 mm and a commodity token is 18 mm, so thirteen strip cells cost less paper than four band cells and the ladder keeps the width it needs.\n\nWhich cells there are is not the board's business either. The tally runs pricing.json memory.tally from..to and the modifier runs pricing.json memory from..to, read at build time, because a board that restated them is a board that could disagree with the game.",
+      "clearanceMm": 1.2,
+      "$widthNote": "A strip cell is the bar token's diameter plus this clearance either side. Nothing else decides it, so a fatter bar widens the strips and narrows the ladder - in that order, and the build fails before the ladder gets too narrow for a hexagon.",
+      "gutterMm": 5,
+      "$gutterNote": "Between the tally and the modifier, and between the modifier and the ladder. Wide enough that a hand reaching for a bar does not knock the price token.",
+      "strokeWidth": 1.2,
+      "cellStrokeWidth": 0.6,
+      "zeroRule": { "strokeWidth": 2, "$note": "The zero cell of the modifier strip and the empty cell of the tally rule heavier, and are where both bars start. A board at setup is three straight columns of pieces: the tallies at empty, the modifiers at zero, the prices at the starting band." }
+    },
     "cell": { "minMm": 18, "$note": "A band cell has to be wider than a commodity token is across the CORNERS, which for a flat-top hex is acrossFlats x 2/root-3 - about 21 mm for an 18 mm token. tools/build-market.mjs checks it and fails rather than printing a board a token overhangs." },
-    "startBandRule": { "strokeWidth": 2.4, "$note": "The starting band (rules.json market.startingBandIndex) rules heavier and is where every token is placed at setup, so a board reset to nothing is a board with one straight column of tokens." },
+    "startBandRule": { "strokeWidth": 2.4, "$note": "The starting band (rules.json market.startingBandIndex) rules heavier and is where every price token is placed at setup." },
+    "foot": {
+      "$comment": "Three rows under the ladders, and they are the reason this board is worth printing rather than looking up. The round is: roll five dice, read the elasticity strip, read the swing ruler, move the token. All four of those things are on this foot.\n\nIts columns are the LINE's columns, not new ones: the dice and the elasticity strip sit under the two memory strips and are exactly as wide, the swing ruler sits under the ladder and is exactly as wide. So the foot cannot drift out of alignment with the board above it - it is measured off the same arithmetic.",
+      "ruleStrokeWidth": 1.2,
+      "gapMm": 3,
+      "rows": [
+        { "id": "ruler", "heightMm": 19, "$note": "The dice key and the elasticity strip on the left; the swing ruler on the right, one cell per bin in pricing.json ruler.bins, each printing the net it covers and the bands it moves." },
+        { "id": "models", "heightMm": 13, "$note": "The three market-memory models across the full width: mark, name, and the one line that says what the model is. The key to the corner mark on every commodity token." },
+        { "id": "panel", "heightMm": 9, "$note": "The prose. marketboard.json panel, and the only sentences on the sheet." }
+      ],
+      "$heightNote": "The foot's height is the sum of its rows plus a gap above each - so adding a row shortens the ladders and takes a line or two off the sheet, which is the correct thing for it to do and the reason no height is typed twice.",
+      "cellStrokeWidth": 0.8,
+      "diceInk": {
+        "$comment": "The three dice are called red, blue and green at the table (pricing.json dice[].colour) and the palette has no red, blue or green - it has oxide, slate and verdigris (docs/art/palette.json). This is the one place the two vocabularies are tied together, so the sheet cannot invent a colour and the rulebook does not have to learn a pigment name.",
+        "red": "oxide",
+        "blue": "slate",
+        "green": "verdigris",
+        "swatchMm": 6.2,
+        "$swatchNote": "A die drawn at the size a die is. The colour is on the WASH plate and the outline and the face letter on the ink, so the black-and-white edition still has three distinguishable dice."
+      },
+      "$slackNote": "Whatever the paper has left between the last line and the foot is slack - the remainder of a division, nothing more, and usually a millimetre or two. It is deliberately not ruled into a dice tray: at A4 there is no room for one that a hand could throw into, and a tray too small to use is a line of six commodities thrown away for a decoration. The dice are rolled on the table beside the board, where dice have always been rolled."
+    },
     "timber": { "boardWidthMm": 26, "seamStrokeWidth": 1.1, "grainStrokeWidth": 0.7, "grainOpacity": 0.5, "knots": 2,
       "$note": "The same sawn ground as the player board. They are the same piece of furniture in two sizes and they should look it." }
   }

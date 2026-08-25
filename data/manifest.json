@@ -5,6 +5,7 @@
   "datasets": [
     { "key": "rules", "file": "rules.json", "collection": null, "summary": "Tunable constants: round structure, effort, food, storage, market, carrying, victory." },
     { "key": "commodities", "file": "commodities.json", "collection": "commodities", "idField": "id", "summary": "Every storable, tradeable good." },
+    { "key": "pricing", "file": "pricing.json", "collection": "models", "idField": "id", "summary": "How a price is arrived at: the red, blue and green dice, the elasticity strip, the swing ruler, and the three market-memory models every commodity runs under." },
     { "key": "tools", "file": "tools.json", "collection": "tools", "idField": "id", "summary": "Equipment that gates recipes and wears out." },
     { "key": "buildings", "file": "buildings.json", "collection": "buildings", "idField": "id", "summary": "Everything that can be constructed on a tile." },
     { "key": "recipes", "file": "recipes.json", "collection": "recipes", "idField": "id", "summary": "Every job worker effort can be allocated to." },
@@ -40,6 +41,7 @@
     "$comment": "Cross-file references the validator checks. Path is a dotted path from the dataset root; [] means 'every element'.",
     "checks": [
       { "from": "commodities", "path": "commodities[].category", "to": "commodities.categories" },
+      { "from": "commodities", "path": "commodities[].pricing", "to": "pricing" },
       { "from": "tools", "path": "tools[].craft.inputs[].commodity", "to": "commodities" },
       { "from": "tools", "path": "tools[].madeAt", "to": "buildings" },
       { "from": "tools", "path": "tools[].enables[]", "to": "recipes" },
