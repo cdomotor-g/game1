@@ -136,6 +136,10 @@
       "subject": [0.03, 0.09, 0.94, 0.90],
       "note": "Envelope nose to propeller, gondola and all four crew, down through the cloud bank to the far horizon."
     },
+    "vehicle-veh-17": {
+      "subject": [0.02, 0.02, 0.96, 0.88],
+      "note": "Envelope crown down through the sail and the bow hinge to the gondola and the rowers."
+    },
     "talisman-tal-01": {
       "subject": [0.22, 0.10, 0.62, 0.85],
       "note": "The knot at the top of the thong down to the three marked charms."
