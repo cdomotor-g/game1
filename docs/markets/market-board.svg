@@ -400,13 +400,13 @@
     <text x="2250.97" y="1366.4" font-size="40" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="bold">+3</text>
     <text x="2250.97" y="1404.8" font-size="15.2" text-anchor="middle" letter-spacing="2.08" font-family="Helvetica, Arial, sans-serif" fill="#7F7568">SPIKE</text>
     <text x="88" y="1460.8" font-size="17.6" text-anchor="start" letter-spacing="2.08" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">WHAT A MARKET REMEMBERS</text>
-    <g transform="translate(88 1475.2) scale(2.13)" fill="none" stroke="#1A1714" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M 4.5 10.5 L 6.5 20.5 L 17.5 20.5 L 19.5 10.5 Z M 3.5 10.5 Q 12 2.5 20.5 10.5 M 2.4 13.6 L 2.4 15.6 M 21.6 13.6 L 21.6 15.6"/></g>
+    <g transform="translate(88 1475.2) scale(2.13)" fill="none" stroke="#1A1714" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M 2.2 20.6 H 21.8 M 3.6 12.2 H 20.4 M 3.6 12.2 Q 12 4.4 20.4 12.2 M 6.2 12.2 L 8.2 20.6 M 17.8 12.2 L 15.8 20.6"/></g>
     <text x="155.2" y="1502.4" font-size="24.8" font-weight="bold">Glut</text>
     <text x="155.2" y="1530.4" font-size="19.2" fill="#3D3630">What does not sell rots.</text>
     <g transform="translate(837.33 1475.2) scale(2.13)" fill="none" stroke="#1A1714" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M 3 19 L 8.5 13.5 L 12.5 16.5 L 20 7 M 20 7 L 14.5 7 M 20 7 L 20 12.5"/></g>
     <text x="904.53" y="1502.4" font-size="24.8" font-weight="bold">Hype</text>
     <text x="904.53" y="1530.4" font-size="19.2" fill="#3D3630">It is bought because it is going up.</text>
-    <g transform="translate(1586.67 1475.2) scale(2.13)" fill="none" stroke="#1A1714" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M 5.5 3 L 18.5 3 M 5.5 21 L 18.5 21 M 6.5 3 L 12 12 L 6.5 21 M 17.5 3 L 12 12 L 17.5 21 M 12 12 L 12 17.5"/></g>
+    <g transform="translate(1586.67 1475.2) scale(2.13)" fill="none" stroke="#1A1714" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M 5.5 3 H 18.5 M 5.5 21 H 18.5 M 6.5 3 L 12 12 L 6.5 21 M 17.5 3 L 12 12 L 17.5 21 M 8.8 19.4 Q 12 16 15.2 19.4"/></g>
     <text x="1653.87" y="1502.4" font-size="24.8" font-weight="bold">Depletion</text>
     <text x="1653.87" y="1530.4" font-size="19.2" fill="#3D3630">The easy ore came out first.</text>
     <text x="88" y="1590.4" font-size="21.6" text-anchor="start" letter-spacing="2.08" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">THE MARKET</text>

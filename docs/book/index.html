@@ -162,7 +162,7 @@
 <p><strong>3. Actions.</strong> In turn order, players spend their hours. This is the whole game.</p>
 <p><strong>4. Production Tick.</strong> Advance every progress track at once: construction, crop growth, wine ageing, cargo in transit, livestock breeding.</p>
 <p><strong>5. Feeding.</strong> Every town pays food upkeep from stock held in that town. Shortfalls become unrest.</p>
-<p><strong>6. Market.</strong> Price bands drift, and turn order passes to the left.</p>
+<p><strong>6. Market.</strong> Roll the market: two red dice for demand, two blue for supply and one green for elasticity, per commodity line in play, bent by what that line remembers. Trade at the new price, walk the tallies, and turn order passes to the left. See <a href="#c-04-trade">04-trade.md</a>.</p>
 <h2 id="effort">Effort</h2>
 <p>One d6 per worker, by default. The pips are hours; a 6 is a good day and a 1 is a bad one. A three-worker town rolls 3d6 and gets somewhere between 3 and 18 hours, usually about 10.</p>
 <p>That variance is the point. It is small enough to plan around and large enough that you cannot cut your margins to zero.</p>
@@ -200,11 +200,12 @@
 <section class="chapter" id="c-02-economy">
 <h1 id="02-the-economy">02 — The economy</h1>
 <h2 id="commodities">Commodities</h2>
-<p>63 of them, in eleven categories. Every commodity carries four numbers that matter:</p>
+<p>66 of them, in eleven categories. Every commodity carries five numbers that matter:</p>
 <ul><li><strong>bulk</strong> — storage slots per unit, and capacity cost when shipped</li>
 <li><strong>baseValue</strong> — coin at price band 1.0</li>
 <li><strong>perishRounds</strong> — how long it keeps outside a granary, if it perishes at all</li>
-<li><strong>category</strong> — which price band it moves with</li></ul>
+<li><strong>category</strong> — what it is, and what an event card shoves when it shoves a family</li>
+<li><strong>pricing</strong> — which of the three market-memory models its own price runs under: a glut that drowns when you flood it, a hype that runs after its own price, or a depletion that ratchets one way for the rest of the game. See <a href="#c-04-trade">04-trade.md</a>.</li></ul>
 <p>The interesting derived number is <strong>value per slot</strong>: <code>baseValue / bulk</code>. Logs are 2 coin per slot; jewellery is 220. That ratio is the entire logistics game. Nobody ships raw logs across the map; everybody ships jewellery.</p>
 <h2 id="recipes">Recipes</h2>
 <p>83 recipes. The shape is always the same:</p>
@@ -312,11 +313,35 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <p><strong>With the board</strong> — buying and selling at a market at the current price band, paying a 15% spread each way. Always available, never a good deal, and the reason nobody ever gets truly stuck.</p>
 <p><strong>With other players</strong> — any goods, any coin, any price the two of you agree. No spread, no limit, and no enforcement beyond the table. This is where the game should get loud.</p>
 <h2 id="price-bands">Price bands</h2>
-<p>Every commodity category sits on a band: ×0.5, ×0.75, ×1.0, ×1.25, ×1.5 or ×2.0 of base value. Bands start at ×1.0 and drift one step each round for one random family. Event cards shove them harder — an iron shortage moves metals two bands for three rounds.</p>
-<p>Bands are per family, not per commodity, so a shortage is a <em>market</em> event you can plan around, not a lookup table you have to memorise.</p>
+<p>Every commodity sits on a band: ×0.5, ×0.75, ×1.0, ×1.25, ×1.5 or ×2.0 of base value. Bands start at ×1.0. Event cards shove them by family — an iron shortage moves metals two bands for three rounds — but what moves them every round is the roll below.</p>
+<h2 id="how-a-price-is-arrived-at">How a price is arrived at</h2>
+<p>Prices used to <em>drift</em>: one random family, one band, every round. It was a rule you could not plan against and could not affect. A player could sell four hundred grain into one town and the grain price would not notice.</p>
+<p>A price is rolled now, and then bent by what the market has already been through.</p>
+<p><strong>Two red dice are demand. Two blue dice are supply. One green die says how hard the swing lands.</strong> The whole sum is one line, and it is printed across the foot of the market board:</p>
+<pre><code>net = (Demand − Supply + Memory) × Elasticity</code></pre>
+<p>The green die is the elasticity: <strong>1–2 stable</strong> (×1, an ordinary season), <strong>3–4 volatile</strong> (×2, a thin market with nobody willing to stand in the middle of it — this is where crashes and spikes come from), <strong>5–6 inelastic</strong> (÷2 dropped toward zero: the town needs it whatever it costs, or cannot use a second one at any price).</p>
+<p>Then read the net on the <strong>swing ruler</strong>, seven cells across the foot of the board, and walk the price token that many bands:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Net</th><th>≤ −16</th><th>−15…−8</th><th>−7…−2</th><th>−1…+1</th><th>+2…+7</th><th>+8…+15</th><th>≥ +16</th></tr></thead>
+<tbody><tr><td>Bands</td><td>−3</td><td>−2</td><td>−1</td><td>hold</td><td>+1</td><td>+2</td><td>+3</td></tr>
+<tr><td></td><td>crash</td><td>slump</td><td>soften</td><td>hold</td><td>firm</td><td>rally</td><td>spike</td></tr></tbody></table></div>
+<p>With nothing remembered that is a market which holds still in about three rounds in eight, moves a band in half of them, and jumps two or three in the rest. <code>docs/markets/index.html</code> prints the exact odds, worked out from the ruler itself rather than claimed, at every value the memory can hold.</p>
+<p>One more rule, and it is what makes a shortage bite: <strong>the board sells no more of a commodity in a round than that round's supply roll</strong>, first come first served in turn order. It will buy any quantity — a market always has room for more of what nobody wants. A low blue roll is a shortage twice over: dear, and rationed.</p>
+<h2 id="what-a-market-remembers">What a market remembers</h2>
+<p>The dice are only half of it. Every line on the market board carries two strips, and they are the reason a market has a history instead of a mood.</p>
+<p>The <strong>memory</strong> is a modifier from −3 to +3, walked by a bar, added to the swing before the green die multiplies it — so in a volatile season a market's history counts double, like everything else about that season. The <strong>tally</strong> beside it is the board's own stock of that commodity: sell to the board and the bar walks up, buy from it and the bar walks back down. Every five tokens the tally fills, which takes it back to empty and steps the memory one cell. Nothing is written down; two pieces of wood are moved as the trade happens.</p>
+<p><strong>What direction it steps is the commodity's own business.</strong> Every commodity in the game runs under exactly one of three models, and the model is engraved in the corner of that commodity's token — so the piece you stand on a line tells you how that line behaves.</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th></th><th>What it is</th><th>Commodities</th></tr></thead>
+<tbody><tr><td>⛰</td><td><strong>Glut</strong></td><td>What does not sell rots. A good harvest is a bad year: the stuff turns up whether anybody wants it or not, and what is still in the warehouse when the season turns has to be shifted at whatever it will fetch. A full tally steps the memory <strong>down</strong>, floor −3, and it walks back toward zero on any round the board is holding none.</td><td>45 — everything grown, felled, herded or made to order</td></tr>
+<tr><td>↗</td><td><strong>Hype</strong></td><td>It is bought because it is going up. Nobody <em>needs</em> a jewel or a famous horse; they want it for what owning it says, and that is loudest when the price is climbing. No tally: the memory moves one cell in whatever direction the price token just moved, in the same gesture, −3 to +3.</td><td>7 — gold, jewellery, spices, fine cloth, wine, mead, horses</td></tr>
+<tr><td>⧗</td><td><strong>Depletion</strong></td><td>The easy ore came out first. Every ton that leaves makes the next dearer to win, and none of it grows back. Tokens sold to the board go on the tally and never come off. A full tally steps the memory <strong>up</strong>, and that step is <strong>permanent</strong> — the only mark in this game that never comes back.</td><td>14 — everything a deposit yields, and what is smelted straight out of one</td></tr></tbody></table></div>
+<p>The split runs down a production chain rather than across a category, which is the point of it being on the commodity. <strong>Gold ore depletes and refined gold hypes</strong>: the same substance, two markets, one priced by the hole it came out of and the other by what people think it is worth this month. Iron ore, pig iron and steel all deplete; the ironware made out of them is a glut good, because by then it is a workshop's output and a workshop can decide to make more.</p>
+<p><code>tools/validate-data.mjs</code> checks the half of that rule that can be checked: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry.</p>
 <h3 id="the-market-board">The market board</h3>
-<p>The bands used to be a number in a rulebook and a sum done in somebody's head. They are a sheet now: one A4 landscape <strong>market board</strong> of identical six-cell ladders, one line per commodity in play, and the commodity's own hexagonal token standing on the band that is its price today. Where the token stands is the price; which token it is says what the price is of. Look at the table and you can see what everything is worth.</p>
-<p><strong>No line is labelled</strong>, and that is the design. A line is not the grain line until somebody puts the grain token on it, so one generic board serves any commodity, any town and any table — print another sheet for another town's market, and a sixty-seventh commodity reprints nothing. The ×1 column rules heavier and carries a hairline hexagon in every line, so setup is one straight column of tokens. Sixteen lines to a sheet; see <a href="#c-08-components">08-components.md</a>.</p>
+<p>The bands used to be a number in a rulebook and a sum done in somebody's head. They are a sheet now: one A4 landscape <strong>market board</strong> of identical market lines. Each line is three strips read left to right — a <strong>tally</strong>, a <strong>memory</strong>, and the <strong>price ladder</strong> the commodity's own hexagonal token walks. Where the token stands is the price; which token it is says what the price is of; and the mark in its corner says which of the three models the strips are running under. Look at the table and you can see what everything is worth and why.</p>
+<p>The foot of the sheet is the working half: the five dice, the elasticity strip that reads the green one, and the swing ruler. Everything a Market phase needs is on one piece of paper.</p>
+<p><strong>No line is labelled</strong>, and that is still the design. A line is not the grain line until somebody puts the grain token on it, so one generic board serves any commodity, any town and any table — print another sheet for another town's market, and a sixty-seventh commodity reprints nothing. Six lines to a sheet, which is a town's real traded list rather than its whole catalogue; see <a href="#c-08-components">08-components.md</a>.</p>
 <h2 id="who-may-trade-with-whom">Who may trade with whom</h2>
 <p>This was an open question in the brief — merchant figure, trading house, or both. The answer is both, doing different jobs:</p>
 <p><strong>Merchant figure.</strong> Moves on the board, 4 move points, carries 4 bulk. Wherever it stands, its owner trades at that town without the spread, and may deal with any player whose merchant or trading house is in or adjacent to the same town. The merchant is <em>reach</em>: it goes to where the deal is.</p>
@@ -570,19 +595,24 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <h3 id="an-encounter">An encounter</h3>
 <p>A discovery roll that turns up a living thing has always produced a monster and never said how to run one. It does now, and the answer is the furniture already on the table: <strong>deal its card onto the spare player board.</strong> Set that board's tracks from the card's summary strip — health, strength, defence, mana — and it has everything a player has and is run the same way, by whoever sits left of the player who drew it. When the encounter ends the card is put away, the tokens come off, and nothing is written down. A stranger met on the road is set up exactly like a hero, because that is exactly what they are to themselves.</p>
 <h2 id="the-market-board">The market board</h2>
-<p>One A4 landscape sheet of price ladders, and <strong>every ladder identical</strong>. A town's price for a commodity is its base value times a band, and the band is the only part that moves — so the board prints the bands and nothing else, and you say <em>which</em> commodity a line is about by standing that commodity's hexagonal token on it. Where the token stands is the price; which token it is says what the price is of.</p>
+<p>One A4 landscape sheet of market lines, and <strong>every line identical</strong>. A line is three strips read left to right:</p>
 <div class="table-wrap"><table>
-<thead><tr><th>×0.5</th><th>×0.75</th><th>×1</th><th>×1.25</th><th>×1.5</th><th>×2</th></tr></thead>
-<tbody></tbody></table></div>
-<p>Sixteen lines to a sheet — two blocks of eight — and nothing on it names a commodity, a town or a player. That is the design, not an omission: a line is not the grain line until somebody puts the grain token on it, and a name strip down the side would need a second token or a pencil to say what the token already says. One board serves any commodity, any town and any table, print more of the same sheet for more towns, and a game that adds a sixty-seventh commodity reprints nothing.</p>
-<p>The ×1 column rules heavier and carries a hairline hexagon in every line — the shape of the token that belongs in it — so setup is a shape-matching job and a reset board is one straight column of tokens. <code>tools/build-market.mjs</code> generates it from <code>data/marketboard.json</code> and the bands in <code>rules.json</code>; the geometry is <code>components.json marketBoard</code>.</p>
+<thead><tr><th>TALLY</th><th></th><th>MEMORY</th><th></th><th>PRICE</th></tr></thead>
+<tbody><tr><td><code>0 1 2 3 4 5</code></td><td></td><td><code>−3 −2 −1 0 +1 +2 +3</code></td><td></td><td><code>×0.5 ×0.75 ×1 ×1.25 ×1.5 ×2</code></td></tr>
+<tr><td>what the board is holding</td><td></td><td>added to the swing</td><td></td><td>base value × this</td></tr>
+<tr><td>a bar walks it</td><td></td><td>a bar walks it</td><td></td><td>the commodity's own hexagon walks it</td></tr></tbody></table></div>
+<p>Where the hexagon stands is the price; which hexagon it is says what the price is of; and the mark engraved in its corner says which of the three market-memory models the two strips are running under. The token is the label, the reading and the rulebook — see <a href="#c-04-trade">04-trade.md</a>.</p>
+<p><strong>The foot is the working half of the sheet.</strong> The five dice — two red, two blue, one green — the elasticity strip that reads the green one, the seven-cell swing ruler that turns a roll into a number of bands, and the key to the three model marks. Everything a Market phase needs is on one piece of paper, and none of it is a lookup.</p>
+<p>Six lines to a sheet, and nothing on it names a commodity, a town or a player. That is the design, not an omission: a line is not the grain line until somebody puts the grain token on it, and a name strip down the side would need a second token or a pencil to say what the token already says. One board serves any commodity, any town and any table, print more of the same sheet for more towns, and a game that adds a sixty-seventh commodity reprints nothing.</p>
+<p>Every strip has a heavier-ruled home cell with the shape of its own piece drawn in hairline — a disc on the tally's empty and the memory's zero, a hexagon in the ×1 band — so setup is a shape-matching job and a reset board is three straight columns. <code>tools/build-market.mjs</code> generates it from <code>data/marketboard.json</code>, the bands in <code>rules.json</code> and the system in <code>data/pricing.json</code>; the geometry is <code>components.json marketBoard</code>, and there is not a coordinate in any of it: the strips take a bar's width each, the ladder takes what is left, and the sheet holds however many lines fit between the head and the foot. Widen the memory track and the board loses ladder; widen it far enough and the build fails rather than printing a band cell a hexagon overhangs.</p>
 <h2 id="tokens-and-bits">Tokens and bits</h2>
 <ul><li><strong>Commodity tokens</strong> — the big question. 63 commodities is far too many to give each its own wooden bit. Two candidate approaches: 1. <strong>Generic cubes in 11 category colours</strong>, with the specific commodity tracked on a player-board grid. Cheap, compact, and it makes a stockpile hard to read at a glance from across the table. 2. <strong>Printed cardboard chits per commodity</strong>, ~20 of the common ones and ~8 of the rare. Readable, thematic, and a genuinely large amount of punchboard.</li></ul>
 <p>  The digital prototype sidesteps this entirely, which is exactly why it should not be   the thing that decides it. This needs a paper prototype before it needs an opinion.</p>
 <p>  One thing the style guide settles either way: <strong>eleven distinguishable colours do not   exist</strong> — not across colour-blindness, not across dye lots, and not in greyscale, where   the eleven collapse into five clusters. So each category also carries a hatch pattern,   which is what actually identifies it. Under option 1 the hatch moves to the   player-board grid cell, and the cube supplies only colour — which is a real argument in   favour of cubes, since it costs nothing to print a hatch into a cell.   See <a href="../art/02-palette.md">../art/02-palette.md</a>.</p>
 <p>  <strong>Cut pieces are hexagons; struck pieces are discs.</strong> A hexagon shares its cuts: nested   on a laser bed, one straight line is the edge of two tokens, so a sheet of hexes yields   around a fifth more pieces than the same sheet of discs and the head travels a good deal   less. Commodity tokens are the ones there are hundreds of, so commodity tokens are   <strong>18 mm flat-top hexagons</strong>, and deposits are the same shape at 24 mm — size is what   tells them apart, since both live on the table.</p>
+<p>  Whichever way it goes, a commodity token carries <strong>two marks</strong>: its family's, and its   market-memory model's, engraved small in the corner (<code>data/pricing.json</code>, drawn by   <code>tools/build-icons.mjs</code>). The second one is there because the market board cannot carry   it — a board line is not about anything until a token is standing on it, so the rule   that line runs under has to arrive with the token. Pick up grain and you are holding a   glut good; pick up iron ore and you are holding a hole in the ground.</p>
 <ul><li><strong>Coins</strong> — round, because a coin that is not round is not a coin. There are far fewer of them, they are the one piece a hand finds by feel while the eyes are elsewhere, and round against hexagonal is the fastest distinction a hand can make in a heap. Three sizes — 16 / 19 / 22 mm for 1 / 5 / 25 — so a stack is countable by feel and in greyscale.</li>
-<li><strong>Bar tokens</strong> — one small 7 mm disc per track in play: six per player board, and one per commodity line on a market board. None on any card, because no card has a track.</li>
+<li><strong>Bar tokens</strong> — one small 7 mm disc per track in play: six per player board, and <strong>two per commodity line on a market board</strong> — one on the tally and one on the memory. None on any card, because no card has a track.</li>
 <li><strong>Route tokens</strong> — road and rail, laid on the map hex by hex, and the piece that puts a player's name on what they paid for. A bar the length of the line between two hex centres: at the default four-sheet Korvane Reach board that is <strong>15 × 3.7 mm</strong> for road and <strong>15 × 5.3 mm</strong> for rail, and <code>tools/build-map.mjs</code> prints the figures for every print preset, because the size is the map's business and not the token's. Ownership is peg holes down the centre line — one for the first player, two for the second — as well as colour, so the toll (see <a href="#c-02-economy">economy</a>) is never an argument.</li>
 <li><strong>Round marker</strong>, turn order markers, first player token</li></ul>
 <h2 id="mini-maps">Mini-maps</h2>
@@ -597,7 +627,7 @@ mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [ste
 <li><strong>Production chain poster</strong> — the tier-0-to-tier-4 spine on one sheet. The Chains view in the web explorer is the working draft of this.</li></ul>
 <h2 id="print-and-play">Print-and-play</h2>
 <p>Everything above is derivable from <code>data/*.json</code>, so a generator that renders card fronts from the data is an obvious next tool — and it would keep the printed components honest against the rules automatically, in the same way the web explorer already is. Two slices of it exist. <code>tools/build-cards.mjs</code> renders the adventure decks — characters, vehicles, monsters and talismans — into <a href="../cards/index.html"><code>docs/cards/</code></a> from the data and the accepted plates in <code>docs/art/renders/</code>, one card per accepted render, print page included. <code>tools/build-board.mjs</code> renders the player board into <a href="../boards/index.html"><code>docs/boards/</code></a>, <code>tools/build-market.mjs</code> the market board into <a href="../markets/index.html"><code>docs/markets/</code></a>, and <code>tools/build-minimaps.mjs</code> the mini-map sheets into <a href="../minimaps/index.html"><code>docs/minimaps/</code></a> — all at true A4 landscape.</p>
-<p>None of them holds a coordinate it did not work out. The player board's track columns are whatever width is left once the card recesses have had theirs, which is why adding a sixth track narrows the columns instead of running off the paper. A market board's band cells are what the blocks leave, and a line is exactly one commodity token tall, so a bigger token makes a taller line and fewer of them rather than a token that overhangs its cell. A mini-map cell is a world hex, so the field sizes itself and a field that would not fit the paper fails the build.</p>
+<p>None of them holds a coordinate it did not work out. The player board's track columns are whatever width is left once the card recesses have had theirs, which is why adding a sixth track narrows the columns instead of running off the paper. A market board's band cells are what the tally and the memory strips leave, and each strip cell is a bar token wide, so widening the memory track narrows the ladder rather than running off the paper; a line is exactly one commodity token tall, so a bigger token makes a taller line and fewer of them rather than a token that overhangs its cell. A mini-map cell is a world hex, so the field sizes itself and a field that would not fit the paper fails the build.</p>
 <p>The <a href="../art/01-two-plate-system.md">two-plate system</a> is what makes that generator tractable: one layout pass emits a <code>#wash</code> group and an <code>#ink</code> group, the colour edition is both, and the print-and-play edition is the ink group alone. Not two design efforts — one layout and two print runs. The files in <a href="../art/examples/">../art/examples/</a> are built to that contract and are the generator's target output.</p>
 </section>
 
@@ -665,8 +695,9 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <h2 id="economy">Economy</h2>
 <h3 id="4-should-storage-be-per-town-or-per-building">4. Should storage be per-town or per-building?</h3>
 <p>Currently a town has one pool of slots and warehouses add to it. The alternative — goods live <em>in</em> a specific warehouse — makes theft cards much more interesting (which warehouse?) and bookkeeping much worse.</p>
-<h3 id="5-does-anything-stop-a-player-hoarding-one-commodity">5. Does anything stop a player hoarding one commodity?</h3>
-<p>Right now, nothing except bulk. A player can sit on 40 grain. The variety bonus nudges against monoculture but only by one effort point. Options: rising storage cost, a diminishing market price for repeated sales, or nothing at all — hoarding may be a fine strategy that other players are free to punish.</p>
+<h3 id="5-does-anything-stop-a-player-hoarding-one-commodity-half-answered">5. Does anything stop a player hoarding one commodity? — <em>half answered</em></h3>
+<p>Nothing stops the hoarding. What is answered is the other half of it: <strong>selling</strong> the hoard is now self-punishing. Every commodity runs a market-memory model, and for the 45 that price by <strong>glut</strong>, every five tokens sold into a town's board steps that line's memory down a cell — to a floor of −3, which is a market that will not come back up until somebody buys the stock out again. A player sitting on 40 grain can no longer sell 40 grain. See <a href="#c-04-trade">04-trade.md</a>.</p>
+<p>Still open: rising storage cost for holding it, and whether the variety bonus's single effort point is doing anything at all. Hoarding may still be a fine strategy — it is just no longer a fine strategy to <em>liquidate</em> in one round.</p>
 <h3 id="6-are-the-spread-numbers-right">6. Are the spread numbers right?</h3>
 <p>15% each way, removed by a trading house or a merchant. That is a 30% round trip, which makes player-to-player trade obviously better than the board. Probably correct — the board should be the fallback, not the plan — but the gap may be too wide to leave any reason to build a market at all beyond the safety net.</p>
 <h2 id="map-and-movement">Map and movement</h2>
@@ -999,75 +1030,102 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>On a Road</td><td>1</td><td>2</td><td>1</td><td>1</td></tr>
 <tr><td>On the Rail</td><td>1</td><td>2</td><td>0</td><td>1</td></tr>
 <tr><td>Inside a Cave</td><td>2</td><td>3</td><td>1</td><td>0</td></tr></tbody></table></div>
+<h2 id="the-market">The market</h2>
+<p>Every Market phase, per commodity line in play: roll two red dice for demand, two blue for supply and one green for elasticity, add what the line remembers, and read the result on the swing ruler printed across the foot of the market board.</p>
+<pre><code>(Demand − Supply + Memory) × Elasticity</code></pre>
+<div class="table-wrap"><table>
+<thead><tr><th>Dice</th><th>Colour</th><th>Range</th><th>What it is</th></tr></thead>
+<tbody><tr><td>2 d6</td><td>red</td><td>2–12</td><td>Demand</td></tr>
+<tr><td>2 d6</td><td>blue</td><td>2–12</td><td>Supply</td></tr>
+<tr><td>1 d6</td><td>green</td><td>1–6</td><td>Elasticity</td></tr></tbody></table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Green die</th><th>Elasticity</th><th></th><th></th></tr></thead>
+<tbody><tr><td><strong>1–2</strong></td><td><strong>×1</strong></td><td>Stable</td><td>An ordinary season. The swing is felt as it fell.</td></tr>
+<tr><td><strong>3–4</strong></td><td><strong>×2</strong></td><td>Volatile</td><td>A thin market with nobody willing to stand in the middle of it. Every point of the swing counts double, and this is where crashes and spikes come from.</td></tr>
+<tr><td><strong>5–6</strong></td><td><strong>÷2</strong></td><td>Inelastic</td><td>The town needs it whatever it costs, or cannot use a second one at any price. Half the swing, dropped toward zero - most inelastic seasons do not move the price at all.</td></tr></tbody></table></div>
+<p>Halving rounds toward zero, so an inelastic season can shrink a swing away to nothing but can never turn it around.</p>
+<h3 id="the-swing-ruler">The swing ruler</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Net</th><th><strong>≤ −16</strong></th><th><strong>−15 … −8</strong></th><th><strong>−7 … −2</strong></th><th><strong>−1 … +1</strong></th><th><strong>+2 … +7</strong></th><th><strong>+8 … +15</strong></th><th><strong>≥ +16</strong></th></tr></thead>
+<tbody><tr><td>Bands</td><td>−3</td><td>−2</td><td>−1</td><td>hold</td><td>+1</td><td>+2</td><td>+3</td></tr>
+<tr><td></td><td>crash</td><td>slump</td><td>soften</td><td>hold</td><td>firm</td><td>rally</td><td>spike</td></tr></tbody></table></div>
+<p>The board sells no more of a commodity in a round than that round's supply roll, first come first served in turn order. It will buy any quantity.</p>
+<h3 id="what-a-market-remembers">What a market remembers</h3>
+<p>Each line carries a tally of the board's own stock — up one cell per token sold to the board, down one per token bought off it — and a modifier from −3 to +3 that the tally moves. Every 5 tokens the tally fills, which takes it back to empty and steps the modifier one cell. Which way it steps is the commodity's own model, and the model's mark is engraved in the corner of that commodity's token.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Model</th><th>Memory</th><th>Tally</th><th>What it is</th></tr></thead>
+<tbody><tr><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>−3 to 0</td><td>−1 when full</td><td><strong>What does not sell rots.</strong> Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned.</td></tr>
+<tr><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>−3 to +3</td><td>—</td><td><strong>It is bought because it is going up.</strong> The luxury trade: low bulk, high value, wanted for what it is rather than for what it does.</td></tr>
+<tr><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>0 to +3</td><td>+1 when full</td><td><strong>The easy ore came out first.</strong> Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry.</td></tr></tbody></table></div>
 <h2 id="commodities">Commodities</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Commodity</th><th>Category</th><th>Bulk</th><th>Value</th><th>Perishes</th><th>Tags</th></tr></thead>
-<tbody><tr><td>Logs</td><td>raw</td><td>2</td><td>4</td><td>—</td><td>bulky</td></tr>
-<tr><td>Stone</td><td>raw</td><td>2</td><td>5</td><td>—</td><td>bulky</td></tr>
-<tr><td>Clay</td><td>raw</td><td>2</td><td>3</td><td>—</td><td>bulky</td></tr>
-<tr><td>Sand</td><td>raw</td><td>2</td><td>2</td><td>—</td><td>bulky</td></tr>
-<tr><td>Iron Ore</td><td>raw</td><td>2</td><td>6</td><td>—</td><td>bulky, ore</td></tr>
-<tr><td>Copper Ore</td><td>raw</td><td>2</td><td>7</td><td>—</td><td>bulky, ore</td></tr>
-<tr><td>Gold Ore</td><td>raw</td><td>2</td><td>14</td><td>—</td><td>bulky, ore</td></tr>
-<tr><td>Salt</td><td>raw</td><td>1</td><td>6</td><td>—</td><td>preservative</td></tr>
-<tr><td>Water</td><td>raw</td><td>1</td><td>1</td><td>—</td><td>liquid</td></tr>
-<tr><td>Coal</td><td>fuel</td><td>2</td><td>8</td><td>—</td><td>bulky, fuel</td></tr>
-<tr><td>Peat</td><td>fuel</td><td>2</td><td>3</td><td>—</td><td>bulky, fuel</td></tr>
-<tr><td>Charcoal</td><td>fuel</td><td>1</td><td>7</td><td>—</td><td>fuel</td></tr>
-<tr><td>Crude Oil</td><td>fuel</td><td>2</td><td>16</td><td>—</td><td>liquid, fuel, late-game</td></tr>
-<tr><td>Lumber</td><td>material</td><td>1</td><td>9</td><td>—</td><td>building-material</td></tr>
-<tr><td>Brick</td><td>material</td><td>2</td><td>12</td><td>—</td><td>building-material</td></tr>
-<tr><td>Pig Iron</td><td>material</td><td>1</td><td>14</td><td>—</td><td>metal</td></tr>
-<tr><td>Steel</td><td>material</td><td>1</td><td>26</td><td>—</td><td>metal, tier3</td></tr>
-<tr><td>Copper</td><td>material</td><td>1</td><td>18</td><td>—</td><td>metal</td></tr>
-<tr><td>Gold</td><td>material</td><td>1</td><td>40</td><td>—</td><td>metal, precious</td></tr>
-<tr><td>Glass</td><td>material</td><td>1</td><td>20</td><td>—</td><td>fragile</td></tr>
-<tr><td>Rope</td><td>material</td><td>1</td><td>8</td><td>—</td><td>—</td></tr>
-<tr><td>Leather</td><td>material</td><td>1</td><td>11</td><td>—</td><td>—</td></tr>
-<tr><td>Ironware</td><td>manufactured</td><td>1</td><td>22</td><td>—</td><td>fittings</td></tr>
-<tr><td>Parchment</td><td>manufactured</td><td>1</td><td>15</td><td>—</td><td>—</td></tr>
-<tr><td>Wool</td><td>textile</td><td>1</td><td>6</td><td>—</td><td>—</td></tr>
-<tr><td>Flax</td><td>textile</td><td>1</td><td>5</td><td>—</td><td>—</td></tr>
-<tr><td>Cotton</td><td>textile</td><td>1</td><td>7</td><td>—</td><td>—</td></tr>
-<tr><td>Yarn</td><td>textile</td><td>1</td><td>12</td><td>—</td><td>—</td></tr>
-<tr><td>Cloth</td><td>textile</td><td>1</td><td>20</td><td>—</td><td>—</td></tr>
-<tr><td>Fine Cloth</td><td>textile</td><td>1</td><td>38</td><td>—</td><td>tier3</td></tr>
-<tr><td>Hide</td><td>textile</td><td>1</td><td>6</td><td>—</td><td>—</td></tr>
-<tr><td>Grain</td><td>food</td><td>1</td><td>5</td><td>—</td><td>staple, seed</td></tr>
-<tr><td>Flour</td><td>food</td><td>1</td><td>9</td><td>—</td><td>—</td></tr>
-<tr><td>Bread</td><td>food</td><td>1</td><td>14</td><td>3 rounds</td><td>staple</td></tr>
-<tr><td>Vegetables</td><td>food</td><td>1</td><td>6</td><td>3 rounds</td><td>—</td></tr>
-<tr><td>Mushrooms</td><td>food</td><td>1</td><td>7</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
-<tr><td>Berries</td><td>food</td><td>1</td><td>5</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
-<tr><td>Apples</td><td>food</td><td>1</td><td>6</td><td>4 rounds</td><td>—</td></tr>
-<tr><td>Fish</td><td>food</td><td>1</td><td>7</td><td>2 rounds</td><td>—</td></tr>
-<tr><td>Meat</td><td>food</td><td>1</td><td>10</td><td>2 rounds</td><td>—</td></tr>
-<tr><td>Salted Meat</td><td>food</td><td>1</td><td>18</td><td>—</td><td>preserved</td></tr>
-<tr><td>Milk</td><td>food</td><td>1</td><td>4</td><td>1 rounds</td><td>liquid</td></tr>
-<tr><td>Cheese</td><td>food</td><td>1</td><td>16</td><td>—</td><td>preserved</td></tr>
-<tr><td>Honey</td><td>food</td><td>1</td><td>12</td><td>—</td><td>potion-ingredient</td></tr>
-<tr><td>Eggs</td><td>food</td><td>1</td><td>5</td><td>2 rounds</td><td>—</td></tr>
-<tr><td>Grapes</td><td>food</td><td>1</td><td>8</td><td>2 rounds</td><td>—</td></tr>
-<tr><td>Hops</td><td>food</td><td>1</td><td>7</td><td>—</td><td>—</td></tr>
-<tr><td>Ale</td><td>drink</td><td>2</td><td>24</td><td>—</td><td>liquid, morale</td></tr>
-<tr><td>Mead</td><td>drink</td><td>2</td><td>32</td><td>—</td><td>liquid, morale</td></tr>
-<tr><td>Wine</td><td>drink</td><td>2</td><td>40</td><td>—</td><td>liquid, morale, luxury-adjacent</td></tr>
-<tr><td>Sheep</td><td>livestock</td><td>2</td><td>18</td><td>—</td><td>breeds, eats</td></tr>
-<tr><td>Cattle</td><td>livestock</td><td>3</td><td>30</td><td>—</td><td>breeds, eats</td></tr>
-<tr><td>Pig</td><td>livestock</td><td>2</td><td>20</td><td>—</td><td>breeds, eats</td></tr>
-<tr><td>Chickens</td><td>livestock</td><td>1</td><td>9</td><td>—</td><td>breeds, eats</td></tr>
-<tr><td>Horse</td><td>livestock</td><td>3</td><td>45</td><td>—</td><td>breeds, eats, draught</td></tr>
-<tr><td>Barrel</td><td>container</td><td>1</td><td>8</td><td>—</td><td>reusable</td></tr>
-<tr><td>Crate</td><td>container</td><td>1</td><td>6</td><td>—</td><td>reusable</td></tr>
-<tr><td>Sack</td><td>container</td><td>0.5</td><td>3</td><td>—</td><td>reusable</td></tr>
-<tr><td>Spices</td><td>luxury</td><td>0.5</td><td>45</td><td>—</td><td>trade-good, import-only</td></tr>
-<tr><td>Gems</td><td>luxury</td><td>0.5</td><td>60</td><td>—</td><td>trade-good, theft-target</td></tr>
-<tr><td>Jewellery</td><td>luxury</td><td>0.5</td><td>110</td><td>—</td><td>trade-good, theft-target, tier3</td></tr>
-<tr><td>Arcane Herb</td><td>arcane</td><td>0.5</td><td>20</td><td>—</td><td>foraged, potion-ingredient</td></tr>
-<tr><td>Mana Crystal</td><td>arcane</td><td>0.5</td><td>55</td><td>—</td><td>potion-ingredient, theft-target</td></tr>
-<tr><td>Moon Blossom</td><td>arcane</td><td>0.5</td><td>14</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
-<tr><td>Ember Root</td><td>arcane</td><td>0.5</td><td>16</td><td>—</td><td>foraged, potion-ingredient</td></tr>
-<tr><td>Frost Lichen</td><td>arcane</td><td>0.5</td><td>12</td><td>—</td><td>foraged, potion-ingredient</td></tr></tbody></table></div>
+<thead><tr><th>Commodity</th><th>Category</th><th>Bulk</th><th>Value</th><th>Prices by</th><th>Perishes</th><th>Tags</th></tr></thead>
+<tbody><tr><td>Logs</td><td>raw</td><td>2</td><td>4</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>bulky</td></tr>
+<tr><td>Stone</td><td>raw</td><td>2</td><td>5</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>bulky</td></tr>
+<tr><td>Clay</td><td>raw</td><td>2</td><td>3</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>bulky</td></tr>
+<tr><td>Sand</td><td>raw</td><td>2</td><td>2</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>bulky</td></tr>
+<tr><td>Iron Ore</td><td>raw</td><td>2</td><td>6</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>bulky, ore</td></tr>
+<tr><td>Copper Ore</td><td>raw</td><td>2</td><td>7</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>bulky, ore</td></tr>
+<tr><td>Gold Ore</td><td>raw</td><td>2</td><td>14</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>bulky, ore</td></tr>
+<tr><td>Salt</td><td>raw</td><td>1</td><td>6</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>preservative</td></tr>
+<tr><td>Water</td><td>raw</td><td>1</td><td>1</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>liquid</td></tr>
+<tr><td>Coal</td><td>fuel</td><td>2</td><td>8</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>bulky, fuel</td></tr>
+<tr><td>Peat</td><td>fuel</td><td>2</td><td>3</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>bulky, fuel</td></tr>
+<tr><td>Charcoal</td><td>fuel</td><td>1</td><td>7</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>fuel</td></tr>
+<tr><td>Crude Oil</td><td>fuel</td><td>2</td><td>16</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>liquid, fuel, late-game</td></tr>
+<tr><td>Lumber</td><td>material</td><td>1</td><td>9</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>building-material</td></tr>
+<tr><td>Brick</td><td>material</td><td>2</td><td>12</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>building-material</td></tr>
+<tr><td>Pig Iron</td><td>material</td><td>1</td><td>14</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>metal</td></tr>
+<tr><td>Steel</td><td>material</td><td>1</td><td>26</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>metal, tier3</td></tr>
+<tr><td>Copper</td><td>material</td><td>1</td><td>18</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>metal</td></tr>
+<tr><td>Gold</td><td>material</td><td>1</td><td>40</td><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>—</td><td>metal, precious</td></tr>
+<tr><td>Glass</td><td>material</td><td>1</td><td>20</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>fragile</td></tr>
+<tr><td>Rope</td><td>material</td><td>1</td><td>8</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Leather</td><td>material</td><td>1</td><td>11</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Ironware</td><td>manufactured</td><td>1</td><td>22</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>fittings</td></tr>
+<tr><td>Parchment</td><td>manufactured</td><td>1</td><td>15</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Wool</td><td>textile</td><td>1</td><td>6</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Flax</td><td>textile</td><td>1</td><td>5</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Cotton</td><td>textile</td><td>1</td><td>7</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Yarn</td><td>textile</td><td>1</td><td>12</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Cloth</td><td>textile</td><td>1</td><td>20</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Fine Cloth</td><td>textile</td><td>1</td><td>38</td><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>—</td><td>tier3</td></tr>
+<tr><td>Hide</td><td>textile</td><td>1</td><td>6</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Grain</td><td>food</td><td>1</td><td>5</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>staple, seed</td></tr>
+<tr><td>Flour</td><td>food</td><td>1</td><td>9</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Bread</td><td>food</td><td>1</td><td>14</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>3 rounds</td><td>staple</td></tr>
+<tr><td>Vegetables</td><td>food</td><td>1</td><td>6</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>3 rounds</td><td>—</td></tr>
+<tr><td>Mushrooms</td><td>food</td><td>1</td><td>7</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Berries</td><td>food</td><td>1</td><td>5</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Apples</td><td>food</td><td>1</td><td>6</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>4 rounds</td><td>—</td></tr>
+<tr><td>Fish</td><td>food</td><td>1</td><td>7</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>2 rounds</td><td>—</td></tr>
+<tr><td>Meat</td><td>food</td><td>1</td><td>10</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>2 rounds</td><td>—</td></tr>
+<tr><td>Salted Meat</td><td>food</td><td>1</td><td>18</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>preserved</td></tr>
+<tr><td>Milk</td><td>food</td><td>1</td><td>4</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>1 rounds</td><td>liquid</td></tr>
+<tr><td>Cheese</td><td>food</td><td>1</td><td>16</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>preserved</td></tr>
+<tr><td>Honey</td><td>food</td><td>1</td><td>12</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>potion-ingredient</td></tr>
+<tr><td>Eggs</td><td>food</td><td>1</td><td>5</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>2 rounds</td><td>—</td></tr>
+<tr><td>Grapes</td><td>food</td><td>1</td><td>8</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>2 rounds</td><td>—</td></tr>
+<tr><td>Hops</td><td>food</td><td>1</td><td>7</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>—</td></tr>
+<tr><td>Ale</td><td>drink</td><td>2</td><td>24</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>liquid, morale</td></tr>
+<tr><td>Mead</td><td>drink</td><td>2</td><td>32</td><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>—</td><td>liquid, morale</td></tr>
+<tr><td>Wine</td><td>drink</td><td>2</td><td>40</td><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>—</td><td>liquid, morale, luxury-adjacent</td></tr>
+<tr><td>Sheep</td><td>livestock</td><td>2</td><td>18</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>breeds, eats</td></tr>
+<tr><td>Cattle</td><td>livestock</td><td>3</td><td>30</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>breeds, eats</td></tr>
+<tr><td>Pig</td><td>livestock</td><td>2</td><td>20</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>breeds, eats</td></tr>
+<tr><td>Chickens</td><td>livestock</td><td>1</td><td>9</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>breeds, eats</td></tr>
+<tr><td>Horse</td><td>livestock</td><td>3</td><td>45</td><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>—</td><td>breeds, eats, draught</td></tr>
+<tr><td>Barrel</td><td>container</td><td>1</td><td>8</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>reusable</td></tr>
+<tr><td>Crate</td><td>container</td><td>1</td><td>6</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>reusable</td></tr>
+<tr><td>Sack</td><td>container</td><td>0.5</td><td>3</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>reusable</td></tr>
+<tr><td>Spices</td><td>luxury</td><td>0.5</td><td>45</td><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>—</td><td>trade-good, import-only</td></tr>
+<tr><td>Gems</td><td>luxury</td><td>0.5</td><td>60</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>trade-good, theft-target</td></tr>
+<tr><td>Jewellery</td><td>luxury</td><td>0.5</td><td>110</td><td><img src="../art/icons/pricing-hype.svg" alt="" loading="lazy"> Hype</td><td>—</td><td>trade-good, theft-target, tier3</td></tr>
+<tr><td>Arcane Herb</td><td>arcane</td><td>0.5</td><td>20</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Mana Crystal</td><td>arcane</td><td>0.5</td><td>55</td><td><img src="../art/icons/pricing-deplete.svg" alt="" loading="lazy"> Depletion</td><td>—</td><td>potion-ingredient, theft-target</td></tr>
+<tr><td>Moon Blossom</td><td>arcane</td><td>0.5</td><td>14</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>2 rounds</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Ember Root</td><td>arcane</td><td>0.5</td><td>16</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>foraged, potion-ingredient</td></tr>
+<tr><td>Frost Lichen</td><td>arcane</td><td>0.5</td><td>12</td><td><img src="../art/icons/pricing-glut.svg" alt="" loading="lazy"> Glut</td><td>—</td><td>foraged, potion-ingredient</td></tr></tbody></table></div>
 <h2 id="tools">Tools</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Tool</th><th>Made at</th><th>Craft</th><th>Hours</th><th>Value</th><th>Durability</th></tr></thead>

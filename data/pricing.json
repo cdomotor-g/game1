@@ -137,8 +137,8 @@
       "assigns": "Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned.",
       "mark": {
         "id": "heaped-measure",
-        "path": "M 4.5 10.5 L 6.5 20.5 L 17.5 20.5 L 19.5 10.5 Z M 3.5 10.5 Q 12 2.5 20.5 10.5 M 2.4 13.6 L 2.4 15.6 M 21.6 13.6 L 21.6 15.6",
-        "$note": "A bushel measure heaped past its own rim, spilling either side. Read at chit size it is simply too much of something."
+        "path": "M 2.2 20.6 H 21.8 M 3.6 12.2 H 20.4 M 3.6 12.2 Q 12 4.4 20.4 12.2 M 6.2 12.2 L 8.2 20.6 M 17.8 12.2 L 15.8 20.6",
+        "$note": "A bushel measure standing on the ground line, its rim wider than it is, and the harvest heaped over the rim past both edges. The overhang is the whole message: read at chit size it is a container with more in it than it holds. The first draft closed the measure at the bottom and sprang the heap from its widest point, which is a bucket with a handle, and a bucket says nothing at all."
       }
     },
     {
@@ -195,8 +195,8 @@
       "assigns": "Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry.",
       "mark": {
         "id": "run-glass",
-        "path": "M 5.5 3 L 18.5 3 M 5.5 21 L 18.5 21 M 6.5 3 L 12 12 L 6.5 21 M 17.5 3 L 12 12 L 17.5 21 M 12 12 L 12 17.5",
-        "$note": "A glass running out, with the last of it falling. Not a pick and not a shaft: what the model is about is the sand, not the digging."
+        "path": "M 5.5 3 H 18.5 M 5.5 21 H 18.5 M 6.5 3 L 12 12 L 6.5 21 M 17.5 3 L 12 12 L 17.5 21 M 8.8 19.4 Q 12 16 15.2 19.4",
+        "$note": "A glass with the sand already down in the bottom bulb. Not a pick and not a shaft: what this model is about is the sand, not the digging - and not a trickle either, because a trickle drawn between two converging lines is invisible at the size this is engraved."
       }
     }
   ],

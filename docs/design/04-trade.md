@@ -11,27 +11,99 @@ no limit, and no enforcement beyond the table. This is where the game should get
 
 ## Price bands
 
-Every commodity category sits on a band: ×0.5, ×0.75, ×1.0, ×1.25, ×1.5 or ×2.0 of base
-value. Bands start at ×1.0 and drift one step each round for one random family. Event
-cards shove them harder — an iron shortage moves metals two bands for three rounds.
+Every commodity sits on a band: ×0.5, ×0.75, ×1.0, ×1.25, ×1.5 or ×2.0 of base value.
+Bands start at ×1.0. Event cards shove them by family — an iron shortage moves metals two
+bands for three rounds — but what moves them every round is the roll below.
 
-Bands are per family, not per commodity, so a shortage is a *market* event you can plan
-around, not a lookup table you have to memorise.
+## How a price is arrived at
+
+Prices used to *drift*: one random family, one band, every round. It was a rule you could
+not plan against and could not affect. A player could sell four hundred grain into one town
+and the grain price would not notice.
+
+A price is rolled now, and then bent by what the market has already been through.
+
+**Two red dice are demand. Two blue dice are supply. One green die says how hard the swing
+lands.** The whole sum is one line, and it is printed across the foot of the market board:
+
+```
+net = (Demand − Supply + Memory) × Elasticity
+```
+
+The green die is the elasticity: **1–2 stable** (×1, an ordinary season), **3–4 volatile**
+(×2, a thin market with nobody willing to stand in the middle of it — this is where crashes
+and spikes come from), **5–6 inelastic** (÷2 dropped toward zero: the town needs it whatever
+it costs, or cannot use a second one at any price).
+
+Then read the net on the **swing ruler**, seven cells across the foot of the board, and walk
+the price token that many bands:
+
+| Net | ≤ −16 | −15…−8 | −7…−2 | −1…+1 | +2…+7 | +8…+15 | ≥ +16 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Bands | −3 | −2 | −1 | hold | +1 | +2 | +3 |
+| | crash | slump | soften | hold | firm | rally | spike |
+
+With nothing remembered that is a market which holds still in about three rounds in eight,
+moves a band in half of them, and jumps two or three in the rest. `docs/markets/index.html`
+prints the exact odds, worked out from the ruler itself rather than claimed, at every value
+the memory can hold.
+
+One more rule, and it is what makes a shortage bite: **the board sells no more of a
+commodity in a round than that round's supply roll**, first come first served in turn order.
+It will buy any quantity — a market always has room for more of what nobody wants. A low
+blue roll is a shortage twice over: dear, and rationed.
+
+## What a market remembers
+
+The dice are only half of it. Every line on the market board carries two strips, and they
+are the reason a market has a history instead of a mood.
+
+The **memory** is a modifier from −3 to +3, walked by a bar, added to the swing before the
+green die multiplies it — so in a volatile season a market's history counts double, like
+everything else about that season. The **tally** beside it is the board's own stock of that
+commodity: sell to the board and the bar walks up, buy from it and the bar walks back down.
+Every five tokens the tally fills, which takes it back to empty and steps the memory one
+cell. Nothing is written down; two pieces of wood are moved as the trade happens.
+
+**What direction it steps is the commodity's own business.** Every commodity in the game
+runs under exactly one of three models, and the model is engraved in the corner of that
+commodity's token — so the piece you stand on a line tells you how that line behaves.
+
+| | | What it is | Commodities |
+| --- | --- | --- | --- |
+| ⛰ | **Glut** | What does not sell rots. A good harvest is a bad year: the stuff turns up whether anybody wants it or not, and what is still in the warehouse when the season turns has to be shifted at whatever it will fetch. A full tally steps the memory **down**, floor −3, and it walks back toward zero on any round the board is holding none. | 45 — everything grown, felled, herded or made to order |
+| ↗ | **Hype** | It is bought because it is going up. Nobody *needs* a jewel or a famous horse; they want it for what owning it says, and that is loudest when the price is climbing. No tally: the memory moves one cell in whatever direction the price token just moved, in the same gesture, −3 to +3. | 7 — gold, jewellery, spices, fine cloth, wine, mead, horses |
+| ⧗ | **Depletion** | The easy ore came out first. Every ton that leaves makes the next dearer to win, and none of it grows back. Tokens sold to the board go on the tally and never come off. A full tally steps the memory **up**, and that step is **permanent** — the only mark in this game that never comes back. | 14 — everything a deposit yields, and what is smelted straight out of one |
+
+The split runs down a production chain rather than across a category, which is the point of
+it being on the commodity. **Gold ore depletes and refined gold hypes**: the same substance,
+two markets, one priced by the hole it came out of and the other by what people think it is
+worth this month. Iron ore, pig iron and steel all deplete; the ironware made out of them is
+a glut good, because by then it is a workshop's output and a workshop can decide to make
+more.
+
+`tools/validate-data.mjs` checks the half of that rule that can be checked: a commodity a
+deposit yields and does not price by depletion is a hole in the ground that never runs dry.
 
 ### The market board
 
 The bands used to be a number in a rulebook and a sum done in somebody's head. They are a
-sheet now: one A4 landscape **market board** of identical six-cell ladders, one line per
-commodity in play, and the commodity's own hexagonal token standing on the band that is its
-price today. Where the token stands is the price; which token it is says what the price is
-of. Look at the table and you can see what everything is worth.
+sheet now: one A4 landscape **market board** of identical market lines. Each line is three
+strips read left to right — a **tally**, a **memory**, and the **price ladder** the
+commodity's own hexagonal token walks. Where the token stands is the price; which token it
+is says what the price is of; and the mark in its corner says which of the three models the
+strips are running under. Look at the table and you can see what everything is worth and
+why.
 
-**No line is labelled**, and that is the design. A line is not the grain line until somebody
-puts the grain token on it, so one generic board serves any commodity, any town and any
-table — print another sheet for another town's market, and a sixty-seventh commodity
-reprints nothing. The ×1 column rules heavier and carries a hairline hexagon in every line,
-so setup is one straight column of tokens. Sixteen lines to a sheet; see
-[08-components.md](08-components.md#the-market-board).
+The foot of the sheet is the working half: the five dice, the elasticity strip that reads
+the green one, and the swing ruler. Everything a Market phase needs is on one piece of
+paper.
+
+**No line is labelled**, and that is still the design. A line is not the grain line until
+somebody puts the grain token on it, so one generic board serves any commodity, any town and
+any table — print another sheet for another town's market, and a sixty-seventh commodity
+reprints nothing. Six lines to a sheet, which is a town's real traded list rather than its
+whole catalogue; see [08-components.md](08-components.md#the-market-board).
 
 ## Who may trade with whom
 

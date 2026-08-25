@@ -21,9 +21,28 @@ fails) and `node tools/build-annex.mjs` (or the printed rulebook lies) and commi
 regenerated files.
 
 The data is one file per system on purpose — travel, discovery, monsters, quests,
-arcana and the decks are separate files so no task needs the whole ruleset in context.
-Add a new system as a new file plus a `manifest.json` entry, never as a new wing on an
-existing file.
+arcana, pricing and the decks are separate files so no task needs the whole ruleset in
+context. Add a new system as a new file plus a `manifest.json` entry, never as a new
+wing on an existing file.
+
+## A price is a system, and it lives in `data/pricing.json`
+
+Two red dice for demand, two blue for supply, one green for elasticity, and every line
+on the market board carries a memory from -3 to +3 that is added to the swing before the
+green die multiplies it. What moves that memory is the commodity's own model — `glut`,
+`hype` or `deplete`, one per commodity in `commodities.json`, engraved as a mark in the
+corner of that commodity's token.
+
+Nothing else may own a piece of that. The bands the price token walks are
+`rules.json market.priceBands`; the board that prints the ruler is `marketboard.json` +
+`components.json marketBoard`; `docs/js/engine.js` plays it off the same numbers rather
+than a second copy of them. Each model states its rule twice on purpose — prose for the
+rulebook, `onSell`/`onBuy`/`dischargeStep`/`followsPrice`/`decayToZero` for the tools —
+so it cannot be changed in one place and left saying the old thing in the other.
+
+`validate-data.mjs` will not let the swing ruler have a hole in it, will not let a model
+walk its bar off the strip the board prints, and will not let the strips squeeze the
+price ladder narrower than the hexagon that walks it.
 
 ## How a component looks is declared once, in `data/components.json`
 
@@ -42,10 +61,11 @@ That file holds **no content**. No card says anything in it, no monster is named
 in it. If you are about to write a name or a number that belongs to one specific
 card, it goes in that card's own file.
 
-The same rule runs down: an element's *mark* is data on the element
-(`data/arcana.json`), how to *draw* a mark is in `components.json`, and
-`tools/build-icons.mjs` turns the two into `docs/art/icons/`. Nothing draws an
-element mark by hand.
+The same rule runs down: a *mark* is data on the thing it is of — an element in
+`data/arcana.json`, a terrain in `data/terrain.json`, a market-memory model in
+`data/pricing.json` — how to *draw* one is in `components.json`, and
+`tools/build-icons.mjs` turns the two into `docs/art/icons/`. Nothing draws a
+mark by hand, and nothing that shows one invents it.
 
 ## Every board is computed, not laid out
 
@@ -68,9 +88,12 @@ belongs on the character card in the recess, never printed into the board — an
 also why a monster met on the road is dealt onto a spare one and run like a player.
 
 The same division holds for the other two boards. `tools/build-market.mjs` +
-`data/marketboard.json`: identical price ladders, nothing on the sheet names a
-commodity, and a line is exactly one commodity token tall — a bigger token makes a
-taller line and fewer of them, never a token that overhangs. `tools/build-minimaps.mjs`
+`data/marketboard.json`: identical lines of tally, memory and price ladder,
+nothing on the sheet names a commodity, and a line is exactly one commodity token
+tall — a bigger token makes a taller line and fewer of them, never a token that
+overhangs. What the strips *count* is not the board's either: the tally and the
+memory are `data/pricing.json`, the bands are `rules.json`, and a board that
+restated them is a board that could disagree with the game. `tools/build-minimaps.mjs`
 + `data/minimap.json`: a flat terrain colour and a hex grid, no art at all, and **a
 mini-map cell is a world-map hex read off the map's own print preset** — not a number
 anybody types.

@@ -2,12 +2,16 @@
 
 ## Commodities
 
-63 of them, in eleven categories. Every commodity carries four numbers that matter:
+66 of them, in eleven categories. Every commodity carries five numbers that matter:
 
 - **bulk** — storage slots per unit, and capacity cost when shipped
 - **baseValue** — coin at price band 1.0
 - **perishRounds** — how long it keeps outside a granary, if it perishes at all
-- **category** — which price band it moves with
+- **category** — what it is, and what an event card shoves when it shoves a family
+- **pricing** — which of the three market-memory models its own price runs under: a glut
+  that drowns when you flood it, a hype that runs after its own price, or a depletion
+  that ratchets one way for the rest of the game. See
+  [04-trade.md](04-trade.md#what-a-market-remembers).
 
 The interesting derived number is **value per slot**: `baseValue / bulk`. Logs are 2
 coin per slot; jewellery is 220. That ratio is the entire logistics game. Nobody ships

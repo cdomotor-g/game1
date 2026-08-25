@@ -52,12 +52,18 @@ Currently a town has one pool of slots and warehouses add to it. The alternative
 live *in* a specific warehouse — makes theft cards much more interesting (which
 warehouse?) and bookkeeping much worse.
 
-### 5. Does anything stop a player hoarding one commodity?
+### 5. Does anything stop a player hoarding one commodity? — *half answered*
 
-Right now, nothing except bulk. A player can sit on 40 grain. The variety bonus nudges
-against monoculture but only by one effort point. Options: rising storage cost, a
-diminishing market price for repeated sales, or nothing at all — hoarding may be a fine
-strategy that other players are free to punish.
+Nothing stops the hoarding. What is answered is the other half of it: **selling** the
+hoard is now self-punishing. Every commodity runs a market-memory model, and for the 45
+that price by **glut**, every five tokens sold into a town's board steps that line's
+memory down a cell — to a floor of −3, which is a market that will not come back up until
+somebody buys the stock out again. A player sitting on 40 grain can no longer sell 40
+grain. See [04-trade.md](04-trade.md#what-a-market-remembers).
+
+Still open: rising storage cost for holding it, and whether the variety bonus's single
+effort point is doing anything at all. Hoarding may still be a fine strategy — it is just
+no longer a fine strategy to *liquidate* in one round.
 
 ### 6. Are the spread numbers right?
 

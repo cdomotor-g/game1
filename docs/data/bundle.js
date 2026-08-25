@@ -544,7 +544,7 @@ window.GAME_DATA = {
         {
           "id": "market-turn",
           "name": "Market",
-          "summary": "Market prices drift, demand cards flip, turn order passes to the left."
+          "summary": "Roll the market for every line: two red, two blue, one green, plus what the line remembers. Trade at the new price, walk the tallies, and turn order passes to the left."
         }
       ],
       "turnOrder": "clockwise-rotating"
@@ -646,7 +646,7 @@ window.GAME_DATA = {
       "startingBandIndex": 2,
       "buySpread": 0.15,
       "sellSpread": -0.15,
-      "driftPerRound": "Each town shifts one random commodity family up or down one band.",
+      "pricedBy": "data/pricing.json. Every Market phase each town rolls two red dice for demand, two blue for supply and one green for elasticity, per commodity line in play, and reads the result on the swing ruler printed across the foot of the market board. The line's own memory strip, -3 to +3, is added to the swing before the green die multiplies it, and what moves that strip is the commodity's pricing model.",
       "playerTradeIsFree": true,
       "merchantStock": {
         "$comment": "When a player meets a merchant - on the road via a discovery roll, or by visiting a settlement - shuffle the item deck and deal this many cards face up. That is what is for sale this visit, at base value +10%. Bigger places carry deeper stock.",
@@ -657,7 +657,7 @@ window.GAME_DATA = {
         "seat": 9,
         "notes": "Tools may be bought the same way at any settlement with a blacksmith rank town or better: deal from the tool list instead."
       },
-      "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player."
+      "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player. What moves a band is not here: it is data/pricing.json, because a die roll and a memory track are a system rather than a constant."
     },
     "infrastructure": {
       "$comment": "What a player gets for laying road and rail, beyond the fact that their own carts go faster on it. Roads were the one thing in the game you built for everybody and were paid for by nobody: the network victory condition scored them at the very end and nothing scored them in the twenty rounds before that, so a road only ever got built where its builder happened to want to walk.\n\nThree returns, in the order a player feels them: a toll every time somebody else uses it, a better price for cargo that moves on your own network, and the network points that were already there. The toll is small on purpose - it is a reason to build, not a business - and it is collected from the table rather than paid into a bank, so every coin of it comes out of a rival.",
@@ -1978,8 +1978,8 @@ window.GAME_DATA = {
         "assigns": "Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned.",
         "mark": {
           "id": "heaped-measure",
-          "path": "M 4.5 10.5 L 6.5 20.5 L 17.5 20.5 L 19.5 10.5 Z M 3.5 10.5 Q 12 2.5 20.5 10.5 M 2.4 13.6 L 2.4 15.6 M 21.6 13.6 L 21.6 15.6",
-          "$note": "A bushel measure heaped past its own rim, spilling either side. Read at chit size it is simply too much of something."
+          "path": "M 2.2 20.6 H 21.8 M 3.6 12.2 H 20.4 M 3.6 12.2 Q 12 4.4 20.4 12.2 M 6.2 12.2 L 8.2 20.6 M 17.8 12.2 L 15.8 20.6",
+          "$note": "A bushel measure standing on the ground line, its rim wider than it is, and the harvest heaped over the rim past both edges. The overhang is the whole message: read at chit size it is a container with more in it than it holds. The first draft closed the measure at the bottom and sprang the heap from its widest point, which is a bucket with a handle, and a bucket says nothing at all."
         }
       },
       {
@@ -2036,8 +2036,8 @@ window.GAME_DATA = {
         "assigns": "Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry.",
         "mark": {
           "id": "run-glass",
-          "path": "M 5.5 3 L 18.5 3 M 5.5 21 L 18.5 21 M 6.5 3 L 12 12 L 6.5 21 M 17.5 3 L 12 12 L 17.5 21 M 12 12 L 12 17.5",
-          "$note": "A glass running out, with the last of it falling. Not a pick and not a shaft: what the model is about is the sand, not the digging."
+          "path": "M 5.5 3 H 18.5 M 5.5 21 H 18.5 M 6.5 3 L 12 12 L 6.5 21 M 17.5 3 L 12 12 L 17.5 21 M 8.8 19.4 Q 12 16 15.2 19.4",
+          "$note": "A glass with the sand already down in the bottom bulb. Not a pick and not a shaft: what this model is about is the sand, not the digging - and not a trickle either, because a trickle drawn between two converging lines is invisible at the size this is engraved."
         }
       }
     ],

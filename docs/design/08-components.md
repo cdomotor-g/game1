@@ -189,26 +189,42 @@ road is set up exactly like a hero, because that is exactly what they are to the
 
 ## The market board
 
-One A4 landscape sheet of price ladders, and **every ladder identical**. A town's price
-for a commodity is its base value times a band, and the band is the only part that moves —
-so the board prints the bands and nothing else, and you say *which* commodity a line is
-about by standing that commodity's hexagonal token on it. Where the token stands is the
-price; which token it is says what the price is of.
+One A4 landscape sheet of market lines, and **every line identical**. A line is three
+strips read left to right:
 
-| ×0.5 | ×0.75 | ×1 | ×1.25 | ×1.5 | ×2 |
-| --- | --- | --- | --- | --- | --- |
+| TALLY | | MEMORY | | PRICE |
+| --- | --- | --- | --- | --- |
+| `0 1 2 3 4 5` | | `−3 −2 −1 0 +1 +2 +3` | | `×0.5 ×0.75 ×1 ×1.25 ×1.5 ×2` |
+| what the board is holding | | added to the swing | | base value × this |
+| a bar walks it | | a bar walks it | | the commodity's own hexagon walks it |
 
-Sixteen lines to a sheet — two blocks of eight — and nothing on it names a commodity, a
-town or a player. That is the design, not an omission: a line is not the grain line until
-somebody puts the grain token on it, and a name strip down the side would need a second
-token or a pencil to say what the token already says. One board serves any commodity, any
-town and any table, print more of the same sheet for more towns, and a game that adds a
-sixty-seventh commodity reprints nothing.
+Where the hexagon stands is the price; which hexagon it is says what the price is of; and
+the mark engraved in its corner says which of the three market-memory models the two
+strips are running under. The token is the label, the reading and the rulebook — see
+[04-trade.md](04-trade.md#what-a-market-remembers).
 
-The ×1 column rules heavier and carries a hairline hexagon in every line — the shape of the
-token that belongs in it — so setup is a shape-matching job and a reset board is one
-straight column of tokens. `tools/build-market.mjs` generates it from `data/marketboard.json`
-and the bands in `rules.json`; the geometry is `components.json marketBoard`.
+**The foot is the working half of the sheet.** The five dice — two red, two blue, one
+green — the elasticity strip that reads the green one, the seven-cell swing ruler that
+turns a roll into a number of bands, and the key to the three model marks. Everything a
+Market phase needs is on one piece of paper, and none of it is a lookup.
+
+Six lines to a sheet, and nothing on it names a commodity, a town or a player. That is the
+design, not an omission: a line is not the grain line until somebody puts the grain token
+on it, and a name strip down the side would need a second token or a pencil to say what the
+token already says. One board serves any commodity, any town and any table, print more of
+the same sheet for more towns, and a game that adds a sixty-seventh commodity reprints
+nothing.
+
+Every strip has a heavier-ruled home cell with the shape of its own piece drawn in
+hairline — a disc on the tally's empty and the memory's zero, a hexagon in the ×1 band — so
+setup is a shape-matching job and a reset board is three straight columns.
+`tools/build-market.mjs` generates it from `data/marketboard.json`, the bands in
+`rules.json` and the system in `data/pricing.json`; the geometry is
+`components.json marketBoard`, and there is not a coordinate in any of it: the strips take
+a bar's width each, the ladder takes what is left, and the sheet holds however many lines
+fit between the head and the foot. Widen the memory track and the board loses ladder;
+widen it far enough and the build fails rather than printing a band cell a hexagon
+overhangs.
 
 ## Tokens and bits
 
@@ -238,12 +254,20 @@ and the bands in `rules.json`; the geometry is `components.json marketBoard`.
   **18 mm flat-top hexagons**, and deposits are the same shape at 24 mm — size is what
   tells them apart, since both live on the table.
 
+  Whichever way it goes, a commodity token carries **two marks**: its family's, and its
+  market-memory model's, engraved small in the corner (`data/pricing.json`, drawn by
+  `tools/build-icons.mjs`). The second one is there because the market board cannot carry
+  it — a board line is not about anything until a token is standing on it, so the rule
+  that line runs under has to arrive with the token. Pick up grain and you are holding a
+  glut good; pick up iron ore and you are holding a hole in the ground.
+
 - **Coins** — round, because a coin that is not round is not a coin. There are far fewer of
   them, they are the one piece a hand finds by feel while the eyes are elsewhere, and round
   against hexagonal is the fastest distinction a hand can make in a heap. Three sizes —
   16 / 19 / 22 mm for 1 / 5 / 25 — so a stack is countable by feel and in greyscale.
-- **Bar tokens** — one small 7 mm disc per track in play: six per player board, and one per
-  commodity line on a market board. None on any card, because no card has a track.
+- **Bar tokens** — one small 7 mm disc per track in play: six per player board, and **two
+  per commodity line on a market board** — one on the tally and one on the memory. None on
+  any card, because no card has a track.
 - **Route tokens** — road and rail, laid on the map hex by hex, and the piece that puts a
   player's name on what they paid for. A bar the length of the line between two hex
   centres: at the default four-sheet Korvane Reach board that is **15 × 3.7 mm** for road
@@ -311,8 +335,10 @@ sheets into [`docs/minimaps/`](../minimaps/index.html) — all at true A4 landsc
 None of them holds a coordinate it did not work out. The player board's track columns are
 whatever width is left once the card recesses have had theirs, which is why adding a sixth
 track narrows the columns instead of running off the paper. A market board's band cells
-are what the blocks leave, and a line is exactly one commodity token tall, so a bigger
-token makes a taller line and fewer of them rather than a token that overhangs its cell. A
+are what the tally and the memory strips leave, and each strip cell is a bar token wide,
+so widening the memory track narrows the ladder rather than running off the paper; a line
+is exactly one commodity token tall, so a bigger token makes a taller line and fewer of
+them rather than a token that overhangs its cell. A
 mini-map cell is a world hex, so the field sizes itself and a field that would not fit the
 paper fails the build.
 

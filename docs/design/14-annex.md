@@ -94,76 +94,126 @@ Monster element weights by table:
 | On the Rail | 1 | 2 | 0 | 1 |
 | Inside a Cave | 2 | 3 | 1 | 0 |
 
+## The market
+
+Every Market phase, per commodity line in play: roll two red dice for demand, two
+blue for supply and one green for elasticity, add what the line remembers, and read
+the result on the swing ruler printed across the foot of the market board.
+
+```
+(Demand − Supply + Memory) × Elasticity
+```
+
+| Dice | Colour | Range | What it is |
+| --- | --- | --- | --- |
+| 2 d6 | red | 2–12 | Demand |
+| 2 d6 | blue | 2–12 | Supply |
+| 1 d6 | green | 1–6 | Elasticity |
+
+| Green die | Elasticity |  |  |
+| --- | --- | --- | --- |
+| **1–2** | **×1** | Stable | An ordinary season. The swing is felt as it fell. |
+| **3–4** | **×2** | Volatile | A thin market with nobody willing to stand in the middle of it. Every point of the swing counts double, and this is where crashes and spikes come from. |
+| **5–6** | **÷2** | Inelastic | The town needs it whatever it costs, or cannot use a second one at any price. Half the swing, dropped toward zero - most inelastic seasons do not move the price at all. |
+
+Halving rounds toward zero, so an inelastic season can shrink a swing away to
+nothing but can never turn it around.
+
+### The swing ruler
+
+| Net | **≤ −16** | **−15 … −8** | **−7 … −2** | **−1 … +1** | **+2 … +7** | **+8 … +15** | **≥ +16** |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Bands | −3 | −2 | −1 | hold | +1 | +2 | +3 |
+|  | crash | slump | soften | hold | firm | rally | spike |
+
+The board sells no more of a commodity in a round than that round's supply roll,
+first come first served in turn order. It will buy any quantity.
+
+### What a market remembers
+
+Each line carries a tally of the board's own stock — up one cell per token sold to
+the board, down one per token bought off it — and a modifier from −3 to
++3 that the tally moves. Every 5 tokens the tally fills, which takes it
+back to empty and steps the modifier one cell. Which way it steps is the
+commodity's own model, and the model's mark is engraved in the corner of that
+commodity's token.
+
+| Model | Memory | Tally | What it is |
+| --- | --- | --- | --- |
+| ![](../art/icons/pricing-glut.svg) Glut | −3 to 0 | −1 when full | **What does not sell rots.** Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned. |
+| ![](../art/icons/pricing-hype.svg) Hype | −3 to +3 | — | **It is bought because it is going up.** The luxury trade: low bulk, high value, wanted for what it is rather than for what it does. |
+| ![](../art/icons/pricing-deplete.svg) Depletion | 0 to +3 | +1 when full | **The easy ore came out first.** Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry. |
+
 ## Commodities
 
-| Commodity | Category | Bulk | Value | Perishes | Tags |
-| --- | --- | --- | --- | --- | --- |
-| Logs | raw | 2 | 4 | — | bulky |
-| Stone | raw | 2 | 5 | — | bulky |
-| Clay | raw | 2 | 3 | — | bulky |
-| Sand | raw | 2 | 2 | — | bulky |
-| Iron Ore | raw | 2 | 6 | — | bulky, ore |
-| Copper Ore | raw | 2 | 7 | — | bulky, ore |
-| Gold Ore | raw | 2 | 14 | — | bulky, ore |
-| Salt | raw | 1 | 6 | — | preservative |
-| Water | raw | 1 | 1 | — | liquid |
-| Coal | fuel | 2 | 8 | — | bulky, fuel |
-| Peat | fuel | 2 | 3 | — | bulky, fuel |
-| Charcoal | fuel | 1 | 7 | — | fuel |
-| Crude Oil | fuel | 2 | 16 | — | liquid, fuel, late-game |
-| Lumber | material | 1 | 9 | — | building-material |
-| Brick | material | 2 | 12 | — | building-material |
-| Pig Iron | material | 1 | 14 | — | metal |
-| Steel | material | 1 | 26 | — | metal, tier3 |
-| Copper | material | 1 | 18 | — | metal |
-| Gold | material | 1 | 40 | — | metal, precious |
-| Glass | material | 1 | 20 | — | fragile |
-| Rope | material | 1 | 8 | — | — |
-| Leather | material | 1 | 11 | — | — |
-| Ironware | manufactured | 1 | 22 | — | fittings |
-| Parchment | manufactured | 1 | 15 | — | — |
-| Wool | textile | 1 | 6 | — | — |
-| Flax | textile | 1 | 5 | — | — |
-| Cotton | textile | 1 | 7 | — | — |
-| Yarn | textile | 1 | 12 | — | — |
-| Cloth | textile | 1 | 20 | — | — |
-| Fine Cloth | textile | 1 | 38 | — | tier3 |
-| Hide | textile | 1 | 6 | — | — |
-| Grain | food | 1 | 5 | — | staple, seed |
-| Flour | food | 1 | 9 | — | — |
-| Bread | food | 1 | 14 | 3 rounds | staple |
-| Vegetables | food | 1 | 6 | 3 rounds | — |
-| Mushrooms | food | 1 | 7 | 2 rounds | foraged, potion-ingredient |
-| Berries | food | 1 | 5 | 2 rounds | foraged, potion-ingredient |
-| Apples | food | 1 | 6 | 4 rounds | — |
-| Fish | food | 1 | 7 | 2 rounds | — |
-| Meat | food | 1 | 10 | 2 rounds | — |
-| Salted Meat | food | 1 | 18 | — | preserved |
-| Milk | food | 1 | 4 | 1 rounds | liquid |
-| Cheese | food | 1 | 16 | — | preserved |
-| Honey | food | 1 | 12 | — | potion-ingredient |
-| Eggs | food | 1 | 5 | 2 rounds | — |
-| Grapes | food | 1 | 8 | 2 rounds | — |
-| Hops | food | 1 | 7 | — | — |
-| Ale | drink | 2 | 24 | — | liquid, morale |
-| Mead | drink | 2 | 32 | — | liquid, morale |
-| Wine | drink | 2 | 40 | — | liquid, morale, luxury-adjacent |
-| Sheep | livestock | 2 | 18 | — | breeds, eats |
-| Cattle | livestock | 3 | 30 | — | breeds, eats |
-| Pig | livestock | 2 | 20 | — | breeds, eats |
-| Chickens | livestock | 1 | 9 | — | breeds, eats |
-| Horse | livestock | 3 | 45 | — | breeds, eats, draught |
-| Barrel | container | 1 | 8 | — | reusable |
-| Crate | container | 1 | 6 | — | reusable |
-| Sack | container | 0.5 | 3 | — | reusable |
-| Spices | luxury | 0.5 | 45 | — | trade-good, import-only |
-| Gems | luxury | 0.5 | 60 | — | trade-good, theft-target |
-| Jewellery | luxury | 0.5 | 110 | — | trade-good, theft-target, tier3 |
-| Arcane Herb | arcane | 0.5 | 20 | — | foraged, potion-ingredient |
-| Mana Crystal | arcane | 0.5 | 55 | — | potion-ingredient, theft-target |
-| Moon Blossom | arcane | 0.5 | 14 | 2 rounds | foraged, potion-ingredient |
-| Ember Root | arcane | 0.5 | 16 | — | foraged, potion-ingredient |
-| Frost Lichen | arcane | 0.5 | 12 | — | foraged, potion-ingredient |
+| Commodity | Category | Bulk | Value | Prices by | Perishes | Tags |
+| --- | --- | --- | --- | --- | --- | --- |
+| Logs | raw | 2 | 4 | ![](../art/icons/pricing-glut.svg) Glut | — | bulky |
+| Stone | raw | 2 | 5 | ![](../art/icons/pricing-glut.svg) Glut | — | bulky |
+| Clay | raw | 2 | 3 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky |
+| Sand | raw | 2 | 2 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky |
+| Iron Ore | raw | 2 | 6 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, ore |
+| Copper Ore | raw | 2 | 7 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, ore |
+| Gold Ore | raw | 2 | 14 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, ore |
+| Salt | raw | 1 | 6 | ![](../art/icons/pricing-deplete.svg) Depletion | — | preservative |
+| Water | raw | 1 | 1 | ![](../art/icons/pricing-glut.svg) Glut | — | liquid |
+| Coal | fuel | 2 | 8 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, fuel |
+| Peat | fuel | 2 | 3 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, fuel |
+| Charcoal | fuel | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | — | fuel |
+| Crude Oil | fuel | 2 | 16 | ![](../art/icons/pricing-deplete.svg) Depletion | — | liquid, fuel, late-game |
+| Lumber | material | 1 | 9 | ![](../art/icons/pricing-glut.svg) Glut | — | building-material |
+| Brick | material | 2 | 12 | ![](../art/icons/pricing-glut.svg) Glut | — | building-material |
+| Pig Iron | material | 1 | 14 | ![](../art/icons/pricing-deplete.svg) Depletion | — | metal |
+| Steel | material | 1 | 26 | ![](../art/icons/pricing-deplete.svg) Depletion | — | metal, tier3 |
+| Copper | material | 1 | 18 | ![](../art/icons/pricing-deplete.svg) Depletion | — | metal |
+| Gold | material | 1 | 40 | ![](../art/icons/pricing-hype.svg) Hype | — | metal, precious |
+| Glass | material | 1 | 20 | ![](../art/icons/pricing-glut.svg) Glut | — | fragile |
+| Rope | material | 1 | 8 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Leather | material | 1 | 11 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Ironware | manufactured | 1 | 22 | ![](../art/icons/pricing-glut.svg) Glut | — | fittings |
+| Parchment | manufactured | 1 | 15 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Wool | textile | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Flax | textile | 1 | 5 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Cotton | textile | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Yarn | textile | 1 | 12 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Cloth | textile | 1 | 20 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Fine Cloth | textile | 1 | 38 | ![](../art/icons/pricing-hype.svg) Hype | — | tier3 |
+| Hide | textile | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Grain | food | 1 | 5 | ![](../art/icons/pricing-glut.svg) Glut | — | staple, seed |
+| Flour | food | 1 | 9 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Bread | food | 1 | 14 | ![](../art/icons/pricing-glut.svg) Glut | 3 rounds | staple |
+| Vegetables | food | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | 3 rounds | — |
+| Mushrooms | food | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | foraged, potion-ingredient |
+| Berries | food | 1 | 5 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | foraged, potion-ingredient |
+| Apples | food | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | 4 rounds | — |
+| Fish | food | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | — |
+| Meat | food | 1 | 10 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | — |
+| Salted Meat | food | 1 | 18 | ![](../art/icons/pricing-glut.svg) Glut | — | preserved |
+| Milk | food | 1 | 4 | ![](../art/icons/pricing-glut.svg) Glut | 1 rounds | liquid |
+| Cheese | food | 1 | 16 | ![](../art/icons/pricing-glut.svg) Glut | — | preserved |
+| Honey | food | 1 | 12 | ![](../art/icons/pricing-glut.svg) Glut | — | potion-ingredient |
+| Eggs | food | 1 | 5 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | — |
+| Grapes | food | 1 | 8 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | — |
+| Hops | food | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
+| Ale | drink | 2 | 24 | ![](../art/icons/pricing-glut.svg) Glut | — | liquid, morale |
+| Mead | drink | 2 | 32 | ![](../art/icons/pricing-hype.svg) Hype | — | liquid, morale |
+| Wine | drink | 2 | 40 | ![](../art/icons/pricing-hype.svg) Hype | — | liquid, morale, luxury-adjacent |
+| Sheep | livestock | 2 | 18 | ![](../art/icons/pricing-glut.svg) Glut | — | breeds, eats |
+| Cattle | livestock | 3 | 30 | ![](../art/icons/pricing-glut.svg) Glut | — | breeds, eats |
+| Pig | livestock | 2 | 20 | ![](../art/icons/pricing-glut.svg) Glut | — | breeds, eats |
+| Chickens | livestock | 1 | 9 | ![](../art/icons/pricing-glut.svg) Glut | — | breeds, eats |
+| Horse | livestock | 3 | 45 | ![](../art/icons/pricing-hype.svg) Hype | — | breeds, eats, draught |
+| Barrel | container | 1 | 8 | ![](../art/icons/pricing-glut.svg) Glut | — | reusable |
+| Crate | container | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | — | reusable |
+| Sack | container | 0.5 | 3 | ![](../art/icons/pricing-glut.svg) Glut | — | reusable |
+| Spices | luxury | 0.5 | 45 | ![](../art/icons/pricing-hype.svg) Hype | — | trade-good, import-only |
+| Gems | luxury | 0.5 | 60 | ![](../art/icons/pricing-deplete.svg) Depletion | — | trade-good, theft-target |
+| Jewellery | luxury | 0.5 | 110 | ![](../art/icons/pricing-hype.svg) Hype | — | trade-good, theft-target, tier3 |
+| Arcane Herb | arcane | 0.5 | 20 | ![](../art/icons/pricing-glut.svg) Glut | — | foraged, potion-ingredient |
+| Mana Crystal | arcane | 0.5 | 55 | ![](../art/icons/pricing-deplete.svg) Depletion | — | potion-ingredient, theft-target |
+| Moon Blossom | arcane | 0.5 | 14 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | foraged, potion-ingredient |
+| Ember Root | arcane | 0.5 | 16 | ![](../art/icons/pricing-glut.svg) Glut | — | foraged, potion-ingredient |
+| Frost Lichen | arcane | 0.5 | 12 | ![](../art/icons/pricing-glut.svg) Glut | — | foraged, potion-ingredient |
 
 ## Tools
 
