@@ -43,6 +43,17 @@
  * works - better than it used to, because the mark saying which ground this is
  * was never the colour's job either.
  *
+ * THREE FILES COME OUT, not one. The sheets themselves, an index.html that shows
+ * them, and a print.html that puts the ones you want on paper - the same split
+ * the cards already have, and for the same reason. A sheet is A4 landscape and
+ * full bleed, so eleven of them is eleven pages of solid colour; index.html could
+ * only ever print all of them, which is not what a table wants and is why the
+ * page had no Print button worth pressing. print.html asks which ground and how
+ * many first. It is generated here rather than written by hand because the paper,
+ * the bleed and the cell are all numbers this file already holds, and a print page
+ * that carried its own copy of them is a print page that can disagree with the
+ * sheets it is printing.
+ *
  * Usage: node tools/build-minimaps.mjs [--check]
  */
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlinkSync } from 'node:fs';
@@ -472,8 +483,10 @@ const index = `<!doctype html>
   p.note { color: ${T70}; font-size: 14px; max-width: 74ch; }
   .bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; font-family: ${SANS}; font-size: 13.5px; margin-bottom: 16px; }
   .bar a { color: ${T85}; }
+  .bar a.primary { color: ${SOOT}; font-weight: bold; }
   figure { margin: 0 0 18px; }
   figcaption { font-family: ${SANS}; font-size: 12.5px; color: ${T70}; margin-top: 4px; }
+  figcaption a { color: ${T85}; }
   .sheets img { display: block; width: 100%; aspect-ratio: ${num(W)} / ${num(H)}; border: 1px solid ${T25};
                 background: ${TALLOW}; border-radius: 10px; }
   @media print {
@@ -501,9 +514,14 @@ const index = `<!doctype html>
   <a href="../boards/index.html">The player board</a>
   <a href="../markets/index.html">The market board</a>
   <a href="../map/index.html">The map</a>
+  <a class="primary" href="print.html">Print the sheets →</a>
 </div>
 <h1>The mini-map sheets</h1>
 <p class="note">${esc(spec.board.summary)}</p>
+<p class="note"><strong>${esc(spec.board.howMany)}</strong> So printing is its own page:
+<a href="print.html">print.html</a> asks which ground and how many copies before it puts anything on
+paper, and every caption below links straight to its own sheet. A mini-map is A4 landscape and full
+bleed — printing the lot is eleven pages of solid colour, and a table almost never wants that.</p>
 <p class="note">${esc(spec.board.note)}</p>
 <p class="note">The pattern on each field is that terrain's own <strong>map mark</strong>, from
 <code>data/terrain.json</code> — the same path the campaign map's legend swatch traces, drawn on the ink plate
@@ -524,9 +542,363 @@ those, re-run the tool, and never these files.</p>
      draws, and the plate is the card - but these sheets draw every mark themselves and
      fetch nothing, so they have nothing to buy with it. -->
 <div class="sheets">
-${terrain.terrains.map((t) => `  <figure><img src="sheets/field-${t.id}.svg" alt="Mini-map: ${esc(t.name)}"><figcaption>${esc(t.name)} (${esc(t.code)}) — ${esc(palette.terrain[t.id].wash)}</figcaption></figure>`).join('\n')}
+${terrain.terrains.map((t) => `  <figure><img src="sheets/field-${t.id}.svg" alt="Mini-map: ${esc(t.name)}"><figcaption>${esc(t.name)} (${esc(t.code)}) — ${esc(palette.terrain[t.id].wash)} · <a href="print.html?terrain=${esc(t.id)}">Print this one →</a></figcaption></figure>`).join('\n')}
 </div>
 </div>
+</body>
+</html>
+`;
+
+/* ------------------------------------------------------------- the print page */
+
+/**
+ * What print.html has to know about each sheet: enough to name it in the picker,
+ * show its colour, and fetch it. Written into the page rather than fetched,
+ * exactly as the card print page carries its own list - these pages have to work
+ * double-clicked off a disk, where there is no server to ask.
+ */
+const PRINTABLE = terrain.terrains.map((t) => ({
+  id: t.id, code: t.code, name: t.name, wash: palette.terrain[t.id].wash,
+}));
+
+const FULL_W = num(MM.sheet.widthMm + 2 * MM.sheet.bleedMm);
+const FULL_H = num(MM.sheet.heightMm + 2 * MM.sheet.bleedMm);
+
+const printPage = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Print the mini-map sheets — game1</title>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+  /* Screen: a control bar, a picker of ground, and a stack of sheet previews.
+     Print: one sheet a page, at true size, and nothing else on the paper.
+
+     This page wears app.css and the card and map print pages' control bar rather
+     than index.html's own styling next door, because what it has to be
+     recognisable AS is a print page. Three of them now, one bar.
+
+     Prefixed, like both of those, and for the reason they each give: app.css
+     already owns .sheet - it is the thumbnail tile in the sandbox, and its
+     "img { width: 100% }" would size a sheet of paper to the width of a preview.
+     So everything that is the paper carries mm-. The furniture keeps the card
+     print page's names - .note, .picker, .empty - and, like that page, sets every
+     property it cares about rather than inheriting half of somebody else's. */
+  .printbar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px 18px;
+              align-items: center; padding: 11px 18px; background: var(--bg-raised);
+              border-bottom: 1px solid var(--line); }
+  .printbar h1 { font-size: .95rem; margin: 0; }
+  .printbar .spacer { flex: 1; }
+  .printbar label { font-size: .78rem; color: var(--ink-soft); display: flex; gap: 5px; align-items: center; }
+  .printbar select, .printbar button { font: inherit; font-size: .8rem; padding: 4px 9px; border-radius: 7px;
+                                       border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+  .printbar button { cursor: pointer; }
+  .printbar button:hover { border-color: var(--accent); }
+  .printbar button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg-raised); font-weight: 600; }
+  .printbar a { color: var(--accent); font-size: .78rem; }
+
+  .note { max-width: 70ch; margin: 18px auto 4px; padding: 0 18px; color: var(--ink-soft); font-size: .85rem; }
+  .note p { margin: 0 0 6px; }
+  .note strong { color: var(--ink); }
+
+  /* The picker: one chip per terrain, carrying its printed colour and how many
+     copies of it to run. Nought is how a sheet is left out, so the same control
+     both chooses and counts. */
+  .picker { max-width: 70ch; margin: 0 auto; padding: 0 18px 6px; }
+  .picker h2 { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+               color: var(--ink-faint); margin: 12px 0 6px; display: flex; gap: 10px; align-items: baseline; }
+  .picker h2 button { font: inherit; font-size: .72rem; text-transform: none; letter-spacing: 0;
+                      background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; }
+  .pickrow { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pick { display: flex; gap: 7px; align-items: center; font-size: .78rem;
+          border: 1px solid var(--line); border-radius: 999px; padding: 3px 5px 3px 8px; background: var(--bg-raised); }
+  .pick[data-on="0"] { opacity: .45; }
+  .pick .mm-swatch { width: 13px; height: 13px; border-radius: 3px; border: 1px solid var(--line-strong); }
+  .pick .code { font-family: var(--mono); font-size: .7rem; color: var(--ink-faint); }
+  .pick input { width: 3.2em; font: inherit; font-size: .75rem; padding: 2px 4px; border-radius: 6px;
+                border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+
+  /* A sheet is ${MM.sheet.widthMm} mm wide - ${Math.round(MM.sheet.widthMm * 96 / 25.4)} px - which is wider than a laptop window, so the
+     stack scrolls sideways and the frames centre themselves. Same arrangement as
+     the map's print page, and for the same reason it gives: centring the overflow
+     itself puts the left edge of every sheet somewhere a browser will not scroll to. */
+  .mm-sheets { padding: 18px; overflow-x: auto; }
+  .mm-frame { width: max-content; margin: 0 auto 22px; }
+  .mm-frame:last-child { margin-bottom: 0; }
+  .mm-label { font: 600 .72rem/1.4 var(--mono, monospace); letter-spacing: .05em; text-transform: uppercase;
+              color: var(--ink-faint); margin: 0 0 5px; }
+
+  /* The sheet is drawn with ${MM.sheet.bleedMm} mm of bleed all round, so it is laid ${MM.sheet.bleedMm} mm out and up
+     inside a window the size of the trim: the bleed runs off the edge of the
+     paper, which is the only place bleed is any use. Scaling the whole thing to
+     fit the page instead prints it about 2% small - and a cell 2% small is no
+     longer a world hex, which is the one promise a mini-map makes. */
+  .mm-sheet { position: relative; width: ${MM.sheet.widthMm}mm; height: ${MM.sheet.heightMm}mm; overflow: hidden;
+              background: #fff; box-shadow: var(--shadow); transform-origin: top left; }
+  .mm-sheet img { position: absolute; display: block; left: -${MM.sheet.bleedMm}mm; top: -${MM.sheet.bleedMm}mm;
+                  width: ${FULL_W}mm; height: ${FULL_H}mm; }
+  .empty { padding: 40px 18px; text-align: center; color: var(--ink-faint); font-size: .85rem; }
+
+  /* No paper picker, so the page size is settled here rather than from script:
+     the sheet is ${MM.sheet.widthMm} x ${MM.sheet.heightMm} mm and there is nothing to choose. */
+  @page { size: ${MM.sheet.widthMm}mm ${MM.sheet.heightMm}mm; margin: 0; }
+
+  /* Nothing that is only there to make the preview readable may reach the paper.
+     The preview scale is undone here and again from script on beforeprint,
+     because a sheet printed at 86% is a sheet whose cells no longer match the
+     board it is standing in for. */
+  @media print {
+    .printbar, .note, .picker, .mm-label { display: none !important; }
+    .mm-sheets { padding: 0; overflow: visible; }
+    .mm-frame { width: auto !important; height: auto !important; margin: 0 !important;
+                break-after: page; page-break-after: always; }
+    .mm-frame:last-child { break-after: auto; page-break-after: auto; }
+    .mm-sheet { box-shadow: none; margin: 0; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="printbar">
+  <h1>Print the mini-map sheets</h1>
+  <label>preview
+    <select id="zoom">
+      <option value="fit">fit the window</option>
+      <option value="1">100%</option>
+      <option value="0.5">50%</option>
+      <option value="0.25">25%</option>
+    </select>
+  </label>
+  <span class="spacer"></span>
+  <a href="index.html">← the sheets</a>
+  <a href="../index.html">Explorer</a>
+  <button type="button" class="primary" id="go-print">Print / save as PDF…</button>
+</div>
+
+<div class="note">
+  <p id="summary"></p>
+  <p><strong>Print at 100% — no “fit to page”, no scaling</strong>, on A4 landscape. Each cell then comes
+  off the paper at <strong>${WORLD.mm}&nbsp;mm across the flats</strong>, which is a world-map hex on the
+  <code>${esc(WORLD.map)}</code> map at its <code>${esc(WORLD.preset)}</code> preset: a figure based for the
+  campaign board stands in a mini-map cell without being re-based. Scale the sheet to fit some other paper
+  and that stops being true, which is why this page offers no paper but the one the sheet is drawn for.
+  For a file rather than paper, print and choose <strong>Save as PDF</strong> — the page size is already
+  set, so the PDF is true size too.</p>
+  <p>The sheets bleed off all four edges. That is deliberate: they are drawn ${FULL_W}&nbsp;×&nbsp;${FULL_H}&nbsp;mm
+  and laid ${MM.sheet.bleedMm}&nbsp;mm out and up, so the colour runs past the paper rather than stopping short of
+  it in a white line. A home printer keeps a few millimetres of margin it cannot print in; that margin eats
+  bleed, and never the field.</p>
+  <p><strong>${esc(spec.board.howMany)}</strong> Both panels print on every sheet, so no sheet is ever the
+  wrong sheet.</p>
+</div>
+
+<div class="picker" id="picker"></div>
+<div class="mm-sheets" id="sheets"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* Generated by tools/build-minimaps.mjs from data/terrain.json and the printed
+     washes in docs/art/palette.json. */
+  var SHEETS = ${JSON.stringify(PRINTABLE)};
+  var CELL_MM = ${WORLD.mm}, SHEET_W = ${MM.sheet.widthMm}, SHEET_H = ${MM.sheet.heightMm};
+  var MAX_COPIES = 20;
+
+  /* A full set, one of each, is the default: that is what "one per terrain,
+     printed once" means, and it is what this page replaced - hitting Ctrl-P on
+     the sheets index could only ever print all eleven. The difference is that the
+     summary now says how many pages that is before anybody presses anything. */
+  var copies = {};
+  SHEETS.forEach(function (s) { copies[s.id] = 1; });
+
+  /* ?terrain=forest, or a code, or several of either, cuts it to that ground.
+     Every caption on the sheets index links here that way, so the obvious route
+     from one sheet is one sheet and not the set. */
+  var asked = new URLSearchParams(location.search).get('terrain');
+  if (asked) {
+    var want = asked.toLowerCase().split(/[\\s,]+/).filter(Boolean);
+    var hit = SHEETS.filter(function (s) {
+      return want.indexOf(s.id) !== -1 || want.indexOf(s.code.toLowerCase()) !== -1;
+    });
+    /* A name nobody recognises leaves the full set alone rather than printing
+       nothing: a typed URL should not silently come out blank. */
+    if (hit.length) {
+      SHEETS.forEach(function (s) { copies[s.id] = 0; });
+      hit.forEach(function (s) { copies[s.id] = 1; });
+    }
+  }
+
+  /* ------------------------------------------------------------- the picker */
+
+  var picker = document.getElementById('picker');
+  var head = document.createElement('h2');
+  head.textContent = 'Which ground, and how many ';
+  [['all', 1], ['none', 0]].forEach(function (pair) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = pair[0];
+    b.addEventListener('click', function () {
+      SHEETS.forEach(function (s) { copies[s.id] = pair[1]; });
+      syncPicker();
+      render();
+    });
+    head.appendChild(b);
+  });
+  picker.appendChild(head);
+
+  var row = document.createElement('div');
+  row.className = 'pickrow';
+  SHEETS.forEach(function (s) {
+    var label = document.createElement('label');
+    label.className = 'pick';
+    label.dataset.id = s.id;
+    label.title = s.name + ' — ' + s.wash;
+
+    var swatch = document.createElement('span');
+    swatch.className = 'mm-swatch';
+    swatch.style.background = s.wash;
+
+    var code = document.createElement('span');
+    code.className = 'code';
+    code.textContent = s.code;
+
+    var box = document.createElement('input');
+    box.type = 'number';
+    box.min = '0';
+    box.max = String(MAX_COPIES);
+    box.step = '1';
+    box.setAttribute('aria-label', 'copies of ' + s.name);
+    box.addEventListener('change', function () {
+      var n = parseInt(box.value, 10);
+      copies[s.id] = Math.max(0, Math.min(MAX_COPIES, isNaN(n) ? 0 : n));
+      syncPicker();
+      render();
+    });
+
+    label.appendChild(swatch);
+    label.appendChild(code);
+    label.appendChild(document.createTextNode(s.name));
+    label.appendChild(box);
+    row.appendChild(label);
+  });
+  picker.appendChild(row);
+
+  function syncPicker() {
+    Array.prototype.forEach.call(picker.querySelectorAll('.pick'), function (label) {
+      var n = copies[label.dataset.id] || 0;
+      label.dataset.on = n ? '1' : '0';
+      label.querySelector('input').value = String(n);
+    });
+  }
+
+  /* -------------------------------------------------------------- the sheets */
+
+  var current = null;
+
+  function render() {
+    var queue = [];
+    SHEETS.forEach(function (s) {
+      for (var i = 0; i < (copies[s.id] || 0); i++) queue.push(s);
+    });
+
+    var chosen = SHEETS.filter(function (s) { return copies[s.id]; }).map(function (s) {
+      return (copies[s.id] > 1 ? copies[s.id] + ' × ' : '') + s.name;
+    });
+
+    document.getElementById('summary').innerHTML = queue.length
+      ? '<strong>' + queue.length + ' sheet' + (queue.length === 1 ? '' : 's') + ' — ' +
+        queue.length + ' page' + (queue.length === 1 ? '' : 's') + ' of A4 landscape</strong>, ' +
+        SHEET_W + ' × ' + SHEET_H + ' mm, one sheet a page: ' + chosen.join(', ') + '.'
+      : '<strong>Nothing chosen.</strong> Pick some ground below — or press <em>all</em> for one of each.';
+
+    var host = document.getElementById('sheets');
+    host.innerHTML = '';
+
+    if (!queue.length) {
+      var none = document.createElement('p');
+      none.className = 'empty';
+      none.textContent = 'No sheets chosen.';
+      host.appendChild(none);
+      current = null;
+      return;
+    }
+
+    queue.forEach(function (s, i) {
+      var sheet = document.createElement('div');
+      sheet.className = 'mm-sheet';
+
+      /* <img>, not <object>. An <object> is a nested browsing context, and a
+         nested browsing context is the one thing a print preview is not obliged
+         to paint - which on a page whose every other element is display:none by
+         then is not a degraded print but a blank sheet. The card sheet pays that
+         price on purpose, because an SVG in an <img> may not fetch the plate it
+         draws and the plate is the card; a mini-map draws every mark itself and
+         fetches nothing, so it has nothing to buy with it. */
+      var img = document.createElement('img');
+      img.src = 'sheets/field-' + s.id + '.svg';
+      img.alt = 'Mini-map: ' + s.name;
+      sheet.appendChild(img);
+
+      var label = document.createElement('p');
+      label.className = 'mm-label';
+      label.textContent = s.name + '  ·  page ' + (i + 1) + ' of ' + queue.length +
+        '  ·  ' + SHEET_W + ' × ' + SHEET_H + ' mm at 100%, ' + CELL_MM + ' mm cells';
+
+      var frame = document.createElement('div');
+      frame.className = 'mm-frame';
+      frame.appendChild(label);
+      frame.appendChild(sheet);
+      host.appendChild(frame);
+    });
+
+    current = { w: SHEET_W, h: SHEET_H };
+    applyScale();
+  }
+
+  /* -------------------------------------------------------- preview scale */
+
+  /* CSS fixes the millimetre at exactly 96/25.4 px, so this needs no measuring. */
+  var MM_PX = 96 / 25.4;
+  var zoom = document.getElementById('zoom');
+
+  function applyScale(force) {
+    if (!current) return;
+    var host = document.getElementById('sheets');
+    var wanted = force === undefined ? zoom.value : force;
+    var wpx = current.w * MM_PX, hpx = current.h * MM_PX;
+    var room = host.clientWidth - 36;                 /* the 18 px of padding either side */
+    var scale = wanted === 'fit' ? Math.min(1, room / wpx) : parseFloat(wanted) || 1;
+
+    Array.prototype.forEach.call(host.children, function (frame) {
+      var sheet = frame.querySelector('.mm-sheet');
+      if (!sheet) return;
+      if (scale >= 1) {
+        sheet.style.transform = '';
+        frame.style.width = '';
+        frame.style.height = '';
+      } else {
+        sheet.style.transform = 'scale(' + scale + ')';
+        frame.style.width = Math.round(wpx * scale) + 'px';
+        frame.style.height = Math.round(hpx * scale) + 'px';
+      }
+    });
+  }
+
+  zoom.addEventListener('change', function () { applyScale(); });
+  window.addEventListener('resize', function () { applyScale(); });
+
+  /* The @media print rules undo the preview scale on their own. This is the belt
+     to that pair of braces: a cell must never reach paper at 86%. */
+  window.addEventListener('beforeprint', function () { applyScale(1); });
+  window.addEventListener('afterprint', function () { applyScale(); });
+  document.getElementById('go-print').addEventListener('click', function () { window.print(); });
+
+  syncPicker();
+  render();
+})();
+</script>
 </body>
 </html>
 `;
@@ -535,6 +907,11 @@ const INDEX_DIR = join(ROOT, 'docs', 'minimaps');
 const keep = new Set(sheets.map(([f]) => f));
 const stale = existsSync(OUT_DIR) ? readdirSync(OUT_DIR).filter((f) => f.endsWith('.svg') && !keep.has(f)) : [];
 
+/* The two pages, checked and written the same way the sheets are: they carry the
+   paper, the bleed and the cell in them, so a sheet that moves and a page that
+   did not is exactly the drift --check is here to catch. */
+const pages = [['index.html', index], ['print.html', printPage]];
+
 if (checkOnly) {
   const drifted = [];
   for (const [file, body] of sheets) {
@@ -542,9 +919,11 @@ if (checkOnly) {
     try { current = readFileSync(join(OUT_DIR, file), 'utf8'); } catch { /* absent counts as stale */ }
     if (current !== body) drifted.push(file);
   }
-  let currentIndex = '';
-  try { currentIndex = readFileSync(join(INDEX_DIR, 'index.html'), 'utf8'); } catch { /* absent */ }
-  if (currentIndex !== index) drifted.push('index.html');
+  for (const [file, body] of pages) {
+    let current = '';
+    try { current = readFileSync(join(INDEX_DIR, file), 'utf8'); } catch { /* absent counts as stale */ }
+    if (current !== body) drifted.push(file);
+  }
   if (drifted.length || stale.length) {
     console.error(`docs/minimaps is stale (${[...drifted, ...stale.map((f) => f + ' should not exist')].join(', ')}). Run: node tools/build-minimaps.mjs`);
     process.exit(1);
@@ -553,12 +932,13 @@ if (checkOnly) {
 } else {
   mkdirSync(OUT_DIR, { recursive: true });
   for (const [file, body] of sheets) writeFileSync(join(OUT_DIR, file), body, 'utf8');
-  writeFileSync(join(INDEX_DIR, 'index.html'), index, 'utf8');
+  for (const [file, body] of pages) writeFileSync(join(INDEX_DIR, file), body, 'utf8');
   for (const f of stale) unlinkSync(join(OUT_DIR, f));
   console.log(
     `wrote ${sheets.length} mini-map sheets to docs/minimaps/sheets/ — ${MM.sheet.widthMm}x${MM.sheet.heightMm}mm, ` +
     `${ROWS} cells across (${cells().length} cells) at ${WORLD.mm}mm, the ${WORLD.map} hex on its ${WORLD.preset} preset; ` +
-    `field ${num(FIELD_W / U)}x${num(FIELD_H / U)}mm, panels ${num(PANEL_W / U)}mm` +
+    `field ${num(FIELD_W / U)}x${num(FIELD_H / U)}mm, panels ${num(PANEL_W / U)}mm; ` +
+    `and ${pages.length} pages to docs/minimaps/ — index.html shows them, print.html puts them on paper` +
     (stale.length ? `; removed ${stale.length} sheet(s) no longer built` : '')
   );
 }

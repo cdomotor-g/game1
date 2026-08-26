@@ -105,6 +105,8 @@ docs/          the published website AND the design documents — see Publishing
   minimaps/          the zoom-in sheets. sheets/ is GENERATED from
                      tools/build-minimaps.mjs — a flat terrain colour and a
                      hex grid whose cells are world hexes, no art at all.
+                     index.html shows them, print.html asks which ground and
+                     how many and puts those on A4 landscape at true size.
                      img/ is the shelved drawn set, kept as-is. See its README
   cards/             GENERATED card fronts for the adventure decks, from
                      tools/build-cards.mjs — index.html shows the set,
@@ -520,6 +522,18 @@ off the map rather than chosen, so a figure based for the campaign board stands 
 mini-map cell without being re-based, a route token cut for one fits the other, and one
 ruler measures both. Print the map bigger and the sheets follow. The scale is a fiction and
 it is the right one, because everything physical about the two boards agrees.
+
+**[minimaps/print.html](https://cdomotor-g.github.io/game1/minimaps/print.html)** is how they
+get onto paper — the same split the cards have, and for the same reason. A mini-map is A4
+landscape and full bleed, so a page that could only print the lot printed eleven pages of
+solid colour; this one asks which ground and how many copies first, previews the paper at
+true size, and takes a terrain in its query string (`print.html?terrain=marsh`) so every
+caption on the index, and every terrain in the explorer, links straight to its own sheet.
+There is no paper but A4 landscape on purpose: a sheet scaled to fit anything else has cells
+that are no longer world hexes, which is the one thing a mini-map promises. It is generated
+by the same tool as the sheets, because the paper, the bleed and the cell are numbers that
+tool already holds and a print page carrying its own copy of them is a print page that can
+disagree with what it is printing.
 
 The thirty-two hand-drawn sheets that preceded this are part of the shelved tile board
 ([#18](https://github.com/cdomotor-g/game1/issues/18)); they stay committed at

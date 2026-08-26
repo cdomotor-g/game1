@@ -11,8 +11,10 @@
   p.note { color: #5F564C; font-size: 14px; max-width: 74ch; }
   .bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; font-family: Helvetica, Arial, sans-serif; font-size: 13.5px; margin-bottom: 16px; }
   .bar a { color: #3D3630; }
+  .bar a.primary { color: #1A1714; font-weight: bold; }
   figure { margin: 0 0 18px; }
   figcaption { font-family: Helvetica, Arial, sans-serif; font-size: 12.5px; color: #5F564C; margin-top: 4px; }
+  figcaption a { color: #3D3630; }
   .sheets img { display: block; width: 100%; aspect-ratio: 2424 / 1728; border: 1px solid #C0B7A9;
                 background: #EDE4D1; border-radius: 10px; }
   @media print {
@@ -40,9 +42,14 @@
   <a href="../boards/index.html">The player board</a>
   <a href="../markets/index.html">The market board</a>
   <a href="../map/index.html">The map</a>
+  <a class="primary" href="print.html">Print the sheets →</a>
 </div>
 <h1>The mini-map sheets</h1>
 <p class="note">One world hex, opened out: a hexagonal field of 61 cells in the terrain's own colour and patterned with its own map mark, each cell the size of a world-map hex, with an encounter panel and a holdings panel either side.</p>
+<p class="note"><strong>One per terrain, printed once. A table needs whichever ground it is fighting or building on, which is rarely more than two sheets at a time.</strong> So printing is its own page:
+<a href="print.html">print.html</a> asks which ground and how many copies before it puts anything on
+paper, and every caption below links straight to its own sheet. A mini-map is A4 landscape and full
+bleed — printing the lot is eleven pages of solid colour, and a table almost never wants that.</p>
 <p class="note">The colour and the mark are not a placeholder for artwork that has not been drawn. They are the specification. A drawn mini-map competes with the pieces standing on it, and every one of these sheets is a sheet somebody is standing pieces on - so the ground is said in the lightest possible way that still says it: the terrain's own map mark, three to a cell, on the ink plate at a third strength, quieter than the grid ruled over it.</p>
 <p class="note">The pattern on each field is that terrain's own <strong>map mark</strong>, from
 <code>data/terrain.json</code> — the same path the campaign map's legend swatch traces, drawn on the ink plate
@@ -63,17 +70,17 @@ those, re-run the tool, and never these files.</p>
      draws, and the plate is the card - but these sheets draw every mark themselves and
      fetch nothing, so they have nothing to buy with it. -->
 <div class="sheets">
-  <figure><img src="sheets/field-grassland.svg" alt="Mini-map: Grassland"><figcaption>Grassland (G) — #B9C9A8</figcaption></figure>
-  <figure><img src="sheets/field-forest.svg" alt="Mini-map: Forest"><figcaption>Forest (F) — #7E9E84</figcaption></figure>
-  <figure><img src="sheets/field-hills.svg" alt="Mini-map: Hills"><figcaption>Hills (H) — #C3AE8A</figcaption></figure>
-  <figure><img src="sheets/field-mountain.svg" alt="Mini-map: Mountain"><figcaption>Mountain (M) — #9AA3A8</figcaption></figure>
-  <figure><img src="sheets/field-marsh.svg" alt="Mini-map: Marsh"><figcaption>Marsh (B) — #8E9478</figcaption></figure>
-  <figure><img src="sheets/field-tundra.svg" alt="Mini-map: Tundra"><figcaption>Tundra (T) — #D2D3CE</figcaption></figure>
-  <figure><img src="sheets/field-desert.svg" alt="Mini-map: Desert"><figcaption>Desert (D) — #DCC79C</figcaption></figure>
-  <figure><img src="sheets/field-river.svg" alt="Mini-map: River"><figcaption>River (R) — #93B7CC</figcaption></figure>
-  <figure><img src="sheets/field-lake.svg" alt="Mini-map: Lake"><figcaption>Lake (L) — #86ACC4</figcaption></figure>
-  <figure><img src="sheets/field-shallow-water.svg" alt="Mini-map: Shallow Water"><figcaption>Shallow Water (S) — #7BA0B5</figcaption></figure>
-  <figure><img src="sheets/field-deep-water.svg" alt="Mini-map: Deep Water"><figcaption>Deep Water (O) — #4E7189</figcaption></figure>
+  <figure><img src="sheets/field-grassland.svg" alt="Mini-map: Grassland"><figcaption>Grassland (G) — #B9C9A8 · <a href="print.html?terrain=grassland">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-forest.svg" alt="Mini-map: Forest"><figcaption>Forest (F) — #7E9E84 · <a href="print.html?terrain=forest">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-hills.svg" alt="Mini-map: Hills"><figcaption>Hills (H) — #C3AE8A · <a href="print.html?terrain=hills">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-mountain.svg" alt="Mini-map: Mountain"><figcaption>Mountain (M) — #9AA3A8 · <a href="print.html?terrain=mountain">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-marsh.svg" alt="Mini-map: Marsh"><figcaption>Marsh (B) — #8E9478 · <a href="print.html?terrain=marsh">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-tundra.svg" alt="Mini-map: Tundra"><figcaption>Tundra (T) — #D2D3CE · <a href="print.html?terrain=tundra">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-desert.svg" alt="Mini-map: Desert"><figcaption>Desert (D) — #DCC79C · <a href="print.html?terrain=desert">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-river.svg" alt="Mini-map: River"><figcaption>River (R) — #93B7CC · <a href="print.html?terrain=river">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-lake.svg" alt="Mini-map: Lake"><figcaption>Lake (L) — #86ACC4 · <a href="print.html?terrain=lake">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-shallow-water.svg" alt="Mini-map: Shallow Water"><figcaption>Shallow Water (S) — #7BA0B5 · <a href="print.html?terrain=shallow-water">Print this one →</a></figcaption></figure>
+  <figure><img src="sheets/field-deep-water.svg" alt="Mini-map: Deep Water"><figcaption>Deep Water (O) — #4E7189 · <a href="print.html?terrain=deep-water">Print this one →</a></figcaption></figure>
 </div>
 </div>
 </body>

@@ -23,8 +23,9 @@ mint/index.html   GENERATED from those two and the live queue, by
 design/           the fifteen design documents; 14-annex.md is GENERATED
                   by tools/build-annex.mjs from data/*.json
 map/              the campaign map: plate, viewer, print sheets
-minimaps/         the zoom-in sheets: spec and generation briefs. SHELVED
-                  with the tile board — see MINT.md
+minimaps/         the zoom-in sheets: GENERATED sheets/, index.html and
+                  print.html. The DRAWN set is SHELVED with the tile
+                  board — see MINT.md
 art/              the visual style guide, and prompts/ — the commissioning
                   briefs for card and map art
 ```

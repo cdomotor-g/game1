@@ -301,6 +301,15 @@
     const visible = D.terrains.filter((t) => UI.matches(t, query));
     return el('div', [
       pageHead('Terrain & the board', 'Tiles decide what can be built, what it costs to cross, and what might be buried underneath.'),
+      /* Ground is also a thing you print. A mini-map is one hex of this terrain
+         opened out onto A4 for pieces to stand on, and the print page asks which
+         ground before it puts anything on paper - so the sheets are one click
+         from the ground they are of, rather than only from the nav tray. */
+      el('div.flow', { style: 'margin-bottom:6px' }, [
+        el('a.btn', { href: 'minimaps/print.html' }, 'Print a mini-map sheet'),
+        el('a.btn.small', { href: 'minimaps/index.html' }, 'All the sheets'),
+        el('a.btn.small', { href: 'map/index.html' }, 'The map'),
+      ]),
       el('div.grid.wide', visible.map((t) =>
         el('button.card', { type: 'button', onclick: () => open('terrain', t.id) }, [
           el('div.card-head', [
@@ -1047,6 +1056,17 @@
       water
         ? linkSection('Waterside on it', wsBuildings.filter(reaches).map((b) => ['building', b.id, b.name, 'on the land beside']))
         : linkSection('Waterside here', wsBuildings.map((b) => ['building', b.id, b.name, watersideText(b.waterside || b.orWaterside).replace('must stand on land ', '')])),
+      /* The sheet for THIS ground, from the one screen that is already about it.
+         The print page takes the terrain in its query string, so this is a link
+         and not an instruction to go and find the right one of eleven. */
+      el('section', [
+        el('h4', 'Mini-map'),
+        el('p.prose', `One world hex of ${t.name.toLowerCase()}, opened out: 61 cells of it on A4 landscape, each cell the size of a world-map hex, with an encounter panel and a holdings panel either side.`),
+        el('div.flow', [
+          el('a.btn.small', { href: `minimaps/print.html?terrain=${t.id}` }, 'Print this sheet'),
+          el('a.btn.small', { href: 'minimaps/index.html' }, 'All the sheets'),
+        ]),
+      ]),
     ];
   };
 
