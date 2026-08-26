@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-sand-pit)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="42.53" cy="80.14" r="1.4"/><circle cx="56.32" cy="106.99" r="0.84"/><circle cx="48.87" cy="137.55" r="1.14"/><circle cx="108.73" cy="160.19" r="1.26"/><circle cx="52.07" cy="137.07" r="1.99"/></g><circle cx="50.74" cy="65.37" r="16.03" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="42.53" cy="80.14" r="1.4"/><circle cx="56.32" cy="106.99" r="0.84"/><circle cx="48.87" cy="137.55" r="1.14"/><circle cx="108.73" cy="160.19" r="1.26"/><circle cx="52.07" cy="137.07" r="1.99"/></g>
 </g>
 </svg>

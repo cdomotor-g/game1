@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-crop-vegetables)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="141.68" cy="156.62" r="1.93"/><circle cx="105.74" cy="108.21" r="1.45"/><circle cx="72.16" cy="33.59" r="0.91"/><circle cx="32.68" cy="50.48" r="1.79"/><circle cx="78.72" cy="116.53" r="1.1"/></g><circle cx="50.74" cy="65.37" r="16.03" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="141.68" cy="156.62" r="1.93"/><circle cx="105.74" cy="108.21" r="1.45"/><circle cx="72.16" cy="33.59" r="0.91"/><circle cx="32.68" cy="50.48" r="1.79"/><circle cx="78.72" cy="116.53" r="1.1"/></g>
 </g>
 </svg>

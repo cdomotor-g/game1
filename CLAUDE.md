@@ -254,6 +254,31 @@ between them. Whichever kind it is, the hex grid is an **overlay drawn at read t
 is never baked into the artwork. If a map says something the game's terrain vocabulary
 cannot express, **change the map, not `data/terrain.json`**.
 
+## No ring stains. Ever. On anything.
+
+A cup ring on a page is a good trick exactly once. This repository spent it five
+times: a circle in `paper.foxing` on a card, then the player board, then the
+market board, then the mini-map sheets, then the building tiles — each one added
+by somebody who had just seen the last one and assumed it was the house style.
+It is not. Five identical coffee rings across a set of components is not wear, it
+is a signature, and it lands on top of the artwork every time.
+
+**Do not draw one, do not ask an artist for one, and do not add one back because
+a component looks bare.** That goes for a cup ring, a water ring, a tea stain, a
+circular blot, a "watermark" — any round mark that reads as something having been
+put down on the page.
+
+`tools/validate-art.mjs` fails the build on a circle or an ellipse painted in
+`paper.foxing`, and on anything stroked in it, which between them is every way a
+ring has ever been drawn here. The colour itself stays: a flat aged-paper wash
+and a board recess are fine uses of it. The negative prompt in every file under
+`docs/art/prompts/` bans it on the drawn plates for the same reason.
+
+Wear that is welcome, and is what to reach for instead: soot specks, a darkened
+or thumbed corner, a crease, a soft fold, die marks, an edge worn pale. Anything
+that looks like the page was *used* rather than like something was *set down on
+it*.
+
 ## Nothing here draws the thing you are about to ship — so look at it
 
 Every check in this repository proves something about the numbers. None of them

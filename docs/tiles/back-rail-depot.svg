@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-rail-depot-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="97.47" cy="111.19" r="1.27"/><circle cx="173.02" cy="152.21" r="2.11"/><circle cx="24.92" cy="68.6" r="1.51"/><circle cx="154.55" cy="95.99" r="1.89"/><circle cx="272.08" cy="92.27" r="2.16"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="97.47" cy="111.19" r="1.27"/><circle cx="173.02" cy="152.21" r="2.11"/><circle cx="24.92" cy="68.6" r="1.51"/><circle cx="154.55" cy="95.99" r="1.89"/><circle cx="272.08" cy="92.27" r="2.16"/></g>
 </g>
 </svg>

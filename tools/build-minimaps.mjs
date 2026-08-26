@@ -78,7 +78,6 @@ const MARK = components.marks.terrain;
 
 const SOOT = palette.ink.soot.hex;
 const TALLOW = palette.paper.tallow.hex;
-const FOXING = palette.paper.foxing.hex;
 const T85 = palette.ink.tints['85'].hex;
 const T70 = palette.ink.tints['70'].hex;
 const T55 = palette.ink.tints['55'].hex;
@@ -346,8 +345,7 @@ function grime(seed) {
   ];
   return (
     `<g fill="none" stroke="${SOOT}" stroke-width="1.2" opacity="0.32">${arcs.map((d) => `<path d="${d}"/>`).join('')}</g>` +
-    `<g fill="${SOOT}" opacity="0.05">${specks}</g>` +
-    `<circle cx="${num(CONTENT.x + PANEL_W / 2)}" cy="${num(CONTENT.y + CONTENT.h * 0.72)}" r="${num(mm(7.5))}" fill="none" stroke="${FOXING}" stroke-width="3.2" opacity="0.45"/>`
+    `<g fill="${SOOT}" opacity="0.05">${specks}</g>`
   );
 }
 

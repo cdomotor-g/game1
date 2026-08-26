@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-butcher-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="105.25" cy="111.82" r="1.71"/><circle cx="30.68" cy="100.51" r="1.93"/><circle cx="27.35" cy="138.15" r="1.66"/><circle cx="66.05" cy="28.56" r="1.68"/><circle cx="126.86" cy="132.02" r="1.21"/></g><circle cx="50.74" cy="65.37" r="16.03" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="105.25" cy="111.82" r="1.71"/><circle cx="30.68" cy="100.51" r="1.93"/><circle cx="27.35" cy="138.15" r="1.66"/><circle cx="66.05" cy="28.56" r="1.68"/><circle cx="126.86" cy="132.02" r="1.21"/></g>
 </g>
 </svg>

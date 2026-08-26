@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-sawmill-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="145.6" cy="121.24" r="1.69"/><circle cx="80.77" cy="105.47" r="1.22"/><circle cx="78.73" cy="95.48" r="1.13"/><circle cx="182.21" cy="45.95" r="2.03"/><circle cx="29.13" cy="37.01" r="0.95"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="145.6" cy="121.24" r="1.69"/><circle cx="80.77" cy="105.47" r="1.22"/><circle cx="78.73" cy="95.48" r="1.13"/><circle cx="182.21" cy="45.95" r="2.03"/><circle cx="29.13" cy="37.01" r="0.95"/></g>
 </g>
 </svg>

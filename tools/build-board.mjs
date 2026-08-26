@@ -66,7 +66,6 @@ const datasets = {
 /* Every colour below is declared in palette.json — validate-art.mjs checks. */
 const SOOT = palette.ink.soot.hex;
 const TALLOW = palette.paper.tallow.hex;
-const FOXING = palette.paper.foxing.hex;
 const T85 = palette.ink.tints['85'].hex;
 const T70 = palette.ink.tints['70'].hex;
 const T55 = palette.ink.tints['55'].hex;
@@ -393,14 +392,11 @@ function grime(seed) {
   const specks = Array.from({ length: 9 }, () =>
     `<circle cx="${num(TRIM.x + rand() * TRIM.w)}" cy="${num(TRIM.y + rand() * TRIM.h)}" r="${num(1 + rand() * 1.6)}"/>`
   ).join('');
-  const ringX = KIT_X + SLOT.w + GUT / 2;
-  const ringY = CONTENT.y + CONTENT.h * 0.56;
   return (
     dieMarks() +
     `<path d="M ${num(TRIM.x)},${num(TRIM.y)} H ${num(TRIM.x + mm(26))} Q ${num(TRIM.x + mm(10))},${num(TRIM.y + mm(12))} ${num(TRIM.x)},${num(TRIM.y + mm(24))} Z" fill="${SOOT}" opacity="0.03"/>` +
     `<path d="M ${num(TRIM.x + TRIM.w)},${num(TRIM.y + TRIM.h)} H ${num(TRIM.x + TRIM.w - mm(24))} Q ${num(TRIM.x + TRIM.w - mm(9))},${num(TRIM.y + TRIM.h - mm(11))} ${num(TRIM.x + TRIM.w)},${num(TRIM.y + TRIM.h - mm(22))} Z" fill="${SOOT}" opacity="0.028"/>` +
-    `<g fill="${SOOT}" opacity="0.05">${specks}</g>` +
-    `<circle cx="${num(ringX)}" cy="${num(ringY)}" r="${num(mm(8.5))}" fill="none" stroke="${FOXING}" stroke-width="3.4" opacity="0.55"/>`
+    `<g fill="${SOOT}" opacity="0.05">${specks}</g>`
   );
 }
 

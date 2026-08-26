@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-blacksmith-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="120.71" cy="64.95" r="1.43"/><circle cx="111.06" cy="139.65" r="1.15"/><circle cx="154.19" cy="26.28" r="0.98"/><circle cx="190.84" cy="84.67" r="1.53"/><circle cx="139.18" cy="70.43" r="2.01"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="120.71" cy="64.95" r="1.43"/><circle cx="111.06" cy="139.65" r="1.15"/><circle cx="154.19" cy="26.28" r="0.98"/><circle cx="190.84" cy="84.67" r="1.53"/><circle cx="139.18" cy="70.43" r="2.01"/></g>
 </g>
 </svg>

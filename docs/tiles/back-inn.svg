@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-inn-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="238.52" cy="156.91" r="1.72"/><circle cx="256.44" cy="128.74" r="1.69"/><circle cx="245.18" cy="74.12" r="1.94"/><circle cx="45.95" cy="160.96" r="1.53"/><circle cx="164.37" cy="39.45" r="1.57"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="238.52" cy="156.91" r="1.72"/><circle cx="256.44" cy="128.74" r="1.69"/><circle cx="245.18" cy="74.12" r="1.94"/><circle cx="45.95" cy="160.96" r="1.53"/><circle cx="164.37" cy="39.45" r="1.57"/></g>
 </g>
 </svg>

@@ -83,7 +83,6 @@ const T70 = palette.ink.tints['70'].hex;
 const T40 = palette.ink.tints['40'].hex;
 const T25 = palette.ink.tints['25'].hex;
 const T12 = palette.ink.tints['12'].hex;
-const FOXING = palette.paper.foxing.hex;
 const OXIDE = palette.inks.oxide.hex;
 const SLATE = palette.inks.slate.hex;
 const BRUISE = palette.inks.bruise.hex;
@@ -554,7 +553,6 @@ function card(spec, geom) {
   <g fill="${SOOT}" opacity="0.055">
     <circle cx="150" cy="700" r="1.4"/><circle cx="420" cy="112" r="1.2"/><circle cx="500" cy="470" r="1.3"/>
   </g>
-  <circle cx="470" cy="676" r="26" fill="none" stroke="${FOXING}" stroke-width="4" opacity="0.5"/>
 </g>
 </svg>
 `;

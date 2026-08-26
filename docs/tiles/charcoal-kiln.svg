@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-charcoal-kiln)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="94.29" cy="153.11" r="1.38"/><circle cx="142.16" cy="142.1" r="1.54"/><circle cx="83.75" cy="123.09" r="1.72"/><circle cx="148.45" cy="87.87" r="2.2"/><circle cx="114.57" cy="150.65" r="1.42"/></g><circle cx="50.74" cy="65.37" r="16.03" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="94.29" cy="153.11" r="1.38"/><circle cx="142.16" cy="142.1" r="1.54"/><circle cx="83.75" cy="123.09" r="1.72"/><circle cx="148.45" cy="87.87" r="2.2"/><circle cx="114.57" cy="150.65" r="1.42"/></g>
 </g>
 </svg>

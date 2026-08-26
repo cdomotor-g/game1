@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-oil-derrick-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="167.97" cy="240.54" r="0.92"/><circle cx="18.59" cy="182.82" r="1.62"/><circle cx="251.03" cy="170.52" r="1.84"/><circle cx="218.84" cy="204.24" r="1.06"/><circle cx="196.23" cy="237.37" r="2.19"/></g><circle cx="85.47" cy="102.39" r="32.06" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="167.97" cy="240.54" r="0.92"/><circle cx="18.59" cy="182.82" r="1.62"/><circle cx="251.03" cy="170.52" r="1.84"/><circle cx="218.84" cy="204.24" r="1.06"/><circle cx="196.23" cy="237.37" r="2.19"/></g>
 </g>
 </svg>

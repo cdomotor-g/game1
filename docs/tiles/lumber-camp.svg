@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-lumber-camp)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="133.24" cy="49.72" r="0.94"/><circle cx="239.07" cy="80.06" r="0.89"/><circle cx="228.61" cy="43.02" r="2.15"/><circle cx="261.77" cy="149.43" r="1.36"/><circle cx="63.48" cy="96.7" r="0.84"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="133.24" cy="49.72" r="0.94"/><circle cx="239.07" cy="80.06" r="0.89"/><circle cx="228.61" cy="43.02" r="2.15"/><circle cx="261.77" cy="149.43" r="1.36"/><circle cx="63.48" cy="96.7" r="0.84"/></g>
 </g>
 </svg>

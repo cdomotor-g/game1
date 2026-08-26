@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-crop-hops-sown)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="138.74" cy="77.4" r="2.03"/><circle cx="97.11" cy="123.01" r="1.81"/><circle cx="73.77" cy="60.53" r="1.65"/><circle cx="126.69" cy="22.1" r="0.82"/><circle cx="135" cy="153.45" r="1.91"/></g><circle cx="50.74" cy="65.37" r="16.03" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="138.74" cy="77.4" r="2.03"/><circle cx="97.11" cy="123.01" r="1.81"/><circle cx="73.77" cy="60.53" r="1.65"/><circle cx="126.69" cy="22.1" r="0.82"/><circle cx="135" cy="153.45" r="1.91"/></g>
 </g>
 </svg>

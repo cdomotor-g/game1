@@ -28,7 +28,7 @@ mid-habit rather than posed, on a short ground line with their working gear
 about them. Clothes and kit are worn from real use and carefully mended -
 patches, re-stitched straps, a wrapped tool handle - never ruined. The page
 itself is tattered from time in the field: creases, a grimy thumbed corner,
-faint foxing, one old water ring. Bold readable silhouette.
+faint foxing at the edges. Bold readable silhouette.
 
 Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading,
 no lens effects, no magic particles. No text, no letters, no border rule.
@@ -37,7 +37,8 @@ no lens effects, no magic particles. No text, no letters, no border rule.
 ## Negative prompt — for all eight
 
 ```text
-gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
+coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
+watermark, blot, gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
 depth of field, neon, saturated colours, pure white background, pure black,
 photorealistic, 3d render, octane, unreal engine, digital painting, oil
 painting, concept art, anime, chibi, cute, cel shaded, sparkles, magic

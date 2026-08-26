@@ -53,7 +53,8 @@ photographic texture, no 3D relief or hillshading.
 ## Negative prompt — for every map
 
 ```text
-hillshading, terrain relief shading, satellite imagery, contour lines, depth
+coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
+watermark, blot, hillshading, terrain relief shading, satellite imagery, contour lines, depth
 soundings, grid lines, hex grid, square grid, latitude longitude lines, modern
 typography, sans-serif labels, national borders, political colouring, minimap,
 game UI, gradient, glow, bloom, drop shadow, soft shading, airbrush, blur,

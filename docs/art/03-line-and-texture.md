@@ -130,7 +130,6 @@ It is a separate layer, `grime`, applied last, at one strength across the whole 
 
 - Uneven ink coverage: one corner over-inked and filling in, the opposite corner starved
 - Plate edge marks where the block met the paper
-- A ring where a cup sat
 - Foxing and edge-darkening on the paper
 - A thumbprint, once — in a corner, not on the subject
 - A crease with wear along its length
@@ -139,6 +138,17 @@ It is a separate layer, `grime`, applied last, at one strength across the whole 
 
 **Never:**
 
+- **A ring where a cup sat.** This list used to permit one, and that line is why
+  there is a section about it in `CLAUDE.md`: five generators each drew a circle
+  in `paper.foxing` — a card, the player board, the market board, the mini-map
+  sheets, the building tiles — because each was written by somebody who had seen
+  the last one and took it for the house style. A cup ring is a good trick exactly
+  once; five identical ones across a set of components is not wear, it is a
+  signature, and it sits on top of the artwork every time. The same goes for a
+  water ring, a tea stain, a circular blot or a "watermark": any round mark that
+  reads as something having been *set down on* the page rather than the page being
+  *used*. `tools/validate-art.mjs` fails the build on one, and every negative
+  prompt under `art/prompts/` bans it on the drawn plates
 - Blood spatter, slime, or "gritty" texture brushes
 - Scratches across the whole image at a random angle
 - A sepia photo filter

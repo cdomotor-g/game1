@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-watchtower-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="138.1" cy="24.46" r="1.99"/><circle cx="142.83" cy="92.66" r="1.79"/><circle cx="73.34" cy="47.1" r="1.95"/><circle cx="140.8" cy="91.78" r="0.81"/><circle cx="76.04" cy="34.06" r="1.52"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="138.1" cy="24.46" r="1.99"/><circle cx="142.83" cy="92.66" r="1.79"/><circle cx="73.34" cy="47.1" r="1.95"/><circle cx="140.8" cy="91.78" r="0.81"/><circle cx="76.04" cy="34.06" r="1.52"/></g>
 </g>
 </svg>

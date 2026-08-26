@@ -36,7 +36,8 @@ Strictly no gradients, no drop shadows, no soft shading. No text, no letters.
 ## Negative prompt — for all six
 
 ```text
-gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
+coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
+watermark, blot, gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
 neon, saturated colours, pure white background, pure black, photorealistic,
 3d render, digital painting, concept art, anime, sparkles, magic particles,
 glowing runes, light rays, watermark, text, letters, logo, frame border,

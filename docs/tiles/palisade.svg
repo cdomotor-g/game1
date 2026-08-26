@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-palisade)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="27.93" cy="92.15" r="1.43"/><circle cx="66.93" cy="91.56" r="2.14"/><circle cx="107.83" cy="140.82" r="1.63"/><circle cx="96.66" cy="28.26" r="1.54"/><circle cx="110.34" cy="128.57" r="2.15"/></g><circle cx="50.74" cy="65.37" r="16.03" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="27.93" cy="92.15" r="1.43"/><circle cx="66.93" cy="91.56" r="2.14"/><circle cx="107.83" cy="140.82" r="1.63"/><circle cx="96.66" cy="28.26" r="1.54"/><circle cx="110.34" cy="128.57" r="2.15"/></g>
 </g>
 </svg>

@@ -10,6 +10,8 @@
  *      edition is a real separation rather than a desaturation.
  *   3. The layer contract holds: #wash, #ink and #grime exist and are named
  *      exactly, so `remove(#wash, #slip)` produces the mono edition.
+ *   4. Nothing draws a ring stain. See NO RING STAINS below - this one is here
+ *      because a note in a style guide did not hold, and a check does.
  *
  * Only attribute values are inspected. A hex code printed as a label is content,
  * not colour, and the palette reference sheet is full of them.
@@ -79,6 +81,38 @@ const paints = (svg) =>
   [...svg.matchAll(/(?:fill|stroke|stop-color|flood-color|color)\s*=\s*"(#[0-9A-Fa-f]{6})"/g)]
     .map(m => m[1].toUpperCase());
 
+/**
+ * NO RING STAINS.
+ *
+ * A cup ring on a page is a good trick exactly once. It appeared on a card, and
+ * then on the player board, and then on the market board, and then on the
+ * mini-map sheets, and then on the building tiles - five generators each drawing
+ * a circle in `paper.foxing` in a slightly different place, because every one of
+ * them was written by somebody who had just seen the last one and thought it was
+ * part of the house style. It is not. Five identical coffee rings across a set of
+ * components is not wear, it is a signature, and it lands on top of the artwork
+ * every time.
+ *
+ * So it is banned rather than discouraged, and banned HERE rather than in a
+ * style guide, because a note is something you have to have read and a check is
+ * not. `paper.foxing` itself stays - it is a real colour and a flat aged-paper
+ * wash or a board recess is a fine use of it. What is banned is the outline: a
+ * circle or an ellipse painted in it, and anything stroked in it, which between
+ * them is every way a ring has ever been drawn here.
+ *
+ * Wear that is welcome: soot specks, a darkened corner, a crease, a thumbed
+ * edge, die marks. Anything that looks like the page was used rather than like
+ * something was put down on it.
+ */
+const STAIN = palette.paper.foxing.hex.toUpperCase();
+const ringStains = (svg) => new Set([
+  /* Deduplicated by where the match starts: a stroked circle answers both
+     patterns and is still one ring, and an error that says "2" about one circle
+     is an error nobody trusts the second time. */
+  ...[...svg.matchAll(new RegExp(`<(circle|ellipse)\\b[^>]*?(?:fill|stroke)\\s*=\\s*"${STAIN}"`, 'gi'))].map((m) => m.index),
+  ...[...svg.matchAll(new RegExp(`<[a-z]+\\b[^>]*?stroke\\s*=\\s*"${STAIN}"`, 'gi'))].map((m) => m.index),
+]).size;
+
 const errors = [];
 const warnings = [];
 
@@ -89,6 +123,15 @@ for (const file of files) {
   const used = new Set(paints(svg));
   const offPalette = [...used].filter(hex => !declared.has(hex));
   if (offPalette.length) errors.push(`${name}: not in palette.json - ${offPalette.join(' ')}`);
+
+  const stains = ringStains(svg);
+  if (stains) {
+    errors.push(
+      `${name}: ${stains} ring stain(s) - a circle, an ellipse or a stroke in ${STAIN} (paper.foxing). ` +
+      'A cup ring is a good trick exactly once and this repository has spent it five times. ' +
+      'Wear it with soot specks, a darkened corner or a crease instead.'
+    );
+  }
 
   for (const layer of ['wash', 'ink', 'grime']) {
     if (!new RegExp(`id="${layer}"`).test(svg)) errors.push(`${name}: missing <g id="${layer}">`);

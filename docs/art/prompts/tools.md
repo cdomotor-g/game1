@@ -59,7 +59,8 @@ no lens effects. No text, no letters, no dimension figures, no border rule.
 ## Negative prompt — for all five
 
 ```text
-gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
+coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
+watermark, blot, gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
 depth of field, neon, saturated colours, pure white background, pure black,
 photorealistic, 3d render, octane, unreal engine, digital painting, oil
 painting, concept art, anime, cel shaded, sparkles, watermark, signature,

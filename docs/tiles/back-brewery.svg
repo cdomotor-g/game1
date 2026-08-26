@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-brewery-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="45.51" cy="166.19" r="1.89"/><circle cx="165.71" cy="132.64" r="1.19"/><circle cx="19.19" cy="147.33" r="1.49"/><circle cx="252.98" cy="45.73" r="1.61"/><circle cx="77.85" cy="85.97" r="1.24"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="45.51" cy="166.19" r="1.89"/><circle cx="165.71" cy="132.64" r="1.19"/><circle cx="19.19" cy="147.33" r="1.49"/><circle cx="252.98" cy="45.73" r="1.61"/><circle cx="77.85" cy="85.97" r="1.24"/></g>
 </g>
 </svg>

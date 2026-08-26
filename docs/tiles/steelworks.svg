@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-steelworks)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="142.62" cy="79.28" r="1.95"/><circle cx="229.87" cy="190.14" r="1.25"/><circle cx="209.26" cy="46.03" r="1.01"/><circle cx="211.29" cy="219.79" r="1.2"/><circle cx="36.66" cy="100.24" r="1.8"/></g><circle cx="85.47" cy="102.39" r="32.06" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="142.62" cy="79.28" r="1.95"/><circle cx="229.87" cy="190.14" r="1.25"/><circle cx="209.26" cy="46.03" r="1.01"/><circle cx="211.29" cy="219.79" r="1.2"/><circle cx="36.66" cy="100.24" r="1.8"/></g>
 </g>
 </svg>

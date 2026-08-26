@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-guildhall)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="119.04" cy="68.63" r="1.15"/><circle cx="135.73" cy="162.8" r="1.17"/><circle cx="216.95" cy="77.04" r="1.58"/><circle cx="262.4" cy="116.65" r="1.3"/><circle cx="264.02" cy="147.05" r="1.43"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="119.04" cy="68.63" r="1.15"/><circle cx="135.73" cy="162.8" r="1.17"/><circle cx="216.95" cy="77.04" r="1.58"/><circle cx="262.4" cy="116.65" r="1.3"/><circle cx="264.02" cy="147.05" r="1.43"/></g>
 </g>
 </svg>

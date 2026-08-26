@@ -89,6 +89,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime">
-  <g fill="none" stroke="#1A1714" stroke-width="1.2" opacity="0.32"><path d="M 16,72 A 56,56 0 0 1 72,16"/><path d="M 2352,16 A 56,56 0 0 1 2408,72"/><path d="M 2408,1656 A 56,56 0 0 1 2352,1712"/><path d="M 72,1712 A 56,56 0 0 1 16,1656"/></g><g fill="#1A1714" opacity="0.05"><circle cx="1139.59" cy="1576" r="1.52"/><circle cx="433.23" cy="612.86" r="1.94"/><circle cx="1399.51" cy="1690.72" r="1.85"/><circle cx="69.71" cy="694.27" r="1.82"/><circle cx="1614.47" cy="1515.14" r="1.62"/><circle cx="158.51" cy="299.13" r="1.77"/><circle cx="2084.27" cy="24.66" r="2.11"/></g><circle cx="333.4" cy="1205.44" r="60" fill="none" stroke="#D9CBAF" stroke-width="3.2" opacity="0.45"/>
+  <g fill="none" stroke="#1A1714" stroke-width="1.2" opacity="0.32"><path d="M 16,72 A 56,56 0 0 1 72,16"/><path d="M 2352,16 A 56,56 0 0 1 2408,72"/><path d="M 2408,1656 A 56,56 0 0 1 2352,1712"/><path d="M 72,1712 A 56,56 0 0 1 16,1656"/></g><g fill="#1A1714" opacity="0.05"><circle cx="1139.59" cy="1576" r="1.52"/><circle cx="433.23" cy="612.86" r="1.94"/><circle cx="1399.51" cy="1690.72" r="1.85"/><circle cx="69.71" cy="694.27" r="1.82"/><circle cx="1614.47" cy="1515.14" r="1.62"/><circle cx="158.51" cy="299.13" r="1.77"/><circle cx="2084.27" cy="24.66" r="2.11"/></g>
 </g>
 </svg>

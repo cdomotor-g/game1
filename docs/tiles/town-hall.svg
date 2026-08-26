@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-town-hall)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="117.63" cy="128.27" r="2.13"/><circle cx="21" cy="93.02" r="1.94"/><circle cx="94" cy="161.59" r="1.25"/><circle cx="247.98" cy="37.43" r="2.03"/><circle cx="266.76" cy="53.54" r="1.78"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="117.63" cy="128.27" r="2.13"/><circle cx="21" cy="93.02" r="1.94"/><circle cx="94" cy="161.59" r="1.25"/><circle cx="247.98" cy="37.43" r="2.03"/><circle cx="266.76" cy="53.54" r="1.78"/></g>
 </g>
 </svg>

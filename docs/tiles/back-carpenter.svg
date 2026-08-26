@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-carpenter-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="106.34" cy="71.24" r="0.85"/><circle cx="46.23" cy="163.66" r="2.09"/><circle cx="40.68" cy="97.13" r="0.9"/><circle cx="21.78" cy="61.87" r="1.05"/><circle cx="92.38" cy="115.7" r="0.83"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="106.34" cy="71.24" r="0.85"/><circle cx="46.23" cy="163.66" r="2.09"/><circle cx="40.68" cy="97.13" r="0.9"/><circle cx="21.78" cy="61.87" r="1.05"/><circle cx="92.38" cy="115.7" r="0.83"/></g>
 </g>
 </svg>

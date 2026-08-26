@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-orchard-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="45.58" cy="147.96" r="0.91"/><circle cx="98.19" cy="118.47" r="2.08"/><circle cx="135.38" cy="49.86" r="1.25"/><circle cx="99.34" cy="56.63" r="1.93"/><circle cx="53.27" cy="92.29" r="1.21"/></g><circle cx="50.74" cy="65.37" r="16.03" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="45.58" cy="147.96" r="0.91"/><circle cx="98.19" cy="118.47" r="2.08"/><circle cx="135.38" cy="49.86" r="1.25"/><circle cx="99.34" cy="56.63" r="1.93"/><circle cx="53.27" cy="92.29" r="1.21"/></g>
 </g>
 </svg>

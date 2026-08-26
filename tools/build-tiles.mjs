@@ -73,7 +73,6 @@ const U = components.stock.unitsPerMm;
 
 const SOOT = palette.ink.soot.hex;
 const TALLOW = palette.paper.tallow.hex;
-const FOXING = palette.paper.foxing.hex;
 const tint = (k) => palette.ink.tints[k].hex;
 
 const SERIF = "Georgia, 'Iowan Old Style', 'Times New Roman', serif";
@@ -213,12 +212,7 @@ function grime(seed, g) {
   const rand = rng(`grime-${seed}`);
   const specks = Array.from({ length: 5 }, () =>
     `<circle cx="${num(BLEED + rand() * g.box.w)}" cy="${num(BLEED + rand() * g.box.h)}" r="${num(0.8 + rand() * 1.4)}"/>`).join('');
-  const r = Math.min(g.box.w, g.box.h) * 0.12;
-  return (
-    `<g fill="${SOOT}" opacity="0.05">${specks}</g>` +
-    `<circle cx="${num(BLEED + g.box.w * 0.26)}" cy="${num(BLEED + g.box.h * 0.32)}" r="${num(r)}" ` +
-    `fill="none" stroke="${FOXING}" stroke-width="2.4" opacity="0.4"/>`
-  );
+  return `<g fill="${SOOT}" opacity="0.05">${specks}</g>`;
 }
 
 /* ------------------------------------------------------------------- sides */

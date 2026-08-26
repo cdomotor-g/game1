@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-brickworks)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="205.04" cy="57.53" r="2.17"/><circle cx="52.71" cy="131.66" r="1.25"/><circle cx="185.15" cy="150.92" r="1.04"/><circle cx="198.24" cy="28.9" r="2.12"/><circle cx="172.33" cy="104.77" r="1.61"/></g><circle cx="85.47" cy="65.37" r="18.51" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="205.04" cy="57.53" r="2.17"/><circle cx="52.71" cy="131.66" r="1.25"/><circle cx="185.15" cy="150.92" r="1.04"/><circle cx="198.24" cy="28.9" r="2.12"/><circle cx="172.33" cy="104.77" r="1.61"/></g>
 </g>
 </svg>

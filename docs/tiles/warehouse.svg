@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-warehouse)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="167.27" cy="124.42" r="0.88"/><circle cx="105.65" cy="237.29" r="1.83"/><circle cx="67.54" cy="223.55" r="2.05"/><circle cx="87.33" cy="273.53" r="1.4"/><circle cx="70.55" cy="114.38" r="1.41"/></g><circle cx="85.47" cy="102.39" r="32.06" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="167.27" cy="124.42" r="0.88"/><circle cx="105.65" cy="237.29" r="1.83"/><circle cx="67.54" cy="223.55" r="2.05"/><circle cx="87.33" cy="273.53" r="1.4"/><circle cx="70.55" cy="114.38" r="1.41"/></g>
 </g>
 </svg>

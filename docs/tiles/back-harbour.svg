@@ -29,6 +29,6 @@
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#cut-tile-harbour-site)">
-  <g fill="#1A1714" opacity="0.05"><circle cx="277.9" cy="100.26" r="1.82"/><circle cx="41.58" cy="153.87" r="1.91"/><circle cx="257.47" cy="188.78" r="0.86"/><circle cx="150.04" cy="273.95" r="2.2"/><circle cx="177.91" cy="18.21" r="1.99"/></g><circle cx="85.47" cy="102.39" r="32.06" fill="none" stroke="#D9CBAF" stroke-width="2.4" opacity="0.4"/>
+  <g fill="#1A1714" opacity="0.05"><circle cx="277.9" cy="100.26" r="1.82"/><circle cx="41.58" cy="153.87" r="1.91"/><circle cx="257.47" cy="188.78" r="0.86"/><circle cx="150.04" cy="273.95" r="2.2"/><circle cx="177.91" cy="18.21" r="1.99"/></g>
 </g>
 </svg>
