@@ -47,8 +47,15 @@ numerals. The name is printed by the tools.
 **No grid.** The cells are an overlay the tools draw. A hex grid painted into a
 plate cannot be moved and will not line up.
 
-Render at 2000 px on the long side or better. Square for one-, three- and
-four-cell tiles; 3:2 landscape for two-cell tiles. Each brief says which.
+**Square for one-, three- and four-cell tiles; 3:2 landscape for two-cell tiles**
+— each brief says which, and it is not a choice: the page is the shape of the
+footprint's own bounding box, so a plate drawn on the wrong page is a plate that
+loses ground it did not have to.
+
+How many pixels is not stated here either. `node tools/mint-request.mjs <id>`
+derives it per tile from the largest world hex any map declares, and prints both
+the floor and the figure it would take to print. A number typed in this file
+would be a number that stops being true the day a map grows a print preset.
 
 ## Shared preamble — paste ahead of every prompt below
 
