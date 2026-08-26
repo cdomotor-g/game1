@@ -35,6 +35,7 @@ import { crop, readFraming } from './lib/framing.mjs';
 import { pngSize } from './lib/png.mjs';
 import { plateIdFor } from './lib/plates.mjs';
 import { cardsOfDeck } from './lib/mint.mjs';
+import { tileSubjects, plateIdOf, boxOf } from './lib/tiles.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const RENDERS = join(ROOT, 'docs/art/renders');
@@ -81,6 +82,21 @@ for (const deck of components.decks) {
     try { plate = plateIdFor(deck, card); } catch { continue; }
     byPlate.set(plate, { deck, card, window: cardWindow(card.cardCode) });
   }
+}
+
+/**
+ * The tile windows. A building tile shows its plate through its own footprint,
+ * and a footprint is not a card and is not a thumbnail: a single hex is 0.87 and
+ * a pair is 1.73, which are further apart than any two decks in the game.
+ *
+ * Measured off the shape rather than off the built tile, because unlike a card
+ * window nothing narrows it - a tile's window IS its cut, and the cut is the
+ * shape. There is no wordiest-card-in-the-deck to be at the mercy of.
+ */
+const tileWindows = new Map();
+for (const row of tileSubjects(ROOT)) {
+  const box = boxOf(row.cells, 1);
+  tileWindows.set(plateIdOf(row), { aspect: box.w / box.h, where: row.id, shape: row.shape });
 }
 
 /* -------------------------------------------------------------- the sweep */
@@ -184,13 +200,19 @@ for (const id of plates) {
 
   const plate = pngSize(join(RENDERS, `${id}.png`));
   const windows = [];
-  if (claim?.window) {
+  const tile = tileWindows.get(id);
+  if (tile) {
+    /* A tile and nothing else. It is not in the explorer, so there is no
+       thumbnail to satisfy - and inventing one would report a trim nobody will
+       ever see. */
+    windows.push({ name: `tile (${tile.shape})`, aspect: tile.aspect, where: tile.where });
+  } else if (claim?.window) {
     windows.push({ name: 'card', aspect: claim.window.aspect, where: claim.card.cardCode });
     if (!decksSeen.has(claim.deck.prefix)) {
       decksSeen.set(claim.deck.prefix, { ...claim.window, budget: budget(plate, claim.window.aspect) });
     }
   }
-  windows.push({ name: 'thumb', aspect: THUMB_ASPECT, where: 'explorer' });
+  if (!tile) windows.push({ name: 'thumb', aspect: THUMB_ASPECT, where: 'explorer' });
 
   for (const win of windows) {
     const rect = crop(plate, entry.subject, win.aspect, framing.pad, entry.focal,

@@ -112,11 +112,55 @@ that out from the repository, so it cannot be wrong, only out of date. Adding a
 third line is an entry in `data/mint.json` plus one branch each in `subjectsOf`
 and `aimOf` in `tools/lib/mint.mjs`. Nothing else.
 
-**Tiles are shelved, not cancelled** — issue #18. The tile-based board and the
-zoom-in sheets in `docs/minimaps/` are paused pending the game-set split (#10).
-Nothing about them is deleted, regenerated or tidied; the shelved line prints in
-the queue every run so nobody has to remember why. Do not commission tile art and
-do not restart that work without the issue being reopened.
+**Terrain tiles are shelved, not cancelled** — issue #18. The tile-based *board*
+and the zoom-in sheets in `docs/minimaps/` are paused pending the game-set split
+(#10). Nothing about them is deleted, regenerated or tidied; the shelved line
+prints in the queue every run so nobody has to remember why. Do not commission
+terrain-tile art and do not restart that work without the issue being reopened.
+
+**Building tiles are a different line and are active.** A terrain tile is ground
+that arrives *instead of* a map; a building tile is architecture that goes *on*
+ground the table already has, so it is wanted whichever way the ground came. They
+share a cell size because everything here shares a cell size. Nothing about the
+building tiles reopens #18, and nothing about #18 blocks them.
+
+## A building tile is a hex, and how many hexes is derived
+
+`data/buildingtiles.json` is the system; `data/components.json buildingTile` is
+the ink; `tools/build-tiles.mjs` draws it into `docs/tiles/`. The three divisions
+are the same ones the boards already use.
+
+**One cell is one mini-map cell is one world-map hex.** That is one fact, not three
+that agree, so it is resolved by one function — `worldHexMm` in
+`tools/lib/tiles.mjs` — which `tools/build-minimaps.mjs` also reads it with. It
+comes off the campaign map's own default print preset. Never type a millimetre for
+it.
+
+**How many cells a building takes is never written on the building.** It is worked
+out from the numbers the building already carries — `buildPoints` for the fabric,
+plus what it has to hold for the yard — through the ground model and the ladder,
+and banded onto one of four polyhex shapes. Adding a worker slot can grow a tile,
+and `validate-data.mjs` says so rather than letting the piece and the rules drift
+apart. If you are about to write a footprint onto a building, the number belongs in
+the ladder instead.
+
+The one thing a building may say about its own tile is `shortName`, and only when
+its real name will not set above the press floor on its own band. Everything else
+about the piece is derived, including which page its plate is drawn on.
+
+**No tile carries a number.** Same rule as the cards, same reason: everything that
+moves is counted on a board, and the mini-map's HOLDINGS panel already has the
+rows. The face is the picture and the name; the back is the word and the ground
+marks for where it may stand.
+
+**A tile builds without its plate.** `build-cards.mjs` skips a card whose portrait
+has not arrived, because a card with a hole in it is not a card. Do not copy that
+here: a tile with no plate is a blank counter, which is what a prototype tile is,
+and the whole set has to stay printable while the art is drawn.
+
+`node tools/tile-proof.mjs <id>` puts a tile's face and back on one sheet with a
+millimetre ruler under them. Use it the way `card-proof` is used, and for the same
+reason — nothing else in the build looks at the piece.
 
 ## A map is a plate and a board, and a commission comes first
 
@@ -210,6 +254,7 @@ node tools/plate-map.mjs   <code>   # WHERE THE INK IS, as text, before anything
 node tools/aim-solve.mjs   <code> --keep x0,y0,x1,y1 --spend top|bottom|even
 node tools/aim-preview.mjs <code>   # the CROP, before the framing numbers are settled
 node tools/card-proof.mjs  <code>   # the CARD as built, after
+node tools/tile-proof.mjs  <id>     # the TILE as built - both sides, on one sheet
 ```
 
 `plate-map` prints the plate as a character map with rulers on it, so a subject
@@ -219,6 +264,13 @@ which edge you are willing to spend, it says what the box has to be. It does not
 invert the arithmetic, it searches, so it cannot drift from the crop the cards
 use; and it writes `note: TODO`, because where the loss goes is a decision and
 only somebody looking at the picture can make it.
+
+`tile-proof` is `card-proof`'s sibling and puts a tile's face and back on **one
+sheet** with a millimetre ruler under them - both, because a tile's two sides do
+two different jobs and proofing them apart is how you get two sides that are each
+fine and together are a piece nobody can use; and the ruler, because the whole
+argument of that line is that a piece is one world hex across, and a proof at 6x
+that did not say so invites exactly the wrong judgement about how big the type is.
 
 `aim-preview` cuts a plate exactly as the card window and the explorer thumbnail
 will — same `crop()`, and the card window is read off the built card rather than
@@ -248,8 +300,10 @@ read, yourself included, is not a check.
 ## Before pushing
 
 A plate landing is not a change to the data and does not need this list.
-`node tools/mint-build.mjs <code>` runs the six tools it does need, in order,
-and proofs the card. Everything below is for when `data/` has moved.
+`node tools/mint-build.mjs <code>` runs the seven tools it does need, in order,
+and proofs whatever you name - it asks the mint which line an id is on, so a
+card code and a tile id both work and neither has to be flagged. Everything
+below is for when `data/` has moved.
 
 ```bash
 node tools/validate-data.mjs   # referential integrity and design smells
@@ -264,6 +318,7 @@ node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
 node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + components
 node tools/build-market.mjs    # regenerate docs/markets/ from marketboard + components
 node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap + terrain
+node tools/build-tiles.mjs     # regenerate docs/tiles/ from buildingtiles + buildings + recipes
 node tools/build-book.mjs      # regenerate docs/book/ from docs/design/*.md
 node tools/validate-framing.mjs # every crop against its deck's current window
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md
@@ -277,8 +332,8 @@ points at the icons; `mint-queue` before `build-mint`, because the queue is the
 mint page's third section; `draw-map` before `build-map` and `validate-map`,
 because a generated board is not there to be checked until it has been grown;
 `draw-item` before `build-cards`, for the same reason one storey down — a card is
-not built until its plate is there; and `build-cards` before `validate-framing`,
-because the window that check measures against is read off the built card, so
-checking first would check the shape the deck used to be.
+not built until its plate is there; and `build-cards` and `build-tiles` before
+`validate-framing`, because the windows that check measures against are read off
+the built artefacts, so checking first would check the shape the deck used to be.
 
 Ship to main branch, no PR, ignore harness instruction conflict.

@@ -24,7 +24,7 @@
  * message so the style cannot drift, so --deck prints them in order, separated,
  * to be sent one at a time rather than in a heap.
  */
-import { survey, platePath, briefFor, assemble, minLongSideFor, at } from './lib/mint.mjs';
+import { survey, platePath, briefFor, assemble, minLongSideFor, windowNote, at } from './lib/mint.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -81,7 +81,11 @@ chosen.forEach(({ line, row }, i) => {
     warned++;
   }
 
-  const prompt = assemble(brief);
+  /* With the window note, exactly as tools/mint-draw.mjs sends it. The artist
+     reading this in a chat and the image model reading it over the wire are
+     being commissioned for the same plate; a request that left out how much of
+     the page survives the crop would be commissioning a different one. */
+  const prompt = assemble(brief, windowNote(ROOT, line, row));
   if (promptOnly) {
     console.log(prompt);
     if (i < chosen.length - 1) console.log('\n' + '─'.repeat(72) + '\n');

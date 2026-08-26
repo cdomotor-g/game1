@@ -197,12 +197,80 @@
     },
 
     {
+      "id": "buildingtiles",
+      "name": "Building tiles",
+      "status": "active",
+      "subject": "one printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it",
+      "unit": "tile",
+      "groupLabel": "Category",
+      "$distinctFromTiles": "NOT the shelved tiles line below, and reopening nothing. That line is a tile-based BOARD - 61 terrain hexes dealt face down so the world is unknown until it is walked - and it stays shelved pending #10. This line is architecture placed ON ground the table already has, whichever way that ground was supplied. See data/buildingtiles.json for the full argument.",
+      "subjectsFrom": {
+        "kind": "tiles",
+        "$note": "tools/lib/tiles.mjs, which reads data/buildings.json for the buildings and data/recipes.json for the sown crops, and works each one's footprint out through the ground model and ladder in data/buildingtiles.json. Two files in, one kind of subject out: a building tile and a field tile differ only in where their subject was read from."
+      },
+      "subjectRequires": ["id", "name", "summary", "shape", "cells", "back"],
+      "$subjectRequiresNote": "Checked against the assembled TILE, not against the building - because the tile is what is being minted, and half of what a brief needs (the shape, the cells, which word is on the back) is worked out rather than written down. A building that has said nothing about its own tile has still said everything the tile needs, which is the point of deriving it.",
+      "brief": {
+        "dir": "docs/art/prompts",
+        "file": "buildingtiles.md",
+        "headingIs": "plateId",
+        "$note": "One `## tile-<id>` section per tile, in one file, buildings and fields together - they are drawn by the same hand to the same brief and splitting them would split the shared preamble that makes them a set."
+      },
+      "plate": {
+        "dir": "docs/art/renders",
+        "ext": ".png",
+        "idFrom": "tile-{id}",
+        "formatFrom": "the footprint's own aspect",
+        "$formatNote": "DERIVED, not declared per tile. A shape's bounding box has an aspect - a single hex is 0.87, a pair is 1.73 - and the format asked for is whichever entry in `draw.sizeByFormat` comes nearest it. So a shape that changes changes the page it is drawn on, and a page nobody can supply is a build failure rather than a plate that arrives the wrong shape.",
+        "minLongSide": {
+          "from": "the largest world hex any map declares",
+          "dpi": 300,
+          "wantDpi": 600,
+          "$note": "DERIVED, like the other two lines, and from the biggest table rather than today's. A tile cut to the four-sheet preset is 19 mm on its long side and would ask for about 230 px, which is a floor nothing could fail; but the same tile cut to the nine-sheet A1 preset is half as big again, and a plate drawn to the smaller number can never be recut for the larger one. Ask for the width before anything else - it is the one property that cannot be recovered."
+        },
+        "frozenWording": "docs/art/renders/{plate}.txt"
+      },
+      "draw": {
+        "$comment": "Same courier as the cards line, and available for the same reason: a tile is small, one call supplies more pixels than a 31 mm piece can spend, and the handover in docs/MINT.md is still the version that definitely works. No key, no route or anything but a 200 and mint-draw prints the commission and exits 0.",
+        "provider": "openai",
+        "model": "gpt-image-1",
+        "endpoint": "https://api.openai.com/v1/images/generations",
+        "keyEnv": "OPENAI_API_KEY",
+        "sizeByFormat": {
+          "square": "1024x1024",
+          "A4 portrait": "1024x1536",
+          "A4 landscape, 3:2": "1536x1024"
+        }
+      },
+      "aim": {
+        "step": "FRAME",
+        "owner": "whoever accepts the plate",
+        "file": "docs/art/framing.json",
+        "at": "plates",
+        "produces": "a `subject` box, a `focal` point and a one-line `note`",
+        "contract": "docs/art/09-framing-and-composition.md",
+        "$note": "The same aim a card takes, and the same file, because it is the same job: a drawn page is not the shape of the window it will be seen through, and something is thrown away. What differs is only the window - a tile's is its own footprint's bounding box, which tools/validate-framing.mjs measures against rather than assuming a card."
+      },
+      "builds": [
+        "docs/tiles/ - tools/build-tiles.mjs",
+        "the backs, which are generated per shape and are nobody's turn to draw"
+      ],
+      "checks": [
+        "node tools/validate-data.mjs",
+        "node tools/validate-art.mjs",
+        "node tools/build-tiles.mjs --check",
+        "node tools/validate-framing.mjs"
+      ]
+    },
+
+    {
       "id": "tiles",
-      "name": "Tiles",
+      "name": "Terrain tiles",
       "status": "shelved",
       "issue": 18,
       "issueUrl": "https://github.com/cdomotor-g/game1/issues/18",
-      "subject": "one printed hex tile face, and the zoom-in sheet behind it",
+      "subject": "one printed hex terrain tile face, and the zoom-in sheet behind it",
+      "$notTheBuildingTiles": "Not the buildingtiles line above, which is active. This line is a way of SUPPLYING A BOARD - a bag of ground dealt face down instead of a drawn map. That one is architecture placed on ground the table already has, and is wanted whichever way the ground arrived. Nothing about the building tiles reopens this, and nothing here blocks them; they share a cell size because everything in this game shares a cell size.",
       "unit": "tile",
       "groupLabel": "Series",
       "shelvedNote": "The tile-based board - 61 double-sided hex tiles dealt face down, and the Holdings / Grounds / Places zoom-in sheets in docs/minimaps/ - is paused, not cancelled. Nothing is deleted: the 32 accepted sheets stay committed and stay on the site, and terrain.json keeps boardSetup. It comes back as a GAME SET (#10): a table would pick either a plate set, where one drawn map is hexed and the world is known, or a tile set, where the board is a bag and the world is unknown until walked. Both feed the same terrain vocabulary and the same move costs, which is the test of whether #10 drew its line in the right place.",

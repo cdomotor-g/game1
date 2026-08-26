@@ -21,6 +21,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { plateIdFor } from './plates.mjs';
 import { pngSize } from './png.mjs';
+import { tileSubjects, plateIdOf, formatFor, boxOf, largestHexMm } from './tiles.mjs';
 
 const HERE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -158,29 +159,9 @@ export function assemble(brief, extra) {
  */
 export function windowNote(root, line, row) {
   const spec = line.draw?.sizeByFormat?.[row.format];
-  if (!spec || !row.group) return '';
+  if (!spec) return '';
   const [pw, ph] = spec.split('x').map(Number);
   if (!pw || !ph) return '';
-
-  const components = readJson(join(root, 'data', 'components.json'));
-  const deck = components.decks.find((d) => d.name === row.group);
-  if (!deck) return '';
-
-  let win = null;
-  for (const card of cardsOfDeck(root, deck)) {
-    const svg = join(root, 'docs', 'cards', `${card.cardCode}.svg`);
-    if (!existsSync(svg)) continue;
-    const m = readFileSync(svg, 'utf8')
-      .match(/id="portrait-window"><rect x="[\d.]+" y="[\d.]+" width="([\d.]+)" height="([\d.]+)"/);
-    if (m) { win = { w: Number(m[1]), h: Number(m[2]) }; break; }
-  }
-  if (!win) return '';
-
-  const aspect = win.w / win.h;
-  const keepW = Math.min(1, (ph * aspect) / pw);
-  const keepH = Math.min(1, pw / aspect / ph);
-  const round = (n) => Math.round(n * 100);
-  const band = (keep) => [round((1 - keep) / 2), 100 - round((1 - keep) / 2)];
 
   /* Wrapped like everything else in a commission. These are pasted into image
      models and read by people, and one 140-column line in a block of 75s reads
@@ -192,12 +173,74 @@ export function windowNote(root, line, row) {
     return lines;
   }, []).join('\n');
 
-  const provenance = `(Worked out from this deck's card window, ${win.w} x ${win.h}, ` +
-    `on the ${pw} x ${ph} page this deck is drawn at. It is not a rule of thumb.)`;
+  const round = (n) => Math.round(n * 100);
+  const band = (keep) => [round((1 - keep) / 2), 100 - round((1 - keep) / 2)];
+
+  let win = null;
+  let provenance = '';
+  let extra = '';
+
+  if (line.id === 'buildingtiles') {
+    /* A tile's window is its CUT, and the cut is the shape. Nothing narrows it -
+       there is no wordiest-card-in-the-deck here - so it is measured off the
+       footprint and is exact. */
+    const box = boxOf(row.tile.cells, 1);
+    win = { w: box.w, h: box.h };
+    provenance = `(Worked out from this tile's own ${row.tile.shape} footprint, ` +
+      `${row.tile.cells.length} cell${row.tile.cells.length === 1 ? '' : 's'}, on the ${pw} x ${ph} page it is drawn at. ` +
+      'It is not a rule of thumb.)';
+
+    /* The one thing a card brief never has to say: a solid label band crosses
+       the piece, and anything drawn under it is gone. */
+    const T = readJson(join(root, 'data', 'components.json')).buildingTile;
+    const bandH = T.nameBand.heightPerCell;
+    const top = (box.shoulderY - bandH - box.y) / box.h;
+    const bottom = (box.shoulderY - box.y) / box.h;
+    extra = wrap('LABEL BAND. A solid band carrying this tile\'s name is printed across ' +
+      `the piece between ${round(top)}% and ${round(bottom)}% of its height, edge to edge. ` +
+      'Whatever is drawn there is covered. Compose so the band falls on ground, ' +
+      'wall or sky rather than across a roofline, a face or the one detail the ' +
+      'tile is of.');
+  } else if (line.id === 'cards') {
+    /* Every FRAMING block in docs/art/prompts/ names a band - "inside the middle
+       70% of the page height" - and that figure is typed, identical across every
+       deck, and not derived from anything. It is also, on the monsters deck,
+       wrong: a 1.10 window on an A4 page keeps 64.2% of its height, so a brief
+       promising 70% is promising room that does not exist. Vhalrik's crown was
+       drawn to the top margin against a band that could never have held it, and
+       the crop had to spend the tips of his horns.
+
+       So the commission says the real number, worked out the way everything else
+       here is worked out - the deck's own card window over the page the deck's
+       own plateFormat asks for. Silent when it cannot be sure: a deck with no
+       card built yet has no window to read, and a guess is worse than nothing. */
+    if (!row.group) return '';
+    const components = readJson(join(root, 'data', 'components.json'));
+    const deck = components.decks.find((d) => d.name === row.group);
+    if (!deck) return '';
+    for (const card of cardsOfDeck(root, deck)) {
+      const svg = join(root, 'docs', 'cards', `${card.cardCode}.svg`);
+      if (!existsSync(svg)) continue;
+      const hit = readFileSync(svg, 'utf8')
+        .match(/id="portrait-window"><rect x="[\d.]+" y="[\d.]+" width="([\d.]+)" height="([\d.]+)"/);
+      if (hit) { win = { w: Number(hit[1]), h: Number(hit[2]) }; break; }
+    }
+    if (!win) return '';
+    provenance = `(Worked out from this deck's card window, ${win.w} x ${win.h}, ` +
+      `on the ${pw} x ${ph} page this deck is drawn at. It is not a rule of thumb.)`;
+  } else {
+    return '';
+  }
+
+  const aspect = win.w / win.h;
+  const keepW = Math.min(1, (ph * aspect) / pw);
+  const keepH = Math.min(1, pw / aspect / ph);
+  const cut = line.id === 'buildingtiles' ? 'tile cut' : 'card cut';
+  const join2 = (text) => (extra ? `${text}\n\n${extra}` : text);
 
   if (keepW > 0.995 && keepH > 0.995) {
-    return wrap('WINDOW. The card cut from this plate keeps very nearly the whole page, ' +
-      `so the FRAMING band above is the only constraint. ${provenance}`);
+    return join2(wrap(`WINDOW. The ${cut} from this plate keeps very nearly the whole page, ` +
+      `so the FRAMING band above is the only constraint. ${provenance}`));
   }
   const parts = [];
   if (keepH <= 0.995) {
@@ -208,9 +251,9 @@ export function windowNote(root, line, row) {
     parts.push(`only the middle ${round(keepW)}% of its width - between ` +
       `${band(keepW)[0]}% and ${band(keepW)[1]}% across`);
   }
-  return wrap('WINDOW. This plate is cut down to a card, and the card keeps ' +
+  return join2(wrap(`WINDOW. This plate is cut down to a ${line.unit}, and the ${line.unit} keeps ` +
     `${keepW > 0.995 ? 'the full width of the page but ' : ''}${parts.join(', and ')}. ` +
-    `Outside that band nothing can be relied on, whatever else this brief says. ${provenance}`);
+    `Outside that band nothing can be relied on, whatever else this brief says. ${provenance}`));
 }
 
 /* ------------------------------------------------------------------ subjects */
@@ -317,6 +360,33 @@ function subjectsOf(root, line) {
     return { rows, deferred, generated };
   }
 
+  if (line.id === 'buildingtiles') {
+    /* Two files in - buildings and the sown crops - and one kind of subject out.
+       The FOOTPRINT is not read anywhere: it is worked out from the subject's own
+       numbers by tools/lib/tiles.mjs, so a building that grows a worker slot grows
+       its tile and the queue says so without anybody editing a tile file. There
+       is no tile file.
+
+       `subject` is the assembled tile rather than the building, because the tile
+       is what is being minted and half of what a brief needs - the shape, the
+       cells, the word on the back - is derived. See lines.buildingtiles
+       .$subjectRequiresNote in data/mint.json. */
+    for (const tile of tileSubjects(root)) {
+      rows.push({
+        id: tile.id,
+        code: tile.id,
+        name: tile.name,
+        group: tile.group,
+        format: formatFor(tile.cells, line.draw?.sizeByFormat),
+        plate: plateIdOf(tile),
+        briefFile: line.brief.file,
+        tile,
+        subject: tile,
+      });
+    }
+    return { rows, deferred, generated };
+  }
+
   /* A shelved line has no source to read, which is the point of it being
      shelved: nothing is enumerated and nothing is chased. */
   return { rows, deferred, generated };
@@ -335,6 +405,14 @@ export function platePath(line, row) {
  */
 function aimOf(root, line, row) {
   if (line.id === 'cards') {
+    const framing = readJson(join(root, line.aim.file));
+    const entry = framing.plates[row.plate];
+    return { done: !!entry, extra: { focal: !!(entry && entry.focal) } };
+  }
+  if (line.id === 'buildingtiles') {
+    /* A tile is tied to its plate exactly as a card is - a subject box, in the
+       same file. What differs is the window it will be read through, and that is
+       tools/validate-framing.mjs's business rather than this one's. */
     const framing = readJson(join(root, line.aim.file));
     const entry = framing.plates[row.plate];
     return { done: !!entry, extra: { focal: !!(entry && entry.focal) } };
@@ -418,6 +496,21 @@ export function minLongSideFor(root, line, row) {
       min: mmToPx(longMm, spec.dpi),
       want: mmToPx(longMm, spec.wantDpi),
       from: `a ${longMm} mm sheet at ${spec.dpi} dpi`,
+    };
+  }
+
+  if (line.id === 'buildingtiles') {
+    /* The biggest a tile could ever be cut, not the size it is cut today. A tile
+       is one world hex across, and the largest hex any map declares is the one a
+       plate has to hold up at - a plate drawn to the small preset can never be
+       recut for the large one, and pixels that were never drawn are gone. */
+    const hex = largestHexMm(root);
+    const box = boxOf(row?.tile?.cells ?? [{ q: 0, r: 0 }], hex.mm);
+    const longMm = Math.max(box.w, box.h);
+    return {
+      min: mmToPx(longMm, spec.dpi),
+      want: mmToPx(longMm, spec.wantDpi),
+      from: `a ${Number(longMm.toFixed(1))} mm tile at ${spec.dpi} dpi - the ${hex.map} ${hex.preset} hex, the largest any map declares`,
     };
   }
 

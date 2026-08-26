@@ -20,7 +20,8 @@ they needed no new machinery, only a new entry in
 | --- | --- | --- | --- | --- | --- |
 | **Cards** | one card in an adventure deck | `art/prompts/<deck>.md` | `art/renders/<plate>.png` | **FRAME** — a subject box and a focal point in `art/framing.json` | active — two decks *generated*, see below |
 | **Maps** | one drawn map plate and the board read off it | `art/prompts/maps.md` | `map/<id>.png` | **TRACE** — the board in `data/maps/<id>.json` | **paused** — see *Generated maps* |
-| **Tiles** | a printed hex tile face and its zoom-in sheet | — | — | — | **shelved**, [#18](https://github.com/cdomotor-g/game1/issues/18) |
+| **Building tiles** | one printed hex tile — a building, or a sown field | `art/prompts/buildingtiles.md` | `art/renders/tile-<id>.png` | **FRAME** — a subject box in `art/framing.json` | active, 54 subjects |
+| **Terrain tiles** | a printed hex tile face and its zoom-in sheet | — | — | — | **shelved**, [#18](https://github.com/cdomotor-g/game1/issues/18) |
 
 A line is declared in `data/mint.json` and nowhere else. That file holds no
 content — no card says anything in it, no map is described in it — exactly like
@@ -28,14 +29,23 @@ content — no card says anything in it, no map is described in it — exactly l
 where its briefs live, what a plate has to be, and what ties the plate back to the
 data.
 
-**Tiles are shelved, not cancelled.** The tile-based board — 61 hex tiles dealt
-face down, and the Holdings / Grounds / Places sheets in
+**Terrain tiles are shelved, not cancelled.** The tile-based board — 61 hex tiles
+dealt face down, and the Holdings / Grounds / Places sheets in
 [`minimaps/`](minimaps/README.md) — is paused pending the game-set split
 ([#10](https://github.com/cdomotor-g/game1/issues/10)), where it fits as a *way of
 supplying a board*: a plate set gives you one drawn map, a tile set gives you a
 bag. Nothing is deleted; the 32 accepted sheets stay committed and stay on the
 site. The queue prints the shelved line every run, so it is visible from the tool
 rather than remembered.
+
+**The building tiles are a different line and reopen nothing.** A terrain tile is
+a piece of ground that arrives *instead of* a map; a building tile is a piece of
+architecture that goes *on* ground the table already has, and it is wanted
+whichever way that ground was supplied. They share a cell size because everything
+in this game shares a cell size — one tile cell is one mini-map cell is one
+world-map hex, read off the campaign map's own print preset. The argument in full
+is the block comment at the top of
+[`../data/buildingtiles.json`](../data/buildingtiles.json).
 
 ## Generated maps
 
@@ -270,6 +280,36 @@ are checked, and `validate-map.mjs` says which it is looking at.
 | **Aim** | the board: a measured `plate` block, a full `rows`, and the `settlements`, `regions`, `routes` and `print` presets |
 | **Builds** | the proof sheet and the derived print sizes via `build-map.mjs`; the viewer, the print sheets and the explorer via `build-data.mjs` |
 
+### Building tiles
+
+A tile is a hex, or a small clump of hexes, cut so that one cell is exactly a
+mini-map cell. **How many cells is never written on the building.** It is worked
+out from the building's own numbers — the effort it takes to raise, and what it
+has to hold — through the ground model and the ladder in
+[`../data/buildingtiles.json`](../data/buildingtiles.json), so adding a worker
+slot can grow a tile and `validate-data` says so. A field tile is the same
+subject read out of a sowing recipe instead of a building.
+
+| | |
+| --- | --- |
+| **In** | a building in `data/buildings.json`, or a recipe carrying a `cropStage`. Nothing about the tile itself: the shape, the cells and the word on the back are all derived, and the assembled tile is what the contract is checked against |
+| **Brief** | a `## tile-<id>` section in `docs/art/prompts/buildingtiles.md` |
+| **Plate id** | `tile-` and the tile's id — `tile-hut`, `tile-crop-grain` |
+| **Out** | `docs/art/renders/tile-<id>.png`, at the page the footprint's own aspect asks for, at the pixel floor the **largest** world hex any map declares derives — not today's, because a plate drawn to the small preset can never be recut for the large one |
+| **Aim** | an entry in `docs/art/framing.json`, exactly as a card. What differs is the window: a tile's is its own footprint, and `validate-framing.mjs` measures against that rather than a card |
+| **Builds** | `docs/tiles/` via `build-tiles.mjs` — face and back for every tile, and an index that prints them all at their true size |
+
+Two things a card brief never has to say, both appended to the prompt
+automatically by `windowNote` so nobody types them: how much of the page the
+hexagonal cut keeps, and **where the label band crosses the piece**. A solid strip
+carrying the tile's name is printed edge to edge across it, and whatever is drawn
+under it is gone.
+
+**A tile builds without its plate**, which is the one place this line differs from
+cards. A card with no portrait is a card with a hole in it, so `build-cards` skips
+it; a tile with no plate is a blank counter, which is exactly what a prototype
+tile is. The whole set is printable today.
+
 **Ask for the width before you ask for anything else.** It is the one property of
 a plate that cannot be recovered later: a coastline can be re-traced, a legend can
 be drawn over, a label can be argued with, but pixels that were never drawn are
@@ -334,6 +374,7 @@ node tools/build-icons.mjs      # element marks
 node tools/build-data.mjs       # the explorer bundle
 node tools/build-annex.mjs      # the printed annex
 node tools/build-cards.mjs      # the cards themselves
+node tools/build-tiles.mjs      # the building tiles
 node tools/build-book.mjs       # the rulebook
 node tools/mint-queue.mjs       # the worklist
 node tools/build-mint.mjs       # the mint page on the site

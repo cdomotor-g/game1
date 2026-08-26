@@ -497,6 +497,52 @@
     },
     "timber": { "boardWidthMm": 26, "seamStrokeWidth": 1.1, "grainStrokeWidth": 0.7, "grainOpacity": 0.5, "knots": 2,
       "$note": "The same sawn ground as the player board. They are the same piece of furniture in two sizes and they should look it." }
-  }
+  },
 
+  "buildingTile": {
+    "$comment": "How a building tile is drawn. What a tile IS - the cell, the ground model, the ladder, the four shapes, what each side carries - is data/buildingtiles.json; this is the ink.\n\nSame division as the boards, and the same discipline: no coordinate here belongs to any one building, and no building is named. Everything is a fraction of the CELL rather than a millimetre, because the cell is read off the campaign map's print preset and can change - and a name band typed at 4 mm would be a name band that stays 4 mm when the tile grows by half.",
+
+    "bleedMm": 2,
+    "$bleedNote": "Less than a card's 3 mm. A tile is die-cut to a hexagon rather than guillotined, and a rotary die holds register far better than a stack of cards being trimmed - but the bleed still has to exist, because the one thing worse than a crooked tile is a white crescent along one edge of it.",
+
+    "cut": {
+      "strokeWidth": 2.4,
+      "$note": "The die line, drawn on the ink plate at the same weight the mini-map's field edge is traced at - these two edges are butted against each other on the table, and a tile outlined more heavily than the ground it sits on reads as a sticker."
+    },
+
+    "nameBand": {
+      "heightPerCell": 0.26,
+      "fontPerCell": 0.135,
+      "trackingPerCell": 0.012,
+      "minFontMm": 1.4,
+      "$fitNote": "fontPerCell is the size a name is set at when it fits. When it does not - and \"Charcoal Kiln\" does not fit across a 17 mm hex - it is set at whatever DOES fit, worked out from the band's own width and the number of letters in the name. Nothing is ever clipped and nothing ever runs over the cut.\n\nminFontMm is the floor, and it is a millimetre rather than a fraction on purpose: it is not a proportion of anything in this game, it is the smallest type a press will hold on board stock. A name that cannot be set above it fails the build - the answer to that is a shorter name, not a smaller type.",
+      "tint": "85",
+      "insetPerCell": 0.08,
+      "$note": "A band across the lower shoulder line - the height at which the bottom row of cells is still at its full width. Below it a pointy-top hex has narrowed to a point, and a name set in that wedge is a name nobody reads across a table.\n\nEvery figure is a fraction of the CELL, not of the tile, so a one-cell hut and a four-cell manor carry the same band at the same type size. They are read by the same eyes at the same distance; a manor whose name was drawn four times larger because its tile is four times bigger would be the only piece on the table shouting."
+    },
+
+    "backMarks": {
+      "sizePerCell": 0.22,
+      "gapPerCell": 0.06,
+      "strokeWidth": 1.6,
+      "$note": "The terrain marks along the back, saying what ground this may stand on: one row, centred, sitting directly above the word band. Sized off the cell like everything else.\n\nHOW MANY FIT IS DERIVED, and a tile that cannot show its whole list shows none of it. That is not a fudge, it is the rule: a building allowed on five or six kinds of ground is a building that goes wherever you put it, and a row of marks saying so is a row of marks saying nothing. What the back is for is the RESTRICTION - the quarry that is hills and mountain only, the farm that is grassland, the dock that needs an edge - and those are short lists by their nature. A blank back and a back with six marks on it mean the same thing, so only one of them is worth printing.",
+      "deposit": "M12 21.4 4.6 8.6h14.8ZM8.4 12.2h7.2M10.2 16.4h3.6",
+      "$depositNote": "An inverted cone of ground with two seams in it: a hole dug down to something. WHICH deposit is never printed - the tile stands on a revealed deposit token that already says - so one mark serves every mine, pit and derrick in the game."
+    },
+
+    "back": {
+      "latheFrom": "back.lathe",
+      "$typeNote": "The word takes the name band's own height, place and type size (nameBand above). A tile is the same object on both sides, so it carries the same band on both - one with what this is, one with what state it is in.",
+      "$latheNote": "The engine-turned ground is the deck backs' own (back.lathe), struck from the tile's centre rather than a card's and run out to its furthest corner, so it fills the piece instead of sitting on it as a disc. Declared by reference rather than copied: a tile back and a card back are the same trick and they should stay the same trick.\n\nA card back also carries a MOTIF and a tile back does not. There is no room: the band and the ground marks take what a 17 mm piece has, and a motif drawn in what was left came out big enough to crowd the one thing the back exists to say. A card is 63 x 88 mm and can afford both.",
+      "$note": "One back per tile, all of them generated by tools/build-tiles.mjs and none of them anybody's turn to draw. A card back may not vary - a back that varies is a marked card - but a tile is picked out of a tray by name rather than drawn off a stack, so its back is free to carry the one thing a player needs while the tile is face down: what ground it may stand on."
+    },
+
+    "sheet": {
+      "widthMm": 210,
+      "heightMm": 297,
+      "marginMm": 10,
+      "gutterMm": 2,
+      "$note": "A4 portrait. Every tile prints at its own true size and they FLOW across the page - each one in its own bounding box, gutter between - rather than nesting on a shared hex lattice.\n\nThat is a deliberate deferral, not an oversight. Hexes do nest, and nesting is why everything loose in this game is a hexagon (see tokens above): butted on a lattice, one cut line serves two pieces. But four different polyhex shapes on one lattice is a packing problem, and a packing that is nearly right wastes more paper than the flow does while being far harder to check. It is worth solving the day these are die-cut in quantity, and worth nothing while they are scissors-and-a-prototype - which is what they are until the plates land."
+    }
+  }
 }

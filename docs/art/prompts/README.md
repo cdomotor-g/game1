@@ -15,6 +15,7 @@ used as drawn — it is cropped, or it is traced — so how the drawing will be
 | --- | --- | --- |
 | Cards | `FRAMING.` — where the head, the hands and the named gear sit on the page | [`09-framing-and-composition.md`](../09-framing-and-composition.md) |
 | Maps | `TRACEABILITY.` — flat washes, one wash per terrain, cold water, no grid | [`../../map/README.md`](../../map/README.md) |
+| Building tiles | `FRAMING.` — which hexagon the page is cut to, and what may go near a corner | [`buildingtiles.md`](buildingtiles.md), and the block comment in [`../../../data/buildingtiles.json`](../../../data/buildingtiles.json) |
 
 Read the contract before writing a prompt, and write the block from it rather
 than from memory.
@@ -37,6 +38,7 @@ in `data/maps/` and it appears there the moment the tool is run — see
 | [`items.md`](items.md) | The 10 item cards — the armour and the weapons | Single object study |
 | [`tools.md`](tools.md) | The 5 tool cards | Single object study |
 | [`maps.md`](maps.md) | Every board in `data/maps/` | Whole map plate, landscape root-two |
+| [`buildingtiles.md`](buildingtiles.md) | The 54 building and field tiles | Ground study, square or 3:2, cut to a hexagon |
 
 The plates are drawn as pages from a **field naturalist's folio**: the same worn
 1600s-almanac register as everything else, but sheet-sized — a specimen study

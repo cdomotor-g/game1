@@ -156,7 +156,7 @@ window.GAME_DATA = {
         "file": "mint.json",
         "collection": "lines",
         "idField": "id",
-        "summary": "The mint: one line per kind of thing that goes designer -> artist -> build. Cards, maps, and tiles while they are shelved. Content-free, like components.json: it says what a line is, never what a card says."
+        "summary": "The mint: one line per kind of thing that goes designer -> artist -> build. Cards, maps, building tiles, and terrain tiles while they are shelved. Content-free, like components.json: it says what a line is, never what a card says."
       },
       {
         "key": "playerboard",
@@ -178,6 +178,13 @@ window.GAME_DATA = {
         "collection": null,
         "idField": null,
         "summary": "The mini-map: one world hex opened out as a plain-colour hexagonal field whose cells are the size of a world-map hex. The shapes are components.json minimap."
+      },
+      {
+        "key": "buildingtiles",
+        "file": "buildingtiles.json",
+        "collection": null,
+        "idField": null,
+        "summary": "Building tiles: hex pieces cut so one cell is a mini-map cell, which is a world-map hex. How many cells a building takes is worked out from its own numbers through the ground model and the ladder here - it is never written on the building. The shapes it is drawn into are components.json buildingTile."
       }
     ],
     "maps": {
@@ -2534,7 +2541,7 @@ window.GAME_DATA = {
     ]
   },
   "buildings": {
-    "$comment": "Buildings are placed on tiles, cost commodities up front, take build-points of effort to finish, and then act as sites where recipes may be run. workerSlots caps how many workers may be allocated to that building in a single round.",
+    "$comment": "Buildings are placed on tiles, cost commodities up front, take build-points of effort to finish, and then act as sites where recipes may be run. workerSlots caps how many workers may be allocated to that building in a single round.\n\nHOW BIG a building's tile is is not written here. It is worked out from the numbers below - the effort it takes to raise, and what it has to hold - through the ground model and ladder in data/buildingtiles.json, so adding a worker slot can grow the tile and the build says so. The one thing a building may say about its own tile is `shortName`: the label printed on the piece, for a name that will not set above the press floor on a 17 mm band. One building needs one today, and the build names any others the day they appear.",
     "version": "0.1.0",
     "categories": [
       {
@@ -3028,6 +3035,7 @@ window.GAME_DATA = {
       {
         "id": "charcoal-kiln",
         "name": "Charcoal Kiln",
+        "shortName": "Kiln",
         "category": "production",
         "tier": 1,
         "summary": "Logs into charcoal, for smelting where there is no coal.",
@@ -13082,6 +13090,46 @@ window.GAME_DATA = {
         "knots": 2,
         "$note": "The same sawn ground as the player board. They are the same piece of furniture in two sizes and they should look it."
       }
+    },
+    "buildingTile": {
+      "$comment": "How a building tile is drawn. What a tile IS - the cell, the ground model, the ladder, the four shapes, what each side carries - is data/buildingtiles.json; this is the ink.\n\nSame division as the boards, and the same discipline: no coordinate here belongs to any one building, and no building is named. Everything is a fraction of the CELL rather than a millimetre, because the cell is read off the campaign map's print preset and can change - and a name band typed at 4 mm would be a name band that stays 4 mm when the tile grows by half.",
+      "bleedMm": 2,
+      "$bleedNote": "Less than a card's 3 mm. A tile is die-cut to a hexagon rather than guillotined, and a rotary die holds register far better than a stack of cards being trimmed - but the bleed still has to exist, because the one thing worse than a crooked tile is a white crescent along one edge of it.",
+      "cut": {
+        "strokeWidth": 2.4,
+        "$note": "The die line, drawn on the ink plate at the same weight the mini-map's field edge is traced at - these two edges are butted against each other on the table, and a tile outlined more heavily than the ground it sits on reads as a sticker."
+      },
+      "nameBand": {
+        "heightPerCell": 0.26,
+        "fontPerCell": 0.135,
+        "trackingPerCell": 0.012,
+        "minFontMm": 1.4,
+        "$fitNote": "fontPerCell is the size a name is set at when it fits. When it does not - and \"Charcoal Kiln\" does not fit across a 17 mm hex - it is set at whatever DOES fit, worked out from the band's own width and the number of letters in the name. Nothing is ever clipped and nothing ever runs over the cut.\n\nminFontMm is the floor, and it is a millimetre rather than a fraction on purpose: it is not a proportion of anything in this game, it is the smallest type a press will hold on board stock. A name that cannot be set above it fails the build - the answer to that is a shorter name, not a smaller type.",
+        "tint": "85",
+        "insetPerCell": 0.08,
+        "$note": "A band across the lower shoulder line - the height at which the bottom row of cells is still at its full width. Below it a pointy-top hex has narrowed to a point, and a name set in that wedge is a name nobody reads across a table.\n\nEvery figure is a fraction of the CELL, not of the tile, so a one-cell hut and a four-cell manor carry the same band at the same type size. They are read by the same eyes at the same distance; a manor whose name was drawn four times larger because its tile is four times bigger would be the only piece on the table shouting."
+      },
+      "backMarks": {
+        "sizePerCell": 0.22,
+        "gapPerCell": 0.06,
+        "strokeWidth": 1.6,
+        "$note": "The terrain marks along the back, saying what ground this may stand on: one row, centred, sitting directly above the word band. Sized off the cell like everything else.\n\nHOW MANY FIT IS DERIVED, and a tile that cannot show its whole list shows none of it. That is not a fudge, it is the rule: a building allowed on five or six kinds of ground is a building that goes wherever you put it, and a row of marks saying so is a row of marks saying nothing. What the back is for is the RESTRICTION - the quarry that is hills and mountain only, the farm that is grassland, the dock that needs an edge - and those are short lists by their nature. A blank back and a back with six marks on it mean the same thing, so only one of them is worth printing.",
+        "deposit": "M12 21.4 4.6 8.6h14.8ZM8.4 12.2h7.2M10.2 16.4h3.6",
+        "$depositNote": "An inverted cone of ground with two seams in it: a hole dug down to something. WHICH deposit is never printed - the tile stands on a revealed deposit token that already says - so one mark serves every mine, pit and derrick in the game."
+      },
+      "back": {
+        "latheFrom": "back.lathe",
+        "$typeNote": "The word takes the name band's own height, place and type size (nameBand above). A tile is the same object on both sides, so it carries the same band on both - one with what this is, one with what state it is in.",
+        "$latheNote": "The engine-turned ground is the deck backs' own (back.lathe), struck from the tile's centre rather than a card's and run out to its furthest corner, so it fills the piece instead of sitting on it as a disc. Declared by reference rather than copied: a tile back and a card back are the same trick and they should stay the same trick.\n\nA card back also carries a MOTIF and a tile back does not. There is no room: the band and the ground marks take what a 17 mm piece has, and a motif drawn in what was left came out big enough to crowd the one thing the back exists to say. A card is 63 x 88 mm and can afford both.",
+        "$note": "One back per tile, all of them generated by tools/build-tiles.mjs and none of them anybody's turn to draw. A card back may not vary - a back that varies is a marked card - but a tile is picked out of a tray by name rather than drawn off a stack, so its back is free to carry the one thing a player needs while the tile is face down: what ground it may stand on."
+      },
+      "sheet": {
+        "widthMm": 210,
+        "heightMm": 297,
+        "marginMm": 10,
+        "gutterMm": 2,
+        "$note": "A4 portrait. Every tile prints at its own true size and they FLOW across the page - each one in its own bounding box, gutter between - rather than nesting on a shared hex lattice.\n\nThat is a deliberate deferral, not an oversight. Hexes do nest, and nesting is why everything loose in this game is a hexagon (see tokens above): butted on a lattice, one cut line serves two pieces. But four different polyhex shapes on one lattice is a packing problem, and a packing that is nearly right wastes more paper than the flow does while being far harder to check. It is worth solving the day these are die-cut in quantity, and worth nothing while they are scissors-and-a-prototype - which is what they are until the plates land."
+      }
     }
   },
   "mint": {
@@ -13297,12 +13345,86 @@ window.GAME_DATA = {
         ]
       },
       {
+        "id": "buildingtiles",
+        "name": "Building tiles",
+        "status": "active",
+        "subject": "one printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it",
+        "unit": "tile",
+        "groupLabel": "Category",
+        "$distinctFromTiles": "NOT the shelved tiles line below, and reopening nothing. That line is a tile-based BOARD - 61 terrain hexes dealt face down so the world is unknown until it is walked - and it stays shelved pending #10. This line is architecture placed ON ground the table already has, whichever way that ground was supplied. See data/buildingtiles.json for the full argument.",
+        "subjectsFrom": {
+          "kind": "tiles",
+          "$note": "tools/lib/tiles.mjs, which reads data/buildings.json for the buildings and data/recipes.json for the sown crops, and works each one's footprint out through the ground model and ladder in data/buildingtiles.json. Two files in, one kind of subject out: a building tile and a field tile differ only in where their subject was read from."
+        },
+        "subjectRequires": [
+          "id",
+          "name",
+          "summary",
+          "shape",
+          "cells",
+          "back"
+        ],
+        "$subjectRequiresNote": "Checked against the assembled TILE, not against the building - because the tile is what is being minted, and half of what a brief needs (the shape, the cells, which word is on the back) is worked out rather than written down. A building that has said nothing about its own tile has still said everything the tile needs, which is the point of deriving it.",
+        "brief": {
+          "dir": "docs/art/prompts",
+          "file": "buildingtiles.md",
+          "headingIs": "plateId",
+          "$note": "One `## tile-<id>` section per tile, in one file, buildings and fields together - they are drawn by the same hand to the same brief and splitting them would split the shared preamble that makes them a set."
+        },
+        "plate": {
+          "dir": "docs/art/renders",
+          "ext": ".png",
+          "idFrom": "tile-{id}",
+          "formatFrom": "the footprint's own aspect",
+          "$formatNote": "DERIVED, not declared per tile. A shape's bounding box has an aspect - a single hex is 0.87, a pair is 1.73 - and the format asked for is whichever entry in `draw.sizeByFormat` comes nearest it. So a shape that changes changes the page it is drawn on, and a page nobody can supply is a build failure rather than a plate that arrives the wrong shape.",
+          "minLongSide": {
+            "from": "the largest world hex any map declares",
+            "dpi": 300,
+            "wantDpi": 600,
+            "$note": "DERIVED, like the other two lines, and from the biggest table rather than today's. A tile cut to the four-sheet preset is 19 mm on its long side and would ask for about 230 px, which is a floor nothing could fail; but the same tile cut to the nine-sheet A1 preset is half as big again, and a plate drawn to the smaller number can never be recut for the larger one. Ask for the width before anything else - it is the one property that cannot be recovered."
+          },
+          "frozenWording": "docs/art/renders/{plate}.txt"
+        },
+        "draw": {
+          "$comment": "Same courier as the cards line, and available for the same reason: a tile is small, one call supplies more pixels than a 31 mm piece can spend, and the handover in docs/MINT.md is still the version that definitely works. No key, no route or anything but a 200 and mint-draw prints the commission and exits 0.",
+          "provider": "openai",
+          "model": "gpt-image-1",
+          "endpoint": "https://api.openai.com/v1/images/generations",
+          "keyEnv": "OPENAI_API_KEY",
+          "sizeByFormat": {
+            "square": "1024x1024",
+            "A4 portrait": "1024x1536",
+            "A4 landscape, 3:2": "1536x1024"
+          }
+        },
+        "aim": {
+          "step": "FRAME",
+          "owner": "whoever accepts the plate",
+          "file": "docs/art/framing.json",
+          "at": "plates",
+          "produces": "a `subject` box, a `focal` point and a one-line `note`",
+          "contract": "docs/art/09-framing-and-composition.md",
+          "$note": "The same aim a card takes, and the same file, because it is the same job: a drawn page is not the shape of the window it will be seen through, and something is thrown away. What differs is only the window - a tile's is its own footprint's bounding box, which tools/validate-framing.mjs measures against rather than assuming a card."
+        },
+        "builds": [
+          "docs/tiles/ - tools/build-tiles.mjs",
+          "the backs, which are generated per shape and are nobody's turn to draw"
+        ],
+        "checks": [
+          "node tools/validate-data.mjs",
+          "node tools/validate-art.mjs",
+          "node tools/build-tiles.mjs --check",
+          "node tools/validate-framing.mjs"
+        ]
+      },
+      {
         "id": "tiles",
-        "name": "Tiles",
+        "name": "Terrain tiles",
         "status": "shelved",
         "issue": 18,
         "issueUrl": "https://github.com/cdomotor-g/game1/issues/18",
-        "subject": "one printed hex tile face, and the zoom-in sheet behind it",
+        "subject": "one printed hex terrain tile face, and the zoom-in sheet behind it",
+        "$notTheBuildingTiles": "Not the buildingtiles line above, which is active. This line is a way of SUPPLYING A BOARD - a bag of ground dealt face down instead of a drawn map. That one is architecture placed on ground the table already has, and is wanted whichever way the ground arrived. Nothing about the building tiles reopens this, and nothing here blocks them; they share a cell size because everything in this game shares a cell size.",
         "unit": "tile",
         "groupLabel": "Series",
         "shelvedNote": "The tile-based board - 61 double-sided hex tiles dealt face down, and the Holdings / Grounds / Places zoom-in sheets in docs/minimaps/ - is paused, not cancelled. Nothing is deleted: the 32 accepted sheets stay committed and stay on the site, and terrain.json keeps boardSetup. It comes back as a GAME SET (#10): a table would pick either a plate set, where one drawn map is hexed and the world is known, or a tile set, where the board is a bag and the world is unknown until walked. Both feed the same terrain vocabulary and the same move costs, which is the test of whether #10 drew its line in the right place.",
@@ -13664,6 +13786,233 @@ window.GAME_DATA = {
         "terrain code"
       ],
       "note": "The terrain code is printed - it is the one thing the sheet knows about itself. The map hex is a ruled blank, because it changes every time the sheet is put down."
+    }
+  },
+  "buildingtiles": {
+    "$comment": "Building tiles: the printed pieces a player puts down when they build something.\n\nA building tile is a hex, or a small clump of hexes, cut so that ONE cell is exactly a mini-map cell - which is exactly a world-map hex, read off whichever map and print preset the table is playing on. That is the whole scale argument and it is not an approximation: a hut tile drops into a mini-map cell, a figure standing beside it is based for the same hex, and one ruler measures the campaign board, the zoom-in sheet and everything built on it. Print the map at a bigger preset and every tile in the box grows with it, because none of the three numbers was ever typed.\n\nTHESE ARE NOT THE SHELVED TILES. Issue #18 shelved a tile-based BOARD - 61 double-sided terrain hexes dealt face down, so the world is unknown until it is walked - pending the game-set split (#10). Nothing here reopens that. A terrain tile is a piece of ground that arrives instead of a map; a building tile is a piece of ARCHITECTURE that goes on ground you already have, and it is wanted whichever way the board was supplied. They share a cell size because everything in this game shares a cell size.\n\nWhat a tile IS lives here. How one is DRAWN - the cut weight, the name band, the lathe on the back, the print sheet - is data/components.json buildingTile, the same division as the player board, the market board and the mini-map. What each individual tile SAYS is on the thing it is of: a building in data/buildings.json, a crop in data/recipes.json. This file names no building and no crop.",
+    "version": "0.1.0",
+    "$structure": {
+      "$comment": "The small type system this file uses, so the next tool that reads it does not have to guess.",
+      "axial": "[q, r] - a cell's position in a footprint, in axial hex coordinates on a pointy-top grid. [0, 0] is the anchor cell, the one a player is told to place; everything else is an offset from it.",
+      "band": "a rung of the ladder. `under` is its exclusive top; its floor is the previous rung's `under`, and the first rung's floor is 0. The last rung has `under: null` and no ceiling, so the ladder can never have a hole in it or run out."
+    },
+    "cell": {
+      "$comment": "The load-bearing decision, and it is a reference rather than a number.\n\nA tile cell is a mini-map cell is a world-map hex. data/minimap.json already made that promise for the zoom-in sheets and tools/build-minimaps.mjs already reads it off the map's own default print preset; this reads the same field from the same place, so the three cannot drift. A tile that carried its own millimetre figure would be a tile that fits the sheet it was designed against and no other.",
+      "from": "maps.<id>.print.presets[default].hexAcrossFlatsMm",
+      "sharedWith": "data/minimap.json cellFrom - deliberately the same expression, and tools/lib/tiles.mjs and tools/build-minimaps.mjs both resolve it the same way",
+      "orientation": "pointy",
+      "$orientationNote": "Pointy-top, like the world map's grid and the mini-map's. A tile turned any of six ways still seats in a cell, and a lane of tiles runs the way a lane of cells runs."
+    },
+    "ground": {
+      "$comment": "How many cells a building takes, worked out from the building's own numbers rather than typed on it. This is the answer to \"the scale should make sense\": scale is a system, like a price, not a judgement made forty times.\n\nTwo things decide how much ground a building covers, and one of them on its own gets it wrong every time. buildPoints is the FABRIC - how much building there is to raise - and it is the only figure that separates a steelworks from a shrine. But a pasture is six animals behind a fence and costs almost nothing to put up, and a warehouse is mostly air. So the yard is counted too: what the building holds is ground it needs whether or not anybody had to build it.\n\nA term's weight says how much of a cell one unit of it asks for. They are small on purpose - the ladder does the deciding, and a model tuned so finely that one worker slot moves a building up a rung is a model that will move it back next time somebody balances a recipe.",
+      "terms": [
+        {
+          "field": "buildPoints",
+          "weight": 0.125,
+          "why": "The fabric. One cell of building per eight points of effort - the hut is four points and the manor thirty, which is the whole range and it lands where a hut and a manor should."
+        },
+        {
+          "field": "housing",
+          "weight": 0.5,
+          "why": "A worker sleeping here needs a roof over a piece of ground. Half a cell each, so four workers is two cells of house."
+        },
+        {
+          "field": "specialistHousing",
+          "weight": 0.5,
+          "why": "The same room, occupied by somebody who charges more for it."
+        },
+        {
+          "field": "workerSlots",
+          "weight": 0.25,
+          "why": "Somebody working here needs a bench and room to swing, which is a good deal less than a bed. Deliberately the lightest term: nearly every building in the game has two to four, so a heavier weight would flatten the whole ladder to one rung."
+        },
+        {
+          "field": "storage",
+          "weight": 0.2,
+          "why": "A slot of stock on the floor. Twelve of them is a warehouse and it is most of why a warehouse is bigger than the shop next door."
+        },
+        {
+          "field": "livestockSlots",
+          "weight": 0.5,
+          "why": "An animal needs grazing, not a shelf. As much ground as a person sleeping, and it is what makes a pasture the largest thing a first-round player can put down."
+        },
+        {
+          "field": "garrison",
+          "weight": 0.4,
+          "why": "A soldier held at a barracks: a bunk and a yard to drill in, a little less than a household."
+        }
+      ],
+      "excluded": [
+        {
+          "field": "fieldSlots",
+          "why": "A field is its own tile, laid beside the farm - see `fields` below. Counting it here as well would print the same ground twice, once inside the steading and once outside it."
+        },
+        {
+          "field": "cost",
+          "why": "What a building is made OF says nothing about how much room it takes. A palisade is six logs and a thin line; a well is three stone and a hole."
+        },
+        {
+          "field": "tier",
+          "why": "Tier is how far up the tech tree a thing sits. A trading house is tier 3 and fits in a shopfront."
+        },
+        {
+          "field": "victoryPoints",
+          "why": "Scoring is not architecture."
+        }
+      ]
+    },
+    "ladder": {
+      "$comment": "Ground demand, banded into a number of cells and a shape. Same shape as the price bands in data/rules.json: contiguous, exclusive-top, and checked by tools/validate-data.mjs so it can never grow a hole or an overlap.\n\nFour rungs is the whole ladder on purpose. A fifth would need a fifth polyhex shape, another die-cut and another row of the print sheet, and the thing it would buy - telling a steelworks from a manor by size - is already told by the picture on the face.",
+      "bands": [
+        {
+          "cells": 1,
+          "under": 2,
+          "shape": "single",
+          "reads": "a single building: a hut, a well, a shop on a corner"
+        },
+        {
+          "cells": 2,
+          "under": 3,
+          "shape": "pair",
+          "reads": "a building and its yard: a farm steading, a smithy with its stack, a watchtower and its wall"
+        },
+        {
+          "cells": 3,
+          "under": 4.5,
+          "shape": "triad",
+          "reads": "a works: a glassworks, a granary, a harbour with its arm out into the water"
+        },
+        {
+          "cells": 4,
+          "under": null,
+          "shape": "rhombus",
+          "reads": "an estate: the manor and its grounds, a pasture and the whole run of fence round it"
+        }
+      ]
+    },
+    "shapes": {
+      "$comment": "The polyhexes a tile may be cut as - one per rung of the ladder, and no choice about which. A size class with two shapes in it is a size class where somebody has to decide, forty times, with nothing to decide it on; and two shapes of the same area are two die-cuts to pay for and two ways for a tile to fail to fit a gap on the board.\n\nCells are axial [q, r] offsets from the anchor cell, which is always [0, 0] and is always the cell a player is told to place. Every shape is edge-connected - a tile that fell into two pieces is two tiles - and tools/validate-data.mjs proves it rather than trusting it.",
+      "single": {
+        "cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "note": "One hex. The anchor and the whole tile."
+      },
+      "pair": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "note": "Two along the row. The anchor is the left-hand cell."
+      },
+      "triad": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "note": "Three mutually adjacent - the tightest three cells a hex grid has, and the only three that all touch each other. The anchor is the upper-left cell."
+      },
+      "rhombus": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "note": "Two rows of two, the lower row stepped half a cell right. Compact, and it seats against a straight run of other tiles on two sides. The anchor is the upper-left cell."
+      }
+    },
+    "fields": {
+      "$comment": "The crop tiles, and the reason a farm's footprint does not include its fields.\n\nA farm today is `fieldSlots: 4` and a growth track: you sow a crop into a slot and it matures over rounds (data/recipes.json, the sow-* recipes). Printed as one big farm tile with four recesses in it, a farm is exactly the same size in the round it is raised and in the round it is feeding a town, and no crop ever gets a picture. Laid as separate one-cell tiles beside the steading, the farm grows on the board as it is sown, a fallow farm looks fallow, and each crop is a subject of its own with its own plate.\n\nA field tile is minted exactly like a building tile - same brief file, same plate directory, same framing entry, same four steps. It is not a different kind of thing, only a different place its subject is read from.",
+      "from": "recipes.json recipes[] carrying a cropStage",
+      "cells": 1,
+      "shape": "single",
+      "placedBeside": "farm",
+      "capFrom": "buildings.json farm.fieldSlots",
+      "$capNote": "How many field tiles one farm may have out is the farm's own fieldSlots and is not restated here. Change the farm and the rule changes with it.",
+      "adjacency": "A field tile must touch the farm's footprint, or another of that farm's field tiles - so a farm's fields are one run of ground rather than four squares scattered across the sheet."
+    },
+    "sides": {
+      "$comment": "A tile is double-sided and the two sides do two different jobs, which is what makes the second side worth printing.\n\nThe BACK is the placement side. A building takes rounds to raise (buildPoints, minRounds), so the tile goes down back-up the round work starts and stays there until the effort is paid. That is precisely when a player needs to know whether it may stand on this ground - so the back carries the terrain marks for where it is allowed, and nothing else has to be looked up. The face is then free to be the picture.\n\nThe backs are GENERATED, not commissioned. There is one per tile, because a back carries the ground THIS building may stand on and that is the one thing on it that is not the same for every tile - but generating it costs nothing, so fifty-four backs is the same amount of work as one. tools/build-tiles.mjs makes them the way tools/build-cards.mjs makes a deck back: a lathe ground, a word, a motif, and the marks. Nobody is waiting on an artist for them, and they are not in the mint queue.\n\nA card back may not vary, because a back that varies is a marked card. A tile back may, because a tile is never in a stack anybody draws from - it is picked out of a tray by name.",
+      "face": {
+        "carries": [
+          "the plate, cropped to the footprint and clipped to the cut line",
+          "the building's or the crop's name, in a band on the lower shoulder line"
+        ],
+        "carriesNot": "a number of any kind. No worker pips, no storage boxes, no build points. Everything that moves is counted on a board - the mini-map's own HOLDINGS panel has Built, Garrison and Stores rows for exactly this - and a tile that carried a count would be a tile that has to be reprinted when a recipe is balanced.",
+        "$bandNote": "The band sits on the lower shoulder line - the height at which a pointy-top hex is still at its full width - rather than at the bottom, where the hex has narrowed to a point and a name would be set in a wedge."
+      },
+      "back": {
+        "carries": [
+          "the word",
+          "the terrain marks for the ground it may stand on, where the list is short enough to be worth printing"
+        ],
+        "$oneEach": "One back per tile, all of them generated. See the block comment above for why a tile back may differ from its neighbour where a card back may not.",
+        "words": [
+          {
+            "for": "buildings",
+            "word": "SITE",
+            "why": "Pegged out and not yet raised. It is what the ground looks like the round the work starts."
+          },
+          {
+            "for": "fields",
+            "word": "SOWN",
+            "why": "A field is not built, it is planted, and it does not become a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word."
+          }
+        ],
+        "terrainMarks": {
+          "from": "buildings.json buildings[].terrain[] -> terrain.json terrains[].mark",
+          "$note": "The world map's own marks, the same paths the mini-map fields are patterned with and the same ones the map legend traces. Nothing here draws a new grass tuft: a tile that invented its own would be a tile a player could not match to the ground under it.",
+          "waterside": "A building with `waterside` takes the water mark as well as - or instead of - a terrain list, because the ground it needs is an edge rather than a type.",
+          "deposit": "A building with `requiresDeposit` or `requiresDepositAny` takes the deposit mark. Which deposit is not printed: the tile stands on a revealed deposit token that already says."
+        }
+      }
+    },
+    "subjects": {
+      "$comment": "Which buildings get a tile at all, said as a rule rather than as a list, so the day somebody adds a building the answer is already decided.",
+      "rule": "Every building in data/buildings.json that stands ON ground, plus one field tile per sown crop.",
+      "excludes": [
+        {
+          "test": "perTile",
+          "why": "Road, rail and bridge are laid ALONG a route rather than placed on a cell, and they are already a piece: data/components.json tokens.route is a bar the length of the line between two hex centres, so a run of them reads as a road instead of as a row of counters. Cutting them a second time as hexes would put two different pieces in the box for one thing."
+        }
+      ]
+    },
+    "howMany": {
+      "$comment": "What a table actually needs, which is not one of each.",
+      "note": "Buildings are built more than once and by more than one player, so a tile is a supply piece rather than a card. The bill of materials is in docs/design/08-components.md; the print sheet in docs/tiles/ prints one kind at a time and asks how many, exactly as the mini-map print page does.",
+      "guide": "Three or four of the cheap tier-1 tiles per player, one or two of everything above tier 2, and one of anything marked unique."
     }
   },
   "maps": [

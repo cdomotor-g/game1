@@ -26,6 +26,7 @@ const CARDS = join(ROOT, 'docs', 'cards');
 const BOARDS = join(ROOT, 'docs', 'boards');
 const MARKETS = join(ROOT, 'docs/markets');
 const MINIMAPS = join(ROOT, 'docs/minimaps/sheets');
+const TILES = join(ROOT, 'docs/tiles');
 const PLATES = join(ROOT, 'docs/art/renders');
 
 const palette = JSON.parse(readFileSync(join(ROOT, 'docs/art/palette.json'), 'utf8'));
@@ -51,6 +52,11 @@ const INK_PLATE = new Set([
    player boards, market boards, mini-map sheets - are held to the same contract.
    A generator is not a licence to invent a colour.
 
+   The building tiles are swept for the same reason as everything else and for
+   one of their own: a tile is the only component in the game printed at 17 mm,
+   so it is the one where a colour that is nearly right and a plate separation
+   that is nearly clean both stop being nearly anything.
+
    The mini-map sheets are the one place a terrain colour reaches a printed
    component directly, which is exactly why they are swept: terrain.json's
    colours are in the palette under `terrain`, and a sheet that painted itself
@@ -65,7 +71,7 @@ const INK_PLATE = new Set([
    a colour. Sweeping the .svg and ignoring the .png draws exactly that line. */
 const files = process.argv.slice(2).length
   ? process.argv.slice(2)
-  : [EXAMPLES, CARDS, BOARDS, MARKETS, MINIMAPS, PLATES].filter(existsSync).flatMap(dir =>
+  : [EXAMPLES, CARDS, BOARDS, MARKETS, MINIMAPS, TILES, PLATES].filter(existsSync).flatMap(dir =>
       readdirSync(dir).filter(f => f.endsWith('.svg')).map(f => join(dir, f)));
 
 /** hex codes appearing as paint attribute values, not as text content */

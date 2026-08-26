@@ -273,9 +273,11 @@ git push</code></pre>
 <thead><tr><th>Line</th><th>Subject</th><th>Brief</th><th>Plate</th><th>Aimed by</th><th>Status</th></tr></thead>
 <tbody><tr><td><strong>Cards</strong></td><td>one card in an adventure deck</td><td><code>art/prompts/&lt;deck&gt;.md</code></td><td><code>art/renders/&lt;plate&gt;.png</code></td><td><strong>FRAME</strong> — a subject box and a focal point in <code>art/framing.json</code></td><td>active — two decks <em>generated</em>, see below</td></tr>
 <tr><td><strong>Maps</strong></td><td>one drawn map plate and the board read off it</td><td><code>art/prompts/maps.md</code></td><td><code>map/&lt;id&gt;.png</code></td><td><strong>TRACE</strong> — the board in <code>data/maps/&lt;id&gt;.json</code></td><td><strong>paused</strong> — see <em>Generated maps</em></td></tr>
-<tr><td><strong>Tiles</strong></td><td>a printed hex tile face and its zoom-in sheet</td><td>—</td><td>—</td><td>—</td><td><strong>shelved</strong>, <a href="https://github.com/cdomotor-g/game1/issues/18">#18</a></td></tr></tbody></table></div>
+<tr><td><strong>Building tiles</strong></td><td>one printed hex tile — a building, or a sown field</td><td><code>art/prompts/buildingtiles.md</code></td><td><code>art/renders/tile-&lt;id&gt;.png</code></td><td><strong>FRAME</strong> — a subject box in <code>art/framing.json</code></td><td>active, 54 subjects</td></tr>
+<tr><td><strong>Terrain tiles</strong></td><td>a printed hex tile face and its zoom-in sheet</td><td>—</td><td>—</td><td>—</td><td><strong>shelved</strong>, <a href="https://github.com/cdomotor-g/game1/issues/18">#18</a></td></tr></tbody></table></div>
 <p>A line is declared in <code>data/mint.json</code> and nowhere else. That file holds no content — no card says anything in it, no map is described in it — exactly like <code>data/components.json</code>. It says what a line <em>is</em>: where its subjects come from, where its briefs live, what a plate has to be, and what ties the plate back to the data.</p>
-<p><strong>Tiles are shelved, not cancelled.</strong> The tile-based board — 61 hex tiles dealt face down, and the Holdings / Grounds / Places sheets in <a href="../minimaps/README.md"><code>minimaps/</code></a> — is paused pending the game-set split (<a href="https://github.com/cdomotor-g/game1/issues/10">#10</a>), where it fits as a <em>way of supplying a board</em>: a plate set gives you one drawn map, a tile set gives you a bag. Nothing is deleted; the 32 accepted sheets stay committed and stay on the site. The queue prints the shelved line every run, so it is visible from the tool rather than remembered.</p>
+<p><strong>Terrain tiles are shelved, not cancelled.</strong> The tile-based board — 61 hex tiles dealt face down, and the Holdings / Grounds / Places sheets in <a href="../minimaps/README.md"><code>minimaps/</code></a> — is paused pending the game-set split (<a href="https://github.com/cdomotor-g/game1/issues/10">#10</a>), where it fits as a <em>way of supplying a board</em>: a plate set gives you one drawn map, a tile set gives you a bag. Nothing is deleted; the 32 accepted sheets stay committed and stay on the site. The queue prints the shelved line every run, so it is visible from the tool rather than remembered.</p>
+<p><strong>The building tiles are a different line and reopen nothing.</strong> A terrain tile is a piece of ground that arrives <em>instead of</em> a map; a building tile is a piece of architecture that goes <em>on</em> ground the table already has, and it is wanted whichever way that ground was supplied. They share a cell size because everything in this game shares a cell size — one tile cell is one mini-map cell is one world-map hex, read off the campaign map's own print preset. The argument in full is the block comment at the top of <a href="../../data/buildingtiles.json"><code>../data/buildingtiles.json</code></a>.</p>
 <h2 id="generated-maps">Generated maps</h2>
 <p>A map plate is one of two kinds and the difference is one field, <code>plate.kind</code> on the map.</p>
 <p><strong>Drawn</strong> is everything above: somebody paints a country, <code>tools/trace-map.mjs</code> samples the pixels, and three or four rounds of hand-correction against a proof sheet turn a guess into <code>rows</code>. <code>korvane-reach</code> is one.</p>
@@ -361,6 +363,17 @@ Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt</code></pre>
 <tr><td><strong>Out</strong></td><td><em>drawn:</em> <code>docs/map/&lt;id&gt;.png</code> — landscape, root-two, a plain frame with a visible inner rule, at the pixel floor the map's own largest print preset derives. Committed as supplied and never re-encoded by any tool here. <em>generated:</em> <code>docs/map/&lt;id&gt;.svg</code>, drawn by <code>tools/draw-map.mjs</code>, a build output with no pixel floor to meet</td></tr>
 <tr><td><strong>Aim</strong></td><td>the board: a measured <code>plate</code> block, a full <code>rows</code>, and the <code>settlements</code>, <code>regions</code>, <code>routes</code> and <code>print</code> presets</td></tr>
 <tr><td><strong>Builds</strong></td><td>the proof sheet and the derived print sizes via <code>build-map.mjs</code>; the viewer, the print sheets and the explorer via <code>build-data.mjs</code></td></tr></tbody></table></div>
+<h3 id="building-tiles">Building tiles</h3>
+<p>A tile is a hex, or a small clump of hexes, cut so that one cell is exactly a mini-map cell. <strong>How many cells is never written on the building.</strong> It is worked out from the building's own numbers — the effort it takes to raise, and what it has to hold — through the ground model and the ladder in <a href="../../data/buildingtiles.json"><code>../data/buildingtiles.json</code></a>, so adding a worker slot can grow a tile and <code>validate-data</code> says so. A field tile is the same subject read out of a sowing recipe instead of a building.</p>
+<div class="table-wrap"><table>
+<tbody><tr><td><strong>In</strong></td><td>a building in <code>data/buildings.json</code>, or a recipe carrying a <code>cropStage</code>. Nothing about the tile itself: the shape, the cells and the word on the back are all derived, and the assembled tile is what the contract is checked against</td></tr>
+<tr><td><strong>Brief</strong></td><td>a <code>## tile-&lt;id&gt;</code> section in <code>docs/art/prompts/buildingtiles.md</code></td></tr>
+<tr><td><strong>Plate id</strong></td><td><code>tile-</code> and the tile's id — <code>tile-hut</code>, <code>tile-crop-grain</code></td></tr>
+<tr><td><strong>Out</strong></td><td><code>docs/art/renders/tile-&lt;id&gt;.png</code>, at the page the footprint's own aspect asks for, at the pixel floor the <strong>largest</strong> world hex any map declares derives — not today's, because a plate drawn to the small preset can never be recut for the large one</td></tr>
+<tr><td><strong>Aim</strong></td><td>an entry in <code>docs/art/framing.json</code>, exactly as a card. What differs is the window: a tile's is its own footprint, and <code>validate-framing.mjs</code> measures against that rather than a card</td></tr>
+<tr><td><strong>Builds</strong></td><td><code>docs/tiles/</code> via <code>build-tiles.mjs</code> — face and back for every tile, and an index that prints them all at their true size</td></tr></tbody></table></div>
+<p>Two things a card brief never has to say, both appended to the prompt automatically by <code>windowNote</code> so nobody types them: how much of the page the hexagonal cut keeps, and <strong>where the label band crosses the piece</strong>. A solid strip carrying the tile's name is printed edge to edge across it, and whatever is drawn under it is gone.</p>
+<p><strong>A tile builds without its plate</strong>, which is the one place this line differs from cards. A card with no portrait is a card with a hole in it, so <code>build-cards</code> skips it; a tile with no plate is a blank counter, which is exactly what a prototype tile is. The whole set is printable today.</p>
 <p><strong>Ask for the width before you ask for anything else.</strong> It is the one property of a plate that cannot be recovered later: a coastline can be re-traced, a legend can be drawn over, a label can be argued with, but pixels that were never drawn are gone. The Korvane Reach arrived at 1491 px and it cost the two larger print presets permanently.</p>
 <p><strong>Never ask for a grid on the plate.</strong> The grid is an overlay drawn from the board. One baked into the artwork cannot be moved, cannot be resized when <code>cols</code> changes, and will not line up with the one the tools draw. <code>hex grid</code> is in the negative prompt on purpose.</p>
 <h2 id="running-it-as-automation">Running it as automation</h2>
@@ -385,6 +398,7 @@ node tools/build-icons.mjs      # element marks
 node tools/build-data.mjs       # the explorer bundle
 node tools/build-annex.mjs      # the printed annex
 node tools/build-cards.mjs      # the cards themselves
+node tools/build-tiles.mjs      # the building tiles
 node tools/build-book.mjs       # the rulebook
 node tools/mint-queue.mjs       # the worklist
 node tools/build-mint.mjs       # the mint page on the site</code></pre>
@@ -395,7 +409,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h1 id="the-mint-queue">The mint queue</h1>
 <p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
 <p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
-<p><strong>cards 61/71 · maps 1/1</strong></p>
+<p><strong>cards 61/71 · maps 1/1 · building tiles 0/54</strong></p>
 <blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 61 of 71 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
 <h2 id="cards">Cards</h2>
@@ -448,9 +462,79 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <thead><tr><th>Map</th><th>Grid</th><th>Plate</th></tr></thead>
 <tbody><tr><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles.svg</code></td></tr></tbody></table></div>
 <hr>
+<h2 id="building-tiles">Building tiles</h2>
+<p>One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in <a href="../art/prompts/buildingtiles.md"><code>docs/art/prompts/buildingtiles.md</code></a>, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
+<p><strong>0 of 54 minted.</strong> 40 waiting on a brief, 14 waiting on art, 0 waiting on frame.</p>
+<h3 id="1-write-the-designer-40-tiles">1 · WRITE — the designer — 40 tiles</h3>
+<p>These exist in the data with no brief. Write one into <code>docs/art/prompts/</code> under the plate id, following the shared preamble at the top of that file and the contract in <code>docs/art/09-framing-and-composition.md</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
+<tbody><tr><td><code>lumber-camp</code></td><td>Lumber Camp</td><td>Extraction</td><td><code>tile-lumber-camp</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>quarry</code></td><td>Quarry</td><td>Extraction</td><td><code>tile-quarry</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>clay-pit</code></td><td>Clay Pit</td><td>Extraction</td><td><code>tile-clay-pit</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>sand-pit</code></td><td>Sand Pit</td><td>Extraction</td><td><code>tile-sand-pit</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>mine</code></td><td>Mine</td><td>Extraction</td><td><code>tile-mine</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>oil-derrick</code></td><td>Oil Derrick</td><td>Extraction</td><td><code>tile-oil-derrick</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>well</code></td><td>Well</td><td>Extraction</td><td><code>tile-well</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>orchard</code></td><td>Orchard</td><td>Extraction</td><td><code>tile-orchard</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>vineyard</code></td><td>Vineyard</td><td>Extraction</td><td><code>tile-vineyard</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>apiary</code></td><td>Apiary</td><td>Extraction</td><td><code>tile-apiary</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>dock</code></td><td>Dock</td><td>Extraction</td><td><code>tile-dock</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>charcoal-kiln</code></td><td>Charcoal Kiln</td><td>Production</td><td><code>tile-charcoal-kiln</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>smelter</code></td><td>Smelter</td><td>Production</td><td><code>tile-smelter</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>steelworks</code></td><td>Steelworks</td><td>Production</td><td><code>tile-steelworks</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>brickworks</code></td><td>Brickworks</td><td>Production</td><td><code>tile-brickworks</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>glassworks</code></td><td>Glassworks</td><td>Production</td><td><code>tile-glassworks</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>blacksmith</code></td><td>Blacksmith</td><td>Production</td><td><code>tile-blacksmith</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>carpenter</code></td><td>Carpenter's Shop</td><td>Production</td><td><code>tile-carpenter</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>weaver</code></td><td>Weaver's Shed</td><td>Production</td><td><code>tile-weaver</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>tannery</code></td><td>Tannery</td><td>Production</td><td><code>tile-tannery</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>tailor</code></td><td>Tailor</td><td>Production</td><td><code>tile-tailor</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>mill</code></td><td>Mill</td><td>Production</td><td><code>tile-mill</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>bakery</code></td><td>Bakery</td><td>Production</td><td><code>tile-bakery</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>butcher</code></td><td>Butcher</td><td>Production</td><td><code>tile-butcher</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>dairy</code></td><td>Dairy</td><td>Production</td><td><code>tile-dairy</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>brewery</code></td><td>Brewery</td><td>Production</td><td><code>tile-brewery</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>winery</code></td><td>Winery</td><td>Production</td><td><code>tile-winery</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>market</code></td><td>Market</td><td>Civic</td><td><code>tile-market</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>trading-house</code></td><td>Trading House</td><td>Civic</td><td><code>tile-trading-house</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>town-hall</code></td><td>Town Hall</td><td>Civic</td><td><code>tile-town-hall</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>guildhall</code></td><td>Guildhall</td><td>Civic</td><td><code>tile-guildhall</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>inn</code></td><td>Inn</td><td>Civic</td><td><code>tile-inn</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>infirmary</code></td><td>Infirmary</td><td>Civic</td><td><code>tile-infirmary</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>barracks</code></td><td>Barracks</td><td>Military</td><td><code>tile-barracks</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>watchtower</code></td><td>Watchtower</td><td>Military</td><td><code>tile-watchtower</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>palisade</code></td><td>Palisade</td><td>Military</td><td><code>tile-palisade</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>alchemist</code></td><td>Alchemist</td><td>Arcane</td><td><code>tile-alchemist</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>shrine</code></td><td>Shrine</td><td>Arcane</td><td><code>tile-shrine</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>harbour</code></td><td>Harbour</td><td>Infrastructure</td><td><code>tile-harbour</code></td><td>·</td><td>·</td><td>·</td></tr>
+<tr><td><code>rail-depot</code></td><td>Rail Depot</td><td>Infrastructure</td><td><code>tile-rail-depot</code></td><td>·</td><td>·</td><td>·</td></tr></tbody></table></div>
+<h3 id="2-draw-the-artist-14-tiles">2 · DRAW — the artist — 14 tiles</h3>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 368 px on the long side (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 736 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
+<tbody><tr><td><code>hut</code></td><td>Hut</td><td>Housing</td><td><code>tile-hut</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>timber-house</code></td><td>Timber House</td><td>Housing</td><td><code>tile-timber-house</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>brick-house</code></td><td>Brick House</td><td>Housing</td><td><code>tile-brick-house</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>manor</code></td><td>Manor</td><td>Housing</td><td><code>tile-manor</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>farm</code></td><td>Farm</td><td>Extraction</td><td><code>tile-farm</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>pasture</code></td><td>Pasture</td><td>Extraction</td><td><code>tile-pasture</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>sawmill</code></td><td>Sawmill</td><td>Production</td><td><code>tile-sawmill</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>warehouse</code></td><td>Warehouse</td><td>Storage</td><td><code>tile-warehouse</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>granary</code></td><td>Granary</td><td>Storage</td><td><code>tile-granary</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>crop-grain</code></td><td>Grain Field</td><td>Fields</td><td><code>tile-crop-grain</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>crop-vegetables</code></td><td>Vegetables Field</td><td>Fields</td><td><code>tile-crop-vegetables</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>crop-flax</code></td><td>Flax Field</td><td>Fields</td><td><code>tile-crop-flax</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>crop-cotton</code></td><td>Cotton Field</td><td>Fields</td><td><code>tile-crop-cotton</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>crop-hops</code></td><td>Hops Field</td><td>Fields</td><td><code>tile-crop-hops</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
+<h3 id="3-frame-whoever-accepts-the-plate-1">3 · FRAME — whoever accepts the plate</h3>
+<p>Nothing waiting.</p>
+<h3 id="minted-2">Minted</h3>
+<p>0 tiles complete: none yet.</p>
+<hr>
 <h2 id="shelved-lines">Shelved lines</h2>
 <p>Declared, reported here every run, and chased by nobody. A shelved line is a decision with a reason attached, not an absence — which is why it prints rather than disappearing.</p>
-<h3 id="tiles-shelved-18">Tiles — shelved, <a href="https://github.com/cdomotor-g/game1/issues/18">#18</a></h3>
+<h3 id="terrain-tiles-shelved-18">Terrain tiles — shelved, <a href="https://github.com/cdomotor-g/game1/issues/18">#18</a></h3>
 <p>The tile-based board - 61 double-sided hex tiles dealt face down, and the Holdings / Grounds / Places zoom-in sheets in docs/minimaps/ - is paused, not cancelled. Nothing is deleted: the 32 accepted sheets stay committed and stay on the site, and terrain.json keeps boardSetup. It comes back as a GAME SET (#10): a table would pick either a plate set, where one drawn map is hexed and the world is known, or a tile set, where the board is a bag and the world is unknown until walked. Both feed the same terrain vocabulary and the same move costs, which is the test of whether #10 drew its line in the right place.</p>
 <p><strong>It comes back when:</strong></p>
 <ul><li>#10 has drawn the core/set line and a set can supply a board</li>

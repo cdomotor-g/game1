@@ -526,6 +526,7 @@ const index = `<!doctype html>
   <a href="../cards/index.html">The card fronts</a>
   <a href="../markets/index.html">The market board</a>
   <a href="../minimaps/index.html">The mini-map sheets</a>
+  <a href="../tiles/index.html">The building tiles</a>
   <a href="../map/index.html">The map</a>
   <a class="primary" href="#" onclick="window.print();return false;">Print the board →</a>
 </div>

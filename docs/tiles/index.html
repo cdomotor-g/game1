@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>game1 — the building tiles</title>
+<style>
+  body { margin: 0; background: #EDE4D1; color: #1A1714; font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif; }
+  .wrap { margin: 24px auto; max-width: 1180px; padding: 0 18px; }
+  h1 { font-size: 22px; margin: 0 0 6px; } h2 { font-size: 16px; margin: 26px 0 6px; }
+  p.note { color: #5F564C; font-size: 14px; max-width: 74ch; }
+  .bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; font-family: Helvetica, Arial, sans-serif; font-size: 13.5px; margin-bottom: 16px; }
+  .bar a { color: #3D3630; }
+  table { border-collapse: collapse; font-family: Helvetica, Arial, sans-serif; font-size: 13px; margin: 8px 0 4px; }
+  th, td { text-align: left; padding: 3px 14px 3px 0; border-bottom: 1px solid #D8CEBE; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 14px; align-items: end; }
+  figure { margin: 0; }
+  figure img { display: block; width: 100%; }
+  figcaption { font-family: Helvetica, Arial, sans-serif; font-size: 11.5px; color: #5F564C; margin-top: 3px; }
+  @media print {
+    /* Names what to KEEP rather than what to hide, so the page cannot grow a
+       heading this rule has not heard of - the lesson the market sheet learned
+       by printing a second page of stray <h3>s. */
+    .wrap > *:not(.grid) { display: none; }
+    .wrap { max-width: none; margin: 0; padding: 0; }
+    .grid { display: block; }
+    .grid + .grid { break-before: page; page-break-before: always; }
+    .grid figcaption { display: none; }
+    /* EVERY TILE AT ITS TRUE SIZE. A prototype set is scissors and a printer,
+       and a tile printed 4% small is a tile that does not seat in a mini-map
+       cell - which is the one promise this whole line rests on. So each piece
+       carries its own millimetres, flowed with a gutter, and nothing is scaled
+       to fit anything. The sizes come from the shape table above, which is
+       measured off the built tiles, so they cannot disagree with the pieces. */
+    .grid figure { display: inline-block; vertical-align: top; margin: 0 2mm 2mm 0; }
+    .grid figure.single img { width: 20.7mm; height: 23.28mm; }
+    .grid figure.pair img { width: 37.4mm; height: 23.28mm; }
+    .grid figure.triad img { width: 37.4mm; height: 37.75mm; }
+    .grid figure.rhombus img { width: 45.75mm; height: 37.75mm; }
+    @page { size: A4 portrait; margin: 10mm; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="bar">
+  <a href="../index.html">← Explorer</a>
+  <a href="../book/index.html">The rulebook</a>
+  <a href="../minimaps/index.html">The mini-map sheets</a>
+  <a href="../boards/index.html">The player board</a>
+  <a href="../map/index.html">The map</a>
+</div>
+<h1>The building tiles</h1>
+<p class="note">A building tile is a hex, or a small clump of hexes, cut so that ONE cell is exactly a mini-map cell - which is exactly a world-map hex, read off whichever map and print preset the table is playing on. That is the whole scale argument and it is not an approximation: a hut tile drops into a mini-map cell, a figure standing beside it is based for the same hex, and one ruler measures the campaign board, the zoom-in sheet and everything built on it. Print the map at a bigger preset and every tile in the box grows with it, because none of the three numbers was ever typed.</p>
+<p class="note">Each cell is <strong>16.7&nbsp;mm across the flats</strong> — a world-map hex on the
+<code>korvane-reach</code> map at its <code>four-sheet</code> print preset, and therefore a mini-map
+cell. Read from the map rather than typed here: print the map at a bigger preset and every tile grows with it.</p>
+<p class="note">How many cells a building takes is <strong>not written on the building</strong>. It is worked out
+from the building's own numbers — the effort it takes to raise, and what it has to hold — through the ground model
+and ladder in <code>data/buildingtiles.json</code>. Add a worker slot and the build tells you the tile grew.</p>
+<h2>The shapes</h2>
+<table>
+<tr><th>Shape</th><th>Cells</th><th>Trim</th><th>With bleed</th><th>Tiles</th><th></th></tr>
+<tr><td><code>single</code></td><td>1</td><td>16.7 × 19.28 mm</td><td>20.7 × 23.28 mm</td><td>21</td><td>One hex. The anchor and the whole tile.</td></tr>
+<tr><td><code>pair</code></td><td>2</td><td>33.4 × 19.28 mm</td><td>37.4 × 23.28 mm</td><td>21</td><td>Two along the row. The anchor is the left-hand cell.</td></tr>
+<tr><td><code>triad</code></td><td>3</td><td>33.4 × 33.75 mm</td><td>37.4 × 37.75 mm</td><td>10</td><td>Three mutually adjacent - the tightest three cells a hex grid has, and the only three that all touch each other. The anchor is the upper-left cell.</td></tr>
+<tr><td><code>rhombus</code></td><td>4</td><td>41.75 × 33.75 mm</td><td>45.75 × 37.75 mm</td><td>2</td><td>Two rows of two, the lower row stepped half a cell right. Compact, and it seats against a straight run of other tiles on two sides. The anchor is the upper-left cell.</td></tr>
+</table>
+<p class="note"><strong>Printing:</strong> print this page at 100% — no “fit to page” — on A4 portrait. Every
+tile then comes out at its own true size, faces first and backs after, and a piece cut out seats in a mini-map
+cell without being trimmed. A tile printed 4% small is a tile that does not seat, which is the one promise this
+line rests on.</p>
+<h2>The tiles</h2>
+<p class="note">54 tiles — 49 buildings and
+5 fields. 54 are still waiting on a plate and print as playable blanks; <a href="../art/mint/QUEUE.md">the mint queue</a> says whose turn each one is.</p>
+<div class="grid">
+  <figure class="single"><img src="hut.svg" alt="Hut"><figcaption>Hut — 1 cell, ground 1</figcaption></figure>
+  <figure class="pair"><img src="timber-house.svg" alt="Timber House"><figcaption>Timber House — 2 cells, ground 2.25</figcaption></figure>
+  <figure class="triad"><img src="brick-house.svg" alt="Brick House"><figcaption>Brick House — 3 cells, ground 3.75</figcaption></figure>
+  <figure class="rhombus"><img src="manor.svg" alt="Manor"><figcaption>Manor — 4 cells, ground 6.25</figcaption></figure>
+  <figure class="pair"><img src="lumber-camp.svg" alt="Lumber Camp"><figcaption>Lumber Camp — 2 cells, ground 2.3</figcaption></figure>
+  <figure class="pair"><img src="quarry.svg" alt="Quarry"><figcaption>Quarry — 2 cells, ground 2</figcaption></figure>
+  <figure class="single"><img src="clay-pit.svg" alt="Clay Pit"><figcaption>Clay Pit — 1 cell, ground 1.375</figcaption></figure>
+  <figure class="single"><img src="sand-pit.svg" alt="Sand Pit"><figcaption>Sand Pit — 1 cell, ground 1.375</figcaption></figure>
+  <figure class="pair"><img src="mine.svg" alt="Mine"><figcaption>Mine — 2 cells, ground 2.75</figcaption></figure>
+  <figure class="triad"><img src="oil-derrick.svg" alt="Oil Derrick"><figcaption>Oil Derrick — 3 cells, ground 4</figcaption></figure>
+  <figure class="single"><img src="well.svg" alt="Well"><figcaption>Well — 1 cell, ground 1</figcaption></figure>
+  <figure class="pair"><img src="farm.svg" alt="Farm"><figcaption>Farm — 2 cells, ground 2</figcaption></figure>
+  <figure class="rhombus"><img src="pasture.svg" alt="Pasture"><figcaption>Pasture — 4 cells, ground 4.625</figcaption></figure>
+  <figure class="single"><img src="orchard.svg" alt="Orchard"><figcaption>Orchard — 1 cell, ground 1.75</figcaption></figure>
+  <figure class="pair"><img src="vineyard.svg" alt="Vineyard"><figcaption>Vineyard — 2 cells, ground 2.25</figcaption></figure>
+  <figure class="single"><img src="apiary.svg" alt="Apiary"><figcaption>Apiary — 1 cell, ground 0.875</figcaption></figure>
+  <figure class="single"><img src="dock.svg" alt="Dock"><figcaption>Dock — 1 cell, ground 1.75</figcaption></figure>
+  <figure class="pair"><img src="sawmill.svg" alt="Sawmill"><figcaption>Sawmill — 2 cells, ground 2</figcaption></figure>
+  <figure class="single"><img src="charcoal-kiln.svg" alt="Charcoal Kiln"><figcaption>Charcoal Kiln — 1 cell, ground 1.5</figcaption></figure>
+  <figure class="pair"><img src="smelter.svg" alt="Smelter"><figcaption>Smelter — 2 cells, ground 2.75</figcaption></figure>
+  <figure class="triad"><img src="steelworks.svg" alt="Steelworks"><figcaption>Steelworks — 3 cells, ground 4.25</figcaption></figure>
+  <figure class="pair"><img src="brickworks.svg" alt="Brickworks"><figcaption>Brickworks — 2 cells, ground 2.5</figcaption></figure>
+  <figure class="triad"><img src="glassworks.svg" alt="Glassworks"><figcaption>Glassworks — 3 cells, ground 3.5</figcaption></figure>
+  <figure class="pair"><img src="blacksmith.svg" alt="Blacksmith"><figcaption>Blacksmith — 2 cells, ground 2.25</figcaption></figure>
+  <figure class="pair"><img src="carpenter.svg" alt="Carpenter's Shop"><figcaption>Carpenter's Shop — 2 cells, ground 2</figcaption></figure>
+  <figure class="pair"><img src="weaver.svg" alt="Weaver's Shed"><figcaption>Weaver's Shed — 2 cells, ground 2.25</figcaption></figure>
+  <figure class="single"><img src="tannery.svg" alt="Tannery"><figcaption>Tannery — 1 cell, ground 1.875</figcaption></figure>
+  <figure class="pair"><img src="tailor.svg" alt="Tailor"><figcaption>Tailor — 2 cells, ground 2.25</figcaption></figure>
+  <figure class="single"><img src="mill.svg" alt="Mill"><figcaption>Mill — 1 cell, ground 1.75</figcaption></figure>
+  <figure class="pair"><img src="bakery.svg" alt="Bakery"><figcaption>Bakery — 2 cells, ground 2</figcaption></figure>
+  <figure class="single"><img src="butcher.svg" alt="Butcher"><figcaption>Butcher — 1 cell, ground 1.625</figcaption></figure>
+  <figure class="single"><img src="dairy.svg" alt="Dairy"><figcaption>Dairy — 1 cell, ground 1.875</figcaption></figure>
+  <figure class="pair"><img src="brewery.svg" alt="Brewery"><figcaption>Brewery — 2 cells, ground 2.625</figcaption></figure>
+  <figure class="triad"><img src="winery.svg" alt="Winery"><figcaption>Winery — 3 cells, ground 3</figcaption></figure>
+  <figure class="triad"><img src="warehouse.svg" alt="Warehouse"><figcaption>Warehouse — 3 cells, ground 4.15</figcaption></figure>
+  <figure class="triad"><img src="granary.svg" alt="Granary"><figcaption>Granary — 3 cells, ground 3.5</figcaption></figure>
+  <figure class="single"><img src="market.svg" alt="Market"><figcaption>Market — 1 cell, ground 1.5</figcaption></figure>
+  <figure class="triad"><img src="trading-house.svg" alt="Trading House"><figcaption>Trading House — 3 cells, ground 3</figcaption></figure>
+  <figure class="pair"><img src="town-hall.svg" alt="Town Hall"><figcaption>Town Hall — 2 cells, ground 2.7</figcaption></figure>
+  <figure class="pair"><img src="guildhall.svg" alt="Guildhall"><figcaption>Guildhall — 2 cells, ground 2.5</figcaption></figure>
+  <figure class="pair"><img src="inn.svg" alt="Inn"><figcaption>Inn — 2 cells, ground 2</figcaption></figure>
+  <figure class="single"><img src="infirmary.svg" alt="Infirmary"><figcaption>Infirmary — 1 cell, ground 1.75</figcaption></figure>
+  <figure class="triad"><img src="barracks.svg" alt="Barracks"><figcaption>Barracks — 3 cells, ground 4.1</figcaption></figure>
+  <figure class="pair"><img src="watchtower.svg" alt="Watchtower"><figcaption>Watchtower — 2 cells, ground 2</figcaption></figure>
+  <figure class="single"><img src="palisade.svg" alt="Palisade"><figcaption>Palisade — 1 cell, ground 1.25</figcaption></figure>
+  <figure class="pair"><img src="alchemist.svg" alt="Alchemist"><figcaption>Alchemist — 2 cells, ground 2.75</figcaption></figure>
+  <figure class="single"><img src="shrine.svg" alt="Shrine"><figcaption>Shrine — 1 cell, ground 1.25</figcaption></figure>
+  <figure class="triad"><img src="harbour.svg" alt="Harbour"><figcaption>Harbour — 3 cells, ground 3.25</figcaption></figure>
+  <figure class="pair"><img src="rail-depot.svg" alt="Rail Depot"><figcaption>Rail Depot — 2 cells, ground 2.75</figcaption></figure>
+  <figure class="single"><img src="crop-grain.svg" alt="Grain Field"><figcaption>Grain Field — 1 cell</figcaption></figure>
+  <figure class="single"><img src="crop-vegetables.svg" alt="Vegetables Field"><figcaption>Vegetables Field — 1 cell</figcaption></figure>
+  <figure class="single"><img src="crop-flax.svg" alt="Flax Field"><figcaption>Flax Field — 1 cell</figcaption></figure>
+  <figure class="single"><img src="crop-cotton.svg" alt="Cotton Field"><figcaption>Cotton Field — 1 cell</figcaption></figure>
+  <figure class="single"><img src="crop-hops.svg" alt="Hops Field"><figcaption>Hops Field — 1 cell</figcaption></figure>
+</div>
+<h2>The backs</h2>
+<p class="note">the word, the terrain marks for the ground it may stand on, where the list is short enough to be worth printing — one per tile, all generated. A tile goes down back-up
+the round its work starts, which is exactly when a player needs to know what ground it may stand on.</p>
+<div class="grid">
+  <figure class="single"><img src="back-hut.svg" alt="Hut, back"><figcaption>Hut — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-timber-house.svg" alt="Timber House, back"><figcaption>Timber House — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-brick-house.svg" alt="Brick House, back"><figcaption>Brick House — SITE</figcaption></figure>
+  <figure class="rhombus"><img src="back-manor.svg" alt="Manor, back"><figcaption>Manor — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-lumber-camp.svg" alt="Lumber Camp, back"><figcaption>Lumber Camp — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-quarry.svg" alt="Quarry, back"><figcaption>Quarry — SITE</figcaption></figure>
+  <figure class="single"><img src="back-clay-pit.svg" alt="Clay Pit, back"><figcaption>Clay Pit — SITE</figcaption></figure>
+  <figure class="single"><img src="back-sand-pit.svg" alt="Sand Pit, back"><figcaption>Sand Pit — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-mine.svg" alt="Mine, back"><figcaption>Mine — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-oil-derrick.svg" alt="Oil Derrick, back"><figcaption>Oil Derrick — SITE</figcaption></figure>
+  <figure class="single"><img src="back-well.svg" alt="Well, back"><figcaption>Well — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-farm.svg" alt="Farm, back"><figcaption>Farm — SITE</figcaption></figure>
+  <figure class="rhombus"><img src="back-pasture.svg" alt="Pasture, back"><figcaption>Pasture — SITE</figcaption></figure>
+  <figure class="single"><img src="back-orchard.svg" alt="Orchard, back"><figcaption>Orchard — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-vineyard.svg" alt="Vineyard, back"><figcaption>Vineyard — SITE</figcaption></figure>
+  <figure class="single"><img src="back-apiary.svg" alt="Apiary, back"><figcaption>Apiary — SITE</figcaption></figure>
+  <figure class="single"><img src="back-dock.svg" alt="Dock, back"><figcaption>Dock — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-sawmill.svg" alt="Sawmill, back"><figcaption>Sawmill — SITE</figcaption></figure>
+  <figure class="single"><img src="back-charcoal-kiln.svg" alt="Charcoal Kiln, back"><figcaption>Charcoal Kiln — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-smelter.svg" alt="Smelter, back"><figcaption>Smelter — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-steelworks.svg" alt="Steelworks, back"><figcaption>Steelworks — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-brickworks.svg" alt="Brickworks, back"><figcaption>Brickworks — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-glassworks.svg" alt="Glassworks, back"><figcaption>Glassworks — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-blacksmith.svg" alt="Blacksmith, back"><figcaption>Blacksmith — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-carpenter.svg" alt="Carpenter's Shop, back"><figcaption>Carpenter's Shop — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-weaver.svg" alt="Weaver's Shed, back"><figcaption>Weaver's Shed — SITE</figcaption></figure>
+  <figure class="single"><img src="back-tannery.svg" alt="Tannery, back"><figcaption>Tannery — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-tailor.svg" alt="Tailor, back"><figcaption>Tailor — SITE</figcaption></figure>
+  <figure class="single"><img src="back-mill.svg" alt="Mill, back"><figcaption>Mill — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-bakery.svg" alt="Bakery, back"><figcaption>Bakery — SITE</figcaption></figure>
+  <figure class="single"><img src="back-butcher.svg" alt="Butcher, back"><figcaption>Butcher — SITE</figcaption></figure>
+  <figure class="single"><img src="back-dairy.svg" alt="Dairy, back"><figcaption>Dairy — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-brewery.svg" alt="Brewery, back"><figcaption>Brewery — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-winery.svg" alt="Winery, back"><figcaption>Winery — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-warehouse.svg" alt="Warehouse, back"><figcaption>Warehouse — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-granary.svg" alt="Granary, back"><figcaption>Granary — SITE</figcaption></figure>
+  <figure class="single"><img src="back-market.svg" alt="Market, back"><figcaption>Market — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-trading-house.svg" alt="Trading House, back"><figcaption>Trading House — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-town-hall.svg" alt="Town Hall, back"><figcaption>Town Hall — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-guildhall.svg" alt="Guildhall, back"><figcaption>Guildhall — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-inn.svg" alt="Inn, back"><figcaption>Inn — SITE</figcaption></figure>
+  <figure class="single"><img src="back-infirmary.svg" alt="Infirmary, back"><figcaption>Infirmary — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-barracks.svg" alt="Barracks, back"><figcaption>Barracks — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-watchtower.svg" alt="Watchtower, back"><figcaption>Watchtower — SITE</figcaption></figure>
+  <figure class="single"><img src="back-palisade.svg" alt="Palisade, back"><figcaption>Palisade — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-alchemist.svg" alt="Alchemist, back"><figcaption>Alchemist — SITE</figcaption></figure>
+  <figure class="single"><img src="back-shrine.svg" alt="Shrine, back"><figcaption>Shrine — SITE</figcaption></figure>
+  <figure class="triad"><img src="back-harbour.svg" alt="Harbour, back"><figcaption>Harbour — SITE</figcaption></figure>
+  <figure class="pair"><img src="back-rail-depot.svg" alt="Rail Depot, back"><figcaption>Rail Depot — SITE</figcaption></figure>
+  <figure class="single"><img src="back-crop-grain.svg" alt="Grain Field, back"><figcaption>Grain Field — SOWN</figcaption></figure>
+  <figure class="single"><img src="back-crop-vegetables.svg" alt="Vegetables Field, back"><figcaption>Vegetables Field — SOWN</figcaption></figure>
+  <figure class="single"><img src="back-crop-flax.svg" alt="Flax Field, back"><figcaption>Flax Field — SOWN</figcaption></figure>
+  <figure class="single"><img src="back-crop-cotton.svg" alt="Cotton Field, back"><figcaption>Cotton Field — SOWN</figcaption></figure>
+  <figure class="single"><img src="back-crop-hops.svg" alt="Hops Field, back"><figcaption>Hops Field — SOWN</figcaption></figure>
+</div>
+</div>
+</body>
+</html>

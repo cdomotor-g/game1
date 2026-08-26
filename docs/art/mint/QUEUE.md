@@ -15,7 +15,7 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 61/71 · maps 1/1**
+**cards 61/71 · maps 1/1 · building tiles 0/54**
 
 > **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 61 of 71 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
@@ -105,13 +105,97 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 ---
 
+## Building tiles
+
+One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
+
+**0 of 54 minted.** 40 waiting on a brief, 14 waiting on art, 0 waiting on frame.
+
+### 1 · WRITE — the designer — 40 tiles
+
+These exist in the data with no brief. Write one into `docs/art/prompts/` under the plate id, following the shared preamble at the top of that file and the contract in `docs/art/09-framing-and-composition.md`.
+
+| Code | Tile | Category | Plate | brief | plate | frame |
+| --- | --- | --- | --- | :-: | :-: | :-: |
+| `lumber-camp` | Lumber Camp | Extraction | `tile-lumber-camp` | · | · | · |
+| `quarry` | Quarry | Extraction | `tile-quarry` | · | · | · |
+| `clay-pit` | Clay Pit | Extraction | `tile-clay-pit` | · | · | · |
+| `sand-pit` | Sand Pit | Extraction | `tile-sand-pit` | · | · | · |
+| `mine` | Mine | Extraction | `tile-mine` | · | · | · |
+| `oil-derrick` | Oil Derrick | Extraction | `tile-oil-derrick` | · | · | · |
+| `well` | Well | Extraction | `tile-well` | · | · | · |
+| `orchard` | Orchard | Extraction | `tile-orchard` | · | · | · |
+| `vineyard` | Vineyard | Extraction | `tile-vineyard` | · | · | · |
+| `apiary` | Apiary | Extraction | `tile-apiary` | · | · | · |
+| `dock` | Dock | Extraction | `tile-dock` | · | · | · |
+| `charcoal-kiln` | Charcoal Kiln | Production | `tile-charcoal-kiln` | · | · | · |
+| `smelter` | Smelter | Production | `tile-smelter` | · | · | · |
+| `steelworks` | Steelworks | Production | `tile-steelworks` | · | · | · |
+| `brickworks` | Brickworks | Production | `tile-brickworks` | · | · | · |
+| `glassworks` | Glassworks | Production | `tile-glassworks` | · | · | · |
+| `blacksmith` | Blacksmith | Production | `tile-blacksmith` | · | · | · |
+| `carpenter` | Carpenter's Shop | Production | `tile-carpenter` | · | · | · |
+| `weaver` | Weaver's Shed | Production | `tile-weaver` | · | · | · |
+| `tannery` | Tannery | Production | `tile-tannery` | · | · | · |
+| `tailor` | Tailor | Production | `tile-tailor` | · | · | · |
+| `mill` | Mill | Production | `tile-mill` | · | · | · |
+| `bakery` | Bakery | Production | `tile-bakery` | · | · | · |
+| `butcher` | Butcher | Production | `tile-butcher` | · | · | · |
+| `dairy` | Dairy | Production | `tile-dairy` | · | · | · |
+| `brewery` | Brewery | Production | `tile-brewery` | · | · | · |
+| `winery` | Winery | Production | `tile-winery` | · | · | · |
+| `market` | Market | Civic | `tile-market` | · | · | · |
+| `trading-house` | Trading House | Civic | `tile-trading-house` | · | · | · |
+| `town-hall` | Town Hall | Civic | `tile-town-hall` | · | · | · |
+| `guildhall` | Guildhall | Civic | `tile-guildhall` | · | · | · |
+| `inn` | Inn | Civic | `tile-inn` | · | · | · |
+| `infirmary` | Infirmary | Civic | `tile-infirmary` | · | · | · |
+| `barracks` | Barracks | Military | `tile-barracks` | · | · | · |
+| `watchtower` | Watchtower | Military | `tile-watchtower` | · | · | · |
+| `palisade` | Palisade | Military | `tile-palisade` | · | · | · |
+| `alchemist` | Alchemist | Arcane | `tile-alchemist` | · | · | · |
+| `shrine` | Shrine | Arcane | `tile-shrine` | · | · | · |
+| `harbour` | Harbour | Infrastructure | `tile-harbour` | · | · | · |
+| `rail-depot` | Rail Depot | Infrastructure | `tile-rail-depot` | · | · | · |
+
+### 2 · DRAW — the artist — 14 tiles
+
+The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 368 px on the long side (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 736 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
+
+| Code | Tile | Category | Plate | brief | plate | frame |
+| --- | --- | --- | --- | :-: | :-: | :-: |
+| `hut` | Hut | Housing | `tile-hut` | ✓ | · | · |
+| `timber-house` | Timber House | Housing | `tile-timber-house` | ✓ | · | · |
+| `brick-house` | Brick House | Housing | `tile-brick-house` | ✓ | · | · |
+| `manor` | Manor | Housing | `tile-manor` | ✓ | · | · |
+| `farm` | Farm | Extraction | `tile-farm` | ✓ | · | · |
+| `pasture` | Pasture | Extraction | `tile-pasture` | ✓ | · | · |
+| `sawmill` | Sawmill | Production | `tile-sawmill` | ✓ | · | · |
+| `warehouse` | Warehouse | Storage | `tile-warehouse` | ✓ | · | · |
+| `granary` | Granary | Storage | `tile-granary` | ✓ | · | · |
+| `crop-grain` | Grain Field | Fields | `tile-crop-grain` | ✓ | · | · |
+| `crop-vegetables` | Vegetables Field | Fields | `tile-crop-vegetables` | ✓ | · | · |
+| `crop-flax` | Flax Field | Fields | `tile-crop-flax` | ✓ | · | · |
+| `crop-cotton` | Cotton Field | Fields | `tile-crop-cotton` | ✓ | · | · |
+| `crop-hops` | Hops Field | Fields | `tile-crop-hops` | ✓ | · | · |
+
+### 3 · FRAME — whoever accepts the plate
+
+Nothing waiting.
+
+### Minted
+
+0 tiles complete: none yet.
+
+---
+
 ## Shelved lines
 
 Declared, reported here every run, and chased by nobody. A shelved line is a
 decision with a reason attached, not an absence — which is why it prints rather
 than disappearing.
 
-### Tiles — shelved, [#18](https://github.com/cdomotor-g/game1/issues/18)
+### Terrain tiles — shelved, [#18](https://github.com/cdomotor-g/game1/issues/18)
 
 The tile-based board - 61 double-sided hex tiles dealt face down, and the Holdings / Grounds / Places zoom-in sheets in docs/minimaps/ - is paused, not cancelled. Nothing is deleted: the 32 accepted sheets stay committed and stay on the site, and terrain.json keeps boardSetup. It comes back as a GAME SET (#10): a table would pick either a plate set, where one drawn map is hexed and the world is known, or a tile set, where the board is a bag and the world is unknown until walked. Both feed the same terrain vocabulary and the same move costs, which is the test of whether #10 drew its line in the right place.
 

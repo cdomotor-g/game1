@@ -60,6 +60,8 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlink
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { worldHexMm } from './lib/tiles.mjs';
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
 const OUT_DIR = join(ROOT, 'docs', 'minimaps', 'sheets');
@@ -89,26 +91,12 @@ const SANS = 'Helvetica, Arial, sans-serif';
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const num = (n) => Number(n.toFixed(2));
 
-/* -------------------------------------------------- the cell, from the map */
+/* --------------------------------------------------- the cell, from the map */
 
-/**
- * A mini-map cell is a world-map hex. This is where that is read, and it is read
- * rather than typed: the map's default print preset says how big a hex prints,
- * and that number is the cell.
- */
-function worldHexMm() {
-  const dir = join(DATA, 'maps');
-  const maps = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.json')) : [];
-  for (const file of maps) {
-    const map = JSON.parse(readFileSync(join(dir, file), 'utf8'));
-    if (!map.print?.presets?.length) continue;
-    const preset = map.print.presets.find((p) => p.id === map.print.default) ?? map.print.presets[0];
-    if (typeof preset.hexAcrossFlatsMm === 'number') {
-      return { mm: preset.hexAcrossFlatsMm, map: map.id, preset: preset.id };
-    }
-  }
-  throw new Error('no map declares a printed hex size - a mini-map cell has nothing to match');
-}
+/* A mini-map cell is a world-map hex, and so is a building-tile cell. That is one
+   fact with two consumers, so it is resolved by one function in
+   tools/lib/tiles.mjs rather than by a copy here and a copy there - this used to
+   be that copy. Nothing about the answer changed when it moved. */
 
 /* ------------------------------------------------------------- the geometry */
 
@@ -129,7 +117,7 @@ const CONTENT = {
   h: TRIM.h - 2 * mm(MM.marginMm),
 };
 
-const WORLD = worldHexMm();
+const WORLD = worldHexMm(ROOT);
 const N = MM.cellsPerSide;
 const CELL_FLATS = mm(WORLD.mm);          // across the flats: a pointy-top cell's width
 const CELL_R = CELL_FLATS / Math.sqrt(3); // circumradius
@@ -511,6 +499,7 @@ const index = `<!doctype html>
 <div class="bar">
   <a href="../index.html">← Explorer</a>
   <a href="../book/index.html">The rulebook</a>
+  <a href="../tiles/index.html">The building tiles</a>
   <a href="../boards/index.html">The player board</a>
   <a href="../markets/index.html">The market board</a>
   <a href="../map/index.html">The map</a>

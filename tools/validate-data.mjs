@@ -12,6 +12,8 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { readTiles, tileSubjects, cellsOf, connected, boxOf, groundOf, bandFor, worldHexMm } from './lib/tiles.mjs';
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
 const quiet = process.argv.includes('--quiet');
@@ -677,6 +679,124 @@ for (const b of buildings) {
   const passive = ['housing', 'storage', 'military', 'infrastructure'].includes(b.category);
   if (!passive && !buildingUsed.has(b.id) && (b.workerSlots ?? 0) > 0) {
     warnings.push(`buildings: "${b.id}" has worker slots but no recipe names it as a site`);
+  }
+}
+
+/* --- 4. the building tiles ------------------------------------------------- */
+
+/**
+ * The tile system, checked the way the price system is: the ladder may not have a
+ * hole in it, a shape may not fall into two pieces, and no tile may be asked to
+ * print something it has no room for.
+ *
+ * None of this is about any one building. How big a building's tile is is worked
+ * out from its own numbers, so every failure here is a failure of the MODEL -
+ * which is exactly the kind that goes unnoticed until fifty-four pieces are at
+ * the printer.
+ */
+{
+  const tiles = readTiles(ROOT);
+  const components = datasets.components;
+  const terrainIds = new Set((datasets.terrain?.terrains ?? []).map((t) => t.id));
+
+  /* The ladder: contiguous, exclusive-top, and open at the end. The same shape
+     the market's swing ruler has, and the same check - a hole in it is a ground
+     demand that no rung answers. */
+  let floor = 0;
+  tiles.ladder.bands.forEach((band, i) => {
+    const last = i === tiles.ladder.bands.length - 1;
+    if (band.under != null && band.under <= floor) {
+      errors.push(`buildingtiles: ladder rung ${band.cells} tops out at ${band.under}, at or below the ${floor} the rung under it reached - the ladder overlaps`);
+    }
+    if (last && band.under != null) {
+      errors.push('buildingtiles: the top rung of the ladder has a ceiling, so a big enough building falls off it - the last rung takes `under: null`');
+    }
+    if (!last && band.under == null) {
+      errors.push(`buildingtiles: ladder rung ${band.cells} has no ceiling but is not the last rung - everything above it is unreachable`);
+    }
+    if (!tiles.shapes[band.shape]) {
+      errors.push(`buildingtiles: ladder rung ${band.cells} asks for shape "${band.shape}", which data/buildingtiles.json does not declare`);
+    } else if (tiles.shapes[band.shape].cells.length !== band.cells) {
+      errors.push(`buildingtiles: ladder rung ${band.cells} asks for "${band.shape}", which is ${tiles.shapes[band.shape].cells.length} cells`);
+    }
+    floor = band.under ?? floor;
+  });
+
+  /* A shape is one piece, or it is two tiles. */
+  for (const id of Object.keys(tiles.shapes).filter((k) => !k.startsWith('$'))) {
+    const cells = cellsOf(id, tiles);
+    const seen = new Set(cells.map((c) => `${c.q},${c.r}`));
+    if (seen.size !== cells.length) errors.push(`buildingtiles: shape "${id}" names the same cell twice`);
+    if (!connected(cells)) errors.push(`buildingtiles: shape "${id}" is not edge-connected - a tile that falls into two pieces is two tiles`);
+    if (!cells.some((c) => c.q === 0 && c.r === 0)) {
+      errors.push(`buildingtiles: shape "${id}" has no [0, 0] cell - the anchor is the cell a player is told to place, and every shape has one`);
+    }
+  }
+
+  /* Every term of the ground model has to be a field some building actually
+     carries, or it is a weight on nothing. */
+  for (const term of tiles.ground.terms) {
+    if (!buildings.some((b) => typeof b[term.field] === 'number')) {
+      errors.push(`buildingtiles: the ground model weights \`${term.field}\`, which no building in data/buildings.json carries`);
+    }
+  }
+  for (const term of tiles.ground.excluded) {
+    if (tiles.ground.terms.some((t) => t.field === term.field)) {
+      errors.push(`buildingtiles: \`${term.field}\` is both weighted and excluded by the ground model`);
+    }
+  }
+
+  /* The pieces themselves: they have to fit a mini-map, they have to be able to
+     say what ground they stand on, and a name has to set above the press floor. */
+  const rows = tileSubjects(ROOT);
+  const T = components.buildingTile;
+  const across = 2 * components.minimap.cellsPerSide - 1;
+
+  for (const row of rows) {
+    for (const id of row.terrain) {
+      if (!terrainIds.has(id)) errors.push(`buildingtiles: tile "${row.id}" may stand on "${id}", which terrain.json does not declare`);
+    }
+    if (row.cells.length > across) {
+      errors.push(`buildingtiles: tile "${row.id}" is ${row.cells.length} cells and a mini-map field is only ${across} across`);
+    }
+
+    /* A label solved to fit is fine; a label that cannot be solved is a name too
+       long for the piece it is printed on, and the answer is a `shortName` on the
+       building. Worked out here as well as in tools/build-tiles.mjs so that it
+       fails at the data rather than at the draw - and in CELL fractions, so it is
+       the same finding whatever preset the map is printed at. */
+    const box = boxOf(row.cells, 1);
+    const perLetter = 0.7 + T.nameBand.trackingPerCell / T.nameBand.fontPerCell;
+    const room = box.row.w - 2 * T.nameBand.insetPerCell;
+    const fitted = Math.min(T.nameBand.fontPerCell, room / (row.label.length * perLetter)) * worldHexMm(ROOT).mm;
+    if (fitted < T.nameBand.minFontMm) {
+      errors.push(
+        `buildingtiles: "${row.label}" sets at ${fitted.toFixed(2)} mm on tile "${row.id}" (${row.shape}), under the ` +
+        `${T.nameBand.minFontMm} mm floor - give that building a \`shortName\` in data/buildings.json`
+      );
+    }
+
+    /* And the ground demand a tile was cut from has to be the one its numbers
+       still ask for, which is the whole point of never writing it down. */
+    if (row.kind === 'building') {
+      const want = bandFor(groundOf(row.subject, tiles), tiles);
+      if (want.cells !== row.cells.length) {
+        errors.push(`buildingtiles: tile "${row.id}" is cut at ${row.cells.length} cells but its numbers ask for ${want.cells}`);
+      }
+    }
+  }
+
+  /* Fields are laid beside a farm, so there had better be one, and it had better
+     say how many. */
+  const host = buildings.find((b) => b.id === tiles.fields.placedBeside);
+  if (!host) {
+    errors.push(`buildingtiles: field tiles are laid beside "${tiles.fields.placedBeside}", which is not a building`);
+  } else if (!(host.fieldSlots > 0)) {
+    errors.push(`buildingtiles: field tiles are capped by ${host.id}.fieldSlots, which is not set - every farm could then hold none`);
+  }
+
+  if (!rows.some((r) => r.kind === 'field')) {
+    warnings.push('buildingtiles: no recipe carries a `cropStage`, so there are no field tiles at all');
   }
 }
 

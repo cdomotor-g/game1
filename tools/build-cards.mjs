@@ -945,6 +945,7 @@ const index = `<!doctype html>
 <div class="bar">
   <a href="../index.html">← Explorer</a>
   <a href="../book/index.html">The rulebook</a>
+  <a href="../tiles/index.html">The building tiles</a>
   <a href="../boards/index.html">The player board</a>
   <a href="../markets/index.html">The market board</a>
   <a href="../mint/index.html">The mint</a>

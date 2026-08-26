@@ -1,5 +1,5 @@
 {
-  "$comment": "Buildings are placed on tiles, cost commodities up front, take build-points of effort to finish, and then act as sites where recipes may be run. workerSlots caps how many workers may be allocated to that building in a single round.",
+  "$comment": "Buildings are placed on tiles, cost commodities up front, take build-points of effort to finish, and then act as sites where recipes may be run. workerSlots caps how many workers may be allocated to that building in a single round.\n\nHOW BIG a building's tile is is not written here. It is worked out from the numbers below - the effort it takes to raise, and what it has to hold - through the ground model and ladder in data/buildingtiles.json, so adding a worker slot can grow the tile and the build says so. The one thing a building may say about its own tile is `shortName`: the label printed on the piece, for a name that will not set above the press floor on a 17 mm band. One building needs one today, and the build names any others the day they appear.",
   "version": "0.1.0",
   "categories": [
     { "id": "housing", "name": "Housing", "summary": "Brings workers into a town." },
@@ -126,7 +126,7 @@
       "workerSlots": 3, "terrain": ["forest", "grassland", "hills"]
     },
     {
-      "id": "charcoal-kiln", "name": "Charcoal Kiln", "category": "production", "tier": 1,
+      "id": "charcoal-kiln", "name": "Charcoal Kiln", "shortName": "Kiln", "category": "production", "tier": 1,
       "summary": "Logs into charcoal, for smelting where there is no coal.",
       "cost": [{ "commodity": "clay", "qty": 3 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 8, "minRounds": 2,
       "workerSlots": 2, "terrain": ["forest", "grassland", "hills"]
