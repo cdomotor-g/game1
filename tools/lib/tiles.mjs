@@ -187,11 +187,18 @@ const EDGES = [
  * and the type runs parallel to that edge. The picture is then whole, with a
  * label tucked into a corner of it.
  *
- * THE EDGE IS ALWAYS THE LOWER-RIGHT ONE, and always the bottom-most and then
- * right-most cell that has that edge open. Fixed rather than chosen per tile:
+ * THE EDGE IS ALWAYS THE LOWER-LEFT ONE, and always the bottom-most and then
+ * left-most cell that has that edge open. Fixed rather than chosen per tile:
  * fifty-four pieces on a table want their labels in the same place and at the
  * same angle, and a rule that picked "wherever there is most room" would tilt
  * one tile's name against its neighbour's for no reason a player could see.
+ *
+ * Lower-LEFT rather than lower-right, which is where it started. A drawing seen
+ * from thirty degrees above and thirty to the left puts its lit face and its
+ * business - the door, the working end, whatever the tile is of - on the right;
+ * the bottom-left is the corner that is nearly always foreground ground. So that
+ * is where the label goes, and the briefs say so, because an artist who does not
+ * know where the band lands will put something in it eventually.
  *
  * The cost is length, and it is not small: the band's midline is one edge plus
  * `h/sqrt(3)`, which is about 73% of what a corner-to-corner strip carried. That
@@ -199,7 +206,7 @@ const EDGES = [
  * than a picture that has to be cut in half - and it is what `shortName` in
  * data/buildings.json is for.
  */
-const BAND_EDGE = 2; // corner 2 -> corner 3: the lower-right side of a pointy-top cell
+const BAND_EDGE = 3; // corner 3 -> corner 4: the lower-left side of a pointy-top cell
 
 export function bandOf(cells, flats, heightPerCell) {
   const key = (c) => `${c.q},${c.r}`;
@@ -209,14 +216,15 @@ export function bandOf(cells, flats, heightPerCell) {
   const open = cells.filter((c) => !present.has(key({ q: c.q + step.q, r: c.r + step.r })));
   if (!open.length) throw new Error('no cell of this footprint has its lower-right edge open - there is nowhere to put the band');
 
-  /* Bottom-most, then right-most: the corner of the piece nearest the reader. */
+  /* Bottom-most, then left-most: the corner of the piece the picture is least
+     likely to need. */
   const cell = open
     .map((c) => ({ c, p: centreOf(c, flats) }))
-    .sort((a, b) => b.p.y - a.p.y || b.p.x - a.p.x)[0];
+    .sort((a, b) => b.p.y - a.p.y || a.p.x - b.p.x)[0];
 
   const centre = cell.p;
-  /* from the bottom vertex to the lower-right one, so the type reads up and to
-     the right rather than down and to the left */
+  /* from the lower-left vertex to the bottom one, so the type reads left to
+     right along the edge rather than backwards up it */
   const from = cornerOf(centre, flats, BAND_EDGE + 1);
   const to = cornerOf(centre, flats, BAND_EDGE);
 

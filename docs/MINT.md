@@ -302,8 +302,10 @@ subject read out of a sowing recipe instead of a building.
 Two things a card brief never has to say, both appended to the prompt
 automatically by `windowNote` so nobody types them: how much of the page the
 hexagonal cut keeps, and **where the label band sits**. A solid strip carrying the
-tile's name runs along the lower-right edge, parallel to it, and whatever is drawn
-under it is gone — a corner of the picture rather than a bar across it.
+tile's name runs along the lower-left edge, parallel to it, and whatever is drawn
+under it is covered — a corner of the picture rather than a bar across it. The same
+corner on every tile, so the note also tells the artist to keep the important
+detail out of it.
 
 **A tile builds without its plate**, which is the one place this line differs from
 cards. A card with no portrait is a card with a hole in it, so `build-cards` skips

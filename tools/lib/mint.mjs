@@ -199,9 +199,13 @@ export function windowNote(root, line, row) {
     extra = wrap('LABEL BAND. A solid band carrying this tile\'s name is printed along the ' +
       `${T.nameBand.edge} edge of the piece, running parallel to it and about ` +
       `${Math.round((band.height / box.h) * 100)}% of the piece's height deep at its deepest. ` +
-      'Whatever is drawn there is covered. It is a corner of the picture rather than ' +
-      'a bar across it, so compose so that corner is ground, water or wall - never ' +
-      'the roofline, the face, or the one detail the tile is of.');
+      'It is in the same corner on every tile in this set. Whatever is drawn under ' +
+      'it is covered, so KEEP THE IMPORTANT DETAIL OUT OF THAT CORNER - not empty, ' +
+      'which on a drawing this small looks like a mistake, but ground, water, wall, ' +
+      'grass, spoil: something the piece can afford to lose. Never the door, the ' +
+      'working end, the one thing the tile is of. The subject is drawn from above ' +
+      'and to the left, so the lit face and the business of it fall to the right ' +
+      'anyway - this is asking you to keep them there.');
 
   } else if (line.id === 'cards') {
     /* Every FRAMING block in docs/art/prompts/ names a band - "inside the middle

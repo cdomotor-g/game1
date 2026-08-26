@@ -25,12 +25,22 @@ a small clump of hexagons — one, two, three or four cells — and the corners 
 the page are cut off. Each brief below says which. Nothing that matters goes near
 a corner.
 
-**A label band sits in one corner.** A solid strip carrying the tile's name is
-printed along the piece's lower-right edge, running parallel to it, and whatever
-is under it is gone. It is a corner of the picture, not a bar across it — it used
-to be a bar across it and that split every drawing into two unrelated halves. The
-exact depth is worked out per tile and arrives appended to the prompt as `LABEL
-BAND`. Compose so that corner is ground, water or wall.
+**A label band sits in the bottom-left corner — always.** A solid strip carrying
+the tile's name is printed along the piece's lower-left edge, running parallel to
+it, and whatever is under it is covered. It is in the same corner on every tile in
+the set, so **keep the important detail out of it**. Not empty — a bare corner on
+a drawing this small looks like a mistake — but ground, grass, water, spoil,
+something the piece can afford to lose. Never the door, the working end, or the
+one thing the tile is of.
+
+That corner is chosen, not arbitrary: everything here is drawn from thirty degrees
+above and thirty to the left, which puts the lit face and the business of the
+building on the right and leaves the bottom-left as foreground ground. The rule is
+asking you to keep them there. The exact depth is worked out per tile and arrives
+appended to the prompt as `LABEL BAND`.
+
+It used to be a bar ruled across the middle, which split every drawing into two
+unrelated halves. That is what a corner is buying.
 
 **Every tile is drawn twice.** The face is the building finished; the back is the
 same building on the same ground with the work not yet done. Both are

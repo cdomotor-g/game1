@@ -585,8 +585,12 @@ back-up the round work starts and is turned over when the effort is paid. That m
 tells finished from unfinished; the label is what tells one tile from another, and a player
 looking into a tray needs that from whichever side is showing.
 
-**The label hugs one edge.** A band carrying the tile's name runs along the lower-right edge
-with the type parallel to it, so the picture is whole and the label sits in a corner of it.
+**The label hugs the bottom-left edge, on every tile.** A band carrying the tile's name runs
+along the lower-left edge with the type parallel to it, so the picture is whole and the label
+sits in a corner of it. The corner is chosen rather than arbitrary — everything is drawn from
+above and to the left, which puts the lit face and the working end of a building on the right
+and leaves the bottom-left as foreground ground — and the commission tells the artist to keep
+the important detail out of it.
 It was a strip ruled corner to corner across the middle, which is the longest band a hexagon
 can carry and split every drawing into two unrelated halves. The edge band is about 73% of
 that length; nineteen names stopped fitting the day it moved and took a `shortName`, which is
