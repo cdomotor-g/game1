@@ -20,7 +20,7 @@
        two unrelated halves, which is what the first version looked like -->
   <g clip-path="url(#cut-tile-granary-site)">
     <path d="M 149.6,285.97 L 216.4,247.4 L 216.4,207.29 L 114.86,265.91 Z" fill="#3D3630"/>
-    <g transform="rotate(-30 174.32 251.64)"><text x="174.32" y="257.96" font-size="18.04" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="bold" letter-spacing="1.6" fill="#EDE4D1">SITE</text></g>
+    <g transform="rotate(-30 174.32 251.64)"><text x="174.32" y="256.45" font-size="13.73" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="bold" letter-spacing="1.22" fill="#EDE4D1">GRANARY</text></g>
   </g>
 
   <!-- the die line, traced off the cells rather than drawn over them -->

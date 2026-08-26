@@ -27,8 +27,8 @@ how big each one is comes out of `data/buildingtiles.json` and is never typed on
 
 - **54 tiles, double-sided, 108 drawn plates** — 49 buildings and 5 sown fields, each drawn
   twice. Face is the building finished; back is the same ground with the work not yet done,
-  labelled **SITE** (or **SOWN**), and the tile is laid that way up while the work is being
-  paid for.
+  and the tile is laid that way up while the work is being paid for. Both sides carry the
+  tile's own name — the picture is what tells the two apart.
 - **21 one-cell, 21 two-cell, 10 three-cell, 2 four-cell** — 16.7 × 19.3 mm up to
   41.8 × 33.8 mm at the current print preset. A hut is one cell; a manor and a pasture are
   four.

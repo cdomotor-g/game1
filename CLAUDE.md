@@ -151,7 +151,11 @@ about the piece is derived, including which page its plate is drawn on.
 **No tile carries a number.** Same rule as the cards, same reason: everything that
 moves is counted on a board, and the mini-map's HOLDINGS panel already has the
 rows. The face is the picture and the name; the back is the same building with
-the work not yet done, and its word.
+the work not yet done, and **the same name again**. The back said SITE once,
+which told a player what the picture already told them and withheld the one thing
+that side was not saying - which tile it is. What survives of that word is the
+back plate's id suffix (`tile-hut-site`, `tile-crop-grain-sown`), and naming the
+plate is the whole of its job now.
 
 **Both sides are drawn, so a tile is two mint subjects.** Not one subject with two
 plates - one plate per subject is the mint's whole model, and a second plate hung

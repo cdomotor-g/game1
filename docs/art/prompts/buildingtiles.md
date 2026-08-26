@@ -38,6 +38,10 @@ commissions, both go through the four steps, and they are separate subjects — 
 back's brief is `## tile-<id>-site` (or `-sown` for a field). See *The site side*
 below, which is where the standing rules for a back live.
 
+**Both sides carry the same name.** The band says HUT on the face and HUT on the
+back. The picture is what tells finished from unfinished; the label is what tells
+one tile from another, and a player needs that from either side.
+
 **The two sides must turn over onto each other.** Same viewpoint, same distance,
 same corner of ground, the building sitting in the same place on the page. A
 player flips the tile the round the work is paid for and the picture should
@@ -130,15 +134,17 @@ and shored, a field drilled and not yet green. Enough of it is there that the
 finished thing is recognisable from the same silhouette; enough is missing that
 nobody could mistake it for done.
 
-SETTING OUT. The plot is pegged and lined: fine dashed survey lines running out
-past the building and a small star at each station, drawn in thin ink over the
-ground and over nothing that matters. This is the deck's signature for a site and
-it goes on every one of them. It is the fastest thing on the piece to read at
-seventeen millimetres and it is what says PLANNED rather than RUINED.
+MATERIAL STAGED AROUND IT. The stuff the building is made of, stacked ready and
+squared up on the ground beside it - logs, sawn boards, dressed stone, brick
+under sacking - and a working station near it: a sawhorse with a piece on it, a
+trestle, a mortar board. One tool set down where somebody left it, never in a
+hand. This is the deck's signature for a site: it is the fastest thing on the
+piece to read at seventeen millimetres and it is what says PAUSED rather than
+RUINED, because nobody stacks material at a ruin.
 
-THE WORK IS PAUSED, NOT ABANDONED. Tools set down where somebody left them,
-material stacked ready and squared up, fresh-cut timber, turned earth still dark.
-Nothing weathered, nothing overgrown, nothing collapsed, nobody in it.
+NOT ABANDONED. Fresh-cut timber, turned earth still dark, nothing weathered,
+nothing overgrown, nothing collapsed, nobody in it. The work stopped at the end
+of a day, not years ago.
 ```
 
 ---
@@ -150,11 +156,11 @@ Nothing weathered, nothing overgrown, nothing collapsed, nobody in it.
 ```text
 [PREAMBLE]
 
-A single-room hut of stacked logs under a steep turf roof, low enough that a
+A single-room hut of stacked logs under a steep thatched roof, low enough that a
 tall man would stoop at the door. One doorway, no window, a stovepipe of
 mortared stone through the ridge with a thread of smoke. A chopping block
 and three split rounds by the door; a beaten path to it through rough grass.
-Wash: ochre on the turf roof, grey-green on the grass, flat.
+Wash: ochre on the thatch, grey-green on the grass, flat.
 
 FRAMING. Square plate, ground to all four edges. The hut sits in the upper
 half of the page with its path running down out of the lower edge. Nothing
@@ -166,16 +172,19 @@ in any corner.
 ```text
 [PREAMBLE]
 
-The hut half raised. The log walls are up to the eaves on three sides and the
-roof is only half thatched: bare rafters and a ridge pole stand open on the near
-side, with a ladder of poles lashed up the pitch. No chimney yet - the stone is
-not laid. An axe stood in the chopping block and three split rounds beside it.
-The doorway is a gap with two posts and no lintel. Wash: ochre on the thatch
-that is on, grey-green on the grass, flat.
+The hut half raised. The log walls are up to the eaves all round and the roof is
+open: bare rafters and a ridge pole against the sky on the near pitch, purlins
+and battens lashed across the far one with the first course of thatch just
+started. No chimney yet - the stone is not laid. The doorway is a gap with two
+posts and no lintel. A stack of unbarked logs on the ground to the left, the
+chopping block and split rounds to the right, and a sawhorse in the foreground
+with a log across it and an axe leaning against the leg. Wash: ochre on the
+started thatch, grey-green on the grass, flat.
 
-FRAMING. Square plate, ground to all four edges. The hut in the upper half with
-the beaten path running down out of the lower edge, matching the finished face
-so the two turn over onto each other. Nothing in any corner.
+FRAMING. Square plate, ground to all four edges. The hut in the upper half, the
+sawhorse and staged timber in the lower half, the beaten path running down out
+of the lower edge - matching the finished face so the two turn over onto each
+other. Nothing in any corner.
 ```
 
 ## tile-timber-house — two cells, 3:2 landscape

@@ -137,12 +137,13 @@
       "$bandNote": "The band hugs the lower-right edge and the type runs parallel to it. It used to be a strip ruled corner to corner across the widest row, which was the longest band a hexagon can carry and cut the picture in half. Tucked against an edge, the picture is whole. How that is drawn, and what the change cost in length, is data/components.json buildingTile.nameBand."
     },
     "back": {
-      "carries": ["the plate of the same building unbuilt - pegged out, part-raised, rafters open", "the word, in the same band in the same place as the face's name"],
-      "words": [
-        { "for": "buildings", "word": "SITE", "why": "Pegged out and part-raised. It is what the ground looks like the round the work starts." },
-        { "for": "fields", "word": "SOWN", "why": "A field is not built, it is planted, and it is not a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word." }
+      "carries": ["the plate of the same building unbuilt - part-raised, its frame open, its material stacked around it", "the tile's own name, in the same band in the same place as the face's"],
+      "$sameNameBothSides": "Both sides carry the SAME name. The back said SITE (or SOWN) once, which told a player something they could already see - the picture is a frame with no roof on it - and cost them the one thing the piece was not telling them from that side, which is what it is. A tile face down in a tray is now findable by name either way up, and finished from unfinished is a glance at the picture.",
+      "states": [
+        { "for": "buildings", "state": "site", "why": "Pegged out and part-raised: what the ground looks like the round the work starts." },
+        { "for": "fields", "state": "sown", "why": "A field is not built, it is planted, and it is not a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word for it." }
       ],
-      "$wordIsAlsoTheFilename": "The word is lowercased into the back plate's id - tile-hut-site, tile-crop-grain-sown - so a brief file section says what the picture is of rather than which side it is. Changing a word here renames a plate, which is the one thing to know before changing one."
+      "$stateIsTheFilename": "The state is no longer printed on anything - it is the back plate's id: tile-hut-site, tile-crop-grain-sown. That is what it is for now, and it is worth keeping for that alone: a brief file section headed `## tile-crop-grain-sown` says what the picture is of, where `-back` would only say which side it is on. Changing a state here renames a plate."
     }
   },
 

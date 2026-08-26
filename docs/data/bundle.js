@@ -13130,7 +13130,7 @@ window.GAME_DATA = {
         "$fitNote": "fontPerCell is the size a name is set at when it fits. When it does not, it is set at whatever DOES fit - worked out from the band's own midline and the number of letters in the name. Nothing is ever clipped and nothing runs over the cut.\n\nThe edge band costs length and the cost is not small: its midline is one edge plus h/sqrt(3), about 73% of what the corner-to-corner strip carried, and nineteen names stopped fitting the day it moved. That is the trade and it is the right way round - a name that has to be shortened is a cheaper problem than a picture that has to be cut in half.\n\nminFontMm is the floor, and it is a millimetre rather than a fraction on purpose: it is not a proportion of anything in this game, it is the smallest type a press will hold on board stock. A name that cannot be set above it fails the build, and the answer is a `shortName` on the building rather than a smaller type."
       },
       "back": {
-        "$note": "A tile's back is a DRAWN PLATE, not a generated one: the same building on the same ground with the work not yet done. So there is nothing here about how to compose it - it is a picture, cropped and banded exactly like the face, which is why tools/build-tiles.mjs has one side function and not two.\n\nIt was generated once, out of an engine-turned lathe borrowed from the card backs, the word, and a row of the world map's terrain marks saying what ground the building could stand on. The marks were the good part of that and they have gone: a drawn plate leaves a 17 mm piece no room for a rules reference at a legible size, and what ground a building may stand on is in data/buildings.json and prints in the rulebook annex. What the plate carries instead is the sense of it, which is better - a site is drawn on the ground it belongs on.\n\nWhich word is on which back is data/buildingtiles.json sides.back.words: SITE for a building, SOWN for a field. It is also the plate's name suffix, so changing one renames a plate."
+        "$note": "A tile's back is a DRAWN PLATE, not a generated one: the same building on the same ground with the work not yet done. So there is nothing here about how to compose it - it is a picture, cropped and banded exactly like the face, which is why tools/build-tiles.mjs has one side function and not two.\n\nIt was generated once, out of an engine-turned lathe borrowed from the card backs, the word, and a row of the world map's terrain marks saying what ground the building could stand on. The marks were the good part of that and they have gone: a drawn plate leaves a 17 mm piece no room for a rules reference at a legible size, and what ground a building may stand on is in data/buildings.json and prints in the rulebook annex. What the plate carries instead is the sense of it, which is better - a site is drawn on the ground it belongs on.\n\nBoth sides carry the SAME name. The back said SITE (or SOWN) once, which told a player something the picture already tells them - it is a frame with no roof on it - and withheld the one thing that side was not saying, which is which tile this is. What survives of that word is the back plate's id suffix, data/buildingtiles.json sides.back.states, and naming the plate is now the whole of its job."
       },
       "sheet": {
         "widthMm": 210,
@@ -13368,10 +13368,11 @@ window.GAME_DATA = {
         "subjectRequires": [
           "id",
           "name",
+          "label",
           "summary",
           "shape",
           "cells",
-          "back"
+          "state"
         ],
         "$subjectRequiresNote": "Checked against the assembled TILE, not against the building - because the tile is what is being minted, and half of what a brief needs (the shape, the cells, which word is on the back) is worked out rather than written down. A building that has said nothing about its own tile has still said everything the tile needs, which is the point of deriving it.",
         "brief": {
@@ -13984,22 +13985,23 @@ window.GAME_DATA = {
       },
       "back": {
         "carries": [
-          "the plate of the same building unbuilt - pegged out, part-raised, rafters open",
-          "the word, in the same band in the same place as the face's name"
+          "the plate of the same building unbuilt - part-raised, its frame open, its material stacked around it",
+          "the tile's own name, in the same band in the same place as the face's"
         ],
-        "words": [
+        "$sameNameBothSides": "Both sides carry the SAME name. The back said SITE (or SOWN) once, which told a player something they could already see - the picture is a frame with no roof on it - and cost them the one thing the piece was not telling them from that side, which is what it is. A tile face down in a tray is now findable by name either way up, and finished from unfinished is a glance at the picture.",
+        "states": [
           {
             "for": "buildings",
-            "word": "SITE",
-            "why": "Pegged out and part-raised. It is what the ground looks like the round the work starts."
+            "state": "site",
+            "why": "Pegged out and part-raised: what the ground looks like the round the work starts."
           },
           {
             "for": "fields",
-            "word": "SOWN",
-            "why": "A field is not built, it is planted, and it is not a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word."
+            "state": "sown",
+            "why": "A field is not built, it is planted, and it is not a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word for it."
           }
         ],
-        "$wordIsAlsoTheFilename": "The word is lowercased into the back plate's id - tile-hut-site, tile-crop-grain-sown - so a brief file section says what the picture is of rather than which side it is. Changing a word here renames a plate, which is the one thing to know before changing one."
+        "$stateIsTheFilename": "The state is no longer printed on anything - it is the back plate's id: tile-hut-site, tile-crop-grain-sown. That is what it is for now, and it is worth keeping for that alone: a brief file section headed `## tile-crop-grain-sown` says what the picture is of, where `-back` would only say which side it is on. Changing a state here renames a plate."
       }
     },
     "subjects": {
@@ -16705,14 +16707,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0.08,
-          0.05,
-          0.85,
-          0.5345
+          0.1,
+          0.13,
+          0.78,
+          0.65
         ],
         "focal": [
-          0.57,
-          0.55
+          0.56,
+          0.43
         ]
       },
       "tile-hut": {

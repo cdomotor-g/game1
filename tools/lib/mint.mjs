@@ -384,7 +384,7 @@ function subjectsOf(root, line) {
         rows.push({
           id: plate.replace(/^tile-/, ''),
           code: plate.replace(/^tile-/, ''),
-          name: which === 'back' ? `${tile.name}, ${tile.back.toLowerCase()}` : tile.name,
+          name: which === 'back' ? `${tile.name}, ${tile.state}` : tile.name,
           group: tile.group,
           format: formatFor(tile.cells, line.draw?.sizeByFormat),
           plate,

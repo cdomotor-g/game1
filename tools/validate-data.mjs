@@ -767,20 +767,18 @@ for (const b of buildings) {
        long for the piece it is printed on, and the answer is a `shortName` on the
        building. Worked out here as well as in tools/build-tiles.mjs so it fails
        at the data rather than at the draw - and measured against the BAND, which
-       since it moved to hug one edge is about 73% of what it was. Both sides:
-       the back carries a word in the same band, and SOWN has to fit too. */
+       since it moved to hug one edge is about 73% of what it was. Once, not
+       twice: both sides carry the same name now. */
     const band = bandOf(row.cells, worldHexMm(ROOT).mm, T.nameBand.heightPerCell);
     const perLetter = 0.7 + T.nameBand.trackingPerCell / T.nameBand.fontPerCell;
     const room = band.midline.length - 2 * T.nameBand.insetPerCell * worldHexMm(ROOT).mm;
-    for (const [which, text] of [['face', row.label], ['back', row.back]]) {
-      const fitted = Math.min(T.nameBand.fontPerCell * worldHexMm(ROOT).mm, room / (text.length * perLetter));
-      if (fitted < T.nameBand.minFontMm) {
-        errors.push(
-          `buildingtiles: "${text}" sets at ${fitted.toFixed(2)} mm on the ${which} of tile "${row.id}" (${row.shape}), ` +
-          `under the ${T.nameBand.minFontMm} mm floor on a ${band.midline.length.toFixed(2)} mm band - ` +
-          `give that building a \`shortName\` in data/buildings.json`
-        );
-      }
+    const fitted = Math.min(T.nameBand.fontPerCell * worldHexMm(ROOT).mm, room / (row.label.length * perLetter));
+    if (fitted < T.nameBand.minFontMm) {
+      errors.push(
+        `buildingtiles: "${row.label}" sets at ${fitted.toFixed(2)} mm on tile "${row.id}" (${row.shape}), ` +
+        `under the ${T.nameBand.minFontMm} mm floor on a ${band.midline.length.toFixed(2)} mm band - ` +
+        `give that building a \`shortName\` in data/buildings.json`
+      );
     }
 
     /* And the ground demand a tile was cut from has to be the one its numbers

@@ -359,7 +359,7 @@ export function tileSubjects(root = HERE) {
       terrain: b.terrain ?? [],
       waterside: b.waterside ?? b.orWaterside ?? null,
       deposit: !!(b.requiresDeposit || b.requiresDepositAny),
-      back: spec.sides.back.words.find((w) => w.for === 'buildings').word,
+      state: spec.sides.back.states.find((x) => x.for === 'buildings').state,
       summary: b.summary,
       subject: b,
     });
@@ -389,7 +389,7 @@ export function tileSubjects(root = HERE) {
       terrain: buildings.buildings.find((b) => b.id === spec.fields.placedBeside)?.terrain ?? [],
       waterside: null,
       deposit: false,
-      back: spec.sides.back.words.find((w) => w.for === 'fields').word,
+      state: spec.sides.back.states.find((x) => x.for === 'fields').state,
       summary: `${named(r.cropStage)} sown in a farm's field, ${r.maturationRounds} round${r.maturationRounds === 1 ? '' : 's'} to ripen.`,
       subject: r,
     });
@@ -401,14 +401,15 @@ export function tileSubjects(root = HERE) {
 /**
  * A tile's plate id, per SIDE - because a tile is two commissions.
  *
- * The suffix is the back's own word rather than a flat `-back`, so a brief file
+ * The suffix is the back's STATE rather than a flat `-back`, so a brief file
  * reads `## tile-hut-site` and `## tile-crop-grain-sown` and says what the
- * picture is of. It is derived from data/buildingtiles.json sides.back.words, so
- * changing a word there renames a plate - which is the one thing to know before
- * changing one.
+ * picture is of instead of only which side it is on. The state is not printed on
+ * the piece - both sides carry the tile's own name - so naming the plate is the
+ * whole of its job now. It comes from data/buildingtiles.json sides.back.states,
+ * and changing one there renames a plate.
  */
 export const plateIdOf = (row, side = 'face') =>
-  (side === 'back' ? `tile-${row.id}-${row.back.toLowerCase()}` : `tile-${row.id}`);
+  (side === 'back' ? `tile-${row.id}-${row.state}` : `tile-${row.id}`);
 
 /**
  * Which page a tile's plate is drawn on: whichever declared format comes nearest

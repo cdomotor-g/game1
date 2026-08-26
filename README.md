@@ -575,11 +575,15 @@ and each crop gets a picture — which one big farm tile with four recesses draw
 could.
 
 **Both sides are drawn.** The face is the building finished; the back is the same ground with
-the work not yet done — pegged out, part-raised, rafters open, the plot lined with a
-surveyor's dashed setting-out and a star at each station. A building takes rounds to raise,
-so the tile goes down back-up the round work starts and is turned over when the effort is
-paid. That makes a tile **two commissions**, and the mint carries two subjects for every one
-of them: `tile-hut` and `tile-hut-site`.
+the work not yet done — walls up, rafters open, the material it is being built from stacked
+around it and a tool set down. A building takes rounds to raise, so the tile goes down
+back-up the round work starts and is turned over when the effort is paid. That makes a tile
+**two commissions**, and the mint carries two subjects for every one of them: `tile-hut` and
+`tile-hut-site`.
+
+**Both sides carry the same name.** The band says HUT either way up. The picture is what
+tells finished from unfinished; the label is what tells one tile from another, and a player
+looking into a tray needs that from whichever side is showing.
 
 **The label hugs one edge.** A band carrying the tile's name runs along the lower-right edge
 with the type parallel to it, so the picture is whole and the label sits in a corner of it.

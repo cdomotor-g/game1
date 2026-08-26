@@ -208,7 +208,7 @@
         "kind": "tiles",
         "$note": "tools/lib/tiles.mjs, which reads data/buildings.json for the buildings and data/recipes.json for the sown crops, and works each one's footprint out through the ground model and ladder in data/buildingtiles.json. Two files in, one kind of subject out: a building tile and a field tile differ only in where their subject was read from."
       },
-      "subjectRequires": ["id", "name", "summary", "shape", "cells", "back"],
+      "subjectRequires": ["id", "name", "label", "summary", "shape", "cells", "state"],
       "$subjectRequiresNote": "Checked against the assembled TILE, not against the building - because the tile is what is being minted, and half of what a brief needs (the shape, the cells, which word is on the back) is worked out rather than written down. A building that has said nothing about its own tile has still said everything the tile needs, which is the point of deriving it.",
       "brief": {
         "dir": "docs/art/prompts",

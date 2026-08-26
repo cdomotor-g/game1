@@ -244,11 +244,14 @@ function side(row, which) {
   const g = geometryOf(row);
   const plate = plateIdOf(row, which);
   const clip = `cut-${plate}`;
-  const label = which === 'back' ? row.back : row.label;
+  /* The SAME name on both sides. The back said SITE once, which told a player
+     something the picture already tells them and withheld the one thing it does
+     not - which tile this is. */
+  const label = row.label;
   const { art, waiting } = picture(plate, g);
 
   const what = which === 'back'
-    ? `The ${row.back.toLowerCase()} side. A ${row.kind === 'field' ? 'field is laid this way up the round it is sown and turned over when it ripens' : 'building is laid this way up the round its work starts and turned over when the effort is paid'}, so the picture is the same ground with the work not yet done.`
+    ? `The ${row.state} side. A ${row.kind === 'field' ? 'field is laid this way up the round it is sown and turned over when it ripens' : 'building is laid this way up the round its work starts and turned over when the effort is paid'}, so the picture is the same ground with the work not yet done.`
     : `${row.summary}`;
 
   return {
@@ -413,7 +416,7 @@ ${rows.map((r) => `  <figure class="${r.shape}">${inline(`${r.id}.svg`)}<figcapt
 turned over when the effort is paid, so the back is a drawn plate of its own — every tile in this set is two
 commissions, not one.</p>
 <div class="grid">
-${rows.map((r) => `  <figure class="${r.shape}">${inline(`back-${r.id}.svg`)}<figcaption>${esc(r.name)} — ${esc(r.back)}</figcaption></figure>`).join('\n')}
+${rows.map((r) => `  <figure class="${r.shape}">${inline(`back-${r.id}.svg`)}<figcaption>${esc(r.name)} — ${esc(r.state)}</figcaption></figure>`).join('\n')}
 </div>
 </div>
 </body>
