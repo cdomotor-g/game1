@@ -39,8 +39,8 @@ import { fileURLToPath } from 'node:url';
 
 import { crop, readFraming } from './lib/framing.mjs';
 import { pngSize } from './lib/png.mjs';
-import { plateIdFor } from './lib/plates.mjs';
-import { cardsOfDeck } from './lib/mint.mjs';
+import { resolvePlate } from './lib/mint.mjs';
+import { boxOf } from './lib/tiles.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const RENDERS = join(ROOT, 'docs/art/renders');
@@ -91,21 +91,7 @@ if (!['top', 'bottom', 'left', 'right', 'even'].includes(spend)) {
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 const components = readJson(join(ROOT, 'data/components.json'));
 
-function resolve(name) {
-  for (const deck of components.decks) {
-    if (!deck.source || !existsSync(join(ROOT, 'data', deck.source))) continue;
-    let cards;
-    try { cards = cardsOfDeck(ROOT, deck); } catch { continue; }
-    for (const card of cards) {
-      let id;
-      try { id = plateIdFor(deck, card); } catch { continue; }
-      if (id === name || card.cardCode === name) return { plate: id, code: card.cardCode };
-    }
-  }
-  return { plate: name, code: null };
-}
-
-const { plate, code } = resolve(target);
+const { plate, code, kind, tile } = resolvePlate(ROOT, target);
 const file = join(RENDERS, `${plate}.png`);
 if (!existsSync(file)) {
   console.error(`aim-solve: no plate at docs/art/renders/${plate}.png`);
@@ -124,9 +110,17 @@ function cardWindow(cardCode) {
 }
 
 const windows = [];
-const cardAspect = cardWindow(code);
-if (cardAspect) windows.push({ name: 'card', aspect: cardAspect });
-windows.push({ name: 'thumb', aspect: THUMB_ASPECT });
+if (kind === 'tile') {
+  /* A tile is cut to its own footprint and is not in the explorer, so its cut is
+     the only window there is. Solving against the thumbnail instead would be
+     solving the wrong problem confidently. */
+  const box = boxOf(tile.cells, 1);
+  windows.push({ name: `tile (${tile.shape})`, aspect: box.w / box.h });
+} else {
+  const cardAspect = cardWindow(code);
+  if (cardAspect) windows.push({ name: 'card', aspect: cardAspect });
+  windows.push({ name: 'thumb', aspect: THUMB_ASPECT });
+}
 
 /* ------------------------------------------------------------ the search */
 

@@ -38,8 +38,8 @@ import { fileURLToPath } from 'node:url';
 
 import { readPng, writePng } from './lib/png.mjs';
 import { crop, readFraming, WHOLE_PLATE } from './lib/framing.mjs';
-import { plateIdFor } from './lib/plates.mjs';
-import { cardsOfDeck } from './lib/mint.mjs';
+import { resolvePlate } from './lib/mint.mjs';
+import { boxOf } from './lib/tiles.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const RENDERS = join(ROOT, 'docs/art/renders');
@@ -85,24 +85,7 @@ const components = readJson(join(ROOT, 'data/components.json'));
  * them is a class, and TAL-01 resolved through the items deck to a plate that
  * has never existed.
  */
-function resolve(input) {
-  for (const deck of components.decks) {
-    if (!deck.source) continue;
-    if (!existsSync(join(ROOT, 'data', deck.source))) continue;
-    let cards;
-    try { cards = cardsOfDeck(ROOT, deck); } catch { continue; }
-    for (const card of cards) {
-      let plate;
-      try { plate = plateIdFor(deck, card); } catch { continue; }
-      if (card.cardCode === input || plate === input) return { deck, card, plate, code: card.cardCode };
-    }
-  }
-  /* Not a card: treat it as a bare plate id, so a plate can be aimed before
-     anything in data/ has been wired up to it. */
-  return { deck: null, card: null, plate: input, code: null };
-}
-
-const { plate, code } = resolve(subject);
+const { plate, code, kind, tile } = resolvePlate(ROOT, subject);
 const platePath = join(RENDERS, `${plate}.png`);
 
 if (!existsSync(platePath)) {
@@ -264,10 +247,24 @@ if (entry) {
 }
 
 const windows = [];
-const card = cardWindow(code);
-if (card) windows.push({ name: 'card', aspect: card.aspect, note: `the picture window on docs/cards/${code}.svg, ${card.w} x ${card.h} units` });
-else if (code) windows.push({ name: 'card', aspect: image.width / image.height, note: "no card built yet - the plate's own shape, as a stand-in. Run tools/build-cards.mjs for the real one." });
-windows.push({ name: 'thumb', aspect: THUMB_ASPECT, note: 'the explorer thumbnail in docs/index.html' });
+if (kind === 'tile') {
+  /* A tile's window IS its cut, and the cut is the shape - so unlike a card
+     window it is measured off the footprint rather than read off the built
+     artefact. Nothing narrows it: there is no wordiest-card-in-the-deck here.
+     And no thumbnail either, because a tile is not in the explorer, so
+     previewing one would be previewing a trim nobody will ever see. */
+  const box = boxOf(tile.cells, 1);
+  windows.push({
+    name: `tile (${tile.shape})`,
+    aspect: box.w / box.h,
+    note: `${tile.cells.length} cell${tile.cells.length === 1 ? '' : 's'}, the cut in docs/tiles/${tile.id}.svg`,
+  });
+} else {
+  const card = cardWindow(code);
+  if (card) windows.push({ name: 'card', aspect: card.aspect, note: `the picture window on docs/cards/${code}.svg, ${card.w} x ${card.h} units` });
+  else if (code) windows.push({ name: 'card', aspect: image.width / image.height, note: "no card built yet - the plate's own shape, as a stand-in. Run tools/build-cards.mjs for the real one." });
+  windows.push({ name: 'thumb', aspect: THUMB_ASPECT, note: 'the explorer thumbnail in docs/index.html' });
+}
 
 mkdirSync(OUT_DIR, { recursive: true });
 

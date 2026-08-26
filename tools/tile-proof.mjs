@@ -19,6 +19,12 @@
  * proof at 6x that did not say so would invite exactly the wrong judgement about
  * how big the type is.
  *
+ * The two SVGs are INLINED into the page rather than pointed at with `<img>`, the
+ * same as docs/tiles/index.html and for the same reason: an SVG inside an `<img>`
+ * is an isolated document and may not fetch the PNG it draws, so the first proof
+ * of the hut came out as an empty hexagon with a name band on it. The plate is the
+ * tile; a proof that cannot show it is a proof of nothing.
+ *
  * Proofs are diagnostics and git-ignored, like the map proof sheets and the aim
  * previews. The SVG is the artefact; this is a photograph of it.
  *
@@ -27,8 +33,8 @@
  *   node tools/tile-proof.mjs --shape single
  */
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join, dirname, resolve as resolvePath } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { findChromium, shoot, noBrowser } from './lib/chromium.mjs';
 import { tileSubjects, worldHexMm } from './lib/tiles.mjs';
@@ -68,6 +74,18 @@ if (!chromium) {
 }
 
 const WORLD = worldHexMm(ROOT);
+
+/**
+ * A tile's markup with every relative `href` made absolute.
+ *
+ * The page is written to a scratch directory, so `../art/renders/tile-hut.png` -
+ * which is right relative to docs/tiles/ - resolves to nothing at all from
+ * /tmp. The plate then silently does not load and the proof is an empty hexagon
+ * with a name band on it, which is exactly what the first hut proof was. Same
+ * rewrite as tools/card-proof.mjs, and the same reason.
+ */
+const absolute = (svg) => svg.replace(/href="([^"#][^"]*)"/g, (whole, href) =>
+  (/^(https?:|data:|file:|#)/.test(href) ? whole : `href="${pathToFileURL(resolvePath(TILES, href)).href}"`));
 const sizeOf = (svg) => {
   const m = svg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
   return { width: Number(m[1]), height: Number(m[2]) };
@@ -77,7 +95,7 @@ const sizeOf = (svg) => {
  * Face, back and a ruler, laid out in CSS pixels that are the SVG's own units so
  * nothing has to be converted twice. The page is measured, then shot at `SCALE`.
  */
-function page(row, face, back, sizes) {
+function page(row, faceSvg, backSvg, sizes) {
   const gap = 8 * U;
   const rule = 10 * U;
   const w = sizes.face.width + gap + sizes.back.width;
@@ -90,11 +108,12 @@ function page(row, face, back, sizes) {
   return `<!doctype html><meta charset="utf-8"><style>
   html,body{margin:0;padding:0;background:${palette.paper.white.hex};}
   .sheet{position:relative;width:${w}px;height:${h}px;}
-  .sheet img{position:absolute;top:0;}
+  .sheet .tile{position:absolute;top:0;}
+  .sheet .tile svg{display:block;width:100%;height:100%;}
   .rule{position:absolute;left:0;top:${h - rule}px;width:${w}px;height:${rule}px;}
 </style><div class="sheet">
-<img src="${'file://' + join(TILES, face)}" style="left:0;width:${sizes.face.width}px;height:${sizes.face.height}px">
-<img src="${'file://' + join(TILES, back)}" style="left:${sizes.face.width + gap}px;width:${sizes.back.width}px;height:${sizes.back.height}px">
+<div class="tile" style="left:0;width:${sizes.face.width}px;height:${sizes.face.height}px">${faceSvg}</div>
+<div class="tile" style="left:${sizes.face.width + gap}px;width:${sizes.back.width}px;height:${sizes.back.height}px">${backSvg}</div>
 <div class="rule">${ticks.join('')}<div style="position:absolute;left:0;top:${5.2 * U}px;font:${2.4 * U}px Helvetica,Arial,sans-serif;color:${palette.ink.tints['70'].hex}">mm of the real piece &#183; ${row.name} &#183; ${row.shape}, ${row.cells.length} cell${row.cells.length === 1 ? '' : 's'} &#183; cell ${WORLD.mm} mm (${WORLD.map} ${WORLD.preset})</div></div>
 </div>`;
 }
@@ -121,7 +140,8 @@ for (const id of ids) {
   const out = join(OUT_DIR, `tile-${id}.png`);
   try {
     shoot(chromium, {
-      html: page(row, `${id}.svg`, `back-${id}.svg`, sizes).replace('<div class="sheet">', `<div class="sheet" style="zoom:${SCALE}">`),
+      html: page(row, absolute(readFileSync(faceFile, 'utf8')), absolute(readFileSync(backFile, 'utf8')), sizes)
+        .replace('<div class="sheet">', `<div class="sheet" style="zoom:${SCALE}">`),
       out,
       width,
       height,

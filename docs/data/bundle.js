@@ -16697,6 +16697,21 @@ window.GAME_DATA = {
           0.84
         ]
       },
+      "tile-hut": {
+        "file": "art/renders/tile-hut.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.08,
+          0.05,
+          0.85,
+          0.53
+        ],
+        "focal": [
+          0.65,
+          0.43
+        ]
+      },
       "tool-axe": {
         "file": "art/renders/tool-axe.png",
         "width": 1254,

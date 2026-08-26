@@ -286,6 +286,10 @@ function grime(seed, g) {
 
 /* ------------------------------------------------------------------- sides */
 
+/* A clip id has to be unique per DOCUMENT, and both index.html and the proof
+   sheet put many tiles in one. `cut` was fine while a tile was only ever alone
+   in its own file, and became a bug the moment two shared a page: every tile
+   after the first clipped to the first one's outline. */
 const shell = (row, g, title, desc, body) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${num(g.w)} ${num(g.h)}" width="${num(g.w)}" height="${num(g.h)}" font-family="${SERIF}">
 <title>${esc(title)}</title>
@@ -296,19 +300,20 @@ ${body}
 
 function face(row) {
   const g = geometryOf(row);
+  const clip = `cut-${row.id}`;
   const { art, waiting } = picture(row, g);
   return {
     waiting,
     svg: shell(row, g, `${row.name} — building tile`,
       `${row.summary} The ${row.shape} footprint is ${row.cells.length} cell${row.cells.length === 1 ? '' : 's'}, worked out from this ${row.kind === 'field' ? 'crop' : "building's"} own numbers through the ground model in data/buildingtiles.json.${waiting ? ' The picture window is bare paper: this plate has not been drawn yet, and the tile is a playable blank until it is.' : ''}`,
       `<defs>
-  <clipPath id="cut">${g.cells.map((d) => `<path d="${d}" transform="${g.shift}"/>`).join('')}</clipPath>
+  <clipPath id="${clip}">${g.cells.map((d) => `<path d="${d}" transform="${g.shift}"/>`).join('')}</clipPath>
 </defs>
 
 <!-- ============================================================ WASH -->
 <g id="wash">
   <rect x="0" y="0" width="${num(g.w)}" height="${num(g.h)}" fill="${TALLOW}"/>
-  <g clip-path="url(#cut)">
+  <g clip-path="url(#${clip})">
     ${art}
   </g>
 </g>
@@ -318,7 +323,7 @@ function face(row) {
   <!-- the name, in a band on the bottom row's shoulder line - the height at
        which a pointy-top hex is still at its full width. Clipped to the cut, so
        it can never overhang a cell the tile does not own -->
-  <g clip-path="url(#cut)">
+  <g clip-path="url(#${clip})">
     ${band(row.label, g, row.id)}
   </g>
 
@@ -327,7 +332,7 @@ function face(row) {
 </g>
 
 <!-- ============================================================ GRIME -->
-<g id="grime" clip-path="url(#cut)">
+<g id="grime" clip-path="url(#${clip})">
   ${grime(row.id, g)}
 </g>`),
   };
@@ -335,12 +340,13 @@ function face(row) {
 
 function back(row) {
   const g = geometryOf(row);
+  const clip = `cut-${row.id}-back`;
   const ground = groundMarks(row, g);
 
   return shell(row, g, `${row.name} — building tile, back`,
     `The placement side. A ${row.kind === 'field' ? 'field is laid back-up the round it is sown and stays there until it ripens' : 'building is laid back-up the round its work starts and stays there until the effort is paid'}, which is exactly when a player needs to know what ground it may stand on - so the marks are the world map's own terrain marks, from data/terrain.json. ${ground.shown ? `This one names ${ground.shown} ground${ground.shown === 1 ? '' : 's'}.` : 'This one names none: it stands on whatever is under it.'}`,
     `<defs>
-  <clipPath id="cut">${g.cells.map((d) => `<path d="${d}" transform="${g.shift}"/>`).join('')}</clipPath>
+  <clipPath id="${clip}">${g.cells.map((d) => `<path d="${d}" transform="${g.shift}"/>`).join('')}</clipPath>
 </defs>
 
 <!-- ============================================================ WASH -->
@@ -351,7 +357,7 @@ function back(row) {
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="${SOOT}">
-  <g clip-path="url(#cut)">
+  <g clip-path="url(#${clip})">
     <!-- the deck backs' own engine-turned ground, struck from the tile's centre
          so a tile put down any of six ways round reads the same -->
     ${lathe(g)}
@@ -363,7 +369,7 @@ function back(row) {
 </g>
 
 <!-- ============================================================ GRIME -->
-<g id="grime" clip-path="url(#cut)">
+<g id="grime" clip-path="url(#${clip})">
   ${grime(`${row.id}-back`, g)}
 </g>`);
 }
@@ -398,6 +404,21 @@ const shapes = [...new Set(rows.map((r) => r.shape))].map((id) => {
   };
 });
 
+/**
+ * A tile's SVG markup, dropped straight into the page.
+ *
+ * NOT `<img src="...">`, which is what this page did first and is why the hut
+ * came out as an empty hexagon. An SVG inside an `<img>` is an isolated document
+ * and may not fetch anything - so the `<image>` that draws the plate never loads,
+ * and every tile with art on it renders as a blank counter. The cards page hits
+ * the same wall and buys its way out with `<object>`; a tile is small enough that
+ * inlining is cheaper than a browsing context each, and unlike an `<object>` it
+ * is reliably painted when the page is printed - which matters here, because
+ * printing this page at true size is how a prototype set gets made.
+ */
+const built = new Map(files);
+const inline = (file) => built.get(file).trim();
+
 const index = `<!doctype html>
 <html lang="en">
 <head>
@@ -415,7 +436,7 @@ const index = `<!doctype html>
   th, td { text-align: left; padding: 3px 14px 3px 0; border-bottom: 1px solid ${tint('12')}; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 14px; align-items: end; }
   figure { margin: 0; }
-  figure img { display: block; width: 100%; }
+  figure svg { display: block; width: 100%; height: auto; }
   figcaption { font-family: ${SANS}; font-size: 11.5px; color: ${tint('70')}; margin-top: 3px; }
   @media print {
     /* Names what to KEEP rather than what to hide, so the page cannot grow a
@@ -433,7 +454,7 @@ const index = `<!doctype html>
        to fit anything. The sizes come from the shape table above, which is
        measured off the built tiles, so they cannot disagree with the pieces. */
     .grid figure { display: inline-block; vertical-align: top; margin: 0 ${T.sheet.gutterMm}mm ${T.sheet.gutterMm}mm 0; }
-${shapes.map((s) => `    .grid figure.${s.id} img { width: ${s.bleedWidthMm}mm; height: ${s.bleedHeightMm}mm; }`).join('\n')}
+${shapes.map((s) => `    .grid figure.${s.id} svg { width: ${s.bleedWidthMm}mm; height: ${s.bleedHeightMm}mm; }`).join('\n')}
     @page { size: A4 portrait; margin: ${T.sheet.marginMm}mm; }
   }
 </style>
@@ -470,13 +491,13 @@ ${rows.filter((r) => r.kind === 'field').length} fields. ${waiting.length
   ? `${waiting.length} are still waiting on a plate and print as playable blanks; <a href="../art/mint/QUEUE.md">the mint queue</a> says whose turn each one is.`
   : 'Every plate has landed.'}</p>
 <div class="grid">
-${rows.map((r) => `  <figure class="${r.shape}"><img src="${r.id}.svg" alt="${esc(r.name)}"><figcaption>${esc(r.name)} — ${r.cells.length} cell${r.cells.length === 1 ? '' : 's'}${r.ground == null ? '' : `, ground ${r.ground}`}</figcaption></figure>`).join('\n')}
+${rows.map((r) => `  <figure class="${r.shape}">${inline(`${r.id}.svg`)}<figcaption>${esc(r.name)} — ${r.cells.length} cell${r.cells.length === 1 ? '' : 's'}${r.ground == null ? '' : `, ground ${r.ground}`}</figcaption></figure>`).join('\n')}
 </div>
 <h2>The backs</h2>
 <p class="note">${esc(spec.sides.back.carries.join(', '))} — one per tile, all generated. A tile goes down back-up
 the round its work starts, which is exactly when a player needs to know what ground it may stand on.</p>
 <div class="grid">
-${rows.map((r) => `  <figure class="${r.shape}"><img src="back-${r.id}.svg" alt="${esc(r.name)}, back"><figcaption>${esc(r.name)} — ${esc(r.back)}</figcaption></figure>`).join('\n')}
+${rows.map((r) => `  <figure class="${r.shape}">${inline(`back-${r.id}.svg`)}<figcaption>${esc(r.name)} — ${esc(r.back)}</figcaption></figure>`).join('\n')}
 </div>
 </div>
 </body>

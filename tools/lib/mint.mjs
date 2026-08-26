@@ -392,6 +392,47 @@ function subjectsOf(root, line) {
   return { rows, deferred, generated };
 }
 
+
+/**
+ * A bare id off a command line -> the plate it names, on whichever line it is on.
+ *
+ * Three tools asked this and each carried its own copy of the answer -
+ * plate-map, aim-preview and aim-solve - which was survivable while there was
+ * one line with plates on it and stopped being survivable the moment there were
+ * two. A tile id typed at any of them resolved to nothing and the tool went
+ * looking for a plate called `hut`.
+ *
+ * It is the mint's question, so it is asked here, and it is the same dull
+ * one-branch-per-line switch as everything else in this file. `kind` says what
+ * was found so a caller can ask the right follow-up question - a card has a
+ * window read off the built card, a tile has one that IS its own footprint.
+ *
+ * An id nothing claims comes back as a bare plate with `kind: null`, so a plate
+ * can still be aimed before anything in data/ has been wired up to it.
+ */
+export function resolvePlate(root, input) {
+  const components = readJson(join(root, 'data', 'components.json'));
+  for (const deck of components.decks) {
+    if (!deck.source || !existsSync(join(root, 'data', deck.source))) continue;
+    let cards;
+    try { cards = cardsOfDeck(root, deck); } catch { continue; }
+    for (const card of cards) {
+      let plate;
+      try { plate = plateIdFor(deck, card); } catch { continue; }
+      if (plate === input || card.cardCode === input) {
+        return { kind: 'card', plate, code: card.cardCode, deck, card, tile: null };
+      }
+    }
+  }
+  for (const tile of tileSubjects(root)) {
+    const plate = plateIdOf(tile);
+    if (plate === input || tile.id === input) {
+      return { kind: 'tile', plate, code: tile.id, deck: null, card: null, tile };
+    }
+  }
+  return { kind: null, plate: input, code: null, deck: null, card: null, tile: null };
+}
+
 /* --------------------------------------------------------------------- probes */
 
 /** Where a line's plate for this subject would be, relative to the repository. */

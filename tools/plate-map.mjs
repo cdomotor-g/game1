@@ -42,8 +42,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { readPng, luminance } from './lib/png.mjs';
-import { plateIdFor } from './lib/plates.mjs';
-import { cardsOfDeck } from './lib/mint.mjs';
+import { resolvePlate } from './lib/mint.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const RENDERS = join(ROOT, 'docs/art/renders');
@@ -72,19 +71,7 @@ if (!['edges', 'dark', 'light'].includes(MODE)) {
 
 /* ------------------------------------------------------------ find the plate */
 
-const components = JSON.parse(readFileSync(join(ROOT, 'data/components.json'), 'utf8'));
-let plate = target;
-let code = null;
-outer: for (const deck of components.decks) {
-  if (!deck.source || !existsSync(join(ROOT, 'data', deck.source))) continue;
-  let cards;
-  try { cards = cardsOfDeck(ROOT, deck); } catch { continue; }
-  for (const card of cards) {
-    let id;
-    try { id = plateIdFor(deck, card); } catch { continue; }
-    if (id === target || card.cardCode === target) { plate = id; code = card.cardCode; break outer; }
-  }
-}
+const { plate, code } = resolvePlate(ROOT, target);
 
 const file = join(RENDERS, `${plate}.png`);
 if (!existsSync(file)) {
