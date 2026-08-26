@@ -12,7 +12,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { readTiles, tileSubjects, cellsOf, connected, boxOf, groundOf, bandFor, worldHexMm } from './lib/tiles.mjs';
+import { readTiles, tileSubjects, cellsOf, connected, bandOf, groundOf, bandFor, worldHexMm, plateIdOf } from './lib/tiles.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -753,6 +753,9 @@ for (const b of buildings) {
   const across = 2 * components.minimap.cellsPerSide - 1;
 
   for (const row of rows) {
+    /* Where a building may stand is no longer printed on the piece - the back is
+       a drawn plate now - but it is still what the brief is written from, so a
+       terrain nothing declares is still a broken commission. */
     for (const id of row.terrain) {
       if (!terrainIds.has(id)) errors.push(`buildingtiles: tile "${row.id}" may stand on "${id}", which terrain.json does not declare`);
     }
@@ -762,18 +765,22 @@ for (const b of buildings) {
 
     /* A label solved to fit is fine; a label that cannot be solved is a name too
        long for the piece it is printed on, and the answer is a `shortName` on the
-       building. Worked out here as well as in tools/build-tiles.mjs so that it
-       fails at the data rather than at the draw - and in CELL fractions, so it is
-       the same finding whatever preset the map is printed at. */
-    const box = boxOf(row.cells, 1);
+       building. Worked out here as well as in tools/build-tiles.mjs so it fails
+       at the data rather than at the draw - and measured against the BAND, which
+       since it moved to hug one edge is about 73% of what it was. Both sides:
+       the back carries a word in the same band, and SOWN has to fit too. */
+    const band = bandOf(row.cells, worldHexMm(ROOT).mm, T.nameBand.heightPerCell);
     const perLetter = 0.7 + T.nameBand.trackingPerCell / T.nameBand.fontPerCell;
-    const room = box.row.w - 2 * T.nameBand.insetPerCell;
-    const fitted = Math.min(T.nameBand.fontPerCell, room / (row.label.length * perLetter)) * worldHexMm(ROOT).mm;
-    if (fitted < T.nameBand.minFontMm) {
-      errors.push(
-        `buildingtiles: "${row.label}" sets at ${fitted.toFixed(2)} mm on tile "${row.id}" (${row.shape}), under the ` +
-        `${T.nameBand.minFontMm} mm floor - give that building a \`shortName\` in data/buildings.json`
-      );
+    const room = band.midline.length - 2 * T.nameBand.insetPerCell * worldHexMm(ROOT).mm;
+    for (const [which, text] of [['face', row.label], ['back', row.back]]) {
+      const fitted = Math.min(T.nameBand.fontPerCell * worldHexMm(ROOT).mm, room / (text.length * perLetter));
+      if (fitted < T.nameBand.minFontMm) {
+        errors.push(
+          `buildingtiles: "${text}" sets at ${fitted.toFixed(2)} mm on the ${which} of tile "${row.id}" (${row.shape}), ` +
+          `under the ${T.nameBand.minFontMm} mm floor on a ${band.midline.length.toFixed(2)} mm band - ` +
+          `give that building a \`shortName\` in data/buildings.json`
+        );
+      }
     }
 
     /* And the ground demand a tile was cut from has to be the one its numbers
@@ -784,6 +791,13 @@ for (const b of buildings) {
         errors.push(`buildingtiles: tile "${row.id}" is cut at ${row.cells.length} cells but its numbers ask for ${want.cells}`);
       }
     }
+  }
+
+  /* Two plates per tile and no two the same. The back's id is built from its own
+     word, so two words that lowercase alike would quietly collide. */
+  const plates = rows.flatMap((r) => ['face', 'back'].map((w) => plateIdOf(r, w)));
+  for (const [id, n] of plates.reduce((m, id) => m.set(id, (m.get(id) ?? 0) + 1), new Map())) {
+    if (n > 1) errors.push(`buildingtiles: ${n} tiles want the plate id "${id}"`);
   }
 
   /* Fields are laid beside a farm, so there had better be one, and it had better

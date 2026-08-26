@@ -252,9 +252,9 @@
         "$note": "The same aim a card takes, and the same file, because it is the same job: a drawn page is not the shape of the window it will be seen through, and something is thrown away. What differs is only the window - a tile's is its own footprint's bounding box, which tools/validate-framing.mjs measures against rather than assuming a card."
       },
       "builds": [
-        "docs/tiles/ - tools/build-tiles.mjs",
-        "the backs, which are generated per shape and are nobody's turn to draw"
+        "docs/tiles/ - tools/build-tiles.mjs, a face and a back for every tile"
       ],
+      "$twoSubjectsPerTile": "A tile is TWO subjects on this line, not one: the building finished, and the same ground with the work not yet done. They are not one subject with two plates - the mint's whole model is one plate per subject, and a second plate hung off the first would still need its own brief, its own framing entry and its own step, which is a subject. The back's id is the tile's plus its own word: `tile-hut-site`, `tile-crop-grain-sown`.",
       "checks": [
         "node tools/validate-data.mjs",
         "node tools/validate-art.mjs",

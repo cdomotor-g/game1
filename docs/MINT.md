@@ -20,7 +20,7 @@ they needed no new machinery, only a new entry in
 | --- | --- | --- | --- | --- | --- |
 | **Cards** | one card in an adventure deck | `art/prompts/<deck>.md` | `art/renders/<plate>.png` | **FRAME** — a subject box and a focal point in `art/framing.json` | active — two decks *generated*, see below |
 | **Maps** | one drawn map plate and the board read off it | `art/prompts/maps.md` | `map/<id>.png` | **TRACE** — the board in `data/maps/<id>.json` | **paused** — see *Generated maps* |
-| **Building tiles** | one printed hex tile — a building, or a sown field | `art/prompts/buildingtiles.md` | `art/renders/tile-<id>.png` | **FRAME** — a subject box in `art/framing.json` | active, 54 subjects |
+| **Building tiles** | one SIDE of one printed hex tile — a building or field, finished or unbuilt | `art/prompts/buildingtiles.md` | `art/renders/tile-<id>[-site].png` | **FRAME** — a subject box in `art/framing.json` | active, 108 subjects |
 | **Terrain tiles** | a printed hex tile face and its zoom-in sheet | — | — | — | **shelved**, [#18](https://github.com/cdomotor-g/game1/issues/18) |
 
 A line is declared in `data/mint.json` and nowhere else. That file holds no
@@ -292,18 +292,18 @@ subject read out of a sowing recipe instead of a building.
 
 | | |
 | --- | --- |
-| **In** | a building in `data/buildings.json`, or a recipe carrying a `cropStage`. Nothing about the tile itself: the shape, the cells and the word on the back are all derived, and the assembled tile is what the contract is checked against |
+| **In** | a building in `data/buildings.json`, or a recipe carrying a `cropStage` — **twice**, because both sides are drawn: the building finished, and the same ground with the work not yet done. Nothing about the tile itself is written down: the shape, the cells and the word on the back are all derived |
 | **Brief** | a `## tile-<id>` section in `docs/art/prompts/buildingtiles.md` |
-| **Plate id** | `tile-` and the tile's id — `tile-hut`, `tile-crop-grain` |
+| **Plate id** | `tile-` and the tile's id for the face; the back adds its own word — `tile-hut` / `tile-hut-site`, `tile-crop-grain` / `tile-crop-grain-sown` |
 | **Out** | `docs/art/renders/tile-<id>.png`, at the page the footprint's own aspect asks for, at the pixel floor the **largest** world hex any map declares derives — not today's, because a plate drawn to the small preset can never be recut for the large one |
 | **Aim** | an entry in `docs/art/framing.json`, exactly as a card. What differs is the window: a tile's is its own footprint, and `validate-framing.mjs` measures against that rather than a card |
 | **Builds** | `docs/tiles/` via `build-tiles.mjs` — face and back for every tile, and an index that prints them all at their true size |
 
 Two things a card brief never has to say, both appended to the prompt
 automatically by `windowNote` so nobody types them: how much of the page the
-hexagonal cut keeps, and **where the label band crosses the piece**. A solid strip
-carrying the tile's name is printed edge to edge across it, and whatever is drawn
-under it is gone.
+hexagonal cut keeps, and **where the label band sits**. A solid strip carrying the
+tile's name runs along the lower-right edge, parallel to it, and whatever is drawn
+under it is gone — a corner of the picture rather than a bar across it.
 
 **A tile builds without its plate**, which is the one place this line differs from
 cards. A card with no portrait is a card with a hole in it, so `build-cards` skips

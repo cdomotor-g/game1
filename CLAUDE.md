@@ -150,8 +150,21 @@ about the piece is derived, including which page its plate is drawn on.
 
 **No tile carries a number.** Same rule as the cards, same reason: everything that
 moves is counted on a board, and the mini-map's HOLDINGS panel already has the
-rows. The face is the picture and the name; the back is the word and the ground
-marks for where it may stand.
+rows. The face is the picture and the name; the back is the same building with
+the work not yet done, and its word.
+
+**Both sides are drawn, so a tile is two mint subjects.** Not one subject with two
+plates - one plate per subject is the mint's whole model, and a second plate hung
+off the first would still need its own brief, framing entry and step. The back's
+id is the tile's plus its own word: `tile-hut-site`, `tile-crop-grain-sown`.
+
+**The name band hugs one edge and the type runs parallel to it.** It was a strip
+ruled corner to corner across the widest row, which is the longest band a hexagon
+can carry and cut every picture in half. The edge band is about 73% of that
+length, nineteen names stopped fitting the day it moved, and that is the right
+way round: a name that has to be shortened is a cheaper problem than a picture
+that has to be cut in half. `shortName` is how a name gets shortened, and
+`validate-data` names the ones that need it.
 
 **A tile builds without its plate.** `build-cards.mjs` skips a card whose portrait
 has not arrived, because a card with a hole in it is not a card. Do not copy that

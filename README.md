@@ -574,12 +574,20 @@ track, so each sown crop is a one-cell tile laid beside the steading, up to the 
 and each crop gets a picture — which one big farm tile with four recesses drawn on it never
 could.
 
-**The back is the placement side.** A building takes rounds to raise, so the tile goes down
-back-up the round work starts and stays there until the effort is paid — which is exactly
-when a player needs to know whether it may stand on this ground. So the back carries the
-word (**SITE**, or **SOWN** for a field) and the world map's own terrain marks for where it
-is allowed, and the face is free to be the picture. A back naming no ground means it stands
-anywhere. The backs are generated, one per tile, and are nobody's turn to draw.
+**Both sides are drawn.** The face is the building finished; the back is the same ground with
+the work not yet done — pegged out, part-raised, rafters open, the plot lined with a
+surveyor's dashed setting-out and a star at each station. A building takes rounds to raise,
+so the tile goes down back-up the round work starts and is turned over when the effort is
+paid. That makes a tile **two commissions**, and the mint carries two subjects for every one
+of them: `tile-hut` and `tile-hut-site`.
+
+**The label hugs one edge.** A band carrying the tile's name runs along the lower-right edge
+with the type parallel to it, so the picture is whole and the label sits in a corner of it.
+It was a strip ruled corner to corner across the middle, which is the longest band a hexagon
+can carry and split every drawing into two unrelated halves. The edge band is about 73% of
+that length; nineteen names stopped fitting the day it moved and took a `shortName`, which is
+the right way round — a name that has to be shortened is cheaper than a picture cut in
+half.
 
 **A tile builds without its plate**, which is where this differs from the cards. A card with
 no portrait is a card with a hole in it; a tile with no plate is a blank counter, which is

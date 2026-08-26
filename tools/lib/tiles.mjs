@@ -172,6 +172,84 @@ const EDGES = [
   [5, { q: 0, r: -1 }],
 ];
 
+/**
+ * Where the name band goes: hugging ONE straight edge of the piece, not ruled
+ * across the middle of it.
+ *
+ * The first version ran a horizontal strip corner to corner along the widest
+ * row's shoulder line. It was the longest band a hexagon can carry and it was
+ * wrong for the same reason: it cut the picture in half. A tile is one small
+ * drawing and a bar through the middle of it splits it into two unrelated
+ * halves, which is exactly what it looked like.
+ *
+ * So the band is the part of one cell lying within `heightPerCell` of one of its
+ * edges - a trapezoid, because a hexagon widens as you move in from any edge -
+ * and the type runs parallel to that edge. The picture is then whole, with a
+ * label tucked into a corner of it.
+ *
+ * THE EDGE IS ALWAYS THE LOWER-RIGHT ONE, and always the bottom-most and then
+ * right-most cell that has that edge open. Fixed rather than chosen per tile:
+ * fifty-four pieces on a table want their labels in the same place and at the
+ * same angle, and a rule that picked "wherever there is most room" would tilt
+ * one tile's name against its neighbour's for no reason a player could see.
+ *
+ * The cost is length, and it is not small: the band's midline is one edge plus
+ * `h/sqrt(3)`, which is about 73% of what a corner-to-corner strip carried. That
+ * is a deliberate trade - a name that has to be shortened is a cheaper problem
+ * than a picture that has to be cut in half - and it is what `shortName` in
+ * data/buildings.json is for.
+ */
+const BAND_EDGE = 2; // corner 2 -> corner 3: the lower-right side of a pointy-top cell
+
+export function bandOf(cells, flats, heightPerCell) {
+  const key = (c) => `${c.q},${c.r}`;
+  const present = new Set(cells.map(key));
+  const [, step] = EDGES[BAND_EDGE];
+
+  const open = cells.filter((c) => !present.has(key({ q: c.q + step.q, r: c.r + step.r })));
+  if (!open.length) throw new Error('no cell of this footprint has its lower-right edge open - there is nowhere to put the band');
+
+  /* Bottom-most, then right-most: the corner of the piece nearest the reader. */
+  const cell = open
+    .map((c) => ({ c, p: centreOf(c, flats) }))
+    .sort((a, b) => b.p.y - a.p.y || b.p.x - a.p.x)[0];
+
+  const centre = cell.p;
+  /* from the bottom vertex to the lower-right one, so the type reads up and to
+     the right rather than down and to the left */
+  const from = cornerOf(centre, flats, BAND_EDGE + 1);
+  const to = cornerOf(centre, flats, BAND_EDGE);
+
+  const h = heightPerCell * flats;
+  const edgeLen = Math.hypot(to.x - from.x, to.y - from.y);
+  const u = { x: (to.x - from.x) / edgeLen, y: (to.y - from.y) / edgeLen };
+  const mid = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 };
+  const nLen = Math.hypot(centre.x - mid.x, centre.y - mid.y);
+  const n = { x: (centre.x - mid.x) / nLen, y: (centre.y - mid.y) / nLen };
+
+  /* A hexagon widens by 2/sqrt(3) per unit travelled in from any edge, so the
+     inner side of the band is longer than the edge itself by h/sqrt(3) at each
+     end. Worked out rather than clipped: a trapezoid drawn right needs no
+     clipping, and one drawn wrong and clipped looks the same until it does not. */
+  const grow = h / Math.sqrt(3);
+  return {
+    cell: cell.c,
+    height: h,
+    quad: [
+      from,
+      to,
+      { x: to.x + n.x * h + u.x * grow, y: to.y + n.y * h + u.y * grow },
+      { x: from.x + n.x * h - u.x * grow, y: from.y + n.y * h - u.y * grow },
+    ],
+    midline: {
+      x: mid.x + (n.x * h) / 2,
+      y: mid.y + (n.y * h) / 2,
+      length: edgeLen + h / Math.sqrt(3),
+      angle: (Math.atan2(u.y, u.x) * 180) / Math.PI,
+    },
+  };
+}
+
 /** Is every cell reachable from the first? A tile that fell into two pieces is two tiles. */
 export function connected(cells) {
   if (cells.length < 2) return true;
@@ -287,7 +365,11 @@ export function tileSubjects(root = HERE) {
     });
   }
 
-  const named = (id) => commodities.commodities.find((c) => c.id === id)?.name ?? id;
+  /* A crop's own name, and its short one where the full name will not set on a
+     17 mm band - the same escape hatch a building has, on the thing it is of. */
+  const commodity = (id) => commodities.commodities.find((c) => c.id === id);
+  const named = (id) => commodity(id)?.name ?? id;
+  const shortNamed = (id) => commodity(id)?.shortName ?? named(id);
   for (const r of recipes.recipes) {
     if (!r.cropStage) continue;
     const band = spec.ladder.bands.find((x) => x.cells === spec.fields.cells);
@@ -298,7 +380,7 @@ export function tileSubjects(root = HERE) {
       /* The crop alone on the piece. Every field tile is a field - the shape says
          so and the back says SOWN - so printing the word twice on a 17 mm hex
          spends the type size that makes the first one readable. */
-      label: named(r.cropStage),
+      label: shortNamed(r.cropStage),
       group: 'Fields',
       ground: null,
       band,
@@ -316,8 +398,17 @@ export function tileSubjects(root = HERE) {
   return out;
 }
 
-/** A tile's plate id. One prefix, so a renders directory sorts into its lines. */
-export const plateIdOf = (row) => `tile-${row.id}`;
+/**
+ * A tile's plate id, per SIDE - because a tile is two commissions.
+ *
+ * The suffix is the back's own word rather than a flat `-back`, so a brief file
+ * reads `## tile-hut-site` and `## tile-crop-grain-sown` and says what the
+ * picture is of. It is derived from data/buildingtiles.json sides.back.words, so
+ * changing a word there renames a plate - which is the one thing to know before
+ * changing one.
+ */
+export const plateIdOf = (row, side = 'face') =>
+  (side === 'back' ? `tile-${row.id}-${row.back.toLowerCase()}` : `tile-${row.id}`);
 
 /**
  * Which page a tile's plate is drawn on: whichever declared format comes nearest

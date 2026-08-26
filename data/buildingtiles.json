@@ -130,41 +130,22 @@
     "adjacency": "A field tile must touch the farm's footprint, or another of that farm's field tiles - so a farm's fields are one run of ground rather than four squares scattered across the sheet."
   },
   "sides": {
-    "$comment": "A tile is double-sided and the two sides do two different jobs, which is what makes the second side worth printing.\n\nThe BACK is the placement side. A building takes rounds to raise (buildPoints, minRounds), so the tile goes down back-up the round work starts and stays there until the effort is paid. That is precisely when a player needs to know whether it may stand on this ground - so the back carries the terrain marks for where it is allowed, and nothing else has to be looked up. The face is then free to be the picture.\n\nThe backs are GENERATED, not commissioned. There is one per tile, because a back carries the ground THIS building may stand on and that is the one thing on it that is not the same for every tile - but generating it costs nothing, so fifty-four backs is the same amount of work as one. tools/build-tiles.mjs makes them the way tools/build-cards.mjs makes a deck back: a lathe ground, a word, a motif, and the marks. Nobody is waiting on an artist for them, and they are not in the mint queue.\n\nA card back may not vary, because a back that varies is a marked card. A tile back may, because a tile is never in a stack anybody draws from - it is picked out of a tray by name.",
+    "$comment": "A tile is double-sided and BOTH SIDES ARE DRAWN. The face is the building finished; the back is the same ground with the work not yet done. That is what makes the second side worth printing, and it means a tile is two commissions rather than one - data/mint.json carries two subjects for every tile, and the mint runs them through the same four steps as anything else.\n\nA building takes rounds to raise (buildPoints, minRounds), so the tile goes down back-up the round work starts and is turned over when the effort is paid. A field is not built but sown, and does not become a field of grain until it has stood there for its maturation rounds - same flip, same moment, a truer word on the back.\n\nThe back was GENERATED once: an engine-turned lathe, the word, and a row of the world map's terrain marks saying what ground the building could stand on. The marks were the good part of it and they are gone. A drawn plate leaves a 17 mm piece no room for a rules reference at a legible size, and where a building may stand is in data/buildings.json and prints in the rulebook annex. What the picture carries instead is the sense of it: a site is drawn on the ground it belongs on, which is the thing the marks were reaching for.",
     "face": {
-      "carries": [
-        "the plate, cropped to the footprint and clipped to the cut line",
-        "the building's or the crop's name, in a band on the lower shoulder line"
-      ],
+      "carries": ["the plate, cropped to the footprint and clipped to the cut line", "the building's or the crop's name, in a band hugging one edge"],
       "carriesNot": "a number of any kind. No worker pips, no storage boxes, no build points. Everything that moves is counted on a board - the mini-map's own HOLDINGS panel has Built, Garrison and Stores rows for exactly this - and a tile that carried a count would be a tile that has to be reprinted when a recipe is balanced.",
-      "$bandNote": "The band sits on the lower shoulder line - the height at which a pointy-top hex is still at its full width - rather than at the bottom, where the hex has narrowed to a point and a name would be set in a wedge."
+      "$bandNote": "The band hugs the lower-right edge and the type runs parallel to it. It used to be a strip ruled corner to corner across the widest row, which was the longest band a hexagon can carry and cut the picture in half. Tucked against an edge, the picture is whole. How that is drawn, and what the change cost in length, is data/components.json buildingTile.nameBand."
     },
     "back": {
-      "carries": [
-        "the word",
-        "the terrain marks for the ground it may stand on, where the list is short enough to be worth printing"
-      ],
-      "$oneEach": "One back per tile, all of them generated. See the block comment above for why a tile back may differ from its neighbour where a card back may not.",
+      "carries": ["the plate of the same building unbuilt - pegged out, part-raised, rafters open", "the word, in the same band in the same place as the face's name"],
       "words": [
-        {
-          "for": "buildings",
-          "word": "SITE",
-          "why": "Pegged out and not yet raised. It is what the ground looks like the round the work starts."
-        },
-        {
-          "for": "fields",
-          "word": "SOWN",
-          "why": "A field is not built, it is planted, and it does not become a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word."
-        }
+        { "for": "buildings", "word": "SITE", "why": "Pegged out and part-raised. It is what the ground looks like the round the work starts." },
+        { "for": "fields", "word": "SOWN", "why": "A field is not built, it is planted, and it is not a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word." }
       ],
-      "terrainMarks": {
-        "from": "buildings.json buildings[].terrain[] -> terrain.json terrains[].mark",
-        "$note": "The world map's own marks, the same paths the mini-map fields are patterned with and the same ones the map legend traces. Nothing here draws a new grass tuft: a tile that invented its own would be a tile a player could not match to the ground under it.",
-        "waterside": "A building with `waterside` takes the water mark as well as - or instead of - a terrain list, because the ground it needs is an edge rather than a type.",
-        "deposit": "A building with `requiresDeposit` or `requiresDepositAny` takes the deposit mark. Which deposit is not printed: the tile stands on a revealed deposit token that already says."
-      }
+      "$wordIsAlsoTheFilename": "The word is lowercased into the back plate's id - tile-hut-site, tile-crop-grain-sown - so a brief file section says what the picture is of rather than which side it is. Changing a word here renames a plate, which is the one thing to know before changing one."
     }
   },
+
   "subjects": {
     "$comment": "Which buildings get a tile at all, said as a rule rather than as a list, so the day somebody adds a building the answer is already decided.",
     "rule": "Every building in data/buildings.json that stands ON ground, plus one field tile per sown crop.",

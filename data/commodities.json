@@ -49,7 +49,7 @@
     { "id": "grain", "name": "Grain", "category": "food", "unit": "sack", "bulk": 1, "baseValue": 5, "pricing": "glut", "tags": ["staple", "seed"], "notes": "Also the seed stock for sowing." },
     { "id": "flour", "name": "Flour", "category": "food", "unit": "sack", "bulk": 1, "baseValue": 9, "pricing": "glut" },
     { "id": "bread", "name": "Bread", "category": "food", "unit": "batch", "bulk": 1, "baseValue": 14, "pricing": "glut", "perishRounds": 3, "tags": ["staple"], "notes": "Feeds 2 workers per unit instead of 1." },
-    { "id": "vegetables", "name": "Vegetables", "category": "food", "unit": "crate", "bulk": 1, "baseValue": 6, "pricing": "glut", "perishRounds": 3 },
+    { "id": "vegetables", "name": "Vegetables", "shortName": "Greens", "category": "food", "unit": "crate", "bulk": 1, "baseValue": 6, "pricing": "glut", "perishRounds": 3 },
     { "id": "mushrooms", "name": "Mushrooms", "category": "food", "unit": "basket", "bulk": 1, "baseValue": 7, "pricing": "glut", "perishRounds": 2, "tags": ["foraged", "potion-ingredient"] },
     { "id": "berries", "name": "Berries", "category": "food", "unit": "basket", "bulk": 1, "baseValue": 5, "pricing": "glut", "perishRounds": 2, "tags": ["foraged", "potion-ingredient"] },
     { "id": "apples", "name": "Apples", "category": "food", "unit": "crate", "bulk": 1, "baseValue": 6, "pricing": "glut", "perishRounds": 4 },

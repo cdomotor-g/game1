@@ -20,13 +20,13 @@
       "notes": "The cheapest way to add a worker, and the first thing every player builds."
     },
     {
-      "id": "timber-house", "name": "Timber House", "category": "housing", "tier": 2,
+      "id": "timber-house", "name": "Timber House", "shortName": "Timber", "category": "housing", "tier": 2,
       "summary": "A proper house of sawn lumber. Houses two workers.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 10, "minRounds": 2,
       "housing": 2, "workerSlots": 0, "terrain": ["grassland", "forest", "hills", "tundra"]
     },
     {
-      "id": "brick-house", "name": "Brick House", "category": "housing", "tier": 3,
+      "id": "brick-house", "name": "Brick House", "shortName": "Brick", "category": "housing", "tier": 3,
       "summary": "Houses three workers, and they are warm: brick-housed workers ignore Cold Snap events.",
       "cost": [{ "commodity": "brick", "qty": 6 }, { "commodity": "lumber", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "buildPoints": 18, "minRounds": 3,
       "housing": 3, "workerSlots": 0, "terrain": ["grassland", "hills", "tundra", "desert"]
@@ -39,7 +39,7 @@
     },
 
     {
-      "id": "lumber-camp", "name": "Lumber Camp", "category": "extraction", "tier": 1,
+      "id": "lumber-camp", "name": "Lumber Camp", "shortName": "Lumber", "category": "extraction", "tier": 1,
       "summary": "Lets you fell trees on any forest tile within 1 tile, and stores logs on site.",
       "cost": [{ "commodity": "logs", "qty": 3 }], "buildPoints": 6, "minRounds": 1,
       "workerSlots": 3, "storage": 4, "terrain": ["forest"]
@@ -71,7 +71,7 @@
       "notes": "One mine per deposit. A deposit is exhausted after its yield total is drawn; flip the deposit token."
     },
     {
-      "id": "oil-derrick", "name": "Oil Derrick", "category": "extraction", "tier": 4,
+      "id": "oil-derrick", "name": "Oil Derrick", "shortName": "Derrick", "category": "extraction", "tier": 4,
       "summary": "Late-game. Pumps crude oil out of an oil field.",
       "cost": [{ "commodity": "steel", "qty": 4 }, { "commodity": "lumber", "qty": 4 }, { "commodity": "ironware", "qty": 2 }], "buildPoints": 26, "minRounds": 4,
       "workerSlots": 3, "requiresDeposit": "oil-field"
@@ -126,7 +126,7 @@
       "workerSlots": 3, "terrain": ["forest", "grassland", "hills"]
     },
     {
-      "id": "charcoal-kiln", "name": "Charcoal Kiln", "shortName": "Kiln", "category": "production", "tier": 1,
+      "id": "charcoal-kiln", "name": "Charcoal Kiln", "shortName": "Charcoal", "category": "production", "tier": 1,
       "summary": "Logs into charcoal, for smelting where there is no coal.",
       "cost": [{ "commodity": "clay", "qty": 3 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 8, "minRounds": 2,
       "workerSlots": 2, "terrain": ["forest", "grassland", "hills"]
@@ -138,37 +138,37 @@
       "workerSlots": 3, "terrain": ["hills", "grassland", "mountain"]
     },
     {
-      "id": "steelworks", "name": "Steelworks", "category": "production", "tier": 3,
+      "id": "steelworks", "name": "Steelworks", "shortName": "Steel", "category": "production", "tier": 3,
       "summary": "The refinery. Pig iron plus coal into steel - and it only really works on coal.",
       "cost": [{ "commodity": "brick", "qty": 8 }, { "commodity": "stone", "qty": 4 }, { "commodity": "ironware", "qty": 2 }], "buildPoints": 26, "minRounds": 4,
       "workerSlots": 4, "requiresBuilding": "smelter", "terrain": ["hills", "grassland"]
     },
     {
-      "id": "brickworks", "name": "Brickworks", "category": "production", "tier": 2,
+      "id": "brickworks", "name": "Brickworks", "shortName": "Kiln", "category": "production", "tier": 2,
       "summary": "Clay plus fuel into brick.",
       "cost": [{ "commodity": "stone", "qty": 4 }, { "commodity": "clay", "qty": 4 }, { "commodity": "lumber", "qty": 2 }], "buildPoints": 14, "minRounds": 3,
       "workerSlots": 3, "terrain": ["grassland", "hills", "marsh"]
     },
     {
-      "id": "glassworks", "name": "Glassworks", "category": "production", "tier": 3,
+      "id": "glassworks", "name": "Glassworks", "shortName": "Glass", "category": "production", "tier": 3,
       "summary": "Sand plus heavy fuel into glass. Hot, hungry and profitable.",
       "cost": [{ "commodity": "brick", "qty": 6 }, { "commodity": "stone", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "buildPoints": 22, "minRounds": 3,
       "workerSlots": 3, "terrain": ["grassland", "hills", "desert"]
     },
     {
-      "id": "blacksmith", "name": "Blacksmith", "category": "production", "tier": 2,
+      "id": "blacksmith", "name": "Blacksmith", "shortName": "Smithy", "category": "production", "tier": 2,
       "summary": "Where every tool in the game is made and repaired.",
       "cost": [{ "commodity": "stone", "qty": 4 }, { "commodity": "lumber", "qty": 3 }, { "commodity": "clay", "qty": 1 }], "buildPoints": 14, "minRounds": 2,
       "workerSlots": 2, "specialist": "smith", "terrain": ["grassland", "forest", "hills", "tundra", "desert", "marsh"]
     },
     {
-      "id": "carpenter", "name": "Carpenter's Shop", "category": "production", "tier": 2,
+      "id": "carpenter", "name": "Carpenter's Shop", "shortName": "Joinery", "category": "production", "tier": 2,
       "summary": "Wooden equipment: ploughs, looms, wheels, barrels, crates.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 12, "minRounds": 2,
       "workerSlots": 2, "specialist": "carpenter", "terrain": ["grassland", "forest", "hills"]
     },
     {
-      "id": "weaver", "name": "Weaver's Shed", "category": "production", "tier": 2,
+      "id": "weaver", "name": "Weaver's Shed", "shortName": "Weaver", "category": "production", "tier": 2,
       "summary": "Houses spinning wheels and looms. Fibre in, cloth out.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 12, "minRounds": 2,
       "workerSlots": 3, "specialist": "weaver", "terrain": ["grassland", "forest", "hills"]
@@ -223,7 +223,7 @@
     },
 
     {
-      "id": "warehouse", "name": "Warehouse", "category": "storage", "tier": 2,
+      "id": "warehouse", "name": "Warehouse", "shortName": "Stores", "category": "storage", "tier": 2,
       "summary": "Twelve storage slots for anything. A prime target for thieves.",
       "cost": [{ "commodity": "lumber", "qty": 5 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 12, "minRounds": 2,
       "workerSlots": 1, "storage": 12, "theftTarget": true
@@ -244,19 +244,19 @@
       "notes": "Cheap on purpose. The market is the safety net: any player who has lost their tools can gather deadwood by hand, put up a stall, and buy a replacement."
     },
     {
-      "id": "trading-house", "name": "Trading House", "category": "civic", "tier": 3,
+      "id": "trading-house", "name": "Trading House", "shortName": "Trader", "category": "civic", "tier": 3,
       "summary": "Removes the market spread for its owner in that town, and lets them trade with any player who has a merchant or trading house connected by a route.",
       "cost": [{ "commodity": "brick", "qty": 5 }, { "commodity": "lumber", "qty": 3 }, { "commodity": "parchment", "qty": 2 }], "buildPoints": 20, "minRounds": 3,
       "workerSlots": 2, "specialist": "merchant", "requiresBuilding": "market", "victoryPoints": 2
     },
     {
-      "id": "town-hall", "name": "Town Hall", "category": "civic", "tier": 2,
+      "id": "town-hall", "name": "Town Hall", "shortName": "Town", "category": "civic", "tier": 2,
       "summary": "Founds a town on a tile and marks its stockpile. One per town, always the first thing placed.",
       "cost": [{ "commodity": "logs", "qty": 4 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 10, "minRounds": 2,
       "workerSlots": 1, "storage": 6, "unique": "per-town"
     },
     {
-      "id": "guildhall", "name": "Guildhall", "category": "civic", "tier": 3,
+      "id": "guildhall", "name": "Guildhall", "shortName": "Guild", "category": "civic", "tier": 3,
       "summary": "Train a worker into a specialist here. One training per round.",
       "cost": [{ "commodity": "brick", "qty": 4 }, { "commodity": "lumber", "qty": 4 }, { "commodity": "parchment", "qty": 1 }], "buildPoints": 18, "minRounds": 3,
       "workerSlots": 1
@@ -292,7 +292,7 @@
     "notes": "Resting, hireling costs and rumours are in rules.json under rest and hirelings. Every settlement printed on a map is assumed to contain an inn of its rank - those are the board's, not any player's."
     },
     {
-      "id": "infirmary", "name": "Infirmary", "category": "civic", "tier": 2,
+      "id": "infirmary", "name": "Infirmary", "shortName": "Hospice", "category": "civic", "tier": 2,
       "summary": "Where the sick are tended and healers are trained. A town with a fed healer weathers illness cards that empty other towns.",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 2 }, { "commodity": "parchment", "qty": 1 }], "buildPoints": 12, "minRounds": 2,
       "workerSlots": 1, "specialist": "healer"
@@ -305,7 +305,7 @@
       "workerSlots": 2, "garrison": 4
     },
     {
-      "id": "watchtower", "name": "Watchtower", "category": "military", "tier": 2,
+      "id": "watchtower", "name": "Watchtower", "shortName": "Tower", "category": "military", "tier": 2,
       "summary": "Cancels one theft or raid event per game against the town it stands in, and reveals adjacent face-down tiles.",
       "cost": [{ "commodity": "stone", "qty": 5 }, { "commodity": "lumber", "qty": 2 }], "buildPoints": 14, "minRounds": 2,
       "workerSlots": 1
@@ -318,7 +318,7 @@
     },
 
     {
-      "id": "alchemist", "name": "Alchemist", "category": "arcane", "tier": 3,
+      "id": "alchemist", "name": "Alchemist", "shortName": "Alchemy", "category": "arcane", "tier": 3,
       "summary": "Brews potions from foraged ingredients and mana crystals. Needs an alembic.",
       "cost": [{ "commodity": "brick", "qty": 3 }, { "commodity": "glass", "qty": 2 }, { "commodity": "parchment", "qty": 2 }], "buildPoints": 18, "minRounds": 3,
       "workerSlots": 2, "specialist": "alchemist"
@@ -355,7 +355,7 @@
       "workerSlots": 2, "waterside": "sea", "requiresBuilding": "dock", "victoryPoints": 2
     },
     {
-      "id": "rail-depot", "name": "Rail Depot", "category": "infrastructure", "tier": 3,
+      "id": "rail-depot", "name": "Rail Depot", "shortName": "Depot", "category": "infrastructure", "tier": 3,
       "summary": "The point where a town joins the rail network. Trains can only load here.",
       "cost": [{ "commodity": "brick", "qty": 4 }, { "commodity": "steel", "qty": 2 }, { "commodity": "lumber", "qty": 2 }], "buildPoints": 18, "minRounds": 3,
       "workerSlots": 2, "requiresBuilding": "rail"

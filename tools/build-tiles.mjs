@@ -32,9 +32,15 @@
  * this afternoon, and a plate landing later fills the window without changing
  * anything else on the piece.
  *
- * Two plates, as everywhere (docs/art/01-two-plate-system.md): #wash is the paper
- * and the picture, #ink is the cut line, the band, every letter, the lathe and the
- * marks, #grime is the wear. Drop #wash and a tile is still a playable piece with
+ * BOTH SIDES ARE DRAWN. The face is the building finished, the back is the same
+ * ground with the work not yet done - so a tile is two commissions, not one, and
+ * the mint carries two subjects for every tile. The back used to be generated
+ * from a lathe, a word and a row of terrain marks; a picture says what it was
+ * saying, and says it better.
+ *
+ * Two plates in the printing sense too (docs/art/01-two-plate-system.md): #wash
+ * is the paper and the picture, #ink is the cut line, the band and every letter,
+ * #grime is the wear. Drop #wash and a tile is still a playable piece with
  * its name on it — which is the black-and-white edition, and also what the set
  * looks like today.
  *
@@ -44,7 +50,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, unlink
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { readTiles, tileSubjects, plateIdOf, worldHexMm, boxOf, outlineOf, cellPaths, centreOf } from './lib/tiles.mjs';
+import { readTiles, tileSubjects, plateIdOf, worldHexMm, boxOf, outlineOf, cellPaths, bandOf } from './lib/tiles.mjs';
 import { crop, readFraming } from './lib/framing.mjs';
 import { pngSize } from './lib/png.mjs';
 
@@ -63,7 +69,6 @@ const framing = readFraming(ROOT);
 
 const T = components.buildingTile;
 const MARK = components.marks.terrain;
-const LATHE = components.back.lathe;
 const U = components.stock.unitsPerMm;
 
 const SOOT = palette.ink.soot.hex;
@@ -112,7 +117,17 @@ function geometryOf(row) {
   const box = boxOf(row.cells, FLATS);
   const ox = BLEED - box.x;
   const oy = BLEED - box.y;
+  const band = bandOf(row.cells, FLATS, T.nameBand.heightPerCell);
+  const put = (pt) => ({ x: pt.x + ox, y: pt.y + oy });
   return {
+    /* The name band, hugging one edge of the piece rather than ruled across the
+       middle of it. Put on the page here, once, so nothing downstream has to
+       remember to shift it. */
+    band: {
+      ...band,
+      quad: band.quad.map(put),
+      midline: { ...band.midline, ...put(band.midline) },
+    },
     box,
     shiftX: ox,
     shiftY: oy,
@@ -140,8 +155,7 @@ function geometryOf(row) {
  * is. Where there is no plate the window is bare paper — see the header: a tile
  * without its picture is a blank counter, not a broken tile.
  */
-function picture(row, g) {
-  const plate = plateIdOf(row);
+function picture(plate, g) {
   const file = join(RENDERS, `${plate}.png`);
   if (!existsSync(file)) return { art: '', waiting: true };
 
@@ -169,107 +183,30 @@ function picture(row, g) {
  * knocked out of it in paper.
  */
 function band(text, g, where) {
-  const y = g.shoulderY - BAND_H;
+  const b = g.band;
   const caps = text.toUpperCase();
   /* The size that fits, never the size we would like. Solved rather than
-     guessed: the band's own width, less its inset, over what this many letters
-     cost at one point of type. "Charcoal Kiln" does not fit across a 17 mm hex
-     at the nominal size, and a name that is clipped is worse than a name that is
-     small. */
-  const room = g.row.w - 2 * BAND_INSET;
+     guessed: the band's own midline, less its inset either end, over what this
+     many letters cost at one point of type. The band is a good deal shorter than
+     the corner-to-corner strip it replaced, so this is doing real work now -
+     see bandOf in tools/lib/tiles.mjs for what was traded for what. */
+  const room = b.midline.length - 2 * BAND_INSET;
   const size = Math.min(BAND_FONT, room / (caps.length * (CAP_WIDTH + T.nameBand.trackingPerCell / T.nameBand.fontPerCell)));
   if (size < MIN_FONT) {
     throw new Error(
-      `"${text}" will not set above the ${T.nameBand.minFontMm} mm floor on a ${num(g.row.w / U)} mm band ` +
+      `"${text}" will not set above the ${T.nameBand.minFontMm} mm floor on a ${num(b.midline.length / U)} mm band ` +
       `(${where}) - it needs ${num(size / U)} mm. Shorten the name; do not shrink the type.`
     );
   }
+  const quad = b.quad.map((p) => `${num(p.x)},${num(p.y)}`).join(' L ');
   return [
-    `<rect x="${num(g.row.x - 2)}" y="${num(y)}" width="${num(g.row.w + 4)}" height="${num(BAND_H)}" fill="${tint(T.nameBand.tint)}"/>`,
-    `<text x="${num(g.row.centreX)}" y="${num(y + BAND_H / 2 + size * 0.35)}" font-size="${num(size)}" ` +
-      `text-anchor="middle" font-family="${SANS}" font-weight="bold" letter-spacing="${num(size * T.nameBand.trackingPerCell / T.nameBand.fontPerCell)}" ` +
-      `fill="${TALLOW}">${esc(text.toUpperCase())}</text>`,
+    `<path d="M ${quad} Z" fill="${tint(T.nameBand.tint)}"/>`,
+    `<g transform="rotate(${num(b.midline.angle)} ${num(b.midline.x)} ${num(b.midline.y)})">` +
+      `<text x="${num(b.midline.x)}" y="${num(b.midline.y + size * 0.35)}" font-size="${num(size)}" ` +
+      `text-anchor="middle" font-family="${SANS}" font-weight="bold" ` +
+      `letter-spacing="${num(size * T.nameBand.trackingPerCell / T.nameBand.fontPerCell)}" ` +
+      `fill="${TALLOW}">${esc(caps)}</text></g>`,
   ].join('\n    ');
-}
-
-/**
- * The engine-turned ground on the back — the deck backs' own lathe (components
- * .json back.lathe), struck from the tile's centre rather than a card's, so it is
- * symmetrical by construction and a tile put down in any of six rotations looks
- * the same from across the table.
- */
-function lathe(g) {
-  /* Out to the furthest corner of the CUT, not to half the shorter side. A disc
-     inscribed in a hexagon leaves its six corners bare and reads as something
-     stuck on; a disc that reaches the corners is a ground the piece was struck
-     from. Measured off the outline rather than assumed, so a shape nobody has
-     drawn yet comes out right the first time. */
-  const R = Math.max(...g.outline.match(/-?[\d.]+,-?[\d.]+/g).map((pair) => {
-    const [x, y] = pair.split(',').map(Number);
-    return Math.hypot(x + g.shiftX - g.centre.x, y + g.shiftY - g.centre.y);
-  }));
-  const rings = Array.from({ length: LATHE.rings }, (_, i) =>
-    `<circle cx="${num(g.centre.x)}" cy="${num(g.centre.y)}" r="${num((R * (i + 1)) / LATHE.rings)}"/>`).join('');
-  const rays = Array.from({ length: LATHE.rays }, (_, i) => {
-    const a = (Math.PI * 2 * i) / LATHE.rays;
-    return `<line x1="${num(g.centre.x + Math.cos(a) * R * 0.18)}" y1="${num(g.centre.y + Math.sin(a) * R * 0.18)}" ` +
-      `x2="${num(g.centre.x + Math.cos(a) * R)}" y2="${num(g.centre.y + Math.sin(a) * R)}"/>`;
-  }).join('');
-  return `<g fill="none" stroke="${SOOT}" stroke-width="${LATHE.strokeWidth}" opacity="${LATHE.opacity}">${rings}${rays}</g>`;
-}
-
-/** One mark drawn from a 24-grid path into a box of `size` centred on x, y. */
-function markAt(path, x, y, size) {
-  const k = size / 24;
-  return `<g transform="translate(${num(x - 12 * k)} ${num(y - 12 * k)}) scale(${num(k)})"><path d="${path}"/></g>`;
-}
-
-/**
- * The ground this tile may stand on, as a row of the world map's own terrain
- * marks along the bottom of the back — plus the deposit mark where the building
- * has to sit on something dug, and the water mark where it has to sit on an edge.
- *
- * These are the marks the mini-map fields are patterned with and the map legend
- * traces. Nothing here draws a new grass tuft: a tile that invented its own would
- * be a tile a player could not match to the ground under it.
- */
-function groundMarks(row, g) {
-  const byId = new Map(terrain.terrains.map((t) => [t.id, t]));
-  const paths = [];
-  for (const id of row.terrain) {
-    const t = byId.get(id);
-    if (!t?.mark?.path) throw new Error(`terrain.json declares no mark for "${id}" — tile ${row.id} cannot say where it may stand`);
-    paths.push(t.mark.path);
-  }
-  if (row.waterside) {
-    const water = terrain.terrains.find((t) => t.id === 'shallow-water');
-    if (!water?.mark?.path) throw new Error('terrain.json declares no shallow-water mark — a waterside tile cannot say what it needs');
-    paths.push(water.mark.path);
-  }
-  if (row.deposit) paths.push(T.backMarks.deposit);
-
-  const size = T.backMarks.sizePerCell * FLATS;
-  const gap = T.backMarks.gapPerCell * FLATS;
-  /* One row, as wide as the piece is, less the band's own inset either side. A
-     list that does not fit is not shown at all - see components.json
-     buildingTile.backMarks: a building that suits six kinds of ground suits
-     whatever is under it, and a blank back says that better than a crowd. */
-  const fits = Math.floor((g.row.w - 2 * BAND_INSET + gap) / (size + gap));
-  if (!paths.length || paths.length > fits) return { marks: '', height: 0, shown: 0, of: paths.length };
-
-  const width = paths.length * size + (paths.length - 1) * gap;
-  const y = g.shoulderY - BAND_H - BAND_INSET - size / 2;
-  const x0 = g.row.centreX - width / 2 + size / 2;
-  return {
-    height: size + BAND_INSET,
-    shown: paths.length,
-    of: paths.length,
-    marks:
-      `<g fill="${MARK.fill}" stroke="${SOOT}" stroke-width="${T.backMarks.strokeWidth}" ` +
-      `stroke-linecap="${MARK.strokeLinecap}" stroke-linejoin="${MARK.strokeLinejoin}">` +
-      paths.map((p, i) => markAt(p, x0 + i * (size + gap), y, size)).join('') +
-      '</g>',
-  };
 }
 
 function grime(seed, g) {
@@ -298,14 +235,33 @@ ${body}
 </svg>
 `;
 
-function face(row) {
+/**
+ * One side of a tile, and there is only one function because there is only one
+ * kind of thing: a plate cropped to the footprint, a name band hugging one edge,
+ * the die line, and some wear.
+ *
+ * The face is the building finished; the back is the same ground with the work
+ * not yet done. That is a difference of subject, not of construction, so it is a
+ * difference of which plate and which word and nothing else. The back used to be
+ * generated - a lathe, a word and a row of terrain marks - and it is a drawn
+ * plate now, which is why this is one function rather than two.
+ */
+function side(row, which) {
   const g = geometryOf(row);
-  const clip = `cut-${row.id}`;
-  const { art, waiting } = picture(row, g);
+  const plate = plateIdOf(row, which);
+  const clip = `cut-${plate}`;
+  const label = which === 'back' ? row.back : row.label;
+  const { art, waiting } = picture(plate, g);
+
+  const what = which === 'back'
+    ? `The ${row.back.toLowerCase()} side. A ${row.kind === 'field' ? 'field is laid this way up the round it is sown and turned over when it ripens' : 'building is laid this way up the round its work starts and turned over when the effort is paid'}, so the picture is the same ground with the work not yet done.`
+    : `${row.summary}`;
+
   return {
     waiting,
-    svg: shell(row, g, `${row.name} — building tile`,
-      `${row.summary} The ${row.shape} footprint is ${row.cells.length} cell${row.cells.length === 1 ? '' : 's'}, worked out from this ${row.kind === 'field' ? 'crop' : "building's"} own numbers through the ground model in data/buildingtiles.json.${waiting ? ' The picture window is bare paper: this plate has not been drawn yet, and the tile is a playable blank until it is.' : ''}`,
+    file: which === 'back' ? `back-${row.id}.svg` : `${row.id}.svg`,
+    svg: shell(row, g, `${row.name} — building tile${which === 'back' ? ', back' : ''}`,
+      `${what} The ${row.shape} footprint is ${row.cells.length} cell${row.cells.length === 1 ? '' : 's'}, worked out from this ${row.kind === 'field' ? 'crop' : "building's"} own numbers through the ground model in data/buildingtiles.json.${waiting ? ' The window is bare paper: this plate has not been drawn yet, and the tile is a playable blank until it is.' : ''}`,
       `<defs>
   <clipPath id="${clip}">${g.cells.map((d) => `<path d="${d}" transform="${g.shift}"/>`).join('')}</clipPath>
 </defs>
@@ -320,11 +276,11 @@ function face(row) {
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="${SOOT}">
-  <!-- the name, in a band on the bottom row's shoulder line - the height at
-       which a pointy-top hex is still at its full width. Clipped to the cut, so
-       it can never overhang a cell the tile does not own -->
+  <!-- the name, in a band hugging the lower-right edge and running parallel to
+       it. Not across the middle: a bar through a small drawing splits it into
+       two unrelated halves, which is what the first version looked like -->
   <g clip-path="url(#${clip})">
-    ${band(row.label, g, row.id)}
+    ${band(label, g, `${row.id} ${which}`)}
   </g>
 
   <!-- the die line, traced off the cells rather than drawn over them -->
@@ -333,45 +289,9 @@ function face(row) {
 
 <!-- ============================================================ GRIME -->
 <g id="grime" clip-path="url(#${clip})">
-  ${grime(row.id, g)}
+  ${grime(plate, g)}
 </g>`),
   };
-}
-
-function back(row) {
-  const g = geometryOf(row);
-  const clip = `cut-${row.id}-back`;
-  const ground = groundMarks(row, g);
-
-  return shell(row, g, `${row.name} — building tile, back`,
-    `The placement side. A ${row.kind === 'field' ? 'field is laid back-up the round it is sown and stays there until it ripens' : 'building is laid back-up the round its work starts and stays there until the effort is paid'}, which is exactly when a player needs to know what ground it may stand on - so the marks are the world map's own terrain marks, from data/terrain.json. ${ground.shown ? `This one names ${ground.shown} ground${ground.shown === 1 ? '' : 's'}.` : 'This one names none: it stands on whatever is under it.'}`,
-    `<defs>
-  <clipPath id="${clip}">${g.cells.map((d) => `<path d="${d}" transform="${g.shift}"/>`).join('')}</clipPath>
-</defs>
-
-<!-- ============================================================ WASH -->
-<!-- A back has no picture. The paper is the whole wash plate. -->
-<g id="wash">
-  <rect x="0" y="0" width="${num(g.w)}" height="${num(g.h)}" fill="${TALLOW}"/>
-</g>
-
-<!-- ============================================================ INK -->
-<g id="ink" fill="${SOOT}">
-  <g clip-path="url(#${clip})">
-    <!-- the deck backs' own engine-turned ground, struck from the tile's centre
-         so a tile put down any of six ways round reads the same -->
-    ${lathe(g)}
-    <!-- what ground this may stand on: the world map's own marks, never a new one -->
-    ${ground.marks}
-    ${band(row.back, g, `${row.id} back`)}
-  </g>
-  <path d="${g.outline}" transform="${g.shift}" fill="none" stroke="${SOOT}" stroke-width="${T.cut.strokeWidth}" stroke-linejoin="round"/>
-</g>
-
-<!-- ============================================================ GRIME -->
-<g id="grime" clip-path="url(#${clip})">
-  ${grime(`${row.id}-back`, g)}
-</g>`);
 }
 
 /* ------------------------------------------------------------------ output */
@@ -381,10 +301,11 @@ const files = [];
 const waiting = [];
 
 for (const row of rows) {
-  const f = face(row);
-  if (f.waiting) waiting.push(row.id);
-  files.push([`${row.id}.svg`, f.svg]);
-  files.push([`back-${row.id}.svg`, back(row)]);
+  for (const which of ['face', 'back']) {
+    const built = side(row, which);
+    if (built.waiting) waiting.push(plateIdOf(row, which));
+    files.push([built.file, built.svg]);
+  }
 }
 
 /* One line per shape, for the print page and the index: how big a tile of this
@@ -494,8 +415,9 @@ ${rows.filter((r) => r.kind === 'field').length} fields. ${waiting.length
 ${rows.map((r) => `  <figure class="${r.shape}">${inline(`${r.id}.svg`)}<figcaption>${esc(r.name)} — ${r.cells.length} cell${r.cells.length === 1 ? '' : 's'}${r.ground == null ? '' : `, ground ${r.ground}`}</figcaption></figure>`).join('\n')}
 </div>
 <h2>The backs</h2>
-<p class="note">${esc(spec.sides.back.carries.join(', '))} — one per tile, all generated. A tile goes down back-up
-the round its work starts, which is exactly when a player needs to know what ground it may stand on.</p>
+<p class="note">${esc(spec.sides.back.carries.join('; '))}. A tile goes down back-up the round its work starts and is
+turned over when the effort is paid, so the back is a drawn plate of its own — every tile in this set is two
+commissions, not one.</p>
 <div class="grid">
 ${rows.map((r) => `  <figure class="${r.shape}">${inline(`back-${r.id}.svg`)}<figcaption>${esc(r.name)} — ${esc(r.back)}</figcaption></figure>`).join('\n')}
 </div>

@@ -21,7 +21,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { plateIdFor } from './plates.mjs';
 import { pngSize } from './png.mjs';
-import { tileSubjects, plateIdOf, formatFor, boxOf, largestHexMm } from './tiles.mjs';
+import { tileSubjects, plateIdOf, formatFor, boxOf, bandOf, largestHexMm } from './tiles.mjs';
 
 const HERE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -190,17 +190,19 @@ export function windowNote(root, line, row) {
       `${row.tile.cells.length} cell${row.tile.cells.length === 1 ? '' : 's'}, on the ${pw} x ${ph} page it is drawn at. ` +
       'It is not a rule of thumb.)';
 
-    /* The one thing a card brief never has to say: a solid label band crosses
-       the piece, and anything drawn under it is gone. */
+    /* The one thing a card brief never has to say: a solid label band is printed
+       over part of the piece, and whatever is drawn under it is gone. Said as a
+       corner rather than as a band down the page, because that is what it is
+       now - it hugs one edge instead of crossing the middle. */
     const T = readJson(join(root, 'data', 'components.json')).buildingTile;
-    const bandH = T.nameBand.heightPerCell;
-    const top = (box.shoulderY - bandH - box.y) / box.h;
-    const bottom = (box.shoulderY - box.y) / box.h;
-    extra = wrap('LABEL BAND. A solid band carrying this tile\'s name is printed across ' +
-      `the piece between ${round(top)}% and ${round(bottom)}% of its height, edge to edge. ` +
-      'Whatever is drawn there is covered. Compose so the band falls on ground, ' +
-      'wall or sky rather than across a roofline, a face or the one detail the ' +
-      'tile is of.');
+    const band = bandOf(row.tile.cells, 1, T.nameBand.heightPerCell);
+    extra = wrap('LABEL BAND. A solid band carrying this tile\'s name is printed along the ' +
+      `${T.nameBand.edge} edge of the piece, running parallel to it and about ` +
+      `${Math.round((band.height / box.h) * 100)}% of the piece's height deep at its deepest. ` +
+      'Whatever is drawn there is covered. It is a corner of the picture rather than ' +
+      'a bar across it, so compose so that corner is ground, water or wall - never ' +
+      'the roofline, the face, or the one detail the tile is of.');
+
   } else if (line.id === 'cards') {
     /* Every FRAMING block in docs/art/prompts/ names a band - "inside the middle
        70% of the page height" - and that figure is typed, identical across every
@@ -372,17 +374,26 @@ function subjectsOf(root, line) {
        cells, the word on the back - is derived. See lines.buildingtiles
        .$subjectRequiresNote in data/mint.json. */
     for (const tile of tileSubjects(root)) {
-      rows.push({
-        id: tile.id,
-        code: tile.id,
-        name: tile.name,
-        group: tile.group,
-        format: formatFor(tile.cells, line.draw?.sizeByFormat),
-        plate: plateIdOf(tile),
-        briefFile: line.brief.file,
-        tile,
-        subject: tile,
-      });
+      /* TWO subjects per tile, because a tile is two commissions: the building
+         finished and the same ground with the work not yet done. They are not one
+         subject with two plates - the mint's whole model is one plate per subject,
+         and a second plate hung off the first would need its own brief, its own
+         framing entry and its own step, which is a subject. */
+      for (const which of ['face', 'back']) {
+        const plate = plateIdOf(tile, which);
+        rows.push({
+          id: plate.replace(/^tile-/, ''),
+          code: plate.replace(/^tile-/, ''),
+          name: which === 'back' ? `${tile.name}, ${tile.back.toLowerCase()}` : tile.name,
+          group: tile.group,
+          format: formatFor(tile.cells, line.draw?.sizeByFormat),
+          plate,
+          briefFile: line.brief.file,
+          tile,
+          side: which,
+          subject: tile,
+        });
+      }
     }
     return { rows, deferred, generated };
   }
@@ -425,9 +436,12 @@ export function resolvePlate(root, input) {
     }
   }
   for (const tile of tileSubjects(root)) {
-    const plate = plateIdOf(tile);
-    if (plate === input || tile.id === input) {
-      return { kind: 'tile', plate, code: tile.id, deck: null, card: null, tile };
+    for (const which of ['face', 'back']) {
+      const plate = plateIdOf(tile, which);
+      const code = plate.replace(/^tile-/, '');
+      if (plate === input || code === input) {
+        return { kind: 'tile', plate, code, deck: null, card: null, tile, side: which };
+      }
     }
   }
   return { kind: null, plate: input, code: null, deck: null, card: null, tile: null };

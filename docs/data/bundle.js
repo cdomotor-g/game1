@@ -1342,6 +1342,7 @@ window.GAME_DATA = {
       {
         "id": "vegetables",
         "name": "Vegetables",
+        "shortName": "Greens",
         "category": "food",
         "unit": "crate",
         "bulk": 1,
@@ -2614,6 +2615,7 @@ window.GAME_DATA = {
       {
         "id": "timber-house",
         "name": "Timber House",
+        "shortName": "Timber",
         "category": "housing",
         "tier": 2,
         "summary": "A proper house of sawn lumber. Houses two workers.",
@@ -2641,6 +2643,7 @@ window.GAME_DATA = {
       {
         "id": "brick-house",
         "name": "Brick House",
+        "shortName": "Brick",
         "category": "housing",
         "tier": 3,
         "summary": "Houses three workers, and they are warm: brick-housed workers ignore Cold Snap events.",
@@ -2707,6 +2710,7 @@ window.GAME_DATA = {
       {
         "id": "lumber-camp",
         "name": "Lumber Camp",
+        "shortName": "Lumber",
         "category": "extraction",
         "tier": 1,
         "summary": "Lets you fell trees on any forest tile within 1 tile, and stores logs on site.",
@@ -2825,6 +2829,7 @@ window.GAME_DATA = {
       {
         "id": "oil-derrick",
         "name": "Oil Derrick",
+        "shortName": "Derrick",
         "category": "extraction",
         "tier": 4,
         "summary": "Late-game. Pumps crude oil out of an oil field.",
@@ -3035,7 +3040,7 @@ window.GAME_DATA = {
       {
         "id": "charcoal-kiln",
         "name": "Charcoal Kiln",
-        "shortName": "Kiln",
+        "shortName": "Charcoal",
         "category": "production",
         "tier": 1,
         "summary": "Logs into charcoal, for smelting where there is no coal.",
@@ -3090,6 +3095,7 @@ window.GAME_DATA = {
       {
         "id": "steelworks",
         "name": "Steelworks",
+        "shortName": "Steel",
         "category": "production",
         "tier": 3,
         "summary": "The refinery. Pig iron plus coal into steel - and it only really works on coal.",
@@ -3119,6 +3125,7 @@ window.GAME_DATA = {
       {
         "id": "brickworks",
         "name": "Brickworks",
+        "shortName": "Kiln",
         "category": "production",
         "tier": 2,
         "summary": "Clay plus fuel into brick.",
@@ -3148,6 +3155,7 @@ window.GAME_DATA = {
       {
         "id": "glassworks",
         "name": "Glassworks",
+        "shortName": "Glass",
         "category": "production",
         "tier": 3,
         "summary": "Sand plus heavy fuel into glass. Hot, hungry and profitable.",
@@ -3177,6 +3185,7 @@ window.GAME_DATA = {
       {
         "id": "blacksmith",
         "name": "Blacksmith",
+        "shortName": "Smithy",
         "category": "production",
         "tier": 2,
         "summary": "Where every tool in the game is made and repaired.",
@@ -3210,6 +3219,7 @@ window.GAME_DATA = {
       {
         "id": "carpenter",
         "name": "Carpenter's Shop",
+        "shortName": "Joinery",
         "category": "production",
         "tier": 2,
         "summary": "Wooden equipment: ploughs, looms, wheels, barrels, crates.",
@@ -3236,6 +3246,7 @@ window.GAME_DATA = {
       {
         "id": "weaver",
         "name": "Weaver's Shed",
+        "shortName": "Weaver",
         "category": "production",
         "tier": 2,
         "summary": "Houses spinning wheels and looms. Fibre in, cloth out.",
@@ -3442,6 +3453,7 @@ window.GAME_DATA = {
       {
         "id": "warehouse",
         "name": "Warehouse",
+        "shortName": "Stores",
         "category": "storage",
         "tier": 2,
         "summary": "Twelve storage slots for anything. A prime target for thieves.",
@@ -3508,6 +3520,7 @@ window.GAME_DATA = {
       {
         "id": "trading-house",
         "name": "Trading House",
+        "shortName": "Trader",
         "category": "civic",
         "tier": 3,
         "summary": "Removes the market spread for its owner in that town, and lets them trade with any player who has a merchant or trading house connected by a route.",
@@ -3535,6 +3548,7 @@ window.GAME_DATA = {
       {
         "id": "town-hall",
         "name": "Town Hall",
+        "shortName": "Town",
         "category": "civic",
         "tier": 2,
         "summary": "Founds a town on a tile and marks its stockpile. One per town, always the first thing placed.",
@@ -3557,6 +3571,7 @@ window.GAME_DATA = {
       {
         "id": "guildhall",
         "name": "Guildhall",
+        "shortName": "Guild",
         "category": "civic",
         "tier": 3,
         "summary": "Train a worker into a specialist here. One training per round.",
@@ -3643,6 +3658,7 @@ window.GAME_DATA = {
       {
         "id": "infirmary",
         "name": "Infirmary",
+        "shortName": "Hospice",
         "category": "civic",
         "tier": 2,
         "summary": "Where the sick are tended and healers are trained. A town with a fed healer weathers illness cards that empty other towns.",
@@ -3689,6 +3705,7 @@ window.GAME_DATA = {
       {
         "id": "watchtower",
         "name": "Watchtower",
+        "shortName": "Tower",
         "category": "military",
         "tier": 2,
         "summary": "Cancels one theft or raid event per game against the town it stands in, and reveals adjacent face-down tiles.",
@@ -3725,6 +3742,7 @@ window.GAME_DATA = {
       {
         "id": "alchemist",
         "name": "Alchemist",
+        "shortName": "Alchemy",
         "category": "arcane",
         "tier": 3,
         "summary": "Brews potions from foraged ingredients and mana crystals. Needs an alembic.",
@@ -3865,6 +3883,7 @@ window.GAME_DATA = {
       {
         "id": "rail-depot",
         "name": "Rail Depot",
+        "shortName": "Depot",
         "category": "infrastructure",
         "tier": 3,
         "summary": "The point where a town joins the rail network. Trains can only load here.",
@@ -13104,24 +13123,14 @@ window.GAME_DATA = {
         "fontPerCell": 0.135,
         "trackingPerCell": 0.012,
         "minFontMm": 1.4,
-        "$fitNote": "fontPerCell is the size a name is set at when it fits. When it does not - and \"Charcoal Kiln\" does not fit across a 17 mm hex - it is set at whatever DOES fit, worked out from the band's own width and the number of letters in the name. Nothing is ever clipped and nothing ever runs over the cut.\n\nminFontMm is the floor, and it is a millimetre rather than a fraction on purpose: it is not a proportion of anything in this game, it is the smallest type a press will hold on board stock. A name that cannot be set above it fails the build - the answer to that is a shorter name, not a smaller type.",
         "tint": "85",
         "insetPerCell": 0.08,
-        "$note": "A band across the lower shoulder line - the height at which the bottom row of cells is still at its full width. Below it a pointy-top hex has narrowed to a point, and a name set in that wedge is a name nobody reads across a table.\n\nEvery figure is a fraction of the CELL, not of the tile, so a one-cell hut and a four-cell manor carry the same band at the same type size. They are read by the same eyes at the same distance; a manor whose name was drawn four times larger because its tile is four times bigger would be the only piece on the table shouting."
-      },
-      "backMarks": {
-        "sizePerCell": 0.22,
-        "gapPerCell": 0.06,
-        "strokeWidth": 1.6,
-        "$note": "The terrain marks along the back, saying what ground this may stand on: one row, centred, sitting directly above the word band. Sized off the cell like everything else.\n\nHOW MANY FIT IS DERIVED, and a tile that cannot show its whole list shows none of it. That is not a fudge, it is the rule: a building allowed on five or six kinds of ground is a building that goes wherever you put it, and a row of marks saying so is a row of marks saying nothing. What the back is for is the RESTRICTION - the quarry that is hills and mountain only, the farm that is grassland, the dock that needs an edge - and those are short lists by their nature. A blank back and a back with six marks on it mean the same thing, so only one of them is worth printing.",
-        "deposit": "M12 21.4 4.6 8.6h14.8ZM8.4 12.2h7.2M10.2 16.4h3.6",
-        "$depositNote": "An inverted cone of ground with two seams in it: a hole dug down to something. WHICH deposit is never printed - the tile stands on a revealed deposit token that already says - so one mark serves every mine, pit and derrick in the game."
+        "edge": "lower-right",
+        "$edgeNote": "The band HUGS ONE EDGE and the type runs parallel to it. It used to be a horizontal strip ruled corner to corner along the widest row - the longest band a hexagon can carry, and wrong for exactly that reason: a bar through the middle of one small drawing splits it into two unrelated halves, which is what it looked like. Tucked against an edge, the picture is whole and the label sits in a corner of it.\n\nAlways the lower-right edge, and always the bottom-most then right-most cell that has one open. Fixed rather than chosen per tile: fifty-four pieces on a table want their labels in the same place at the same angle, and a rule that hunted for whichever edge had most room would tilt one tile's name against its neighbour's for no reason a player could see. The geometry is bandOf in tools/lib/tiles.mjs.",
+        "$fitNote": "fontPerCell is the size a name is set at when it fits. When it does not, it is set at whatever DOES fit - worked out from the band's own midline and the number of letters in the name. Nothing is ever clipped and nothing runs over the cut.\n\nThe edge band costs length and the cost is not small: its midline is one edge plus h/sqrt(3), about 73% of what the corner-to-corner strip carried, and nineteen names stopped fitting the day it moved. That is the trade and it is the right way round - a name that has to be shortened is a cheaper problem than a picture that has to be cut in half.\n\nminFontMm is the floor, and it is a millimetre rather than a fraction on purpose: it is not a proportion of anything in this game, it is the smallest type a press will hold on board stock. A name that cannot be set above it fails the build, and the answer is a `shortName` on the building rather than a smaller type."
       },
       "back": {
-        "latheFrom": "back.lathe",
-        "$typeNote": "The word takes the name band's own height, place and type size (nameBand above). A tile is the same object on both sides, so it carries the same band on both - one with what this is, one with what state it is in.",
-        "$latheNote": "The engine-turned ground is the deck backs' own (back.lathe), struck from the tile's centre rather than a card's and run out to its furthest corner, so it fills the piece instead of sitting on it as a disc. Declared by reference rather than copied: a tile back and a card back are the same trick and they should stay the same trick.\n\nA card back also carries a MOTIF and a tile back does not. There is no room: the band and the ground marks take what a 17 mm piece has, and a motif drawn in what was left came out big enough to crowd the one thing the back exists to say. A card is 63 x 88 mm and can afford both.",
-        "$note": "One back per tile, all of them generated by tools/build-tiles.mjs and none of them anybody's turn to draw. A card back may not vary - a back that varies is a marked card - but a tile is picked out of a tray by name rather than drawn off a stack, so its back is free to carry the one thing a player needs while the tile is face down: what ground it may stand on."
+        "$note": "A tile's back is a DRAWN PLATE, not a generated one: the same building on the same ground with the work not yet done. So there is nothing here about how to compose it - it is a picture, cropped and banded exactly like the face, which is why tools/build-tiles.mjs has one side function and not two.\n\nIt was generated once, out of an engine-turned lathe borrowed from the card backs, the word, and a row of the world map's terrain marks saying what ground the building could stand on. The marks were the good part of that and they have gone: a drawn plate leaves a 17 mm piece no room for a rules reference at a legible size, and what ground a building may stand on is in data/buildings.json and prints in the rulebook annex. What the plate carries instead is the sense of it, which is better - a site is drawn on the ground it belongs on.\n\nWhich word is on which back is data/buildingtiles.json sides.back.words: SITE for a building, SOWN for a field. It is also the plate's name suffix, so changing one renames a plate."
       },
       "sheet": {
         "widthMm": 210,
@@ -13407,9 +13416,9 @@ window.GAME_DATA = {
           "$note": "The same aim a card takes, and the same file, because it is the same job: a drawn page is not the shape of the window it will be seen through, and something is thrown away. What differs is only the window - a tile's is its own footprint's bounding box, which tools/validate-framing.mjs measures against rather than assuming a card."
         },
         "builds": [
-          "docs/tiles/ - tools/build-tiles.mjs",
-          "the backs, which are generated per shape and are nobody's turn to draw"
+          "docs/tiles/ - tools/build-tiles.mjs, a face and a back for every tile"
         ],
+        "$twoSubjectsPerTile": "A tile is TWO subjects on this line, not one: the building finished, and the same ground with the work not yet done. They are not one subject with two plates - the mint's whole model is one plate per subject, and a second plate hung off the first would still need its own brief, its own framing entry and its own step, which is a subject. The back's id is the tile's plus its own word: `tile-hut-site`, `tile-crop-grain-sown`.",
         "checks": [
           "node tools/validate-data.mjs",
           "node tools/validate-art.mjs",
@@ -13964,39 +13973,33 @@ window.GAME_DATA = {
       "adjacency": "A field tile must touch the farm's footprint, or another of that farm's field tiles - so a farm's fields are one run of ground rather than four squares scattered across the sheet."
     },
     "sides": {
-      "$comment": "A tile is double-sided and the two sides do two different jobs, which is what makes the second side worth printing.\n\nThe BACK is the placement side. A building takes rounds to raise (buildPoints, minRounds), so the tile goes down back-up the round work starts and stays there until the effort is paid. That is precisely when a player needs to know whether it may stand on this ground - so the back carries the terrain marks for where it is allowed, and nothing else has to be looked up. The face is then free to be the picture.\n\nThe backs are GENERATED, not commissioned. There is one per tile, because a back carries the ground THIS building may stand on and that is the one thing on it that is not the same for every tile - but generating it costs nothing, so fifty-four backs is the same amount of work as one. tools/build-tiles.mjs makes them the way tools/build-cards.mjs makes a deck back: a lathe ground, a word, a motif, and the marks. Nobody is waiting on an artist for them, and they are not in the mint queue.\n\nA card back may not vary, because a back that varies is a marked card. A tile back may, because a tile is never in a stack anybody draws from - it is picked out of a tray by name.",
+      "$comment": "A tile is double-sided and BOTH SIDES ARE DRAWN. The face is the building finished; the back is the same ground with the work not yet done. That is what makes the second side worth printing, and it means a tile is two commissions rather than one - data/mint.json carries two subjects for every tile, and the mint runs them through the same four steps as anything else.\n\nA building takes rounds to raise (buildPoints, minRounds), so the tile goes down back-up the round work starts and is turned over when the effort is paid. A field is not built but sown, and does not become a field of grain until it has stood there for its maturation rounds - same flip, same moment, a truer word on the back.\n\nThe back was GENERATED once: an engine-turned lathe, the word, and a row of the world map's terrain marks saying what ground the building could stand on. The marks were the good part of it and they are gone. A drawn plate leaves a 17 mm piece no room for a rules reference at a legible size, and where a building may stand is in data/buildings.json and prints in the rulebook annex. What the picture carries instead is the sense of it: a site is drawn on the ground it belongs on, which is the thing the marks were reaching for.",
       "face": {
         "carries": [
           "the plate, cropped to the footprint and clipped to the cut line",
-          "the building's or the crop's name, in a band on the lower shoulder line"
+          "the building's or the crop's name, in a band hugging one edge"
         ],
         "carriesNot": "a number of any kind. No worker pips, no storage boxes, no build points. Everything that moves is counted on a board - the mini-map's own HOLDINGS panel has Built, Garrison and Stores rows for exactly this - and a tile that carried a count would be a tile that has to be reprinted when a recipe is balanced.",
-        "$bandNote": "The band sits on the lower shoulder line - the height at which a pointy-top hex is still at its full width - rather than at the bottom, where the hex has narrowed to a point and a name would be set in a wedge."
+        "$bandNote": "The band hugs the lower-right edge and the type runs parallel to it. It used to be a strip ruled corner to corner across the widest row, which was the longest band a hexagon can carry and cut the picture in half. Tucked against an edge, the picture is whole. How that is drawn, and what the change cost in length, is data/components.json buildingTile.nameBand."
       },
       "back": {
         "carries": [
-          "the word",
-          "the terrain marks for the ground it may stand on, where the list is short enough to be worth printing"
+          "the plate of the same building unbuilt - pegged out, part-raised, rafters open",
+          "the word, in the same band in the same place as the face's name"
         ],
-        "$oneEach": "One back per tile, all of them generated. See the block comment above for why a tile back may differ from its neighbour where a card back may not.",
         "words": [
           {
             "for": "buildings",
             "word": "SITE",
-            "why": "Pegged out and not yet raised. It is what the ground looks like the round the work starts."
+            "why": "Pegged out and part-raised. It is what the ground looks like the round the work starts."
           },
           {
             "for": "fields",
             "word": "SOWN",
-            "why": "A field is not built, it is planted, and it does not become a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word."
+            "why": "A field is not built, it is planted, and it is not a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word."
           }
         ],
-        "terrainMarks": {
-          "from": "buildings.json buildings[].terrain[] -> terrain.json terrains[].mark",
-          "$note": "The world map's own marks, the same paths the mini-map fields are patterned with and the same ones the map legend traces. Nothing here draws a new grass tuft: a tile that invented its own would be a tile a player could not match to the ground under it.",
-          "waterside": "A building with `waterside` takes the water mark as well as - or instead of - a terrain list, because the ground it needs is an edge rather than a type.",
-          "deposit": "A building with `requiresDeposit` or `requiresDepositAny` takes the deposit mark. Which deposit is not printed: the tile stands on a revealed deposit token that already says."
-        }
+        "$wordIsAlsoTheFilename": "The word is lowercased into the back plate's id - tile-hut-site, tile-crop-grain-sown - so a brief file section says what the picture is of rather than which side it is. Changing a word here renames a plate, which is the one thing to know before changing one."
       }
     },
     "subjects": {
@@ -16695,6 +16698,21 @@ window.GAME_DATA = {
           0.08,
           0.7,
           0.84
+        ]
+      },
+      "tile-hut-site": {
+        "file": "art/renders/tile-hut-site.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.08,
+          0.05,
+          0.85,
+          0.5345
+        ],
+        "focal": [
+          0.57,
+          0.55
         ]
       },
       "tile-hut": {

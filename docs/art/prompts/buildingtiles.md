@@ -25,10 +25,23 @@ a small clump of hexagons — one, two, three or four cells — and the corners 
 the page are cut off. Each brief below says which. Nothing that matters goes near
 a corner.
 
-**A label band crosses the piece.** A solid strip carrying the tile's name is
-printed across it, edge to edge, and whatever is under it is gone. The exact
-band is worked out per tile and arrives appended to the prompt as `LABEL BAND` —
-follow that, not a guess. Compose so it lands on ground, wall or sky.
+**A label band sits in one corner.** A solid strip carrying the tile's name is
+printed along the piece's lower-right edge, running parallel to it, and whatever
+is under it is gone. It is a corner of the picture, not a bar across it — it used
+to be a bar across it and that split every drawing into two unrelated halves. The
+exact depth is worked out per tile and arrives appended to the prompt as `LABEL
+BAND`. Compose so that corner is ground, water or wall.
+
+**Every tile is drawn twice.** The face is the building finished; the back is the
+same building on the same ground with the work not yet done. Both are
+commissions, both go through the four steps, and they are separate subjects — the
+back's brief is `## tile-<id>-site` (or `-sown` for a field). See *The site side*
+below, which is where the standing rules for a back live.
+
+**The two sides must turn over onto each other.** Same viewpoint, same distance,
+same corner of ground, the building sitting in the same place on the page. A
+player flips the tile the round the work is paid for and the picture should
+settle rather than jump.
 
 **Seen from above and to the side, never head-on.** These pieces sit on a table
 next to each other. A row of buildings each drawn in flat elevation reads as a
@@ -102,6 +115,31 @@ people, figures, crowd, heroic, grimdark, ruined, apocalyptic, overgrown,
 abandoned, cutaway, floor plan, blueprint, elevation drawing
 ```
 
+## The site side — what a back is, for every tile
+
+A back is the same subject as its face, unbuilt, and it carries three things
+beyond the face's brief. They are standing rules: they apply to every `-site` and
+`-sown` prompt below and are not repeated in each one.
+
+```text
+UNBUILT. The same building, on the same ground, seen from the same angle and the
+same distance, with the work not finished. What that means depends on the
+building: a frame raised and the roof half on, walls to waist height, a pit dug
+and shored, a field drilled and not yet green. Enough of it is there that the
+finished thing is recognisable from the same silhouette; enough is missing that
+nobody could mistake it for done.
+
+SETTING OUT. The plot is pegged and lined: fine dashed survey lines running out
+past the building and a small star at each station, drawn in thin ink over the
+ground and over nothing that matters. This is the deck's signature for a site and
+it goes on every one of them. It is the fastest thing on the piece to read at
+seventeen millimetres and it is what says PLANNED rather than RUINED.
+
+THE WORK IS PAUSED, NOT ABANDONED. Tools set down where somebody left them,
+material stacked ready and squared up, fresh-cut timber, turned earth still dark.
+Nothing weathered, nothing overgrown, nothing collapsed, nobody in it.
+```
+
 ---
 
 # Housing
@@ -122,6 +160,23 @@ half of the page with its path running down out of the lower edge. Nothing
 in any corner.
 ```
 
+## tile-hut-site — one cell, square
+
+```text
+[PREAMBLE]
+
+The hut half raised. The log walls are up to the eaves on three sides and the
+roof is only half thatched: bare rafters and a ridge pole stand open on the near
+side, with a ladder of poles lashed up the pitch. No chimney yet - the stone is
+not laid. An axe stood in the chopping block and three split rounds beside it.
+The doorway is a gap with two posts and no lintel. Wash: ochre on the thatch
+that is on, grey-green on the grass, flat.
+
+FRAMING. Square plate, ground to all four edges. The hut in the upper half with
+the beaten path running down out of the lower edge, matching the finished face
+so the two turn over onto each other. Nothing in any corner.
+```
+
 ## tile-timber-house — two cells, 3:2 landscape
 
 ```text
@@ -139,6 +194,24 @@ woodstore and fence running right, so the piece reads across rather than up.
 Ridge line kept in the upper third.
 ```
 
+## tile-timber-house-site — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+The timber house part built. A stone footing course is laid and the sawn frame
+stands on it - corner posts, plates and studs, braced and pegged, open to the
+sky. Two rafters up at the near gable and the rest stacked. The shingles are in
+banded bundles on the ground, the chimney is a heap of squared stone, and the
+paling fence is posts with no rails yet. A saw horse with a plank on it and a
+mallet resting there. Wash: ochre on the fresh timber, grey-green on the grass,
+flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Frame left of centre, timber
+stacks and fence posts running right, matching the finished face so the two turn
+over onto each other. Ridge line kept in the upper third.
+```
+
 ## tile-brick-house — three cells, square
 
 ```text
@@ -154,6 +227,24 @@ cold slate blue on the door, grey-green on the yard, flat.
 FRAMING. Square plate, ground to all four edges. House in the upper two
 thirds, yard behind and to the right, cobbles running out of the lower edge.
 Chimney well inside the top margin; nothing in any corner.
+```
+
+## tile-brick-house-site — three cells, square
+
+```text
+[PREAMBLE]
+
+The brick house at first-floor height. The walls are up about two thirds with a
+ragged tooth left at each corner where the next courses will bond in, window
+openings arched over timber centring still in place, and no roof at all - just
+the joists across. A plank scaffold on lashed poles with a mortar board and a
+bucket on it. Stacks of brick under sacking, a heap of sand, a slaked-lime tub.
+The yard wall is a trench with a footing in it. Wash: rust red on the laid
+brick, cold slate blue on the tools, grey-green on the ground, flat.
+
+FRAMING. Square plate, ground to all four edges. House in the upper two thirds,
+yard behind and to the right, cobbles unlaid and running out of the lower edge,
+matching the finished face. Scaffold poles well inside the top margin.
 ```
 
 ## tile-manor — four cells, 3:2 landscape
@@ -177,6 +268,24 @@ estate rather than a large cottage. Chimneys well inside the top margin.
 
 # Ground and crops
 
+## tile-manor-site — four cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+The manor as a shell. Dressed stone up to the first-floor string course with the
+three gables not started, window openings square and empty, and a full timber
+scaffold of poles and lashed platforms round two faces with a hoist gin at one
+corner. Squared blocks laid out in rows on the grass, waiting to go up. The
+kitchen garden is beds marked with pegs and line and nothing growing; the sweep
+is bare subsoil with cart ruts; the avenue is four staked saplings. Wash: cold
+slate blue on the stone, ochre on the scaffold, grey-green on the ground, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Shell centre and left, laid-out
+stone and pegged garden filling the right, matching the finished face. Scaffold
+tops well inside the top margin.
+```
+
 ## tile-farm — two cells, 3:2 landscape
 
 ```text
@@ -192,6 +301,24 @@ grass beyond the fence, flat.
 FRAMING. Landscape 3:2, ground to all four edges. Barn along the top, yard
 across the middle and bottom, gate at the lower right. The fields are
 separate tiles and must NOT appear here.
+```
+
+## tile-farm-site — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+The steading going up. The barn is a bent frame of crucks and tie beams with the
+first bundles of thatch on the near end only; the cart shed is four posts and a
+plate. The yard is turned earth not yet trodden hard, with the cart standing
+loaded with straw rather than backed in. The stone trough lies on its side where
+it was rolled off the sledge. The gate is hung and the fence is posts with no
+rails. Wash: ochre on the raw timber and thatch, rust red on the cart, grey-green
+beyond, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Barn along the top, open yard
+across the middle and bottom, gate at the lower right, matching the finished
+face. The fields are separate tiles and must NOT appear here.
 ```
 
 ## tile-pasture — four cells, 3:2 landscape
@@ -212,6 +339,24 @@ piece; shelter in the upper left, trough at the centre right, animals spread
 across the middle band. Nothing important in any corner.
 ```
 
+## tile-pasture-site — four cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+The pasture being fenced. Post holes dug in a line with the spoil beside each,
+posts standing in about half of them, rails leaning in bundles against the set
+ones, and the far side of the run still open ground. The trough is a dry
+stone-lined pit with no water in it and the gutter is a split log not yet hung.
+The field shelter is four poles and a ridge with no thatch. A post-hole spade and
+a maul left in the grass. No animals at all - the whole point is that nothing can
+be put in it yet. Wash: grey-green on the grass, ochre on the raw posts, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. The unfinished fence line frames
+the piece; shelter frame upper left, dry trough centre right, matching the
+finished face. Nothing important in any corner.
+```
+
 ## tile-crop-grain — one cell, square
 
 ```text
@@ -225,6 +370,23 @@ Wash: ochre on the ears, grey-green on the stems and margin, flat.
 
 FRAMING. Square plate, crop to all four edges. Drills run corner to corner so
 the pattern survives the hexagonal cut. No horizon, no sky, no building.
+```
+
+## tile-crop-grain-sown — one cell, square
+
+```text
+[PREAMBLE]
+
+One field just drilled with grain and not yet green. Straight seed furrows in
+freshly turned earth running diagonally across the whole page, the ridges still
+sharp and dark, a scatter of straw and a rook or two working the tilth. A harrow
+left at the headland where the last pass finished. Nothing standing, no ears, no
+colour but earth. Wash: ochre on the turned soil, grey-green only at the trodden
+margin, flat.
+
+FRAMING. Square plate, earth to all four edges. Furrows corner to corner,
+matching the ripe face so the two turn over onto each other. No horizon, no sky,
+no building.
 ```
 
 ## tile-crop-vegetables — one cell, square
@@ -242,6 +404,21 @@ FRAMING. Square plate, ground to all four edges. Beds run corner to corner.
 No horizon, no sky, no building.
 ```
 
+## tile-crop-vegetables-sown — one cell, square
+
+```text
+[PREAMBLE]
+
+One vegetable plot just made up and not yet sprouted. Beds ridged and raked
+smooth in ruled rows running diagonally across the page, a line of string on two
+pegs down one bed, and a dibber left standing in the soil. The bean poles are
+crossed and tied but bare. A shallow drill open along one bed with the seed not
+yet covered. Wash: ochre on the raked earth, grey-green on the poles, flat.
+
+FRAMING. Square plate, ground to all four edges. Beds corner to corner, matching
+the grown face. No horizon, no sky, no building.
+```
+
 ## tile-crop-flax — one cell, square
 
 ```text
@@ -255,6 +432,21 @@ Wash: cold slate blue on the flowers, grey-green on the stems, flat.
 
 FRAMING. Square plate, crop to all four edges. Drills corner to corner. No
 horizon, no sky, no building.
+```
+
+## tile-crop-flax-sown — one cell, square
+
+```text
+[PREAMBLE]
+
+One field just sown with flax and not yet up. Fine tilth harrowed to a
+near-level surface - much smoother than a grain drilling, which is what tells the
+two apart at this stage - with the seed broadcast and a light chain harrow drawn
+diagonally across, leaving faint parallel combing. A seed hopper on its strap
+left at the field edge. Nothing standing. Wash: ochre on the fine soil, flat.
+
+FRAMING. Square plate, earth to all four edges. Combing corner to corner,
+matching the flowering face. No horizon, no sky, no building.
 ```
 
 ## tile-crop-cotton — one cell, square
@@ -271,6 +463,21 @@ paper for the bolls, flat.
 
 FRAMING. Square plate, ground to all four edges. Rows corner to corner. No
 horizon, no sky, no building.
+```
+
+## tile-crop-cotton-sown — one cell, square
+
+```text
+[PREAMBLE]
+
+One cotton field just set and not yet grown. Wide ridged rows on dry earth, the
+ridges freshly drawn and the furrows between them clean - the wide spacing is the
+identity of this tile at every stage. Seed set in shallow holes along each ridge,
+one or two marked with a stone. The picking basket standing empty at the row end.
+Wash: ochre on the dry earth, flat.
+
+FRAMING. Square plate, ground to all four edges. Rows corner to corner, matching
+the picking face. No horizon, no sky, no building.
 ```
 
 ## tile-crop-hops — one cell, square
@@ -293,6 +500,22 @@ they are meant to be cut by it. Rows corner to corner.
 
 # Working buildings
 
+## tile-crop-hops-sown — one cell, square
+
+```text
+[PREAMBLE]
+
+One hop garden just planted. The poles are set in their grid and the twine is
+strung between them - the height against everything else is still the identity of
+this tile - but the bines are only new sets at the foot of each pole, a hand
+high, with nothing climbing yet. Bare trodden earth between the rows and a bundle
+of spare poles lying on the ground. Wash: ochre on the poles, grey-green only at
+the new sets, flat.
+
+FRAMING. Square plate, ground to all four edges. Poles run to the top edge - they
+are meant to be cut by it - matching the grown face. Rows corner to corner.
+```
+
 ## tile-sawmill — two cells, 3:2 landscape
 
 ```text
@@ -308,6 +531,23 @@ fresh-cut ends, cold slate blue on the blade and ironwork, flat.
 FRAMING. Landscape 3:2, ground to all four edges. Mill left of centre, log
 deck and lumber stack running right. Roof ridge inside the upper third; the
 piece must read across.
+```
+
+## tile-sawmill-site — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+The sawmill as a frame. Heavy sill beams bedded on stone pads and the main posts
+up with the tie beams across, no roof boards, and the saw carriage not yet in -
+only its track laid. The pit wheel lies on its side on the grass with its shaft
+beside it. The log deck holds one trunk, chained and waiting. A drift of fresh
+offcuts where the frame was cut to length, and a broadaxe left in a beam. Wash:
+ochre on the raw timber, cold slate blue on the ironwork, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Frame left of centre, log deck
+and the wheel on the ground running right, matching the finished face. Ridge
+inside the upper third; the piece must read across.
 ```
 
 ## tile-warehouse — three cells, square
@@ -327,6 +567,24 @@ middle and upper page; the loading apron and its crates run out of the lower
 edge. Hoist beam well inside the top margin.
 ```
 
+## tile-warehouse-site — three cells, square
+
+```text
+[PREAMBLE]
+
+The storehouse at plinth and frame. The staddle stones are set and levelled in
+their rows, the sill beams and floor joists are across them, and the wall frame
+is up on two sides only - open studwork you can see straight through. No boards,
+no tar, no doors: the gable hoist beam lies on the ground with its pulley block
+beside it. Stacks of tarred board under a weighted sheet, and the loading apron
+is bare earth with one crate on it. Wash: cold slate blue on the plinth stones,
+ochre on the raw frame and boards, flat.
+
+FRAMING. Square plate, ground to all four edges. The frame fills the middle and
+upper page; the apron runs out of the lower edge, matching the finished face.
+Nothing in any corner.
+```
+
 ## tile-granary — three cells, square
 
 ```text
@@ -342,4 +600,22 @@ grey-green on the ground, flat.
 FRAMING. Square plate, ground to all four edges. The store sits high on the
 page with clear daylight under its floor; ladder and sacks run down to the
 lower edge. Nothing in any corner.
+```
+
+## tile-granary-site — three cells, square
+
+```text
+[PREAMBLE]
+
+The granary being raised. The staddle stones stand in their grid with the
+mushroom caps on and the floor frame laid across them - the gap underneath is
+already the clearest thing about it and must read even here. Two walls
+weatherboarded, two still open frame. No roof, no ladder up, no vent. The ladder
+lies on the grass and the shingles are bundled beside it, and one sack of grain
+stands by, waiting. Wash: ochre on the boards and sacks, cold slate blue on the
+staddle stones, grey-green on the ground, flat.
+
+FRAMING. Square plate, ground to all four edges. The frame sits high with clear
+daylight under its floor; the ladder and sacks run down to the lower edge,
+matching the finished face. Nothing in any corner.
 ```
