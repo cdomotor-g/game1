@@ -150,17 +150,37 @@ about the piece is derived, including which page its plate is drawn on.
 
 **No tile carries a number.** Same rule as the cards, same reason: everything that
 moves is counted on a board, and the mini-map's HOLDINGS panel already has the
-rows. The face is the picture and the name; the back is the same building with
-the work not yet done, and **the same name again**. The back said SITE once,
-which told a player what the picture already told them and withheld the one thing
-that side was not saying - which tile it is. What survives of that word is the
-back plate's id suffix (`tile-hut-site`, `tile-crop-grain-sown`), and naming the
-plate is the whole of its job now.
+rows. The face is the picture and the name; the back is that same picture with the
+colour dropped, and **the same name again**.
 
-**Both sides are drawn, so a tile is two mint subjects.** Not one subject with two
-plates - one plate per subject is the mint's whole model, and a second plate hung
-off the first would still need its own brief, framing entry and step. The back's
-id is the tile's plus its own word: `tile-hut-site`, `tile-crop-grain-sown`.
+The back said SITE once, and that word was taken out because the picture already
+told a player what it meant while withholding the one thing it did not - which
+tile this is. That argument was conditional on the back being a *drawn* unbuilt
+picture, and it does not survive the colour drop: a colourless finished building
+does not say unbuilt on its own. So the load moved to the band rather than back
+onto a word - **hollow on the back, solid on the face**, same name, same corner,
+same ink. One glance says which way up the piece is, and it costs no picture and
+adds no second text element to a 17 mm hex. The state (`site`, `sown`) is still
+the true word for what that side means and is still kept, in
+`data/buildingtiles.json`; it names nothing and is printed on nothing.
+
+**One plate is drawn, so a tile is one mint subject.** The back is the face's own
+plate with the colour run not laid on - soot on tallow, the key block pulled
+before the colour blocks - and its name band drawn hollow instead of solid. No
+second brief, no second framing entry, no second step.
+
+It was two subjects until the back kept failing the one rule that matters most
+here: **the two sides must turn over onto each other.** Two separately drawn
+plates have to be argued into that agreement every time and fall out of it for
+free; one plate printed two ways cannot drift, because it is one plate. The rule
+is kept by construction now, which is the turn `draw-item.mjs` and `draw-map.mjs`
+already took one storey up. What it costs is the staged material that said PAUSED
+rather than RUINED; the colour-dropped face says NOT YET instead, and that was
+bought knowingly for half the plates and half the aiming.
+
+`platesOf` in `tools/lib/tiles.mjs` is the one place that counts a tile's plates.
+The mint queue and `validate-data` both sweep it rather than writing out a list of
+sides - which is exactly how those two came apart last time.
 
 **The name band hugs one edge and the type runs parallel to it.** It was a strip
 ruled corner to corner across the widest row, which is the longest band a hexagon

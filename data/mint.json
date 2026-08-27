@@ -254,7 +254,7 @@
       "builds": [
         "docs/tiles/ - tools/build-tiles.mjs, a face and a back for every tile"
       ],
-      "$twoSubjectsPerTile": "A tile is TWO subjects on this line, not one: the building finished, and the same ground with the work not yet done. They are not one subject with two plates - the mint's whole model is one plate per subject, and a second plate hung off the first would still need its own brief, its own framing entry and its own step, which is a subject. The back's id is the tile's plus its own word: `tile-hut-site`, `tile-crop-grain-sown`.",
+      "$oneSubjectPerTile": "A tile is ONE subject on this line, not two. It was two while the back was drawn - the building finished, and the same ground with the work not yet done - and the back is not drawn any more: it is the face's own plate with the colour run not laid on, soot on tallow, its name band hollow instead of solid. There is no second picture, so there is no second brief, no second framing entry and no second step, which is to say no second subject.\n\nThe reason is the rule it kept breaking. The two sides have to turn over onto each other - same viewpoint, same distance, the building in the same place on the page - and two separately drawn plates have to be argued into that every time and drift out of it for free. One plate printed two ways cannot drift. tools/lib/tiles.mjs platesOf is the single place that arithmetic lives; the mint queue and validate-data both sweep it rather than writing out a list of sides, which is how those two came apart the last time this changed.",
       "checks": [
         "node tools/validate-data.mjs",
         "node tools/validate-art.mjs",

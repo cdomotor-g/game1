@@ -15,7 +15,7 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 61/71 · maps 1/1 · building tiles 2/108**
+**cards 61/71 · maps 1/1 · building tiles 1/54**
 
 > **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 61 of 71 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
@@ -109,127 +109,74 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**2 of 108 minted.** 80 waiting on a brief, 26 waiting on art, 0 waiting on frame.
+**1 of 54 minted.** 40 waiting on a brief, 13 waiting on art, 0 waiting on frame.
 
-### 1 · WRITE — the designer — 80 tiles
+### 1 · WRITE — the designer — 40 tiles
 
 These exist in the data with no brief. Write one into `docs/art/prompts/` under the plate id, following the shared preamble at the top of that file and the contract in `docs/art/09-framing-and-composition.md`.
 
 | Code | Tile | Category | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
 | `lumber-camp` | Lumber Camp | Extraction | `tile-lumber-camp` | · | · | · |
-| `lumber-camp-site` | Lumber Camp, site | Extraction | `tile-lumber-camp-site` | · | · | · |
 | `quarry` | Quarry | Extraction | `tile-quarry` | · | · | · |
-| `quarry-site` | Quarry, site | Extraction | `tile-quarry-site` | · | · | · |
 | `clay-pit` | Clay Pit | Extraction | `tile-clay-pit` | · | · | · |
-| `clay-pit-site` | Clay Pit, site | Extraction | `tile-clay-pit-site` | · | · | · |
 | `sand-pit` | Sand Pit | Extraction | `tile-sand-pit` | · | · | · |
-| `sand-pit-site` | Sand Pit, site | Extraction | `tile-sand-pit-site` | · | · | · |
 | `mine` | Mine | Extraction | `tile-mine` | · | · | · |
-| `mine-site` | Mine, site | Extraction | `tile-mine-site` | · | · | · |
 | `oil-derrick` | Oil Derrick | Extraction | `tile-oil-derrick` | · | · | · |
-| `oil-derrick-site` | Oil Derrick, site | Extraction | `tile-oil-derrick-site` | · | · | · |
 | `well` | Well | Extraction | `tile-well` | · | · | · |
-| `well-site` | Well, site | Extraction | `tile-well-site` | · | · | · |
 | `orchard` | Orchard | Extraction | `tile-orchard` | · | · | · |
-| `orchard-site` | Orchard, site | Extraction | `tile-orchard-site` | · | · | · |
 | `vineyard` | Vineyard | Extraction | `tile-vineyard` | · | · | · |
-| `vineyard-site` | Vineyard, site | Extraction | `tile-vineyard-site` | · | · | · |
 | `apiary` | Apiary | Extraction | `tile-apiary` | · | · | · |
-| `apiary-site` | Apiary, site | Extraction | `tile-apiary-site` | · | · | · |
 | `dock` | Dock | Extraction | `tile-dock` | · | · | · |
-| `dock-site` | Dock, site | Extraction | `tile-dock-site` | · | · | · |
 | `charcoal-kiln` | Charcoal Kiln | Production | `tile-charcoal-kiln` | · | · | · |
-| `charcoal-kiln-site` | Charcoal Kiln, site | Production | `tile-charcoal-kiln-site` | · | · | · |
 | `smelter` | Smelter | Production | `tile-smelter` | · | · | · |
-| `smelter-site` | Smelter, site | Production | `tile-smelter-site` | · | · | · |
 | `steelworks` | Steelworks | Production | `tile-steelworks` | · | · | · |
-| `steelworks-site` | Steelworks, site | Production | `tile-steelworks-site` | · | · | · |
 | `brickworks` | Brickworks | Production | `tile-brickworks` | · | · | · |
-| `brickworks-site` | Brickworks, site | Production | `tile-brickworks-site` | · | · | · |
 | `glassworks` | Glassworks | Production | `tile-glassworks` | · | · | · |
-| `glassworks-site` | Glassworks, site | Production | `tile-glassworks-site` | · | · | · |
 | `blacksmith` | Blacksmith | Production | `tile-blacksmith` | · | · | · |
-| `blacksmith-site` | Blacksmith, site | Production | `tile-blacksmith-site` | · | · | · |
 | `carpenter` | Carpenter's Shop | Production | `tile-carpenter` | · | · | · |
-| `carpenter-site` | Carpenter's Shop, site | Production | `tile-carpenter-site` | · | · | · |
 | `weaver` | Weaver's Shed | Production | `tile-weaver` | · | · | · |
-| `weaver-site` | Weaver's Shed, site | Production | `tile-weaver-site` | · | · | · |
 | `tannery` | Tannery | Production | `tile-tannery` | · | · | · |
-| `tannery-site` | Tannery, site | Production | `tile-tannery-site` | · | · | · |
 | `tailor` | Tailor | Production | `tile-tailor` | · | · | · |
-| `tailor-site` | Tailor, site | Production | `tile-tailor-site` | · | · | · |
 | `mill` | Mill | Production | `tile-mill` | · | · | · |
-| `mill-site` | Mill, site | Production | `tile-mill-site` | · | · | · |
 | `bakery` | Bakery | Production | `tile-bakery` | · | · | · |
-| `bakery-site` | Bakery, site | Production | `tile-bakery-site` | · | · | · |
 | `butcher` | Butcher | Production | `tile-butcher` | · | · | · |
-| `butcher-site` | Butcher, site | Production | `tile-butcher-site` | · | · | · |
 | `dairy` | Dairy | Production | `tile-dairy` | · | · | · |
-| `dairy-site` | Dairy, site | Production | `tile-dairy-site` | · | · | · |
 | `brewery` | Brewery | Production | `tile-brewery` | · | · | · |
-| `brewery-site` | Brewery, site | Production | `tile-brewery-site` | · | · | · |
 | `winery` | Winery | Production | `tile-winery` | · | · | · |
-| `winery-site` | Winery, site | Production | `tile-winery-site` | · | · | · |
 | `market` | Market | Civic | `tile-market` | · | · | · |
-| `market-site` | Market, site | Civic | `tile-market-site` | · | · | · |
 | `trading-house` | Trading House | Civic | `tile-trading-house` | · | · | · |
-| `trading-house-site` | Trading House, site | Civic | `tile-trading-house-site` | · | · | · |
 | `town-hall` | Town Hall | Civic | `tile-town-hall` | · | · | · |
-| `town-hall-site` | Town Hall, site | Civic | `tile-town-hall-site` | · | · | · |
 | `guildhall` | Guildhall | Civic | `tile-guildhall` | · | · | · |
-| `guildhall-site` | Guildhall, site | Civic | `tile-guildhall-site` | · | · | · |
 | `inn` | Inn | Civic | `tile-inn` | · | · | · |
-| `inn-site` | Inn, site | Civic | `tile-inn-site` | · | · | · |
 | `infirmary` | Infirmary | Civic | `tile-infirmary` | · | · | · |
-| `infirmary-site` | Infirmary, site | Civic | `tile-infirmary-site` | · | · | · |
 | `barracks` | Barracks | Military | `tile-barracks` | · | · | · |
-| `barracks-site` | Barracks, site | Military | `tile-barracks-site` | · | · | · |
 | `watchtower` | Watchtower | Military | `tile-watchtower` | · | · | · |
-| `watchtower-site` | Watchtower, site | Military | `tile-watchtower-site` | · | · | · |
 | `palisade` | Palisade | Military | `tile-palisade` | · | · | · |
-| `palisade-site` | Palisade, site | Military | `tile-palisade-site` | · | · | · |
 | `alchemist` | Alchemist | Arcane | `tile-alchemist` | · | · | · |
-| `alchemist-site` | Alchemist, site | Arcane | `tile-alchemist-site` | · | · | · |
 | `shrine` | Shrine | Arcane | `tile-shrine` | · | · | · |
-| `shrine-site` | Shrine, site | Arcane | `tile-shrine-site` | · | · | · |
 | `harbour` | Harbour | Infrastructure | `tile-harbour` | · | · | · |
-| `harbour-site` | Harbour, site | Infrastructure | `tile-harbour-site` | · | · | · |
 | `rail-depot` | Rail Depot | Infrastructure | `tile-rail-depot` | · | · | · |
-| `rail-depot-site` | Rail Depot, site | Infrastructure | `tile-rail-depot-site` | · | · | · |
 
-### 2 · DRAW — the artist — 26 tiles
+### 2 · DRAW — the artist — 13 tiles
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Tile | Category | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
 | `timber-house` | Timber House | Housing | `tile-timber-house` | ✓ | · | · |
-| `timber-house-site` | Timber House, site | Housing | `tile-timber-house-site` | ✓ | · | · |
 | `brick-house` | Brick House | Housing | `tile-brick-house` | ✓ | · | · |
-| `brick-house-site` | Brick House, site | Housing | `tile-brick-house-site` | ✓ | · | · |
 | `manor` | Manor | Housing | `tile-manor` | ✓ | · | · |
-| `manor-site` | Manor, site | Housing | `tile-manor-site` | ✓ | · | · |
 | `farm` | Farm | Extraction | `tile-farm` | ✓ | · | · |
-| `farm-site` | Farm, site | Extraction | `tile-farm-site` | ✓ | · | · |
 | `pasture` | Pasture | Extraction | `tile-pasture` | ✓ | · | · |
-| `pasture-site` | Pasture, site | Extraction | `tile-pasture-site` | ✓ | · | · |
 | `sawmill` | Sawmill | Production | `tile-sawmill` | ✓ | · | · |
-| `sawmill-site` | Sawmill, site | Production | `tile-sawmill-site` | ✓ | · | · |
 | `warehouse` | Warehouse | Storage | `tile-warehouse` | ✓ | · | · |
-| `warehouse-site` | Warehouse, site | Storage | `tile-warehouse-site` | ✓ | · | · |
 | `granary` | Granary | Storage | `tile-granary` | ✓ | · | · |
-| `granary-site` | Granary, site | Storage | `tile-granary-site` | ✓ | · | · |
 | `crop-grain` | Grain Field | Fields | `tile-crop-grain` | ✓ | · | · |
-| `crop-grain-sown` | Grain Field, sown | Fields | `tile-crop-grain-sown` | ✓ | · | · |
 | `crop-vegetables` | Vegetables Field | Fields | `tile-crop-vegetables` | ✓ | · | · |
-| `crop-vegetables-sown` | Vegetables Field, sown | Fields | `tile-crop-vegetables-sown` | ✓ | · | · |
 | `crop-flax` | Flax Field | Fields | `tile-crop-flax` | ✓ | · | · |
-| `crop-flax-sown` | Flax Field, sown | Fields | `tile-crop-flax-sown` | ✓ | · | · |
 | `crop-cotton` | Cotton Field | Fields | `tile-crop-cotton` | ✓ | · | · |
-| `crop-cotton-sown` | Cotton Field, sown | Fields | `tile-crop-cotton-sown` | ✓ | · | · |
 | `crop-hops` | Hops Field | Fields | `tile-crop-hops` | ✓ | · | · |
-| `crop-hops-sown` | Hops Field, sown | Fields | `tile-crop-hops-sown` | ✓ | · | · |
 
 ### 3 · FRAME — whoever accepts the plate
 
@@ -237,7 +184,7 @@ Nothing waiting.
 
 ### Minted
 
-2 tiles complete: `hut`, `hut-site`.
+1 tile complete: `hut`.
 
 Every minted tile is fully aimed: a `subject` box, a `focal` point and a one-line `note`.
 

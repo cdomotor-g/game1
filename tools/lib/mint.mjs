@@ -21,7 +21,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { plateIdFor } from './plates.mjs';
 import { pngSize } from './png.mjs';
-import { tileSubjects, plateIdOf, formatFor, boxOf, bandOf, largestHexMm } from './tiles.mjs';
+import { tileSubjects, plateIdOf, platesOf, formatFor, boxOf, bandOf, largestHexMm } from './tiles.mjs';
 
 const HERE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -378,23 +378,23 @@ function subjectsOf(root, line) {
        cells, the word on the back - is derived. See lines.buildingtiles
        .$subjectRequiresNote in data/mint.json. */
     for (const tile of tileSubjects(root)) {
-      /* TWO subjects per tile, because a tile is two commissions: the building
-         finished and the same ground with the work not yet done. They are not one
-         subject with two plates - the mint's whole model is one plate per subject,
-         and a second plate hung off the first would need its own brief, its own
-         framing entry and its own step, which is a subject. */
-      for (const which of ['face', 'back']) {
-        const plate = plateIdOf(tile, which);
+      /* ONE subject per tile. It was two while the back was drawn - the building
+         finished, and the same ground with the work not yet done - and the back is
+         not drawn any more: it is the face's plate with the colour run not laid
+         on. There is no second picture, so there is no second brief, no second
+         framing entry and no second step, which is to say no second subject.
+         platesOf is the one place that arithmetic lives. */
+      for (const plate of platesOf(tile)) {
         rows.push({
           id: plate.replace(/^tile-/, ''),
           code: plate.replace(/^tile-/, ''),
-          name: which === 'back' ? `${tile.name}, ${tile.state}` : tile.name,
+          name: tile.name,
           group: tile.group,
           format: formatFor(tile.cells, line.draw?.sizeByFormat),
           plate,
           briefFile: line.brief.file,
           tile,
-          side: which,
+          side: 'face',
           subject: tile,
         });
       }
@@ -440,11 +440,10 @@ export function resolvePlate(root, input) {
     }
   }
   for (const tile of tileSubjects(root)) {
-    for (const which of ['face', 'back']) {
-      const plate = plateIdOf(tile, which);
+    for (const plate of platesOf(tile)) {
       const code = plate.replace(/^tile-/, '');
       if (plate === input || code === input) {
-        return { kind: 'tile', plate, code, deck: null, card: null, tile, side: which };
+        return { kind: 'tile', plate, code, deck: null, card: null, tile, side: 'face' };
       }
     }
   }

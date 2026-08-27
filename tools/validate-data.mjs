@@ -12,7 +12,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { readTiles, tileSubjects, cellsOf, connected, bandOf, groundOf, bandFor, worldHexMm, plateIdOf } from './lib/tiles.mjs';
+import { readTiles, tileSubjects, cellsOf, connected, bandOf, groundOf, bandFor, worldHexMm, plateIdOf, platesOf } from './lib/tiles.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -791,9 +791,10 @@ for (const b of buildings) {
     }
   }
 
-  /* Two plates per tile and no two the same. The back's id is built from its own
-     word, so two words that lowercase alike would quietly collide. */
-  const plates = rows.flatMap((r) => ['face', 'back'].map((w) => plateIdOf(r, w)));
+  /* One plate per tile now - the back is the face printed short - and no two the
+     same. Swept through platesOf rather than a literal list of sides, so this
+     check cannot disagree with the mint queue about how many plates exist. */
+  const plates = rows.flatMap((r) => platesOf(r));
   for (const [id, n] of plates.reduce((m, id) => m.set(id, (m.get(id) ?? 0) + 1), new Map())) {
     if (n > 1) errors.push(`buildingtiles: ${n} tiles want the plate id "${id}"`);
   }

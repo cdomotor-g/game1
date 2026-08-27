@@ -13118,6 +13118,22 @@ window.GAME_DATA = {
         "strokeWidth": 2.4,
         "$note": "The die line, drawn on the ink plate at the same weight the mini-map's field edge is traced at - these two edges are butted against each other on the table, and a tile outlined more heavily than the ground it sits on reads as a sticker."
       },
+      "back": {
+        "$comment": "How the back of a tile is printed. Not a second plate: the face's own plate with the colour run not laid on - the key block pulled before the colour blocks, which is what an unfinished letterpress print is. Declared here because it is INK, exactly like the band and the die line; what a back MEANS is data/buildingtiles.json sides.back.\n\nThese are filter numbers rather than colours, so the palette contract is untouched: nothing new is painted, one thing is printed short. And it is a colour separation, not a blur or a glow - the house style bans soft shading outright, and at seventeen millimetres a softened edge would cost the silhouette the whole deck is built on.",
+        "saturation": 0,
+        "$saturationNote": "Flat spot colour off, black line left standing. Zero rather than a little: a back that kept a trace of ochre reads as a badly printed face rather than a deliberate one.",
+        "duotone": [
+          "ink.soot",
+          "paper.tallow"
+        ],
+        "$duotoneNote": "Desaturating alone leaves the plate as neutral grey on white, which is a photocopy of the tile rather than a printing of it - and it breaks the one palette rule this whole set is built on, that the paper is warm oatmeal and never white. So the grey is mapped straight back onto the deck's own two ends: soot where the ink was, tallow where the paper was. That is not a filter dressed up, it is what a single-colour run IS - one ink on the stock - which is exactly the thing the back is meant to be.\n\nRead from docs/art/palette.json by name rather than typed as hex, for the usual reason: a palette that moved and a filter that did not is a back that no longer matches the paper it is printed on.",
+        "gamma": 0.85,
+        "$gammaNote": "A touch of lift after the map, so the mid tones sit up and the piece does not go muddy at seventeen millimetres. Small on purpose - this is the difference between a light print and a wrong one.",
+        "bandHollow": true,
+        "$bandNote": "The band is OUTLINED on the back and filled on the face, same name, same corner, same angle, and the SAME ink either way - nameBand.tint, solid on the face with the type reversed out of it in paper, and drawn as a rule with the type in it on the back. Nothing new is painted; the two sides are one colour used two ways. That is the whole of what tells the sides apart at a glance, and it is the cheapest possible way to say it: no second band, no second word, no picture given up. See sides.back.$sameNameBothSides in data/buildingtiles.json for why the load sits here rather than on a word.",
+        "bandStrokePerCell": 0.012,
+        "bandTextTint": "85"
+      },
       "nameBand": {
         "heightPerCell": 0.26,
         "fontPerCell": 0.135,
@@ -13128,9 +13144,6 @@ window.GAME_DATA = {
         "edge": "lower-left",
         "$edgeNote": "The band HUGS ONE EDGE and the type runs parallel to it. It used to be a horizontal strip ruled corner to corner along the widest row - the longest band a hexagon can carry, and wrong for exactly that reason: a bar through the middle of one small drawing splits it into two unrelated halves, which is what it looked like. Tucked against an edge, the picture is whole and the label sits in a corner of it.\n\nAlways the LOWER-LEFT edge, and always the bottom-most then left-most cell that has one open. Fixed rather than chosen per tile: fifty-four pieces on a table want their labels in the same place at the same angle, and a rule that hunted for whichever edge had most room would tilt one tile's name against its neighbour's for no reason a player could see.\n\nLower-left rather than lower-right, which is where it started. Every plate in this deck is drawn from thirty degrees above and thirty to the left, which puts the lit face and the business of the building - the door, the working end, whatever the tile is actually of - on the right, and leaves the bottom-left as foreground ground. That is the corner a label can have.\n\nAnd because it is fixed, it is a thing the ARTIST has to be told: the LABEL BAND note appended to every commission names the corner and says to keep the important detail out of it. Not to leave it empty - a bare corner on a small drawing looks like a mistake - just to put nothing there that the piece needs. The geometry is bandOf in tools/lib/tiles.mjs.",
         "$fitNote": "fontPerCell is the size a name is set at when it fits. When it does not, it is set at whatever DOES fit - worked out from the band's own midline and the number of letters in the name. Nothing is ever clipped and nothing runs over the cut.\n\nThe edge band costs length and the cost is not small: its midline is one edge plus h/sqrt(3), about 73% of what the corner-to-corner strip carried, and nineteen names stopped fitting the day it moved. That is the trade and it is the right way round - a name that has to be shortened is a cheaper problem than a picture that has to be cut in half.\n\nminFontMm is the floor, and it is a millimetre rather than a fraction on purpose: it is not a proportion of anything in this game, it is the smallest type a press will hold on board stock. A name that cannot be set above it fails the build, and the answer is a `shortName` on the building rather than a smaller type."
-      },
-      "back": {
-        "$note": "A tile's back is a DRAWN PLATE, not a generated one: the same building on the same ground with the work not yet done. So there is nothing here about how to compose it - it is a picture, cropped and banded exactly like the face, which is why tools/build-tiles.mjs has one side function and not two.\n\nIt was generated once, out of an engine-turned lathe borrowed from the card backs, the word, and a row of the world map's terrain marks saying what ground the building could stand on. The marks were the good part of that and they have gone: a drawn plate leaves a 17 mm piece no room for a rules reference at a legible size, and what ground a building may stand on is in data/buildings.json and prints in the rulebook annex. What the plate carries instead is the sense of it, which is better - a site is drawn on the ground it belongs on.\n\nBoth sides carry the SAME name. The back said SITE (or SOWN) once, which told a player something the picture already tells them - it is a frame with no roof on it - and withheld the one thing that side was not saying, which is which tile this is. What survives of that word is the back plate's id suffix, data/buildingtiles.json sides.back.states, and naming the plate is now the whole of its job."
       },
       "sheet": {
         "widthMm": 210,
@@ -13419,7 +13432,7 @@ window.GAME_DATA = {
         "builds": [
           "docs/tiles/ - tools/build-tiles.mjs, a face and a back for every tile"
         ],
-        "$twoSubjectsPerTile": "A tile is TWO subjects on this line, not one: the building finished, and the same ground with the work not yet done. They are not one subject with two plates - the mint's whole model is one plate per subject, and a second plate hung off the first would still need its own brief, its own framing entry and its own step, which is a subject. The back's id is the tile's plus its own word: `tile-hut-site`, `tile-crop-grain-sown`.",
+        "$oneSubjectPerTile": "A tile is ONE subject on this line, not two. It was two while the back was drawn - the building finished, and the same ground with the work not yet done - and the back is not drawn any more: it is the face's own plate with the colour run not laid on, soot on tallow, its name band hollow instead of solid. There is no second picture, so there is no second brief, no second framing entry and no second step, which is to say no second subject.\n\nThe reason is the rule it kept breaking. The two sides have to turn over onto each other - same viewpoint, same distance, the building in the same place on the page - and two separately drawn plates have to be argued into that every time and drift out of it for free. One plate printed two ways cannot drift. tools/lib/tiles.mjs platesOf is the single place that arithmetic lives; the mint queue and validate-data both sweep it rather than writing out a list of sides, which is how those two came apart the last time this changed.",
         "checks": [
           "node tools/validate-data.mjs",
           "node tools/validate-art.mjs",
@@ -13974,7 +13987,7 @@ window.GAME_DATA = {
       "adjacency": "A field tile must touch the farm's footprint, or another of that farm's field tiles - so a farm's fields are one run of ground rather than four squares scattered across the sheet."
     },
     "sides": {
-      "$comment": "A tile is double-sided and BOTH SIDES ARE DRAWN. The face is the building finished; the back is the same ground with the work not yet done. That is what makes the second side worth printing, and it means a tile is two commissions rather than one - data/mint.json carries two subjects for every tile, and the mint runs them through the same four steps as anything else.\n\nA building takes rounds to raise (buildPoints, minRounds), so the tile goes down back-up the round work starts and is turned over when the effort is paid. A field is not built but sown, and does not become a field of grain until it has stood there for its maturation rounds - same flip, same moment, a truer word on the back.\n\nThe back was GENERATED once: an engine-turned lathe, the word, and a row of the world map's terrain marks saying what ground the building could stand on. The marks were the good part of it and they are gone. A drawn plate leaves a 17 mm piece no room for a rules reference at a legible size, and where a building may stand is in data/buildings.json and prints in the rulebook annex. What the picture carries instead is the sense of it: a site is drawn on the ground it belongs on, which is the thing the marks were reaching for.",
+      "$comment": "A tile is double-sided and ONE PLATE IS DRAWN. The face is the building finished; the back is that same plate with the colour run not laid on - black line on bare paper - and its name band drawn hollow instead of solid. So a tile is ONE commission, not two, and data/mint.json carries one subject for it.\n\nThe back was DRAWN once, as a second commission: the same building part-raised, its frame open, its material stacked around it. It is not any more, and the reason is the rule it kept breaking. The two sides have to turn over onto each other - same viewpoint, same distance, the building in the same place on the page - so that a player flipping the tile sees the picture settle rather than jump. Two separately drawn plates have to be argued into that agreement every time and drift out of it for free; one plate printed two ways cannot drift, because it is one plate. The rule is now kept by construction rather than by vigilance, which is the same turn tools/draw-item.mjs and tools/draw-map.mjs already took one storey up: the picture is an output, not a second hand-made thing.\n\nWhat is spent for it is the staged material - the squared-up timber, the sawhorse, the tool set down - which was this deck's signature for a site and said PAUSED rather than RUINED, because nobody stacks material at a ruin. The colour-dropped face says NOT YET instead. That is a thinner statement and it was chosen knowingly, for half the plates, half the aiming and a rule that cannot come apart.\n\nA building takes rounds to raise (buildPoints, minRounds), so the tile goes down back-up the round work starts and is turned over when the effort is paid. A field is not built but sown, and does not become a field of grain until it has stood there for its maturation rounds - same flip, same moment.",
       "face": {
         "carries": [
           "the plate, cropped to the footprint and clipped to the cut line",
@@ -13984,16 +13997,18 @@ window.GAME_DATA = {
         "$bandNote": "The band hugs the LOWER-LEFT edge and the type runs parallel to it - the same corner on every tile in the set. It used to be a strip ruled corner to corner across the widest row, which was the longest band a hexagon can carry and cut the picture in half; tucked against an edge, the picture is whole.\n\nThe corner is chosen and it is the artist's business, not only the tool's: every plate here is drawn from thirty degrees above and thirty to the left, which puts the lit face and the working end of a building on the right and leaves the bottom-left as foreground ground. That is the corner a label can have, and the brief tells the artist to keep the important detail out of it - not to leave it empty, just to put nothing there the piece needs. How the band is drawn is data/components.json buildingTile.nameBand."
       },
       "back": {
+        "derivedFrom": "face",
         "carries": [
-          "the plate of the same building unbuilt - part-raised, its frame open, its material stacked around it",
-          "the tile's own name, in the same band in the same place as the face's"
+          "the face's own plate, with the colour run not laid on: black line on bare paper",
+          "the tile's own name, in the same band in the same place as the face's, drawn hollow"
         ],
-        "$sameNameBothSides": "Both sides carry the SAME name. The back said SITE (or SOWN) once, which told a player something they could already see - the picture is a frame with no roof on it - and cost them the one thing the piece was not telling them from that side, which is what it is. A tile face down in a tray is now findable by name either way up, and finished from unfinished is a glance at the picture.",
+        "$whyNotDrawn": "A back is not a commission. It is the face plate printed short - the key block pulled before the colour blocks are laid on, which is what an unfinished letterpress print literally is, and so it is the deck's own idiom rather than a filter borrowed from somewhere else. How the colour is dropped is data/components.json buildingTile.back.",
+        "$sameNameBothSides": "Both sides carry the SAME name. The back said SITE (or SOWN) once and that word was taken out because the picture already told a player what it meant - a frame with no roof on it - while withholding the one thing it did not, which is which tile this is.\n\nThat argument was conditional on the back being a DRAWN unbuilt picture, and it does not survive this change: a colour-dropped finished building does not say unbuilt on its own. So the load moved to the band rather than back onto a word. The band is drawn HOLLOW on the back - the same name, in the same corner, at the same angle, outlined instead of filled. One glance says which side is up; it costs no picture area, adds no second text element to a 17 mm hex, and the piece is still findable by name either way up.",
         "states": [
           {
             "for": "buildings",
             "state": "site",
-            "why": "Pegged out and part-raised: what the ground looks like the round the work starts."
+            "why": "Pegged out and not yet raised: what the ground is the round the work starts."
           },
           {
             "for": "fields",
@@ -14001,7 +14016,7 @@ window.GAME_DATA = {
             "why": "A field is not built, it is planted, and it is not a field of grain until it has stood there for its maturation rounds. Same flip, same moment, a truer word for it."
           }
         ],
-        "$stateIsTheFilename": "The state is no longer printed on anything - it is the back plate's id: tile-hut-site, tile-crop-grain-sown. That is what it is for now, and it is worth keeping for that alone: a brief file section headed `## tile-crop-grain-sown` says what the picture is of, where `-back` would only say which side it is on. Changing a state here renames a plate."
+        "$stateIsProseNow": "The state named a plate once - tile-hut-site, tile-crop-grain-sown - and there is no second plate to name. It is kept because it is still the true word for what that side of the piece MEANS, and tools/build-tiles.mjs writes it into the side's <desc> so the artefact says what it is. It is printed on nothing."
       }
     },
     "subjects": {
@@ -16700,21 +16715,6 @@ window.GAME_DATA = {
           0.08,
           0.7,
           0.84
-        ]
-      },
-      "tile-hut-site": {
-        "file": "art/renders/tile-hut-site.png",
-        "width": 1254,
-        "height": 1254,
-        "subject": [
-          0.1,
-          0.13,
-          0.78,
-          0.65
-        ],
-        "focal": [
-          0.56,
-          0.43
         ]
       },
       "tile-hut": {

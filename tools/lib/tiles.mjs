@@ -407,17 +407,32 @@ export function tileSubjects(root = HERE) {
 }
 
 /**
- * A tile's plate id, per SIDE - because a tile is two commissions.
+ * A tile's plate id. ONE per tile, whichever side is asked for.
  *
- * The suffix is the back's STATE rather than a flat `-back`, so a brief file
- * reads `## tile-hut-site` and `## tile-crop-grain-sown` and says what the
- * picture is of instead of only which side it is on. The state is not printed on
- * the piece - both sides carry the tile's own name - so naming the plate is the
- * whole of its job now. It comes from data/buildingtiles.json sides.back.states,
- * and changing one there renames a plate.
+ * It used to be one per SIDE - `tile-hut-site`, `tile-crop-grain-sown` - because
+ * a tile was two commissions. It is one now: the back is the face's plate with
+ * the colour run not laid on, so there is no second picture to name. The `side`
+ * argument is kept because callers still say which side they are drawing and it
+ * would be worse for them to have to know that it no longer matters here.
+ *
+ * The state (`site`, `sown`) survives as prose - it is still the true word for
+ * what that side means - but it names nothing. See data/buildingtiles.json
+ * sides.back.
  */
-export const plateIdOf = (row, side = 'face') =>
-  (side === 'back' ? `tile-${row.id}-${row.state}` : `tile-${row.id}`);
+export const plateIdOf = (row, _side = 'face') => `tile-${row.id}`;
+
+/**
+ * Every DISTINCT plate a tile needs drawn, which is the number the mint queue,
+ * the uniqueness check and the artist all have to agree on.
+ *
+ * Stated once, here, rather than as `['face', 'back'].map(...)` written out at
+ * each of the three call sites - which is exactly how those three drifted apart
+ * the last time this changed.
+ */
+export const platesOf = (row) => [...new Set(SIDES.map((w) => plateIdOf(row, w)))];
+
+/** The sides a tile is printed on. Both are drawn; only one is commissioned. */
+export const SIDES = ['face', 'back'];
 
 /**
  * Which page a tile's plate is drawn on: whichever declared format comes nearest

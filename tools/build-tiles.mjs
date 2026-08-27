@@ -88,6 +88,9 @@ const FLATS = WORLD.mm * U;                 // one cell, across the flats, in un
 const BLEED = T.bleedMm * U;
 const perCell = (k) => T[k] * FLATS;        // a components.json fraction, in units
 
+const BACK = T.back;
+const CELL = FLATS;                         // one cell across the flats, in units
+
 const BAND_H = T.nameBand.heightPerCell * FLATS;
 const BAND_FONT = T.nameBand.fontPerCell * FLATS;
 const MIN_FONT = T.nameBand.minFontMm * U;
@@ -181,7 +184,7 @@ function picture(plate, g) {
  * the cut so it can never overhang a hex it does not belong to, with the name
  * knocked out of it in paper.
  */
-function band(text, g, where) {
+function band(text, g, where, hollow = false) {
   const b = g.band;
   const caps = text.toUpperCase();
   /* The size that fits, never the size we would like. Solved rather than
@@ -198,13 +201,20 @@ function band(text, g, where) {
     );
   }
   const quad = b.quad.map((p) => `${num(p.x)},${num(p.y)}`).join(' L ');
+  /* Filled on the face, OUTLINED on the back. That one difference is the whole
+     of what tells a player which way up the piece is, and it is deliberately the
+     cheapest thing that could do it: no second band, no second word, and not one
+     square millimetre of picture given up on a tile this small. */
+  const plate = hollow
+    ? `<path d="M ${quad} Z" fill="none" stroke="${tint(T.nameBand.tint)}" stroke-width="${num(BACK.bandStrokePerCell * CELL)}" stroke-linejoin="round"/>`
+    : `<path d="M ${quad} Z" fill="${tint(T.nameBand.tint)}"/>`;
   return [
-    `<path d="M ${quad} Z" fill="${tint(T.nameBand.tint)}"/>`,
+    plate,
     `<g transform="rotate(${num(b.midline.angle)} ${num(b.midline.x)} ${num(b.midline.y)})">` +
       `<text x="${num(b.midline.x)}" y="${num(b.midline.y + size * 0.35)}" font-size="${num(size)}" ` +
       `text-anchor="middle" font-family="${SANS}" font-weight="bold" ` +
       `letter-spacing="${num(size * T.nameBand.trackingPerCell / T.nameBand.fontPerCell)}" ` +
-      `fill="${TALLOW}">${esc(caps)}</text></g>`,
+      `fill="${hollow ? tint(BACK.bandTextTint) : TALLOW}">${esc(caps)}</text></g>`,
   ].join('\n    ');
 }
 
@@ -221,6 +231,38 @@ function grime(seed, g) {
    sheet put many tiles in one. `cut` was fine while a tile was only ever alone
    in its own file, and became a bug the moment two shared a page: every tile
    after the first clipped to the first one's outline. */
+/* The colour run, not laid on. A separation rather than an effect: saturation to
+   nothing, then the grey mapped straight back onto the deck's own two ends -
+   soot where the ink was, tallow where the paper was. That is not a filter
+   dressed up as printing, it is what a single-colour run IS, one ink on the
+   stock, which is the thing a back is meant to be.
+
+   Neutral grey on white was the first try and it was wrong twice over: it reads
+   as a photocopy of the tile rather than a printing of it, and it breaks the one
+   rule the whole set is built on - the paper is warm oatmeal and never white.
+
+   No blur, no glow, no soft shading; the house style bans those outright, and a
+   softened edge at seventeen millimetres would cost the silhouette the deck is
+   built on. The numbers are data/components.json buildingTile.back, and the two
+   ends are read from the palette by name so a palette that moves takes the back
+   with it. */
+const channels = (ref) => {
+  const [group, name] = ref.split('.');
+  const hex = palette[group][name].hex.replace('#', '');
+  return [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+};
+const DUOTONE = BACK.duotone.map(channels);   // [ink, paper], each [r, g, b]
+const COLOUR_DROP = `<filter id="colour-drop" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="${BACK.saturation}"/>
+    <feComponentTransfer>
+      ${['R', 'G', 'B'].map((ch, i) =>
+        `<feFunc${ch} type="table" tableValues="${num(DUOTONE[0][i])} ${num(DUOTONE[1][i])}"/>`).join('\n      ')}
+    </feComponentTransfer>
+    <feComponentTransfer>
+      ${['R', 'G', 'B'].map((ch) => `<feFunc${ch} type="gamma" exponent="${BACK.gamma}"/>`).join('\n      ')}
+    </feComponentTransfer>
+  </filter>`;
+
 const shell = (row, g, title, desc, body) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${num(g.w)} ${num(g.h)}" width="${num(g.w)}" height="${num(g.h)}" font-family="${SERIF}">
 <title>${esc(title)}</title>
@@ -243,30 +285,34 @@ ${body}
 function side(row, which) {
   const g = geometryOf(row);
   const plate = plateIdOf(row, which);
-  const clip = `cut-${plate}`;
+  const back = which === 'back';
+  /* One plate, two sides, so the clip id has to carry the side as well - both
+     are on the proof sheet and the index at once, and an id that repeated would
+     clip the second piece to the first one's outline. */
+  const clip = `cut-${plate}-${which}`;
   /* The SAME name on both sides. The back said SITE once, which told a player
      something the picture already tells them and withheld the one thing it does
      not - which tile this is. */
   const label = row.label;
   const { art, waiting } = picture(plate, g);
 
-  const what = which === 'back'
-    ? `The ${row.state} side. A ${row.kind === 'field' ? 'field is laid this way up the round it is sown and turned over when it ripens' : 'building is laid this way up the round its work starts and turned over when the effort is paid'}, so the picture is the same ground with the work not yet done.`
+  const what = back
+    ? `The ${row.state} side. A ${row.kind === 'field' ? 'field is laid this way up the round it is sown and turned over when it ripens' : 'building is laid this way up the round its work starts and turned over when the effort is paid'}. It is the face's own plate with the colour run not laid on, and its name band drawn hollow: the two sides cannot drift apart because they are one picture.`
     : `${row.summary}`;
 
   return {
     waiting,
-    file: which === 'back' ? `back-${row.id}.svg` : `${row.id}.svg`,
-    svg: shell(row, g, `${row.name} — building tile${which === 'back' ? ', back' : ''}`,
+    file: back ? `back-${row.id}.svg` : `${row.id}.svg`,
+    svg: shell(row, g, `${row.name} — building tile${back ? ', back' : ''}`,
       `${what} The ${row.shape} footprint is ${row.cells.length} cell${row.cells.length === 1 ? '' : 's'}, worked out from this ${row.kind === 'field' ? 'crop' : "building's"} own numbers through the ground model in data/buildingtiles.json.${waiting ? ' The window is bare paper: this plate has not been drawn yet, and the tile is a playable blank until it is.' : ''}`,
       `<defs>
-  <clipPath id="${clip}">${g.cells.map((d) => `<path d="${d}" transform="${g.shift}"/>`).join('')}</clipPath>
+  <clipPath id="${clip}">${g.cells.map((d) => `<path d="${d}" transform="${g.shift}"/>`).join('')}</clipPath>${back ? `\n  ${COLOUR_DROP}` : ''}
 </defs>
 
 <!-- ============================================================ WASH -->
 <g id="wash">
   <rect x="0" y="0" width="${num(g.w)}" height="${num(g.h)}" fill="${TALLOW}"/>
-  <g clip-path="url(#${clip})">
+  <g clip-path="url(#${clip})"${back ? ' filter="url(#colour-drop)"' : ''}>
     ${art}
   </g>
 </g>
@@ -277,7 +323,7 @@ function side(row, which) {
        it. Not across the middle: a bar through a small drawing splits it into
        two unrelated halves, which is what the first version looked like -->
   <g clip-path="url(#${clip})">
-    ${band(label, g, `${row.id} ${which}`)}
+    ${band(label, g, `${row.id} ${which}`, back && BACK.bandHollow)}
   </g>
 
   <!-- the die line, traced off the cells rather than drawn over them -->
