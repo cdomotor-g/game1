@@ -1,0 +1,133 @@
+name: Fetch plate
+
+# THE COURIER. A plate is drawn on Hugging Face and has to land in
+# docs/art/renders/ before anything can be built from it. This workflow is the
+# leg between those two places, and it exists because that leg is the one part of
+# the mint nobody could automate from a chat session: the agent that commissions
+# a plate cannot reach huggingface.co (organisation egress policy), and the job
+# that draws it cannot reach this repository without a credential nobody should
+# be pasting into a conversation.
+#
+# A GitHub Action can reach both. So the token stays where a token belongs -
+# Settings -> Secrets and variables -> Actions, on this repository - and the
+# handover is a dispatch rather than somebody dragging a file between two browser
+# tabs. See docs/MINT-SETUP.md.
+#
+# It fetches the FULL plate, not a reduced one. Reduced copies only ever existed
+# to squeeze a picture through a chat window, and nothing here has to.
+
+on:
+  workflow_dispatch:
+    inputs:
+      plate:
+        description: 'Plate id, e.g. tile-warehouse or MOD-02'
+        required: true
+        type: string
+      dataset:
+        description: 'Hugging Face dataset holding the drawn plates'
+        required: false
+        default: 'cdomotor-g/game1-plates'
+        type: string
+      source:
+        description: 'Path within the dataset. Defaults to <plate>.png'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # The plate itself. A private dataset needs the token; a public one ignores
+      # it. --fail so a 404 stops the run here rather than committing an HTML
+      # error page with a .png on the end of it, which is exactly the kind of
+      # thing that gets discovered three weeks later inside a card window.
+      - name: Fetch the plate
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PLATE: ${{ inputs.plate }}
+          DATASET: ${{ inputs.dataset }}
+          SOURCE: ${{ inputs.source }}
+        run: |
+          set -euo pipefail
+          src="${SOURCE:-}"
+          [ -n "$src" ] || src="${PLATE}.png"
+          url="https://huggingface.co/datasets/${DATASET}/resolve/main/${src}"
+          echo "fetching ${url}"
+          curl --fail --location --silent --show-error \
+            ${HF_TOKEN:+--header "Authorization: Bearer ${HF_TOKEN}"} \
+            --output "docs/art/renders/${PLATE}.png" "$url"
+
+      # A truncated download is still a file. This reads the IHDR the same way
+      # the build tools do, so a plate that arrives half-written fails here
+      # instead of being committed and cropped to nothing.
+      - name: Check it is a plate
+        env:
+          PLATE: ${{ inputs.plate }}
+        run: |
+          node --input-type=module -e '
+            import { pngSize } from "./tools/lib/png.mjs";
+            const p = `docs/art/renders/${process.env.PLATE}.png`;
+            const { width, height } = pngSize(p);
+            if (!width || !height) throw new Error(`${p} is not a readable PNG`);
+            console.log(`${p} — ${width} x ${height}`);
+          '
+
+      # The wording a plate was actually drawn from, when it differs from the
+      # brief. docs/MINT.md asks for it to be committed beside the plate, and the
+      # reason is that a prompt which had to be changed to get an acceptable
+      # render is the only record of how this picture was really made. Absent in
+      # the dataset means the brief was used verbatim, which is not an error.
+      - name: Fetch the frozen wording, if there is any
+        continue-on-error: true
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PLATE: ${{ inputs.plate }}
+          DATASET: ${{ inputs.dataset }}
+        run: |
+          set -euo pipefail
+          url="https://huggingface.co/datasets/${DATASET}/resolve/main/render/${PLATE}.txt"
+          curl --fail --location --silent --show-error \
+            ${HF_TOKEN:+--header "Authorization: Bearer ${HF_TOKEN}"} \
+            --output "docs/art/renders/${PLATE}.txt" "$url" \
+            && echo "froze the wording" || echo "no frozen wording — the brief was used as written"
+
+      # A landing plate is not a change to data/, so this is the short list
+      # rather than the one at the foot of CLAUDE.md: draw what the plate feeds,
+      # and recompute the queue so the subject moves off DRAW by itself.
+      - name: Rebuild what the plate feeds
+        run: |
+          node tools/build-tiles.mjs
+          node tools/build-cards.mjs
+          node tools/build-data.mjs
+          node tools/mint-queue.mjs
+          node tools/build-mint.mjs
+
+      - name: Check nothing else moved
+        run: |
+          node tools/validate-data.mjs
+          node tools/validate-art.mjs
+
+      - name: Commit
+        env:
+          PLATE: ${{ inputs.plate }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "nothing changed — the plate was already here"
+            exit 0
+          fi
+          git commit -m "The ${PLATE} plate lands" -m "Fetched from the drawn-plate dataset by .github/workflows/fetch-plate.yml and committed with whatever it feeds rebuilt. The plate is the artist's output and is never edited here; everything else in this commit is generated from it."
+          git push

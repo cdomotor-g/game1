@@ -235,6 +235,50 @@ it.
 
 ---
 
+## 4a · The courier, when the artist is a machine on Hugging Face
+
+An artist that draws on [Hugging Face](https://huggingface.co) leaves the plate
+there, and it has to reach `docs/art/renders/` before anything can be built from
+it. Step 4 above assumes a person carries it. This is the version where nobody
+does.
+
+The awkwardness is that neither end can reach the other. A Claude Code session
+commissioning a plate cannot reach `huggingface.co` at all — the organisation's
+egress policy denies it, and that is a setting to respect rather than work
+around. A job running on Hugging Face can reach the internet freely, but pushing
+to this repository would need a GitHub credential, and the only way to hand one
+to a chat session is to paste it into the conversation, where it stays forever.
+
+**A GitHub Action can reach both, and it is already inside the repository**, so
+it needs no credential to write here. That is what
+[`.github/workflows/fetch-plate.yml`](../.github/workflows/fetch-plate.yml) is.
+
+### Once, per repository
+
+Add the Hugging Face token as an Actions secret:
+
+1. **github.com** → this repository → **Settings**
+2. **Secrets and variables** → **Actions**
+3. **New repository secret**
+4. Name it exactly `HF_TOKEN`; paste a token from
+   [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) with
+   **read** access to the dataset holding the plates
+
+The token lives in GitHub's secret store, which is where a token belongs. It is
+never typed into a conversation, and a public plate dataset does not need one at
+all — the workflow sends the header only when the secret is set.
+
+### Per plate
+
+Run the **Fetch plate** workflow with the plate id — from the Actions tab, or by
+dispatch from wherever the mint is being driven. It fetches the plate, refuses
+anything that is not a readable PNG, picks up the frozen wording if the dataset
+has any, rebuilds what the plate feeds, and commits. The subject moves off DRAW
+on its own, because the queue is computed from the repository rather than stored.
+
+It takes the **full** plate. Reduced copies only ever existed to squeeze a
+picture through a chat window, and nothing on this path has to.
+
 ## 5 · Accepting and rejecting
 
 The one rule that keeps this from turning into taste: **reject with one concrete
