@@ -182,3 +182,51 @@ least one more job, and whether to spend it is not a call this file can make.
 
 The tile itself is built and printable meanwhile, as a blank counter with its name
 band, which is what `build-tiles.mjs` is for.
+
+## Sheet 4 — Z-Image, v4 wording. The model was a real part of it.
+
+`MODEL=Tongyi-MAI/Z-Image`, same six seeds, same v4 wording as sheet 3 would have
+had. The only variables changed are the model and the four-paragraph structure.
+
+**All six are barracks.** Long low stone range, slate roof, strict repeating
+window rank on every one. Compare sheet 1, where six seeds produced six cottages.
+
+| what kept failing | sheets 1-3 (Qwen-Image) | sheet 4 (Z-Image) |
+|---|---|---|
+| rendered text on the page | 3 of 6, after eight negative terms | **0 of 6** |
+| palette | orange/red roofs, acid grass, saturated | **correct** — slate blue-grey walls and roof, dusty grey-green grass, ochre gate |
+| spear rack and drill post | absent or shrunk to nothing | **present on 5 of 6** |
+| yard wall and timber gate | rarely both | **present on 5 of 6** |
+| download per job | 57.7 GB | **20.5 GB** |
+
+The text result is the one that matters, and it is not luck. Qwen-Image's headline
+capability is bilingual text rendering; this deck's hardest rule is no text of any
+kind. Eight negative terms were arguing with the model's best trick and losing.
+Z-Image is documented as having *"robust negative control"* and is not a text
+specialist, so the same negative now holds.
+
+**What is still wrong, and it is the old enemy:**
+
+- **Every candidate is still drawn 75-100% of the page wide**, where a triad wants
+  the centre half. The ends of the range would go to the die.
+- **A pale flat band sits above the roofline on most of the six**, which reads as
+  sky. Much softer than sheet 2 seed 34's horizon-and-treeline, but the preamble
+  bans it outright.
+
+Best two for the die are **202** (the cleanest rank on any sheet; ground filling
+the lower third and both lower corners) and **303** (range set to the right,
+ground filling the lower left exactly where the name band is printed).
+
+**Neither has been drawn at final.** Four drawing jobs are now spent on this
+subject.
+
+## What this changes beyond the barracks
+
+The model was carrying more of the blame than three sheets of prompt-fixing
+suggested, and the prompt fixes were still all necessary — sheet 4 uses every one
+of them. Both things are true, which is why the record of both is kept here.
+
+`tools/hf/draw-plate.py` now carries a sampler profile per model family, so this
+is a `--model` flag rather than a rewrite. Nothing about the default has been
+changed: Qwen-Image is still what a job draws with unless told otherwise, and it
+should stay that way until a plate actually ships off Z-Image.
