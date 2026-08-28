@@ -4,6 +4,12 @@ THE ONE JOB THAT DRAWS A PLATE. Run it on Hugging Face; never retype it.
     hf_jobs uv  flavor=a100-large  with_deps=[...]  secrets={"HF_TOKEN": "$HF_TOKEN"}
     args: PLATE=tile-granary MODE=draft   -> one contact sheet of candidates
           PLATE=tile-granary MODE=final SEED=21  -> the plate itself
+          MODEL=Tongyi-MAI/Z-Image  -> draw it on something other than the default
+
+MODEL picks a sampler profile, not just a checkpoint: the arguments a pipeline
+takes are not portable between families, and a wrong one is not discovered until
+fifty gigabytes have already been fetched. See PROFILES below, and add an entry
+rather than passing a model that has none.
 
 WHY THIS FILE EXISTS, in one number: the granary cost about twenty-two minutes of
 a100-large across five separate jobs and produced eight images, one of which
@@ -47,10 +53,44 @@ MODEL = os.environ.get("MODEL", "Qwen/Qwen-Image")
 SEEDS = [int(s) for s in os.environ.get("SEEDS", "21,34,55,101,202,303").split(",")]
 SEED = int(os.environ.get("SEED", "0"))
 
-# Draft: enough to judge composition, colour cast and stray text. Nothing else.
-DRAFT = dict(width=640, height=640, num_inference_steps=8, true_cfg_scale=4.0)
-# Final: the plate. 1328 is Qwen's native 1:1 and is over the print target.
-FINAL = dict(width=1328, height=1328, num_inference_steps=34, true_cfg_scale=5.5)
+# SAMPLER ARGUMENTS ARE NOT PORTABLE BETWEEN MODEL FAMILIES, and a wrong one is
+# a whole job: it is not found until after fifty gigabytes have been downloaded
+# and the pipeline is being called. So each family carries its own profile here,
+# looked up by MODEL, and nothing else in this file has to know which is running.
+#
+# Qwen-Image takes true_cfg_scale, and at 20B it does not fit on the card - hence
+# enable_model_cpu_offload(), hence a100-large. Z-Image takes guidance_scale and
+# cfg_normalization, wants 28-50 steps rather than 8-34, and at 6B loads whole.
+# Draft is always enough to judge composition, colour cast and stray text, and
+# nothing else; final is always the plate at 1328, over the print target.
+PROFILES = {
+    "Qwen/Qwen-Image": {
+        "offload": True,
+        "draft": dict(width=640, height=640, num_inference_steps=8, true_cfg_scale=4.0),
+        "final": dict(width=1328, height=1328, num_inference_steps=34, true_cfg_scale=5.5),
+    },
+    "Tongyi-MAI/Z-Image": {
+        "offload": False,
+        "load": dict(low_cpu_mem_usage=False),
+        "draft": dict(width=640, height=640, num_inference_steps=28,
+                      guidance_scale=4.0, cfg_normalization=False),
+        "final": dict(width=1328, height=1328, num_inference_steps=50,
+                      guidance_scale=4.0, cfg_normalization=False),
+    },
+}
+# The 2512 refresh is the same pipeline and the same arguments as the original.
+PROFILES["Qwen/Qwen-Image-2512"] = PROFILES["Qwen/Qwen-Image"]
+
+# Fail here rather than after the download. An unknown model is a typo or a new
+# family, and either way somebody has to say what its sampler wants.
+if MODEL not in PROFILES:
+    raise SystemExit(
+        f"no sampler profile for {MODEL!r}. Add one to PROFILES in this file - "
+        f"known: {', '.join(sorted(PROFILES))}"
+    )
+PROFILE = PROFILES[MODEL]
+DRAFT = PROFILE["draft"]
+FINAL = PROFILE["final"]
 
 tok = os.environ["HF_TOKEN"]
 api = HfApi(token=tok)
@@ -63,10 +103,15 @@ def read(path):
 positive = read(f"render/{PLATE}.txt")
 negative = read(f"prompts/negative-{PLATE}.txt").replace("\n", " ")
 
-print(f"{PLATE} · {MODE} · {len(positive.split())} words", flush=True)
+print(f"{PLATE} · {MODE} · {MODEL} · {len(positive.split())} words", flush=True)
 
-pipe = DiffusionPipeline.from_pretrained(MODEL, torch_dtype=torch.bfloat16)
-pipe.enable_model_cpu_offload()
+pipe = DiffusionPipeline.from_pretrained(
+    MODEL, torch_dtype=torch.bfloat16, **PROFILE.get("load", {})
+)
+if PROFILE["offload"]:
+    pipe.enable_model_cpu_offload()
+else:
+    pipe.to("cuda")
 
 
 def draw(seed, settings):
