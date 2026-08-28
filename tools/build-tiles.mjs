@@ -32,11 +32,14 @@
  * this afternoon, and a plate landing later fills the window without changing
  * anything else on the piece.
  *
- * BOTH SIDES ARE DRAWN. The face is the building finished, the back is the same
- * ground with the work not yet done - so a tile is two commissions, not one, and
- * the mint carries two subjects for every tile. The back used to be generated
- * from a lathe, a word and a row of terrain marks; a picture says what it was
- * saying, and says it better.
+ * ONE PLATE IS DRAWN, AND PRINTED TWO WAYS. The face is the building finished;
+ * the back is that same plate with the colour run not laid on - the key block
+ * pulled before the colour blocks - and its name band drawn hollow instead of
+ * solid. So a tile is ONE mint subject, not two, and there is one function below
+ * rather than two: the sides differ by a filter and a band, and by nothing else.
+ * The rule they have to keep - that the two sides turn over onto each other - is
+ * kept by construction, because they are one picture. See data/buildingtiles.json
+ * sides for what that argument cost and why it was worth it.
  *
  * Two plates in the printing sense too (docs/art/01-two-plate-system.md): #wash
  * is the paper and the picture, #ink is the cut line, the band and every letter,
@@ -319,9 +322,12 @@ function side(row, which) {
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="${SOOT}">
-  <!-- the name, in a band hugging the lower-right edge and running parallel to
+  <!-- the name, in a band hugging the lower-left edge and running parallel to
        it. Not across the middle: a bar through a small drawing splits it into
-       two unrelated halves, which is what the first version looked like -->
+       two unrelated halves, which is what the first version looked like. The
+       corner is components.json buildingTile.nameBand.edge, and lower-LEFT
+       because the plates are drawn from thirty degrees to the left, which puts
+       the business of the building on the right - see bandOf in lib/tiles.mjs -->
   <g clip-path="url(#${clip})">
     ${band(label, g, `${row.id} ${which}`, back && BACK.bandHollow)}
   </g>
@@ -396,6 +402,8 @@ const index = `<!doctype html>
   p.note { color: ${tint('70')}; font-size: 14px; max-width: 74ch; }
   .bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; font-family: ${SANS}; font-size: 13.5px; margin-bottom: 16px; }
   .bar a { color: ${tint('85')}; }
+  .bar a.primary { margin-left: auto; padding: 4px 10px; border-radius: 7px; text-decoration: none;
+                   border: 1px solid ${tint('40')}; background: ${tint('12')}; font-weight: 600; }
   table { border-collapse: collapse; font-family: ${SANS}; font-size: 13px; margin: 8px 0 4px; }
   th, td { text-align: left; padding: 3px 14px 3px 0; border-bottom: 1px solid ${tint('12')}; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 14px; align-items: end; }
@@ -431,6 +439,7 @@ ${shapes.map((s) => `    .grid figure.${s.id} svg { width: ${s.bleedWidthMm}mm; 
   <a href="../minimaps/index.html">The mini-map sheets</a>
   <a href="../boards/index.html">The player board</a>
   <a href="../map/index.html">The map</a>
+  <a class="primary" href="print.html">Print the tiles &rarr;</a>
 </div>
 <h1>The building tiles</h1>
 <p class="note">${esc(spec.$comment.split('\n\n')[1])}</p>
@@ -445,22 +454,27 @@ and ladder in <code>data/buildingtiles.json</code>. Add a worker slot and the bu
 <tr><th>Shape</th><th>Cells</th><th>Trim</th><th>With bleed</th><th>Tiles</th><th></th></tr>
 ${shapes.map((s) => `<tr><td><code>${s.id}</code></td><td>${s.cells}</td><td>${s.widthMm} × ${s.heightMm} mm</td><td>${s.bleedWidthMm} × ${s.bleedHeightMm} mm</td><td>${s.count}</td><td>${esc(s.note)}</td></tr>`).join('\n')}
 </table>
-<p class="note"><strong>Printing:</strong> print this page at 100% — no “fit to page” — on A4 portrait. Every
-tile then comes out at its own true size, faces first and backs after, and a piece cut out seats in a mini-map
-cell without being trimmed. A tile printed 4% small is a tile that does not seat, which is the one promise this
-line rests on.</p>
+<p class="note"><strong>Printing.</strong> ${esc(spec.howMany.note.split('. ')[0])}, so printing is its own page:
+<a href="print.html">print.html</a> asks which tiles, how many of each and which sides before it puts anything on
+paper, and every caption below links straight to its own tile. It is also the only one of the two that can lay the
+backs out mirrored, which is what a two-sided run needs.</p>
+<p class="note">This page still prints, as the short way round: at 100% — no “fit to page” — on
+${T.sheet.widthMm}&nbsp;×&nbsp;${T.sheet.heightMm}&nbsp;mm paper, it puts every tile on the paper at its own true
+size, all the faces and then all the backs. A tile printed 4% small is a tile that does not seat in a mini-map
+cell, which is the one promise this line rests on.</p>
 <h2>The tiles</h2>
 <p class="note">${rows.length} tiles — ${rows.filter((r) => r.kind === 'building').length} buildings and
 ${rows.filter((r) => r.kind === 'field').length} fields. ${waiting.length
   ? `${waiting.length} are still waiting on a plate and print as playable blanks; <a href="../art/mint/QUEUE.md">the mint queue</a> says whose turn each one is.`
   : 'Every plate has landed.'}</p>
 <div class="grid">
-${rows.map((r) => `  <figure class="${r.shape}">${inline(`${r.id}.svg`)}<figcaption>${esc(r.name)} — ${r.cells.length} cell${r.cells.length === 1 ? '' : 's'}${r.ground == null ? '' : `, ground ${r.ground}`}</figcaption></figure>`).join('\n')}
+${rows.map((r) => `  <figure class="${r.shape}">${inline(`${r.id}.svg`)}<figcaption>${esc(r.name)} — ${r.cells.length} cell${r.cells.length === 1 ? '' : 's'}${r.ground == null ? '' : `, ground ${r.ground}`} · <a href="print.html?tile=${esc(r.id)}">Print this one →</a></figcaption></figure>`).join('\n')}
 </div>
 <h2>The backs</h2>
 <p class="note">${esc(spec.sides.back.carries.join('; '))}. A tile goes down back-up the round its work starts and is
-turned over when the effort is paid, so the back is a drawn plate of its own — every tile in this set is two
-commissions, not one.</p>
+turned over when the effort is paid. The back is not a second drawing: it is the face's own plate with the colour
+run not laid on and its name band drawn hollow, so the two sides cannot drift out of register with each other —
+they are one picture, printed two ways.</p>
 <div class="grid">
 ${rows.map((r) => `  <figure class="${r.shape}">${inline(`back-${r.id}.svg`)}<figcaption>${esc(r.name)} — ${esc(r.state)}</figcaption></figure>`).join('\n')}
 </div>
@@ -469,7 +483,551 @@ ${rows.map((r) => `  <figure class="${r.shape}">${inline(`back-${r.id}.svg`)}<fi
 </html>
 `;
 
-const pages = [['index.html', index]];
+/* ------------------------------------------------------------- the print page */
+
+/**
+ * What print.html has to know about each tile: enough to name it in the picker,
+ * group it, lay it out and fetch both its sides. Written into the page rather
+ * than fetched, exactly as the card and mini-map print pages carry their own
+ * lists - these pages have to work double-clicked off a disk, where there is no
+ * server to ask.
+ *
+ * The two sides come through as MARKUP in a hidden stock below rather than as a
+ * src on this record, for the reason index.html gives next door: an SVG inside
+ * an <img> is an isolated document and never fetches the plate it draws, so
+ * every tile with art on it would print as a blank counter. Cloned from the
+ * stock, one node per copy, so twenty huts cost twenty nodes and one payload.
+ */
+const PRINTABLE = rows.map((r) => {
+  const g = geometryOf(r);
+  return {
+    id: r.id, name: r.name, group: r.group, shape: r.shape,
+    cells: r.cells.length,
+    w: num(g.w / U), h: num(g.h / U),
+  };
+});
+
+/* Nothing may be wider than the paper it is laid on. The shapes are derived and
+   the margin is data, so this is a thing that can come true by somebody editing
+   either one - and a tile that overhangs the sheet is caught here rather than by
+   a player with scissors. Same guard build-board.mjs keeps over its tracks. */
+const CONTENT_W = T.sheet.widthMm - 2 * T.sheet.marginMm;
+const CONTENT_H = T.sheet.heightMm - 2 * T.sheet.marginMm;
+const overhang = shapes.filter((s) => s.bleedWidthMm > CONTENT_W || s.bleedHeightMm > CONTENT_H);
+if (overhang.length) {
+  console.error(
+    `a tile does not fit the print sheet: ${overhang.map((s) => `${s.id} is ${s.bleedWidthMm}x${s.bleedHeightMm}mm`).join(', ')} ` +
+    `against ${CONTENT_W}x${CONTENT_H}mm of printable ${T.sheet.widthMm}x${T.sheet.heightMm}mm paper. ` +
+    'Either the cell grew or data/components.json buildingTile.sheet shrank.'
+  );
+  process.exit(1);
+}
+
+const printPage = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Print the building tiles — game1</title>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+  /* Screen: a control bar, a picker of tiles, and a stack of imposed sheets.
+     Print: those same sheets, at true size, and nothing else on the paper.
+
+     This page wears app.css and the other print pages' control bar rather than
+     index.html's own styling next door, for the reason the mini-map print page
+     gives: what it has to be recognisable AS is a print page. Four of them now,
+     one bar.
+
+     Prefixed bt-, like the mini-map's mm-, and for the same reason it gives:
+     app.css already owns names like .sheet, and inheriting half of somebody
+     else's rule is how a sheet of paper ends up the width of a thumbnail. The
+     furniture keeps the shared names - .printbar, .note, .picker, .empty. */
+  .printbar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px 18px;
+              align-items: center; padding: 11px 18px; background: var(--bg-raised);
+              border-bottom: 1px solid var(--line); }
+  .printbar h1 { font-size: .95rem; margin: 0; }
+  .printbar .spacer { flex: 1; }
+  .printbar label { font-size: .78rem; color: var(--ink-soft); display: flex; gap: 5px; align-items: center; }
+  /* hidden is an attribute and the display:flex above beats it, which is how
+     the flip control came to show in a mode that has nothing to flip. */
+  .printbar label[hidden] { display: none; }
+  .printbar select, .printbar button { font: inherit; font-size: .8rem; padding: 4px 9px; border-radius: 7px;
+                                       border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+  .printbar button { cursor: pointer; }
+  .printbar button:hover { border-color: var(--accent); }
+  .printbar button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg-raised); font-weight: 600; }
+  .printbar a { color: var(--accent); font-size: .78rem; }
+
+  .note { max-width: 74ch; margin: 18px auto 4px; padding: 0 18px; color: var(--ink-soft); font-size: .85rem; }
+  .note p { margin: 0 0 6px; }
+  .note strong { color: var(--ink); }
+
+  /* The picker: one chip per tile, carrying how many copies of it to run, under
+     a heading per group with its own all/none. Nought is how a tile is left out,
+     so the same control both chooses and counts - the mini-map page's bargain,
+     which is worth keeping when there are fifty-four of them rather than eleven.
+     The groups are the buildings' own categories, not a grouping invented here. */
+  .picker { max-width: 74ch; margin: 0 auto; padding: 0 18px 6px; }
+  .picker h2 { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+               color: var(--ink-faint); margin: 14px 0 6px; display: flex; gap: 10px; align-items: baseline; }
+  .picker h2 button { font: inherit; font-size: .72rem; text-transform: none; letter-spacing: 0;
+                      background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; }
+  .pickrow { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pick { display: flex; gap: 7px; align-items: center; font-size: .78rem;
+          border: 1px solid var(--line); border-radius: 999px; padding: 3px 5px 3px 9px; background: var(--bg-raised); }
+  .pick[data-on="0"] { opacity: .45; }
+  .pick .cells { font-family: var(--mono); font-size: .7rem; color: var(--ink-faint); }
+  .pick input { width: 3.2em; font: inherit; font-size: .75rem; padding: 2px 4px; border-radius: 6px;
+                border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+
+  /* A sheet is ${T.sheet.widthMm} mm wide - about ${Math.round(T.sheet.widthMm * 96 / 25.4)} px - which fits most windows but not all,
+     so the stack scrolls sideways and the sheets centre themselves. Same
+     arrangement as the mini-map and map print pages, and for the reason they
+     give: centring the overflow itself puts the left edge of a sheet somewhere a
+     browser will not scroll to. */
+  .bt-sheets { padding: 18px; overflow-x: auto; }
+  .bt-frame { width: max-content; margin: 0 auto 22px; }
+  .bt-frame:last-child { margin-bottom: 0; }
+  .bt-label { font: 600 .72rem/1.4 var(--mono, monospace); letter-spacing: .05em; text-transform: uppercase;
+              color: var(--ink-faint); margin: 0 0 5px; }
+
+  /* THE SHEET IS AN IMPOSITION, not a flow. Every piece is placed at an absolute
+     millimetre on the paper, by script, because the backs have to be laid out
+     MIRRORED to come out under their own faces on a two-sided run - and a browser
+     flowing inline-blocks cannot be asked where its rows broke. It is also what
+     makes true size unarguable: a piece is its own bleed box in millimetres and
+     nothing is scaled to fit anything. */
+  .bt-page { position: relative; width: ${T.sheet.widthMm}mm; height: ${T.sheet.heightMm}mm; overflow: hidden;
+             background: ${TALLOW}; box-shadow: var(--shadow); transform-origin: top left; }
+  .bt-piece { position: absolute; }
+  .bt-piece svg { display: block; width: 100%; height: 100%; }
+  .empty { padding: 40px 18px; text-align: center; color: var(--ink-faint); font-size: .85rem; }
+
+  /* No paper picker, so the page size is settled here rather than from script:
+     the sheet is data/components.json buildingTile.sheet and there is nothing to
+     choose. Zero margin because the margin is already in the imposition - the
+     pieces are placed at page coordinates, which is the only way a mirrored back
+     can be trusted to land on its face. */
+  @page { size: ${T.sheet.widthMm}mm ${T.sheet.heightMm}mm; margin: 0; }
+
+  @media print {
+    .printbar, .note, .picker, .bt-label { display: none !important; }
+    .bt-sheets { padding: 0; overflow: visible; }
+    .bt-frame { width: auto !important; height: auto !important; margin: 0 !important;
+                break-after: page; page-break-after: always; }
+    .bt-frame:last-child { break-after: auto; page-break-after: auto; }
+    /* The preview scale is undone here and again from script on beforeprint. A
+       tile printed at 86% is a tile that does not seat in a mini-map cell, which
+       is the one promise this whole line rests on. */
+    .bt-page { box-shadow: none; margin: 0; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="printbar">
+  <h1>Print the building tiles</h1>
+  <label>sides
+    <select id="mode">
+      <option value="faces">faces only</option>
+      <option value="duplex">both sides, two-sided printing</option>
+      <option value="pairs">both sides, side by side</option>
+    </select>
+  </label>
+  <label id="flip-wrap" hidden>flip on
+    <select id="flip">
+      <option value="long">long edge</option>
+      <option value="short">short edge</option>
+    </select>
+  </label>
+  <label>preview
+    <select id="zoom">
+      <option value="fit">fit the window</option>
+      <option value="1">100%</option>
+      <option value="0.5">50%</option>
+    </select>
+  </label>
+  <span class="spacer"></span>
+  <a href="index.html">← the tiles</a>
+  <a href="../index.html">Explorer</a>
+  <button type="button" class="primary" id="go-print">Print / save as PDF…</button>
+</div>
+
+<div class="note">
+  <p id="summary"></p>
+  <p><strong>Print at 100% — no “fit to page”, no scaling</strong>, on ${T.sheet.widthMm}&nbsp;×&nbsp;${T.sheet.heightMm}&nbsp;mm paper.
+  Each cell then comes off the sheet at <strong>${WORLD.mm}&nbsp;mm across the flats</strong>, which is a world-map hex
+  on the <code>${esc(WORLD.map)}</code> map at its <code>${esc(WORLD.preset)}</code> preset and therefore a mini-map cell:
+  a piece cut out seats where it is meant to, and a figure based for the campaign board stands beside it. A tile
+  printed 4% small is a tile that does not seat, which is why this page offers no paper but the one the pieces are
+  drawn for. For a file rather than paper, print and choose <strong>Save as PDF</strong> — the page size is already
+  set, so the PDF is true size too.</p>
+  <p><strong>Two-sided printing.</strong> A tile is a piece with two sides: the face is the building finished, the back
+  is that same picture with the colour run not laid on and its name band drawn hollow. Choose <em>both sides,
+  two-sided printing</em> and every other sheet is a run of backs laid out <strong>mirrored</strong>, so each one falls
+  under its own face when the paper is turned — which means the flip in your printer's dialog has to be the flip
+  chosen above. Get it the wrong way round and every back lands on the wrong tile. No duplex printer: choose
+  <em>side by side</em>, cut both, and glue them together.</p>
+  <p>Pieces are laid out with their <strong>${T.bleedMm}&nbsp;mm bleed</strong> showing and a ${T.sheet.gutterMm}&nbsp;mm gutter between them.
+  The cut line drawn inside each one is the hexagon to follow; the bleed is the margin for cutting it crookedly.</p>
+  <p><strong>${esc(spec.howMany.guide)}</strong> ${esc(spec.howMany.note.split('. ').slice(0, 1).join('. '))}.</p>
+</div>
+
+<div class="picker" id="picker"></div>
+<div class="bt-sheets" id="sheets"></div>
+
+<!-- The stock: one copy of every side's markup, cloned per piece by the script
+     below and never shown. Inlined rather than fetched because an SVG in an
+     <img> is an isolated document that never loads the plate it draws. -->
+<div id="stock" hidden>
+${rows.map((r) => `<div data-tile="${esc(r.id)}" data-side="face">${inline(`${r.id}.svg`)}</div>
+<div data-tile="${esc(r.id)}" data-side="back">${inline(`back-${r.id}.svg`)}</div>`).join('\n')}
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* Generated by tools/build-tiles.mjs from data/buildingtiles.json,
+     data/components.json, data/buildings.json and data/recipes.json. Every
+     millimetre here is derived - the pieces from their own footprints, the
+     paper from components.json buildingTile.sheet - and none is typed. */
+  var TILES = ${JSON.stringify(PRINTABLE)};
+  var PAGE_W = ${T.sheet.widthMm}, PAGE_H = ${T.sheet.heightMm};
+  var MARGIN = ${T.sheet.marginMm}, GUTTER = ${T.sheet.gutterMm};
+  var CELL_MM = ${WORLD.mm};
+  var MAX_COPIES = 40;
+  var EPS = 0.01;   /* millimetres are floats; a piece must not miss its row by one */
+
+  /* One of each is the default, which is a complete prototype set and what the
+     tiles index could already print. What this page adds is everything after
+     that: how many of each, which sides, and how many pages it comes to before
+     anybody presses anything. */
+  var copies = {};
+  TILES.forEach(function (t) { copies[t.id] = 1; });
+
+  /* ?tile=hut, or several, cuts it to those. Every caption on the tiles index
+     links here that way, so the obvious route from one tile is one tile and not
+     the set. A name nobody recognises leaves the full set alone rather than
+     printing nothing: a typed URL should not silently come out blank. */
+  var asked = new URLSearchParams(location.search).get('tile');
+  if (asked) {
+    var want = asked.toLowerCase().split(/[\\s,]+/).filter(Boolean);
+    var hit = TILES.filter(function (t) { return want.indexOf(t.id) !== -1; });
+    if (hit.length) {
+      TILES.forEach(function (t) { copies[t.id] = 0; });
+      hit.forEach(function (t) { copies[t.id] = 1; });
+    }
+  }
+
+  /* ------------------------------------------------------------- the picker */
+
+  var picker = document.getElementById('picker');
+  var groups = [];
+  TILES.forEach(function (t) { if (groups.indexOf(t.group) === -1) groups.push(t.group); });
+
+  function heading(text, ids) {
+    var h = document.createElement('h2');
+    h.appendChild(document.createTextNode(text + ' '));
+    [['all', 1], ['none', 0]].forEach(function (pair) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = pair[0];
+      b.addEventListener('click', function () {
+        ids.forEach(function (id) { copies[id] = pair[1]; });
+        syncPicker();
+        render();
+      });
+      h.appendChild(b);
+    });
+    return h;
+  }
+
+  picker.appendChild(heading('Every tile', TILES.map(function (t) { return t.id; })));
+
+  groups.forEach(function (g) {
+    var mine = TILES.filter(function (t) { return t.group === g; });
+    picker.appendChild(heading(g, mine.map(function (t) { return t.id; })));
+
+    var row = document.createElement('div');
+    row.className = 'pickrow';
+    mine.forEach(function (t) {
+      var label = document.createElement('label');
+      label.className = 'pick';
+      label.dataset.id = t.id;
+      label.title = t.name + ' — ' + t.shape + ', ' + t.cells + ' cell' +
+        (t.cells === 1 ? '' : 's') + ', ' + t.w + ' × ' + t.h + ' mm with bleed';
+
+      var cells = document.createElement('span');
+      cells.className = 'cells';
+      cells.textContent = t.cells;
+
+      var box = document.createElement('input');
+      box.type = 'number';
+      box.min = '0';
+      box.max = String(MAX_COPIES);
+      box.step = '1';
+      box.setAttribute('aria-label', 'copies of ' + t.name);
+      box.addEventListener('change', function () {
+        var n = parseInt(box.value, 10);
+        copies[t.id] = Math.max(0, Math.min(MAX_COPIES, isNaN(n) ? 0 : n));
+        syncPicker();
+        render();
+      });
+
+      var times = document.createElement('span');
+      times.className = 'cells';
+      times.textContent = '×';
+
+      label.appendChild(cells);
+      label.appendChild(document.createTextNode(t.name));
+      label.appendChild(times);
+      label.appendChild(box);
+      row.appendChild(label);
+    });
+    picker.appendChild(row);
+  });
+
+  function syncPicker() {
+    Array.prototype.forEach.call(picker.querySelectorAll('.pick'), function (label) {
+      var n = copies[label.dataset.id] || 0;
+      label.dataset.on = n ? '1' : '0';
+      label.querySelector('input').value = String(n);
+    });
+  }
+
+  /* ---------------------------------------------------------- the imposition */
+
+  /**
+   * Shelf packing, in page coordinates: left to right along a row, down to the
+   * next row when the next piece will not fit, on to the next sheet when the
+   * next row will not. Pieces stay in set order rather than being sorted tall
+   * first - a sorted sheet packs a little tighter and comes off the printer in
+   * an order nobody can follow, and these are cut out by hand.
+   *
+   * Page coordinates rather than coordinates inside the margin, because a
+   * mirrored back is mirrored about the SHEET. Doing it inside the content box
+   * happens to give the same answer while the two margins are equal, and stops
+   * doing so the moment somebody makes them different.
+   */
+  function impose(queue) {
+    var pages = [], page = [], x = MARGIN, y = MARGIN, rowH = 0;
+    queue.forEach(function (p) {
+      if (x > MARGIN && x + p.w > PAGE_W - MARGIN + EPS) { x = MARGIN; y += rowH + GUTTER; rowH = 0; }
+      if (y + p.h > PAGE_H - MARGIN + EPS) { if (page.length) pages.push(page); page = []; x = MARGIN; y = MARGIN; rowH = 0; }
+      page.push({ id: p.id, name: p.name, side: p.side, x: x, y: y, w: p.w, h: p.h });
+      x += p.w + GUTTER;
+      rowH = Math.max(rowH, p.h);
+    });
+    if (page.length) pages.push(page);
+    return pages;
+  }
+
+  /* Turning the paper over. Long edge is the usual binding and mirrors across
+     the page's vertical centre line; short edge tumbles it and mirrors across
+     the horizontal one. Which of the two a printer does is a setting in its
+     dialog, not something a page can detect - so the page asks, and says what
+     goes wrong if the answer is wrong. */
+  function backOf(item, flip) {
+    return {
+      id: item.id, name: item.name, side: 'back', w: item.w, h: item.h,
+      x: flip === 'short' ? item.x : PAGE_W - item.x - item.w,
+      y: flip === 'short' ? PAGE_H - item.y - item.h : item.y
+    };
+  }
+
+  /* ---------------------------------------------------------------- rendering */
+
+  var stock = document.getElementById('stock');
+  var current = null;
+
+  function markup(id, side) {
+    var held = stock.querySelector('[data-tile="' + id + '"][data-side="' + side + '"]');
+    return held.firstElementChild.cloneNode(true);
+  }
+
+  function chosen() {
+    var out = [];
+    TILES.forEach(function (t) {
+      for (var i = 0; i < (copies[t.id] || 0); i++) out.push(t);
+    });
+    return out;
+  }
+
+  function sheetsFor(mode, flip) {
+    var picked = chosen();
+    if (!picked.length) return [];
+
+    var faces = picked.map(function (t) {
+      return { id: t.id, name: t.name, side: 'face', w: t.w, h: t.h };
+    });
+
+    if (mode === 'faces') {
+      return impose(faces).map(function (items) { return { kind: 'faces', items: items }; });
+    }
+
+    /* Side by side: the face and its own back next to each other in one flow,
+       for a printer that cannot turn the paper over. Cut both, glue them back
+       to back. Nothing is mirrored - the two are looked at, not registered. */
+    if (mode === 'pairs') {
+      var flat = [];
+      faces.forEach(function (f) {
+        flat.push(f);
+        flat.push({ id: f.id, name: f.name, side: 'back', w: f.w, h: f.h });
+      });
+      return impose(flat).map(function (items) { return { kind: 'both', items: items }; });
+    }
+
+    /* Two-sided: impose the faces, then follow each sheet with its own backs
+       mirrored, so sheet 1 prints on the front of the paper and sheet 2 on the
+       back of that same piece of paper. */
+    var out = [];
+    impose(faces).forEach(function (items) {
+      out.push({ kind: 'faces', items: items });
+      out.push({ kind: 'backs', items: items.map(function (it) { return backOf(it, flip); }) });
+    });
+    return out;
+  }
+
+  function render() {
+    var mode = document.getElementById('mode').value;
+    var flip = document.getElementById('flip').value;
+    document.getElementById('flip-wrap').hidden = mode !== 'duplex';
+
+    var pages = sheetsFor(mode, flip);
+    var picked = chosen();
+    var kinds = TILES.filter(function (t) { return copies[t.id]; });
+
+    /* Naming every tile is useful up to about a dozen and is a wall of text at
+       fifty-four - and the fifty-four case is the default, so it was the one
+       being read. Past that, say the counts that are not one and how many of the
+       rest there are: what a person checks in this line is "did I ask for three
+       huts", not the roll call. */
+    var many = kinds.filter(function (t) { return copies[t.id] > 1; });
+    var ones = kinds.length - many.length;
+    var listed;
+    if (kinds.length === TILES.length && !many.length) {
+      listed = 'one of each';
+    } else if (kinds.length > 12) {
+      listed = many.map(function (t) { return copies[t.id] + ' × ' + t.name; });
+      if (ones) listed.push(ones + ' more, one each');
+      listed = listed.join(', ');
+    } else {
+      listed = kinds.map(function (t) {
+        return (copies[t.id] > 1 ? copies[t.id] + ' × ' : '') + t.name;
+      }).join(', ');
+    }
+
+    var sheets = mode === 'duplex' ? pages.length / 2 : pages.length;
+    document.getElementById('summary').innerHTML = picked.length
+      ? '<strong>' + picked.length + ' piece' + (picked.length === 1 ? '' : 's') + ' of ' +
+        kinds.length + ' kind' + (kinds.length === 1 ? '' : 's') + ' — ' +
+        pages.length + ' page' + (pages.length === 1 ? '' : 's') +
+        (mode === 'duplex' ? ' on ' + sheets + ' sheet' + (sheets === 1 ? '' : 's') + ' of paper, printed both sides' : '') +
+        ', ' + PAGE_W + ' × ' + PAGE_H + ' mm</strong>: ' + listed + '.'
+      : '<strong>Nothing chosen.</strong> Pick some tiles below — or press <em>all</em> under <em>Every tile</em> for one of each.';
+
+    var host = document.getElementById('sheets');
+    host.innerHTML = '';
+
+    if (!pages.length) {
+      var none = document.createElement('p');
+      none.className = 'empty';
+      none.textContent = 'No tiles chosen.';
+      host.appendChild(none);
+      current = null;
+      return;
+    }
+
+    pages.forEach(function (pg, i) {
+      var page = document.createElement('div');
+      page.className = 'bt-page';
+
+      pg.items.forEach(function (it) {
+        var slot = document.createElement('div');
+        slot.className = 'bt-piece';
+        /* Which piece and which way up, on the element itself: it is what makes
+           an imposed sheet readable in a dev tools inspector, and it is how a
+           proof can check that a back landed under its own face rather than
+           under a neighbour that happens to be the same size. */
+        slot.dataset.tile = it.id;
+        slot.dataset.side = it.side;
+        slot.style.left = it.x + 'mm';
+        slot.style.top = it.y + 'mm';
+        slot.style.width = it.w + 'mm';
+        slot.style.height = it.h + 'mm';
+        slot.appendChild(markup(it.id, it.side));
+        page.appendChild(slot);
+      });
+
+      var said = pg.kind === 'faces' ? 'faces' : pg.kind === 'backs' ? 'backs, mirrored' : 'faces and backs';
+      var label = document.createElement('p');
+      label.className = 'bt-label';
+      label.textContent = 'page ' + (i + 1) + ' of ' + pages.length + '  ·  ' + said +
+        '  ·  ' + pg.items.length + ' piece' + (pg.items.length === 1 ? '' : 's') +
+        '  ·  ' + PAGE_W + ' × ' + PAGE_H + ' mm at 100%, ' + CELL_MM + ' mm cells';
+
+      var frame = document.createElement('div');
+      frame.className = 'bt-frame';
+      frame.appendChild(label);
+      frame.appendChild(page);
+      host.appendChild(frame);
+    });
+
+    current = { w: PAGE_W, h: PAGE_H };
+    applyScale();
+  }
+
+  /* -------------------------------------------------------- preview scale */
+
+  /* CSS fixes the millimetre at exactly 96/25.4 px, so this needs no measuring. */
+  var MM_PX = 96 / 25.4;
+  var zoom = document.getElementById('zoom');
+
+  function applyScale(force) {
+    if (!current) return;
+    var host = document.getElementById('sheets');
+    var wanted = force === undefined ? zoom.value : force;
+    var wpx = current.w * MM_PX, hpx = current.h * MM_PX;
+    var room = host.clientWidth - 36;                 /* the 18 px of padding either side */
+    var scale = wanted === 'fit' ? Math.min(1, room / wpx) : parseFloat(wanted) || 1;
+
+    Array.prototype.forEach.call(host.children, function (frame) {
+      var page = frame.querySelector('.bt-page');
+      if (!page) return;
+      if (scale >= 1) {
+        page.style.transform = '';
+        frame.style.width = '';
+        frame.style.height = '';
+      } else {
+        page.style.transform = 'scale(' + scale + ')';
+        frame.style.width = Math.round(wpx * scale) + 'px';
+        frame.style.height = Math.round(hpx * scale) + 'px';
+      }
+    });
+  }
+
+  zoom.addEventListener('change', function () { applyScale(); });
+  window.addEventListener('resize', function () { applyScale(); });
+  document.getElementById('mode').addEventListener('change', function () { render(); });
+  document.getElementById('flip').addEventListener('change', function () { render(); });
+
+  /* The @media print rules undo the preview scale on their own. This is the belt
+     to that pair of braces: a piece must never reach paper at 86%. */
+  window.addEventListener('beforeprint', function () { applyScale(1); });
+  window.addEventListener('afterprint', function () { applyScale(); });
+  document.getElementById('go-print').addEventListener('click', function () { window.print(); });
+
+  syncPicker();
+  render();
+})();
+</script>
+</body>
+</html>
+`;
+
+const pages = [['index.html', index], ['print.html', printPage]];
 const keep = new Set([...files.map(([f]) => f), ...pages.map(([f]) => f)]);
 const stale = existsSync(OUT_DIR)
   ? readdirSync(OUT_DIR).filter((f) => (f.endsWith('.svg') || f.endsWith('.html')) && !keep.has(f))
@@ -492,9 +1050,10 @@ if (checkOnly) {
   for (const [file, body] of [...files, ...pages]) writeFileSync(join(OUT_DIR, file), body, 'utf8');
   for (const f of stale) unlinkSync(join(OUT_DIR, f));
   console.log(
-    `wrote ${rows.length} building tiles (${files.length} files) to docs/tiles/ — ` +
+    `wrote ${rows.length} building tiles (${files.length} files) + ${pages.length} pages to docs/tiles/ — ` +
     `${shapes.map((s) => `${s.count} ${s.id} at ${s.widthMm}x${s.heightMm}mm`).join(', ')}; ` +
-    `cell ${WORLD.mm}mm, the ${WORLD.map} hex on its ${WORLD.preset} preset` +
+    `cell ${WORLD.mm}mm, the ${WORLD.map} hex on its ${WORLD.preset} preset; ` +
+    `index.html shows them, print.html imposes them on ${T.sheet.widthMm}x${T.sheet.heightMm}mm paper` +
     (waiting.length ? `; ${waiting.length} still waiting on a plate and printing as blanks` : '') +
     (stale.length ? `; removed ${stale.length} file(s) no longer built` : '')
   );

@@ -74,10 +74,14 @@ numerals. The name is printed by the tools.
 **No grid.** The cells are an overlay the tools draw. A hex grid painted into a
 plate cannot be moved and will not line up.
 
-**Square for one-, three- and four-cell tiles; 3:2 landscape for two-cell tiles**
-— each brief says which, and it is not a choice: the page is the shape of the
-footprint's own bounding box, so a plate drawn on the wrong page is a plate that
-loses ground it did not have to.
+**Square for one- and three-cell tiles; 3:2 landscape for two- and four-cell
+tiles** — each brief says which, and it is not a choice: the page is the shape of
+the footprint's own bounding box, so a plate drawn on the wrong page is a plate
+that loses ground it did not have to. Nor is the heading the authority on it:
+`formatFor` in `tools/lib/tiles.mjs` works the page out from the footprint, and
+`node tools/mint-request.mjs <plate-id>` prints the answer with the commission. If
+a building's numbers change enough to move it up a band, the shape in the heading
+below is the stale one and the tool is right.
 
 How many pixels is not stated here either. `node tools/mint-request.mjs <id>`
 derives it per tile from the largest world hex any map declares, and prints both
@@ -240,6 +244,174 @@ estate rather than a large cottage. Chimneys well inside the top margin.
 
 ---
 
+# Out of the ground
+
+## tile-lumber-camp — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A working stand of felled timber and NOT a sawmill: eight or ten trunks
+limbed and cross-cut, stacked in a pile against two upright stakes, with a
+second pile part-built beside it. A pair of shear legs of three poles over
+the stack with a chain and hook hanging. Fresh stumps in the cleared ground
+with an axe left standing in one, and a skid track of dragged earth running
+away between them. A lean-to of poles and boughs at the back with a
+crosscut saw hung on it. Wash: ochre on the cut ends and the bark, grey-green
+on the ground and the boughs, cold slate blue on the chain, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Stacks along the right and
+centre where the shear legs stand over them; stumps and the skid track fill
+the left and the lower edge, which is ground the band may cover. No standing
+trees taller than the shear legs - this is cleared ground, not forest.
+```
+
+## tile-quarry — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A cut face in stone, worked in three stepped benches, the rock left square
+and raw where it has been split - drill holes down one edge of the face and
+a row of iron wedges still in them. Dressed blocks squared and stacked on
+the quarry floor, one of them slung under a timber derrick of three legs
+with a windlass at its foot. A barrow of chippings and a spoil run of small
+waste tipped down one side. Wash: cold slate blue on the rock and the
+blocks, ochre on the derrick timber, grey-green on the grass along the top
+of the face, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. The face runs across the
+upper half with the grass line along its top; floor, blocks and derrick fill
+the lower half. Derrick right of centre. The spoil run takes the lower left,
+which is ground the band may cover.
+```
+
+## tile-clay-pit — one cell, square
+
+```text
+[PREAMBLE]
+
+A wet dug hollow, terraced in two shallow steps, with brown standing water
+in the bottom of it and the sides slumped and slick where they have been cut
+by hand. A plank ramp with a barrow on it running up out of the pit, and a
+spade left upright in the cut face. A heap of grey clay set out on boards to
+stiffen beside the pit, squared off with the back of the spade. Reeds along
+the wet edge. Wash: cold slate blue on the water and the wet clay, ochre on
+the planks and the barrow, grey-green on the reeds, flat.
+
+FRAMING. Square plate, ground to all four edges. The hollow fills the centre
+and lower right; the drying heap and boards sit upper left, the ramp runs
+out of the right edge. Wet, and unmistakably wet - that is the whole of what
+tells this from the sand pit.
+```
+
+## tile-sand-pit — one cell, square
+
+```text
+[PREAMBLE]
+
+A dry hollow scooped out of pale sand, the sides steep and slumping in
+loose fans at the foot with the whole surface shifting rather than cut. A
+riddle - a square sieve frame on four legs - stood at the edge of the pit
+with screened sand heaped clean under it and a shovel leaning against it.
+A barrow at the top of a plank run. A few dry stems at the rim and nothing
+green in the pit at all. Wash: ochre on the sand throughout, cold slate blue
+on the riddle mesh and the shovel, flat.
+
+FRAMING. Square plate, ground to all four edges. Pit through the centre and
+lower right; riddle and screened heap upper left; the plank run leaves the
+right edge. Dry, loose and pale - which is what tells it from the clay pit
+at seventeen millimetres.
+```
+
+## tile-mine — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A timbered adit driven into the foot of a rise: a square mouth framed in
+heavy squared timber with a cap piece over it, black inside, and a rough
+track running out of it. Over the ground beside it a winding gin - four
+posts and a windlass drum with a rope over a pulley down a shaft collared
+in planks. A tub on two rails at the adit mouth and a long spoil tip of
+broken waste running down and out of the piece. A picking table of boards
+with sorted ore on it. Wash: cold slate blue on the rock, the ore and the
+ironwork, ochre on the timber and the tub, grey-green on the grass above
+the adit, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Adit mouth left of centre
+in the rise, gin and shaft to the right of it so the piece reads across.
+The spoil tip runs out of the lower left, which is ground the band may
+cover. Nothing above the gin posts.
+```
+
+## tile-oil-derrick — three cells, square
+
+```text
+[PREAMBLE]
+
+A tall latticed derrick of bolted timber, four legs battered inward to a
+crown block at the top with a cable falling from it - the only lattice
+tower in the whole set, and its openwork against the paper is the entire
+silhouette. At its foot a low engine house of boards with a stovepipe and
+a walking beam pivoted on a samson post beside it. Two riveted iron tanks
+on a low bund to one side, and a slush pit of standing oil, dark and flat.
+Trodden ground gone black around the well head. Wash: cold slate blue on
+the tanks, the cable and the ironwork, ochre on the derrick timber and the
+engine house, flat - and the pit and the stained ground as solid ink, the
+darkest shape on the page.
+
+FRAMING. Square plate, ground to all four edges. The derrick stands centre
+and slightly right, its crown block well inside the top margin and daylight
+showing through the lattice on both sides. Engine house and beam at its
+foot; tanks right; the slush pit and stained ground fill the lower left,
+which is ground the band may cover.
+```
+
+## tile-well — one cell, square
+
+```text
+[PREAMBLE]
+
+A round wellhead of dressed stone, waist high, under a small pitched roof
+of shingles carried on two posts, with a windlass barrel and crank between
+them and a bucket on a rope hanging over the shaft. A stone trough at the
+side, filled and slopping over. The ground worn bare in a ring around it
+and a path leading in, with the grass beaten flat where people stand.
+Nothing else. Wash: cold slate blue on the stone, the water and the ironwork,
+ochre on the roof shingles and the posts, grey-green on the grass beyond
+the worn ring, flat.
+
+FRAMING. Square plate, ground to all four edges. The wellhead sits centre
+and slightly right, roof ridge inside the upper third. The trough is at the
+right; the worn ground and the path fill the lower left, which is ground the
+band may cover. Small object, whole page - do not fill the plate with
+scenery to make it look busier.
+```
+
+## tile-dock — one cell, square
+
+```text
+[PREAMBLE]
+
+A timber jetty on driven piles running out over open water, decked in
+uneven planks with a low rail down one side, two bollards and a coiled rope
+on it. A flat-bottomed boat made fast alongside with an oar shipped and a
+net heaped in the bottom. On the bank a drying rack of poles with split fish
+hung on it and a barrel beside it. Water occupies rather more than half the
+piece, drawn as flat hatching with no reflection and no ripple ring. Wash:
+cold slate blue on the water and the rope, ochre on the jetty timber, the
+boat and the rack, grey-green on the bank, flat.
+
+FRAMING. Square plate, ground and water to all four edges. Bank across the
+lower left, jetty running from it up and away to the right so the piece
+reads out over the water. Rack and barrel on the bank at the lower left,
+which is ground the band may cover. Small and timber-built: the harbour is
+the stone one, and this must not be mistaken for it.
+```
+
+---
+
 # Ground and crops
 
 ## tile-farm — two cells, 3:2 landscape
@@ -275,6 +447,64 @@ ochre on the shelter thatch, flat.
 FRAMING. Landscape 3:2, ground to all four edges. The fence line frames the
 piece; shelter in the upper left, trough at the centre right, animals spread
 across the middle band. Nothing important in any corner.
+```
+
+## tile-orchard — one cell, square
+
+```text
+[PREAMBLE]
+
+Standard fruit trees in staggered rows on a grass floor, pruned open in the
+middle to a goblet of four or five limbs, trunks clear to head height and
+whitened at the foot - trees that have been kept, not trees that grew. Six
+or seven of them, small, none of them touching. A ladder set up into one, a
+picking basket at its foot and windfalls in the grass under another. Wash:
+grey-green on the grass and the leaves, ochre on the trunks, rust red on
+the fruit, flat.
+
+FRAMING. Square plate, ground to all four edges. Rows run corner to corner
+so the pattern survives the hexagonal cut. Ladder and basket at the centre
+right; open grass at the lower left, which is ground the band may cover. No
+horizon, no sky, no fence, no building.
+```
+
+## tile-vineyard — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+Rows of staked vines on a slope, low and knee-high and gnarled at the foot,
+each trained along a wire between chestnut posts so the rows read as long
+combed bands of leaf running away across the piece. A dry-stone terrace wall
+holding the slope, one course of it fallen and re-laid. A picking basket
+and a pair of shears on the wall. The ground between the rows is dry, stony
+and worked. Wash: grey-green on the leaves, cold slate blue on the terrace
+stone, ochre on the posts and the dry ground, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Rows run corner to corner
+and away to the right; the terrace wall crosses the lower third. Basket and
+shears right of centre. Nothing tall - this is the opposite of the hop
+garden, and low against high is what tells them apart at seventeen
+millimetres. No building.
+```
+
+## tile-apiary — one cell, square
+
+```text
+[PREAMBLE]
+
+Five straw skeps - domed coiled-straw hives, plain and unmistakable - set in
+a row on a low plank bench under a shallow shingle roof on posts, open at
+the front. Bees drawn only as a scatter of small marks in the air at the
+hive mouths, no insect drawn large enough to have legs. A smoker and a
+covered pail on the ground at the end of the bench. Rough flowering grass
+all round. Wash: ochre on the straw skeps and the bench, grey-green on the
+grass, cold slate blue on the smoker, flat.
+
+FRAMING. Square plate, ground to all four edges. The row of skeps runs
+across the upper middle so the domes repeat - the repeat is the whole
+silhouette; flowering grass fills the lower half and the lower left, which
+is ground the band may cover. No hollow log hives, no boxes - skeps.
 ```
 
 ## tile-crop-grain — one cell, square
@@ -375,6 +605,363 @@ deck and lumber stack running right. Roof ridge inside the upper third; the
 piece must read across.
 ```
 
+## tile-charcoal-kiln — one cell, square
+
+```text
+[PREAMBLE]
+
+A burning charcoal clamp and NOT a building: a broad low dome of cordwood
+stacked on end and sealed all over in turf and wet earth, twice as wide as
+it is high, with a short chimney hole at the crown letting up one thin
+thread of smoke and three vent holes low around the base. The turf skin is
+patched and cracked where it has been re-daubed. A stack of cordwood cut to
+length beside it, a long rake and a shovel laid down, and a heap of finished
+charcoal on a bed of ash. The ground round the clamp is burnt bare and grey.
+Wash: ochre on the cordwood and the turf, grey-green on the grass beyond the
+burnt ring, flat - and the finished charcoal as solid ink.
+
+FRAMING. Square plate, ground to all four edges. The dome sits centre and
+right, its crown inside the upper third; cordwood stack right, charcoal heap
+and tools at the lower left, which is ground the band may cover. No walls, no
+roof, no chimney stack - the moment this grows a building it becomes one of
+the other four heat tiles.
+```
+
+## tile-smelter — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A stone stack furnace: a squat tapering tower of rough stone about three
+times a man's height, battered inward as it rises, with an arched tapping
+hole at its foot and a runner of sand in front of it where the metal is let
+out. A lean-to of boards against one side housing a great pair of bellows,
+their nozzle going through the wall. A charging ramp of stacked earth and
+timber running up the back to the top of the stack. An ore heap of broken
+rock on one side and a heap of black slag on the other, glassy and lumpy.
+Wash: cold slate blue on the stone and the ore, ochre on the bellows leather
+and the ramp timber, flat - and the slag heap as solid ink.
+
+FRAMING. Landscape 3:2, ground to all four edges. Stack right of centre with
+the tapping arch and its sand runner at its foot; bellows shed and charging
+ramp to the left so the piece reads across. Top of the stack well inside the
+upper margin. The slag heap takes the lower left, which is ground the band
+may cover.
+```
+
+## tile-steelworks — three cells, square
+
+```text
+[PREAMBLE]
+
+The industrial one, and it should look a century later than everything
+around it: a long shed of brick with an iron-framed roof in a shallow saw
+of three ridges, and beside it one tall round brick chimney far higher than
+anything else in the set, banded at the top. Wide arched openings down the
+shed's flank, dark inside. A great coal heap against the near end with a
+plank run over it, iron ingots stacked crosswise in courses on the ground,
+and a spent-lime and cinder waste at the back. Everything rectilinear,
+everything sooted. Wash: rust red on the brick, cold slate blue on the iron
+roof frame and the ingots, flat - and the coal heap as solid ink.
+
+FRAMING. Square plate, ground to all four edges. Chimney right of centre and
+kept well inside the top margin - it may be cut by nothing. Shed running
+left and away from it; ingot stacks and coal across the lower half; cinder
+waste at the lower left, which is ground the band may cover. Big, black and
+straight-lined - that is what separates it from the smelter.
+```
+
+## tile-brickworks — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A rectangular updraught kiln of brick with four arched firing mouths in a
+row along its foot, blackened around each arch, a low parapet at the top and
+smoke standing off it. Alongside it - and this is the signature of the tile,
+not the kiln - the drying hacks: long open racks under a low board roof on
+posts, holding green bricks stacked in herringbone courses with air between
+them, three bays of them running away. A pug mill of a barrel and a sweep
+arm in the yard, a barrow of clay, and a mound of raw clay weathering.
+Wash: rust red on the fired brick and the kiln, ochre on the green bricks,
+the racks and the roof boards, cold slate blue on the raw clay, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Kiln left of centre, firing
+arches full on to the viewer; drying hacks running right and away so the
+piece reads across. The pug mill and clay mound take the lower left, which is
+ground the band may cover. The stacked green bricks must read as stacked
+bricks at seventeen millimetres - that is the whole tile.
+```
+
+## tile-glassworks — three cells, square
+
+```text
+[PREAMBLE]
+
+A glass cone: one enormous brick cone, round in plan, tapering the whole
+height of the piece to an open mouth at the top with heat standing off it -
+a shape nothing else in this set has, and drawn tall enough that it cannot
+be mistaken for a kiln or a chimney. Arched doorways round its foot, dark
+inside, with the ground in front of them worn and glass-strewn. A low
+annealing shed of brick lean-to against the cone. Sand in a heaped bay of
+boards, a barrow, a stack of split faggot wood, and a scatter of broken
+cullet swept into a pile that catches the light as bare paper. Wash: rust
+red on the brick cone and the shed, ochre on the sand and the faggots, cold
+slate blue on the cullet, flat.
+
+FRAMING. Square plate, ground to all four edges. The cone stands centre and
+right and its mouth must sit well inside the top margin with paper above it;
+annealing shed to its left; sand bay, faggots and cullet across the lower
+half, the cullet pile at the lower left where the band may cover it. Nothing
+may be drawn taller than the cone.
+```
+
+## tile-blacksmith — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+An open-fronted forge: a low building of stone to waist height and boards
+above, its whole front side open to the yard under the roof overhang, with a
+brick hearth and a great tapering hood inside it going up into a stone
+chimney at the gable. An anvil on an elm block standing out in the yard
+clear of the building, a slack tub of water beside it, and a rack of made
+iron - bar stock, hoops, a plough share, three horseshoes - hung and leaned
+along the open front. A coal heap and a heap of clinker at the gable end.
+Wash: cold slate blue on the anvil, the ironwork and the stone, ochre on the
+boards and the elm block, rust red on the brick hearth, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Building right of centre
+with the open front turned toward the viewer so the hood and hearth are
+visible inside it; anvil and slack tub out in the yard to the left, which is
+the reading of the tile - the anvil outdoors and alone is what says smith at
+seventeen millimetres. Coal and clinker at the lower left, which is ground
+the band may cover.
+```
+
+## tile-carpenter — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+An open-sided joiner's shop under a board roof: a long bench along the back
+with a screw vice and a rack of hand tools over it, two sawhorses out in
+front with a squared baulk across them and a saw left in the kerf. Leaning
+against the shop, a half-finished cartwheel - spoked, felloes on, tyre not
+yet - which is the shape that says carpenter across a table. Barrel staves
+bundled upright, a stack of seasoning boards stickered with laths between
+them, a plough body finished and set aside, and a drift of curled shavings
+under the bench. Wash: ochre on the timber, the wheel and the shavings, cold
+slate blue on the saw, the vice and the tyre iron, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Shop across the right and
+centre, sawhorses in front of it; the wheel leaning at the right-hand end
+where the eye lands. Board stack and shavings run out of the lower left,
+which is ground the band may cover. No water wheel and no frame saw - that
+is the sawmill, and these two must not be confused.
+```
+
+## tile-weaver — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A long low weaving shed, its upper floor carrying an unbroken band of small
+windows the whole length of the wall - the weaver's window range, and the
+one thing that names this building - under a shallow shingled roof. Ground
+floor of stone with a plain door. In the yard in front, a tenter frame: a
+long timber rack on posts with a length of cloth stretched and hooked taut
+across it, drying. A rack of yarn hanks hung on pegs by the door, and a
+covered basket of fleece. Wash: ochre on the shingles and the tenter frame,
+grey-green on the cloth and the yarn, cold slate blue on the stone and the
+tenter hooks, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Shed along the back from
+the centre to the right, window range full on to the viewer and unbroken;
+tenter frame across the front and left, its stretched cloth the biggest
+plain shape on the page. Fleece basket at the lower left, which is ground
+the band may cover.
+```
+
+## tile-tannery — one cell, square
+
+```text
+[PREAMBLE]
+
+Pits, and the building comes second: six square sunken tan pits in two rows,
+sunk into the ground and lined with boards, filled with dark liquor with
+hides floating slack in them and a plank walk between the rows. A beam and a
+scraping horse set up at the pit end with a hide over it. A stretch rack
+behind, a frame of poles with two hides laced into it drying. A heap of
+ground oak bark under a scrap of board roof. A shallow open shed at the
+back, and nothing else. Wash: ochre on the hides, the bark and the timber,
+cold slate blue on the pit liquor and the scraping blade, grey-green on the
+grass at the edges, flat - the liquor dark, the darkest thing on the plate.
+
+FRAMING. Square plate, ground to all four edges. Pits fill the centre and
+lower right and run corner to corner; rack and shed across the top; bark
+heap at the lower left, which is ground the band may cover. The pits must
+read as pits in the ground and not as tubs standing on it.
+```
+
+## tile-tailor — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A narrow town shop of two storeys, taller than it is wide, jettied slightly
+over the street, with one very large glazed window filling most of the upper
+floor - a wall of small leaded panes for close work, and the reason this
+building looks the way it does. Below, a plain shopfront with a half-door and
+a fold-down board shelf on brackets, propped open. On the shelf, three bolts
+of cloth stood on end and one unrolled a hand's length; on a bench beside it
+a great pair of shears and a flat iron. A neat swept doorstep and a scrap
+basket. Everything trim and square - this is the tidiest building in the set.
+Wash: rust red on the brick, ochre on the timber and the bolts, cold slate
+blue on the window leading, the shears and the iron, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Shop right of centre and
+standing tall in the frame with its eaves inside the upper margin; the shelf,
+bolts and bench running left along the front so the piece reads across.
+Swept step and scrap basket at the lower left, which is ground the band may
+cover. No dummy, no figure, no hanging garments over the street.
+```
+
+## tile-mill — one cell, square
+
+```text
+[PREAMBLE]
+
+A stone tower mill: a round tapering tower of rubble stone, three storeys,
+capped with a boat-shaped timber cap and carrying four lattice sails on a
+windshaft - the sails are the silhouette and they must read as four from any
+distance. A tail pole running down from the cap to a wheel on a track at the
+ground. A stone doorway with a sack hoist door above it, two full sacks
+standing by the step, and an old millstone leaning against the tower foot.
+Wash: cold slate blue on the stone tower and the millstone, ochre on the cap,
+the sails and the sacks, grey-green on the grass, flat.
+
+FRAMING. Square plate, ground to all four edges. The tower stands centre and
+slightly right; the sails may be cut by the top and right edges - they are
+meant to be, and cutting them is what makes the mill read as huge - but the
+cap and the windshaft must sit well inside. Sacks and millstone at the foot,
+grass at the lower left where the band may cover it. No water wheel: the
+sawmill has the wheel and this must not borrow it.
+```
+
+## tile-bakery — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A small brick bakehouse under a pantile roof with a great domed brick oven
+bulging out through its back wall, half outside the building, roofed over
+with its own little lead cap and a squat flue - the bulge is what says
+bakery and it must be unmistakable. A wide low door with a worn stone step
+and a long-handled wooden peel leaning by it. Outside, a cooling rack of
+slatted boards on trestles with round loaves set out on it, and a bundle of
+faggot wood stacked to the eaves under the overhang. Wash: rust red on the
+brick and the pantiles, ochre on the loaves, the peel and the faggots, cold
+slate blue on the stone step and the flue cap, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Bakehouse left of centre
+with the oven bulge turned to the viewer at its right-hand end; cooling rack
+and loaves running right so the piece reads across. Faggot stack at the
+lower left, which is ground the band may cover. Roof ridge inside the upper
+third.
+```
+
+## tile-butcher — one cell, square
+
+```text
+[PREAMBLE]
+
+A small open-fronted shambles of board and stone under a deep overhanging
+roof that shades the whole front: inside it a heavy chopping block worn
+hollow in the middle, a rack of knives and a saw on the back wall, and a
+stout beam across the opening carrying four empty iron hooks. Outside, a
+salting barrel with its lid off and a scoop in the salt, a stone trough, and
+a raw hide folded over a rail to one side. Swept, wet-looking flags in front.
+Nothing hanging on the hooks and no carcass anywhere - the tools and the
+salt say it. Wash: cold slate blue on the stone, the hooks and the knives,
+ochre on the block, the barrel and the hide, flat.
+
+FRAMING. Square plate, ground to all four edges. Shop across the upper and
+middle page with its open front to the viewer; barrel and trough at the
+front right; swept flags and the hide rail at the lower left, which is
+ground the band may cover.
+```
+
+## tile-dairy — one cell, square
+
+```text
+[PREAMBLE]
+
+A low stone dairy with thick walls, deep eaves and a cool slated roof, its
+one small window barred rather than glazed and set high for draught. The
+door stands open on a stone-flagged floor with shallow setting pans laid out
+in a row on a slate bench inside. Out in front, a cheese press - a squared
+timber frame with a great stone weight hung in it over a cheese in its
+hoop - and a churn on a stand beside it with a pail. Two rounds of cheese
+turned out on a board. A slab-lidded well cover set in the ground. Wash:
+cold slate blue on the stone, the slate roof and the pans, ochre on the
+press timber, the churn and the cheeses, grey-green on the grass, flat.
+
+FRAMING. Square plate, ground to all four edges. Dairy across the top and
+centre, door open and turned to the viewer; press and churn out in front of
+it at the centre right, which is where the eye lands; grass and the well
+cover at the lower left, which is ground the band may cover. Cool, shaded
+and shut in - the opposite of the bakery, and it should read that way.
+```
+
+## tile-brewery — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A brick brewhouse of two low storeys with a long louvred cupola riding the
+whole ridge of the roof, steam standing out of its slats - the vented ridge
+is the signature and is the first thing to draw. Through a wide open doorway
+the head of a copper mash tun with a rail round its top. Outside, a stone
+ramp down to a cellar hatch with two barrels being rolled on it and four
+more stacked on their sides in a rick beside it, chocked with wedges. A
+hop sack, corded at the neck, and a heap of spent grain. Wash: rust red on
+the brick, ochre on the barrels, the cupola louvres and the sack, cold slate
+blue on the copper hoops and the stone ramp, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Brewhouse across the back
+from the centre to the left with the cupola full along its ridge; ramp,
+hatch and barrel rick running right so the piece reads across. Spent grain
+and hop sack at the lower left, which is ground the band may cover.
+```
+
+## tile-winery — three cells, square
+
+```text
+[PREAMBLE]
+
+A press house open on two sides under a heavy tiled roof on stone piers,
+built round one great timber screw press - a squared frame with a wooden
+screw the thickness of a leg running down through its head to a bed and a
+basket, the beam above it counterweighted with a hung stone. That press is
+the tile. Under the roof beside it, two shallow open vats of staved timber
+with a trough running between them; outside, barrels stacked on their sides
+in a stone rack two courses high, and a stone catch trough with a wooden
+spout. Baskets stacked empty by a pier. Wash: cold slate blue on the stone
+piers, the racks and the troughs, ochre on the press timber, the vats and
+the barrels, rust red on the roof tiles, flat.
+
+FRAMING. Square plate, ground to all four edges. The press stands centre and
+right under the roof, its head well inside the upper margin; vats to its
+left, barrel rack across the lower right, stacked baskets and swept floor at
+the lower left, which is ground the band may cover. No vines - the vineyard
+is its own tile and must not appear here.
+```
+
+---
+
+# Storage
+
 ## tile-warehouse — three cells, square
 
 ```text
@@ -408,4 +995,316 @@ grey-green on the ground, flat.
 FRAMING. Square plate, ground to all four edges. The store sits high on the
 page with clear daylight under its floor; ladder and sacks run down to the
 lower edge. Nothing in any corner.
+```
+
+---
+
+# The town
+
+## tile-market — one cell, square
+
+```text
+[PREAMBLE]
+
+A market shelter and no building at all: a square tiled roof, steeply
+pitched with a finial at the peak, carried on four stout timber posts over an
+open floor of worn stone flags, with the daylight going straight through
+underneath it - that gap under the roof is the whole silhouette and it must
+not be closed. Two trestle tables under it, one with baskets and a stack of
+crates, one bare. A beam scale hung from a tie between two posts. A pole with
+a rolled awning lashed to it against one post. Sacks leaned at the foot of
+another. Wash: rust red on the roof tiles, ochre on the posts, the trestles
+and the baskets, cold slate blue on the flags and the scale, flat.
+
+FRAMING. Square plate, ground to all four edges. The shelter sits centre and
+slightly right with clear paper visible under the roof between the posts;
+flags and sacks spread to the lower left, which is ground the band may cover.
+Roof peak inside the upper third. No walls, no door, no shopfront - the
+moment it has a wall it stops being a market.
+```
+
+## tile-trading-house — three cells, square
+
+```text
+[PREAMBLE]
+
+A brick counting house of two storeys and good windows, pierced through the
+middle of its front by a wide arched carriage entry with a shadowed passage
+running through to a rear yard - the arch through the building is what says
+trading house rather than warehouse. A panelled door with three stone steps
+and an iron handrail to one side of the arch, a bay of shuttered windows to
+the other. In the passage mouth a two-wheeled hand cart part loaded; on the
+ground beside the door a great beam scale on a stand with a set of graded
+weights, and three corded bales and a bound chest waiting to be weighed.
+Wash: rust red on the brick, cold slate blue on the roof slate, the scale
+and the ironwork, ochre on the bales, the chest and the cart, flat.
+
+FRAMING. Square plate, ground to all four edges. The building fills the
+upper two thirds with the carriage arch dead centre and dark; scale, bales
+and cart across the lower half; swept paving at the lower left, which is
+ground the band may cover. No hoist beam and no staddle stones - those are
+the warehouse's and this must not borrow them.
+```
+
+## tile-town-hall — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A stone moot hall standing on an open arcade: a first-floor hall of dressed
+stone with tall mullioned windows, carried on six squat round columns with a
+paved market floor open underneath and daylight all the way through it. An
+outside stair of stone runs up the near gable end to a doorway with a hood
+over it. A small open timber cupola on the ridge with one bell hung in it.
+Two benches under the arcade and a stone standard by the foot of the stair.
+Wash: cold slate blue on the stone, the roof and the bell, ochre on the
+cupola timber, the stair rail and the benches, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Hall across the centre and
+right, the arcade beneath it with paper showing through between the columns;
+outside stair at the left-hand end so the piece reads across. Cupola and bell
+well inside the upper margin. Paving and benches at the lower left, which is
+ground the band may cover.
+```
+
+## tile-guildhall — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A timber-framed hall, the front close-studded in narrow uprights with the
+upper floor jettied a full foot out over the lower on carved brackets - the
+overhang and the ranked studding are the whole identity, and they are what
+tell it from the town hall's stone arcade. A steep tiled roof, a carved
+bargeboard on the gable, a range of small leaded windows along the jetty. A
+wide plank double door with a stone step and a long bench each side of it,
+worn hollow. An iron lantern bracket over the door with a lantern on it.
+Wash: ochre on the timber frame, the bargeboard and the benches, rust red on
+the roof tiles, cold slate blue on the window leading and the lantern, flat -
+the infill panels left as bare paper.
+
+FRAMING. Landscape 3:2, ground to all four edges. Hall across the centre and
+right with the jetty full on to the viewer so the overhang casts its line;
+door and benches at the centre; the ground and step run out of the lower
+left, which is ground the band may cover. Gable inside the upper margin.
+```
+
+## tile-inn — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A long two-storey inn with a wooden gallery running the length of its upper
+floor on turned posts, and a wide arched cart entry through the ground floor
+at one end opening into a dark stable yard passage. A plain empty iron sign
+bracket over the door with nothing hanging from it. Below the gallery, a
+bench and a barrel-topped table by the door, three barrels stacked against
+the wall, a horse trough of hollowed stone and a mounting block of three
+steps. A lantern on a hook. Wash: ochre on the timber gallery, the barrels
+and the bench, rust red on the roof tiles, cold slate blue on the stone
+trough, the mounting block and the ironwork, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Inn across the back with
+the cart arch at the right-hand end; gallery running left above the door;
+trough, block and barrels along the front so the piece reads across. Yard
+cobbles at the lower left, which is ground the band may cover. The sign
+bracket must be empty - no board, no painted device, no lettering of any
+kind.
+```
+
+## tile-infirmary — one cell, square
+
+```text
+[PREAMBLE]
+
+A small stone hall with a steep shingled roof, a gabled stone porch standing
+out from the front with a bench inside it, and three tall narrow windows down
+the flank set higher than a person - light in, nothing to see out. One
+chimney at the far gable drawing thin smoke. In front, a physic garden of
+four small squared beds edged with boards and divided by a gravel cross
+path, each bed a different low herb, with a watering can and a covered water
+butt at the corner of the nearest. Wash: cold slate blue on the stone and
+the water butt, ochre on the shingles, the porch bench and the gravel,
+grey-green on the herb beds, flat.
+
+FRAMING. Square plate, ground to all four edges. Hall across the upper half
+with the porch centre right; the four herb beds fill the lower half and run
+corner to corner; the gravel path and the nearest bed take the lower left,
+which is ground the band may cover. Quiet and kept - no cross, no bell, no
+shrine furniture.
+```
+
+---
+
+# Defence
+
+## tile-barracks — three cells, square
+
+```text
+[PREAMBLE]
+
+A long two-storey block of plain stone with its windows in a strict repeating
+rank - eight below and eight above, all identical, all the same distance
+apart - and a shallow slate roof with two plain chimneys. The regularity is
+the point: nothing else in this set is regular, and that alone should name it
+across a table. A walled yard in front of trodden bare earth, entered by a
+square gate of squared timber between two stone piers. In the yard, a rack of
+eight spears stood upright in a frame, a drill post set in the ground with a
+worn ring round it, and a covered water butt against the wall. Wash: cold
+slate blue on the stone, the slate and the spearheads, ochre on the gate
+timber, the rack and the shafts, flat.
+
+FRAMING. Square plate, ground to all four edges. Block across the upper half,
+full on to the viewer so the window rank reads as a rank; yard wall and gate
+across the lower right; spear rack and drill post in the middle of the yard;
+bare earth at the lower left, which is ground the band may cover. No banners,
+no devices, no painted arms.
+```
+
+## tile-watchtower — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A tall square stone tower, far taller than it is wide and the tallest thing
+in the set after the glass cone, battered slightly inward as it rises, with
+narrow slit openings up two faces and a corbelled parapet at the head
+carrying a short timber hoarding on one side. An iron beacon basket on a
+bracket arm at the parapet corner, empty and cold. An outside stair of stone
+running up the near face to a door set well above the ground, with the ground
+floor blind. A low dry-stone wall enclosing a scrap of ground at its foot, a
+gate of two rails, and a heap of cut beacon wood under a board. Wash: cold
+slate blue on the stone and the ironwork, ochre on the hoarding timber, the
+stair rail and the beacon wood, grey-green on the grass, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Tower right of centre and
+standing the full height of the plate with its parapet and beacon basket well
+inside the top margin - they may be cut by nothing. Wall, gate and beacon
+wood run left and out of the lower left, which is ground the band may cover.
+```
+
+## tile-palisade — one cell, square
+
+```text
+[PREAMBLE]
+
+A run of defence work and no building: a close-set line of split logs driven
+upright in an earth bank, each one axe-pointed at the top so the whole run
+reads as a saw-tooth line across the piece - that toothed top edge is the
+entire silhouette. Behind it a walkway of planks on braced timber uprights,
+reached by a short ladder. In front, a ditch with its spoil thrown up
+against the foot of the logs and rough grass growing on the bank. A narrow
+gate of two heavy leaves, barred across with a drawbar, set into the run.
+Wash: ochre on the split logs and the walkway, cold slate blue on the drawbar
+ironwork, grey-green on the bank grass, flat.
+
+FRAMING. Square plate, ground to all four edges. The run crosses the plate
+corner to corner so the line survives the hexagonal cut, gate right of
+centre; ditch and bank along the near side, walkway and ladder behind. The
+ditch and its grass take the lower left, which is ground the band may cover.
+No towers, no wall walk roofed over - a fence, seriously made.
+```
+
+---
+
+# The strange work
+
+## tile-alchemist — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A narrow crooked house of two storeys and a half, leaning slightly and
+taller than its neighbours would be, with a glazed oriel bay jettied out from
+the upper floor on a bracket - and standing in that bay, drawn as clean
+silhouettes against the glass, a tall pear-shaped alembic with its long neck
+curving down and two round-bottomed retorts. The chimney is a stack of
+open-ended clay pots mortared one on the next, four of them, crooked, with a
+thin thread of smoke - the pot chimney and the glassware are what name this
+tile. A small walled yard beside it holding one bed of tall strange-leaved
+plants, a stone mortar on a block, and a covered crock. Wash: cold slate blue
+on the glass, the alembic and the roof slate, ochre on the timber and the
+clay pots, grey-green on the plants, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. House right of centre and
+standing tall with the pot chimney inside the upper margin; the oriel bay
+turned to the viewer at eye height; walled yard and plant bed running left so
+the piece reads across. Mortar and crock at the lower left, which is ground
+the band may cover. No stars, no sigils, no glow of any kind.
+```
+
+## tile-shrine — one cell, square
+
+```text
+[PREAMBLE]
+
+A plain standing stone, rough and unworked and about the height of a man,
+set upright on a stepped base of three courses and sheltered by a small open
+canopy - four short stone columns carrying a low pitched slab roof, open on
+every side with daylight going straight through. That is all the structure
+there is. At the foot of the stone a shallow bowl and a bundle of cut stems
+laid down; the paving worn smooth in a ring where people have stood, and a
+path beaten to it through the grass. Wash: cold slate blue on the stone, the
+columns and the roof slab, grey-green on the grass and the cut stems, ochre
+on the worn path and the bowl, flat.
+
+FRAMING. Square plate, ground to all four edges. Canopy and stone centre and
+slightly right, roof slab inside the upper third, paper showing between the
+columns; the worn ring and the path fill the lower left, which is ground the
+band may cover. Old and tended, never ruined and never overgrown. No figure,
+no carving, no symbol on the stone.
+```
+
+---
+
+# Ways in and out
+
+## tile-harbour — three cells, square
+
+```text
+[PREAMBLE]
+
+A quay of dressed stone, coursed and square, running out into deep water with
+a mole returning from its far end - stone, and heavy, and the opposite of the
+dock's timber jetty in every line. A treadwheel crane on the quay: a squat
+timber house on a stone base carrying a projecting jib with a block and hook
+hanging over the water. Iron bollards along the edge, a flight of steps cut
+down into the water at one side, and mooring rings. Alongside, the hull of a
+single-masted decked vessel made fast, drawn from the quay so it is mostly
+hull and rail with the mast running up and out of the plate. Crates and two
+barrels stacked on the quay, a coil of heavy rope. Water fills the outer
+third, flat hatched, with no reflection and no ripple ring. Wash: cold slate
+blue on the stone, the water, the ironwork and the hull, ochre on the crane
+timber, the crates and the rope, flat.
+
+FRAMING. Square plate, quay and water to all four edges. Quay running from
+the lower left up and away to the right with the crane at the centre right
+and the vessel beyond it; the mast is cut by the top edge and is meant to be.
+Crates, bollards and rope along the near quay; swept stone at the lower left,
+which is ground the band may cover.
+```
+
+## tile-rail-depot — two cells, 3:2 landscape
+
+```text
+[PREAMBLE]
+
+A goods platform of stone with a timber edge, a shed of boards along the
+back of it with two wide sliding doors, and a pair of iron rails on timber
+sleepers running along its face and out of both ends of the piece - the rails
+are subject matter, laid in ballast and drawn with the sleepers showing, not
+lines put over the picture. At the end of the platform a buffer stop of
+baulked timber. Beside the shed a water tower - an iron tank on four braced
+legs with a swinging leather-jointed spout - and a small hand crane on the
+platform edge. Crates and a hand barrow on the platform, a heap of ballast
+and a stack of spare sleepers on the ground. Wash: cold slate blue on the
+rails, the tank, the crane and the stone, ochre on the shed boards, the
+sleepers and the crates, rust red on the tank's rusted seams, flat.
+
+FRAMING. Landscape 3:2, ground to all four edges. Platform and shed across
+the back from the centre to the right, water tower at the right-hand end and
+inside the upper margin; rails running the full width and out of both ends so
+the piece reads across; buffer stop at the left. Ballast and spare sleepers
+at the lower left, which is ground the band may cover. No locomotive, no
+wagon, no rolling stock of any kind.
 ```
