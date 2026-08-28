@@ -109,13 +109,13 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**2 of 54 minted.** 0 waiting on a brief, 52 waiting on art, 0 waiting on frame.
+**2 of 54 minted.** 0 waiting on a brief, 51 waiting on art, 1 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 52 tiles
+### 2 · DRAW — the artist — 51 tiles
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -154,7 +154,6 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `dairy` | Dairy | Production | `tile-dairy` | ✓ | · | · |
 | `brewery` | Brewery | Production | `tile-brewery` | ✓ | · | · |
 | `winery` | Winery | Production | `tile-winery` | ✓ | · | · |
-| `granary` | Granary | Storage | `tile-granary` | ✓ | · | · |
 | `market` | Market | Civic | `tile-market` | ✓ | · | · |
 | `trading-house` | Trading House | Civic | `tile-trading-house` | ✓ | · | · |
 | `town-hall` | Town Hall | Civic | `tile-town-hall` | ✓ | · | · |
@@ -174,9 +173,13 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `crop-cotton` | Cotton Field | Fields | `tile-crop-cotton` | ✓ | · | · |
 | `crop-hops` | Hops Field | Fields | `tile-crop-hops` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate
+### 3 · FRAME — whoever accepts the plate — 1 tile
 
-Nothing waiting.
+The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
+
+| Code | Tile | Category | Plate | brief | plate | frame |
+| --- | --- | --- | --- | :-: | :-: | :-: |
+| `granary` | Granary | Storage | `tile-granary` | ✓ | ✓ | · |
 
 ### Minted
 
