@@ -81,9 +81,27 @@ export function largestHexMm(root = HERE) {
 
 /* -------------------------------------------------------------- the footprint */
 
-/** How much ground a subject's own numbers ask for. */
+/** What one yard model costs, in cells. A subject that names no yard needs none. */
+export function yardOf(subject, spec) {
+  const id = subject.yard;
+  if (id == null) return { id: null, weight: 0 };
+  const model = spec.ground.yards.models.find((m) => m.id === id);
+  if (!model) throw new Error(`"${subject.id}" wants the yard model "${id}", which data/buildingtiles.json does not declare`);
+  return model;
+}
+
+/**
+ * How much ground a subject's own numbers ask for: the fabric, what it holds, and
+ * the yard its trade needs in the open.
+ *
+ * The third one is the only part not read off a count, because there is no count
+ * of it - a tannery's drying racks are not a number any rule needs. It is named
+ * instead, from three, the way a commodity names its pricing model. See
+ * data/buildingtiles.json ground.yards.
+ */
 export function groundOf(subject, spec) {
-  return spec.ground.terms.reduce((sum, t) => sum + (subject[t.field] || 0) * t.weight, 0);
+  const counted = spec.ground.terms.reduce((sum, t) => sum + (subject[t.field] || 0) * t.weight, 0);
+  return counted + yardOf(subject, spec).weight;
 }
 
 /** Which rung of the ladder a ground demand lands on. */

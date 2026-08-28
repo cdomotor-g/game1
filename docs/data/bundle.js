@@ -2601,6 +2601,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 4,
         "minRounds": 1,
+        "yard": "walls",
         "housing": 1,
         "workerSlots": 0,
         "terrain": [
@@ -2615,7 +2616,7 @@ window.GAME_DATA = {
       {
         "id": "timber-house",
         "name": "Timber House",
-        "shortName": "Timber",
+        "shortName": "Cottage",
         "category": "housing",
         "tier": 2,
         "summary": "A proper house of sawn lumber. Houses two workers.",
@@ -2631,6 +2632,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 10,
         "minRounds": 2,
+        "yard": "walls",
         "housing": 2,
         "workerSlots": 0,
         "terrain": [
@@ -2643,7 +2645,7 @@ window.GAME_DATA = {
       {
         "id": "brick-house",
         "name": "Brick House",
-        "shortName": "Brick",
+        "shortName": "Terrace",
         "category": "housing",
         "tier": 3,
         "summary": "Houses three workers, and they are warm: brick-housed workers ignore Cold Snap events.",
@@ -2663,6 +2665,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 18,
         "minRounds": 3,
+        "yard": "walls",
         "housing": 3,
         "workerSlots": 0,
         "terrain": [
@@ -2698,6 +2701,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 30,
         "minRounds": 4,
+        "yard": "yard",
         "housing": 4,
         "specialistHousing": 1,
         "workerSlots": 0,
@@ -2710,7 +2714,7 @@ window.GAME_DATA = {
       {
         "id": "lumber-camp",
         "name": "Lumber Camp",
-        "shortName": "Lumber",
+        "shortName": "Camp",
         "category": "extraction",
         "tier": 1,
         "summary": "Lets you fell trees on any forest tile within 1 tile, and stores logs on site.",
@@ -2722,6 +2726,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 6,
         "minRounds": 1,
+        "yard": "works",
         "workerSlots": 3,
         "storage": 4,
         "terrain": [
@@ -2742,6 +2747,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 8,
         "minRounds": 2,
+        "yard": "works",
         "workerSlots": 4,
         "terrain": [
           "hills",
@@ -2762,6 +2768,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 5,
         "minRounds": 1,
+        "yard": "works",
         "workerSlots": 3,
         "terrain": [
           "marsh",
@@ -2783,6 +2790,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 5,
         "minRounds": 1,
+        "yard": "works",
         "workerSlots": 3,
         "terrain": [
           "desert"
@@ -2808,6 +2816,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 14,
         "minRounds": 3,
+        "yard": "yard",
         "workerSlots": 4,
         "terrain": [
           "hills",
@@ -2849,6 +2858,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 26,
         "minRounds": 4,
+        "yard": "works",
         "workerSlots": 3,
         "requiresDeposit": "oil-field"
       },
@@ -2866,6 +2876,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 6,
         "minRounds": 1,
+        "yard": "walls",
         "workerSlots": 1,
         "terrain": [
           "grassland",
@@ -2890,6 +2901,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 8,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 4,
         "fieldSlots": 4,
         "terrain": [
@@ -2914,6 +2926,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 7,
         "minRounds": 1,
+        "yard": "works",
         "workerSlots": 3,
         "livestockSlots": 6,
         "terrain": [
@@ -2940,6 +2953,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 10,
         "minRounds": 3,
+        "yard": "works",
         "workerSlots": 2,
         "terrain": [
           "grassland",
@@ -2964,6 +2978,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 12,
         "minRounds": 3,
+        "yard": "works",
         "workerSlots": 3,
         "terrain": [
           "hills",
@@ -2984,6 +2999,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 5,
         "minRounds": 1,
+        "yard": "walls",
         "workerSlots": 1,
         "terrain": [
           "grassland",
@@ -3009,6 +3025,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 8,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 3,
         "waterside": "any"
       },
@@ -3030,6 +3047,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 10,
         "minRounds": 2,
+        "yard": "works",
         "workerSlots": 3,
         "terrain": [
           "forest",
@@ -3040,7 +3058,7 @@ window.GAME_DATA = {
       {
         "id": "charcoal-kiln",
         "name": "Charcoal Kiln",
-        "shortName": "Charcoal",
+        "shortName": "Hearth",
         "category": "production",
         "tier": 1,
         "summary": "Logs into charcoal, for smelting where there is no coal.",
@@ -3056,6 +3074,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 8,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 2,
         "terrain": [
           "forest",
@@ -3085,6 +3104,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 16,
         "minRounds": 3,
+        "yard": "works",
         "workerSlots": 3,
         "terrain": [
           "hills",
@@ -3095,7 +3115,7 @@ window.GAME_DATA = {
       {
         "id": "steelworks",
         "name": "Steelworks",
-        "shortName": "Steel",
+        "shortName": "Foundry",
         "category": "production",
         "tier": 3,
         "summary": "The refinery. Pig iron plus coal into steel - and it only really works on coal.",
@@ -3115,6 +3135,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 26,
         "minRounds": 4,
+        "yard": "works",
         "workerSlots": 4,
         "requiresBuilding": "smelter",
         "terrain": [
@@ -3145,6 +3166,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 14,
         "minRounds": 3,
+        "yard": "works",
         "workerSlots": 3,
         "terrain": [
           "grassland",
@@ -3155,7 +3177,7 @@ window.GAME_DATA = {
       {
         "id": "glassworks",
         "name": "Glassworks",
-        "shortName": "Glass",
+        "shortName": "Glazier",
         "category": "production",
         "tier": 3,
         "summary": "Sand plus heavy fuel into glass. Hot, hungry and profitable.",
@@ -3175,6 +3197,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 22,
         "minRounds": 3,
+        "yard": "works",
         "workerSlots": 3,
         "terrain": [
           "grassland",
@@ -3205,6 +3228,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 14,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 2,
         "specialist": "smith",
         "terrain": [
@@ -3235,6 +3259,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 12,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 2,
         "specialist": "carpenter",
         "terrain": [
@@ -3262,6 +3287,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 12,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 3,
         "specialist": "weaver",
         "terrain": [
@@ -3288,6 +3314,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 11,
         "minRounds": 2,
+        "yard": "works",
         "workerSlots": 2,
         "terrain": [
           "grassland",
@@ -3312,6 +3339,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 14,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 2,
         "specialist": "tailor",
         "requiresBuilding": "weaver"
@@ -3334,6 +3362,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 10,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 2,
         "terrain": [
           "grassland",
@@ -3358,6 +3387,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 12,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 2
       },
       {
@@ -3378,6 +3408,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 9,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 2
       },
       {
@@ -3398,6 +3429,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 11,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 2
       },
       {
@@ -3422,6 +3454,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 15,
         "minRounds": 3,
+        "yard": "yard",
         "workerSlots": 3,
         "specialist": "brewer"
       },
@@ -3447,6 +3480,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 18,
         "minRounds": 3,
+        "yard": "yard",
         "workerSlots": 3,
         "requiresBuilding": "vineyard"
       },
@@ -3469,6 +3503,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 12,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 1,
         "storage": 12,
         "theftTarget": true
@@ -3491,6 +3526,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 10,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 1,
         "storage": 10,
         "storageFilter": [
@@ -3514,6 +3550,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 8,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 2,
         "notes": "Cheap on purpose. The market is the safety net: any player who has lost their tools can gather deadwood by hand, put up a stall, and buy a replacement."
       },
@@ -3540,6 +3577,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 20,
         "minRounds": 3,
+        "yard": "walls",
         "workerSlots": 2,
         "specialist": "merchant",
         "requiresBuilding": "market",
@@ -3564,6 +3602,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 10,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 1,
         "storage": 6,
         "unique": "per-town"
@@ -3591,6 +3630,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 18,
         "minRounds": 3,
+        "yard": "walls",
         "workerSlots": 1
       },
       {
@@ -3611,6 +3651,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 12,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 2,
         "roadside": {
           "$comment": "An inn is the only building that does not need a town under it. That is not a special case for its own sake - it is what makes a long route survivable, and it is the reason a player builds anything on the empty half of the board. A roadside inn is a holding: it earns, it can be bought and sold, and it can be burned down.",
@@ -3678,6 +3719,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 12,
         "minRounds": 2,
+        "yard": "yard",
         "workerSlots": 1,
         "specialist": "healer"
       },
@@ -3699,6 +3741,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 16,
         "minRounds": 3,
+        "yard": "yard",
         "workerSlots": 2,
         "garrison": 4
       },
@@ -3721,6 +3764,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 14,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 1
       },
       {
@@ -3737,6 +3781,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 10,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 0
       },
       {
@@ -3762,6 +3807,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 18,
         "minRounds": 3,
+        "yard": "walls",
         "workerSlots": 2,
         "specialist": "alchemist"
       },
@@ -3783,6 +3829,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 10,
         "minRounds": 2,
+        "yard": "walls",
         "workerSlots": 0,
         "victoryPoints": 1
       },
@@ -3875,6 +3922,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 22,
         "minRounds": 3,
+        "yard": "works",
         "workerSlots": 2,
         "waterside": "sea",
         "requiresBuilding": "dock",
@@ -3903,6 +3951,7 @@ window.GAME_DATA = {
         ],
         "buildPoints": 18,
         "minRounds": 3,
+        "yard": "works",
         "workerSlots": 2,
         "requiresBuilding": "rail"
       }
@@ -13827,12 +13876,12 @@ window.GAME_DATA = {
       "$orientationNote": "Pointy-top, like the world map's grid and the mini-map's. A tile turned any of six ways still seats in a cell, and a lane of tiles runs the way a lane of cells runs."
     },
     "ground": {
-      "$comment": "How many cells a building takes, worked out from the building's own numbers rather than typed on it. This is the answer to \"the scale should make sense\": scale is a system, like a price, not a judgement made forty times.\n\nTwo things decide how much ground a building covers, and one of them on its own gets it wrong every time. buildPoints is the FABRIC - how much building there is to raise - and it is the only figure that separates a steelworks from a shrine. But a pasture is six animals behind a fence and costs almost nothing to put up, and a warehouse is mostly air. So the yard is counted too: what the building holds is ground it needs whether or not anybody had to build it.\n\nA term's weight says how much of a cell one unit of it asks for. They are small on purpose - the ladder does the deciding, and a model tuned so finely that one worker slot moves a building up a rung is a model that will move it back next time somebody balances a recipe.",
+      "$comment": "How many cells a building takes, worked out from the building's own numbers rather than typed on it. This is the answer to \"the scale should make sense\": scale is a system, like a price, not a judgement made forty times.\n\nTHREE things take room, and for a long time this model counted two of them.\n\nThe FABRIC is how much building there is to raise, and buildPoints is the only figure that separates a steelworks from a shrine. What the building HOLDS is the second: a pasture is six animals behind a fence and costs almost nothing to put up, a warehouse is mostly air, and neither is described by its fabric at all.\n\nThe third is the YARD, and leaving it out is what made a third of the set the wrong size. A tannery is pits, bark stacks and drying racks and eleven build points; a weaver is a room with looms in it and twelve. A quarry is a hole the size of the stone taken out of it; a trading house is a counting room and a strong box, and cost more to build than either. Fabric and holdings say those pairs are the same size. They are not, and what separates them is not on any number a building carries - it is what the TRADE needs in the open, which is a fact about the trade. So it is named, from a closed vocabulary of three, the way a commodity names its pricing model in data/pricing.json: `yards` below says what the three are and what each costs, and each building says which one it needs. Nothing writes a footprint, and the ladder still does the deciding.\n\nA term's weight says how much of a cell one unit of it asks for. They are small on purpose - the ladder does the deciding, and a model tuned so finely that one worker slot moves a building up a rung is a model that will move it back next time somebody balances a recipe.",
       "terms": [
         {
           "field": "buildPoints",
-          "weight": 0.125,
-          "why": "The fabric. One cell of building per eight points of effort - the hut is four points and the manor thirty, which is the whole range and it lands where a hut and a manor should."
+          "weight": 0.08,
+          "why": "The fabric. One cell of building per twelve or thirteen points of effort - the hut is four points and the manor thirty, which is the whole range and it lands where a hut and a manor should.\n\nLighter than it was, and deliberately. Effort is not area: brick costs more to lay than timber on the same plot, a tower is dear because it is tall, and a shed is cheap by the acre. Leaned on hard enough, buildPoints made a fine building on a small plot come out bigger than a rough one on a large plot - a twenty-point trading house wider than a ten-point sawmill - which is precisely backwards. It still carries the fabric; the yard now carries what the fabric never knew."
         },
         {
           "field": "housing",
@@ -13846,12 +13895,12 @@ window.GAME_DATA = {
         },
         {
           "field": "workerSlots",
-          "weight": 0.25,
-          "why": "Somebody working here needs a bench and room to swing, which is a good deal less than a bed. Deliberately the lightest term: nearly every building in the game has two to four, so a heavier weight would flatten the whole ladder to one rung."
+          "weight": 0.1,
+          "why": "Somebody working here needs a bench and room to swing, which is a good deal less than a bed. Deliberately the lightest term: nearly every building in the game has two to four, so a heavier weight would flatten the whole ladder to one rung. Lighter still now that the yard is counted - where those hands actually spread out to is the yard, and charging for it twice made every four-worker shop the size of a farm."
         },
         {
           "field": "storage",
-          "weight": 0.2,
+          "weight": 0.15,
           "why": "A slot of stock on the floor. Twelve of them is a warehouse and it is most of why a warehouse is bigger than the shop next door."
         },
         {
@@ -13865,6 +13914,29 @@ window.GAME_DATA = {
           "why": "A soldier held at a barracks: a bunk and a yard to drill in, a little less than a household."
         }
       ],
+      "yards": {
+        "$comment": "What the trade needs in the OPEN - the third thing that takes room, and the only one a building cannot work out from a number it already carries.\n\nThree of them, and there will only ever be three, for the reason there are only ever three pricing models: a vocabulary a person has to choose from forty times is only useful if the choice is obvious every time, and the moment there is a fourth it stops being. Four was tried. The top two came out 0.2 of a cell apart, which is a distinction doing knife-edge work and nothing else, so they were merged and the buildings' own fabric and hands were left to separate a tannery from a quarry - which they do.\n\nA building names one. It is not a footprint and it is not a size: it is a fact about the trade, the same kind of fact as `glut` or `deplete`, and the ladder still decides what it adds up to. A shrine and a manor are both `walls`; one is a cell and the other is four.",
+        "models": [
+          {
+            "id": "walls",
+            "weight": 0,
+            "reads": "Nothing stands outside. The walls are the whole of it - a counter, a bench, a bed, a shaft head, a well.",
+            "examples": "a weaver, a butcher, a trading house, a house, a watchtower"
+          },
+          {
+            "id": "yard",
+            "weight": 1,
+            "reads": "One working yard beside the building: a cart to unload, a stack to season, a bit of ground to turn something over on.",
+            "examples": "a smithy, a granary, a mill, an inn, a farm steading"
+          },
+          {
+            "id": "works",
+            "weight": 2,
+            "reads": "The ground itself is the works: pits and racks, a face cut into it, a plantation standing on it, a run of fence around it. The building is a piece of something larger.",
+            "examples": "a tannery, a sawmill, a quarry, an orchard, a harbour"
+          }
+        ]
+      },
       "excluded": [
         {
           "field": "fieldSlots",
@@ -13885,31 +13957,31 @@ window.GAME_DATA = {
       ]
     },
     "ladder": {
-      "$comment": "Ground demand, banded into a number of cells and a shape. Same shape as the price bands in data/rules.json: contiguous, exclusive-top, and checked by tools/validate-data.mjs so it can never grow a hole or an overlap.\n\nFour rungs is the whole ladder on purpose. A fifth would need a fifth polyhex shape, another die-cut and another row of the print sheet, and the thing it would buy - telling a steelworks from a manor by size - is already told by the picture on the face.",
+      "$comment": "Ground demand, banded into a number of cells and a shape. Same shape as the price bands in data/rules.json: contiguous, exclusive-top, and checked by tools/validate-data.mjs so it can never grow a hole or an overlap.\n\nFour rungs is the whole ladder on purpose. A fifth would need a fifth polyhex shape, another die-cut and another row of the print sheet, and the thing it would buy - telling a steelworks from a manor by size - is already told by the picture on the face.\n\nThe rungs moved when the yard was added, because a model that counts a third thing lands everything higher and the old edges would have shunted half the set up a shape. They are set where they are by working backwards from what these buildings ARE: a shopfront on the first rung, a building and its yard on the second, a works on the third, an estate on the fourth.",
       "bands": [
         {
           "cells": 1,
-          "under": 2,
+          "under": 1.5,
           "shape": "single",
-          "reads": "a single building: a hut, a well, a shop on a corner"
+          "reads": "a single building with nothing outside it: a hut, a shop on a corner, a well, a tower"
         },
         {
           "cells": 2,
           "under": 3,
           "shape": "pair",
-          "reads": "a building and its yard: a farm steading, a smithy with its stack, a watchtower and its wall"
+          "reads": "a building and its yard: a farm steading, a smithy with its stack, a market square, a cottage and its plot"
         },
         {
           "cells": 3,
-          "under": 4.5,
+          "under": 4.25,
           "shape": "triad",
-          "reads": "a works: a glassworks, a granary, a harbour with its arm out into the water"
+          "reads": "a works: a granary, a tannery's pits and racks, a quarry face, an orchard, a harbour with its arm out into the water"
         },
         {
           "cells": 4,
           "under": null,
           "shape": "rhombus",
-          "reads": "an estate: the manor and its grounds, a pasture and the whole run of fence round it"
+          "reads": "an estate: the manor and its grounds, a pasture and the whole run of fence round it, a steelworks and its stockyard"
         }
       ]
     },

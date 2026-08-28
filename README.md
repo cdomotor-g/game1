@@ -560,13 +560,21 @@ own default print preset by the same function `build-minimaps.mjs` reads it with
 three are one fact rather than three that agree. Print the map at the nine-sheet preset and
 every tile in the box grows to match.
 
-**How big a building's tile is, is never written on the building.** It is worked out from
-the numbers the building already carries — the effort it takes to raise, and what it has to
-hold — through the ground model and ladder in `data/buildingtiles.json`, and banded onto one
-of four polyhex shapes. A hut is one cell; a farm steading two; a warehouse three; a manor
-and a pasture four. Add a worker slot to a building and `validate-data.mjs` tells you its
-tile grew. That is the answer to *make the scale make sense*: scale is a system, like a
-price, not a judgement made fifty-four times.
+**How big a building's tile is, is never written on the building.** It is worked out
+through the ground model and ladder in `data/buildingtiles.json` and banded onto one of four
+polyhex shapes. A hut is one cell; a farm steading two; a warehouse three; a manor and a
+pasture four. Add a worker slot to a building and `validate-data.mjs` tells you its tile
+grew. That is the answer to *make the scale make sense*: scale is a system, like a price,
+not a judgement made fifty-four times.
+
+Three things take room. The **fabric** is the effort it takes to raise, the **holdings** are
+its beds, benches, shelves, stock and animals — and the **yard** is what the trade needs in
+the open, which no number a building carries has ever said. A tannery is pits, bark stacks
+and drying racks and eleven build points; a weaver is a room with looms in it and twelve.
+So a building names its yard — `walls`, `yard` or `works`, a closed vocabulary of three,
+the same shape as a commodity naming its pricing model. It is a fact about the trade rather
+than a size: a shrine and a manor are both `walls`, and the ladder decides that one is a
+cell and the other four.
 
 **A farm's fields are their own tiles.** Sowing puts a crop in a field slot with a growth
 track, so each sown crop is a one-cell tile laid beside the steading, up to the farm's own

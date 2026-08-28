@@ -746,10 +746,39 @@ for (const b of buildings) {
     }
   }
 
+  /* The yard is the one part of the ground model a building NAMES rather than
+     counts, so it is checked the way a commodity's pricing model is: the
+     vocabulary is closed, it is ordered, and nothing may stand outside it.
+     A building with no yard would quietly be charged for none, which is a
+     footprint arrived at by omission - the exact failure this whole file is
+     here to catch. */
+  const yards = tiles.ground.yards.models;
+  const yardIds = new Set(yards.map((m) => m.id));
+  yards.reduce((below, model) => {
+    if (model.weight < below) {
+      errors.push(`buildingtiles: yard "${model.id}" costs ${model.weight} cells, less than the yard declared before it - the vocabulary runs from least open ground to most`);
+    }
+    return model.weight;
+  }, -Infinity);
+  if (yards[0]?.weight !== 0) {
+    errors.push('buildingtiles: the first yard model has to cost nothing - a building whose walls are the whole of it is the floor the other two are measured from');
+  }
+  for (const b of buildings) {
+    if (b.perTile) continue;            // laid along a route, never cut as a hex
+    if (b.yard == null) {
+      errors.push(`buildings: "${b.id}" names no \`yard\`, so the ground model cannot say what its trade needs in the open - pick one of ${[...yardIds].join(', ')}`);
+    } else if (!yardIds.has(b.yard)) {
+      errors.push(`buildings: "${b.id}" names the yard "${b.yard}", which data/buildingtiles.json does not declare`);
+    }
+  }
+
   /* The pieces themselves: they have to fit a mini-map, they have to be able to
      say what ground they stand on, and a name has to set above the press floor. */
   const rows = tileSubjects(ROOT);
   const T = components.buildingTile;
+  const commodityNames = new Set(
+    (datasets.commodities?.commodities ?? []).flatMap((c) => [c.name, c.shortName]).filter(Boolean).map((n) => n.toLowerCase())
+  );
   const across = 2 * components.minimap.cellsPerSide - 1;
 
   for (const row of rows) {
@@ -781,6 +810,21 @@ for (const b of buildings) {
       );
     }
 
+    /* A tile's name has to name the THING, and a bare commodity noun does not.
+       `shortName` exists so a long name fits a 17 mm band, not so it becomes a
+       different word: LUMBER on a two-hex piece was read as a lumber token, and
+       fairly - every commodity token in the box is a hexagon with a commodity's
+       name behind it. Commodity tokens are all one hex and all the same hex
+       (components.json tokens.commodity); a tile is one to four and never one of
+       them, so no tile may borrow their vocabulary. */
+    if (row.kind === 'building' && commodityNames.has(row.label.toLowerCase())) {
+      errors.push(
+        `buildingtiles: tile "${row.id}" is printed "${row.label}", which is the name of a commodity - ` +
+        `a multi-hex piece labelled like a one-hex commodity token reads as one. Give that building a ` +
+        `\`shortName\` in data/buildings.json that still names a building`
+      );
+    }
+
     /* And the ground demand a tile was cut from has to be the one its numbers
        still ask for, which is the whole point of never writing it down. */
     if (row.kind === 'building') {
@@ -789,6 +833,17 @@ for (const b of buildings) {
         errors.push(`buildingtiles: tile "${row.id}" is cut at ${row.cells.length} cells but its numbers ask for ${want.cells}`);
       }
     }
+  }
+
+  /* Two tiles printing the same word is two pieces a player cannot tell apart,
+     and it is what a `shortName` chosen in isolation does: a charcoal kiln and a
+     brickworks are both, shortened by the obvious route, a KILN. */
+  const labels = new Map();
+  for (const row of rows) {
+    const key = row.label.toLowerCase();
+    if (labels.has(key)) {
+      errors.push(`buildingtiles: tiles "${labels.get(key)}" and "${row.id}" are both printed "${row.label}" - one of them needs a different \`shortName\``);
+    } else labels.set(key, row.id);
   }
 
   /* One plate per tile now - the back is the face printed short - and no two the

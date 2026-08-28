@@ -176,16 +176,45 @@ comes off the campaign map's own default print preset. Never type a millimetre f
 it.
 
 **How many cells a building takes is never written on the building.** It is worked
-out from the numbers the building already carries — `buildPoints` for the fabric,
-plus what it has to hold for the yard — through the ground model and the ladder,
-and banded onto one of four polyhex shapes. Adding a worker slot can grow a tile,
-and `validate-data.mjs` says so rather than letting the piece and the rules drift
-apart. If you are about to write a footprint onto a building, the number belongs in
-the ladder instead.
+out through the ground model and the ladder in `data/buildingtiles.json`, and banded
+onto one of four polyhex shapes. Adding a worker slot can grow a tile, and
+`validate-data.mjs` says so rather than letting the piece and the rules drift apart.
+If you are about to write a footprint onto a building, the number belongs in the
+ladder instead.
+
+**Three things take room, and two of them are counted.** The FABRIC is `buildPoints`
+and what the building HOLDS is its beds, benches, shelves, stock and animals. The
+third is the YARD — what the trade needs in the open — and there is no count of it
+anywhere, because a tannery's drying racks are not a number any rule needs. So a
+building *names* one, from a closed vocabulary of three (`walls`, `yard`, `works`),
+exactly the way a commodity names its pricing model. That is a fact about the trade,
+not a size: a shrine and a manor are both `walls`, and the ladder still decides that
+one is a cell and the other four.
+
+Leaving the yard out is what made a third of the set the wrong size. A tannery is
+pits and racks and eleven build points; a weaver is a room with looms and twelve.
+Fabric and holdings say those two are the same tile. The yard is the only thing that
+says otherwise, and `buildPoints` cannot stand in for it — effort is not area, so
+leaned on hard enough it made a twenty-point trading house wider than a ten-point
+sawmill.
+
+There will only ever be three yards, for the reason there are only ever three pricing
+models. Four was tried: the top two came out 0.2 of a cell apart, which is a
+distinction doing knife-edge work and nothing else.
 
 The one thing a building may say about its own tile is `shortName`, and only when
 its real name will not set above the press floor on its own band. Everything else
 about the piece is derived, including which page its plate is drawn on.
+
+**A `shortName` shortens a name; it does not change the word.** `LUMBER` on a
+two-hex piece got read as a lumber token, and fairly — every commodity token in the
+box is a hexagon with a commodity's name behind it. Commodity tokens are all one hex
+and all the same hex (`components.json tokens.commodity`, 18 mm flat-top, no
+exceptions); a tile is one to four cells and is never one of them, so no tile may
+borrow their vocabulary. `validate-data.mjs` fails on a tile label that is a
+commodity's name, and on two tiles printing the same word — a charcoal kiln and a
+brickworks are both, shortened by the obvious route, a KILN. Shorten to another
+*building* word: Hut, Cottage, Terrace, Manor; Smithy, Joinery, Hospice, Foundry.
 
 **No tile carries a number.** Same rule as the cards, same reason: everything that
 moves is counted on a board, and the mini-map's HOLDINGS panel already has the
