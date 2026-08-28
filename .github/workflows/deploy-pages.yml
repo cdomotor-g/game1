@@ -75,6 +75,13 @@ jobs:
           fi
           echo "docs/data/bundle.js is up to date with data/*.json"
 
+      # The dependency graph the annex prints and the explorer's Graph tab draws
+      # live: nodes from data/graph.json, arrows computed from the manifest's own
+      # reference checks, laid out deterministically so this rebuild is
+      # byte-identical. Committed, so it goes stale the moment any reference moves.
+      - name: Fail if the committed dependency graph is stale
+        run: node tools/build-graph.mjs --check
+
       # The annex is the printed rulebook's reference tables, generated from the same
       # data. Same reasoning as the bundle: committed, so it must not drift.
       - name: Fail if the committed annex is stale

@@ -185,6 +185,13 @@ window.GAME_DATA = {
         "collection": null,
         "idField": null,
         "summary": "Building tiles: hex pieces cut so one cell is a mini-map cell, which is a world-map hex. How many cells a building takes is worked out from its own numbers through the ground model and the ladder here - it is never written on the building. The shapes it is drawn into are components.json buildingTile."
+      },
+      {
+        "key": "graph",
+        "file": "graph.json",
+        "collection": "nodes",
+        "idField": "id",
+        "summary": "The dependency graph: which collections are things in the web of the game, and which ink each family washes in. Nodes only - the arrows are computed from references.checks below, never declared, so the graph cannot disagree with what the validator enforces. Drawn live by the explorer's Graph tab and into docs/art/graph/dependencies.svg by tools/build-graph.mjs for the printed rulebook."
       }
     ],
     "maps": {
@@ -14106,6 +14113,102 @@ window.GAME_DATA = {
       "note": "Buildings are built more than once and by more than one player, so a tile is a supply piece rather than a card. The bill of materials is in docs/design/08-components.md; the print sheet in docs/tiles/ prints one kind at a time and asks how many, exactly as the mini-map print page does.",
       "guide": "Three or four of the cheap tier-1 tiles per player, one or two of everything above tier 2, and one of anything marked unique."
     }
+  },
+  "graph": {
+    "$comment": "The dependency graph: which collections are THINGS in the web of the game, as opposed to vocabularies that classify their own file. This file declares the NODES only. The arrows are never declared anywhere - docs/js/graph.js computes them from manifest.json references.checks, the same declarations tools/validate-data.mjs enforces, so the graph cannot drift from what the validator guarantees and redraws itself the moment the data moves. A node's id is the collection spec exactly as the checks name it: a dataset key, or dataset.subcollection for a collection that lives inside another file. 'name' is the legend label, singular, because it captions one dot. 'wash' is one of the five chromatic inks in docs/art/palette.json - the graph has no colours of its own - and kinds sharing an ink are a family on purpose: the land is verdigris, goods and folk are ochre, work and danger are oxide, structure and movement are slate, the arcane and the adventure are bruise. Within a family, docs/js/graph.js steps the ink toward soot or paper by declaration order, so the order of this list is meaningful. Drawn by the explorer's Graph tab live from the bundle, and by tools/build-graph.mjs into docs/art/graph/dependencies.svg for the printed rulebook.",
+    "version": "0.1.0",
+    "nodes": [
+      {
+        "id": "terrain",
+        "name": "Terrain",
+        "wash": "verdigris"
+      },
+      {
+        "id": "deposits",
+        "name": "Deposit",
+        "wash": "verdigris"
+      },
+      {
+        "id": "commodities",
+        "name": "Commodity",
+        "wash": "ochre"
+      },
+      {
+        "id": "pricing",
+        "name": "Price model",
+        "wash": "ochre"
+      },
+      {
+        "id": "peoples",
+        "name": "People",
+        "wash": "ochre"
+      },
+      {
+        "id": "peoples.professions",
+        "name": "Profession",
+        "wash": "ochre"
+      },
+      {
+        "id": "recipes",
+        "name": "Job",
+        "wash": "oxide"
+      },
+      {
+        "id": "tools",
+        "name": "Tool",
+        "wash": "oxide"
+      },
+      {
+        "id": "items",
+        "name": "Equipment",
+        "wash": "oxide"
+      },
+      {
+        "id": "monsters",
+        "name": "Monster",
+        "wash": "oxide"
+      },
+      {
+        "id": "buildings",
+        "name": "Building",
+        "wash": "slate"
+      },
+      {
+        "id": "transport",
+        "name": "Transport mode",
+        "wash": "slate"
+      },
+      {
+        "id": "transport.figures",
+        "name": "Board figure",
+        "wash": "slate"
+      },
+      {
+        "id": "vehicles",
+        "name": "Vehicle",
+        "wash": "slate"
+      },
+      {
+        "id": "arcana.elements",
+        "name": "Element",
+        "wash": "bruise"
+      },
+      {
+        "id": "modifications",
+        "name": "Modification",
+        "wash": "bruise"
+      },
+      {
+        "id": "quests",
+        "name": "Quest",
+        "wash": "bruise"
+      },
+      {
+        "id": "characters",
+        "name": "Character",
+        "wash": "bruise"
+      }
+    ]
   },
   "maps": [
     {

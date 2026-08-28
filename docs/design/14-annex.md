@@ -4,6 +4,19 @@
 > in `data/*.json`, run the tool, and commit both. Every number here is the same
 > number the explorer and the simulator read.
 
+## The web of things
+
+Before the tables, the shape of them: every thing in the game and every
+arrow between them, computed from the same cross-file references
+`tools/validate-data.mjs` checks — so this picture cannot know a tie the
+validator does not enforce. An arrow points from the thing whose data
+names the other, at the thing it names: a job points at the ore it takes
+in, the iron it puts out and the smelter it runs in alike. The explorer’s
+**Graph** tab is this same drawing, live — pan it, drag it, click any dot
+for its entry.
+
+![The dependency graph: every thing in the game, and every reference between them](../art/graph/dependencies.svg)
+
 ## Terrain
 
 The letter code is printed in the bottom corner of every hex on every map.

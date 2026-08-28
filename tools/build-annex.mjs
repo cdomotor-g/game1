@@ -82,6 +82,25 @@ say('> in `data/*.json`, run the tool, and commit both. Every number here is the
 say('> number the explorer and the simulator read.');
 say();
 
+/* ---------------------------------------------------------------- the web */
+/* The one picture in the annex: the dependency graph, drawn by
+   tools/build-graph.mjs from the same cross-file references the validator
+   checks. Referenced by path, so a rebuilt graph reaches the book with no
+   edit here - same bargain as the element marks below. */
+say('## The web of things');
+say();
+say('Before the tables, the shape of them: every thing in the game and every');
+say('arrow between them, computed from the same cross-file references');
+say('`tools/validate-data.mjs` checks — so this picture cannot know a tie the');
+say('validator does not enforce. An arrow points from the thing whose data');
+say('names the other, at the thing it names: a job points at the ore it takes');
+say('in, the iron it puts out and the smelter it runs in alike. The explorer’s');
+say('**Graph** tab is this same drawing, live — pan it, drag it, click any dot');
+say('for its entry.');
+say();
+say('![The dependency graph: every thing in the game, and every reference between them](../art/graph/dependencies.svg)');
+say();
+
 /* ------------------------------------------------------------------ terrain */
 say('## Terrain');
 say();

@@ -8,6 +8,7 @@
   const TABS = [
     ['overview', 'Overview'],
     ['sandbox', 'Sandbox'],
+    ['graph', 'Graph'],
     ['chains', 'Chains'],
     ['commodities', 'Commodities'],
     ['recipes', 'Recipes'],

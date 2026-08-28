@@ -98,6 +98,21 @@ restated them is a board that could disagree with the game. `tools/build-minimap
 mini-map cell is a world-map hex read off the map's own print preset** — not a number
 anybody types.
 
+## The graph draws the manifest's own checks, and knows no edge of its own
+
+The dependency graph — the explorer's **Graph** tab, and `docs/art/graph/dependencies.svg`
+printed in the annex — declares its nodes in `data/graph.json` (which collections are
+things in the web, and which of the five inks each family washes in) and declares its
+arrows nowhere. `docs/js/graph.js` computes them from `manifest.json references.checks`,
+the same declarations `validate-data.mjs` enforces, so the picture cannot know a tie the
+validator does not check and cannot miss one it does. Edit any data file and the web
+explorer redraws live off the rebuilt bundle; run `node tools/build-graph.mjs` and the
+printed copy follows. If an edge is missing from the graph, the fix is a new line in
+`references.checks` — which also teaches the validator to check it — never a special case
+in the graph. The model, the seeded deterministic layout and the SVG renderer live once,
+in `docs/js/graph.js`; `tools/lib/graph.mjs` shim-loads it the way framing is loaded, so
+the site and the book are one drawing seen twice.
+
 ## The mint is a multi-tool, and the queue is computed
 
 `docs/MINT.md` is the pipeline and `docs/MINT-SETUP.md` is how to run it. One
@@ -452,6 +467,7 @@ node tools/build-map.mjs       # map proof sheets, and the derived print sizes
 node tools/build-icons.mjs     # element marks -> docs/art/icons/
 node tools/draw-item.mjs       # generated plates: redraw docs/art/renders/{item,tool}-*
 node tools/build-data.mjs      # rebuild the web bundle
+node tools/build-graph.mjs     # redraw docs/art/graph/dependencies.svg - the web the annex prints
 node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
 node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + components
