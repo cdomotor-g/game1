@@ -22,7 +22,7 @@
 <g id="wash">
   <rect x="0" y="0" width="299.2" height="301.97" fill="#EDE4D1"/>
   <g clip-path="url(#cut-tile-granary-back)" filter="url(#colour-drop)">
-    <image href="../art/renders/tile-granary.png" x="16" y="16" width="267.2" height="267.2" preserveAspectRatio="none"/>
+    <image href="../art/renders/tile-granary.png" x="13.47" y="16" width="270.37" height="270.37" preserveAspectRatio="none"/>
   </g>
 </g>
 

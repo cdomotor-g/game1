@@ -42,20 +42,23 @@ appended to the prompt as `LABEL BAND`.
 It used to be a bar ruled across the middle, which split every drawing into two
 unrelated halves. That is what a corner is buying.
 
-**Every tile is drawn twice.** The face is the building finished; the back is the
-same building on the same ground with the work not yet done. Both are
-commissions, both go through the four steps, and they are separate subjects — the
-back's brief is `## tile-<id>-site` (or `-sown` for a field). See *The site side*
-below, which is where the standing rules for a back live.
+**Every tile is drawn once.** The face is the building finished; the back is that
+same plate with the colour run not laid on and its name band drawn hollow. The
+back is a build output, not a commission, so a tile is ONE subject with one
+brief, one framing entry and one step — there is no `## tile-<id>-site` (or
+`-sown`) section to write. See *The back — and why it has no brief* below, which
+is where the standing rules for a back live.
 
 **Both sides carry the same name.** The band says HUT on the face and HUT on the
 back. The picture is what tells finished from unfinished; the label is what tells
 one tile from another, and a player needs that from either side.
 
-**The two sides must turn over onto each other.** Same viewpoint, same distance,
-same corner of ground, the building sitting in the same place on the page. A
-player flips the tile the round the work is paid for and the picture should
-settle rather than jump.
+**The two sides turn over onto each other by construction.** Same viewpoint, same
+distance, same corner of ground, the building in the same place on the page — a
+player flips the tile the round the work is paid for and the picture settles
+rather than jumps. That was once a rule an artist had to hold across two drawn
+plates, and it fell out of agreement for free; one plate printed two ways cannot
+drift.
 
 **Seen from above and to the side, never head-on.** These pieces sit on a table
 next to each other. A row of buildings each drawn in flat elevation reads as a
@@ -992,9 +995,14 @@ louvred vent in the gable. Two sacks and a scoop at the foot of the ladder.
 Wash: ochre on the boards and sacks, cold slate blue on the staddle stones,
 grey-green on the ground, flat.
 
-FRAMING. Square plate, ground to all four edges. The store sits high on the
-page with clear daylight under its floor; ladder and sacks run down to the
-lower edge. Nothing in any corner.
+FRAMING. Square plate, ground to all four edges. The footprint is a triad —
+a two-cell row across the top, one cell under it — so the page keeps its full
+width only through the middle band, narrows to the centre half below that, and
+carries a V notch in the top centre between the two upper points. Keep the
+store in the central column: ridge below the notch, the staddle stones and the
+daylight gap on the widest part, ladder and sacks gathered under the building
+in the middle of the lower half and well in from both sides. Ground, not
+detail, in the lower-left.
 ```
 
 ---
