@@ -109,7 +109,7 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**1 of 54 minted.** 40 waiting on a brief, 13 waiting on art, 0 waiting on frame.
+**1 of 54 minted.** 40 waiting on a brief, 12 waiting on art, 1 waiting on frame.
 
 ### 1 · WRITE — the designer — 40 tiles
 
@@ -158,7 +158,7 @@ These exist in the data with no brief. Write one into `docs/art/prompts/` under 
 | `harbour` | Harbour | Infrastructure | `tile-harbour` | · | · | · |
 | `rail-depot` | Rail Depot | Infrastructure | `tile-rail-depot` | · | · | · |
 
-### 2 · DRAW — the artist — 13 tiles
+### 2 · DRAW — the artist — 12 tiles
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -170,7 +170,6 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `farm` | Farm | Extraction | `tile-farm` | ✓ | · | · |
 | `pasture` | Pasture | Extraction | `tile-pasture` | ✓ | · | · |
 | `sawmill` | Sawmill | Production | `tile-sawmill` | ✓ | · | · |
-| `warehouse` | Warehouse | Storage | `tile-warehouse` | ✓ | · | · |
 | `granary` | Granary | Storage | `tile-granary` | ✓ | · | · |
 | `crop-grain` | Grain Field | Fields | `tile-crop-grain` | ✓ | · | · |
 | `crop-vegetables` | Vegetables Field | Fields | `tile-crop-vegetables` | ✓ | · | · |
@@ -178,9 +177,13 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `crop-cotton` | Cotton Field | Fields | `tile-crop-cotton` | ✓ | · | · |
 | `crop-hops` | Hops Field | Fields | `tile-crop-hops` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate
+### 3 · FRAME — whoever accepts the plate — 1 tile
 
-Nothing waiting.
+The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
+
+| Code | Tile | Category | Plate | brief | plate | frame |
+| --- | --- | --- | --- | :-: | :-: | :-: |
+| `warehouse` | Warehouse | Storage | `tile-warehouse` | ✓ | ✓ | · |
 
 ### Minted
 

@@ -478,7 +478,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <hr>
 <h2 id="building-tiles">Building tiles</h2>
 <p>One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in <a href="../art/prompts/buildingtiles.md"><code>docs/art/prompts/buildingtiles.md</code></a>, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
-<p><strong>1 of 54 minted.</strong> 40 waiting on a brief, 13 waiting on art, 0 waiting on frame.</p>
+<p><strong>1 of 54 minted.</strong> 40 waiting on a brief, 12 waiting on art, 1 waiting on frame.</p>
 <h3 id="1-write-the-designer-40-tiles">1 · WRITE — the designer — 40 tiles</h3>
 <p>These exist in the data with no brief. Write one into <code>docs/art/prompts/</code> under the plate id, following the shared preamble at the top of that file and the contract in <code>docs/art/09-framing-and-composition.md</code>.</p>
 <div class="table-wrap"><table>
@@ -523,7 +523,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>shrine</code></td><td>Shrine</td><td>Arcane</td><td><code>tile-shrine</code></td><td>·</td><td>·</td><td>·</td></tr>
 <tr><td><code>harbour</code></td><td>Harbour</td><td>Infrastructure</td><td><code>tile-harbour</code></td><td>·</td><td>·</td><td>·</td></tr>
 <tr><td><code>rail-depot</code></td><td>Rail Depot</td><td>Infrastructure</td><td><code>tile-rail-depot</code></td><td>·</td><td>·</td><td>·</td></tr></tbody></table></div>
-<h3 id="2-draw-the-artist-13-tiles">2 · DRAW — the artist — 13 tiles</h3>
+<h3 id="2-draw-the-artist-12-tiles">2 · DRAW — the artist — 12 tiles</h3>
 <p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
@@ -533,15 +533,17 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>farm</code></td><td>Farm</td><td>Extraction</td><td><code>tile-farm</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>pasture</code></td><td>Pasture</td><td>Extraction</td><td><code>tile-pasture</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>sawmill</code></td><td>Sawmill</td><td>Production</td><td><code>tile-sawmill</code></td><td>✓</td><td>·</td><td>·</td></tr>
-<tr><td><code>warehouse</code></td><td>Warehouse</td><td>Storage</td><td><code>tile-warehouse</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>granary</code></td><td>Granary</td><td>Storage</td><td><code>tile-granary</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>crop-grain</code></td><td>Grain Field</td><td>Fields</td><td><code>tile-crop-grain</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>crop-vegetables</code></td><td>Vegetables Field</td><td>Fields</td><td><code>tile-crop-vegetables</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>crop-flax</code></td><td>Flax Field</td><td>Fields</td><td><code>tile-crop-flax</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>crop-cotton</code></td><td>Cotton Field</td><td>Fields</td><td><code>tile-crop-cotton</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>crop-hops</code></td><td>Hops Field</td><td>Fields</td><td><code>tile-crop-hops</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
-<h3 id="3-frame-whoever-accepts-the-plate-1">3 · FRAME — whoever accepts the plate</h3>
-<p>Nothing waiting.</p>
+<h3 id="3-frame-whoever-accepts-the-plate-1-tile">3 · FRAME — whoever accepts the plate — 1 tile</h3>
+<p>The plate is committed and <code>docs/art/framing.json</code> says nothing about it yet. A <code>subject</code> box, a <code>focal</code> point and a one-line <code>note</code> — the contract is <a href="../art/09-framing-and-composition.md"><code>docs/art/09-framing-and-composition.md</code></a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
+<tbody><tr><td><code>warehouse</code></td><td>Warehouse</td><td>Storage</td><td><code>tile-warehouse</code></td><td>✓</td><td>✓</td><td>·</td></tr></tbody></table></div>
 <h3 id="minted-2">Minted</h3>
 <p>1 tile complete: <code>hut</code>.</p>
 <p>Every minted tile is fully aimed: a <code>subject</code> box, a <code>focal</code> point and a one-line <code>note</code>.</p>

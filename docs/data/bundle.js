@@ -16732,6 +16732,17 @@ window.GAME_DATA = {
           0.43
         ]
       },
+      "tile-warehouse": {
+        "file": "art/renders/tile-warehouse.png",
+        "width": 1328,
+        "height": 1328,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "tool-axe": {
         "file": "art/renders/tool-axe.png",
         "width": 1254,
