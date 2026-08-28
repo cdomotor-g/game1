@@ -164,7 +164,10 @@ asset, sparkles, magic particles, watermark, signature, text, letters,
 numerals, signage, logo, UI, frame border, vignette, hex grid, square grid,
 ruled lines, horizon, sky, clouds, background scenery, distant mountains,
 people, figures, crowd, heroic, grimdark, ruined, apocalyptic, overgrown,
-abandoned, cutaway, floor plan, blueprint, elevation drawing
+abandoned, cutaway, floor plan, blueprint, elevation drawing, floating island,
+diorama, plinth, base slab, cut-out, isolated object on a plain background,
+white margin, empty border, caption, handwriting, manuscript text, book page,
+page border, plate number, framed illustration, mounted plate
 ```
 
 ## The back — and why it has no brief
@@ -1165,23 +1168,54 @@ shrine furniture.
 ```text
 [PREAMBLE]
 
-A long two-storey block of plain stone with its windows in a strict repeating
-rank - eight below and eight above, all identical, all the same distance
-apart - and a shallow slate roof with two plain chimneys. The regularity is
-the point: nothing else in this set is regular, and that alone should name it
-across a table. A walled yard in front of trodden bare earth, entered by a
-square gate of squared timber between two stone piers. In the yard, a rack of
-eight spears stood upright in a frame, a drill post set in the ground with a
-worn ring round it, and a covered water butt against the wall. Wash: cold
-slate blue on the stone, the slate and the spearheads, ochre on the gate
-timber, the rack and the shafts, flat.
+A long low barrack range of plain dressed stone, much longer than it is deep,
+its walls built of cool pale grey-blue stone blocks. A shallow hipped roof of
+grey slate slopes gently down on all four sides to a wide overhanging eave,
+with one plain chimney at each end. The building is severe, institutional and
+entirely plain. Seen in three-quarter view so that the long front wall and one
+short end wall are both visible at once and the eye looks down onto the roof.
+Along that whole front wall the same small square window is repeated over and
+over in one unbroken evenly spaced row, six of them on the upper floor and six
+directly beneath them, every one plain and square and exactly like its
+neighbours, evenly spaced along the entire length, each big enough to read as
+its own opening. That relentless repetition IS the building - it is what the
+eye catches first and it is the one thing that names this tile across a table,
+because everything else in this set is irregular. A single plain doorway breaks
+the lower row at its middle. In front of the range a low drystone yard wall
+crosses the dry bare earth, broken by a square gate of squared timber between
+two stone piers. In the yard a rack of spears stands upright in a timber frame,
+and a stout drill post is set in the ground with a worn ring trodden round it.
+Colour muted, chalky and greyed throughout and laid flat: cool slate blue-grey
+on the stone walls, the roof slates and the spearheads, dull weathered ochre on
+the gate timber, the rack and the shafts, dusty grey-green on the grass, dry
+pale dun on the trodden earth. Plain dry grass and bare dry earth fill all four
+corners of the picture and the whole of the lower half of the page; the range
+stands across the upper middle with its roof ridge comfortably below the top
+edge, and plain open dry ground lies to the left of it, to the right of it and
+behind it.
 
-FRAMING. Square plate, ground to all four edges. Block across the upper half,
-full on to the viewer so the window rank reads as a rank; yard wall and gate
-across the lower right; spear rack and drill post in the middle of the yard;
-bare earth at the lower left, which is ground the band may cover. No banners,
-no devices, no painted arms.
+FRAMING. Square plate, ground to all four edges. The three-quarter view and the
+hipped roof are stated in the subject paragraph on purpose, because --render
+strips this block. So is the ground that fills the corners: the derived envelope
+sentence is a *measurement*, and three sheets have now shown that a model cannot
+act on one - it draws the subject page-wide regardless. What works is the answer
+the accepted granary wording found, which is to say what fills the rest of the
+page rather than how big the subject is, and above all never to describe where
+the viewer is standing. Asking for distance buys a horizon, a border and a
+caption; sheet 2 seed 34 bought all three. Compose inside the safe box
+`node tools/tile-envelope.mjs barracks` prints - the triad narrows to the centre
+half below its shoulder, so a range drawn long across the page loses its far end
+and a yard set out to the side loses its gate. The range is long in its own
+proportions and still small on the page. Trodden bare earth in the lower left,
+which is ground the band may cover. No banners, no devices, no painted arms.
 ```
+
+Keep negations out of that subject paragraph, and out of every other one in this
+file. `--render` drops a whole *sentence* that negates, so a "not X" buried
+mid-sentence sails through into the prompt and gets drawn: "not a steep gabled
+one" drew gables and "none decorated" drew decoration, on sheet 2. Note that this
+paragraph is outside the fence for the same reason — anything inside it is the
+prompt.
 
 ## tile-watchtower — two cells, 3:2 landscape
 
