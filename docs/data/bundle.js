@@ -16722,10 +16722,14 @@ window.GAME_DATA = {
         "width": 1328,
         "height": 1328,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.05,
+          0.02,
+          0.93,
+          0.93
+        ],
+        "focal": [
+          0.46,
+          0.56
         ]
       },
       "tile-granary": {

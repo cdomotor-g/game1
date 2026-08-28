@@ -7,245 +7,742 @@
     "focalTargetOverride": "[x, y] as fractions of the WINDOW, if this plate should not use the default focalTarget below. Rare - a plate that needs its own target usually needs a better subject box.",
     "note": "Prose, for the next person holding the pen. Not read by anything."
   },
-  "focalTarget": [0.5, 0.4],
+  "focalTarget": [
+    0.5,
+    0.4
+  ],
   "focalTargetNote": "Where a focal point lands in the window: centred across, a little above the middle down. That is where a reader looks first and where a face belongs. The crop slides to put the focal point here, as far as the subject box allows - the subject always wins.",
   "pad": 0.03,
   "padNote": "Breathing room added around the subject before the box is grown to the window's shape, as a fraction of the subject's shorter side. Keeps a head off the window rule.",
   "plates": {
     "character-chr-01": {
-      "subject": [0.15, 0.05, 0.76, 0.58],
+      "subject": [
+        0.15,
+        0.05,
+        0.76,
+        0.58
+      ],
       "note": "Corin at the stump, lacing a boot - head, both hands and the staff top."
     },
     "character-chr-02": {
-      "subject": [0.18, 0.06, 0.75, 0.68],
+      "subject": [
+        0.18,
+        0.06,
+        0.75,
+        0.68
+      ],
       "note": "Berga crouched over the pan; the pan is the card, so the box runs down to it."
     },
     "character-chr-03": {
-      "subject": [0.18, 0.06, 0.74, 0.60],
+      "subject": [
+        0.18,
+        0.06,
+        0.74,
+        0.6
+      ],
       "note": "Sylvae reading - head, the open herbal, and the hand writing in it."
     },
     "character-chr-04": {
-      "subject": [0.13, 0.06, 0.72, 0.58],
+      "subject": [
+        0.13,
+        0.06,
+        0.72,
+        0.58
+      ],
       "note": "Tilly on the crate: head, the gourd under one arm, the hand chalking the tally."
     },
     "character-chr-05": {
-      "subject": [0.10, 0.09, 0.82, 0.58],
+      "subject": [
+        0.1,
+        0.09,
+        0.82,
+        0.58
+      ],
       "note": "Ruk seated at the haft - head high, both hands and the axe head across the middle."
     },
     "character-chr-06": {
-      "subject": [0.22, 0.10, 0.74, 0.66],
+      "subject": [
+        0.22,
+        0.1,
+        0.74,
+        0.66
+      ],
       "note": "Elspeth reading a vial against the light; the open case is the other half of her."
     },
     "character-chr-07": {
-      "subject": [0.10, 0.12, 0.82, 0.58],
+      "subject": [
+        0.1,
+        0.12,
+        0.82,
+        0.58
+      ],
       "note": "Havik in the motion works - head, both hands in the gear, the lamps left."
     },
     "character-chr-08": {
-      "subject": [0.16, 0.08, 0.72, 0.58],
+      "subject": [
+        0.16,
+        0.08,
+        0.72,
+        0.58
+      ],
       "note": "Old Mother Keswick shelling into the bowl. The cat comes along below if there is room."
     },
     "monster-ash-drake": {
-      "subject": [0.088, 0.175, 0.827, 0.535],
-      "focal": [0.285, 0.592],
+      "subject": [
+        0.088,
+        0.175,
+        0.827,
+        0.535
+      ],
+      "focal": [
+        0.285,
+        0.592
+      ],
       "note": "Snout at the near corner to the far curve of the tail - the whole animal, laid diagonally across the page. Both windows grow it downward, which brings the bent pick in whole on the card and spends only its haft on the thumbnail. The smoke off the nostril is on the left margin and survives at card width."
     },
     "monster-barrow-troll": {
-      "subject": [0.06, 0.1186, 0.88, 0.72],
-      "focal": [0.548, 0.169],
+      "subject": [
+        0.06,
+        0.1186,
+        0.88,
+        0.72
+      ],
+      "focal": [
+        0.548,
+        0.169
+      ],
       "note": "Both shoulders wall to wall, the torc and the broken sword in the chest thatch, and down to the toppled stone. A 0.96 window on an A4 page can be at most 0.736 of it tall and this troll wants 0.742 from crown to the stone's base, so the box hands the pad three pixels of turf dome and three of buried stone - neither of which anyone will miss. The thumbnail keeps head, shoulders and grave-goods and leaves the stone to the card."
     },
     "monster-cinder-wolf": {
-      "subject": [0.107, 0.235, 0.845, 0.442],
-      "focal": [0.171, 0.450],
+      "subject": [
+        0.107,
+        0.235,
+        0.845,
+        0.442
+      ],
+      "focal": [
+        0.171,
+        0.45
+      ],
       "note": "Ear tips to front paw, muzzle to tail: the whole animal, with the banked coals behind the ribs inside it. Wide enough that both windows grow it downward, which is what brings the smoke off the spine and the burnt rings in the grass along for free. The shepherd's crook is scale and the card can spend its lower shaft."
     },
     "monster-deepwater-maw": {
-      "subject": [0.02, 0.36, 0.96, 0.52],
+      "subject": [
+        0.02,
+        0.36,
+        0.96,
+        0.52
+      ],
       "note": "The eye and the ring of teeth. The ship on the horizon is scale, not subject - it goes."
     },
     "monster-dust-devil": {
-      "subject": [0.04, 0.16, 0.94, 0.58],
+      "subject": [
+        0.04,
+        0.16,
+        0.94,
+        0.58
+      ],
       "note": "The funnel and the wagon it is emptying, whole; the debris trailing off the top may be spent."
     },
     "monster-forge-wight": {
-      "subject": [0.17, 0.195, 0.72, 0.70],
-      "focal": [0.400, 0.306],
+      "subject": [
+        0.17,
+        0.195,
+        0.72,
+        0.7
+      ],
+      "focal": [
+        0.4,
+        0.306
+      ],
       "note": "Hood down to the near foot, and out to the right of the tool row: the wight, both hands, the riveted splice on the cart rail, and the mended tools laid out like offerings. Focal is the empty hood - the head is a void and the void is the face. The card takes the whole tableau; the thumbnail keeps hood, hands and splice and lets the tool heads sit on the bottom edge."
     },
     "monster-gravel-wyrm": {
-      "subject": [0.05, 0.10, 0.82, 0.63],
+      "subject": [
+        0.05,
+        0.1,
+        0.82,
+        0.63
+      ],
       "note": "The arch of plated back and the blind maw at the end of it."
     },
     "monster-hoarwyrm": {
-      "subject": [0.07, 0.099, 0.85, 0.63],
-      "focal": [0.222, 0.568],
+      "subject": [
+        0.07,
+        0.099,
+        0.85,
+        0.63
+      ],
+      "focal": [
+        0.222,
+        0.568
+      ],
       "note": "Tail tip to snout - all three undulations - and down past the horizon so the wyrm is seen to be flying over something. Whole at 0.539 of the page, which is the first plate in this deck small enough that both windows take the animal entire and nothing has to be traded. The white band and the reindeer leaving it are below any reachable crop; they are the story, not the subject. The box starts six thousandths below the tail tip and lets the pad carry it, because the lowest frost spikes on the ruff are the true bottom of the animal at 0.645 and the 5:4 thumbnail needs every pixel between the two."
     },
     "monster-mire-strangler": {
-      "subject": [0.04, 0.13, 0.92, 0.58],
+      "subject": [
+        0.04,
+        0.13,
+        0.92,
+        0.58
+      ],
       "note": "Both drowned trees, the bundle hung between them, and the first fan of roots."
     },
     "monster-reef-serpent": {
-      "subject": [0.04, 0.20, 0.92, 0.58],
+      "subject": [
+        0.04,
+        0.2,
+        0.92,
+        0.58
+      ],
       "note": "The head taking the offered fish, the coils on the beacon, the bow of the boat."
     },
     "monster-rime-harpy": {
-      "subject": [0.14, 0.09, 0.76, 0.62],
+      "subject": [
+        0.14,
+        0.09,
+        0.76,
+        0.62
+      ],
       "note": "Head to talons, both wings. The nest at the foot of the crag is scenery."
     },
     "monster-stone-boar": {
-      "subject": [0.04, 0.2265, 0.85, 0.545],
-      "focal": [0.685, 0.60],
+      "subject": [
+        0.04,
+        0.2265,
+        0.85,
+        0.545
+      ],
+      "focal": [
+        0.685,
+        0.6
+      ],
       "note": "Rump to snout: the whole animal, because the boulder hide IS the card. The animal is 0.56 of the page tall and a 5:4 thumbnail can only hold 0.565, so the box stops just under the tallest dorsal spikes and lets the pad carry them - spend a spike tip before you spend the nose, which is the half of the picture the story is about. The oak, the furrow and the spilled basket are scale."
     },
     "monster-storm-roc": {
-      "subject": [0.02, 0.05, 0.96, 0.42],
+      "subject": [
+        0.02,
+        0.05,
+        0.96,
+        0.42
+      ],
       "note": "The spread wings and the lamb; the sea stack below carries as much as fits."
     },
     "monster-vhalrik-the-cinder-crowned": {
-      "subject": [0.10, 0.1074, 0.82, 0.72],
-      "focal": [0.419, 0.238],
+      "subject": [
+        0.1,
+        0.1074,
+        0.82,
+        0.72
+      ],
+      "focal": [
+        0.419,
+        0.238
+      ],
       "note": "Crown down to the crossed forelimbs, wide enough to carry the wagon wheel. This plate ran its crown to the top margin rather than into the middle 70% the brief asked for, and MON-13 is a unique with a wordy rule, so its window is 1.10 and can hold only 0.643 of the page - the subject spans 0.79 and something the brief named had to go. The tips of the tallest horns go: the crown still reads as crown from 0.09 down, whereas a wheel cropped to a sliver reads as nothing at all."
     },
     "vehicle-veh-01": {
-      "subject": [0.03, 0.16, 0.94, 0.48],
+      "subject": [
+        0.03,
+        0.16,
+        0.94,
+        0.48
+      ],
       "note": "Locomotive to last carriage, with the smoke above the stack."
     },
     "vehicle-veh-02": {
-      "subject": [0.03, 0.14, 0.95, 0.72],
+      "subject": [
+        0.03,
+        0.14,
+        0.95,
+        0.72
+      ],
       "note": "The water tower and the ore train running away from it."
     },
     "vehicle-veh-03": {
-      "subject": [0.03, 0.18, 0.94, 0.68],
+      "subject": [
+        0.03,
+        0.18,
+        0.94,
+        0.68
+      ],
       "note": "Old Smoke and her tender, wheels on the rail."
     },
     "vehicle-veh-04": {
-      "subject": [0.10, 0.08, 0.84, 0.76],
+      "subject": [
+        0.1,
+        0.08,
+        0.84,
+        0.76
+      ],
       "note": "Hull and both masts to the mastheads."
     },
     "vehicle-veh-05": {
-      "subject": [0.03, 0.12, 0.94, 0.76],
+      "subject": [
+        0.03,
+        0.12,
+        0.94,
+        0.76
+      ],
       "note": "The whole carrack, bowsprit to stern, mastheads in."
     },
     "vehicle-veh-06": {
-      "subject": [0.06, 0.10, 0.88, 0.78],
+      "subject": [
+        0.06,
+        0.1,
+        0.88,
+        0.78
+      ],
       "note": "The lateen sail and the loaded hull under it."
     },
     "vehicle-veh-07": {
-      "subject": [0.03, 0.24, 0.95, 0.58],
+      "subject": [
+        0.03,
+        0.24,
+        0.95,
+        0.58
+      ],
       "note": "The column of wagons, lead team to the last tilt, pennant included."
     },
     "vehicle-veh-08": {
-      "subject": [0.03, 0.26, 0.95, 0.54],
+      "subject": [
+        0.03,
+        0.26,
+        0.95,
+        0.54
+      ],
       "note": "The wagons on the causeway and the reeds they are crossing."
     },
     "vehicle-veh-09": {
-      "subject": [0.02, 0.02, 0.96, 0.95],
+      "subject": [
+        0.02,
+        0.02,
+        0.96,
+        0.95
+      ],
       "note": "All four switchbacks, the lead team at the top to the screw brake and its crewman at the bottom."
     },
     "vehicle-veh-10": {
-      "subject": [0.03, 0.15, 0.94, 0.72],
+      "subject": [
+        0.03,
+        0.15,
+        0.94,
+        0.72
+      ],
       "note": "The courser at full gallop, nose to tail."
     },
     "vehicle-veh-11": {
-      "subject": [0.08, 0.13, 0.84, 0.76],
+      "subject": [
+        0.08,
+        0.13,
+        0.84,
+        0.76
+      ],
       "note": "The pony grazing, panniers on."
     },
     "vehicle-veh-12": {
-      "subject": [0.15, 0.08, 0.78, 0.82],
+      "subject": [
+        0.15,
+        0.08,
+        0.78,
+        0.82
+      ],
       "note": "Horse and rider on the night road; the moon is spendable."
     },
     "vehicle-veh-13": {
-      "subject": [0.02, 0.06, 0.94, 0.86],
+      "subject": [
+        0.02,
+        0.06,
+        0.94,
+        0.86
+      ],
       "note": "Driver and sled at the near end, the gang line receding to Drum, and the loose spare on the right."
     },
     "vehicle-veh-14": {
-      "subject": [0.02, 0.02, 0.955, 0.96],
+      "subject": [
+        0.02,
+        0.02,
+        0.955,
+        0.96
+      ],
       "note": "The lantern on the stern bracket round to the bow, all five sails, down to the sea."
     },
     "vehicle-veh-15": {
-      "subject": [0.02, 0.02, 0.97, 0.87],
+      "subject": [
+        0.02,
+        0.02,
+        0.97,
+        0.87
+      ],
       "note": "Stern to the chase gun, mast trucks down to the waterline. The 1.60 window cannot hold the whole page, so the foreground sea is what it spends."
     },
     "vehicle-veh-16": {
-      "subject": [0.03, 0.09, 0.94, 0.90],
+      "subject": [
+        0.03,
+        0.09,
+        0.94,
+        0.9
+      ],
       "note": "Envelope nose to propeller, gondola and all four crew, down through the cloud bank to the far horizon."
     },
     "vehicle-veh-17": {
-      "subject": [0.02, 0.02, 0.96, 0.88],
+      "subject": [
+        0.02,
+        0.02,
+        0.96,
+        0.88
+      ],
       "note": "Envelope crown down through the sail and the bow hinge to the gondola and the rowers."
     },
     "talisman-tal-01": {
-      "subject": [0.22, 0.10, 0.62, 0.85],
+      "subject": [
+        0.22,
+        0.1,
+        0.62,
+        0.85
+      ],
       "note": "The knot at the top of the thong down to the three marked charms."
     },
     "talisman-tal-02": {
-      "subject": [0.20, 0.11, 0.64, 0.76],
+      "subject": [
+        0.2,
+        0.11,
+        0.64,
+        0.76
+      ],
       "note": "The knot itself with its hanging loop."
     },
     "talisman-tal-03": {
-      "subject": [0.13, 0.16, 0.79, 0.68],
+      "subject": [
+        0.13,
+        0.16,
+        0.79,
+        0.68
+      ],
       "note": "The disc and enough of the pooled chain to read as one."
     },
     "talisman-tal-04": {
-      "subject": [0.07, 0.19, 0.89, 0.69],
+      "subject": [
+        0.07,
+        0.19,
+        0.89,
+        0.69
+      ],
       "note": "Both halves of the open locket - the portrait is the point of the card."
     },
     "talisman-tal-05": {
-      "subject": [0.22, 0.08, 0.64, 0.79],
+      "subject": [
+        0.22,
+        0.08,
+        0.64,
+        0.79
+      ],
       "note": "The stone in its claws, and the plait it hangs from."
     },
     "talisman-tal-06": {
-      "subject": [0.16, 0.08, 0.70, 0.84],
+      "subject": [
+        0.16,
+        0.08,
+        0.7,
+        0.84
+      ],
       "note": "Stopper to base of the flask, with the crystal caged inside it."
     },
     "modification-spinnaker": {
-      "subject": [0.04, 0.03, 0.94, 0.77],
-      "focal": [0.56, 0.32],
+      "subject": [
+        0.04,
+        0.03,
+        0.94,
+        0.77
+      ],
+      "focal": [
+        0.56,
+        0.32
+      ],
       "note": "The folded sail and the clew stretched out of it, with the spar and its bell fitting; the palm, the wax and the snuffer at the foot are scenery a flat window may spend."
     },
     "people-dwarf": {
-      "subject": [0.12, 0.10, 0.80, 0.62],
+      "subject": [
+        0.12,
+        0.1,
+        0.8,
+        0.62
+      ],
       "note": "Pick over the shoulder, lamp in the other hand, head between them."
     },
     "people-elf": {
-      "subject": [0.08, 0.08, 0.84, 0.60],
+      "subject": [
+        0.08,
+        0.08,
+        0.84,
+        0.6
+      ],
       "note": "The weaver at the loom - head and the sprig she is holding up to look at."
     },
     "people-halfling": {
-      "subject": [0.06, 0.10, 0.88, 0.60],
+      "subject": [
+        0.06,
+        0.1,
+        0.88,
+        0.6
+      ],
       "note": "Yoke across the shoulders with a basket swinging at each end."
     },
     "people-human": {
-      "subject": [0.13, 0.10, 0.74, 0.62],
+      "subject": [
+        0.13,
+        0.1,
+        0.74,
+        0.62
+      ],
       "note": "The builder with the maul up and the frame he is raising behind him."
     },
-
-    "item-leather-jerkin": { "subject": [0.12, 0.04, 0.72, 0.94], "focal": [0.58, 0.63], "note": "The whole jerkin, shoulders to hem, with the belt and both skirt panels. Focal on the buckle. Drawn plate - measured off the picture, unlike its generated neighbours." },
-    "item-chain-mail": { "subject": [0.13, 0.04, 0.76, 0.92], "focal": [0.42, 0.53], "note": "Collar to the split hem, both sleeves and the belt. Focal on the buckle. Drawn plate - measured off the picture." },
-    "item-plate-harness": { "subject": [0.13, 0.08, 0.74, 0.78], "focal": [0.5, 0.42], "note": "Both pauldrons, the breastplate and all three fauld lames. The bench below is scenery the crop may spend. Focal on the centre ridge. Drawn plate - measured off the picture." },
-    "item-helm": { "subject": [0.1, 0.15, 0.8, 0.73], "focal": [0.39, 0.6], "note": "Crown to the tip of the nasal, brow band and every rivet. Focal where the nasal meets the band. Drawn plate - measured off the picture." },
-    "item-shield": { "subject": [0.08, 0.04, 0.86, 0.9], "focal": [0.5, 0.49], "note": "The whole disc, rim to rim, with the stapled split top-left. Focal on the boss. Drawn plate - measured off the picture." },
-    "item-sword": { "subject": [0.21, 0.01, 0.76, 0.98], "focal": [0.44, 0.72], "note": "Point to pommel, both quillons and the whole grip. The sword is drawn corner to corner with no margin, so the box is nearly the page: the card window holds all of it, and the 5:4 thumbnail cannot - it keeps the point and spends the pommel. Drawn plate - measured off the picture." },
-    "item-war-axe": { "subject": [0.21, 0.06, 0.66, 0.85], "focal": [0.62, 0.28], "note": "Wedge and poll down to the knob, taking the beard and the binding. Focal on the eye where the bit meets the haft. Drawn plate - measured off the picture." },
-    "item-bow": { "subject": [0.42, 0.04, 0.26, 0.92], "focal": [0.55, 0.5], "note": "Both horn nocks, the whole stave and string, and the corded grip. A narrow upright subject on a square page, so the crop brings a lot of paper with it. Focal on the grip. Drawn plate - measured off the picture." },
-    "item-war-hammer": { "subject": [0.11, 0.04, 0.85, 0.91], "focal": [0.6, 0.17], "note": "Face and fluke across the top, both langets, and the haft down to the wrapped butt. Focal on the head where the langets start. Drawn plate - measured off the picture." },
-    "item-crossbow": { "subject": [0.04, 0.17, 0.94, 0.73], "focal": [0.53, 0.27], "note": "Both prod tips and lashings, the string, the whole tiller to the butt cap, the nut and the hanging trigger. Focal on the nut. Drawn plate - measured off the picture." },
+    "item-leather-jerkin": {
+      "subject": [
+        0.12,
+        0.04,
+        0.72,
+        0.94
+      ],
+      "focal": [
+        0.58,
+        0.63
+      ],
+      "note": "The whole jerkin, shoulders to hem, with the belt and both skirt panels. Focal on the buckle. Drawn plate - measured off the picture, unlike its generated neighbours."
+    },
+    "item-chain-mail": {
+      "subject": [
+        0.13,
+        0.04,
+        0.76,
+        0.92
+      ],
+      "focal": [
+        0.42,
+        0.53
+      ],
+      "note": "Collar to the split hem, both sleeves and the belt. Focal on the buckle. Drawn plate - measured off the picture."
+    },
+    "item-plate-harness": {
+      "subject": [
+        0.13,
+        0.08,
+        0.74,
+        0.78
+      ],
+      "focal": [
+        0.5,
+        0.42
+      ],
+      "note": "Both pauldrons, the breastplate and all three fauld lames. The bench below is scenery the crop may spend. Focal on the centre ridge. Drawn plate - measured off the picture."
+    },
+    "item-helm": {
+      "subject": [
+        0.1,
+        0.15,
+        0.8,
+        0.73
+      ],
+      "focal": [
+        0.39,
+        0.6
+      ],
+      "note": "Crown to the tip of the nasal, brow band and every rivet. Focal where the nasal meets the band. Drawn plate - measured off the picture."
+    },
+    "item-shield": {
+      "subject": [
+        0.08,
+        0.04,
+        0.86,
+        0.9
+      ],
+      "focal": [
+        0.5,
+        0.49
+      ],
+      "note": "The whole disc, rim to rim, with the stapled split top-left. Focal on the boss. Drawn plate - measured off the picture."
+    },
+    "item-sword": {
+      "subject": [
+        0.21,
+        0.01,
+        0.76,
+        0.98
+      ],
+      "focal": [
+        0.44,
+        0.72
+      ],
+      "note": "Point to pommel, both quillons and the whole grip. The sword is drawn corner to corner with no margin, so the box is nearly the page: the card window holds all of it, and the 5:4 thumbnail cannot - it keeps the point and spends the pommel. Drawn plate - measured off the picture."
+    },
+    "item-war-axe": {
+      "subject": [
+        0.21,
+        0.06,
+        0.66,
+        0.85
+      ],
+      "focal": [
+        0.62,
+        0.28
+      ],
+      "note": "Wedge and poll down to the knob, taking the beard and the binding. Focal on the eye where the bit meets the haft. Drawn plate - measured off the picture."
+    },
+    "item-bow": {
+      "subject": [
+        0.42,
+        0.04,
+        0.26,
+        0.92
+      ],
+      "focal": [
+        0.55,
+        0.5
+      ],
+      "note": "Both horn nocks, the whole stave and string, and the corded grip. A narrow upright subject on a square page, so the crop brings a lot of paper with it. Focal on the grip. Drawn plate - measured off the picture."
+    },
+    "item-war-hammer": {
+      "subject": [
+        0.11,
+        0.04,
+        0.85,
+        0.91
+      ],
+      "focal": [
+        0.6,
+        0.17
+      ],
+      "note": "Face and fluke across the top, both langets, and the haft down to the wrapped butt. Focal on the head where the langets start. Drawn plate - measured off the picture."
+    },
+    "item-crossbow": {
+      "subject": [
+        0.04,
+        0.17,
+        0.94,
+        0.73
+      ],
+      "focal": [
+        0.53,
+        0.27
+      ],
+      "note": "Both prod tips and lashings, the string, the whole tiller to the butt cap, the nut and the hanging trigger. Focal on the nut. Drawn plate - measured off the picture."
+    },
     "tile-warehouse": {
-      "subject": [0.02, 0.02, 0.96, 0.96],
-      "focal": [0.62, 0.46],
+      "subject": [
+        0.02,
+        0.02,
+        0.96,
+        0.96
+      ],
+      "focal": [
+        0.62,
+        0.46
+      ],
       "note": "The whole page, near enough. A triad's window is 0.99 against a square plate, so nothing has to be spent and the tile keeps the ink from edge to edge - the one framing entry on this deck that is not a choice about what to lose.\n\nThe focal is the padlocked double door under the hoist beam, which is what the tile is of: it is the working end, and it is where the eye should land at seventeen millimetres rather than on the long dark side wall. Right of centre by design - the plate is drawn from thirty degrees above and thirty to the left, which puts the business of the building on the right and leaves the lower-left as the foreground grass the name band is printed over."
     },
+    "tile-barracks": {
+      "subject": [
+        0.05,
+        0.02,
+        0.93,
+        0.93
+      ],
+      "focal": [
+        0.46,
+        0.56
+      ],
+      "note": "The whole page, near enough, and for the warehouse's reason: a triad's window is 0.99 against a square plate, so the crop keeps the ink from edge to edge and nothing is spent there. On this shape the crop is never where anything is lost.\n\nWhat IS lost is the hexagon, and aim-solve measures a rectangle and cannot see it. The range is drawn corner to corner - the wording told it to run \"towards the far corner\", which is an instruction to span the diagonal, and it did - so the two ends of the building are the exposed parts. The far end sits high on the left, where a triad is full width and keeps it. The near end sits low on the right, where a triad has narrowed to its centre half, and that end loses its gable corner. That was accepted rather than redrawn: the rank of windows, the yard wall, the gate, the spear rack and the drill post are all inside the cut and whole, and the near gable is the one part of this plate the tile can afford to lose.\n\nThe focal is the gate and the spear rack beside it. The window rank is what makes this building regular, but regularity is a texture and a texture has no point to land on; the rack and the drill post are what make it military rather than a long house, and they sit together just inside the yard wall. Left of centre here, unlike the granary and the warehouse, because this plate runs the other way: the business of it is at the near end, and the near end is bottom-left of the roof ridge rather than right of it."
+    },
     "tile-granary": {
-      "subject": [0.036, 0.062, 0.935, 0.888],
-      "focal": [0.62, 0.36],
+      "subject": [
+        0.036,
+        0.062,
+        0.935,
+        0.888
+      ],
+      "focal": [
+        0.62,
+        0.36
+      ],
       "note": "The whole page, near enough. A triad's window is 0.99 against a square plate, so nothing has to be spent and the tile keeps the ink from edge to edge - the same answer the warehouse got, and for the same reason: on this shape the crop is not where anything is lost.\n\nWhat IS lost is the hexagon, and no framing entry can argue with it. Below the shoulder line a triad keeps only the middle half of its width, and the proof says what that costs here: the wooden scoop goes entirely, and the base of the outermost staddle stone on each side goes with it. Both sacks, the ladder and the daylight gap under the floor are inside the cut and whole. That loss was accepted rather than solved - the plate would have to be redrawn smaller on its page to keep the scoop, and the scoop is the one item on it the tile can afford to lose.\n\nThe focal is the small hatch high in the gable that the ladder reaches: the working end, and the one thing that tells a granary from a shed at seventeen millimetres. Right of centre by design - the plate is drawn from thirty degrees above and thirty to the left, which puts the business of the building on the right and leaves the lower-left as the foreground grass the name band is printed over."
     },
-    "tile-hut": { "subject": [0.08, 0.05, 0.85, 0.53], "focal": [0.65, 0.43], "note": "The hut from the chimney down to the grass line, with the chopping block and the split rounds. Nothing is spent: a square plate in a 0.87 window loses 6.7% off each side and there is nothing out there but ground texture. Focal on the doorway - the one flat black shape on the plate, and the thing the tile is of." },
-    "tool-axe": { "subject": [0.16, 0.02, 0.74, 0.92], "focal": [0.55, 0.21], "note": "Wedge and poll, the whole bit and its hollowed edge, and the haft down to the knob. Focal on the eye. Drawn plate - measured off the picture." },
-    "tool-saw": { "subject": [0.03, 0.33, 0.96, 0.47], "focal": [0.27, 0.56], "note": "Toe, the whole toothed edge, both saw nuts and the tote. A wide flat subject on a square page, so the crop brings paper above and below. Focal on the heel where the tote meets the plate. Drawn plate - measured off the picture." },
-    "tool-pick": { "subject": [0.22, 0.08, 0.68, 0.83], "focal": [0.58, 0.2], "note": "Both ends of the head - the drawn point and the mushroomed one - the wedged eye, and the haft to the butt. Focal on the eye. Drawn plate - measured off the picture." },
-    "tool-hammer": { "subject": [0.27, 0.02, 0.53, 0.95], "focal": [0.53, 0.15], "note": "Face and pein across the head, both wedges in the eye, and the haft to the butt. Focal on the eye. Drawn plate - measured off the picture." },
-    "tool-scythe": { "subject": [0.25, 0.03, 0.43, 0.93], "focal": [0.58, 0.1], "note": "Blade tip to collar, both nibs, and the snaith to its butt. A tall narrow subject on a square page, so the crop brings paper either side. Focal on the collar where the tang is bolted. Drawn plate - measured off the picture." }
+    "tile-hut": {
+      "subject": [
+        0.08,
+        0.05,
+        0.85,
+        0.53
+      ],
+      "focal": [
+        0.65,
+        0.43
+      ],
+      "note": "The hut from the chimney down to the grass line, with the chopping block and the split rounds. Nothing is spent: a square plate in a 0.87 window loses 6.7% off each side and there is nothing out there but ground texture. Focal on the doorway - the one flat black shape on the plate, and the thing the tile is of."
+    },
+    "tool-axe": {
+      "subject": [
+        0.16,
+        0.02,
+        0.74,
+        0.92
+      ],
+      "focal": [
+        0.55,
+        0.21
+      ],
+      "note": "Wedge and poll, the whole bit and its hollowed edge, and the haft down to the knob. Focal on the eye. Drawn plate - measured off the picture."
+    },
+    "tool-saw": {
+      "subject": [
+        0.03,
+        0.33,
+        0.96,
+        0.47
+      ],
+      "focal": [
+        0.27,
+        0.56
+      ],
+      "note": "Toe, the whole toothed edge, both saw nuts and the tote. A wide flat subject on a square page, so the crop brings paper above and below. Focal on the heel where the tote meets the plate. Drawn plate - measured off the picture."
+    },
+    "tool-pick": {
+      "subject": [
+        0.22,
+        0.08,
+        0.68,
+        0.83
+      ],
+      "focal": [
+        0.58,
+        0.2
+      ],
+      "note": "Both ends of the head - the drawn point and the mushroomed one - the wedged eye, and the haft to the butt. Focal on the eye. Drawn plate - measured off the picture."
+    },
+    "tool-hammer": {
+      "subject": [
+        0.27,
+        0.02,
+        0.53,
+        0.95
+      ],
+      "focal": [
+        0.53,
+        0.15
+      ],
+      "note": "Face and pein across the head, both wedges in the eye, and the haft to the butt. Focal on the eye. Drawn plate - measured off the picture."
+    },
+    "tool-scythe": {
+      "subject": [
+        0.25,
+        0.03,
+        0.43,
+        0.93
+      ],
+      "focal": [
+        0.58,
+        0.1
+      ],
+      "note": "Blade tip to collar, both nibs, and the snaith to its butt. A tall narrow subject on a square page, so the crop brings paper either side. Focal on the collar where the tang is bolted. Drawn plate - measured off the picture."
+    }
   }
 }
