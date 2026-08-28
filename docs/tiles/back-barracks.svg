@@ -28,9 +28,12 @@
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="#1A1714">
-  <!-- the name, in a band hugging the lower-right edge and running parallel to
+  <!-- the name, in a band hugging the lower-left edge and running parallel to
        it. Not across the middle: a bar through a small drawing splits it into
-       two unrelated halves, which is what the first version looked like -->
+       two unrelated halves, which is what the first version looked like. The
+       corner is components.json buildingTile.nameBand.edge, and lower-LEFT
+       because the plates are drawn from thirty degrees to the left, which puts
+       the business of the building on the right - see bandOf in lib/tiles.mjs -->
   <g clip-path="url(#cut-tile-barracks-back)">
     <path d="M 82.8,247.4 L 149.6,285.97 L 184.34,265.91 L 82.8,207.29 Z" fill="none" stroke="#3D3630" stroke-width="1.6" stroke-linejoin="round"/>
     <g transform="rotate(30 124.88 251.64)"><text x="124.88" y="255.85" font-size="12.01" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="bold" letter-spacing="1.07" fill="#3D3630">BARRACKS</text></g>

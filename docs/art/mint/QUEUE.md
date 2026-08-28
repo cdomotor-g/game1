@@ -109,56 +109,13 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**2 of 54 minted.** 40 waiting on a brief, 12 waiting on art, 0 waiting on frame.
+**2 of 54 minted.** 0 waiting on a brief, 52 waiting on art, 0 waiting on frame.
 
-### 1 · WRITE — the designer — 40 tiles
+### 1 · WRITE — the designer
 
-These exist in the data with no brief. Write one into `docs/art/prompts/` under the plate id, following the shared preamble at the top of that file and the contract in `docs/art/09-framing-and-composition.md`.
+Nothing waiting.
 
-| Code | Tile | Category | Plate | brief | plate | frame |
-| --- | --- | --- | --- | :-: | :-: | :-: |
-| `lumber-camp` | Lumber Camp | Extraction | `tile-lumber-camp` | · | · | · |
-| `quarry` | Quarry | Extraction | `tile-quarry` | · | · | · |
-| `clay-pit` | Clay Pit | Extraction | `tile-clay-pit` | · | · | · |
-| `sand-pit` | Sand Pit | Extraction | `tile-sand-pit` | · | · | · |
-| `mine` | Mine | Extraction | `tile-mine` | · | · | · |
-| `oil-derrick` | Oil Derrick | Extraction | `tile-oil-derrick` | · | · | · |
-| `well` | Well | Extraction | `tile-well` | · | · | · |
-| `orchard` | Orchard | Extraction | `tile-orchard` | · | · | · |
-| `vineyard` | Vineyard | Extraction | `tile-vineyard` | · | · | · |
-| `apiary` | Apiary | Extraction | `tile-apiary` | · | · | · |
-| `dock` | Dock | Extraction | `tile-dock` | · | · | · |
-| `charcoal-kiln` | Charcoal Kiln | Production | `tile-charcoal-kiln` | · | · | · |
-| `smelter` | Smelter | Production | `tile-smelter` | · | · | · |
-| `steelworks` | Steelworks | Production | `tile-steelworks` | · | · | · |
-| `brickworks` | Brickworks | Production | `tile-brickworks` | · | · | · |
-| `glassworks` | Glassworks | Production | `tile-glassworks` | · | · | · |
-| `blacksmith` | Blacksmith | Production | `tile-blacksmith` | · | · | · |
-| `carpenter` | Carpenter's Shop | Production | `tile-carpenter` | · | · | · |
-| `weaver` | Weaver's Shed | Production | `tile-weaver` | · | · | · |
-| `tannery` | Tannery | Production | `tile-tannery` | · | · | · |
-| `tailor` | Tailor | Production | `tile-tailor` | · | · | · |
-| `mill` | Mill | Production | `tile-mill` | · | · | · |
-| `bakery` | Bakery | Production | `tile-bakery` | · | · | · |
-| `butcher` | Butcher | Production | `tile-butcher` | · | · | · |
-| `dairy` | Dairy | Production | `tile-dairy` | · | · | · |
-| `brewery` | Brewery | Production | `tile-brewery` | · | · | · |
-| `winery` | Winery | Production | `tile-winery` | · | · | · |
-| `market` | Market | Civic | `tile-market` | · | · | · |
-| `trading-house` | Trading House | Civic | `tile-trading-house` | · | · | · |
-| `town-hall` | Town Hall | Civic | `tile-town-hall` | · | · | · |
-| `guildhall` | Guildhall | Civic | `tile-guildhall` | · | · | · |
-| `inn` | Inn | Civic | `tile-inn` | · | · | · |
-| `infirmary` | Infirmary | Civic | `tile-infirmary` | · | · | · |
-| `barracks` | Barracks | Military | `tile-barracks` | · | · | · |
-| `watchtower` | Watchtower | Military | `tile-watchtower` | · | · | · |
-| `palisade` | Palisade | Military | `tile-palisade` | · | · | · |
-| `alchemist` | Alchemist | Arcane | `tile-alchemist` | · | · | · |
-| `shrine` | Shrine | Arcane | `tile-shrine` | · | · | · |
-| `harbour` | Harbour | Infrastructure | `tile-harbour` | · | · | · |
-| `rail-depot` | Rail Depot | Infrastructure | `tile-rail-depot` | · | · | · |
-
-### 2 · DRAW — the artist — 12 tiles
+### 2 · DRAW — the artist — 52 tiles
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -167,10 +124,50 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `timber-house` | Timber House | Housing | `tile-timber-house` | ✓ | · | · |
 | `brick-house` | Brick House | Housing | `tile-brick-house` | ✓ | · | · |
 | `manor` | Manor | Housing | `tile-manor` | ✓ | · | · |
+| `lumber-camp` | Lumber Camp | Extraction | `tile-lumber-camp` | ✓ | · | · |
+| `quarry` | Quarry | Extraction | `tile-quarry` | ✓ | · | · |
+| `clay-pit` | Clay Pit | Extraction | `tile-clay-pit` | ✓ | · | · |
+| `sand-pit` | Sand Pit | Extraction | `tile-sand-pit` | ✓ | · | · |
+| `mine` | Mine | Extraction | `tile-mine` | ✓ | · | · |
+| `oil-derrick` | Oil Derrick | Extraction | `tile-oil-derrick` | ✓ | · | · |
+| `well` | Well | Extraction | `tile-well` | ✓ | · | · |
 | `farm` | Farm | Extraction | `tile-farm` | ✓ | · | · |
 | `pasture` | Pasture | Extraction | `tile-pasture` | ✓ | · | · |
+| `orchard` | Orchard | Extraction | `tile-orchard` | ✓ | · | · |
+| `vineyard` | Vineyard | Extraction | `tile-vineyard` | ✓ | · | · |
+| `apiary` | Apiary | Extraction | `tile-apiary` | ✓ | · | · |
+| `dock` | Dock | Extraction | `tile-dock` | ✓ | · | · |
 | `sawmill` | Sawmill | Production | `tile-sawmill` | ✓ | · | · |
+| `charcoal-kiln` | Charcoal Kiln | Production | `tile-charcoal-kiln` | ✓ | · | · |
+| `smelter` | Smelter | Production | `tile-smelter` | ✓ | · | · |
+| `steelworks` | Steelworks | Production | `tile-steelworks` | ✓ | · | · |
+| `brickworks` | Brickworks | Production | `tile-brickworks` | ✓ | · | · |
+| `glassworks` | Glassworks | Production | `tile-glassworks` | ✓ | · | · |
+| `blacksmith` | Blacksmith | Production | `tile-blacksmith` | ✓ | · | · |
+| `carpenter` | Carpenter's Shop | Production | `tile-carpenter` | ✓ | · | · |
+| `weaver` | Weaver's Shed | Production | `tile-weaver` | ✓ | · | · |
+| `tannery` | Tannery | Production | `tile-tannery` | ✓ | · | · |
+| `tailor` | Tailor | Production | `tile-tailor` | ✓ | · | · |
+| `mill` | Mill | Production | `tile-mill` | ✓ | · | · |
+| `bakery` | Bakery | Production | `tile-bakery` | ✓ | · | · |
+| `butcher` | Butcher | Production | `tile-butcher` | ✓ | · | · |
+| `dairy` | Dairy | Production | `tile-dairy` | ✓ | · | · |
+| `brewery` | Brewery | Production | `tile-brewery` | ✓ | · | · |
+| `winery` | Winery | Production | `tile-winery` | ✓ | · | · |
 | `granary` | Granary | Storage | `tile-granary` | ✓ | · | · |
+| `market` | Market | Civic | `tile-market` | ✓ | · | · |
+| `trading-house` | Trading House | Civic | `tile-trading-house` | ✓ | · | · |
+| `town-hall` | Town Hall | Civic | `tile-town-hall` | ✓ | · | · |
+| `guildhall` | Guildhall | Civic | `tile-guildhall` | ✓ | · | · |
+| `inn` | Inn | Civic | `tile-inn` | ✓ | · | · |
+| `infirmary` | Infirmary | Civic | `tile-infirmary` | ✓ | · | · |
+| `barracks` | Barracks | Military | `tile-barracks` | ✓ | · | · |
+| `watchtower` | Watchtower | Military | `tile-watchtower` | ✓ | · | · |
+| `palisade` | Palisade | Military | `tile-palisade` | ✓ | · | · |
+| `alchemist` | Alchemist | Arcane | `tile-alchemist` | ✓ | · | · |
+| `shrine` | Shrine | Arcane | `tile-shrine` | ✓ | · | · |
+| `harbour` | Harbour | Infrastructure | `tile-harbour` | ✓ | · | · |
+| `rail-depot` | Rail Depot | Infrastructure | `tile-rail-depot` | ✓ | · | · |
 | `crop-grain` | Grain Field | Fields | `tile-crop-grain` | ✓ | · | · |
 | `crop-vegetables` | Vegetables Field | Fields | `tile-crop-vegetables` | ✓ | · | · |
 | `crop-flax` | Flax Field | Fields | `tile-crop-flax` | ✓ | · | · |

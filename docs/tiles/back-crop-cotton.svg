@@ -28,9 +28,12 @@
 
 <!-- ============================================================ INK -->
 <g id="ink" fill="#1A1714">
-  <!-- the name, in a band hugging the lower-right edge and running parallel to
+  <!-- the name, in a band hugging the lower-left edge and running parallel to
        it. Not across the middle: a bar through a small drawing splits it into
-       two unrelated halves, which is what the first version looked like -->
+       two unrelated halves, which is what the first version looked like. The
+       corner is components.json buildingTile.nameBand.edge, and lower-LEFT
+       because the plates are drawn from thirty degrees to the left, which puts
+       the business of the building on the right - see bandOf in lib/tiles.mjs -->
   <g clip-path="url(#cut-tile-crop-cotton-back)">
     <path d="M 16,131.7 L 82.8,170.27 L 117.54,150.21 L 16,91.59 Z" fill="none" stroke="#3D3630" stroke-width="1.6" stroke-linejoin="round"/>
     <g transform="rotate(30 58.08 135.94)"><text x="58.08" y="141.55" font-size="16.02" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="bold" letter-spacing="1.42" fill="#3D3630">COTTON</text></g>
