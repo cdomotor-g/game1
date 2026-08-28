@@ -9,7 +9,7 @@
 <g id="wash">
   <rect x="0" y="0" width="299.2" height="301.97" fill="#EDE4D1"/>
   <g clip-path="url(#cut-tile-warehouse-face)">
-    <image href="../art/renders/tile-warehouse.png" x="16" y="16" width="267.2" height="267.2" preserveAspectRatio="none"/>
+    <image href="../art/renders/tile-warehouse.png" x="16" y="16" width="269.97" height="269.97" preserveAspectRatio="none"/>
   </g>
 </g>
 
