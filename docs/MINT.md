@@ -345,6 +345,57 @@ the tool still produces the correct worklist. Automating the notification is the
 a convenience rather than a dependency, and can be added, removed or broken
 without stranding anything half-minted.
 
+## When the artist is a model: the whole run from one request
+
+The two-agent handover above is the version that always works, and it stays. This
+is the version where nobody carries anything, and it is what `/mint` drives.
+
+```
+brief ─▶ mint-request --render ─▶ hf_jobs draws it ─▶ look at the preview
+      ─▶ fetch-plate.yml carries it in ─▶ aim ─▶ build ─▶ proof ─▶ push
+```
+
+**A model is not handed the commission.** This is the part that is easy to get
+wrong and expensive to discover. A commission is written for a person: it carries
+blocks they read as instructions about the job — `FRAMING.`, `WINDOW.`,
+`LABEL BAND.` — and sentences saying what not to draw. A model cannot tell an
+instruction from a subject, so it draws them. The first warehouse plate came back
+with the brief rendered onto the page as paragraphs of text, from a model whose
+headline strength is text placement, doing exactly as it was told.
+
+So there are two prompts built from one brief, and one tool that knows the
+difference:
+
+| | |
+| --- | --- |
+| `mint-request <id>` | the **commission** — for a person, blocks and all |
+| `mint-request <id> --render` | the **render prompt** — pure depiction, every "no X" moved to the negative |
+
+`--render` prints what it moved, so nothing is dropped silently. `renderPrompt`
+in `tools/lib/mint.mjs` is the only place that difference lives.
+
+**The plate is drawn on Hugging Face** with an `hf_jobs` uv job, which has the
+GPU and the bandwidth. It writes the PNG to a dataset.
+
+**The plate is carried in by a GitHub Action**, because neither end can reach the
+other: a Claude Code session cannot reach `huggingface.co` (organisation egress
+policy — a setting to respect, not route around), and a job on Hugging Face
+cannot write here without a credential nobody should paste into a conversation.
+An Action reaches both and is already inside the repository. Dispatch
+`fetch-plate.yml` with the plate id; it fetches, refuses anything that is not a
+readable PNG, takes the frozen wording, rebuilds what the plate feeds and commits.
+The subject moves off DRAW by itself, because the queue is computed rather than
+stored. Setup is `MINT-SETUP.md` §4a and it is one secret, once.
+
+**Nobody moves a file.** That was the fallback before the Action existed and it is
+not one: it is slow, it is the thing this pipeline exists to remove, and it does
+not survive being asked a hundred times.
+
+**Looking at the plate is still a person's job, and it is not optional.** Every
+check in this repository proves something about numbers; none of them looks at
+the picture. The job writes a small JPEG preview for exactly this. Reject against
+`docs/art/07-ai-agent-brief.md` with a concrete reason, not taste.
+
 ## Adding a third line
 
 The mint is a multi-tool because the next thing is not going to be a card or a

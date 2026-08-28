@@ -136,6 +136,61 @@ export function assemble(brief, extra) {
   return brief.negative ? `${body}\n\nNEGATIVE PROMPT.\n${brief.negative}` : body;
 }
 
+/* A commission is written for a PERSON, and the difference matters more than it
+   looks. It carries blocks a human reads as instructions about the job - FRAMING,
+   WINDOW, LABEL BAND, TRACEABILITY - and sentences that say what NOT to draw. An
+   image model has no way to tell an instruction from a subject, so it draws them:
+   the first warehouse plate came back with the brief rendered onto the page as
+   paragraphs of text, because the model was told "LABEL BAND." and did as it was
+   asked.
+
+   So a model gets a different prompt built from the same brief. This is the one
+   place that difference lives. */
+const META = /^(FRAMING|WINDOW|LABEL BAND|TRACEABILITY)\./;
+
+/* A sentence that only says what to leave out. Kept as a short explicit list
+   rather than anything clever: every one of these is a phrase the house preamble
+   actually uses, and a regex that guessed would quietly eat a subject one day. */
+const NEGATION = /^(No |Nobody |Never |None |Strictly no |No\b)/i;
+
+/**
+ * The same brief, as an image model should be given it: pure depiction in the
+ * positive, everything else in the negative.
+ *
+ * Returns { positive, negative, moved }. `moved` is what was taken out of the
+ * positive, so a caller can print it and nobody has to wonder whether the tool
+ * silently dropped half the brief.
+ *
+ * What it does NOT do is invent. The subject paragraph is the artist's own
+ * words; the corner rule survives as the one depictive sentence it can be
+ * ("plain ground fills the lower-left corner") because where the ground is IS
+ * part of the picture, where "a band will be printed here" is not.
+ */
+export function renderPrompt(brief, { cornerNote = null } = {}) {
+  if (!brief) return null;
+  const body = brief.preamble ? brief.subject.replace('[PREAMBLE]', brief.preamble) : brief.subject;
+
+  const kept = [];
+  const moved = [];
+  for (const para of body.split(/\n\s*\n/)) {
+    const text = para.trim();
+    if (!text) continue;
+    if (META.test(text)) { moved.push(text.split('.')[0] + ' block'); continue; }
+    const sentences = text.replace(/\n/g, ' ').split(/(?<=\.)\s+/).map((x) => x.trim()).filter(Boolean);
+    const positive = sentences.filter((x) => !NEGATION.test(x));
+    const dropped = sentences.filter((x) => NEGATION.test(x));
+    moved.push(...dropped);
+    if (positive.length) kept.push(positive.join(' '));
+  }
+  if (cornerNote) kept.push(cornerNote);
+
+  return {
+    positive: kept.join('\n\n'),
+    negative: brief.negative ? brief.negative.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim() : '',
+    moved,
+  };
+}
+
 /**
  * What the card window will actually keep of this plate, in numbers, for the
  * artist who cannot see the card.

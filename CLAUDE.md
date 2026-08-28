@@ -107,6 +107,20 @@ is tied back to the data, the thing builds. Only the third step's name changes
 between lines — a card is **framed** (a subject box in `framing.json`), a map is
 **traced** (the board in `data/maps/<id>.json`).
 
+**One request mints a thing, end to end.** `/mint <subject>` is the runbook and
+it does not stop halfway: the brief, the plate drawn on Hugging Face, the plate
+carried into the repository by `.github/workflows/fetch-plate.yml`, the crop
+aimed, built, proofed and pushed. Nobody moves a file — that Action exists so
+nobody has to, and it does not survive being asked a hundred times.
+
+**An image model is never handed the commission.** A commission is written for a
+person and carries blocks they read as instructions — `FRAMING.`, `WINDOW.`,
+`LABEL BAND.` — which a model cannot tell from a subject and so draws onto the
+page. `node tools/mint-request.mjs <id> --render` builds the other prompt: pure
+depiction, every "no X" moved into the negative, and it prints what it moved so
+nothing goes silently. `renderPrompt` in `tools/lib/mint.mjs` is the one place
+that difference lives.
+
 Run `node tools/mint-queue.mjs` to see where everything has got to — it works
 that out from the repository, so it cannot be wrong, only out of date. Adding a
 third line is an entry in `data/mint.json` plus one branch each in `subjectsOf`

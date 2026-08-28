@@ -19,12 +19,18 @@
  *   node tools/mint-request.mjs --deck modifications    every one of a deck at DRAW
  *   node tools/mint-request.mjs --all                   every subject at DRAW
  *   node tools/mint-request.mjs MOD-01 --prompt-only    just the prompt, no header
+ *   node tools/mint-request.mjs MOD-01 --render        the prompt an IMAGE MODEL should get
+ *
+ * --render is not a formatting option, it is a different prompt. A commission is
+ * written for a person and carries blocks they read as instructions about the
+ * job; a model cannot tell an instruction from a subject and draws them. See
+ * renderPrompt in tools/lib/mint.mjs.
  *
  * A deck is one artist session: docs/MINT-SETUP.md asks for one subject per
  * message so the style cannot drift, so --deck prints them in order, separated,
  * to be sent one at a time rather than in a heap.
  */
-import { survey, platePath, briefFor, assemble, minLongSideFor, windowNote, at } from './lib/mint.mjs';
+import { survey, platePath, briefFor, assemble, renderPrompt, minLongSideFor, windowNote, at } from './lib/mint.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -33,6 +39,7 @@ const targets = args.filter((a) => !a.startsWith('--') && args[args.indexOf(a) -
 
 const ROOT = process.cwd();
 const promptOnly = flag('prompt-only');
+const render = flag('render');
 
 const found = survey(ROOT);
 
@@ -85,6 +92,24 @@ chosen.forEach(({ line, row }, i) => {
      reading this in a chat and the image model reading it over the wire are
      being commissioned for the same plate; a request that left out how much of
      the page survives the crop would be commissioning a different one. */
+  if (render) {
+    /* The corner rule is the one part of the LABEL BAND block that is about the
+       PICTURE rather than about the printing, so it is the one part that crosses
+       over - said as a thing to draw instead of a thing to know. */
+    const corner = line.id === 'buildingtiles'
+      ? 'Plain empty ground fills the lower left corner of the picture.'
+      : null;
+    const r = renderPrompt(brief, { cornerNote: corner });
+    console.log(`### RENDER PROMPT · ${row.code} · ${row.name}`);
+    console.log(`\n**save to**  ${platePath(line, row)}`);
+    console.log(`**format**   ${row.format}\n`);
+    console.log('POSITIVE\n```text\n' + r.positive + '\n```\n');
+    console.log('NEGATIVE\n```text\n' + r.negative + '\n```\n');
+    console.log(`Moved out of the positive, because a model draws what it is told:\n  ${r.moved.join('\n  ')}`);
+    if (i < chosen.length - 1) console.log('\n' + '─'.repeat(72) + '\n');
+    return;
+  }
+
   const prompt = assemble(brief, windowNote(ROOT, line, row));
   if (promptOnly) {
     console.log(prompt);

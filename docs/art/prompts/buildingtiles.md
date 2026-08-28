@@ -115,6 +115,20 @@ no lens effects. No text, no letters, no numerals, no signage. No border
 rule, no vignette, no grid.
 ```
 
+## Words that get drawn literally
+
+A model has no idea which of your words are the name of a thing and which are a
+simile. Two that have already cost a plate here:
+
+- **"mushroom-shaped staddle stones"** put actual toadstools on the grass and
+  left the building sitting flat on the ground. Say **"short round stone pillars
+  with flat wide caps"** and name them staddle stones after.
+- **A heading a person reads as an instruction** - `FRAMING.`, `WINDOW.`,
+  `LABEL BAND.` - gets rendered onto the page as text. That is why an image model
+  is never handed the commission: `node tools/mint-request.mjs <id> --render`
+  builds it a different prompt, with the meta blocks stripped and every "no X"
+  moved into the negative where it belongs. Use it.
+
 ## Negative prompt — for all of them
 
 ```text
@@ -383,7 +397,8 @@ edge. Hoist beam well inside the top margin.
 ```text
 [PREAMBLE]
 
-A grain store raised on mushroom-shaped staddle stones with a short ladder up
+A grain store raised on short round stone pillars with flat wide caps -
+staddle stones - with a short ladder up
 to a small high door - the gap under the floor is the point of the building
 and must be unmistakable. Weatherboarded sides, a steep shingled roof, a
 louvred vent in the gable. Two sacks and a scoop at the foot of the ladder.
