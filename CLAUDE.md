@@ -113,6 +113,17 @@ in the graph. The model, the seeded deterministic layout and the SVG renderer li
 in `docs/js/graph.js`; `tools/lib/graph.mjs` shim-loads it the way framing is loaded, so
 the site and the book are one drawing seen twice.
 
+The flows are the graph taken apart: one small diagram per place of work — the
+explorer's **Flows** tab, and `docs/art/flows/` printed in the annex — showing what
+goes in, the job with its hours, tool and specialist, and what comes out, with a note
+under every input saying where that thing comes from. Same construction, one storey
+down: model and renderer live once in `docs/js/flows.js`, `tools/build-flows.mjs`
+writes the committed copies and fails if any recipe lands in no diagram, and the
+diagrams' washes are the graph's own (`data/graph.json`), so a commodity is the same
+colour as its dot. Nothing about a flow is declared anywhere: a building's diagram is
+its own jobs and crafts read off the data, and the annex lists the diagrams through
+the same model that draws them.
+
 ## The mint is a multi-tool, and the queue is computed
 
 `docs/MINT.md` is the pipeline and `docs/MINT-SETUP.md` is how to run it. One
@@ -468,6 +479,7 @@ node tools/build-icons.mjs     # element marks -> docs/art/icons/
 node tools/draw-item.mjs       # generated plates: redraw docs/art/renders/{item,tool}-*
 node tools/build-data.mjs      # rebuild the web bundle
 node tools/build-graph.mjs     # redraw docs/art/graph/dependencies.svg - the web the annex prints
+node tools/build-flows.mjs     # redraw docs/art/flows/ - one diagram per place of work
 node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
 node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + components

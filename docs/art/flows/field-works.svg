@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 303" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="303" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714">Works and construction</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Changing the map itself: clearing ground and raising buildings.</text>
+<g><rect x="16" y="72.5" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="85" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="clear-forest"><rect x="300" y="57.5" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="71.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Clear Forest</text><text x="410" y="83.5" text-anchor="middle" font-size="8" fill="#3D3630">4h effort · needs Axe</text><text x="410" y="94.5" text-anchor="middle" font-size="8" fill="#3D3630">on Forest</text></g>
+<line x1="524" y1="81.5" x2="548" y2="65" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="logs"><rect x="552" y="56" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="68.5" font-size="9" fill="#1A1714">3 × Logs</text></g>
+<text x="552" y="86" font-size="7.5" font-style="italic" fill="#5F564C">Flip the forest tile to grassland.</text>
+<text x="552" y="95" font-size="7.5" font-style="italic" fill="#5F564C">Permanent - and there is no way to plant a</text>
+<text x="552" y="104" font-size="7.5" font-style="italic" fill="#5F564C">forest back.</text>
+<line x1="16" y1="113" x2="764" y2="113" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="134" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="146.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="build-generic"><rect x="300" y="119" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="133" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Building Work</text><text x="410" y="145" text-anchor="middle" font-size="8" fill="#3D3630">1h effort · needs Hammer</text><text x="410" y="156" text-anchor="middle" font-size="8" fill="#3D3630">at any construction site</text></g>
+<line x1="524" y1="143" x2="548" y2="126.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<text x="552" y="129.5" font-size="8.5" fill="#1A1714">1 build point per hour</text>
+<text x="552" y="144.5" font-size="7.5" font-style="italic" fill="#5F564C">Add 1 build-point per hour to any</text>
+<text x="552" y="153.5" font-size="7.5" font-style="italic" fill="#5F564C">construction site. The fallback when you</text>
+<text x="552" y="162.5" font-size="7.5" font-style="italic" fill="#5F564C">have no specialised tool.</text>
+<line x1="16" y1="173" x2="764" y2="173" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="194" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="206.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="build-timber-frame"><rect x="300" y="179" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="193" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Timber Framing</text><text x="410" y="205" text-anchor="middle" font-size="8" fill="#3D3630">1h effort · needs Saw</text><text x="410" y="216" text-anchor="middle" font-size="8" fill="#3D3630">at any construction site</text></g>
+<line x1="524" y1="203" x2="548" y2="191" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<text x="552" y="194" font-size="8.5" fill="#1A1714">2 build points per hour</text>
+<text x="552" y="209" font-size="7.5" font-style="italic" fill="#5F564C">Double-rate build work on any building</text>
+<text x="552" y="218" font-size="7.5" font-style="italic" fill="#5F564C">whose cost is mostly logs or lumber.</text>
+<line x1="16" y1="233" x2="764" y2="233" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="254" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="266.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="build-masonry"><rect x="300" y="239" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="253" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Masonry</text><text x="410" y="265" text-anchor="middle" font-size="8" fill="#3D3630">1h effort · needs Trowel</text><text x="410" y="276" text-anchor="middle" font-size="8" fill="#3D3630">at any construction site</text></g>
+<line x1="524" y1="263" x2="548" y2="251" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<text x="552" y="254" font-size="8.5" fill="#1A1714">2 build points per hour</text>
+<text x="552" y="269" font-size="7.5" font-style="italic" fill="#5F564C">Double-rate build work on any building</text>
+<text x="552" y="278" font-size="7.5" font-style="italic" fill="#5F564C">whose cost is mostly stone or brick.</text>
+</svg>

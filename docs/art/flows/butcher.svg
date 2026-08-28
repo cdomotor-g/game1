@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 254" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="254" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="butcher">Butcher</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 3 Lumber + 1 Stone — 9 build points</text>
+<g class="f-token" data-kind="commodities" data-id="cattle"><rect x="16" y="62.5" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="75" font-size="9" fill="#1A1714">1 × Cattle</text></g>
+<text x="23" y="88.5" font-size="7" fill="#5F564C" font-style="italic">from the Pasture</text>
+<line x1="80.6" y1="71.5" x2="296" y2="76.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="butcher-livestock"><rect x="300" y="58" width="220" height="37" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="72" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Butcher Livestock</text><text x="410" y="84" text-anchor="middle" font-size="8" fill="#3D3630">2h effort · needs Knife</text></g>
+<line x1="524" y1="76.5" x2="548" y2="65" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="meat"><rect x="552" y="56" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="68.5" font-size="9" fill="#1A1714">4 × Meat</text></g>
+<line x1="524" y1="76.5" x2="548" y2="88" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="hide"><rect x="552" y="79" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="91.5" font-size="9" fill="#1A1714">2 × Hide</text></g>
+<text x="24" y="108" font-size="8" fill="#3D3630" font-style="italic">or 1 Pig → 3 Meat + 1 Hide</text>
+<text x="24" y="119" font-size="8" fill="#3D3630" font-style="italic">or 1 Sheep → 2 Meat + 1 Hide + 1 Wool</text>
+<text x="24" y="130" font-size="8" fill="#3D3630" font-style="italic">or 1 Chickens → 1 Meat</text>
+<line x1="16" y1="138" x2="764" y2="138" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="meat"><rect x="16" y="144" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="156.5" font-size="9" fill="#1A1714">2 × Meat</text></g>
+<text x="23" y="170" font-size="7" fill="#5F564C" font-style="italic">from in the open country</text>
+<line x1="70.88" y1="153" x2="296" y2="191" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="salt"><rect x="16" y="177" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="189.5" font-size="9" fill="#1A1714">1 × Salt</text></g>
+<text x="23" y="203" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="70.88" y1="186" x2="296" y2="191" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="barrel"><rect x="16" y="210" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="222.5" font-size="9" fill="#1A1714">1 × Barrel</text></g>
+<text x="23" y="236" font-size="7" fill="#5F564C" font-style="italic">from the Carpenter's Shop</text>
+<line x1="80.6" y1="219" x2="296" y2="191" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="salt-meat"><rect x="300" y="172.5" width="220" height="37" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="186.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Salt Meat</text><text x="410" y="198.5" text-anchor="middle" font-size="8" fill="#3D3630">1h effort</text></g>
+<line x1="524" y1="191" x2="548" y2="191" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="salted-meat"><rect x="552" y="182" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="194.5" font-size="9" fill="#1A1714">2 × Salted Meat</text></g>
+</svg>

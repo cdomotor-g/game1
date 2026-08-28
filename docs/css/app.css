@@ -577,3 +577,12 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
 .graph-stage svg.focus .g-edges line.hi { stroke-opacity: .9; stroke-width: 1.3; }
 
 .graph-note { font-size: 12.5px; color: var(--ink-faint); margin-top: 10px; }
+
+/* ---------------------------------------------------------- the flows tab */
+/* One injected SVG per workplace, drawn by docs/js/flows.js. */
+
+.flow-panel { padding: 10px 14px; scroll-margin-top: 72px; }
+.flow-panel svg { display: block; width: 100%; height: auto; }
+.flow-stage .f-token { cursor: pointer; }
+.flow-stage .f-token:hover rect { stroke-width: 2.2; }
+.flow-stage .f-token:hover text { text-decoration: underline; }

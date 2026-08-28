@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 138" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="138" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="trading-house">Trading House</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 5 Brick + 3 Lumber + 2 Parchment — 20 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">needs a Market first · run by a Merchant</text>
+<g><rect x="16" y="86" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="98.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="broker-trade"><rect x="300" y="71" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="85" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Broker a Trade</text><text x="410" y="97" text-anchor="middle" font-size="8" fill="#3D3630">1h effort</text><text x="410" y="108" text-anchor="middle" font-size="8" fill="#3D3630">by a Merchant</text></g>
+<text x="552" y="75" font-size="7.5" font-style="italic" fill="#5F564C">Trade any quantity with any player whose</text>
+<text x="552" y="84" font-size="7.5" font-style="italic" fill="#5F564C">merchant or trading house is connected to</text>
+<text x="552" y="93" font-size="7.5" font-style="italic" fill="#5F564C">this town by a route, at whatever price</text>
+<text x="552" y="102" font-size="7.5" font-style="italic" fill="#5F564C">you agree. No spread. You may also broker</text>
+<text x="552" y="111" font-size="7.5" font-style="italic" fill="#5F564C">a deal between two other players and take</text>
+<text x="552" y="120" font-size="7.5" font-style="italic" fill="#5F564C">10% of the coin.</text>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 132" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="132" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="oil-derrick">Oil Derrick</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 4 Steel + 4 Lumber + 2 Ironware — 26 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">over a Oil Field</text>
+<g class="f-token" data-kind="commodities" data-id="barrel"><rect x="16" y="78" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="90.5" font-size="9" fill="#1A1714">1 × Barrel</text></g>
+<text x="23" y="104" font-size="7" fill="#5F564C" font-style="italic">from the Carpenter's Shop</text>
+<line x1="80.6" y1="87" x2="296" y2="92" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="pump-oil"><rect x="300" y="68" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="82" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Pump Oil</text><text x="410" y="94" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text><text x="410" y="105" text-anchor="middle" font-size="8" fill="#3D3630">at a Oil Field</text></g>
+<line x1="524" y1="92" x2="548" y2="92" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="crude-oil"><rect x="552" y="83" width="77.18" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="95.5" font-size="9" fill="#1A1714">1 × Crude Oil</text></g>
+</svg>

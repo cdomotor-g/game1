@@ -1,0 +1,290 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 2207" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="2207" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="blacksmith">Blacksmith</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 4 Stone + 3 Lumber + 1 Clay — 14 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">stands on Grassland, Forest, Hills, Tundra, Desert or Marsh · run by a Smith</text>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="68" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="80.5" font-size="9" fill="#1A1714">2 × Pig Iron</text></g>
+<text x="23" y="94" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="77" x2="296" y2="98.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="coal"><rect x="16" y="101" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="113.5" font-size="9" fill="#1A1714">fuel: 1 Coal</text></g>
+<text x="23" y="127" font-size="7" fill="#5F564C" font-style="italic">or 2 Charcoal / 3 Logs / 3 Peat</text>
+<line x1="90.32" y1="110" x2="296" y2="98.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="forge-ironware"><rect x="300" y="80" width="220" height="37" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="94" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Forge Ironware</text><text x="410" y="106" text-anchor="middle" font-size="8" fill="#3D3630">3h effort · needs Hammer</text></g>
+<line x1="524" y1="98.5" x2="548" y2="98.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="ironware"><rect x="552" y="89.5" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="102" font-size="9" fill="#1A1714">2 × Ironware</text></g>
+<line x1="16" y1="135" x2="764" y2="135" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="156" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="168.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="forge-tool"><rect x="300" y="141" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="155" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Forge Tool</text><text x="410" y="167" text-anchor="middle" font-size="8" fill="#3D3630">0h effort · needs Hammer</text><text x="410" y="178" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<text x="552" y="158.5" font-size="7.5" font-style="italic" fill="#5F564C">Make any tool from tools.json. Pay that</text>
+<text x="552" y="167.5" font-size="7.5" font-style="italic" fill="#5F564C">tool's craft inputs and craft effort. Size</text>
+<text x="552" y="176.5" font-size="7.5" font-style="italic" fill="#5F564C">2 doubles the inputs, size 3 triples them.</text>
+<line x1="16" y1="195" x2="764" y2="195" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="210.5" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="223" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="repair-tool"><rect x="300" y="201" width="220" height="37" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="215" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Repair Tool</text><text x="410" y="227" text-anchor="middle" font-size="8" fill="#3D3630">2h effort · needs Hammer</text></g>
+<text x="552" y="217.5" font-size="7.5" font-style="italic" fill="#5F564C">Restore a tool's durability track to full</text>
+<text x="552" y="226.5" font-size="7.5" font-style="italic" fill="#5F564C">for half its craft inputs, rounded up.</text>
+<line x1="16" y1="244" x2="764" y2="244" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="gold"><rect x="16" y="250" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="262.5" font-size="9" fill="#1A1714">1 × Gold</text></g>
+<text x="23" y="276" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="70.88" y1="259" x2="296" y2="280.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="gems"><rect x="16" y="283" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="295.5" font-size="9" fill="#1A1714">1 × Gems</text></g>
+<text x="23" y="309" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="70.88" y1="292" x2="296" y2="280.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="make-jewellery"><rect x="300" y="256.5" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="270.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make Jewellery</text><text x="410" y="282.5" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text><text x="410" y="293.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<line x1="524" y1="280.5" x2="548" y2="280.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="jewellery"><rect x="552" y="271.5" width="77.18" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="284" font-size="9" fill="#1A1714">1 × Jewellery</text></g>
+<line x1="16" y1="317" x2="764" y2="317" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="323" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="335.5" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="349" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="332" x2="296" y2="353.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="356" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="368.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="382" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="365" x2="296" y2="353.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="axe"><rect x="300" y="335" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="349" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Axe</text><text x="410" y="361" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="353.5" x2="548" y2="353.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="axe"><rect x="552" y="344.5" width="40" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="357" font-size="9" fill="#1A1714">Axe</text></g>
+<line x1="16" y1="390" x2="764" y2="390" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="396" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="408.5" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="422" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="405" x2="296" y2="426.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="429" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="441.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="455" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="438" x2="296" y2="426.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="saw"><rect x="300" y="408" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="422" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Saw</text><text x="410" y="434" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="426.5" x2="548" y2="426.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="saw"><rect x="552" y="417.5" width="40" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="430" font-size="9" fill="#1A1714">Saw</text></g>
+<line x1="16" y1="463" x2="764" y2="463" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="469" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="481.5" font-size="9" fill="#1A1714">2 × Pig Iron</text></g>
+<text x="23" y="495" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="478" x2="296" y2="499.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="502" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="514.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="528" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="511" x2="296" y2="499.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="pick"><rect x="300" y="481" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="495" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Pick</text><text x="410" y="507" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text></g>
+<line x1="524" y1="499.5" x2="548" y2="499.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="pick"><rect x="552" y="490.5" width="40" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="503" font-size="9" fill="#1A1714">Pick</text></g>
+<line x1="16" y1="536" x2="764" y2="536" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="542" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="554.5" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="568" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="551" x2="296" y2="572.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="575" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="587.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="601" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="584" x2="296" y2="572.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="shovel"><rect x="300" y="554" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="568" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Shovel</text><text x="410" y="580" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="572.5" x2="548" y2="572.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="shovel"><rect x="552" y="563.5" width="43.16" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="576" font-size="9" fill="#1A1714">Shovel</text></g>
+<line x1="16" y1="609" x2="764" y2="609" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="615" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="627.5" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="641" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="624" x2="296" y2="645.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="648" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="660.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="674" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="657" x2="296" y2="645.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="hammer"><rect x="300" y="627" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="641" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Hammer</text><text x="410" y="653" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="645.5" x2="548" y2="645.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="hammer"><rect x="552" y="636.5" width="43.16" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="649" font-size="9" fill="#1A1714">Hammer</text></g>
+<line x1="16" y1="682" x2="764" y2="682" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="692.5" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="705" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="718.5" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="701.5" x2="296" y2="706.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="knife"><rect x="300" y="688" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="702" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Knife</text><text x="410" y="714" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="706.5" x2="548" y2="706.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="knife"><rect x="552" y="697.5" width="40" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="710" font-size="9" fill="#1A1714">Knife</text></g>
+<line x1="16" y1="731" x2="764" y2="731" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="741.5" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="754" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="767.5" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="750.5" x2="296" y2="755.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="shears"><rect x="300" y="737" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="751" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Shears</text><text x="410" y="763" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="755.5" x2="548" y2="755.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="shears"><rect x="552" y="746.5" width="43.16" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="759" font-size="9" fill="#1A1714">Shears</text></g>
+<line x1="16" y1="780" x2="764" y2="780" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="786" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="798.5" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="812" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="795" x2="296" y2="816.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="819" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="831.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="845" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="828" x2="296" y2="816.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="scythe"><rect x="300" y="798" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="812" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Scythe</text><text x="410" y="824" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="816.5" x2="548" y2="816.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="scythe"><rect x="552" y="807.5" width="43.16" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="820" font-size="9" fill="#1A1714">Scythe</text></g>
+<line x1="16" y1="853" x2="764" y2="853" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="863.5" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="876" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="889.5" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="872.5" x2="296" y2="877.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="trowel"><rect x="300" y="859" width="220" height="37" rx="5" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1.3"/><text x="410" y="873" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Trowel</text><text x="410" y="885" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="877.5" x2="548" y2="877.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="tools" data-id="trowel"><rect x="552" y="868.5" width="43.16" height="18" rx="4" fill="#dac9b6" stroke="#6f2d1f" stroke-width="1"/><text x="559" y="881" font-size="9" fill="#1A1714">Trowel</text></g>
+<line x1="16" y1="902" x2="764" y2="902" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="ironware"><rect x="16" y="908" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="920.5" font-size="9" fill="#1A1714">2 × Ironware</text></g>
+<text x="23" y="934" font-size="7" fill="#5F564C" font-style="italic">made here</text>
+<line x1="90.32" y1="917" x2="296" y2="938.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="941" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="953.5" font-size="9" fill="#1A1714">1 × Leather</text></g>
+<text x="23" y="967" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="950" x2="296" y2="938.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="chain-mail"><rect x="300" y="920" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="934" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Chain Mail</text><text x="410" y="946" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text></g>
+<line x1="524" y1="938.5" x2="548" y2="938.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="chain-mail"><rect x="552" y="929.5" width="62.6" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="942" font-size="9" fill="#1A1714">Chain Mail</text></g>
+<line x1="16" y1="975" x2="764" y2="975" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="steel"><rect x="16" y="981" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="993.5" font-size="9" fill="#1A1714">3 × Steel</text></g>
+<text x="23" y="1007" font-size="7" fill="#5F564C" font-style="italic">from the Steelworks</text>
+<line x1="75.74" y1="990" x2="296" y2="1011.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="1014" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1026.5" font-size="9" fill="#1A1714">2 × Leather</text></g>
+<text x="23" y="1040" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="1023" x2="296" y2="1011.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="plate-harness"><rect x="300" y="987.5" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1001.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Plate Harness</text><text x="410" y="1013.5" text-anchor="middle" font-size="8" fill="#3D3630">8h effort</text><text x="410" y="1024.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<line x1="524" y1="1011.5" x2="548" y2="1011.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="plate-harness"><rect x="552" y="1002.5" width="77.18" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1015" font-size="9" fill="#1A1714">Plate Harness</text></g>
+<line x1="16" y1="1048" x2="764" y2="1048" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="ironware"><rect x="16" y="1058.5" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1071" font-size="9" fill="#1A1714">1 × Ironware</text></g>
+<text x="23" y="1084.5" font-size="7" fill="#5F564C" font-style="italic">made here</text>
+<line x1="90.32" y1="1067.5" x2="296" y2="1072.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="helm"><rect x="300" y="1054" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1068" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Helm</text><text x="410" y="1080" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="1072.5" x2="548" y2="1072.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="helm"><rect x="552" y="1063.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1076" font-size="9" fill="#1A1714">Helm</text></g>
+<line x1="16" y1="1097" x2="764" y2="1097" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="1103" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1115.5" font-size="9" fill="#1A1714">2 × Pig Iron</text></g>
+<text x="23" y="1129" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="1112" x2="296" y2="1133.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="1136" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1148.5" font-size="9" fill="#1A1714">1 × Leather</text></g>
+<text x="23" y="1162" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="1145" x2="296" y2="1133.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="sword"><rect x="300" y="1115" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1129" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Sword</text><text x="410" y="1141" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text></g>
+<line x1="524" y1="1133.5" x2="548" y2="1133.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="sword"><rect x="552" y="1124.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1137" font-size="9" fill="#1A1714">Sword</text></g>
+<line x1="16" y1="1170" x2="764" y2="1170" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="steel"><rect x="16" y="1176" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1188.5" font-size="9" fill="#1A1714">2 × Steel</text></g>
+<text x="23" y="1202" font-size="7" fill="#5F564C" font-style="italic">from the Steelworks</text>
+<line x1="75.74" y1="1185" x2="296" y2="1206.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="1209" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1221.5" font-size="9" fill="#1A1714">1 × Leather</text></g>
+<text x="23" y="1235" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="1218" x2="296" y2="1206.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="steel-sword"><rect x="300" y="1182.5" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1196.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Steel Sword</text><text x="410" y="1208.5" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="1219.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<line x1="524" y1="1206.5" x2="548" y2="1206.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="steel-sword"><rect x="552" y="1197.5" width="67.46" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1210" font-size="9" fill="#1A1714">Steel Sword</text></g>
+<line x1="16" y1="1243" x2="764" y2="1243" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="1249" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1261.5" font-size="9" fill="#1A1714">2 × Pig Iron</text></g>
+<text x="23" y="1275" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="1258" x2="296" y2="1279.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="1282" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1294.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="1308" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="1291" x2="296" y2="1279.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="war-axe"><rect x="300" y="1261" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1275" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: War Axe</text><text x="410" y="1287" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="1279.5" x2="548" y2="1279.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="war-axe"><rect x="552" y="1270.5" width="48.02" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1283" font-size="9" fill="#1A1714">War Axe</text></g>
+<line x1="16" y1="1316" x2="764" y2="1316" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="1322" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1334.5" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="1348" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="1331" x2="296" y2="1352.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="1355" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1367.5" font-size="9" fill="#1A1714">2 × Lumber</text></g>
+<text x="23" y="1381" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="1364" x2="296" y2="1352.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="pike"><rect x="300" y="1334" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1348" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Pike</text><text x="410" y="1360" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="1352.5" x2="548" y2="1352.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="pike"><rect x="552" y="1343.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1356" font-size="9" fill="#1A1714">Pike</text></g>
+<line x1="16" y1="1389" x2="764" y2="1389" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="steel"><rect x="16" y="1395" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1407.5" font-size="9" fill="#1A1714">2 × Steel</text></g>
+<text x="23" y="1421" font-size="7" fill="#5F564C" font-style="italic">from the Steelworks</text>
+<line x1="75.74" y1="1404" x2="296" y2="1425.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="1428" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1440.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="1454" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="1437" x2="296" y2="1425.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="war-hammer"><rect x="300" y="1407" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1421" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: War Hammer</text><text x="410" y="1433" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text></g>
+<line x1="524" y1="1425.5" x2="548" y2="1425.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="war-hammer"><rect x="552" y="1416.5" width="62.6" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1429" font-size="9" fill="#1A1714">War Hammer</text></g>
+<line x1="16" y1="1462" x2="764" y2="1462" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="steel"><rect x="16" y="1468" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1480.5" font-size="9" fill="#1A1714">1 × Steel</text></g>
+<text x="23" y="1494" font-size="7" fill="#5F564C" font-style="italic">from the Steelworks</text>
+<line x1="75.74" y1="1477" x2="296" y2="1515" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="1501" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1513.5" font-size="9" fill="#1A1714">2 × Lumber</text></g>
+<text x="23" y="1527" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="1510" x2="296" y2="1515" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="rope"><rect x="16" y="1534" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1546.5" font-size="9" fill="#1A1714">1 × Rope</text></g>
+<text x="23" y="1560" font-size="7" fill="#5F564C" font-style="italic">from the Weaver's Shed</text>
+<line x1="70.88" y1="1543" x2="296" y2="1515" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="crossbow"><rect x="300" y="1491" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1505" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Crossbow</text><text x="410" y="1517" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="1528" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<line x1="524" y1="1515" x2="548" y2="1515" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="crossbow"><rect x="552" y="1506" width="52.88" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1518.5" font-size="9" fill="#1A1714">Crossbow</text></g>
+<line x1="16" y1="1568" x2="764" y2="1568" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="1574" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1586.5" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="1600" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="1583" x2="296" y2="1621" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="1607" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1619.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="1633" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="1616" x2="296" y2="1621" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="rope"><rect x="16" y="1640" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1652.5" font-size="9" fill="#1A1714">2 × Rope</text></g>
+<text x="23" y="1666" font-size="7" fill="#5F564C" font-style="italic">from the Weaver's Shed</text>
+<line x1="70.88" y1="1649" x2="296" y2="1621" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="harpoon"><rect x="300" y="1602.5" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1616.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Harpoon</text><text x="410" y="1628.5" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="1621" x2="548" y2="1621" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="harpoon"><rect x="552" y="1612" width="48.02" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1624.5" font-size="9" fill="#1A1714">Harpoon</text></g>
+<line x1="16" y1="1674" x2="764" y2="1674" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="1684.5" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1697" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="1710.5" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="1693.5" x2="296" y2="1698.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="dirk"><rect x="300" y="1680" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1694" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Dirk</text><text x="410" y="1706" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="1698.5" x2="548" y2="1698.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="dirk"><rect x="552" y="1689.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1702" font-size="9" fill="#1A1714">Dirk</text></g>
+<line x1="16" y1="1723" x2="764" y2="1723" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="steel"><rect x="16" y="1729" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1741.5" font-size="9" fill="#1A1714">3 × Steel</text></g>
+<text x="23" y="1755" font-size="7" fill="#5F564C" font-style="italic">from the Steelworks</text>
+<line x1="75.74" y1="1738" x2="296" y2="1759.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="1762" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1774.5" font-size="9" fill="#1A1714">1 × Leather</text></g>
+<text x="23" y="1788" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="1771" x2="296" y2="1759.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="greatsword"><rect x="300" y="1735.5" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1749.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Greatsword</text><text x="410" y="1761.5" text-anchor="middle" font-size="8" fill="#3D3630">7h effort</text><text x="410" y="1772.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<line x1="524" y1="1759.5" x2="548" y2="1759.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="greatsword"><rect x="552" y="1750.5" width="62.6" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1763" font-size="9" fill="#1A1714">Greatsword</text></g>
+<line x1="16" y1="1796" x2="764" y2="1796" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="1802" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1814.5" font-size="9" fill="#1A1714">1 × Pig Iron</text></g>
+<text x="23" y="1828" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="90.32" y1="1811" x2="296" y2="1832.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="1835" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1847.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="1861" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="1844" x2="296" y2="1832.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="boar-spear"><rect x="300" y="1814" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1828" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Boar Spear</text><text x="410" y="1840" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="1832.5" x2="548" y2="1832.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="boar-spear"><rect x="552" y="1823.5" width="62.6" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1836" font-size="9" fill="#1A1714">Boar Spear</text></g>
+<line x1="16" y1="1869" x2="764" y2="1869" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="ironware"><rect x="16" y="1875" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1887.5" font-size="9" fill="#1A1714">1 × Ironware</text></g>
+<text x="23" y="1901" font-size="7" fill="#5F564C" font-style="italic">made here</text>
+<line x1="90.32" y1="1884" x2="296" y2="1905.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="glass"><rect x="16" y="1908" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1920.5" font-size="9" fill="#1A1714">1 × Glass</text></g>
+<text x="23" y="1934" font-size="7" fill="#5F564C" font-style="italic">from the Glassworks</text>
+<line x1="75.74" y1="1917" x2="296" y2="1905.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="lantern"><rect x="300" y="1887" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1901" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Lantern</text><text x="410" y="1913" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="1905.5" x2="548" y2="1905.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="lantern"><rect x="552" y="1896.5" width="48.02" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1909" font-size="9" fill="#1A1714">Lantern</text></g>
+<line x1="16" y1="1942" x2="764" y2="1942" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="copper"><rect x="16" y="1952.5" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1965" font-size="9" fill="#1A1714">1 × Copper</text></g>
+<text x="23" y="1978.5" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="80.6" y1="1961.5" x2="296" y2="1966.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-copper-amulet"><rect x="300" y="1948" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1962" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Copper Amulet</text><text x="410" y="1974" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="1966.5" x2="548" y2="1966.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-copper-amulet"><rect x="552" y="1957.5" width="77.18" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1970" font-size="9" fill="#1A1714">Copper Amulet</text></g>
+<line x1="16" y1="1991" x2="764" y2="1991" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="gold"><rect x="16" y="2007" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2019.5" font-size="9" fill="#1A1714">1 × Gold</text></g>
+<text x="23" y="2033" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="70.88" y1="2016" x2="296" y2="2021" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-gold-locket"><rect x="300" y="1997" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2011" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Gold Locket</text><text x="410" y="2023" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text><text x="410" y="2034" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<line x1="524" y1="2021" x2="548" y2="2021" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-gold-locket"><rect x="552" y="2012" width="67.46" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2024.5" font-size="9" fill="#1A1714">Gold Locket</text></g>
+<line x1="16" y1="2051" x2="764" y2="2051" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="gems"><rect x="16" y="2057" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2069.5" font-size="9" fill="#1A1714">1 × Gems</text></g>
+<text x="23" y="2083" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="70.88" y1="2066" x2="296" y2="2087.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="copper"><rect x="16" y="2090" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2102.5" font-size="9" fill="#1A1714">1 × Copper</text></g>
+<text x="23" y="2116" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="80.6" y1="2099" x2="296" y2="2087.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-gemfire-pendant"><rect x="300" y="2063.5" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2077.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Gemfire Pendant</text><text x="410" y="2089.5" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="2100.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<line x1="524" y1="2087.5" x2="548" y2="2087.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-gemfire-pendant"><rect x="552" y="2078.5" width="86.9" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2091" font-size="9" fill="#1A1714">Gemfire Pendant</text></g>
+<line x1="16" y1="2124" x2="764" y2="2124" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="steel"><rect x="16" y="2130" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2142.5" font-size="9" fill="#1A1714">2 × Steel</text></g>
+<text x="23" y="2156" font-size="7" fill="#5F564C" font-style="italic">from the Steelworks</text>
+<line x1="75.74" y1="2139" x2="296" y2="2160.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="2163" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2175.5" font-size="9" fill="#1A1714">2 × Lumber</text></g>
+<text x="23" y="2189" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="2172" x2="296" y2="2160.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="ice-runners"><rect x="300" y="2131" width="220" height="59" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="2145" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Ice Runners</text><text x="410" y="2157" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="2168" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text><text x="410" y="2179" text-anchor="middle" font-size="8" fill="#3D3630">fits: cart, caravan, sled</text></g>
+<line x1="524" y1="2160.5" x2="548" y2="2160.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="ice-runners"><rect x="552" y="2151.5" width="67.46" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="2164" font-size="9" fill="#1A1714">Ice Runners</text></g>
+</svg>

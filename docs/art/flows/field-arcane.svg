@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 371" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="371" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714">Gathering the arcane</text><text x="16" y="40" font-size="8.5" fill="#3D3630">The herbs, roots and blossoms that grow where nobody farms.</text>
+<g><rect x="16" y="76.5" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="89" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="forage"><rect x="300" y="56" width="220" height="59" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="70" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Forage</text><text x="410" y="82" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text><text x="410" y="93" text-anchor="middle" font-size="8" fill="#3D3630">on Forest, Hills, Marsh, Mountain or</text><text x="410" y="104" text-anchor="middle" font-size="8" fill="#3D3630">Grassland</text></g>
+<line x1="524" y1="85.5" x2="548" y2="64" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<text x="552" y="67" font-size="8.5" fill="#1A1714">roll a d6 — Berries, Mushrooms,</text>
+<text x="552" y="77" font-size="8.5" fill="#1A1714">Vegetables or Arcane Herb</text>
+<text x="552" y="92" font-size="7.5" font-style="italic" fill="#5F564C">Roll on the forage table for what you</text>
+<text x="552" y="101" font-size="7.5" font-style="italic" fill="#5F564C">find. No tool, no building - the opening</text>
+<text x="552" y="110" font-size="7.5" font-style="italic" fill="#5F564C">move for a player who has nothing.</text>
+<line x1="16" y1="121" x2="764" y2="121" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="142" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="154.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="harvest-herbs"><rect x="300" y="127" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="141" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Harvest Arcane Herbs</text><text x="410" y="153" text-anchor="middle" font-size="8" fill="#3D3630">2h effort · needs Knife</text><text x="410" y="164" text-anchor="middle" font-size="8" fill="#3D3630">on Forest, Marsh or Mountain</text></g>
+<line x1="524" y1="151" x2="548" y2="151" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="552" y="142" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="154.5" font-size="9" fill="#1A1714">1 × Arcane Herb</text></g>
+<line x1="16" y1="181" x2="764" y2="181" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="202" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="214.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="pick-moon-blossom"><rect x="300" y="187" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="201" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Pick Moon Blossom</text><text x="410" y="213" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text><text x="410" y="224" text-anchor="middle" font-size="8" fill="#3D3630">on Grassland or Forest</text></g>
+<line x1="524" y1="211" x2="548" y2="211" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="moon-blossom"><rect x="552" y="202" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="214.5" font-size="9" fill="#1A1714">1 × Moon Blossom</text></g>
+<line x1="16" y1="241" x2="764" y2="241" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="262" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="274.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="dig-ember-root"><rect x="300" y="247" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="261" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Dig Ember Root</text><text x="410" y="273" text-anchor="middle" font-size="8" fill="#3D3630">2h effort · needs Shovel</text><text x="410" y="284" text-anchor="middle" font-size="8" fill="#3D3630">on Desert or Hills</text></g>
+<line x1="524" y1="271" x2="548" y2="271" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="ember-root"><rect x="552" y="262" width="82.04" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="274.5" font-size="9" fill="#1A1714">1 × Ember Root</text></g>
+<line x1="16" y1="301" x2="764" y2="301" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="322" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="334.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="scrape-frost-lichen"><rect x="300" y="307" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="321" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Scrape Frost Lichen</text><text x="410" y="333" text-anchor="middle" font-size="8" fill="#3D3630">2h effort · needs Knife</text><text x="410" y="344" text-anchor="middle" font-size="8" fill="#3D3630">on Tundra or Mountain</text></g>
+<line x1="524" y1="331" x2="548" y2="331" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="frost-lichen"><rect x="552" y="322" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="334.5" font-size="9" fill="#1A1714">1 × Frost Lichen</text></g>
+</svg>

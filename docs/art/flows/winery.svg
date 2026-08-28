@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 178" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="178" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="winery">Winery</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 4 Stone + 3 Lumber + 2 Brick — 18 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">needs a Vineyard first</text>
+<g class="f-token" data-kind="commodities" data-id="grapes"><rect x="16" y="68" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="80.5" font-size="9" fill="#1A1714">4 × Grapes</text></g>
+<text x="23" y="94" font-size="7" fill="#5F564C" font-style="italic">from the Vineyard</text>
+<line x1="80.6" y1="77" x2="296" y2="115" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="water"><rect x="16" y="101" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="113.5" font-size="9" fill="#1A1714">1 × Water</text></g>
+<text x="23" y="127" font-size="7" fill="#5F564C" font-style="italic">from the Well</text>
+<line x1="75.74" y1="110" x2="296" y2="115" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="barrel"><rect x="16" y="134" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="146.5" font-size="9" fill="#1A1714">1 × Barrel</text></g>
+<text x="23" y="160" font-size="7" fill="#5F564C" font-style="italic">from the Carpenter's Shop</text>
+<line x1="80.6" y1="143" x2="296" y2="115" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="make-wine"><rect x="300" y="91" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="105" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make Wine</text><text x="410" y="117" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text><text x="410" y="128" text-anchor="middle" font-size="8" fill="#3D3630">2 rounds to mature</text></g>
+<line x1="524" y1="115" x2="548" y2="115" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="wine"><rect x="552" y="106" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="118.5" font-size="9" fill="#1A1714">2 × Wine</text></g>
+</svg>

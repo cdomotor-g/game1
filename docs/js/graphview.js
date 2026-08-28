@@ -27,6 +27,8 @@
     'quests': 'quest', 'modifications': 'modification', 'arcana.elements': 'element',
   };
 
+  global.Views.drawerKindOf = DRAWER_KIND;   // flowsview.js opens drawers by the same wiring
+
   const state = { off: new Set() };
   const cache = new Map();   // filter signature -> { model, laid }
 

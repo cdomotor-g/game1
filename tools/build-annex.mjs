@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { build as buildFlows, readGameData } from './lib/flows.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -100,6 +101,26 @@ say('for its entry.');
 say();
 say('![The dependency graph: every thing in the game, and every reference between them](../art/graph/dependencies.svg)');
 say();
+
+/* ---------------------------------------------------------------- the flows */
+/* One small diagram per place of work, from tools/build-flows.mjs. The list
+   of diagrams comes from the same model that draws them - so the annex can
+   never print a flow the tool did not draw, or miss one it did. */
+say('## The flows of work');
+say();
+say('The web above, taken apart: one diagram per place of work, with everything');
+say('unrelated removed. Read each row left to right — what goes **in** on the');
+say('left, with a note under each thing saying where it comes from; the **job**');
+say('in the middle with its hours, its tool and who works it; what comes **out**');
+say('on the right. To get what you want, find the thing on the right of some row');
+say('and walk left, diagram to diagram, until every input is something you can');
+say('gather. The explorer’s **Flows** tab is these same diagrams, live, with');
+say('every box clickable.');
+say();
+for (const d of buildFlows(readGameData()).diagrams) {
+  say(`![${d.title} — what goes in and what comes out](../art/flows/${d.id}.svg)`);
+  say();
+}
 
 /* ------------------------------------------------------------------ terrain */
 say('## Terrain');

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 120" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="120" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="road">Road</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 1 Stone — 3 build points</text>
+<g><rect x="16" y="71" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="83.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="lay-roadbed"><rect x="300" y="56" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="70" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Lay Roadbed</text><text x="410" y="82" text-anchor="middle" font-size="8" fill="#3D3630">1h effort · needs Shovel</text><text x="410" y="93" text-anchor="middle" font-size="8" fill="#3D3630">at any construction site</text></g>
+<line x1="524" y1="80" x2="548" y2="63.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<text x="552" y="66.5" font-size="8.5" fill="#1A1714">2 build points per hour</text>
+<text x="552" y="81.5" font-size="7.5" font-style="italic" fill="#5F564C">Build-points go onto the road under</text>
+<text x="552" y="90.5" font-size="7.5" font-style="italic" fill="#5F564C">construction on that tile. Terrain</text>
+<text x="552" y="99.5" font-size="7.5" font-style="italic" fill="#5F564C">multiplies the cost - see terrain.json.</text>
+</svg>

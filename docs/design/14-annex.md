@@ -17,6 +17,105 @@ for its entry.
 
 ![The dependency graph: every thing in the game, and every reference between them](../art/graph/dependencies.svg)
 
+## The flows of work
+
+The web above, taken apart: one diagram per place of work, with everything
+unrelated removed. Read each row left to right — what goes **in** on the
+left, with a note under each thing saying where it comes from; the **job**
+in the middle with its hours, its tool and who works it; what comes **out**
+on the right. To get what you want, find the thing on the right of some row
+and walk left, diagram to diagram, until every input is something you can
+gather. The explorer’s **Flows** tab is these same diagrams, live, with
+every box clickable.
+
+![Lumber Camp — what goes in and what comes out](../art/flows/lumber-camp.svg)
+
+![Quarry — what goes in and what comes out](../art/flows/quarry.svg)
+
+![Clay Pit — what goes in and what comes out](../art/flows/clay-pit.svg)
+
+![Sand Pit — what goes in and what comes out](../art/flows/sand-pit.svg)
+
+![Mine — what goes in and what comes out](../art/flows/mine.svg)
+
+![Oil Derrick — what goes in and what comes out](../art/flows/oil-derrick.svg)
+
+![Well — what goes in and what comes out](../art/flows/well.svg)
+
+![Farm — what goes in and what comes out](../art/flows/farm.svg)
+
+![Pasture — what goes in and what comes out](../art/flows/pasture.svg)
+
+![Orchard — what goes in and what comes out](../art/flows/orchard.svg)
+
+![Vineyard — what goes in and what comes out](../art/flows/vineyard.svg)
+
+![Apiary — what goes in and what comes out](../art/flows/apiary.svg)
+
+![Dock — what goes in and what comes out](../art/flows/dock.svg)
+
+![Sawmill — what goes in and what comes out](../art/flows/sawmill.svg)
+
+![Charcoal Kiln — what goes in and what comes out](../art/flows/charcoal-kiln.svg)
+
+![Smelter — what goes in and what comes out](../art/flows/smelter.svg)
+
+![Steelworks — what goes in and what comes out](../art/flows/steelworks.svg)
+
+![Brickworks — what goes in and what comes out](../art/flows/brickworks.svg)
+
+![Glassworks — what goes in and what comes out](../art/flows/glassworks.svg)
+
+![Blacksmith — what goes in and what comes out](../art/flows/blacksmith.svg)
+
+![Carpenter's Shop — what goes in and what comes out](../art/flows/carpenter.svg)
+
+![Weaver's Shed — what goes in and what comes out](../art/flows/weaver.svg)
+
+![Tannery — what goes in and what comes out](../art/flows/tannery.svg)
+
+![Tailor — what goes in and what comes out](../art/flows/tailor.svg)
+
+![Mill — what goes in and what comes out](../art/flows/mill.svg)
+
+![Bakery — what goes in and what comes out](../art/flows/bakery.svg)
+
+![Butcher — what goes in and what comes out](../art/flows/butcher.svg)
+
+![Dairy — what goes in and what comes out](../art/flows/dairy.svg)
+
+![Brewery — what goes in and what comes out](../art/flows/brewery.svg)
+
+![Winery — what goes in and what comes out](../art/flows/winery.svg)
+
+![Market — what goes in and what comes out](../art/flows/market.svg)
+
+![Trading House — what goes in and what comes out](../art/flows/trading-house.svg)
+
+![Town Hall — what goes in and what comes out](../art/flows/town-hall.svg)
+
+![Guildhall — what goes in and what comes out](../art/flows/guildhall.svg)
+
+![Inn — what goes in and what comes out](../art/flows/inn.svg)
+
+![Infirmary — what goes in and what comes out](../art/flows/infirmary.svg)
+
+![Alchemist — what goes in and what comes out](../art/flows/alchemist.svg)
+
+![Road — what goes in and what comes out](../art/flows/road.svg)
+
+![Railroad — what goes in and what comes out](../art/flows/rail.svg)
+
+![Harbour — what goes in and what comes out](../art/flows/harbour.svg)
+
+![In the open country — what goes in and what comes out](../art/flows/field-gathering.svg)
+
+![Gathering the arcane — what goes in and what comes out](../art/flows/field-arcane.svg)
+
+![Afield with a figure — what goes in and what comes out](../art/flows/field-prospecting.svg)
+
+![Works and construction — what goes in and what comes out](../art/flows/field-works.svg)
+
 ## Terrain
 
 The letter code is printed in the bottom corner of every hex on every map.

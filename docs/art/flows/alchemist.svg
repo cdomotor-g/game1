@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 1756" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="1756" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="alchemist">Alchemist</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 3 Brick + 2 Glass + 2 Parchment — 18 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">run by a Alchemist</text>
+<g class="f-token" data-kind="commodities" data-id="water"><rect x="16" y="78" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="90.5" font-size="9" fill="#1A1714">1 × Water</text></g>
+<text x="23" y="104" font-size="7" fill="#5F564C" font-style="italic">from the Well</text>
+<line x1="75.74" y1="87" x2="296" y2="92" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="brew-potion"><rect x="300" y="68" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="82" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Brew Potion</text><text x="410" y="94" text-anchor="middle" font-size="8" fill="#3D3630">3h effort · needs Alembic</text><text x="410" y="105" text-anchor="middle" font-size="8" fill="#3D3630">by a Alchemist</text></g>
+<text x="552" y="85.5" font-size="7.5" font-style="italic" fill="#5F564C">Make any potion from items.json, paying</text>
+<text x="552" y="94.5" font-size="7.5" font-style="italic" fill="#5F564C">its listed ingredients on top of the</text>
+<text x="552" y="103.5" font-size="7.5" font-style="italic" fill="#5F564C">water.</text>
+<line x1="16" y1="122" x2="764" y2="122" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="128" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="140.5" font-size="9" fill="#1A1714">2 × Arcane Herb</text></g>
+<text x="23" y="154" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="137" x2="296" y2="158.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="honey"><rect x="16" y="161" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="173.5" font-size="9" fill="#1A1714">1 × Honey</text></g>
+<text x="23" y="187" font-size="7" fill="#5F564C" font-style="italic">from the Apiary</text>
+<line x1="75.74" y1="170" x2="296" y2="158.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-vigour"><rect x="300" y="140" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="154" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Draught of Vigour</text><text x="410" y="166" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="158.5" x2="548" y2="158.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-vigour"><rect x="552" y="149.5" width="96.62" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="162" font-size="9" fill="#1A1714">Draught of Vigour</text></g>
+<line x1="16" y1="195" x2="764" y2="195" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="201" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="213.5" font-size="9" fill="#1A1714">1 × Arcane Herb</text></g>
+<text x="23" y="227" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="210" x2="296" y2="231.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="mushrooms"><rect x="16" y="234" width="77.18" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="246.5" font-size="9" fill="#1A1714">2 × Mushrooms</text></g>
+<text x="23" y="260" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="95.18" y1="243" x2="296" y2="231.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-toil"><rect x="300" y="213" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="227" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Tireless Toil</text><text x="410" y="239" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="231.5" x2="548" y2="231.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-toil"><rect x="552" y="222.5" width="77.18" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="235" font-size="9" fill="#1A1714">Tireless Toil</text></g>
+<line x1="16" y1="268" x2="764" y2="268" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="ale"><rect x="16" y="274" width="48.02" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="286.5" font-size="9" fill="#1A1714">1 × Ale</text></g>
+<text x="23" y="300" font-size="7" fill="#5F564C" font-style="italic">from the Brewery</text>
+<line x1="66.02" y1="283" x2="296" y2="304.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="307" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="319.5" font-size="9" fill="#1A1714">2 × Arcane Herb</text></g>
+<text x="23" y="333" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="316" x2="296" y2="304.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-crew"><rect x="300" y="286" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="300" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Brewmaster's Round</text><text x="410" y="312" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text></g>
+<line x1="524" y1="304.5" x2="548" y2="304.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-crew"><rect x="552" y="295.5" width="101.48" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="308" font-size="9" fill="#1A1714">Brewmaster's Round</text></g>
+<line x1="16" y1="341" x2="764" y2="341" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="347" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="359.5" font-size="9" fill="#1A1714">2 × Arcane Herb</text></g>
+<text x="23" y="373" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="356" x2="296" y2="377.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="berries"><rect x="16" y="380" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="392.5" font-size="9" fill="#1A1714">2 × Berries</text></g>
+<text x="23" y="406" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="85.46" y1="389" x2="296" y2="377.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-healing"><rect x="300" y="359" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="373" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Healing Draught</text><text x="410" y="385" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="377.5" x2="548" y2="377.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-healing"><rect x="552" y="368.5" width="86.9" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="381" font-size="9" fill="#1A1714">Healing Draught</text></g>
+<line x1="16" y1="414" x2="764" y2="414" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="420" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="432.5" font-size="9" fill="#1A1714">1 × Arcane Herb</text></g>
+<text x="23" y="446" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="429" x2="296" y2="450.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="mana-crystal"><rect x="16" y="453" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="465.5" font-size="9" fill="#1A1714">1 × Mana Crystal</text></g>
+<text x="23" y="479" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="109.76" y1="462" x2="296" y2="450.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-swiftness"><rect x="300" y="432" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="446" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Swiftfoot</text><text x="410" y="458" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="450.5" x2="548" y2="450.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-swiftness"><rect x="552" y="441.5" width="57.74" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="454" font-size="9" fill="#1A1714">Swiftfoot</text></g>
+<line x1="16" y1="487" x2="764" y2="487" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="mana-crystal"><rect x="16" y="493" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="505.5" font-size="9" fill="#1A1714">1 × Mana Crystal</text></g>
+<text x="23" y="519" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="109.76" y1="502" x2="296" y2="523.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="mushrooms"><rect x="16" y="526" width="77.18" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="538.5" font-size="9" fill="#1A1714">2 × Mushrooms</text></g>
+<text x="23" y="552" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="95.18" y1="535" x2="296" y2="523.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-fortitude"><rect x="300" y="505" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="519" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Stonehide</text><text x="410" y="531" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text></g>
+<line x1="524" y1="523.5" x2="548" y2="523.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-fortitude"><rect x="552" y="514.5" width="57.74" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="527" font-size="9" fill="#1A1714">Stonehide</text></g>
+<line x1="16" y1="560" x2="764" y2="560" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="mana-crystal"><rect x="16" y="566" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="578.5" font-size="9" fill="#1A1714">1 × Mana Crystal</text></g>
+<text x="23" y="592" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="109.76" y1="575" x2="296" y2="596.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="599" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="611.5" font-size="9" fill="#1A1714">2 × Arcane Herb</text></g>
+<text x="23" y="625" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="608" x2="296" y2="596.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-clarity"><rect x="300" y="578" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="592" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Prospector's Clarity</text><text x="410" y="604" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text></g>
+<line x1="524" y1="596.5" x2="548" y2="596.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-clarity"><rect x="552" y="587.5" width="111.2" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="600" font-size="9" fill="#1A1714">Prospector's Clarity</text></g>
+<line x1="16" y1="633" x2="764" y2="633" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="gold"><rect x="16" y="639" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="651.5" font-size="9" fill="#1A1714">1 × Gold</text></g>
+<text x="23" y="665" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="70.88" y1="648" x2="296" y2="669.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="672" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="684.5" font-size="9" fill="#1A1714">2 × Arcane Herb</text></g>
+<text x="23" y="698" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="681" x2="296" y2="669.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-fortune"><rect x="300" y="651" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="665" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Merchant's Fortune</text><text x="410" y="677" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text></g>
+<line x1="524" y1="669.5" x2="548" y2="669.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-fortune"><rect x="552" y="660.5" width="101.48" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="673" font-size="9" fill="#1A1714">Merchant's Fortune</text></g>
+<line x1="16" y1="706" x2="764" y2="706" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="moon-blossom"><rect x="16" y="712" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="724.5" font-size="9" fill="#1A1714">2 × Moon Blossom</text></g>
+<text x="23" y="738" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="109.76" y1="721" x2="296" y2="742.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="745" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="757.5" font-size="9" fill="#1A1714">1 × Arcane Herb</text></g>
+<text x="23" y="771" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="754" x2="296" y2="742.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-nightsight"><rect x="300" y="724" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="738" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Owl's Eye</text><text x="410" y="750" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="742.5" x2="548" y2="742.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-nightsight"><rect x="552" y="733.5" width="57.74" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="746" font-size="9" fill="#1A1714">Owl's Eye</text></g>
+<line x1="16" y1="779" x2="764" y2="779" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="frost-lichen"><rect x="16" y="785" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="797.5" font-size="9" fill="#1A1714">2 × Frost Lichen</text></g>
+<text x="23" y="811" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="109.76" y1="794" x2="296" y2="815.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="honey"><rect x="16" y="818" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="830.5" font-size="9" fill="#1A1714">1 × Honey</text></g>
+<text x="23" y="844" font-size="7" fill="#5F564C" font-style="italic">from the Apiary</text>
+<line x1="75.74" y1="827" x2="296" y2="815.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-physic"><rect x="300" y="797" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="811" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Physic Tonic</text><text x="410" y="823" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="815.5" x2="548" y2="815.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-physic"><rect x="552" y="806.5" width="72.32" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="819" font-size="9" fill="#1A1714">Physic Tonic</text></g>
+<line x1="16" y1="852" x2="764" y2="852" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="ember-root"><rect x="16" y="858" width="82.04" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="870.5" font-size="9" fill="#1A1714">2 × Ember Root</text></g>
+<text x="23" y="884" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="100.04" y1="867" x2="296" y2="888.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="honey"><rect x="16" y="891" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="903.5" font-size="9" fill="#1A1714">1 × Honey</text></g>
+<text x="23" y="917" font-size="7" fill="#5F564C" font-style="italic">from the Apiary</text>
+<line x1="75.74" y1="900" x2="296" y2="888.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-emberguard"><rect x="300" y="870" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="884" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Emberguard Salve</text><text x="410" y="896" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="888.5" x2="548" y2="888.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-emberguard"><rect x="552" y="879.5" width="91.76" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="892" font-size="9" fill="#1A1714">Emberguard Salve</text></g>
+<line x1="16" y1="925" x2="764" y2="925" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="mana-crystal"><rect x="16" y="931" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="943.5" font-size="9" fill="#1A1714">1 × Mana Crystal</text></g>
+<text x="23" y="957" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="109.76" y1="940" x2="296" y2="961.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="964" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="976.5" font-size="9" fill="#1A1714">3 × Arcane Herb</text></g>
+<text x="23" y="990" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="973" x2="296" y2="961.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-ley-tincture"><rect x="300" y="937.5" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="951.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Ley Tincture</text><text x="410" y="963.5" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="974.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Alchemist</text></g>
+<line x1="524" y1="961.5" x2="548" y2="961.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-ley-tincture"><rect x="552" y="952.5" width="72.32" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="965" font-size="9" fill="#1A1714">Ley Tincture</text></g>
+<line x1="16" y1="998" x2="764" y2="998" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="mead"><rect x="16" y="1004" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1016.5" font-size="9" fill="#1A1714">2 × Mead</text></g>
+<text x="23" y="1030" font-size="7" fill="#5F564C" font-style="italic">from the Brewery</text>
+<line x1="70.88" y1="1013" x2="296" y2="1034.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="1037" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1049.5" font-size="9" fill="#1A1714">1 × Arcane Herb</text></g>
+<text x="23" y="1063" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="1046" x2="296" y2="1034.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-forbearance"><rect x="300" y="1016" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1030" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Innkeeper's Forbearance</text><text x="410" y="1042" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="1034.5" x2="548" y2="1034.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-forbearance"><rect x="552" y="1025.5" width="125.78" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1038" font-size="9" fill="#1A1714">Innkeeper's Forbearance</text></g>
+<line x1="16" y1="1071" x2="764" y2="1071" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="honey"><rect x="16" y="1077" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1089.5" font-size="9" fill="#1A1714">1 × Honey</text></g>
+<text x="23" y="1103" font-size="7" fill="#5F564C" font-style="italic">from the Apiary</text>
+<line x1="75.74" y1="1086" x2="296" y2="1124" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="salted-meat"><rect x="16" y="1110" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1122.5" font-size="9" fill="#1A1714">1 × Salted Meat</text></g>
+<text x="23" y="1136" font-size="7" fill="#5F564C" font-style="italic">from the Butcher</text>
+<line x1="104.9" y1="1119" x2="296" y2="1124" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="1143" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1155.5" font-size="9" fill="#1A1714">1 × Arcane Herb</text></g>
+<text x="23" y="1169" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="1152" x2="296" y2="1124" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-long-ration"><rect x="300" y="1105.5" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1119.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Long Ration</text><text x="410" y="1131.5" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="1124" x2="548" y2="1124" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-long-ration"><rect x="552" y="1115" width="67.46" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1127.5" font-size="9" fill="#1A1714">Long Ration</text></g>
+<line x1="16" y1="1177" x2="764" y2="1177" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="ember-root"><rect x="16" y="1183" width="82.04" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1195.5" font-size="9" fill="#1A1714">2 × Ember Root</text></g>
+<text x="23" y="1209" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="100.04" y1="1192" x2="296" y2="1230" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="frost-lichen"><rect x="16" y="1216" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1228.5" font-size="9" fill="#1A1714">2 × Frost Lichen</text></g>
+<text x="23" y="1242" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="109.76" y1="1225" x2="296" y2="1230" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="mana-crystal"><rect x="16" y="1249" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1261.5" font-size="9" fill="#1A1714">1 × Mana Crystal</text></g>
+<text x="23" y="1275" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="109.76" y1="1258" x2="296" y2="1230" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-dragonsbane"><rect x="300" y="1206" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1220" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Dragonsbane Draught</text><text x="410" y="1232" text-anchor="middle" font-size="8" fill="#3D3630">6h effort</text><text x="410" y="1243" text-anchor="middle" font-size="8" fill="#3D3630">by a Alchemist</text></g>
+<line x1="524" y1="1230" x2="548" y2="1230" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-dragonsbane"><rect x="552" y="1221" width="106.34" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1233.5" font-size="9" fill="#1A1714">Dragonsbane Draught</text></g>
+<line x1="16" y1="1283" x2="764" y2="1283" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="moon-blossom"><rect x="16" y="1289" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1301.5" font-size="9" fill="#1A1714">1 × Moon Blossom</text></g>
+<text x="23" y="1315" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="109.76" y1="1298" x2="296" y2="1336" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="ale"><rect x="16" y="1322" width="48.02" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1334.5" font-size="9" fill="#1A1714">1 × Ale</text></g>
+<text x="23" y="1348" font-size="7" fill="#5F564C" font-style="italic">from the Brewery</text>
+<line x1="66.02" y1="1331" x2="296" y2="1336" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="arcane-herb"><rect x="16" y="1355" width="86.9" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1367.5" font-size="9" fill="#1A1714">1 × Arcane Herb</text></g>
+<text x="23" y="1381" font-size="7" fill="#5F564C" font-style="italic">from gathering the arcane</text>
+<line x1="104.9" y1="1364" x2="296" y2="1336" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-aeronaut"><rect x="300" y="1317.5" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1331.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Aeronaut's Nerve</text><text x="410" y="1343.5" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="1336" x2="548" y2="1336" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="potion-aeronaut"><rect x="552" y="1327" width="91.76" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1339.5" font-size="9" fill="#1A1714">Aeronaut's Nerve</text></g>
+<line x1="16" y1="1389" x2="764" y2="1389" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="mana-crystal"><rect x="16" y="1395" width="91.76" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1407.5" font-size="9" fill="#1A1714">1 × Mana Crystal</text></g>
+<text x="23" y="1421" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="109.76" y1="1404" x2="296" y2="1442" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="glass"><rect x="16" y="1428" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1440.5" font-size="9" fill="#1A1714">1 × Glass</text></g>
+<text x="23" y="1454" font-size="7" fill="#5F564C" font-style="italic">from the Glassworks</text>
+<line x1="75.74" y1="1437" x2="296" y2="1442" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="gold"><rect x="16" y="1461" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="1473.5" font-size="9" fill="#1A1714">1 × Gold</text></g>
+<text x="23" y="1487" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="70.88" y1="1470" x2="296" y2="1442" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-crystal-phylactery"><rect x="300" y="1418" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="1432" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Crystal Phylactery</text><text x="410" y="1444" text-anchor="middle" font-size="8" fill="#3D3630">6h effort</text><text x="410" y="1455" text-anchor="middle" font-size="8" fill="#3D3630">by a Alchemist</text></g>
+<line x1="524" y1="1442" x2="548" y2="1442" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-crystal-phylactery"><rect x="552" y="1433" width="101.48" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="1445.5" font-size="9" fill="#1A1714">Crystal Phylactery</text></g>
+<line x1="16" y1="1495" x2="764" y2="1495" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="1516" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="1528.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="modifications" data-id="keelbound"><rect x="300" y="1501" width="220" height="48" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="1515" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Keelbound</text><text x="410" y="1527" text-anchor="middle" font-size="8" fill="#3D3630">0h effort</text><text x="410" y="1538" text-anchor="middle" font-size="8" fill="#3D3630">fits: ship, barge</text></g>
+<line x1="524" y1="1525" x2="548" y2="1525" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="keelbound"><rect x="552" y="1516" width="57.74" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="1528.5" font-size="9" fill="#1A1714">Keelbound</text></g>
+<line x1="16" y1="1555" x2="764" y2="1555" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="1576" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="1588.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="modifications" data-id="fleetfoot-binding"><rect x="300" y="1561" width="220" height="48" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="1575" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Fleetfoot Binding</text><text x="410" y="1587" text-anchor="middle" font-size="8" fill="#3D3630">0h effort</text><text x="410" y="1598" text-anchor="middle" font-size="8" fill="#3D3630">fits: any</text></g>
+<line x1="524" y1="1585" x2="548" y2="1585" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="fleetfoot-binding"><rect x="552" y="1576" width="96.62" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="1588.5" font-size="9" fill="#1A1714">Fleetfoot Binding</text></g>
+<line x1="16" y1="1615" x2="764" y2="1615" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="1636" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="1648.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="modifications" data-id="warded-hold"><rect x="300" y="1621" width="220" height="48" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="1635" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Warded Hold</text><text x="410" y="1647" text-anchor="middle" font-size="8" fill="#3D3630">0h effort</text><text x="410" y="1658" text-anchor="middle" font-size="8" fill="#3D3630">fits: any</text></g>
+<line x1="524" y1="1645" x2="548" y2="1645" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="warded-hold"><rect x="552" y="1636" width="67.46" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="1648.5" font-size="9" fill="#1A1714">Warded Hold</text></g>
+<line x1="16" y1="1675" x2="764" y2="1675" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="1701.5" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="1714" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="modifications" data-id="salamander-grate"><rect x="300" y="1681" width="220" height="59" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="1695" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Salamander Grate</text><text x="410" y="1707" text-anchor="middle" font-size="8" fill="#3D3630">0h effort</text><text x="410" y="1718" text-anchor="middle" font-size="8" fill="#3D3630">by a Alchemist</text><text x="410" y="1729" text-anchor="middle" font-size="8" fill="#3D3630">fits: train, ship, airship</text></g>
+<line x1="524" y1="1710.5" x2="548" y2="1710.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="salamander-grate"><rect x="552" y="1701.5" width="91.76" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="1714" font-size="9" fill="#1A1714">Salamander Grate</text></g>
+</svg>

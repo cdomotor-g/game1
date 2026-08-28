@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 338" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="338" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="pasture">Pasture</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 3 Logs + 1 Rope — 7 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">stands on Grassland, Hills or Tundra</text>
+<g class="f-token" data-kind="commodities" data-id="grain"><rect x="16" y="68" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="80.5" font-size="9" fill="#1A1714">1 × Grain</text></g>
+<text x="23" y="94" font-size="7" fill="#5F564C" font-style="italic">from the Farm</text>
+<line x1="75.74" y1="77" x2="296" y2="98.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="sheep"><rect x="16" y="101" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="113.5" font-size="9" fill="#1A1714">1 × Sheep</text></g>
+<text x="23" y="127" font-size="7" fill="#5F564C" font-style="italic">made here</text>
+<line x1="75.74" y1="110" x2="296" y2="98.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="graze-livestock"><rect x="300" y="74.5" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="88.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Graze Livestock</text><text x="410" y="100.5" text-anchor="middle" font-size="8" fill="#3D3630">1h effort</text><text x="410" y="111.5" text-anchor="middle" font-size="8" fill="#3D3630">2 rounds to mature</text></g>
+<line x1="524" y1="98.5" x2="548" y2="77.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="sheep"><rect x="552" y="68.5" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="81" font-size="9" fill="#1A1714">2 × Sheep</text></g>
+<text x="552" y="98.5" font-size="7.5" font-style="italic" fill="#5F564C">Breeding. Put one head in, take two out</text>
+<text x="552" y="107.5" font-size="7.5" font-style="italic" fill="#5F564C">after 2 rounds, up to the pasture's</text>
+<text x="552" y="116.5" font-size="7.5" font-style="italic" fill="#5F564C">livestock slots. Buy your first animal at</text>
+<text x="552" y="125.5" font-size="7.5" font-style="italic" fill="#5F564C">a market.</text>
+<text x="24" y="140" font-size="8" fill="#3D3630" font-style="italic">or 1 Grain + 1 Cattle → 2 Cattle</text>
+<text x="24" y="151" font-size="8" fill="#3D3630" font-style="italic">or 1 Grain + 1 Pig → 2 Pig</text>
+<text x="24" y="162" font-size="8" fill="#3D3630" font-style="italic">or 2 Grain + 1 Horse → 2 Horse</text>
+<text x="24" y="173" font-size="8" fill="#3D3630" font-style="italic">or 1 Grain + 1 Chickens → 3 Chickens</text>
+<line x1="16" y1="181" x2="764" y2="181" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="196.5" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="209" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="collect-eggs"><rect x="300" y="187" width="220" height="37" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="201" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Collect Eggs</text><text x="410" y="213" text-anchor="middle" font-size="8" fill="#3D3630">1h effort</text></g>
+<line x1="524" y1="205.5" x2="548" y2="205.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="eggs"><rect x="552" y="196.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="209" font-size="9" fill="#1A1714">2 × Eggs</text></g>
+<line x1="16" y1="230" x2="764" y2="230" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="245.5" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="258" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="shear-sheep"><rect x="300" y="236" width="220" height="37" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="250" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Shear Sheep</text><text x="410" y="262" text-anchor="middle" font-size="8" fill="#3D3630">1h effort · needs Shears</text></g>
+<line x1="524" y1="254.5" x2="548" y2="254.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="wool"><rect x="552" y="245.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="258" font-size="9" fill="#1A1714">2 × Wool</text></g>
+<line x1="16" y1="279" x2="764" y2="279" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="barrel"><rect x="16" y="289.5" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="302" font-size="9" fill="#1A1714">1 × Barrel</text></g>
+<text x="23" y="315.5" font-size="7" fill="#5F564C" font-style="italic">from the Carpenter's Shop</text>
+<line x1="80.6" y1="298.5" x2="296" y2="303.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="recipes" data-id="milk-cattle"><rect x="300" y="285" width="220" height="37" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="299" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Milk Cattle</text><text x="410" y="311" text-anchor="middle" font-size="8" fill="#3D3630">1h effort</text></g>
+<line x1="524" y1="303.5" x2="548" y2="303.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="milk"><rect x="552" y="294.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="307" font-size="9" fill="#1A1714">2 × Milk</text></g>
+</svg>

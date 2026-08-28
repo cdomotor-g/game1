@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 182" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="182" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="dock">Dock</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 4 Logs + 1 Rope — 8 build points</text>
+<g><rect x="16" y="65.5" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="78" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="net-fish"><rect x="300" y="56" width="220" height="37" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="70" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Net Fish</text><text x="410" y="82" text-anchor="middle" font-size="8" fill="#3D3630">2h effort · needs Fishing Net</text></g>
+<line x1="524" y1="74.5" x2="548" y2="74.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="fish"><rect x="552" y="65.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="78" font-size="9" fill="#1A1714">2 × Fish</text></g>
+<line x1="16" y1="99" x2="764" y2="99" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="105" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="117.5" font-size="9" fill="#1A1714">6 × Lumber</text></g>
+<text x="23" y="131" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="114" x2="296" y2="135.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="rope"><rect x="16" y="138" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="150.5" font-size="9" fill="#1A1714">2 × Rope</text></g>
+<text x="23" y="164" font-size="7" fill="#5F564C" font-style="italic">from the Weaver's Shed</text>
+<line x1="70.88" y1="147" x2="296" y2="135.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="transport" data-id="barge"><rect x="300" y="117" width="220" height="37" rx="5" fill="#d1ccbd" stroke="#2f414c" stroke-width="1.3"/><text x="410" y="131" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Build: Barge</text><text x="410" y="143" text-anchor="middle" font-size="8" fill="#3D3630">6h effort</text></g>
+<line x1="524" y1="135.5" x2="548" y2="135.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="transport" data-id="barge"><rect x="552" y="126.5" width="40" height="18" rx="4" fill="#d1ccbd" stroke="#2f414c" stroke-width="1"/><text x="559" y="139" font-size="9" fill="#1A1714">Barge</text></g>
+</svg>

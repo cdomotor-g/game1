@@ -9,6 +9,7 @@
     ['overview', 'Overview'],
     ['sandbox', 'Sandbox'],
     ['graph', 'Graph'],
+    ['flows', 'Flows'],
     ['chains', 'Chains'],
     ['commodities', 'Commodities'],
     ['recipes', 'Recipes'],

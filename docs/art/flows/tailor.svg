@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 498" font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
+<rect width="780" height="498" fill="#EDE4D1"/>
+<text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="tailor">Tailor</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 3 Lumber + 2 Brick — 14 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">needs a Weaver's Shed first · run by a Tailor</text>
+<g><rect x="16" y="83" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="95.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="sew-garment"><rect x="300" y="68" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="82" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Sew Garment</text><text x="410" y="94" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text><text x="410" y="105" text-anchor="middle" font-size="8" fill="#3D3630">by a Tailor</text></g>
+<text x="552" y="90" font-size="7.5" font-style="italic" fill="#5F564C">Make any clothing or soft-armour item from</text>
+<text x="552" y="99" font-size="7.5" font-style="italic" fill="#5F564C">items.json, paying its listed inputs.</text>
+<line x1="16" y1="122" x2="764" y2="122" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="cloth"><rect x="16" y="132.5" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="145" font-size="9" fill="#1A1714">1 × Cloth</text></g>
+<text x="23" y="158.5" font-size="7" fill="#5F564C" font-style="italic">from the Weaver's Shed</text>
+<line x1="75.74" y1="141.5" x2="296" y2="146.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="tunic"><rect x="300" y="128" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="142" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Tunic</text><text x="410" y="154" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="146.5" x2="548" y2="146.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="tunic"><rect x="552" y="137.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="150" font-size="9" fill="#1A1714">Tunic</text></g>
+<line x1="16" y1="171" x2="764" y2="171" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="cloth"><rect x="16" y="177" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="189.5" font-size="9" fill="#1A1714">2 × Cloth</text></g>
+<text x="23" y="203" font-size="7" fill="#5F564C" font-style="italic">from the Weaver's Shed</text>
+<line x1="75.74" y1="186" x2="296" y2="207.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="wool"><rect x="16" y="210" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="222.5" font-size="9" fill="#1A1714">2 × Wool</text></g>
+<text x="23" y="236" font-size="7" fill="#5F564C" font-style="italic">from the Pasture</text>
+<line x1="70.88" y1="219" x2="296" y2="207.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="winter-coat"><rect x="300" y="189" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="203" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Winter Coat</text><text x="410" y="215" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="207.5" x2="548" y2="207.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="winter-coat"><rect x="552" y="198.5" width="67.46" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="211" font-size="9" fill="#1A1714">Winter Coat</text></g>
+<line x1="16" y1="244" x2="764" y2="244" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="cloth"><rect x="16" y="250" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="262.5" font-size="9" fill="#1A1714">2 × Cloth</text></g>
+<text x="23" y="276" font-size="7" fill="#5F564C" font-style="italic">from the Weaver's Shed</text>
+<line x1="75.74" y1="259" x2="296" y2="280.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="283" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="295.5" font-size="9" fill="#1A1714">1 × Leather</text></g>
+<text x="23" y="309" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="292" x2="296" y2="280.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="travelling-cloak"><rect x="300" y="262" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="276" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Travelling Cloak</text><text x="410" y="288" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="280.5" x2="548" y2="280.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="travelling-cloak"><rect x="552" y="271.5" width="91.76" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="284" font-size="9" fill="#1A1714">Travelling Cloak</text></g>
+<line x1="16" y1="317" x2="764" y2="317" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="327.5" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="340" font-size="9" fill="#1A1714">1 × Leather</text></g>
+<text x="23" y="353.5" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="336.5" x2="296" y2="341.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="boots"><rect x="300" y="323" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="337" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Sturdy Boots</text><text x="410" y="349" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="341.5" x2="548" y2="341.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="boots"><rect x="552" y="332.5" width="72.32" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="345" font-size="9" fill="#1A1714">Sturdy Boots</text></g>
+<line x1="16" y1="366" x2="764" y2="366" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="fine-cloth"><rect x="16" y="372" width="82.04" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="384.5" font-size="9" fill="#1A1714">2 × Fine Cloth</text></g>
+<text x="23" y="398" font-size="7" fill="#5F564C" font-style="italic">from the Weaver's Shed</text>
+<line x1="100.04" y1="381" x2="296" y2="402.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="gold"><rect x="16" y="405" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="417.5" font-size="9" fill="#1A1714">1 × Gold</text></g>
+<text x="23" y="431" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="70.88" y1="414" x2="296" y2="402.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="fine-robes"><rect x="300" y="384" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="398" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Fine Robes</text><text x="410" y="410" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text></g>
+<line x1="524" y1="402.5" x2="548" y2="402.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="fine-robes"><rect x="552" y="393.5" width="62.6" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="406" font-size="9" fill="#1A1714">Fine Robes</text></g>
+<line x1="16" y1="439" x2="764" y2="439" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="449.5" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="462" font-size="9" fill="#1A1714">2 × Leather</text></g>
+<text x="23" y="475.5" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="458.5" x2="296" y2="463.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="leather-jerkin"><rect x="300" y="445" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="459" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Leather Jerkin</text><text x="410" y="471" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="463.5" x2="548" y2="463.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="leather-jerkin"><rect x="552" y="454.5" width="82.04" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="467" font-size="9" fill="#1A1714">Leather Jerkin</text></g>
+</svg>

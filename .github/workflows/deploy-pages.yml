@@ -82,6 +82,13 @@ jobs:
       - name: Fail if the committed dependency graph is stale
         run: node tools/build-graph.mjs --check
 
+      # The flows of work the annex prints and the explorer's Flows tab draws
+      # live: one diagram per place of work, computed from the recipes, tools,
+      # items, vehicles and modifications. Fails outright if a recipe lands in
+      # no diagram - a job the book silently does not show is the bug this stops.
+      - name: Fail if the committed flow diagrams are stale
+        run: node tools/build-flows.mjs --check
+
       # The annex is the printed rulebook's reference tables, generated from the same
       # data. Same reasoning as the bundle: committed, so it must not drift.
       - name: Fail if the committed annex is stale
