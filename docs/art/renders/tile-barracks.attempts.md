@@ -124,3 +124,61 @@ budget for a subject is two. It is over because sheet 1 bought a wording fix and
 sheet 2 bought a different one, and the alternative at each point was to spend a
 *final* render on a prompt a draft had already shown to be wrong — which is the
 more expensive mistake and the one the two-job rule exists to prevent.
+
+## Draft sheet 3 — the size fix works, the page furniture does not
+
+Same six seeds, v3 wording. **Saying what fills the page worked.** Seeds 21, 101,
+202 and 303 are all composed small with ground running into the corners, which is
+the first time in three sheets that has happened. The granary's technique
+transfers exactly.
+
+| # | seed | rejected for |
+|---|---|---|
+| 1 | 21 | **a human figure standing in front of the range**, which the preamble forbids outright. Verandah posts instead of a window rank, and almost no colour run. |
+| 2 | 34 | strong rank, correct low roof — and a hard horizon with the range running to a vanishing point, which reads as a street, not a tile. Page-wide again. |
+| 3 | 55 | handwritten text across the middle left. Two buildings rather than one. |
+| 4 | 101 | thatched roof where the brief says grey slate; three openings, no rank; water in the foreground. |
+| 5 | 202 | good rank, good ground, and a **plate number rendered top left**. Ochre roof rather than slate. |
+| 6 | 303 | closest composition of the eighteen — small in frame, rank present, blue-grey walls — and **two lines of handwritten annotation along the top edge**. Red tile roof rather than slate. |
+
+**Text is the thing that will not go.** It is now in the negative eight ways —
+`text, letters, numerals, signage, caption, handwriting, manuscript text, plate
+number` — and it still arrived on three of six. Qwen-Image is a text-strong model
+and the shared preamble opens by naming *"a worn 1600s surveyor's field book"*,
+which is a page with writing on it. The negative is arguing with the first line of
+the positive, and losing.
+
+**Which is when the accepted granary plate is worth reading again.**
+`tile-granary.txt` — the wording that plate was actually drawn from — **does not
+contain the preamble at all.** It opens "A coloured woodcut illustration of a
+single small farm building, drawn in three-quarter view from high above and to the
+left", keeps every style fact the preamble carries (mis-registered letterpress
+colour, heavy uneven woodcut outline, hatching, oatmeal paper, near-black ink) and
+drops the two words that summon a page: *field book*. Nobody wrote down that this
+was the reason it worked, so it has been rediscovered here at the cost of three
+sheets.
+
+That is a sanctioned divergence, not a workaround: the courier fetches
+`render/<plate>.txt` and commits it beside the plate precisely because *"a prompt
+which had to be changed to get an acceptable render is the only record of how this
+picture was really made"*. The v4 wording below is the brief's own subject
+paragraph carried into the granary's accepted structure.
+
+## Where this stands
+
+The v4 wording is staged at `render/tile-barracks.txt` on the plate dataset and
+has not been drawn. It is the brief's own subject carried into the accepted
+granary plate's four-paragraph structure — opening line, subject, `Composition:`,
+then colour and technique — with the field-book framing dropped and every style
+fact it carried kept.
+
+**Three drawing jobs are spent and no plate has shipped.** That is the shape of
+the run this pipeline was reformed to stop: the granary spent five jobs for one
+plate and emptied the account's quota. Each of the three bought a real, recorded
+fix — the cottage prior, the page-filling subject, and now the page furniture —
+and all three are in the brief and in the shared negative, so none of them has to
+be bought again by this tile or by the fifty-one behind it. But finishing needs at
+least one more job, and whether to spend it is not a call this file can make.
+
+The tile itself is built and printable meanwhile, as a blank counter with its name
+band, which is what `build-tiles.mjs` is for.
