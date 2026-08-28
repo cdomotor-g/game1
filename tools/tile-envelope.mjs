@@ -80,5 +80,8 @@ for (const t of chosen) {
   console.log(`  ${envelopeNote(t.cells).replace(/\. /g, '.\n  ')}`);
 }
 
-console.log(`\nThis is what mint-request --render appends to a building-tile prompt.
+console.log(`\nmint-request --render appends all of that to a building-tile prompt
+EXCEPT the closing figures, which are held back from the model deliberately: a
+measurement is not a thing that can be drawn, and four sheets of the barracks
+were drawn straight through that one. The bands say the same fact drawably.
 Compose inside the box; everything else is ground the piece can afford to lose.`);

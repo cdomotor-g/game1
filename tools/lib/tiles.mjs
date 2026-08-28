@@ -437,18 +437,44 @@ export function envelopeOf(cells, flats = 1, samples = 240) {
  * because no image model resolves better than that and a figure like 53.7% reads
  * as precision nothing here has.
  */
-export function envelopeNote(cells, flats = 1) {
+export function envelopeNote(cells, flats = 1, { figures = true } = {}) {
   const { box } = envelopeOf(cells, flats);
   const five = (n) => Math.round(n * 20) * 5;
   const w = five(box.w);
   const top = five(box.y);
   const bottom = five(box.y + box.h);
+  const left = five(box.x);
+  const right = five(1 - box.x - box.w);
+  const under = five(1 - box.y - box.h);
 
+  /* BANDS, NOT A MEASUREMENT, and that is the whole lesson of this function.
+     It used to open by saying the subject "spans no more than the central 50%
+     of the width", which is true, derived, and useless: a diffusion model has
+     no way to act on a percentage, and four sheets of the barracks were drawn
+     page-wide against it. The accepted granary plate worked because its wording
+     never mentioned size at all - it said what fills the rest of the page,
+     corner by corner. So the same numbers are spent here on empty bands, which
+     are drawable, and the figures follow at the end for the person composing.
+
+     The top band carries the second lesson. "No sky, no horizon" is a negation
+     and the model kept putting a pale strip above the roofline anyway; saying
+     what IS up there - more of the same ground, seen from above - is depictive,
+     and is also just true of a view taken from thirty degrees up. */
   return [
-    `The whole subject is drawn well inside the middle of the page: it spans no more than the central ${w}% of the width, and sits between ${top}% and ${bottom}% of the height, measured from the top.`,
-    'Everything outside that is plain ground, because the printed piece is cut to a hexagon and the corners and edges of the page are trimmed away.',
+    `A band of plain empty ground runs down the whole left ${left}% of the page and another down the whole right ${right}%, each one from the top edge to the bottom edge, with nothing standing in either.`,
+    `Plain empty ground fills the top ${top}% of the page and the bottom ${under}% in the same way, so the subject sits clear of every edge with open ground all round it.`,
+    'The ground above the subject is more of that same ground, seen from above and running back to the top edge of the page.',
+    'Everything outside the subject is plain ground, because the printed piece is cut to a hexagon and the corners and edges of the page are trimmed away.',
     'Plain empty ground fills the lower left corner of the picture.',
-  ].join(' ');
+    /* The figures are for a PERSON composing, and are withheld from the model on
+       the same principle renderPrompt is built on: a measurement is not a thing
+       that can be drawn, and this particular measurement is the one four sheets
+       were drawn straight through. The bands above say the same fact in a form
+       that can be. */
+    figures
+      ? `In figures, for whoever is composing: the subject spans no more than the central ${w}% of the width and sits between ${top}% and ${bottom}% of the height, measured from the top.`
+      : null,
+  ].filter(Boolean).join(' ');
 }
 
 /** Every cell as its own hexagon, for a clipPath - whose children are unioned. */

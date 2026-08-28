@@ -102,7 +102,7 @@ chosen.forEach(({ line, row }, i) => {
        the footprint now, by envelopeNote in tools/lib/tiles.mjs, so a shape that
        changes changes what its brief asks for. */
     const corner = line.id === 'buildingtiles' && row.tile?.cells
-      ? envelopeNote(row.tile.cells)
+      ? envelopeNote(row.tile.cells, 1, { figures: false })
       : null;
     const r = renderPrompt(brief, { cornerNote: corner });
     console.log(`### RENDER PROMPT · ${row.code} · ${row.name}`);
