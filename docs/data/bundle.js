@@ -16717,6 +16717,17 @@ window.GAME_DATA = {
           0.84
         ]
       },
+      "tile-barracks": {
+        "file": "art/renders/tile-barracks.png",
+        "width": 1328,
+        "height": 1328,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "tile-granary": {
         "file": "art/renders/tile-granary.png",
         "width": 1328,

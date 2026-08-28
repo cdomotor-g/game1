@@ -514,10 +514,10 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <hr>
 <h2 id="building-tiles">Building tiles</h2>
 <p>One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in <a href="../art/prompts/buildingtiles.md"><code>docs/art/prompts/buildingtiles.md</code></a>, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
-<p><strong>3 of 54 minted.</strong> 0 waiting on a brief, 51 waiting on art, 0 waiting on frame.</p>
+<p><strong>3 of 54 minted.</strong> 0 waiting on a brief, 50 waiting on art, 1 waiting on frame.</p>
 <h3 id="1-write-the-designer-2">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
-<h3 id="2-draw-the-artist-51-tiles">2 · DRAW — the artist — 51 tiles</h3>
+<h3 id="2-draw-the-artist-50-tiles">2 · DRAW — the artist — 50 tiles</h3>
 <p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
@@ -560,7 +560,6 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>guildhall</code></td><td>Guildhall</td><td>Civic</td><td><code>tile-guildhall</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>inn</code></td><td>Inn</td><td>Civic</td><td><code>tile-inn</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>infirmary</code></td><td>Infirmary</td><td>Civic</td><td><code>tile-infirmary</code></td><td>✓</td><td>·</td><td>·</td></tr>
-<tr><td><code>barracks</code></td><td>Barracks</td><td>Military</td><td><code>tile-barracks</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>watchtower</code></td><td>Watchtower</td><td>Military</td><td><code>tile-watchtower</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>palisade</code></td><td>Palisade</td><td>Military</td><td><code>tile-palisade</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>alchemist</code></td><td>Alchemist</td><td>Arcane</td><td><code>tile-alchemist</code></td><td>✓</td><td>·</td><td>·</td></tr>
@@ -572,8 +571,11 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>crop-flax</code></td><td>Flax Field</td><td>Fields</td><td><code>tile-crop-flax</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>crop-cotton</code></td><td>Cotton Field</td><td>Fields</td><td><code>tile-crop-cotton</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>crop-hops</code></td><td>Hops Field</td><td>Fields</td><td><code>tile-crop-hops</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
-<h3 id="3-frame-whoever-accepts-the-plate-1">3 · FRAME — whoever accepts the plate</h3>
-<p>Nothing waiting.</p>
+<h3 id="3-frame-whoever-accepts-the-plate-1-tile">3 · FRAME — whoever accepts the plate — 1 tile</h3>
+<p>The plate is committed and <code>docs/art/framing.json</code> says nothing about it yet. A <code>subject</code> box, a <code>focal</code> point and a one-line <code>note</code> — the contract is <a href="../art/09-framing-and-composition.md"><code>docs/art/09-framing-and-composition.md</code></a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
+<tbody><tr><td><code>barracks</code></td><td>Barracks</td><td>Military</td><td><code>tile-barracks</code></td><td>✓</td><td>✓</td><td>·</td></tr></tbody></table></div>
 <h3 id="minted-2">Minted</h3>
 <p>3 tiles complete: <code>hut</code>, <code>warehouse</code>, <code>granary</code>.</p>
 <p>Every minted tile is fully aimed: a <code>subject</code> box, a <code>focal</code> point and a one-line <code>note</code>.</p>
