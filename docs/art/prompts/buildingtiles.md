@@ -25,6 +25,22 @@ a small clump of hexagons — one, two, three or four cells — and the corners 
 the page are cut off. Each brief below says which. Nothing that matters goes near
 a corner.
 
+**How much of the page that shape keeps is derived, not written here.** Run
+`node tools/tile-envelope.mjs <id>` and it prints the footprint as a map with the
+safe box marked: the largest area a subject can occupy and be certain of surviving
+the die. The same numbers are appended to every commission automatically by
+`--render` (`envelopeNote` in `tools/lib/tiles.mjs`), so no `FRAMING.` block below
+needs to state a composition band and none of them should — a band typed by hand
+is a band that stops being true the day a building's numbers move it to another
+shape.
+
+It is worth knowing why this is derived rather than trusted to judgement. A triad
+keeps only the middle half of its width below the shoulder line, and **no aiming
+can recover what falls outside that**: a triad's window is 0.99 against a square
+plate, so the crop keeps essentially the whole page and hands the overhang to the
+die. The granary spent three drawn plates on a building drawn to the full width
+before that was understood, and the accepted plate still loses a scoop to it.
+
 **A label band sits in the bottom-left corner — always.** A solid strip carrying
 the tile's name is printed along the piece's lower-left edge, running parallel to
 it, and whatever is under it is covered. It is in the same corner on every tile in
@@ -995,14 +1011,12 @@ louvred vent in the gable. Two sacks and a scoop at the foot of the ladder.
 Wash: ochre on the boards and sacks, cold slate blue on the staddle stones,
 grey-green on the ground, flat.
 
-FRAMING. Square plate, ground to all four edges. The footprint is a triad —
-a two-cell row across the top, one cell under it — so the page keeps its full
-width only through the middle band, narrows to the centre half below that, and
-carries a V notch in the top centre between the two upper points. Keep the
-store in the central column: ridge below the notch, the staddle stones and the
-daylight gap on the widest part, ladder and sacks gathered under the building
-in the middle of the lower half and well in from both sides. Ground, not
-detail, in the lower-left.
+FRAMING. Square plate, ground to all four edges. Compose inside the safe box
+`node tools/tile-envelope.mjs granary` prints — the triad narrows to the centre
+half below its shoulder and carries a V notch in the top centre, so a store
+drawn to the full width loses its outer staddle stones. The daylight gap under
+the floor is the one thing that must survive whole; ladder and sacks gather
+under the building, not out to the sides. Ground, not detail, in the lower-left.
 ```
 
 ---

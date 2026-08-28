@@ -315,6 +315,142 @@ export function outlineOf(cells, flats, round = (n) => Number(n.toFixed(3))) {
   return `M ${points.map((p) => `${round(p.x)},${round(p.y)}`).join(' L ')} Z`;
 }
 
+/**
+ * WHAT THE PIECE ACTUALLY KEEPS OF ITS PAGE.
+ *
+ * A plate is drawn on a rectangle and a tile is not a rectangle, so some of that
+ * page is cut off by the die. How much, and where, is arithmetic - and until this
+ * function existed it was being guessed at, per tile, by whoever was writing the
+ * brief. The granary cost five drawing passes to that guess: three of them came
+ * back with the building drawn to the full width of the page, which a triad
+ * cannot hold below its shoulder, and the crop cannot help because a triad's
+ * window is 0.99 against a square plate - it keeps everything, including the
+ * parts that fall outside the cut.
+ *
+ * So the shape says what it can hold, in numbers, before anybody draws anything.
+ *
+ * `rows` is the inside span at each sampled height, as fractions of the bounding
+ * box: what proportion of the page survives at that height, and where. `box` is
+ * the largest rectangle that fits inside the outline at every height it spans -
+ * the box a subject can be drawn in and be certain of surviving the die. Both are
+ * fractions of the plate, because that is what a prompt and a framing entry both
+ * speak in.
+ *
+ * The box is the largest one SHAPED LIKE THE PIECE that fits, not the largest by
+ * area. Area alone answers a single hexagon with a letterbox - full width, middle
+ * half of the height - which is true, and is useless as composition advice: a
+ * subject drawn on a square page occupies a roughly square area, and a brief that
+ * says otherwise is asking for a picture nobody wants. In fractions of the
+ * bounding box both axes run 0 to 1, so a rectangle similar to the page is simply
+ * a square in that space, and the question becomes the largest square that fits.
+ *
+ * Searched rather than solved, by bisection on the side: a search cannot drift
+ * from the outline the way a closed form re-derived by hand could.
+ */
+export function envelopeOf(cells, flats = 1, samples = 240) {
+  const box = boxOf(cells, flats);
+  const d = outlineOf(cells, flats);
+  const nums = d.match(/-?[\d.]+/g).map(Number);
+  const poly = [];
+  for (let i = 0; i < nums.length; i += 2) poly.push([nums[i], nums[i + 1]]);
+
+  const inside = (px, py) => {
+    let hit = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const [xi, yi] = poly[i];
+      const [xj, yj] = poly[j];
+      if ((yi > py) !== (yj > py) && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) hit = !hit;
+    }
+    return hit;
+  };
+
+  /* The inside span at one height, as the widest unbroken run. A shape with two
+     lobes at that height - a triad's two upper points, with the notch between
+     them - has no single span, and the honest answer is the wider lobe rather
+     than a span across a gap the die has cut away. */
+  const spanAt = (fy) => {
+    const py = box.y + box.h * fy;
+    const cols = samples;
+    let best = null;
+    let run = null;
+    for (let i = 0; i <= cols; i++) {
+      const fx = i / cols;
+      if (inside(box.x + box.w * fx, py)) run = run ?? fx;
+      else if (run !== null) {
+        if (!best || fx - run > best.x1 - best.x0) best = { x0: run, x1: fx };
+        run = null;
+      }
+    }
+    if (run !== null && (!best || 1 - run > best.x1 - best.x0)) best = { x0: run, x1: 1 };
+    return best ?? { x0: 0.5, x1: 0.5 };
+  };
+
+  const rows = [];
+  for (let i = 0; i <= samples; i++) {
+    const y = i / samples;
+    const { x0, x1 } = spanAt(y);
+    rows.push({ y, x0, x1, w: x1 - x0 });
+  }
+
+  /* Does a square of this side fit anywhere? Slide the top edge down the rows,
+     intersecting each band as it goes; the band fits when what every row in it
+     has in common is at least as wide as the band is tall. */
+  const fits = (side) => {
+    const span = Math.round(side * samples);
+    if (span < 1) return null;
+    for (let a = 0; a + span < rows.length; a++) {
+      let lo = -Infinity;
+      let hi = Infinity;
+      for (let b = a; b <= a + span; b++) {
+        lo = Math.max(lo, rows[b].x0);
+        hi = Math.min(hi, rows[b].x1);
+        if (hi - lo < side) break;
+      }
+      if (hi - lo >= side) return { x: lo + (hi - lo - side) / 2, y: rows[a].y, w: side, h: rows[a + span].y - rows[a].y };
+    }
+    return null;
+  };
+
+  let lo = 0;
+  let hi = 1;
+  let best = fits(0.05);
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    const hit = fits(mid);
+    if (hit) { best = hit; lo = mid; } else hi = mid;
+  }
+  if (!best) throw new Error('a footprint with no inside is not a shape');
+
+  return { rows, box: best };
+}
+
+/**
+ * The envelope said in words, for a brief and for the model that draws from it.
+ *
+ * The corner rule was a hardcoded sentence in tools/mint-request.mjs and the
+ * proportions were not said at all - which is the half of the composition that
+ * kept coming back wrong. Both are the same kind of fact, both are derived from
+ * the same shape, and so both are said here, in one place, in the one register a
+ * model can act on: where to put the thing, as a description of the picture.
+ *
+ * Percentages rather than a box, because a prompt is prose. Rounded to fives,
+ * because no image model resolves better than that and a figure like 53.7% reads
+ * as precision nothing here has.
+ */
+export function envelopeNote(cells, flats = 1) {
+  const { box } = envelopeOf(cells, flats);
+  const five = (n) => Math.round(n * 20) * 5;
+  const w = five(box.w);
+  const top = five(box.y);
+  const bottom = five(box.y + box.h);
+
+  return [
+    `The whole subject is drawn well inside the middle of the page: it spans no more than the central ${w}% of the width, and sits between ${top}% and ${bottom}% of the height, measured from the top.`,
+    'Everything outside that is plain ground, because the printed piece is cut to a hexagon and the corners and edges of the page are trimmed away.',
+    'Plain empty ground fills the lower left corner of the picture.',
+  ].join(' ');
+}
+
 /** Every cell as its own hexagon, for a clipPath - whose children are unioned. */
 export function cellPaths(cells, flats, round = (n) => Number(n.toFixed(3))) {
   return cells.map((c) => {

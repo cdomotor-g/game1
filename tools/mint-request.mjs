@@ -31,6 +31,7 @@
  * to be sent one at a time rather than in a heap.
  */
 import { survey, platePath, briefFor, assemble, renderPrompt, minLongSideFor, windowNote, at } from './lib/mint.mjs';
+import { envelopeNote } from './lib/tiles.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -93,11 +94,15 @@ chosen.forEach(({ line, row }, i) => {
      being commissioned for the same plate; a request that left out how much of
      the page survives the crop would be commissioning a different one. */
   if (render) {
-    /* The corner rule is the one part of the LABEL BAND block that is about the
-       PICTURE rather than about the printing, so it is the one part that crosses
-       over - said as a thing to draw instead of a thing to know. */
-    const corner = line.id === 'buildingtiles'
-      ? 'Plain empty ground fills the lower left corner of the picture.'
+    /* What the piece keeps of its page, in numbers, said as a thing to draw.
+       This used to be one hardcoded sentence about the lower-left corner, which
+       is the half of the composition that never went wrong. The half that did -
+       how big the subject may be before the die cuts it - was not said at all,
+       and was guessed at per tile by whoever wrote the brief. It is derived from
+       the footprint now, by envelopeNote in tools/lib/tiles.mjs, so a shape that
+       changes changes what its brief asks for. */
+    const corner = line.id === 'buildingtiles' && row.tile?.cells
+      ? envelopeNote(row.tile.cells)
       : null;
     const r = renderPrompt(brief, { cornerNote: corner });
     console.log(`### RENDER PROMPT · ${row.code} · ${row.name}`);

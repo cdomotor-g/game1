@@ -351,8 +351,9 @@ The two-agent handover above is the version that always works, and it stays. Thi
 is the version where nobody carries anything, and it is what `/mint` drives.
 
 ```
-brief ─▶ mint-request --render ─▶ hf_jobs draws it ─▶ look at the preview
-      ─▶ fetch-plate.yml carries it in ─▶ aim ─▶ build ─▶ proof ─▶ push
+tile-envelope ─▶ brief ─▶ mint-request --render ─▶ ONE draft job (6 on a sheet)
+      ─▶ pick a seed ─▶ ONE final job ─▶ fetch-plate.yml carries it in
+      ─▶ aim ─▶ build ─▶ proof ─▶ push
 ```
 
 **A model is not handed the commission.** This is the part that is easy to get
@@ -377,6 +378,38 @@ in `tools/lib/mint.mjs` is the only place that difference lives.
 **The plate is drawn on Hugging Face** with an `hf_jobs` uv job, which has the
 GPU and the bandwidth. It writes the PNG to a dataset.
 
+**Drawing is metered, and the meter is the design constraint.** The granary spent
+about twenty-two minutes of `a100-large` across five jobs, returned eight plates,
+shipped one, and emptied the account's quota. Half of that time drew nothing at
+all: every job re-downloads fifty gigabytes of Qwen-Image and reinstalls
+sixty-three packages before its first pixel, so the setup is two to three minutes
+whether the job then draws one picture or twelve. Five jobs paid it five times.
+
+So the drawing step has a shape, and `tools/hf/draw-plate.py` is that shape made
+into a file nobody retypes:
+
+| | |
+| --- | --- |
+| **one job per subject** | the model is loaded once and every candidate drawn from that load. Six seeds is one job, not six. |
+| **draft, then final** | `MODE=draft` returns six candidates at 640 px and eight steps — about a tenth of a plate each — tiled onto ONE contact sheet. Only the seed that survives it earns `MODE=final`. |
+
+A draft is enough for what actually goes wrong. Five of the granary's six rejects
+were plainly visible at draft size: a horizon and treeline that the brief forbids,
+a subject drawn too wide for the die, folio numerals and a signature rendered onto
+the page, a colour cast. Judging those on full-quality renders is paying ten times
+for the same information.
+
+`node tools/mint-job.mjs <id>` prints the call, because two of its arguments have
+each already cost a job: the dependency list is `with_deps` and not `with` (pass
+`with` and it is dropped in silence, and the job dies on `ModuleNotFoundError`
+after it has been scheduled), and the flavour is `a100-large` and not `l40sx1`.
+
+**Every rejection is written down**, in `docs/art/renders/<plate>.attempts.md`,
+with the wording, the seed and the reason. Three of the granary's six rejects went
+the same way — "a wide field, seen from some way off" buys a landscape, which
+means a horizon — because the first two had not been recorded. A rejection nobody
+wrote down is a rejection somebody pays for twice.
+
 **The plate is carried in by a GitHub Action**, because neither end can reach the
 other: a Claude Code session cannot reach `huggingface.co` (organisation egress
 policy — a setting to respect, not route around), and a job on Hugging Face
@@ -393,8 +426,11 @@ not survive being asked a hundred times.
 
 **Looking at the plate is still a person's job, and it is not optional.** Every
 check in this repository proves something about numbers; none of them looks at
-the picture. The job writes a small JPEG preview for exactly this. Reject against
-`docs/art/07-ai-agent-brief.md` with a concrete reason, not taste.
+the picture. The draft sheet exists for exactly this, and it is one attachment
+rather than six. Reject against `docs/art/07-ai-agent-brief.md` with a concrete
+reason, not taste — and if every candidate on the sheet fails the same way, the
+wording is wrong and re-rolling seeds against it just spends the quota more
+slowly.
 
 ## Adding a third line
 

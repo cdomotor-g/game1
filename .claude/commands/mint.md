@@ -40,9 +40,16 @@ things below.
 Everything needed is automated and none of it needs them:
 
 ```
-brief ─▶ mint-request --render ─▶ hf_jobs draws ─▶ look at the preview
-      ─▶ actions_run_trigger fetch-plate ─▶ merge ─▶ aim ─▶ build ─▶ proof ─▶ push
+tile-envelope ─▶ brief ─▶ mint-request --render ─▶ ONE draft job (6 on a sheet)
+      ─▶ pick a seed ─▶ ONE final job ─▶ actions_run_trigger fetch-plate
+      ─▶ merge ─▶ aim ─▶ build ─▶ proof ─▶ push
 ```
+
+**Two HF jobs per subject. Not five.** Drawing is metered and the granary emptied
+the quota: twenty-two minutes of `a100-large` over five jobs, eight plates, one
+shipped. Half of that drew nothing, because every job re-downloads fifty gigabytes
+of model before its first pixel. Draft six candidates in one job, look at the one
+contact sheet, then draw the winner once.
 
 **Stop and ask only if:** a subject cannot be briefed without a design decision
 they have not made, or a plate keeps failing for a reason you cannot name. A
@@ -81,22 +88,38 @@ not shown its work.
    what it moved, so nothing is dropped silently. Never hand a model the plain
    commission.
 
-   **b. Draw it with an `hf_jobs` uv job.** Write the positive and negative to
-   `hf://datasets/<owner>/game1-plates/render/<plate>.txt` with `hf_fs_write`, then
-   run a job that reads them and uploads the PNG to the same dataset. What works,
-   and why:
+   **b. Draw it — draft first, in ONE job.** Write the positive and negative to
+   `hf://datasets/<owner>/game1-plates/render/<plate>.txt` and
+   `prompts/negative-<plate>.txt` with `hf_fs_write`. Then
+   `node tools/mint-job.mjs <id>` prints the exact `hf_jobs` call; the script it
+   names is `tools/hf/draw-plate.py`, which is committed so nobody retypes it.
+
+   Pass the script **verbatim**. Never inline a variant — an inlined job is a job
+   per attempt, and a job per attempt is what emptied the quota.
 
    | | |
    | --- | --- |
    | `flavor` | `a100-large`. Qwen-Image is 20B; with `enable_model_cpu_offload()` it needs ≥48 GB, and `l40sx1` queues for hardware. |
-   | model | `Qwen/Qwen-Image` via `DiffusionPipeline`, `torch.bfloat16` |
-   | size | `1328x1328` for a square plate — the model's native 1:1, and over the print target |
-   | steps | 30, `true_cfg_scale` 5.0 (this is what makes `negative_prompt` bite) |
+   | `with_deps` | **not `with`.** Pass `with` and it is silently dropped, the job starts bare and dies on `ModuleNotFoundError` after it has already been scheduled. |
    | `secrets` | `{"HF_TOKEN": "$HF_TOKEN"}` — substituted server-side |
-   | `with_deps` | torch, `git+https://github.com/huggingface/diffusers.git`, transformers, accelerate, safetensors, sentencepiece, huggingface_hub, pillow |
+   | draft | `MODE=draft` — six seeds at 640 px / 8 steps, tiled onto ONE sheet |
+   | final | `MODE=final SEED=<n>` — 1328², 34 steps, only for a seed the sheet earned |
 
-   Have the job also write a small JPEG preview — `hf_fs attach` on a 2.6 MB PNG
-   is wasteful when all you need is to look at it.
+   **Cancelling can take siblings with it.** Cancelling one job while another of
+   yours is running has killed the wrong one. Do not run two drawing jobs at once,
+   and if you must cancel, verify with `inspect` which one actually stopped.
+
+   **Judge the draft sheet, not a full render.** One `hf_fs attach` on
+   `draft/<plate>-sheet.jpg` shows every candidate at once. Five of the granary's
+   six rejects were plainly visible at draft size — a horizon that should not
+   exist, a subject too big for the die, text rendered onto the page, a colour
+   cast. Reject against the checklist in `docs/art/07-ai-agent-brief.md`, say the
+   concrete reason, and **write it into `docs/art/renders/<plate>.attempts.md`** so
+   the next run does not buy the same lesson. Three of the granary's six went the
+   same way because the wording that caused it had not been written down.
+
+   If every candidate fails the same way, fix the wording once and redraft —
+   do not re-roll seeds against a prompt that is wrong.
 
    **c. Carry it in.** Dispatch the courier and it lands, builds and commits
    itself:
@@ -107,10 +130,6 @@ not shown its work.
    Then `git fetch origin main && git merge --ff-only origin/main`. The subject
    moves off DRAW on its own, because the queue is computed rather than stored.
    Setup and the one secret it needs are `docs/MINT-SETUP.md` §4a.
-
-   **Look at the preview before you carry anything in.** A rejected plate costs a
-   dispatch and a commit; looking costs one `hf_fs attach`. Reject against the
-   checklist in `docs/art/07-ai-agent-brief.md`, and say the concrete reason.
 
    **If any of that is unavailable** — no HF connector, no PRO, quota spent —
    `node tools/mint-draw.mjs <code>` degrades to printing the commission for a
@@ -164,16 +183,27 @@ counts a tile's plates; never write out `['face','back']` anywhere else.
 
 **Draw the finished building, and draw it well** — it is doing both jobs now.
 
-**The corner is not decoration.** The name band is printed over the lower-left on
-*both* sides. Whatever is there is covered, so the brief must put ground, grass or
-spoil in that corner and never the door or the working end. `--render` appends
-that sentence for you.
+**Read the shape before you write the brief.** `node tools/tile-envelope.mjs <id>`
+prints the footprint as a map with the safe box marked and the numbers under it.
+Do it first, every time. It is free, it is local, and not doing it is what the
+granary paid three drawn plates for.
 
-**The hexagon cuts its own bounding box.** A polyhex tile loses the corners of the
-page even when the crop keeps everything — the warehouse's two barrels were drawn
-at the right edge and are not on the piece. `aim-solve` measures the rectangle and
-cannot see this. Look at `tile-proof` and check the named subject is actually
-inside the outline.
+**The hexagon cuts its own bounding box, and no aim can undo it.** A polyhex tile
+loses the corners of the page even when the crop keeps everything — a triad's
+window is 0.99 against a square plate, so the crop keeps essentially all of it,
+including the parts the die then trims. The warehouse's two barrels went that way;
+so did the granary's scoop, and three whole granary plates were drawn to the full
+width of a page a triad cannot hold below its shoulder. **The only fix is to draw
+it smaller, and that has to be decided before the plate exists.**
+
+`--render` appends the envelope and the corner rule to every building-tile prompt
+automatically (`envelopeNote` in `tools/lib/tiles.mjs`), so both are derived from
+the footprint rather than typed. Never hand-write a composition band or a corner
+sentence into a brief — if you are about to, the number belongs in the shape.
+
+`aim-solve` measures a rectangle and cannot see the die at all: it will say
+"nothing has to be spent" about a plate the hexagon is about to cut. Look at
+`tile-proof` and check the named subject is actually inside the outline.
 
 **Proof with `node tools/tile-proof.mjs <id>`** — both sides on one sheet with a
 millimetre ruler, because two sides that are each fine and together unusable is

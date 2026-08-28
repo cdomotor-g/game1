@@ -121,6 +121,31 @@ depiction, every "no X" moved into the negative, and it prints what it moved so
 nothing goes silently. `renderPrompt` in `tools/lib/mint.mjs` is the one place
 that difference lives.
 
+**Drawing is metered, so draft first and draw once.** The granary cost about
+twenty-two minutes of `a100-large` across five jobs, returned eight plates, shipped
+one, and emptied the quota. Half that time drew nothing: every job re-downloads
+fifty gigabytes of Qwen-Image and reinstalls sixty-three packages before its first
+pixel, so the setup is two to three minutes whether the job then draws one picture
+or twelve.
+
+Two rules come out of that and they are not style preferences.
+
+**One job per subject, never one job per attempt.** `tools/hf/draw-plate.py` loads
+the model once and draws every candidate from that load. Six seeds is one job.
+
+**Judge composition cheaply, then draw once properly.** `MODE=draft` returns six
+candidates tiled on ONE contact sheet at 640 px and eight steps — about a tenth of
+a full plate — and five of the granary's six rejects were plainly visible at that
+size: a horizon that should not exist, a subject too big for the die, text rendered
+onto the page, a colour cast. Only the seed that survives the sheet earns
+`MODE=final`. `node tools/mint-job.mjs <id>` prints the call, because `with_deps`
+(not `with`) and `a100-large` (not `l40sx1`) have each already cost a job.
+
+Every rejection goes in `docs/art/renders/<plate>.attempts.md` with the reason. A
+rejection nobody wrote down is one somebody pays for twice — three of the granary's
+six went the same way because the wording that caused it was not written down the
+first time.
+
 Run `node tools/mint-queue.mjs` to see where everything has got to — it works
 that out from the repository, so it cannot be wrong, only out of date. Adding a
 third line is an entry in `data/mint.json` plus one branch each in `subjectsOf`
@@ -326,12 +351,21 @@ git-ignored, on the same reasoning as the map proof sheets — a proof is a
 photograph of the artefact, never the artefact.
 
 ```bash
+node tools/tile-envelope.mjs <id>   # WHAT THE SHAPE KEEPS, before anything is drawn
 node tools/plate-map.mjs   <code>   # WHERE THE INK IS, as text, before anything
 node tools/aim-solve.mjs   <code> --keep x0,y0,x1,y1 --spend top|bottom|even
 node tools/aim-preview.mjs <code>   # the CROP, before the framing numbers are settled
 node tools/card-proof.mjs  <code>   # the CARD as built, after
 node tools/tile-proof.mjs  <id>     # the TILE as built - both sides, on one sheet
 ```
+
+`tile-envelope` is the earliest of these and the only one that runs before a
+plate exists. A tile is cut to a clump of hexagons, so part of every page is
+thrown away, and composing without knowing which part is how the granary spent
+three drawn plates on a building drawn too wide for a triad to hold. It prints
+the shape as a map with the safe box marked, and the same numbers are appended to
+every building-tile commission automatically. Nothing about that is a judgement,
+so nothing about it should be typed into a brief by hand.
 
 `plate-map` prints the plate as a character map with rulers on it, so a subject
 can be measured without opening four magnified strips of it. `aim-solve` runs

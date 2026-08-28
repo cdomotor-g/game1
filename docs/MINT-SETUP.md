@@ -268,6 +268,36 @@ The token lives in GitHub's secret store, which is where a token belongs. It is
 never typed into a conversation, and a public plate dataset does not need one at
 all — the workflow sends the header only when the secret is set.
 
+### The drawing job, and what it costs
+
+The job that draws a plate is `tools/hf/draw-plate.py`, committed so nobody
+retypes it. `node tools/mint-job.mjs <id>` prints the `hf_jobs` call that runs it.
+
+**The meter is real.** A single mint run — the granary — spent about twenty-two
+minutes of `a100-large` over five jobs and emptied the account's Hugging Face
+quota, returning eight plates of which one shipped. Roughly half that time drew
+nothing: each job re-downloads fifty gigabytes of Qwen-Image and reinstalls
+sixty-three packages first, which is two to three minutes of setup whether the job
+then draws one picture or twelve.
+
+So: **one job per subject, and draft before final.** Six candidates at 640 px and
+eight steps come back tiled on one contact sheet for about a tenth of the cost of
+one full plate, and that is enough to see everything that actually goes wrong.
+
+Three traps, each of which has already cost a whole job:
+
+| Trap | What happens | Do |
+| --- | --- | --- |
+| `with` instead of `with_deps` | the dependency list is dropped in silence; the job schedules, starts bare, and dies on `ModuleNotFoundError: huggingface_hub` | pass `with_deps` |
+| `l40sx1` instead of `a100-large` | Qwen-Image is 20B and needs ≥48 GB even with `enable_model_cpu_offload()`; the job queues for hardware, then fails | pass `a100-large` |
+| cancelling with a sibling running | cancelling one job has taken another of the same account's running jobs with it | never run two drawing jobs at once; after any cancel, `inspect` to see which actually stopped |
+
+**When the quota is spent** the API answers `402 Payment Required` on submit.
+That is not a reason to abandon a run: plates already drawn are still in the
+dataset and every step after drawing — carrying in, aiming, building, proofing,
+shipping — costs nothing. Pick the best plate you have, land it, and say plainly
+what was blocked.
+
 ### Per plate
 
 Run the **Fetch plate** workflow with the plate id — from the Actions tab, or by
@@ -294,6 +324,16 @@ reason from the checklist, never with a feeling.**
 If the honest reason really is "it doesn't feel right", then **the brief was
 wrong** and the designer owns the fix. Rewrite the brief, do not re-roll the
 image; a re-roll against a bad brief is a slot machine.
+
+The draft sheet makes this cheap to act on: six candidates from one wording, side
+by side. **If they all fail the same way, the wording caused it** — three granary
+drafts all came back with a horizon and a treeline, because the wording had asked
+for "a wide field, seen from some way off", and a model that draws distance draws
+a horizon. Change the sentence, not the seed.
+
+And write the rejection down. Every plate keeps a
+`docs/art/renders/<plate>.attempts.md` with the wording, the seed and the reason,
+because a rejection nobody recorded is one somebody pays for twice.
 
 ---
 
