@@ -230,3 +230,49 @@ of them. Both things are true, which is why the record of both is kept here.
 is a `--model` flag rather than a rewrite. Nothing about the default has been
 changed: Qwen-Image is still what a job draws with unless told otherwise, and it
 should stay that way until a plate actually ships off Z-Image.
+
+## Sheet 5 — Z-Image, v5 wording. Sky fixed, width not.
+
+Two fixes went in together and exactly one of them landed.
+
+**The sky is gone on 6 of 6.** Saying what is overhead — *more of that same
+ground, seen from above and running back to the top edge* — worked first time,
+where "No sky, no horizon" in the negative had failed for four sheets. The band
+above every roofline is now olive ground.
+
+**Text still 0 of 6. Palette correct on 6 of 6.** Slate blue-grey walls and roof,
+dusty grey-green grass, ochre gate, dun earth. **Spear rack and drill post now on
+6 of 6** — the props have never all survived before.
+
+**The empty side bands did not land.** Every candidate still runs 90-100% of the
+page wide, and the cause is a phrase of mine one paragraph earlier: the range was
+told its length runs *"towards the far corner"*, which is an instruction to span
+the diagonal. It fought the bands and won. Corner-to-corner is not the way to say
+recession.
+
+| # | seed | verdict |
+|---|---|---|
+| 1 | 21 | good range and rank; an odd black-clad annexe on the near end |
+| 2 | 34 | strong two-storey rank, best-drawn spear rack, yard reads well; drawn very large |
+| 3 | 55 | **taken to final** — range in the upper right, rank legible along the front, rack and post well inside the kept zone, and the whole lower left an empty grass field |
+| 4 | 101 | a ruled border round the plate again. Reject on sight |
+| 5 | 202 | drawn frontal rather than angled, and a band of tall reeds across the top |
+| 6 | 303 | good, but the spear rack sits down in the lower left where the name band prints |
+
+## A correction, and it is mine
+
+Sheets 4 and 5 were both judged "drawn too wide, the ends go to the die". For a
+subject sitting in the **upper** band of a triad that is simply wrong, and
+`tile-envelope` says so plainly: rows 3-10 are `:` — kept by the die — all the way
+to both edges. A triad is two hexes side by side on top of one, so it is full
+width above the shoulder and only narrows below it.
+
+The `#` safe box is the largest inscribed **rectangle**, and a rectangle cannot
+describe "wide at top, narrow at bottom", so it is conservative by construction.
+The derived note inherits that: it asks for empty bands down the full height of
+the left and right quarters when only the lower part of those quarters is really
+cut. That is the safe direction to be wrong in, and it is worth knowing rather
+than tightening — a brief that asked for exactly the hexagon would be a brief
+nobody could compose to.
+
+So seed 55 was accepted on what the die actually keeps, not on the rectangle.
