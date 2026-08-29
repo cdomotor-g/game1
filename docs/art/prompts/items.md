@@ -1,38 +1,45 @@
-# The items — object studies (item-leather-jerkin … item-crossbow)
+# The items — object studies (item-coil-of-rope … item-plate-harness)
 
-Ten single-object studies, one per item card in the ITEMS deck — the armour
-first, then the weapons — from `data/items.json`, in deck order. Talismans live
-in the same file and are **not** in this deck: they are arcane subjects with
-their own back, their own violet and their own brief in
+Twenty single-object studies, one per card in the three decks that carry a made
+thing: **ITEMS**, **WEAPONS** and **ARMOUR**. All three read from
+`data/items.json` and all three name their plates `item-<id>`, which is why one
+brief file serves them — they are one subject drawn by one hand, and only the
+card back behind them differs. The sections below run in deck order and each
+says which deck its card is dealt from.
+
+Talismans live in the same data file and are **not** among them: they are arcane
+subjects with their own back, their own violet and their own brief in
 [`talismans.md`](talismans.md).
 
-An item here is a **made thing that is worn or carried**, and the deck rests on
+An item here is a **made thing that is worn or carried**, and the decks rest on
 one rule: **draw the thing, not the fight.** A sword drawn in a hand is a picture
 of a swordsman; a sword laid on a bench with the grip worn shiny and a nick out
 of the edge is a picture of the thing you are buying. There is a character deck
 for people.
 
-Everything in this deck is **second-hand and cared for**: kept oiled, kept
-mended, and older than whoever owns it. Nothing is gleaming and nothing is
-ruined. The wear is where a hand goes.
+Everything here is **second-hand and cared for**: kept oiled, kept mended, and
+older than whoever owns it. Nothing is gleaming and nothing is ruined. The wear
+is where a hand goes.
 
 Render at 2000 px square or better, single subject, centred.
 
-## These plates are generated today, and this brief is how that is undone
+## Which of these are generated, and which are waiting on an artist
 
-`data/components.json` gives the ITEMS deck `plateKind: "generated"`, so
-`docs/art/renders/item-*.png` is drawn by
-[`tools/draw-item.mjs`](../../../tools/draw-item.mjs) from the parts each item
-carries in its own `plate` block. That is not a placeholder and it is not a
-decision about this deck for ever — it is what an object study can be built from
-where a face cannot.
+`data/components.json` gives all three decks `plateKind: "generated"`, so a card
+that carries a `plate` block in `data/items.json` has its plate drawn by
+[`tools/draw-item.mjs`](../../../tools/draw-item.mjs) from the parts in that
+block. That is not a placeholder and it is not a decision about these decks for
+ever — it is what an object study can be built from where a face cannot.
 
-**To have one of these drawn by hand instead: delete that item's `plate` block in
-`data/items.json`.** The tool then has nothing to draw it from and will never
-overwrite the plate; `node tools/mint-queue.mjs` puts the card back at DRAW; and
-the prompt below is what the artist is handed. That is the whole switch, and it
-is per card rather than per deck, so one hand-drawn sword can sit in a deck of
-generated ones.
+**A card with no `plate` block is drawn by hand.** The tool has nothing to draw
+it from, so it can never overwrite what arrives, and `node tools/mint-queue.mjs`
+carries the card to DRAW. Half of the twenty below are in that state today — the
+eight ITEMS cards, and the dagger and the staff — and their prompts are what the
+artist is handed.
+
+**To move a generated one across, delete its `plate` block.** That is the whole
+switch, and it is per card rather than per deck, so one hand-drawn sword can sit
+in a deck of generated ones.
 
 ## Shared preamble — paste ahead of every prompt below
 
@@ -60,18 +67,26 @@ Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading,
 no lens effects. No text, no letters, no dimension figures, no border rule.
 ```
 
-## Negative prompt — for all ten
+The palette names three inks and every material is assigned one of them. Two
+that the list does not spell out, settled the same way elsewhere in this
+repository: **brass washes ochre**, and **glass washes cold slate blue**, with
+bare paper kept for the surface that catches the light.
+
+## Negative prompt — for all twenty
 
 ```text
-coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
-watermark, blot, gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
-depth of field, neon, saturated colours, pure white background, pure black,
-photorealistic, 3d render, octane, unreal engine, digital painting, oil
-painting, concept art, anime, cel shaded, sparkles, magic, runes, watermark,
+coffee ring, cup ring, water ring, tea stain, circular stain,
+ring stain, watermark, blot, gradient, glow, bloom, lens flare,
+drop shadow, soft shading, airbrush, blur, depth of field, neon,
+saturated colours, pure white background, pure black, photorealistic,
+3d render, octane, unreal engine, digital painting, oil painting,
+concept art, anime, cel shaded, sparkles, magic, runes, watermark,
 signature, text, letters, numbers, logo, UI, frame border, blueprint,
 technical drawing, exploded diagram, callout lines, product photograph,
-hands, arms, figure, wielder, mannequin, armour stand, battle, blood,
-grimdark, ruined, rusted through, shattered
+lit flame, burning wick, firelight, light rays, sparks, embers, hands,
+arms, figure, wielder, mannequin, armour stand, coat hanger,
+clothes rail, battle, blood, grimdark, ruined, rusted through,
+shattered
 ```
 
 ## The framing block
@@ -86,97 +101,184 @@ every named part well inside the middle 84% of the page. Low ground line in
 the bottom third, and the item sitting on it. Clear, quiet page above.
 ```
 
-## item-leather-jerkin — Leather Jerkin *(armour, body, ITM-01)*
+## item-coil-of-rope — Coil of Rope *(ITEMS deck · gear, carried, ITM-01)*
 
 ```text
 [PREAMBLE]
 
-A sleeveless jerkin cut from two thick hides, stood on a bench as if still on
-a body: deep armholes, a laced chest closed with a hide thong criss-crossed
-through punched eyelets, a broad waist belt with a plain iron buckle. The
-skirt hangs to mid-thigh and flares. Waxed dark at the shoulders where rain
-sits, paler where the belt rides. One shoulder seam restitched in newer
-thread. Wash: rust red across the hide in broad flat panels, slate on the
-buckle.
+A coil of hemp rope stood on edge against a bench like a wheel, its turns
+lying flat against one another: three-strand rope laid up right-handed, the
+twist of the strands drawn all the way round the coil so it can never read as
+a smooth ring. Fifteen fathoms, so the coil is deep - eight or nine turns
+thick. One end finishes in a spliced eye, the three strands tucked and
+tapered where they re-enter the lay; the other is whipped with waxed twine in
+tight turns and hangs down to the ground. A hand's length of the standing
+part is furred and glazed where it has run over rock. Wash: rust red across
+the rope, flat, the whipping twine left as bare paper.
 
-FRAMING. Square plate, whole page drawn edge to edge. The whole jerkin -
-shoulders, lacing, belt, buckle and hem - inside the middle 84%. Low ground
-line in the bottom third. Clear, quiet page above.
+FRAMING. Square plate, whole page drawn edge to edge. The whole coil, the
+spliced eye, the whipped end and both hanging tails inside the middle 84%.
+Low ground line in the bottom third with the coil standing on it. Clear,
+quiet page above.
 ```
 
-## item-helm — Helm *(armour, head, ITM-02)*
+## item-lantern — Lantern *(ITEMS deck · light, ITM-02)*
 
 ```text
 [PREAMBLE]
 
-A one-piece iron skull cap stood on a bench, seen slightly from the front: a
-riveted brow band running right round it with six domed rivets showing, and a
-straight nasal bar dropping from the band over where the face would be. The
-crown is raised from a single sheet and carries the planishing marks. Two old
-dents left in, unhammered. A leather lining strap just visible inside the
-rim. Wash: cold slate blue on the iron, flat, rust red on the strap.
+A hand lantern stood on a bench, out and cold: a square iron frame glazed on
+four sides, one pane hinged as a door with a small turn-catch, a pierced
+conical cap above it with a ring of punched vent holes, and a folding
+carrying ring on top. Inside, a plain socket holds a candle stub burnt down
+to a finger's height, its wick black and bent over, drawn clearly through the
+glass. One pane is cracked corner to corner; another has been replaced with a
+thin sheet of horn that does not match its neighbours. The inside of the cap
+is sooted dark and the base carries a crust of old wax runs. Wash: cold slate
+blue on the iron frame and the glazing, warm ochre on the horn pane, flat.
 
-FRAMING. Square plate, whole page drawn edge to edge. Crown, brow band, every
-rivet and the full length of the nasal inside the middle 84%. Low ground line
-in the bottom third. Clear, quiet page above.
+FRAMING. Square plate, whole page drawn edge to edge. The cap and its vent
+holes, the carrying ring, all four panes, the door catch, the candle stub and
+the waxed base inside the middle 84%. Low ground line in the bottom third
+with the lantern standing on it. Clear, quiet page above.
 ```
 
-## item-shield — Shield *(armour, off-hand, ITM-03)*
+## item-torch — Torch *(ITEMS deck · light, ITM-03)*
 
 ```text
 [PREAMBLE]
 
-A round shield of butted planks, face on, stood on its edge: five or six
-boards running vertically with the joints showing, an iron rim banded right
-round the edge and nailed through, and a domed iron boss riveted over the
-central hand-hole. The paint is gone; the boards are bare and grey with
-weather. Four rivets in a square about the boss. A split in one board stopped
-with an iron staple. Wash: warm ochre on the boards, cold slate blue on the
-rim and boss, both flat.
+A single torch stood on its butt and leant against a bench, out and cold: a
+riven stave a forearm and a half long with the grain running straight down
+it, split at the head into four fingers held apart by a small driven wedge.
+The split is packed with strips of coarse cloth soaked in pitch and bound
+round with cord in tight crossed turns. The head is charred from one earlier
+burning and the topmost cloth has gone crisp and curled, but the binding
+below it is whole and the pitch beneath still thick. The butt is trimmed
+square and worn pale where a hand grips it. Wash: warm ochre on the stave,
+rust red on the cloth and the cord, flat, the charred head left in near-black
+ink.
 
-FRAMING. Square plate, whole page drawn edge to edge. The whole disc - rim,
-every board joint and the boss - inside the middle 84%. Low ground line in
-the bottom third. Clear, quiet page above.
+FRAMING. Square plate, whole page drawn edge to edge. The whole stave from
+charred head to butt, the wedge, the packed cloth and every turn of the cord
+inside the middle 84%. Low ground line in the bottom third with the butt
+standing on it. Clear, quiet page above.
 ```
 
-## item-chain-mail — Chain Mail *(armour, body, ITM-04)*
+## item-grappling-hook — Grappling Hook *(ITEMS deck · gear, carried, ITM-04)*
 
 ```text
 [PREAMBLE]
 
-A knee-length riveted mail hauberk hung on a bench so it stands like a body:
-short sleeves to the elbow, a leather-bound collar, a leather belt at the
-waist, and the hem split front and back for riding. The rings are drawn
-individually where the eye lands - rows of interlocked rings, each closed
-with a tiny rivet - and settle into even texture further out. It hangs heavy
-and pools slightly where it meets the bench. A patch of newer, brighter rings
-mended into one shoulder. Wash: cold slate blue across the mail, flat, rust
-red on the collar and belt.
+A four-fluked grappling hook laid on a bench, resting on two flukes with the
+other two standing up: four iron flukes forged out from one central shank,
+each curved and tapering to a point, and a heavy welded ring at the butt of
+the shank. Three flukes stand at the same angle; the fourth is sprung visibly
+wider than its fellows and carries fresh hammer marks where somebody has
+beaten it back and not quite succeeded. The points are bright and rounded off
+from striking stone. A short tail of hemp rope is bent to the ring round a
+grooved thimble and seized back on itself with waxed twine. Wash: cold slate
+blue on the iron, rust red on the rope and the seizing, flat.
 
-FRAMING. Square plate, whole page drawn edge to edge. Collar, both sleeves,
-belt and the split hem inside the middle 84%. Low ground line in the bottom
-third. Clear, quiet page above.
+FRAMING. Square plate, whole page drawn edge to edge. All four flukes and
+their points, the shank, the ring, the thimble and the seized rope tail
+inside the middle 84%. Low ground line in the bottom third with the hook
+lying on it. Clear, quiet page above.
 ```
 
-## item-plate-harness — Plate Harness *(armour, body, ITM-05)*
+## item-bag — Bag *(ITEMS deck · gear, belt, ITM-05)*
 
 ```text
 [PREAMBLE]
 
-A breastplate with its fauld, stood on a bench: a single raised centre ridge
-running from throat to waist, a rolled edge at the arms and neck, a pauldron
-strapped over each shoulder, and three overlapping fauld lames hanging below
-the waist on sliding rivets. Buckled leather straps at the shoulders with the
-tongues hanging. Polished to a soft grey, not a mirror. One lame carries an
-old proof dent, hammered out and still visible. Wash: cold slate blue on the
-steel, flat, rust red on the straps.
+A small drawstring bag of coarse undyed cloth slumped on a bench, about as
+tall as a hand: four straight seams running up its corners, the top hemmed
+and pierced for a cord that gathers the neck into even pleats and finishes in
+two hanging tails with a knot in each. A loop of the same cord hangs at the
+back for a belt. It is not empty - it sits heavy and round-bottomed, and a
+few coin edges press their shapes out through the weave. The cloth is thin
+and shiny down one side where it has rubbed against a hip for years, and a
+square patch is darned into the bottom corner in thread that never matched.
+Wash: rust red on the cloth and the cord, flat, the darned patch left as bare
+paper.
 
-FRAMING. Square plate, whole page drawn edge to edge. Both pauldrons, the
-full breastplate, every fauld lame and the hanging straps inside the middle
-84%. Low ground line in the bottom third. Clear, quiet page above.
+FRAMING. Square plate, whole page drawn edge to edge. The whole bag - all
+four seams, the gathered neck, both cord tails, the belt loop and the darned
+patch - inside the middle 84%. Low ground line in the bottom third with the
+bag sitting on it. Clear, quiet page above.
 ```
 
-## item-sword — Sword *(weapon, hand, ITM-06)*
+## item-satchel — Satchel *(ITEMS deck · gear, back, ITM-06)*
+
+```text
+[PREAMBLE]
+
+A leather satchel stood square on a bench with its long strap laid round it
+in a loose loop: a boxy body with pleated gussets at both ends, a broad flap
+falling two-thirds down the front, and two narrow straps from the flap
+dropping into plain iron buckles on the body. The shoulder strap is one
+length, buckled at each end to an iron D-ring at a gusset, and is worn pale
+and thin along the stretch that crosses a shoulder. The leather is oiled dark
+across the flap where rain sits and paler along the bottom edge where it has
+been set down a thousand times. The buckle holes are stretched oval, and a
+second row of them has been punched further along, roughly. Wash: rust red
+across the leather, flat, cold slate blue on the buckles and the D-rings.
+
+FRAMING. Square plate, whole page drawn edge to edge. The body, both gussets,
+the flap, both buckled straps, both D-rings and the full loop of the shoulder
+strap inside the middle 84%. Low ground line in the bottom third with the
+satchel standing on it. Clear, quiet page above.
+```
+
+## item-travelling-cloak — Travelling Cloak *(ITEMS deck · clothing, back, ITM-07)*
+
+```text
+[PREAMBLE]
+
+A heavy hooded travelling cloak hung over the end of a bench so that it falls
+full length and keeps the shape of the shoulders that are not in it: a deep
+pointed hood collapsed empty against the back, a broad shoulder cape falling
+to the elbow, and below it the body of the cloak dropping in heavy vertical
+folds to a hem that swings clear of the ground. It closes at the throat with
+a leather strap through a horn toggle. The wool is coarse and its weave is
+drawn where light crosses the folds. The shoulders and the crown of the hood
+are faded paler than the rest by weather; the hem is darker, stiff with dried
+mud, and has been turned up and restitched shorter along one side. Wash:
+rust red across the wool and the throat strap, flat, warm ochre on the horn
+toggle.
+
+FRAMING. Square plate, whole page drawn edge to edge. The hood, the shoulder
+cape, the throat strap and toggle, the full drop of the folds and the whole
+hem inside the middle 84%. Low ground line in the bottom third with the hem
+hanging above it. Clear, quiet page above.
+```
+
+## item-binoculars — Binoculars *(ITEMS deck · gear, belt, ITM-08)*
+
+```text
+[PREAMBLE]
+
+A pair of binocular glasses laid on a bench, seen from a little above and to
+one side: two brass tubes of equal length lying side by side and joined at
+the eyepiece end by a hinged bridge with a small knurled screw at its pivot,
+so the eyepieces can be set nearer or further apart. Each tube is a plain
+cylinder stepped down once near the eye, with the objective lens seated in a
+rolled rim at the far end and the eyepiece in a short collar at the near one.
+Both tubes are bound about their middles in one wrapping of leather, stitched
+closed along a straight seam and worn dark and smooth where the fingers
+close. A twisted cord is knotted through a small lug on the bridge. The brass
+is bright at the edges of the leather and dulled elsewhere, and one objective
+rim carries a shallow dent. Wash: warm ochre on the brass, rust red on the
+leather and the cord, cold slate blue on the lens glass, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. Both tubes end to end,
+both objective rims, both eyepiece collars, the hinged bridge and its screw,
+the leather binding and the knotted cord inside the middle 84%. Low ground
+line in the bottom third with the glasses lying on it. Clear, quiet page
+above.
+```
+
+## item-sword — Sword *(WEAPONS deck · weapon, hand, WPN-01)*
 
 ```text
 [PREAMBLE]
@@ -195,7 +297,7 @@ line in the bottom third with the pommel resting on it. Clear, quiet page
 above.
 ```
 
-## item-war-axe — War Axe *(weapon, hand, ITM-07)*
+## item-war-axe — War Axe *(WEAPONS deck · weapon, hand, WPN-02)*
 
 ```text
 [PREAMBLE]
@@ -214,7 +316,7 @@ middle 84%. Low ground line in the bottom third with the knob resting on it.
 Clear, quiet page above.
 ```
 
-## item-war-hammer — War Hammer *(weapon, two-hand, ITM-08)*
+## item-war-hammer — War Hammer *(WEAPONS deck · weapon, two-hand, WPN-03)*
 
 ```text
 [PREAMBLE]
@@ -233,7 +335,7 @@ ground line in the bottom third with the butt resting on it. Clear, quiet
 page above.
 ```
 
-## item-bow — Bow *(weapon, two-hand, ITM-09)*
+## item-bow — Bow *(WEAPONS deck · weapon, two-hand, WPN-04)*
 
 ```text
 [PREAMBLE]
@@ -252,7 +354,7 @@ sweep of the stave, the whole string and the corded grip inside the middle
 quiet page above.
 ```
 
-## item-crossbow — Crossbow *(weapon, two-hand, ITM-10)*
+## item-crossbow — Crossbow *(WEAPONS deck · weapon, two-hand, WPN-05)*
 
 ```text
 [PREAMBLE]
@@ -269,4 +371,141 @@ cold slate blue on the prod and trigger, rust red on the lashings, all flat.
 FRAMING. Square plate, whole page drawn edge to edge. Butt, the whole tiller,
 both prod tips, both lashings, the string, the nut and the trigger inside the
 middle 84%. Low ground line in the bottom third. Clear, quiet page above.
+```
+
+## item-dagger — Dagger *(WEAPONS deck · weapon, hand, WPN-06)*
+
+```text
+[PREAMBLE]
+
+A plain single-edged dagger laid at a steep angle across a bench, point up
+and grip low: a straight blade a hand and a half long with a flat back, a
+short shallow fuller run along it below the back, and a long single edge
+honed so often that the blade is visibly narrower at its middle than at
+either end. A simple iron cross of two short bars, a grip of two wooden
+scales riveted through the tang with three iron rivets and worn round and
+dark, and a small flattened pommel peened over the end of the tang. The last
+two inches before the point are polished bright by everyday work while the
+rest of the blade is a dull grey. One small nick out of the edge near the
+cross, left. Wash: cold slate blue on the blade and the fittings, warm ochre
+on the wooden scales, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. Point, edge, fuller,
+both arms of the cross, all three rivets, the whole grip and the pommel
+inside the middle 84%. Low ground line in the bottom third with the pommel
+resting on it. Clear, quiet page above.
+```
+
+## item-staff — Staff *(WEAPONS deck · weapon, two-hand, WPN-07)*
+
+```text
+[PREAMBLE]
+
+A plain ash quarterstaff stood on its shoe and leant across a bench so that
+it runs corner to corner up the page: one straight length of ash, shoulder
+high on whoever carries it, of even thickness the whole way with only the
+faintest taper, the grain running true down it and drawn line by line. An
+iron shoe is fitted over the lower end and riveted through twice, its rim
+spread and mushroomed from being planted. The upper end is bare, rounded off
+and finely split with age, and bound below the split with a few turns of
+waxed cord. Two bands a shoulder's width apart are worn pale and polished
+where two hands have gripped for years; the stave between and beyond them is
+darker and dulled. One old knot is planed flush and shows as a closed eye in
+the grain. Wash: warm ochre on the ash, cold slate blue on the iron shoe,
+rust red on the cord, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. The full length of the
+stave from the shoe to the bound top, both shoe rivets, both worn grip bands
+and the planed knot inside the middle 84%. Low ground line in the bottom
+third with the shoe standing on it. Clear, quiet page above.
+```
+
+## item-leather-jerkin — Leather Jerkin *(ARMOUR deck · armour, body, ARM-01)*
+
+```text
+[PREAMBLE]
+
+A sleeveless jerkin cut from two thick hides, stood on a bench as if still on
+a body: deep armholes, a laced chest closed with a hide thong criss-crossed
+through punched eyelets, a broad waist belt with a plain iron buckle. The
+skirt hangs to mid-thigh and flares. Waxed dark at the shoulders where rain
+sits, paler where the belt rides. One shoulder seam restitched in newer
+thread. Wash: rust red across the hide in broad flat panels, slate on the
+buckle.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole jerkin -
+shoulders, lacing, belt, buckle and hem - inside the middle 84%. Low ground
+line in the bottom third. Clear, quiet page above.
+```
+
+## item-helm — Helm *(ARMOUR deck · armour, head, ARM-02)*
+
+```text
+[PREAMBLE]
+
+A one-piece iron skull cap stood on a bench, seen slightly from the front: a
+riveted brow band running right round it with six domed rivets showing, and a
+straight nasal bar dropping from the band over where the face would be. The
+crown is raised from a single sheet and carries the planishing marks. Two old
+dents left in, unhammered. A leather lining strap just visible inside the
+rim. Wash: cold slate blue on the iron, flat, rust red on the strap.
+
+FRAMING. Square plate, whole page drawn edge to edge. Crown, brow band, every
+rivet and the full length of the nasal inside the middle 84%. Low ground line
+in the bottom third. Clear, quiet page above.
+```
+
+## item-shield — Shield *(ARMOUR deck · armour, off-hand, ARM-03)*
+
+```text
+[PREAMBLE]
+
+A round shield of butted planks, face on, stood on its edge: five or six
+boards running vertically with the joints showing, an iron rim banded right
+round the edge and nailed through, and a domed iron boss riveted over the
+central hand-hole. The paint is gone; the boards are bare and grey with
+weather. Four rivets in a square about the boss. A split in one board stopped
+with an iron staple. Wash: warm ochre on the boards, cold slate blue on the
+rim and boss, both flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole disc - rim,
+every board joint and the boss - inside the middle 84%. Low ground line in
+the bottom third. Clear, quiet page above.
+```
+
+## item-chain-mail — Chain Mail *(ARMOUR deck · armour, body, ARM-04)*
+
+```text
+[PREAMBLE]
+
+A knee-length riveted mail hauberk hung on a bench so it stands like a body:
+short sleeves to the elbow, a leather-bound collar, a leather belt at the
+waist, and the hem split front and back for riding. The rings are drawn
+individually where the eye lands - rows of interlocked rings, each closed
+with a tiny rivet - and settle into even texture further out. It hangs heavy
+and pools slightly where it meets the bench. A patch of newer, brighter rings
+mended into one shoulder. Wash: cold slate blue across the mail, flat, rust
+red on the collar and belt.
+
+FRAMING. Square plate, whole page drawn edge to edge. Collar, both sleeves,
+belt and the split hem inside the middle 84%. Low ground line in the bottom
+third. Clear, quiet page above.
+```
+
+## item-plate-harness — Plate Harness *(ARMOUR deck · armour, body, ARM-05)*
+
+```text
+[PREAMBLE]
+
+A breastplate with its fauld, stood on a bench: a single raised centre ridge
+running from throat to waist, a rolled edge at the arms and neck, a pauldron
+strapped over each shoulder, and three overlapping fauld lames hanging below
+the waist on sliding rivets. Buckled leather straps at the shoulders with the
+tongues hanging. Polished to a soft grey, not a mirror. One lame carries an
+old proof dent, hammered out and still visible. Wash: cold slate blue on the
+steel, flat, rust red on the straps.
+
+FRAMING. Square plate, whole page drawn edge to edge. Both pauldrons, the
+full breastplate, every fauld lame and the hanging straps inside the middle
+84%. Low ground line in the bottom third. Clear, quiet page above.
 ```

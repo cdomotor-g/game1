@@ -26,26 +26,13 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**61 of 81 minted.** 10 waiting on a brief, 10 waiting on art, 0 waiting on frame.
+**61 of 81 minted.** 0 waiting on a brief, 20 waiting on art, 0 waiting on frame.
 
-### 1 · WRITE — the designer — 10 cards
+### 1 · WRITE — the designer
 
-These exist in the data with no brief. Write one into `docs/art/prompts/` under the plate id, following the shared preamble at the top of that file and the contract in `docs/art/09-framing-and-composition.md`.
+Nothing waiting.
 
-| Code | Card | Deck | Plate | brief | plate | frame |
-| --- | --- | --- | --- | :-: | :-: | :-: |
-| `ITM-07` | Travelling Cloak | Items | `item-travelling-cloak` | · | · | · |
-| `ITM-01` | Coil of Rope | Items | `item-coil-of-rope` | · | · | · |
-| `ITM-04` | Grappling Hook | Items | `item-grappling-hook` | · | · | · |
-| `ITM-05` | Bag | Items | `item-bag` | · | · | · |
-| `ITM-06` | Satchel | Items | `item-satchel` | · | · | · |
-| `ITM-08` | Binoculars | Items | `item-binoculars` | · | · | · |
-| `ITM-03` | Torch | Items | `item-torch` | · | · | · |
-| `ITM-02` | Lantern | Items | `item-lantern` | · | · | · |
-| `WPN-06` | Dagger | Weapons | `item-dagger` | · | · | · |
-| `WPN-07` | Staff | Weapons | `item-staff` | · | · | · |
-
-### 2 · DRAW — the artist — 10 cards
+### 2 · DRAW — the artist — 20 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -61,6 +48,16 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `MOD-09` | Fleetfoot Binding | Modifications | `modification-fleetfoot-binding` | ✓ | · | · |
 | `MOD-10` | Warded Hold | Modifications | `modification-warded-hold` | ✓ | · | · |
 | `MOD-11` | Salamander Grate | Modifications | `modification-salamander-grate` | ✓ | · | · |
+| `ITM-07` | Travelling Cloak | Items | `item-travelling-cloak` | ✓ | · | · |
+| `ITM-01` | Coil of Rope | Items | `item-coil-of-rope` | ✓ | · | · |
+| `ITM-04` | Grappling Hook | Items | `item-grappling-hook` | ✓ | · | · |
+| `ITM-05` | Bag | Items | `item-bag` | ✓ | · | · |
+| `ITM-06` | Satchel | Items | `item-satchel` | ✓ | · | · |
+| `ITM-08` | Binoculars | Items | `item-binoculars` | ✓ | · | · |
+| `ITM-03` | Torch | Items | `item-torch` | ✓ | · | · |
+| `ITM-02` | Lantern | Items | `item-lantern` | ✓ | · | · |
+| `WPN-06` | Dagger | Weapons | `item-dagger` | ✓ | · | · |
+| `WPN-07` | Staff | Weapons | `item-staff` | ✓ | · | · |
 
 ### 3 · FRAME — whoever accepts the plate
 

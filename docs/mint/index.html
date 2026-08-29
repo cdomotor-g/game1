@@ -464,22 +464,10 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
-<p><strong>61 of 81 minted.</strong> 10 waiting on a brief, 10 waiting on art, 0 waiting on frame.</p>
-<h3 id="1-write-the-designer-10-cards">1 · WRITE — the designer — 10 cards</h3>
-<p>These exist in the data with no brief. Write one into <code>docs/art/prompts/</code> under the plate id, following the shared preamble at the top of that file and the contract in <code>docs/art/09-framing-and-composition.md</code>.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
-<tbody><tr><td><code>ITM-07</code></td><td>Travelling Cloak</td><td>Items</td><td><code>item-travelling-cloak</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>ITM-01</code></td><td>Coil of Rope</td><td>Items</td><td><code>item-coil-of-rope</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>ITM-04</code></td><td>Grappling Hook</td><td>Items</td><td><code>item-grappling-hook</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>ITM-05</code></td><td>Bag</td><td>Items</td><td><code>item-bag</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>ITM-06</code></td><td>Satchel</td><td>Items</td><td><code>item-satchel</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>ITM-08</code></td><td>Binoculars</td><td>Items</td><td><code>item-binoculars</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>ITM-03</code></td><td>Torch</td><td>Items</td><td><code>item-torch</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>ITM-02</code></td><td>Lantern</td><td>Items</td><td><code>item-lantern</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>WPN-06</code></td><td>Dagger</td><td>Weapons</td><td><code>item-dagger</code></td><td>·</td><td>·</td><td>·</td></tr>
-<tr><td><code>WPN-07</code></td><td>Staff</td><td>Weapons</td><td><code>item-staff</code></td><td>·</td><td>·</td><td>·</td></tr></tbody></table></div>
-<h3 id="2-draw-the-artist-10-cards">2 · DRAW — the artist — 10 cards</h3>
+<p><strong>61 of 81 minted.</strong> 0 waiting on a brief, 20 waiting on art, 0 waiting on frame.</p>
+<h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
+<p>Nothing waiting.</p>
+<h3 id="2-draw-the-artist-20-cards">2 · DRAW — the artist — 20 cards</h3>
 <p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
@@ -492,7 +480,17 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>MOD-08</code></td><td>Keelbound</td><td>Modifications</td><td><code>modification-keelbound</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>MOD-09</code></td><td>Fleetfoot Binding</td><td>Modifications</td><td><code>modification-fleetfoot-binding</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>MOD-10</code></td><td>Warded Hold</td><td>Modifications</td><td><code>modification-warded-hold</code></td><td>✓</td><td>·</td><td>·</td></tr>
-<tr><td><code>MOD-11</code></td><td>Salamander Grate</td><td>Modifications</td><td><code>modification-salamander-grate</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
+<tr><td><code>MOD-11</code></td><td>Salamander Grate</td><td>Modifications</td><td><code>modification-salamander-grate</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-07</code></td><td>Travelling Cloak</td><td>Items</td><td><code>item-travelling-cloak</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-01</code></td><td>Coil of Rope</td><td>Items</td><td><code>item-coil-of-rope</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-04</code></td><td>Grappling Hook</td><td>Items</td><td><code>item-grappling-hook</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-05</code></td><td>Bag</td><td>Items</td><td><code>item-bag</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-06</code></td><td>Satchel</td><td>Items</td><td><code>item-satchel</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-08</code></td><td>Binoculars</td><td>Items</td><td><code>item-binoculars</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-03</code></td><td>Torch</td><td>Items</td><td><code>item-torch</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-02</code></td><td>Lantern</td><td>Items</td><td><code>item-lantern</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>WPN-06</code></td><td>Dagger</td><td>Weapons</td><td><code>item-dagger</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>WPN-07</code></td><td>Staff</td><td>Weapons</td><td><code>item-staff</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
 <h3 id="3-frame-whoever-accepts-the-plate">3 · FRAME — whoever accepts the plate</h3>
 <p>Nothing waiting.</p>
 <h3 id="minted">Minted</h3>
@@ -509,7 +507,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h2 id="maps">Maps</h2>
 <p>One drawn map plate, and the hex board read off it. Briefs in <a href="../art/prompts/maps.md"><code>docs/art/prompts/maps.md</code></a>, plates in <code>docs/map/</code>, aimed by <strong>TRACE</strong> in <code>data/maps/{id}.json</code>.</p>
 <p><strong>1 of 1 minted.</strong> 0 waiting on a brief, 0 waiting on art, 0 waiting on trace.</p>
-<h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
+<h3 id="1-write-the-designer-1">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="2-draw-the-artist">2 · DRAW — the artist</h3>
 <p>Nothing waiting.</p>
@@ -527,7 +525,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h2 id="building-tiles">Building tiles</h2>
 <p>One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in <a href="../art/prompts/buildingtiles.md"><code>docs/art/prompts/buildingtiles.md</code></a>, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
 <p><strong>4 of 54 minted.</strong> 0 waiting on a brief, 50 waiting on art, 0 waiting on frame.</p>
-<h3 id="1-write-the-designer-1">1 · WRITE — the designer</h3>
+<h3 id="1-write-the-designer-2">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="2-draw-the-artist-50-tiles">2 · DRAW — the artist — 50 tiles</h3>
 <p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
