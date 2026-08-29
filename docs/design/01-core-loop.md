@@ -19,11 +19,24 @@ for trade negotiation.
 growth, wine ageing, cargo in transit, livestock breeding.
 
 **5. Feeding.** Every town pays food upkeep from stock held in that town. Shortfalls
-become unrest.
+become unrest. Then, at the end of the phase, every player rolls the ochre **spoil die**
+once for each perishable stack still in their hands — grown, bought, looted or found, it
+makes no difference to a fish — and discards what the spoil strip says. It sits here and
+not one phase later because rot is a thing that happens to food, not a thing that happens
+to a market, and because the round you failed to shift a hold full of milk is the round it
+should cost you.
 
-**6. Market.** Roll the market: two red dice for demand, two blue for supply and one green
-for elasticity, per commodity line in play, bent by what that line remembers. Trade at the
-new price, walk the tallies, and turn order passes to the left. See
+**6. Market.** Roll the market for every column on the price ledger: **two blue dice for
+demand, two red for supply, one green for volatility**, plus whatever the good's own nature
+adds. Blue is what you want and red is what stands in your way — the same two colours,
+subtracted the same way, as a fight. The whole sum is addition, `Demand − Supply +
+Volatility + Modifier`; read the net on the swing ruler, step the price that many places
+along that commodity's printed row of six, fill the new figure into the ledger, strike the
+old one through, and write the move in the row's move box. Then turn order passes to the
+left.
+
+Nobody trades in this phase. It fixes the price everybody will trade at **next** round, in
+the Actions phase, against a figure they can already see. See
 [04-trade.md](04-trade.md#how-a-price-is-arrived-at).
 
 ## Effort
@@ -65,7 +78,8 @@ is legal when all of these hold:
 - **Hours** — you have the batch's effort cost left.
 
 Run the batch and everything happens at once: inputs are consumed, the tool takes one
-wear point per hour, and outputs arrive — immediately, or after a maturation wait.
+wear point for the job however many hours it ran, and outputs arrive — immediately, or
+after a maturation wait.
 
 The web sandbox shows you exactly this list, including everything you *cannot* do and
 the first reason why. That "out of reach, and why" panel is the most useful teaching
@@ -80,15 +94,27 @@ anything.
 
 ## Tools wear out
 
-A tool has a durability track. Each hour worked with it costs one wear point. When the
-track empties, the tool is gone — the effort already spent is not refunded.
+A tool has a wear track. **Each job done with it costs one wear point** — one, whether the
+job was one hour or nine — and when the track empties the tool is gone, with the effort
+already spent on the job that broke it not refunded. It used to be a point a labour hour,
+which meant adding hours up all round and a durability number running past thirty; it is a
+point a job now, on the player board's own 0–14 scale, and an axe that was twenty-four wear
+at three hours a job is ten wear at one a job. Slightly longer-lived, and nobody adds hours
+up any more.
 
-On the table this is a little progress bar with a sliding marker, one per tool. In the
+A tool is no longer the only thing this happens to. **Everything a figure carries wears**,
+on one track, in one unit, at one point a use — a sword swung, a plate dented by the blow it
+turned, a torch burned for a night, a rope that took a party down a cliff. On the table that
+is one of the four **W ladders** on the player board, one beside each kit slot, so a player
+counts the wear of the four things they are actually carrying and nothing else. In the
 digital build it is a bar that turns amber and then red.
 
 Tool size multiplies output rather than hours: a large axe does not let one worker
 work faster, it means the hours they do work count for more. Sizes are ×1, ×1.5 and ×2
-output for ×1, ×1.5 and ×2 durability.
+output for ×1, ×2 and ×3.5 cost — and **not** for more wear. A size used to multiply
+durability too, and a multiplied wear number is a number the board's ceiling sweep cannot
+see, because it never appears in the data at the size it is actually walked at. A bigger
+loom is a faster loom, not a longer-lived one.
 
 **Required vs optional tools.** Most tools gate their recipes: no pick, no coal. Farm
 tools do not. Sowing and harvesting can be done by hand; a plough halves the hours and

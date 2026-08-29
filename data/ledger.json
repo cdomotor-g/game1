@@ -1,0 +1,66 @@
+{
+  "$comment": "The price ledger: one A4 sheet, and the only place in this game where a price lives.\n\nPrices were on a board. Six lines, each with a token standing on one of six bands, and the price was that band's multiplier times the commodity's base value - a sum somebody did in their head every time anybody asked what grain was worth. Then a memory strip beside it, and a tally beside that, and three pieces to walk per line per round. What the table could actually SEE at the end of all that was a token standing on a cell. Not a price. Not last round's price. Not whether the price had been climbing for four rounds, which is precisely the thing anybody trading would want to know.\n\nA ledger is what merchants have always used instead, and it is better at every one of those jobs. The price is written down as a number, in figures a metre away can read. Last round's is directly above it with a line through it. The whole history of a market is one column you can run your eye down.\n\nTHE FIGURES ARE HOLLOW AND YOU COLOUR THEM IN. Three seven-segment digits per cell, printed as outlines, filled with a pencil - which is a stranger idea on paper than it sounds and turns out to be the right one for three reasons. A written number is somebody's handwriting and gets argued about across a table; a filled figure is a figure. Colouring in seven bars is fast and it is EXACTLY as fast for 188 as for 8, where writing is not. And a wrong digit is corrected by filling one more segment rather than by rubbing out, which is what lets the whole sheet be worked in pencil at speed.\n\nNO BANDS ON THIS SHEET, AND NO TOKEN. Every commodity's six prices are printed as one row of six figures in the annex - grain is 3 · 4 · 5 · 6 · 8 · 10 - so a move is a STEP ALONG THAT ROW. You have last round's price written in front of you; it is one of the six; the swing ruler says how many places to step; the figure you land on is the new price. There is nothing to multiply, no band to remember and nothing to walk. That is what let the price ladder come off the market board with nothing replacing it.\n\nThis file is content: what a column is, what a row is, what the head holds and what the foot says. How the sheet is DRAWN - the paper, the margins, how tall a digit is cut, how thick a segment is - is declared once in data/components.json under `ledger`, the same division as the two boards. The ROUNDS are rules.json victory.gameLengthRounds and the MOVE RANGE is pricing.json ruler, both read at build time, because a sheet that restated them is a sheet that could disagree with the game.",
+  "version": "0.1.0",
+
+  "sheet": {
+    "id": "price-ledger",
+    "name": "Price Ledger",
+    "sheet": "A4 portrait",
+    "summary": "Commodities across the top, one column each. Rounds down the left, one row each. Every cell is three hollow seven-segment figures and a small box beside them.",
+    "$portraitNote": "PORTRAIT, and the numbers chose it rather than taste. A ledger wants rows: landscape gives 273 mm of width - eleven columns nobody needs - and only about 150 mm of history. Portrait gives 239 mm of history and lands on six columns, which is a town's real traded list. A price ledger is a tall thing.",
+    "note": "The same sawn workbench ground as the boards (docs/art/06-components.md), ruled rather than routed. It is the one sheet in the game that is written on, so it is the one sheet that is printed fresh for every game.",
+    "generic": "No commodity is named on it. A column is not the grain column until somebody stands the grain token in the seat at its head, and it stops being the grain column when they take it off - the same doctrine the market board's lines ran under, inherited by the sheet that took the job over.",
+    "howMany": "One per town whose market the table is actually trading in. Six columns is a town's real traded list; a town dealing in more than six prints a second sheet, which is what a second sheet is for."
+  },
+
+  "column": {
+    "$comment": "One commodity's whole market, read top to bottom: what it is, and then what it cost, every round, for the whole game.",
+    "identity": "The token IS the label. A hairline hexagonal seat at the head of the column, and the commodity's own token stands in it - carrying its family's mark and, in the corner, the mark that says which of the four kinds of good it is. So the column head says what this is AND how it behaves, and neither is printed on the sheet.",
+    "seat": "A ruled blank, not a printed name. A table short of a token writes a name in it in pencil, the way the mini-map sheets rule a blank hex for the same reason: the thing that goes there changes every time the sheet is put down.",
+    "reads": "Straight down. The one un-struck figure in a column is the price now; every struck one above it is what it was, in order, with the gaps where the market held.",
+    "moveBox": {
+      "$comment": "The small box beside each row's figures, and the only thing on this sheet that is written rather than filled. Write the number of places the price just stepped: -3 to +3, or a dash if it held.\n\nIt earns its width twice. It is the RECORD - a column of moves is the shape of a market at a glance, where a column of prices is only its level. And for a SOUGHT good it is the rule: the hype modifier is the move box on the row above, which is how a market that runs on its own reputation gets a memory without anything having to remember it (pricing.json sought).",
+      "range": "pricing.ruler bins move",
+      "holds": "one figure, signed, or a dash",
+      "$dashNote": "A held round writes a dash rather than a nought, and rather than nothing. A dash says the roll happened and came to nothing; an empty box says somebody forgot to roll this column, and those are different problems."
+    }
+  },
+
+  "row": {
+    "$comment": "One round. Not one price change - one ROUND, whether the price moved or not, because a row that is only written when something happens is a row you cannot count backwards from.",
+    "is": "A round of the game, numbered down the left-hand edge of the sheet from 1 to rules.json victory.gameLengthRounds.",
+    "$whyRoundsNote": "The market rolls once per column per Market phase, so a price can change at most as many times as there are rounds - which makes the round count the honest number of rows, and makes the sheet impossible to run off the bottom of. It also makes `the row above` mean exactly one thing for the sought good's rule. In a free-running list a round that held would write nothing, and `the row above` would quietly mean two rounds ago.",
+    "blankIsInformation": "About three rounds in ten hold (pricing.json ruler.odds), so a column has gaps in it, and the gaps are the market holding. A gap in one column where every other column has a figure is somebody who forgot to roll a line.",
+    "strikeThrough": "When the price changes, rule a line through the figure in the row above and fill the new one in this row. It is the gesture the whole sheet is built around and it is the reason the figures are filled rather than written: a struck figure is still perfectly readable, where struck handwriting is a smudge."
+  },
+
+  "digits": {
+    "$comment": "Three of them, hollow, per row per column. Three because the dearest thing in the game is worth 110 at base and 220 at the top band, and a fourth digit would be a column of noughts on every sheet ever printed.\n\nSeven segments each, all seven printed whether they are part of the figure or not - an unlit segment is what makes a hollow figure read as a NUMBER WAITING rather than as a shape. Drawing only the lit ones would also mean the tool knew the price, which it must not: this sheet is printed before anybody has rolled anything.",
+    "count": 3,
+    "range": [0, 999],
+    "$rangeNote": "Base values run 1 to 110 and the top band is double, so 220 is the dearest price the printed game can produce. Three digits is right, with room, and the check that says so is in tools/validate-data.mjs rather than in this sentence.",
+    "filled": "With a pencil. One segment at a time, and a wrong digit is corrected by filling one more segment rather than by rubbing anything out.",
+    "leadingZeros": "Leave them blank. A price of 8 is a blank, a blank and an 8, not 008 - nobody has ever written 008 on a ledger."
+  },
+
+  "head": {
+    "$comment": "The top of every column: the token's seat, and nothing else. There is no band strip, no starting price and no name.",
+    "title": "PRICE LEDGER",
+    "holds": ["the commodity token's hexagonal seat"],
+    "$nothingElseNote": "A band strip was tried here and does not fit: six cells of a 7 mm bar plus clearance is 56 mm against a 31 mm column. It was not worth widening the sheet for, because it was not worth having - the price on the ledger IS the band, read against the commodity's own printed row of six in the annex."
+  },
+
+  "foot": {
+    "$comment": "One row across the bottom of the sheet: the four marks a column head can be carrying, so a player who has just stood a token in a seat can read what its corner mark means without getting up. The same four that head the market board's panels, at key size.",
+    "title": "WHAT KIND OF GOOD",
+    "source": "pricing.models",
+    "shows": ["mark", "name", "line"],
+    "note": "The one thing this sheet says that is not a number. It is here because the sheet is what a trader has in front of them, and the mark on the token they just picked up is the question they are most likely to have."
+  },
+
+  "printing": {
+    "$comment": "The one component in the game that is consumed by being used, alongside the depletion sheet - and the two are consumed differently, which is worth saying. A depletion sheet is spent because pieces are left on it; a ledger is spent because it is written on. Neither can be put away and got out again.",
+    "fresh": "One per game, per town being traded in. Print a few spares; a game that runs long or a table that opens a seventh market wants another sheet and should not have to stop.",
+    "pencil": "Pencil, not ink, whatever the flavour text says. The sheet is designed for a mistake to be recoverable by filling one more segment, and that only works if the fill can also be rubbed out when somebody has genuinely mis-read the ruler."
+  }
+}

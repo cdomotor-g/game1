@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 618" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 667" font-family="Georgia, 'Times New Roman', serif">
 <defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
-<rect width="780" height="618" fill="#EDE4D1"/>
+<rect width="780" height="667" fill="#EDE4D1"/>
 <text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="weaver">Weaver's Shed</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 4 Lumber + 1 Stone — 12 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">stands on Grassland, Forest or Hills · run by a Weaver</text>
 <g class="f-token" data-kind="commodities" data-id="wool"><rect x="16" y="72.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="85" font-size="9" fill="#1A1714">2 × Wool</text></g>
 <text x="23" y="98.5" font-size="7" fill="#5F564C" font-style="italic">from the Pasture</text>
@@ -56,23 +56,30 @@
 <line x1="524" y1="428.5" x2="548" y2="428.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
 <g class="f-token" data-kind="items" data-id="sling"><rect x="552" y="419.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="432" font-size="9" fill="#1A1714">Sling</text></g>
 <line x1="16" y1="453" x2="764" y2="453" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="yarn"><rect x="16" y="463.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="476" font-size="9" fill="#1A1714">2 × Yarn</text></g>
+<g class="f-token" data-kind="commodities" data-id="rope"><rect x="16" y="463.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="476" font-size="9" fill="#1A1714">2 × Rope</text></g>
 <text x="23" y="489.5" font-size="7" fill="#5F564C" font-style="italic">made here</text>
 <line x1="70.88" y1="472.5" x2="296" y2="477.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="talisman-weavers-knot"><rect x="300" y="459" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="473" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Weaver's Knot</text><text x="410" y="485" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<g class="f-token" data-kind="items" data-id="coil-of-rope"><rect x="300" y="459" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="473" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Coil of Rope</text><text x="410" y="485" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
 <line x1="524" y1="477.5" x2="548" y2="477.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="talisman-weavers-knot"><rect x="552" y="468.5" width="77.18" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="481" font-size="9" fill="#1A1714">Weaver's Knot</text></g>
+<g class="f-token" data-kind="items" data-id="coil-of-rope"><rect x="552" y="468.5" width="72.32" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="481" font-size="9" fill="#1A1714">Coil of Rope</text></g>
 <line x1="16" y1="502" x2="764" y2="502" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="fine-cloth"><rect x="16" y="508" width="82.04" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="520.5" font-size="9" fill="#1A1714">4 × Fine Cloth</text></g>
-<text x="23" y="534" font-size="7" fill="#5F564C" font-style="italic">made here</text>
-<line x1="100.04" y1="517" x2="296" y2="555" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="commodities" data-id="rope"><rect x="16" y="541" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="553.5" font-size="9" fill="#1A1714">3 × Rope</text></g>
-<text x="23" y="567" font-size="7" fill="#5F564C" font-style="italic">made here</text>
-<line x1="70.88" y1="550" x2="296" y2="555" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="574" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="586.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
-<text x="23" y="600" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
-<line x1="80.6" y1="583" x2="296" y2="555" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="modifications" data-id="spinnaker"><rect x="300" y="525.5" width="220" height="59" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="539.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Spinnaker</text><text x="410" y="551.5" text-anchor="middle" font-size="8" fill="#3D3630">6h effort</text><text x="410" y="562.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Weaver</text><text x="410" y="573.5" text-anchor="middle" font-size="8" fill="#3D3630">fits: ship, barge</text></g>
-<line x1="524" y1="555" x2="548" y2="555" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="modifications" data-id="spinnaker"><rect x="552" y="546" width="57.74" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="558.5" font-size="9" fill="#1A1714">Spinnaker</text></g>
+<g class="f-token" data-kind="commodities" data-id="yarn"><rect x="16" y="512.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="525" font-size="9" fill="#1A1714">2 × Yarn</text></g>
+<text x="23" y="538.5" font-size="7" fill="#5F564C" font-style="italic">made here</text>
+<line x1="70.88" y1="521.5" x2="296" y2="526.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-weavers-knot"><rect x="300" y="508" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="522" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Weaver's Knot</text><text x="410" y="534" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="526.5" x2="548" y2="526.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-weavers-knot"><rect x="552" y="517.5" width="77.18" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="530" font-size="9" fill="#1A1714">Weaver's Knot</text></g>
+<line x1="16" y1="551" x2="764" y2="551" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="fine-cloth"><rect x="16" y="557" width="82.04" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="569.5" font-size="9" fill="#1A1714">4 × Fine Cloth</text></g>
+<text x="23" y="583" font-size="7" fill="#5F564C" font-style="italic">made here</text>
+<line x1="100.04" y1="566" x2="296" y2="604" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="rope"><rect x="16" y="590" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="602.5" font-size="9" fill="#1A1714">3 × Rope</text></g>
+<text x="23" y="616" font-size="7" fill="#5F564C" font-style="italic">made here</text>
+<line x1="70.88" y1="599" x2="296" y2="604" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="623" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="635.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="649" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="632" x2="296" y2="604" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="spinnaker"><rect x="300" y="574.5" width="220" height="59" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="588.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Spinnaker</text><text x="410" y="600.5" text-anchor="middle" font-size="8" fill="#3D3630">6h effort</text><text x="410" y="611.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Weaver</text><text x="410" y="622.5" text-anchor="middle" font-size="8" fill="#3D3630">fits: ship, barge</text></g>
+<line x1="524" y1="604" x2="548" y2="604" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="spinnaker"><rect x="552" y="595" width="57.74" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="607.5" font-size="9" fill="#1A1714">Spinnaker</text></g>
 </svg>

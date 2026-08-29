@@ -25,16 +25,23 @@ Reach is genuinely dark:
 | Light | Night speed |
 | --- | --- |
 | None | No travel. Even on a road. |
-| Torch | 1 hex (2 on a road); spends one of the torch's uses |
-| Lantern | Half day speed, rounded up; spends nothing |
+| Torch | 1 hex (2 on a road); **1 wear**, which is the whole of a torch |
+| Lantern | Half day speed, rounded up; 1 wear of its eight |
 | Owl's Eye potion | As a lantern, for one round |
 
 A night leg is never free: it triggers a second discovery roll where the party
 stops, with the monster band widened by 1. Trains run at night at full speed
 with a lantern fitted; ships need one rigged and sail at half speed. Torches
-burn out; lanterns are capital. That is the whole economy of light, and it makes
-a lantern one of the best-value items in the game — which is why one is a quest
-delivery.
+burn out; lanterns are capital — and that is now the wear track saying it rather
+than a special rule about torches. A torch has **1 wear** and a lantern **8**: the
+same number in the same box on the same ladder, and the whole economy of light
+falls out of the difference. It makes a lantern one of the best-value items in the
+game, which is why one is a quest delivery.
+
+**A night leg also halves the number that lets you leave.** Pace under a lantern is
+half your day speed rounded up, and under a torch it is 1 — so pushing on past dark
+is the cheapest way in the game to make yourself catchable. See *Running away*,
+below.
 
 **Caves** appear through discovery rolls on hills and mountains (the `caves`
 terrain feature). A party may enter only with a lit torch or lantern; inside is
@@ -71,46 +78,145 @@ widen downward from their printed bottom and never claim 1 or 20.
 
 ## Monsters
 
-Twelve for now, three per element — fire, earth, water, air — in
-`monsters.json`, drawn when a discovery roll says **monster** and the drawn
-card's terrain list includes the hex. Water monsters do not occur in the desert
-because the deck itself refuses the draw.
+Fourteen — three of each element, fire, earth, water and air, and then the two
+dragons the sighting cards had been promising — in `monsters.json`, drawn when a
+discovery roll says **monster** and the drawn card's terrain list includes the
+hex. Water monsters do not occur in the desert because the deck itself refuses
+the draw.
+
+Every one of them prints five numbers and a mark in its summary strip — **H**
+health, **S** strength, **A** armour, **P** pace, **Y** mana yield, and its
+element — and every one of those five is a number a *player* can also have. That
+is what lets a monster be dealt onto a spare player board and run like anybody
+else at the table: there is nothing on the card the board cannot hold.
 
 Meeting one is a choice, and the choice is the player's unless the card says
 otherwise:
 
 | Option | How | What you get |
 | --- | --- | --- |
-| **Slay** | Fight, per the conflict rules | The monster's mana, in its element |
-| **Enslave** | Win by 2+ net hits without killing | A d4 worker that eats and breeds unrest |
-| **Befriend** | The gift on its card, then 4+ on a d6 | A guard for a hex, or an escort |
-| **Domesticate** | Befriend or subdue, then 2 rounds at a pasture | The benefit on its card |
-| **Flee** | Withdraw the way you came | Nothing, and nothing rolls |
+| **Slay** | Fight, per the conflict rules: totals, difference, health off the loser | Mana in its element — **the lesser of the Y box and a roll of the purple die** |
+| **Enslave** | Beat it by **2 or more** without taking it to 0 health — declared before you roll | A d4 worker that eats and breeds unrest. No mana |
+| **Befriend** | The gift on its card, then 4+ on a d6 | A guard for a hex, or an escort. No mana |
+| **Domesticate** | Befriend or win without killing, then 2 rounds at a pasture | The benefit on its card. No mana |
+| **Flee** | **Only if your pace is greater than its P.** Withdraw the way you came | Nothing, nothing looted, and no discovery roll this leg |
+
+Three of those rows changed shape when the battle roll did, and the changes are
+not cosmetic. **Enslave** used to be *win by 2+ net hits*, and there are no hits
+to net: it is a margin on the one total now, declared before the dice so that
+taking a monster alive is a risk you accepted rather than a mercy you discovered
+afterwards. **Slay** pays a die rather than a price list — the Y box is a ceiling
+and the purple die says how much of it you caught. And **Flee** stopped being
+free, which is the largest of the three and has a section of its own below.
 
 Not everything can be tamed: the card lists which options it allows, and the
-Gravel Wyrm, the Mire Strangler and the Deepwater Maw allow none of them. The
-trade is deliberate — slaying pays mana now, the other three turn mana away for
-a living asset that eats.
+Gravel Wyrm, the Mire Strangler, the Dust Devil and the Deepwater Maw allow none
+of them. The trade is deliberate — slaying pays mana, the other three turn mana
+away for a living asset that eats.
 
-Seven of the twelve bestiary plates are accepted
-([`docs/art/prompts/monsters.md`](../art/prompts/monsters.md) is the brief);
-the three fire monsters, the Barrow Troll and the Stone Boar are still to be
-drawn:
+All fourteen bestiary plates are accepted
+([`docs/art/prompts/monsters.md`](../art/prompts/monsters.md) is the brief):
 
 | | | | |
 | --- | --- | --- | --- |
-| ![Gravel Wyrm](../art/renders/monster-gravel-wyrm.png) | ![Mire Strangler](../art/renders/monster-mire-strangler.png) | ![Reef Serpent](../art/renders/monster-reef-serpent.png) | ![The Deepwater Maw](../art/renders/monster-deepwater-maw.png) |
-| *Gravel Wyrm (MON-06)* | *Mire Strangler (MON-07)* | *Reef Serpent (MON-08)* | *The Deepwater Maw (MON-09)* |
-| ![Rime Harpy](../art/renders/monster-rime-harpy.png) | ![Dust Devil](../art/renders/monster-dust-devil.png) | ![Storm Roc](../art/renders/monster-storm-roc.png) | |
-| *Rime Harpy (MON-10)* | *Dust Devil (MON-11)* | *Storm Roc (MON-12)* | |
+| ![Cinder Wolf](../art/renders/monster-cinder-wolf.png) | ![Ash Drake](../art/renders/monster-ash-drake.png) | ![Forge Wight](../art/renders/monster-forge-wight.png) | ![Barrow Troll](../art/renders/monster-barrow-troll.png) |
+| *Cinder Wolf (MON-01)* | *Ash Drake (MON-02)* | *Forge Wight (MON-03)* | *Barrow Troll (MON-04)* |
+| ![Stone Boar](../art/renders/monster-stone-boar.png) | ![Gravel Wyrm](../art/renders/monster-gravel-wyrm.png) | ![Mire Strangler](../art/renders/monster-mire-strangler.png) | ![Reef Serpent](../art/renders/monster-reef-serpent.png) |
+| *Stone Boar (MON-05)* | *Gravel Wyrm (MON-06)* | *Mire Strangler (MON-07)* | *Reef Serpent (MON-08)* |
+| ![The Deepwater Maw](../art/renders/monster-deepwater-maw.png) | ![Rime Harpy](../art/renders/monster-rime-harpy.png) | ![Dust Devil](../art/renders/monster-dust-devil.png) | ![Storm Roc](../art/renders/monster-storm-roc.png) |
+| *The Deepwater Maw (MON-09)* | *Rime Harpy (MON-10)* | *Dust Devil (MON-11)* | *Storm Roc (MON-12)* |
+| ![Vhalrik, the Cinder-Crowned](../art/renders/monster-vhalrik-the-cinder-crowned.png) | ![The Hoarwyrm](../art/renders/monster-hoarwyrm.png) | | |
+| *Vhalrik, the Cinder-Crowned (MON-13)* | *The Hoarwyrm (MON-14)* | | |
 
 An unresolved monster stays on its hex as a figure and attacks whoever ends a
 leg there. The wild accumulates.
 
+### Running away
+
+**A party may run only if its pace is GREATER than the monster's.** Equal is not
+greater: a thing that matches you stays with you, and there is no roll to make it
+otherwise. A party that cannot outpace what it has met **may not decline the
+fight** — the option is not offered. It may still befriend it, or offer it
+something, or die.
+
+Fleeing used to be free. Withdraw the way you came, lose the discovery roll,
+done — and the cost of that was the whole bestiary. Every monster was optional,
+which made most of them decorative: a card turned over, a shrug, a leg ended one
+hex short. A deck of fourteen creatures nobody ever had to fight is a deck of
+fourteen illustrations.
+
+So the P box went on every card, and the comparison is a footrace:
+
+| Your leg | Pace | Gets away from |
+| --- | --- | --- |
+| On foot, mountain or marsh | 1 | **Nothing at all** — a mire strangler is pace 1, and equal is not greater |
+| On foot, forest, hills, tundra or desert | 2 | The mire strangler |
+| On foot, grassland | 4 | Everything up to the barrow troll — but not the stone boar at 4 |
+| On foot, on a road | 5 | Up to the maw and the hoarwyrm; the reef serpent matches you |
+| Mounted, grassland | 6 | Up to Vhalrik and the reef serpent; the wolf and the drake match you, and the harpy, the dust devil and the roc are faster |
+| Mounted, on a road | 8 | Everything except the storm roc — **which nothing in the game outruns** |
+
+Read down that column and the design falls out of it. On foot in grassland — the
+best ground a walking party gets — you outrun the barrow troll and nothing else
+that lives there. On foot in the mountains you outrun nothing whatsoever, and the
+mountains hold seven of the fourteen. The three fastest creatures in the deck are
+all air monsters, and two of them keep to the high passes and the tundra, which
+is precisely where nobody keeps a horse. And the storm roc is pace 8, the fastest
+leg anybody can make is 8, and equal is not greater — so the roc is the one
+creature in this game nobody has ever walked away from.
+
+**This is the change that puts a road, a horse and a night's sleep into the same
+decision as a sword**, and each of the three gets there by a different door.
+
+The **road** and the **horse** are the obvious two: they are pace, directly, and
+they were already being bought for the toll and the haulage. A mounted party on a
+road outruns thirteen of the fourteen and can be a coward all day; a party on foot
+in the mountains has bought nothing but the fight it is standing in. The
+infrastructure the economy game was building for money now decides whether the
+adventure layer is survivable, which is exactly the join this whole layer is
+supposed to have.
+
+The **night** gets there by the back. Pushing on into a night leg is the standing
+temptation of the travel rules — one more round of distance, for the price of a
+lantern — and what it actually costs is now legible in one number: **a night leg
+under a lantern is half your day pace, rounded up.** So the party that refuses to
+make camp halves the only figure that lets it decline a fight, and does it on the
+one leg that rolls a *second* discovery with the monster band widened by 1. Push
+on and you are slower, in the dark, rolling more often, on a worse table. Sleep,
+and every one of those goes the other way. That is the sentence the flee rule was
+missing: a night's camp used to be about health and strength, and now it is about
+whether you get to leave.
+
+And it means plate harness costs you something real: **−1 pace** as well as +3
+armour. The best armour in the game is also the reason you have to use it.
+
+One exception, and it is aimed at exactly the situation it sounds like: monsters
+of **strength 4 or more get one free round of the battle roll against a fleeing
+cargo vehicle**, whatever its pace. A loaded wagon does not sprint, and a big
+enough thing gets its one swing at it as it goes. Full rules in
+`rules.json → conflict.flee`.
+
 ## Mana, talismans and spells
 
-Slaying a monster yields its **mana**, element-matched. Mana is not a commodity:
-no bulk, no stockpile, no crate. It must be *held* — and almost nobody can hold
+Slaying a monster yields **mana**, element-matched — and how much is a die, not a
+price. The **Y** box on the card is the *most* the corpse can give up; what you
+actually take is **the lesser of that number and one roll of the purple mana die**
+(`arcana.json → manaDie`), rolled once at the moment it reaches 0 health and split
+among whoever fought.
+
+It was a payment until it was a ceiling, and the reason for the change is
+Vhalrik. Six mana, every time, known in advance: the largest fight on the map was
+an errand with a price sticker on it, and no decision in it survived the moment
+you did the arithmetic. Now the small kill is wages and the great kill is a
+gamble. A cinder wolf yields 1, so any roll but a 1 is still 1 and the trickle at
+the bottom of the deck is untouched; Vhalrik yields 6, so the die is the whole
+story and half the time you leave four of it lying on the mountain. The purple die
+is the fifth and last die in the box — blue is what you want, red is what stands
+in your way, green is the weather on a market, ochre is what the season takes back,
+and bruise is what a dead monster gives up. Five inks, five dice, no sixth.
+
+Mana is not a commodity: no bulk, no stockpile, no crate. It must be *held* — and
+almost nobody can hold
 it in the body. Elves carry up to 3 innately; humans, dwarves, halflings and
 orcs carry none at all. Everyone else's mana lives in a **talisman**
 (`items.json`, class `talisman`): a bone charm holds 2, a copper amulet 4, a
@@ -130,10 +236,11 @@ the violet is a printing error, exactly as
 | ![Gold Locket](../art/renders/talisman-tal-04.png) | ![Gemfire Pendant](../art/renders/talisman-tal-05.png) | ![Crystal Phylactery](../art/renders/talisman-tal-06.png) |
 | *Gold Locket (TAL-04) — holds 6* | *Gemfire Pendant (TAL-05) — holds 8* | *Crystal Phylactery (TAL-06) — holds 10* |
 
-Mana is spent on **spells** (`arcana.json`): eight for now, two per element, a
-minor and a major. Like the potions, every one buys the things the game actually
-cares about — hours, movement, safety, repair — and none of them break the
-economy. Casting is one spell per character per round, and only characters cast.
+Mana is spent on **spells** (`arcana.json`): fourteen of them, at least three per
+element, running from a 1-mana Kindle to a 5-mana Stormcall. Like the potions,
+every one buys the things the game actually cares about — hours, movement, safety,
+repair, information — and none of them break the economy. Casting is one spell per
+character per round, and only characters cast.
 
 Mana crystals (the commodity) are frozen mana: shatter one for 2 mana of any
 element, but mana never freezes back.
@@ -219,14 +326,21 @@ Wagonrow (VEH-09) is still to be drawn:
 figure takes one at setup for a face and a **summary strip** across the top of
 the card, which is every number they have, printed once:
 
-| H | S | D | M | ¤ | KG |
-| --- | --- | --- | --- | --- | --- |
-| health | strength | defence | mana held in the body | coin at setup | what they can shoulder |
+| H | S | M | ¤ | KG |
+| --- | --- | --- | --- | --- |
+| health | strength | mana held in the body | coin at setup | what they can shoulder |
 
 Those are the player board's own track letters, so setting up is reading across
 the strip and putting tokens down left to right. Nothing on the card moves —
 there is no bar on any card any more — and the portrait gets the full width of
 the card because there is nothing beside it.
+
+**The strip lost a box.** There was a **D** between S and M and there is not any
+more, because defence went with the to-hit roll it existed to shift. What a
+character brings to a battle besides their strength is the gear in their four kit
+slots, and gear is a card with its own number on it — so the thing that used to
+be printed on the hero is now something the hero is *carrying*, which is both
+truer and one fewer number to reprint every time the fight changes.
 
 ### Strength — one arm, one number
 
@@ -253,15 +367,88 @@ holding it. They never convert into each other, and nothing in the data has
 both. Full rules in `rules.json → carrying`; the whole item table with masses is
 in the [annex](14-annex.md#items).
 
-### Defence — what makes a blow miss
+### Armour — the only thing between you and the blow
 
-Every character and every monster now carries a **defence** as well as a
-strength, and the attack roll is the difference between the two: *less your own
-strength, plus their defence*, clamped to 2+ and 6+. Strength used to sit on both
-sides of that roll, which quietly made every strong thing armoured — a stone boar
-barely swings and turns a sword, and until now it had no way to say so. Defence
-is not armour: armour soaks hits after they land, defence stops them landing, and
-a figure in plate has both.
+A battle is one opposed total: your strength plus your gear plus two blue dice
+against its strength plus its armour plus two red, and the lower total loses
+health equal to the difference. **Armour is a number you add to your own side of
+that**, once per piece worn, and it is the whole of what stands between a figure
+and a wound. A worn suit runs 1 to 3; a figure wearing body, head and off-hand can
+reach 5; monsters run 0 to 3 and print theirs in the **A** box.
+
+This section used to be called *Defence — what makes a blow miss*, and there used
+to be two numbers in it. Defence stopped a hit landing; armour cancelled it once
+it had; a figure in plate had both. That was an honest distinction while there was
+a to-hit roll to distinguish — one number moved the target, the other ate the
+result — and it is the reason every character and every monster in this game
+carried two defensive ratings for as long as they did.
+
+There is no to-hit roll. And with nothing to hit, **a number that makes you harder
+to hit and a number that soaks the hit are arithmetically the same number** —
+both are an amount by which the other side's dice fail to hurt you, and the only
+difference left was which side of the roll you subtracted it on. So defence was
+deleted and armour absorbed it: a monster's defence was halved and reprinted as
+its **A**, a character's went off the summary strip entirely, and peoples stopped
+having a `defence.base` because armour is a thing you buy rather than a thing you
+are born with. A stone boar barely swings and still turns a sword — strength 2,
+armour 2 — and it says that in two numbers meaning two things, where the old pair
+said it in two numbers meaning one.
+
+What that cost is a shade of character: a duellist and a knight are the same
+column now. What it bought is the whole of the deletion — one field, one direction,
+one place to look — and the agility went somewhere it does more work, which is
+**pace**, and whether you are in the fight at all.
+
+Armour wears. One wear point per round of battle on every piece worn, both sides,
+win or lose, because a blow you turned still dented the plate.
+
+### Wear — everything a figure carries is running out
+
+**Tools wore out and nothing else did.** A sword was immortal, a suit of plate
+never dented, a rope never frayed and a lantern burned forever — so the only
+equipment decision anybody made twice in a whole game was which axe to buy.
+Everything a figure carries wears now, on one scale, in one unit, at **one wear
+point a use**:
+
+| The thing | What counts as a use |
+| --- | --- |
+| A tool | Each **job** it is used in — not each hour |
+| A weapon, shield, helm or suit | Each round of a battle it is swung or worn in |
+| A light | Each night leg it is burned on |
+| Anything else | What its own card says: a rope that takes a party down a cliff, a bag stuffed past its seams |
+
+The maximum is printed once, in the **W** box of the card's summary strip, and it
+is walked on the board — four narrow **W** ladders, one against each kit recess,
+so a player tracks the wear of the four things they are actually carrying and
+nothing else. At 0 the thing is finished: the card is discarded, the ladder is
+cleared, and whatever it was doing for its owner it stops doing at once. A sword
+that goes at 0 mid-battle leaves you swinging with nothing for the rest of it, and
+a tool that breaks does not refund the job it broke on. A blacksmith mends three
+rungs a round at four coin a rung; what cannot be mended is a thing at 0, which is
+not damaged, it is gone.
+
+**The numbers came down to meet the board, not the other way round.** Wear used to
+run to thirty-four and be counted on the tool itself, because there was no track
+for it and the note beside the strip said there never would be — *it runs past
+twenty, the board stops at fourteen.* Now there is a track, so the scale is the
+board's. Tools that ran 14 to 34 run **6 to 14**: the alembic is the frailest at 6
+and a large loom the longest-lived thing anybody owns at 14, which is the ceiling
+exactly. What a figure carries on its back sits under that — a torch is 1 and gone
+in a night, a plate harness 12 — and all of it walks the same 0–14 ladder as
+everything else in the game.
+
+Nothing got shorter, because **the clock changed with the scale.** An axe had 24
+wear at one point per labour *hour*, which is eight three-hour jobs. It has 10 at
+one point per **job**, which is ten. The axe lasts slightly longer than it did and
+nobody adds hours up at the table any more. That is the identical trade the
+kilogram made when a hero could not stand their own load on a fourteen-rung
+ladder, and it is the right way round: the ceiling belongs to the game, and a
+number that will not fit under it is a number that is wrong.
+
+Three things never wear. **Potions** are drunk rather than worn out, so the card
+is discarded on use and there is no W box on it. **Talismans** do not, because
+mana is not friction — a phylactery filled and emptied a hundred times is a
+phylactery. And **commodities** do not, because they are counted rather than owned.
 
 ### Eating and sleeping
 
@@ -358,21 +545,38 @@ width of the card.
 One A4 landscape sheet each and every one identical, printed at
 [`docs/boards/`](../boards/index.html). The card in play drops into a recess top
 left, four more recesses take whatever that card has in play, the round's phases
-print underneath, and five numbered tracks run up the middle:
+print underneath, **four** numbered tracks run up the middle, and a narrow wear
+ladder stands against each of the four kit recesses:
 
 | | Track | A rung is | Runs | Walked by |
 | --- | --- | --- | --- | --- |
 | **H** | Health | 1 | 0–14 | The figure, hurt and mended — medical aid only |
 | **S** | Strength | 1 | 0–14 | Set from the card; a rung down for every night without a camp |
-| **D** | Defence | 1 | 0–14 | Set from the card. Read by whoever is attacking you |
-| **P** | Pace | 1 hex | 0–14 | Hexes left in this leg |
+| **P** | Pace | 1 hex | 0–14 | Hexes left in this leg — and what you must beat to run from a monster |
 | **M** | Mana | 1 | 0–14 | The body and every talisman in a slot |
+| **W** ×4 | Wear | 1 | 0–14 | One ladder per kit slot, set from the card's W box, down a rung a use |
 
 The ladders are numbered from the bottom and walked by a token, and they are
-numbered and **nothing else** — no rung glyph, no plus, no minus. At a shade over
-13 mm a column, a little mark saying which *kind* of number this is was competing
-with the figure for the same three millimetres. Which way a token walks is a
-sentence in the rulebook, where there is room to say it.
+numbered and **nothing else** — no rung glyph, no plus, no minus. A little mark
+saying which *kind* of number this is was competing with the figure for the same
+three millimetres. Which way a token walks is a sentence in the rulebook, where
+there is room to say it.
+
+**The board traded a column for four ladders and came out wider.** The **D**
+column went out of the middle the same day wear arrived at the edge, so what used
+to be five columns at a shade over 13.6 mm is four at **15.6** — the tracks a
+player reads every round are now noticeably easier to read than they were before
+anything was added. Margins came down from 8 mm to 6 and gutters from 6 to 4 to
+pay for the rest of it.
+
+Wear is drawn at the edge rather than up the middle because it is **the first
+number on this board that belongs to a card rather than to whoever is sitting
+behind it.** A single W column could only ever have counted one thing's wear, and
+a figure carries four — so it is drawn where the thing it counts is lying, in a
+ladder against the recess, walked by a 4.5 mm **pip** rather than the 7 mm bar the
+main tracks use. That is what makes fifteen rungs fit down the side of an 88 mm
+card. And a fifth thing in play is a fifth thing whose wear nobody is counting,
+which is the argument the four kit slots were already making.
 
 **Pace is the board's own**, and it is the one that was missing. A party looks
 its day-leg speed up in [`travel.json`](../../data/travel.json) every single
@@ -380,6 +584,12 @@ round of the game and has never had anywhere to keep it: set the token at the
 start of a leg, walk it down a rung per hex entered, halve it for a night leg
 under a lantern. At zero the leg is over, and the discovery roll happens
 wherever it stopped. It is pace rather than speed because strength has the S.
+
+It is also, now, the number the other side of the table is measured against. Every
+monster card prints a **P**, and a party may run only if its own pace is *greater*
+than that one — so the token a player has been walking down all leg for
+bookkeeping reasons turns out, the moment something steps out of the trees, to be
+the number that says whether they are allowed to leave.
 
 **A vehicle gets a board too.** It used to get a column — a sixth track called V,
 counting damage on a wagon most players were not running, printed on everybody's
@@ -391,22 +601,34 @@ as it is repaired at 5 coin a rung in any town, wrecked at nothing and spilling
 its cargo on the hex. A hull is a body, and the board never had to learn anything
 new to run one.
 
-**Strength and defence are the pair that changed the game rather than recording
-it.** Strength was already printed on every monster card as a threat rating; it
-now settles attack rolls as well, and it swallowed burden while it was at it —
+**Strength and pace are the pair that changed the game rather than recording it.**
+Strength was already printed on every monster card as a threat rating; it is now
+the base of your whole side of a battle, it swallowed burden on the way past —
 what a figure carries is strength × 3 kilograms and there is no second track for
-it. Defence is its opposite number: shift the number you need by *less your own
-strength, plus their defence*, so an even fight still hits on 4+ and a point of
-advantage is worth exactly one pip. Neither ever adds dice; dice are what weapons
-and armour give you. The full rule is in
+it — and it is still the threshold rules read off a monster card, where a thug
+refuses anything of strength 4 or more. One arm, one number, three jobs, and a
+hard night takes a rung off all three at once.
+
+**Pace** is the newer half, and it is the one that turned a track into a decision.
+Made a footrace, it stopped being a record of the leg and became the price of
+declining a fight — which is why a road and a horse are now weapons, why plate
+harness charges you a point of it, and why the column that used to be pure
+bookkeeping is the one a party now argues over.
+
+*Defence used to be the other half of this heading*, and it is worth saying what it
+was doing: it shifted a to-hit roll by *less your own strength, plus their
+defence*, so an even fight hit on 4+ and a point of advantage was worth exactly one
+pip. It went when the to-hit roll went, and what replaced it is armour, which was
+already in the game doing the other half of the same job. The full rule is in
 [08-components.md](08-components.md#a-fight).
 
 **Every track runs 0 to 14, and so does the game.** That is the ceiling on
-everything a token walks — health (a hull included), strength, defence, mana — and
-`tools/validate-data.mjs` sweeps the whole dataset against it, so a fifteenth
-point of health fails the build rather than walking off a board somebody has
-already printed. Kilograms are the one thing exempt, because nothing walks a
-token for them.
+everything a token walks — health (a hull included), strength, pace, mana and the
+four wear ladders — and `tools/validate-data.mjs` sweeps the whole dataset against
+it, so a fifteenth point of health fails the build rather than walking off a board
+somebody has already printed. It is why tool wear was rescaled from 34 down to 14
+rather than the board being asked to grow a longer ladder. Kilograms are the one
+thing exempt, because nothing walks a token for them.
 
 **Print one more board than there are players.** The spare is the encounter
 board: a discovery roll that turns up a monster or a stranger deals their card

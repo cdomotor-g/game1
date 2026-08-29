@@ -53,6 +53,7 @@ import { fileURLToPath } from 'node:url';
 import { pngSize } from './lib/png.mjs';
 import { crop, readFraming, WHOLE_PLATE } from './lib/framing.mjs';
 import { plateIdFor } from './lib/plates.mjs';
+import { cardsOfDeck } from './lib/decks.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -667,13 +668,16 @@ const monsters = read('monsters.json').monsters;
 const characters = read('characters.json').characters;
 const peoplesById = new Map(read('peoples.json').peoples.map((p) => [p.id, p]));
 const itemData = read('items.json');
-const talismans = itemData.items.filter((i) => i.class === 'talisman');
-/* The other side of that split. items.json holds two decks and the line between
-   them is a class: a talisman is an arcane subject with its own back, its own
-   violet and its own prompt file, and everything else in the file - the armour
-   and the weapons today, the clothing and the potions when they are drawn - is
-   the ITEMS deck. tools/lib/mint.mjs draws the same line, once, for everybody. */
-const gear = itemData.items.filter((i) => i.class !== 'talisman' && i.cardCode);
+/* items.json holds FOUR decks now and the line between them is a class, declared
+   on each deck as components.json decks[].sourceFilter and resolved once in
+   docs/js/decks.js for this tool, the mint queue and the explorer alike. A
+   talisman is an arcane subject with its own back and its own violet; a WEAPON
+   and a piece of ARMOUR each got their own back the day a fight stopped being
+   about hits; and everything left - the rope, the lantern, the bag, the cloak -
+   is the ITEMS deck. The split is data, not a list written out here. */
+const deckCards = (prefix) => cardsOfDeck(deckByPrefix(prefix), itemData.items).filter((c) => c.cardCode);
+const talismans = deckCards('TAL');
+const gear = [...deckCards('ITM'), ...deckCards('WPN'), ...deckCards('ARM')];
 const itemClassName = new Map(itemData.classes.map((c) => [c.id, c.name.toLowerCase()]));
 const toolkit = read('tools.json').tools.filter((t) => t.cardCode);
 const recipeName = new Map(read('recipes.json').recipes.map((r) => [r.id, r.name]));
@@ -708,14 +712,17 @@ for (const c of characters) {
   specs.push({
     code: c.cardCode, name: c.name, portrait: render,
     kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling}`,
-    desc: `Character card: ${c.name}, ${c.calling}. Health ${c.health}, strength ${c.strength}, defence ${c.defence}, ${kg}kg carried, ${c.startingGold} coin to start.`,
-    /* Six boxes, the most a 63 mm card holds: what they are, what they swing
-       and turn a blow with, what they can hold and what they start with. The
-       kilograms are the only derived number on any card in the game. */
+    desc: `Character card: ${c.name}, ${c.calling}. Health ${c.health}, strength ${c.strength}, ${kg}kg carried, ${c.startingGold} coin to start.`,
+    /* FIVE boxes now, and it was six. DEFENCE went with the to-hit roll it
+       existed to shift: a battle is one opposed total, and what a character
+       brings to it besides strength is the gear in their kit slots, which
+       changes every time they put something down and so cannot be printed.
+       The kilograms are still the only derived number on any card in the game -
+       and they mean more than they did, because the coin in the purse is now
+       counted against them like everything else (rules.json carrying.coin). */
     stats: [
       cell('health', c.health, 'oxide'),
       cell('strength', c.strength, 'ochre'),
-      cell('defence', c.defence, 'slate'),
       cell('mana', c.manaCapacity, 'bruise'),
       cell('gold', c.startingGold, 'ochre'),
       cell('carry', kg, 'slate'),
@@ -756,19 +763,28 @@ for (const m of monsters) {
        unique), and the deck is where it stays. */
     code: m.cardCode, name: m.name, portrait: render,
     kicker: `${m.element} · ${m.terrains.join(', ')}`,
-    desc: `Monster card: ${m.name}, ${m.element}. Health ${m.health}, strength ${m.strength}, defence ${m.defence}, yields ${m.manaYield} mana.`,
-    /* The element used to be a badge beside the name and pushed everything else
-       a line down the card. It is the last box of the strip now: the same ring
-       and mark, in a box the same size as the numbers next to it. */
+    desc: `Monster card: ${m.name}, ${m.element}. Health ${m.health}, strength ${m.strength}, armour ${m.armour}, pace ${m.pace}, yields at most ${m.manaYield} mana.`,
+    /* SIX boxes, which is components.json statStrip.cells.max exactly, and the
+       strip is now full: a seventh number would want a smaller number of numbers.
+       Two of them are new and one is gone. ARMOUR replaced DEFENCE - the same
+       property, halved and renamed, because in an opposed total a number that
+       makes you harder to hit and a number that soaks the hit are one number. It
+       is the only card-only figure on any card in the game (statStrip.letters
+       $armourNote): a monster's armour is its hide and does not move, where a
+       character's is whatever is in their kit slots. PACE is what you have to
+       beat to run away, and it is the reason half this deck cannot be run away
+       from. The element keeps the last box, as a mark rather than a figure. */
     stats: [
       cell('health', m.health, 'oxide'),
       cell('strength', m.strength, 'ochre'),
-      cell('defence', m.defence, 'slate'),
+      cell('armour', m.armour, 'slate'),
+      cell('pace', m.pace, 'verdigris'),
       cell('yield', m.manaYield, 'bruise'),
       { element: m.element, tint: 'soot-tint-12' },
     ],
     facts: [
-      `Options: ${opts.join(' · ')}.`,
+      `Options: ${opts.join(' · ')}. Run only if your pace beats ${m.pace}.`,
+      `Slain, it yields the lesser of ${m.manaYield} and the purple die.`,
       ...(m.gift ? [`Gift to befriend: ${m.gift}.`] : []),
       ...(m.befriended ? [`Befriended: ${m.befriended}`] : []),
       ...(m.enslaved ? [`Enslaved: ${m.enslaved}`] : []),
@@ -854,17 +870,25 @@ for (const m of modifications) {
   });
 }
 
-/* An OBJECT card - a jerkin, a sword, an axe - prints what it is worth and what
-   it weighs, and says everything it DOES in words underneath.
+/* An OBJECT card - a jerkin, a sword, an axe - prints what it is worth, what it
+   weighs and how much WEAR is in it, and says everything else it does in words
+   underneath.
 
-   That is deliberate and it is the same decision the modifications deck made. A
-   weapon has a combatDice and a piece of armour has an armourValue, and neither
-   of them is the whole truth: the war axe is "+1 combat die, +2 when attacking"
-   and the crossbow is three dice that also ignore a point of armour and only
-   roll every second round. Printing the bare 1 next to a letter would be a
-   smaller, wronger version of a sentence the card has room for anyway - and it
-   would put a number on the strip with no track under it, which is what the
-   strip stopped doing when the ladders came off (components.json statStrip). */
+   The wear box is new and it is there because there is a track under it now:
+   four of them, one against each kit slot on the player board. That is the whole
+   test the strip has ever applied - a number goes in a lettered box when a token
+   walks it, and into a sentence when it does not.
+
+   What still goes into a sentence: what a weapon or a piece of armour is worth
+   in a fight. A weapon has a `battle` and a piece of armour has an `armour`, and
+   neither of them is the whole truth - the war axe is "+1, and +2 in a battle you
+   started", the crossbow is +3 that also takes a point off their armour and only
+   counts every second round. Printing the bare 1 next to a letter would be a
+   smaller, wronger version of a sentence the card has room for anyway.
+
+   A MONSTER does print its armour, and that is not an inconsistency: a monster's
+   armour is its hide and is the same number in every fight it is ever in, where a
+   character's is whatever they are wearing this round. */
 const recipeLine = (madeAt, specialist, inputs, hours) => {
   const bill = (inputs || []).map((i) => `${i.qty} ${commodityName.get(i.commodity) || i.commodity}`).join(', ');
   return `Made at the ${madeAt}${specialist && specialist !== madeAt ? ` by a${/^[aeiou]/i.test(specialist) ? 'n' : ''} ${specialist}` : ''}: ${bill} · ${hours} h.`;
@@ -877,8 +901,9 @@ for (const i of gear) {
   specs.push({
     code: i.cardCode, name: i.name, portrait: render,
     kicker: `${kind} · ${i.slot} · made at the ${i.madeAt}`,
-    desc: `Item card: ${i.name}, ${kind}. Worth ${i.baseValue}, weighs ${i.massKg}kg, worn in the ${i.slot} slot.`,
+    desc: `Item card: ${i.name}, ${kind}. Worth ${i.baseValue}, weighs ${i.massKg}kg, ${i.wear} of wear in it, carried in the ${i.slot} slot.`,
     stats: [
+      cell('wear', i.wear, 'slate'),
       cell('value', i.baseValue, 'ochre'),
       cell('mass', i.massKg, 'slate'),
     ],
@@ -899,9 +924,9 @@ for (const t of toolkit) {
   specs.push({
     code: t.cardCode, name: t.name, portrait: render,
     kicker: `tool · ${t.family} · made at the ${t.madeAt}`,
-    desc: `Tool card: ${t.name}, ${t.family}. ${t.summary} Worth ${t.baseValue}, ${t.baseDurability} of wear in it.`,
+    desc: `Tool card: ${t.name}, ${t.family}. ${t.summary} Worth ${t.baseValue}, ${t.baseWear} of wear in it.`,
     stats: [
-      cell('wear', t.baseDurability, 'oxide'),
+      cell('wear', t.baseWear, 'slate'),
       cell('value', t.baseValue, 'ochre'),
     ],
     facts: [
@@ -946,6 +971,7 @@ const index = `<!doctype html>
   <a href="../tiles/index.html">The building tiles</a>
   <a href="../boards/index.html">The player board</a>
   <a href="../markets/index.html">The market board</a>
+  <a href="../ledger/index.html">The price ledger</a>
   <a href="../mint/index.html">The mint</a>
   <a class="primary" href="print.html">Print &amp; cut the cards →</a>
 </div>

@@ -211,3 +211,92 @@ if (games > 1) {
   const deepest = Object.keys(state.stock).map((id) => D.tierOf(id));
   console.log(`  deepest chain reached: tier ${deepest.length ? Math.max(...deepest) : 0}`);
 }
+
+/* ---------------------------------------------------------------- the checks
+
+   A simulation that only prints a table proves that the engine RAN. These are
+   the four things the redesign could break silently, each of them a claim the
+   printed components make and none of them visible in a diff:
+
+     1. the swing ruler can read every net the dice and the modifiers can produce
+     2. a price never steps off the printed row of six
+     3. a finite commodity's modifier only ever goes UP - the whole model
+     4. a battle never deals a negative wound, and a tie deals none
+
+   They run on every invocation, because a check you have to remember to run is
+   a check that is not run. */
+
+const checks = [];
+const claim = (ok, what) => checks.push({ ok, what });
+
+/* 1. THE RULER, swept over every reachable net rather than sampled. */
+{
+  const P = D.pricing;
+  const demand = P.dice.sets.find((x) => x.id === 'demand');
+  const supply = P.dice.sets.find((x) => x.id === 'supply');
+  const adds = P.volatility.steps.map((x) => x.add);
+  const lo = demand.range[0] - supply.range[1] + Math.min(...adds) + P.modifier.from;
+  const hi = demand.range[1] - supply.range[0] + Math.max(...adds) + P.modifier.to;
+  let holes = [];
+  for (let net = lo; net <= hi; net++) {
+    if (!P.ruler.bins.some((b) => net >= b.from && net <= b.to)) holes.push(net);
+  }
+  claim(holes.length === 0, `the swing ruler reads every net from ${lo} to ${hi}${holes.length ? ` — no cell for ${holes.join(', ')}` : ''}`);
+}
+
+/* 2, 3. A LONG MARKET, watched. Twelve hundred rolls of every line, with the
+   price checked against the ladder and the depletion modifier checked against
+   its own history on every one of them. */
+{
+  const state = Engine.newGame('human', 7);
+  const top = D.rules.market.priceBands.length - 1;
+  let offLadder = 0;
+  let wentDown = 0;
+  const seen = {};
+  for (const c of D.commodities) seen[c.id] = 0;
+  for (let round = 0; round < 200; round++) {
+    /* burn a little of everything finite, so the grids actually fill */
+    for (const c of D.commodities) {
+      if (c.pricing === 'deplete' && round % 3 === 0) Engine.spend(state, c.id, 1);
+    }
+    Engine.rollMarket(state);
+    for (const c of D.commodities) {
+      const band = state.bands[c.id];
+      if (band < 0 || band > top) offLadder += 1;
+      if (c.pricing === 'deplete') {
+        const m = Engine.marketOf(state, c.id).modifier;
+        if (m < seen[c.id]) wentDown += 1;
+        seen[c.id] = m;
+      }
+    }
+  }
+  claim(offLadder === 0, `no price stepped off the ${top + 1}-band row in 200 rounds of every line`);
+  claim(wentDown === 0, 'a finite commodity\'s modifier never once went down');
+  const worked = D.commodities.filter((c) => c.pricing === 'deplete' && Engine.marketOf(state, c.id).modifier >= D.pricing.depletion.top).length;
+  claim(worked > 0, `${worked} seams reached the bottom of their grid, so the ladder is reachable`);
+}
+
+/* 4. A THOUSAND BATTLES. */
+{
+  const state = Engine.newGame('human', 7);
+  let bad = 0;
+  let ties = 0;
+  const chr = D.characters[0];
+  for (const m of D.monsters) {
+    for (let i = 0; i < 80; i++) {
+      const r = Engine.battle(state, { strength: chr.strength, items: chr.startsWith || [] }, m);
+      if (r.damage < 0) bad += 1;
+      if (r.wounded === null && r.damage !== 0) bad += 1;
+      if (r.wounded === null) ties += 1;
+    }
+  }
+  claim(bad === 0, `no battle in ${D.monsters.length * 80} dealt a negative or unassigned wound (${ties} ties)`);
+}
+
+const failed = checks.filter((c) => !c.ok);
+console.log('');
+for (const c of checks) console.log(`  ${c.ok ? 'ok  ' : 'FAIL'}  ${c.what}`);
+if (failed.length) {
+  console.error(`\n${failed.length} check(s) failed — the printed components and the engine disagree.`);
+  process.exit(1);
+}

@@ -34,9 +34,39 @@ Feeding phase and every worker in it gets +1 flat effort next round. This exists
 stop the optimal strategy from being "grow only grain forever", and it rewards the
 player whose economy has breadth over the one with a single deep silo.
 
-**Spoilage.** Perishable food outside a granary goes off. Meat and fish keep two rounds;
-bread three. A granary stops perishing entirely for what it holds, which is most of
-what a granary is for.
+**Spoilage.** Eleven commodities are **perishable** (`data/pricing.json → models`, the
+`perish` model), and at the end of every Feeding phase every player rolls the **ochre
+spoil die** once for each perishable stack they are still holding — in a town, in a hold,
+or on a figure's back — and discards what the strip says:
+
+| Ochre | Keeps well — bread, vegetables, apples | Keeps poorly — milk, fish, meat, eggs, berries, mushrooms, grapes, moon blossom |
+| --- | --- | --- |
+| 1–2 | — | 1 |
+| 3–4 | 1 | 2 |
+| 5–6 | 2 | 3 |
+
+You cannot lose more than you hold: a stack of one told to lose three loses one. A
+**granary reads one row up the strip** — a 5 or a 6 costs what a 3 or a 4 costs, and a 1
+or a 2 costs nothing at all — which is what a granary is for, and why it takes food and
+drink and nothing else. That is a change worth naming: a granary used to stop perishing
+*entirely*, and now it is very good insurance rather than immunity, because a building
+that deletes a rule stops the rule from being part of the game for anybody who owns one.
+
+**It replaced a countdown, and the countdown is what was wrong.** Every perishable used
+to carry a number of rounds it kept for — meat and fish two, bread three — which meant a
+token on every stack with an age written on it and a player having to remember which
+week the fish arrived. A die at the end of the round asks the same question and needs
+nothing written down anywhere: roll it, discard that many, move on. What survives of
+`perishRounds` is which of the two columns above a commodity reads, and that is the whole
+of the difference between milk and an apple now.
+
+**And it is where the old GLUT pricing model went.** Glut bent a price down through a
+memory strip on the market board — a fair model of a market and a poor model of a fish.
+It punished the *town* for what the *farmer* did, and it never once made anybody hurry.
+The spoil die punishes whoever is actually holding the stuff, at the end of the round
+they failed to shift it, which is both truer and considerably more urgent. Spoilage now
+touches no price at all: what rotting does to a market it does through the market's own
+front door, because units that rot are units nobody sells.
 
 ### On the road: food and sleep
 
@@ -59,6 +89,27 @@ Strength is spent, so sleep gives it back; health is damage, so somebody has to 
 Keeping those apart is what makes a night's camp a decision rather than a formality, a
 lantern and a stretch of salted meat worth their coin, and a physician worth feeding. Full
 numbers in `rules.json → upkeep` and `rules.json → rest`.
+
+**The spoil die follows you out of town.** The end-of-Feeding roll above is not a town
+rule — it is rolled once per perishable stack *anybody* is holding, and a pack is a place
+you are holding something. So the fresh food a party carries is rolling the ochre die every
+round it is out, with no granary within a week's walk to read a row up the strip, while the
+salted meat and the cheese and the ale in the next pocket are staples and roll nothing at
+all. That is the whole argument for preserved food in one sentence: salting a side of meat
+is not flavour, it is taking a stack out of the die's reach. A party that provisions itself
+on fish and berries because they were cheap at the dock has bought a smell.
+
+**And coin weighs something now.** A gold coin is 25 grams, forty to the kilogram, and it
+counts against the same `strength × 3` kilograms as the sword and the rope. It used to be
+weightless — the one thing a figure could hold an unlimited quantity of, an abstraction
+living outside the world it was buying things in — and taking that exemption away is what
+turns a successful trip into a logistics problem. A strength-3 figure shoulders 9 kg, so
+they could carry 360 coin and nothing else; the 60 they start with is a kilogram and a half,
+a rounding error against a blade. The weight only bites at the moment it should: a party
+that has just sold a hold of jewellery has to work out how the money is getting home, and
+the answer is a strongbox on a wagon, which is **cargo**, measured in bulk and stealable
+like any other cargo on the road. A fortune is heavy. Full rules in
+`rules.json → carrying.coin`.
 
 ## Unrest
 

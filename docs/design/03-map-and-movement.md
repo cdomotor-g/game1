@@ -10,10 +10,27 @@ about its diagonals or forbids them.
 
 Six equal exits is what makes a route a *choice* rather than a staircase. It is why a road
 can bend without costing more than a road that does not; why flanking is a real position
-rather than an arithmetic exception; and why a party fleeing a monster has five ways out
-instead of three. The cost is one: a hex grid is harder to draw and harder to describe in
-prose. `tools/lib/hexgrid.mjs` pays that cost once and nothing else in the game pays it
-again.
+rather than an arithmetic exception; and why going *around* an occupied hex costs one extra
+hex where a square grid that forbids its diagonals charges two. The cost is one: a hex grid
+is harder to draw and harder to describe in prose. `tools/lib/hexgrid.mjs` pays that cost
+once and nothing else in the game pays it again.
+
+That third example used to be **fleeing** — *a party fleeing a monster has five ways out
+instead of three* — and it has been retired because it is now untrue in both halves. Running
+is not a direction any more, it is a **footrace**: a party may withdraw only if its pace is
+*greater* than the monster's P, equal is not greater, and half the bestiary is faster than a
+person on foot (`rules.json → conflict.flee`, argued in
+[13-adventure.md](13-adventure.md)). And a successful flight does not use one of the six
+exits at all — it goes back the way you came, which is the one hex the geometry was never in
+any doubt about.
+
+What the six exits actually buy against a monster is the **detour**. An unresolved monster
+sits on its hex as a figure and attacks anything that ends a leg there, so the question a
+party asks is never *which way out* but *how dearly do I pay to go round*, and that is a
+question about neighbours. Six of them at one distance each is one hex of detour. Four of
+them, with the diagonals either forbidden or lied about, is two. The geometry still wins the
+argument; it just wins a different one, and the honest version is worth more than the tidy
+one it replaced.
 
 `terrain.json` keeps `tileShape: hex` and lists `square` as an alternative it does not use.
 A mini-map's own grid is hexagonal for exactly the same reason — plus one more, which is

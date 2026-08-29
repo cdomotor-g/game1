@@ -24,14 +24,14 @@ window.GAME_DATA = {
         "file": "pricing.json",
         "collection": "models",
         "idField": "id",
-        "summary": "How a price is arrived at: the red, blue and green dice, the elasticity strip, the swing ruler, and the three market-memory models every commodity runs under."
+        "summary": "How a price is arrived at: the blue, red, green and ochre dice, the volatility strip, the swing ruler, and the four kinds of good every commodity is one of. All addition - nothing multiplies."
       },
       {
         "key": "tools",
         "file": "tools.json",
         "collection": "tools",
         "idField": "id",
-        "summary": "Equipment that gates recipes and wears out."
+        "summary": "Equipment that gates recipes and wears out, on the board’s own 0-14 scale."
       },
       {
         "key": "buildings",
@@ -87,7 +87,7 @@ window.GAME_DATA = {
         "file": "items.json",
         "collection": "items",
         "idField": "id",
-        "summary": "Clothing, armour, weapons, potions, lights and talismans, each with its mass in kg."
+        "summary": "Clothing, armour, weapons, gear, potions, lights and talismans, each with its mass in kg and, unless it is drunk or holds mana, the wear it will take."
       },
       {
         "key": "travel",
@@ -128,7 +128,7 @@ window.GAME_DATA = {
         "file": "characters.json",
         "collection": "characters",
         "idField": "id",
-        "summary": "The character deck: named heroes with health, strength, defence, mana and the gold they start with."
+        "summary": "The character deck: named heroes with health, strength, mana and the gold they start with."
       },
       {
         "key": "quests",
@@ -163,14 +163,21 @@ window.GAME_DATA = {
         "file": "playerboard.json",
         "collection": "tracks",
         "idField": "id",
-        "summary": "The player board: the six numbered tracks a figure walks a token along, the card slots, and the turn reference. The shapes it is drawn into are components.json board."
+        "summary": "The player board: four numbered tracks a figure walks a token along, a wear ladder against each of the four kit slots, the card recesses and the turn reference. The shapes it is drawn into are components.json board."
       },
       {
         "key": "marketboard",
         "file": "marketboard.json",
         "collection": null,
         "idField": null,
-        "summary": "The market board: identical price ladders, one per commodity in play, walked by that commodity's own hexagonal token. The bands are rules.json market.priceBands; the shapes are components.json marketBoard."
+        "summary": "The market board: two sheets that hold no price. One explains the roll and the four kinds of goods; the other is a page of depletion grids, covered a pip at a time and never uncovered. The shapes are components.json marketBoard."
+      },
+      {
+        "key": "ledger",
+        "file": "ledger.json",
+        "collection": null,
+        "idField": null,
+        "summary": "The price ledger: the only place a price lives. Commodities across the top, rounds down the side, and every price three hollow seven-segment figures the players colour in and strike through. The shapes are components.json ledger."
       },
       {
         "key": "minimap",
@@ -526,7 +533,10 @@ window.GAME_DATA = {
       "id": "coin",
       "name": "Coin",
       "symbol": "¤",
-      "startingAmount": 60
+      "startingAmount": 60,
+      "massKgEach": 0.025,
+      "$massNote": "A gold coin weighs 25 grams, and it is the one thing on this list that used to weigh nothing. Coin was on carrying.notCarried - an abstraction that lived outside the world - and a purse of four hundred is ten kilograms, which is most of what a figure can shoulder. So it comes off that list and goes on the scales with everything else: what you are carrying is what you are carrying, and a fortune is heavy.\n\nIt is a real weight for a real coin. A sovereign is eight grams and a piece of eight is twenty-seven; twenty-five puts this one in the same purse as the coins it is drawn from, and forty of them to the kilogram is arithmetic a table can do without being asked to.",
+      "$carryNote": "Forty coin to the kilogram. A strength-3 figure can shoulder 9 kg, so an empty-handed one could carry 360 coin and nothing else; the 60 they start with is a kilogram and a half, which is a rounding error against a sword. The weight only bites when somebody is moving a fortune - which is exactly the moment it should."
     },
     "round": {
       "phases": [
@@ -553,12 +563,12 @@ window.GAME_DATA = {
         {
           "id": "feeding",
           "name": "Feeding",
-          "summary": "Each town must pay food upkeep from stock held in or near that town. Shortfalls cause unrest."
+          "summary": "Each town must pay food upkeep from stock held in or near that town. Shortfalls cause unrest. Then every player rolls the ochre spoil die once for each perishable stack they are still holding."
         },
         {
           "id": "market-turn",
           "name": "Market",
-          "summary": "Roll the market for every line: two red, two blue, one green, plus what the line remembers. Trade at the new price, walk the tallies, and turn order passes to the left."
+          "summary": "Roll the market for every line on the ledger: two blue, two red, one green, plus whatever the good's own nature adds. Read the swing ruler, walk the band, write the new price and strike the old one through. Turn order passes to the left."
         }
       ],
       "turnOrder": "clockwise-rotating"
@@ -603,9 +613,59 @@ window.GAME_DATA = {
       "workersPerSiteDefault": 3,
       "notes": "Materials are paid when the site is founded. Build points accumulate on a progress track; a building only produces once its track is full."
     },
+    "wear": {
+      "$comment": "What using a thing does to it, and it is now one rule for every made thing in the game rather than a private arrangement between tools and their own file.\n\nTools wore out and nothing else did. A sword was immortal, a suit of plate never dented, a rope never frayed and a lantern burned forever - so the only equipment decision anybody ever made twice was which axe to buy. Everything a player carries wears now, on one track, in one unit, at one wear point a use.\n\nTHE SCALE IS THE BOARD'S. Wear used to run to thirty-four and be counted on the tool, because there was no track for it and the strip note said there never would be: 'it runs past twenty, the board stops at fourteen.' The board has a track for it now - four of them, one beside each kit slot - so the number came down to meet the board rather than the board going up to meet the number. That is the same trade the kilogram made when a hero could not stand their own load on a fourteen-rung ladder, and it is the right way round: the ceiling is the game's, and a number that will not fit under it is a number that is wrong.\n\nRescaling did not shorten anything's life, because the CLOCK changed with the scale. An axe had twenty-four wear at one a labour hour, which is eight three-hour jobs. It has ten at one a JOB, which is ten. A tool lasts slightly longer than it did and nobody adds hours up any more.",
+      "unit": "wear-point",
+      "walks": "down",
+      "track": "The W track beside the item's own slot on the player board. Set it from the W box on the card when the thing is picked up, knock it down a rung each time the thing is used, and at 0 it is finished.",
+      "printedOn": "The card, as the W box in the summary strip: the most wear the thing will take. Nothing on a card ever moves - see data/playerboard.json.",
+      "perUse": 1,
+      "takes": [
+        {
+          "id": "job",
+          "applies": "a tool",
+          "when": "each recipe it is used in",
+          "$note": "Per job, not per hour. A worker who spends nine hours felling timber has run one job and blunted one axe by one."
+        },
+        {
+          "id": "battle",
+          "applies": "a weapon, a shield, a helm or a suit of armour",
+          "when": "each round of a battle it is swung or worn in",
+          "$note": "Both sides, win or lose. A blow you turned still dented the plate."
+        },
+        {
+          "id": "night",
+          "applies": "a light",
+          "when": "each night leg it is burned on",
+          "$note": "Which is what a torch is: one wear, one night, gone."
+        },
+        {
+          "id": "use",
+          "applies": "anything else",
+          "when": "each time its own card says",
+          "$note": "A rope that takes a party down a cliff, a grappling hook that holds, a bag that is stuffed past its seams. The card says what counts as a use, because a rope and a pair of boots do not wear for the same reason."
+        }
+      ],
+      "atZero": "Worn out. The card is discarded, the track is cleared, and whatever the thing was doing for its owner it stops doing at once - a broken tool does not refund the effort already spent on the job that broke it, and a sword that goes at 0 leaves you swinging with nothing for the rest of the battle.",
+      "neverWears": [
+        "Potions, which are drunk rather than worn out - the card is discarded on use and there is no W box on it.",
+        "Talismans. Mana is not friction; a phylactery that has been filled and emptied a hundred times is a phylactery.",
+        "Commodities, which are counted rather than owned."
+      ],
+      "repair": {
+        "toFull": false,
+        "wearPerRound": 3,
+        "coinPerPoint": 4,
+        "effortHours": 2,
+        "requires": "blacksmith",
+        "$note": "Any settlement with a blacksmith, three points a round, four coin a point and two hours of somebody's labour. A thing may be mended any number of times; what cannot be mended is a thing at 0, which is not damaged, it is gone."
+      },
+      "$boardNote": "Four kit slots, four W tracks, so a player tracks the wear of everything they are actually carrying and nothing else. A fifth thing in play is a fifth thing whose wear nobody is counting, which is the same argument the four slots were already making."
+    },
     "tools": {
       "durabilityUnit": "wear-point",
-      "wearPerEffortHour": 1,
+      "wearPerJob": 1,
+      "wearRule": "rules.json wear - a tool is not special any more, it is the first thing that wore out.",
       "brokenToolEffect": "Tool is removed from play. Effort already spent this round is not refunded.",
       "repairCost": {
         "fractionOfBuildCost": 0.5,
@@ -617,24 +677,22 @@ window.GAME_DATA = {
           "id": "small",
           "tier": 1,
           "outputMultiplier": 1,
-          "durabilityMultiplier": 1,
           "costMultiplier": 1
         },
         {
           "id": "medium",
           "tier": 2,
           "outputMultiplier": 1.5,
-          "durabilityMultiplier": 1.5,
           "costMultiplier": 2
         },
         {
           "id": "large",
           "tier": 3,
           "outputMultiplier": 2,
-          "durabilityMultiplier": 2,
           "costMultiplier": 3.5
         }
       ],
+      "$sizesNote": "A size used to multiply durability as well, and it does not any more. A bigger loom is a FASTER loom, not a longer-lived one - and a multiplied wear number is a number the ceiling sweep cannot see, because it never appears in the data at the size it is actually walked at. One multiplier fewer, one hole in the ceiling fewer, and one thing less to work out at a table.",
       "notes": "Output multipliers round down, minimum 1. A size-3 tool never lets one worker exceed a site's worker cap - it just makes that worker's hours count for more."
     },
     "storage": {
@@ -660,7 +718,9 @@ window.GAME_DATA = {
       "startingBandIndex": 2,
       "buySpread": 0.15,
       "sellSpread": -0.15,
-      "pricedBy": "data/pricing.json. Every Market phase each town rolls two red dice for demand, two blue for supply and one green for elasticity, per commodity line in play, and reads the result on the swing ruler printed across the foot of the market board. The line's own memory strip, -3 to +3, is added to the swing before the green die multiplies it, and what moves that strip is the commodity's pricing model.",
+      "pricedBy": "data/pricing.json. Every Market phase each town rolls two BLUE dice for demand, two RED for supply and one GREEN for volatility, per commodity line on the ledger, and reads the result on the swing ruler printed on the market board. The whole sum is addition: Demand − Supply + Volatility + whatever the good's own nature adds. Nothing multiplies and nothing is halved.",
+      "recordedOn": "data/ledger.json - the price ledger. One column per commodity traded, one row per round, and the price written in three hollow seven-segment figures the player colours in, struck through when it changes and the new one written under it. No board tracks a price any more, and no token walks a band.",
+      "$bandNote": "THE BANDS ARE A PRINTED ROW, NOT A LADDER. Every commodity's six prices are worked out from its base value and printed as one row of six figures in the annex - grain is 3 · 4 · 5 · 6 · 8 · 10 - so a price move is a step ALONG THAT ROW. The price you last wrote in the ledger is one of the six; the swing ruler says how many places to step; the figure you land on is the new price. There is nothing to multiply, no band index to remember and no bar to walk, which is what let the price ladder come off the market board without anything replacing it.",
       "playerTradeIsFree": true,
       "merchantStock": {
         "$comment": "When a player meets a merchant - on the road via a discovery roll, or by visiting a settlement - shuffle the item deck and deal this many cards face up. That is what is for sale this visit, at base value +10%. Bigger places carry deeper stock.",
@@ -671,7 +731,7 @@ window.GAME_DATA = {
         "seat": 9,
         "notes": "Tools may be bought the same way at any settlement with a blacksmith rank town or better: deal from the tool list instead."
       },
-      "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player. What moves a band is not here: it is data/pricing.json, because a die roll and a memory track are a system rather than a constant."
+      "notes": "Base values live on each commodity. Town price = baseValue at the band its bar stands on, and every commodity's six prices are printed out in full in the annex so that lookup is never a multiplication. The spread is the house cut when trading with the board rather than another player. What moves a band is not here: it is data/pricing.json, because a die roll and four kinds of goods are a system rather than a constant."
     },
     "infrastructure": {
       "$comment": "What a player gets for laying road and rail, beyond the fact that their own carts go faster on it. Roads were the one thing in the game you built for everybody and were paid for by nobody: the network victory condition scored them at the very end and nothing scored them in the twenty rounds before that, so a road only ever got built where its builder happened to want to walk.\n\nThree returns, in the order a player feels them: a toll every time somebody else uses it, a better price for cargo that moves on your own network, and the network points that were already there. The toll is small on purpose - it is a reason to build, not a business - and it is collected from the table rather than paid into a bank, so every coin of it comes out of a rival.",
@@ -712,9 +772,15 @@ window.GAME_DATA = {
       "limit": "strength x kgPerStrength, in kilograms. Characters use the strength on their card; any other figure uses its people's strength.base (peoples.json).",
       "marker": "None. There is no burden track any more and no token to walk: total what the figure is wearing, wielding and stowing, and it either fits under the limit printed on the card or it does not.",
       "limitRule": "A figure may not take up an item that would put its load over the limit. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
+      "coin": {
+        "$comment": "Coin was on the list below - weightless, an abstraction, the one thing a figure could hold an unlimited quantity of. It is not any more. A gold coin weighs 25 grams (currency.massKgEach), forty to the kilogram, and it goes on the scales with the sword and the rope.\n\nWhat that buys is a real decision at the top of the game. A strength-3 figure shoulders 9 kg; a strength-6 one, 18. Spend that on plate and a greatsword and there is nothing left for a fortune, and a party that has just sold a hold of jewellery has to work out how it is getting the money home. Coin is not a number in a corner of the sheet any more, it is cargo.",
+        "massKgEach": "rules.currency.massKgEach",
+        "perKg": 40,
+        "counts": "Against the same limit as everything else. Total what the figure is wearing, wielding, stowing and carrying in its purse.",
+        "elsewhere": "Coin in a strongbox on a wagon is cargo like any other and is measured in bulk, not on a figure's back. Coin left in a town is not being carried by anybody."
+      },
       "notCarried": [
         "Commodities in transit, which travel by transport mode and are measured in bulk.",
-        "Coin.",
         "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."
       ],
       "onZeroHealth": "A figure carried to a settlement at 0 health loses everything it was carrying on the way.",
@@ -766,7 +832,7 @@ window.GAME_DATA = {
         "encounter": {
           "$comment": "What to DO with a discovery roll that turns up a living thing, which the tables have always produced and the rules have never said how to run. The answer is the one piece of furniture already on the table: a player board. The thing you met gets one, and for the length of the encounter it is a player - a player who is not a person.",
           "rule": "Shuffle the deck the result names - monsters for a beast, characters for a stranger on the road - and deal one card face up onto a spare player board, into the character recess.",
-          "setUp": "Set that board's tracks from the card exactly as a player sets their own at setup: health, strength, defence and mana off the printed strip. It now has everything a player has and is run the same way, by whoever is to the left of the player who drew it.",
+          "setUp": "Set that board's tracks from the card exactly as a player sets their own at setup: health, strength, pace and mana off the printed strip. Its armour is a number on the card and does not move, so nothing walks it. It now has everything a player has and is run the same way, by whoever is to the left of the player who drew it.",
           "boards": "Print one player board per player plus one for the table. The spare is the encounter board, and it is why the board is generic (playerboard.json board.generic): the furniture does not care whether a person or a wolf is sitting behind it.",
           "afterwards": "When the encounter ends the card is put away - back into its deck, or onto the hex as a lair, or into the winner's hand if it was befriended, enslaved or domesticated (monsters.json encounterOptions). Clear the board's tokens. Nothing about the encounter is written down.",
           "why": "A monster with a board is a monster whose health and strength are visible to everyone, walked down in front of the table rather than tracked in one player's head - and a stranger met on the road is set up exactly like a hero, because that is exactly what they are to themselves."
@@ -800,15 +866,15 @@ window.GAME_DATA = {
     },
     "hirelings": {
       "where": "Hired at any inn, in any settlement of village rank or better.",
-      "$statsNote": "Every figure in a fight needs a strength and a defence, hirelings included - conflict.attack reads both off whoever is swinging and whoever is being swung at, and a hireling with neither cannot be attacked by the rules as written. These are the numbers printed on the inn's board, and they are what you are paying for: the thug is strong and careless, the militiaman is neither and is wearing a coat of plates, and the blade is better at both than either.",
+      "$statsNote": "Every figure in a fight needs a strength and something to swing, hirelings included - conflict.battle totals both off whoever is fighting. These are the numbers printed on the inn's board, and they are what you are paying for: the thug is strong and carries nothing, the militiaman is ordinary and is wearing a coat of plates, and the blade is better than either and rolls a third die.",
       "options": [
         {
           "id": "thug",
           "name": "Thug",
           "coinPerJourney": 20,
           "strength": 4,
-          "defence": 2,
-          "combatDice": 1,
+          "armour": 0,
+          "battle": 1,
           "note": "Refuses to fight monsters of strength 4 or more. Counts as a soldier for escort purposes."
         },
         {
@@ -816,9 +882,8 @@ window.GAME_DATA = {
           "name": "Militiaman",
           "coinPerJourney": 35,
           "strength": 3,
-          "defence": 4,
-          "combatDice": 1,
-          "armourValue": 1,
+          "armour": 2,
+          "battle": 1,
           "note": "Steady. Fights anything."
         },
         {
@@ -826,46 +891,66 @@ window.GAME_DATA = {
           "name": "Hired Blade",
           "coinPerJourney": 60,
           "strength": 5,
-          "defence": 4,
-          "combatDice": 2,
-          "note": "Fights anything, and rolls first like a bow."
+          "armour": 1,
+          "battle": 2,
+          "extraDie": true,
+          "note": "Fights anything, and rolls a third blue die, keeping the best two."
         }
       ],
       "notes": "A hireling escorts one journey - a travelling party or a cargo in transit - then goes home. Hirelings eat no food; the fee is everything. An escorted cargo drops its theft risk to 0, same as a soldier escort. They do not eat and they do not sleep on your account either, so upkeep never touches them."
     },
     "conflict": {
-      "combatDie": "d6",
-      "hitsOn": 4,
+      "$comment": "A battle is ONE SUBTRACTION and it is the same subtraction the market makes.\n\nIt used to be a to-hit roll: one die per unit, hit on a 4, shifted by your strength and their defence, clamped at both ends, with armour cancelling hits after they landed. That is four numbers, two of them doing nearly the same job, and a table that had to remember which way the clamp went.\n\nNow both sides total up and the difference is the wound. You roll TWO BLUE dice and add your strength and your gear; the thing you are fighting rolls TWO RED and adds its own. Whoever is lower loses health equal to the gap. Blue is what you want, red is what stands in your way, and it is the identical gesture a player has already made once this round on the market board - two blue against two red, subtract, read the difference. One pair of colours, two systems, no second thing to learn.\n\nDEFENCE IS GONE. It was the half of the old strength that made a strong thing hard to hurt, and it was a good fix for a to-hit roll. In an opposed total there is nothing for it to do that armour was not already doing: a stone boar that barely swings and turns a sword is a low strength and a high armour, which is two numbers saying two things, where strength-and-defence was two numbers saying one.",
+      "battleDice": {
+        "yours": "blue",
+        "theirs": "red",
+        "count": 2,
+        "faces": 6
+      },
       "roundsPerBattle": 1,
       "retreatAllowed": true,
       "lootFraction": 0.25,
+      "battle": {
+        "$comment": "The one line of arithmetic printed on the player board, because it is the only one a player needs while a monster card is face up in front of them.",
+        "rule": "Both sides total strength, gear and dice. The lower total loses health equal to the difference.",
+        "formula": "yours = your strength + your gear + 2 blue dice · theirs = its strength + its armour + 2 red dice · the lower loses health = the difference",
+        "gear": "Your weapon's battle number plus every piece of armour you are wearing. A monster's gear is its armour and nothing else - its weapon is itself.",
+        "worked": [
+          "Strength 4 with a sword (+1) and a leather jerkin (+1) rolls 7 on the blue: 13. A cinder wolf, strength 2, armour 1, rolls 7 on the red: 10. The wolf takes 3 - and it has 4 health, so one more exchange finishes it.",
+          "The same character against Vhalrik, strength 7, armour 3, who rolls 8: 18 against 13. The character takes 5, which is half of what they have.",
+          "Equal totals wound nobody. Two figures who are the same and roll the same have had a fight and neither of them has anything to show for it, which is the honest answer."
+        ],
+        "ties": "A difference of nothing is no damage to anybody.",
+        "simultaneous": false,
+        "$simultaneousNote": "There is only one roll and only one loser, so hits are no longer applied both ways. Attacking is still never free: the dice decide who was better on the day, and being the attacker buys nothing at all.",
+        "extraDice": "A few cards grant an extra die of your own colour - Ruk's escort trait, a hired blade. Roll it and KEEP THE BEST TWO. It is the only place in the game where more dice are rolled than are counted, and it is worth about a point and a half.",
+        "appliesTo": "Any figure with a strength: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the numbers printed on the inn's board."
+      },
       "strength": {
-        "$comment": "One number, three jobs, and it is the only number a figure brings to a fight of its own. Strength is what you SWING WITH - it shifts the number you need to hit. It is what you CARRY WITH - see carrying.kgPerStrength. And it is still the threat threshold some rules read off a monster card. It is also the number a hard night takes off you (upkeep.night), which is what ties the three together: an exhausted figure hits worse and carries less, and that is one token moving down one track.",
+        "$comment": "One number, three jobs, and it is the only number a figure brings to a fight of its own. Strength is what you SWING WITH - it is the base of your side of the battle roll. It is what you CARRY WITH - see carrying.kgPerStrength. And it is still the threat threshold some rules read off a monster card. It is also the number a hard night takes off you (upkeep.night), which is what ties the three together: an exhausted figure fights worse and carries less, and that is one token moving down one track.",
         "scale": "0 to the board's ceiling (components.json board.track). Characters run 2 to 6, monsters 2 to 7.",
         "carries": "strength x carrying.kgPerStrength kilograms. The card prints the kilograms; the track holds the strength.",
-        "notDice": "Strength never adds dice. Weapons and armour add dice and soak hits, exactly as they did; +1 combat die is still +1 combat die.",
+        "inABattle": "It is added to your total, straight, once. It never adds dice - everyone rolls two, and the very few things that grant a third say so on their own card.",
         "threshold": "Unchanged and read off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges.",
         "atZero": "A figure at 0 strength does not fight and carries nothing."
       },
-      "defence": {
-        "$comment": "The other half, and new. Strength used to sit on both sides of the attack roll - yours off the board, theirs off the card - which made a strong thing hard to hurt for no reason other than that it hit hard. Those are different properties and they now have different numbers: an ash drake is strong AND armoured, a dust devil is neither and is still almost impossible to land a blow on, and a stone boar barely swings at all and turns a sword.",
-        "scale": "0 to the board's ceiling, same as every other track. Characters run 2 to 5, monsters 1 to 6.",
-        "isNot": "Armour. Armour is items.json armourValue and still soaks hits after they land; defence is what makes them miss in the first place. A figure can have both, and a figure in plate usually does.",
-        "atZero": "Nothing between the blow and you. An attacker needs only its own hitsOn, less its strength."
+      "armour": {
+        "$comment": "What is between you and the blow, and the only piece of gear a monster has. It used to be two things - DEFENCE, which stopped a hit landing, and ARMOUR, which cancelled it after it had. In an opposed total there is no difference between those two sentences: both of them are a number that makes the other side's roll less likely to hurt you. So there is one number, it is called armour, and a monster's hide is on the same field as a suit of plate.",
+        "scale": "0 upward. A worn suit runs 1 to 3, and a figure wearing body, head and off-hand can reach 5. Monsters run 0 to 3.",
+        "adds": "Straight to your battle total, once per piece worn.",
+        "wears": "One wear point per round of battle, on every piece worn - see rules.json wear. A blow you turned still dented the plate.",
+        "$monsterNote": "A monster's armour is what its card prints in the A box, and it is the whole of the old defence rescaled: an ash drake is strong AND armoured, a rime harpy is neither, and a stone boar barely swings and still turns a sword."
       },
-      "attack": {
-        "$comment": "The one line of arithmetic printed on the player board, because it is the only one a player needs while a monster card is face up in front of them. It is a DIFFERENCE, which is what lets one number on the board and one number on the card settle the whole roll.",
-        "rule": "Shift the number you need: less your own strength, plus their defence.",
-        "formula": "target = hitsOn + opponentDefence - yourStrength",
-        "worked": "Strength 3 against defence 3: 4+. Strength 5 against defence 3: 2+. Strength 2 against defence 5: 6+.",
-        "clamp": [
-          2,
-          6
-        ],
-        "clampNote": "Never better than 2+ and never worse than 6+. A fight is never decided before the dice are thrown - Vhalrik at defence 6 is terrifying, not arithmetic, and the halfling still lands one in six.",
-        "appliesTo": "Any figure with a strength and a defence: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the numbers printed on the inn's board."
+      "flee": {
+        "$comment": "The option a party has always had, and now the one it has to earn. Fleeing used to be free - withdraw the way you came, lose your discovery roll, done - which made every monster optional and most of them decorative. You have to be FASTER than the thing you are running from, and half the bestiary is faster than a person on foot.",
+        "rule": "A party may run only if its pace is GREATER than the monster's. Equal is not greater: a thing that matches you stays with you.",
+        "pace": "The party's pace for the leg it is on - the number on the P track, off travel.json for its mode and the ground. The monster's is printed on its card.",
+        "succeeds": "Withdraw the way you came and end your movement. No discovery roll this leg, and nothing is looted.",
+        "refused": "A party that cannot outpace the monster may not decline the fight. It may still befriend it, or offer it something, or die.",
+        "cargo": "Monsters of strength 4 or more get one free round of the battle roll against a fleeing cargo vehicle, whatever its pace.",
+        "$whyNote": "It puts a road, a horse and a night's sleep into the same decision as a sword. A mounted party outruns nearly everything; a party on foot at the end of a hard week has a pace of 2 and outruns a mire strangler and nothing else."
       },
-      "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour, and hit on the number the strength-against-defence difference leaves them needing. Both sides apply hits simultaneously."
+      "notes": "One roll, one loser, one wound. Both sides total strength, gear and dice; the lower total loses health equal to the difference; and a tie hurts nobody."
     },
     "victory": {
       "gameLengthRounds": 24,
@@ -957,7 +1042,7 @@ window.GAME_DATA = {
         "unit": "load",
         "bulk": 2,
         "baseValue": 4,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "bulky"
         ],
@@ -970,7 +1055,7 @@ window.GAME_DATA = {
         "unit": "block",
         "bulk": 2,
         "baseValue": 5,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "bulky"
         ]
@@ -1057,7 +1142,7 @@ window.GAME_DATA = {
         "unit": "barrel",
         "bulk": 1,
         "baseValue": 1,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "liquid"
         ],
@@ -1098,7 +1183,7 @@ window.GAME_DATA = {
         "unit": "sack",
         "bulk": 1,
         "baseValue": 7,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "fuel"
         ]
@@ -1124,7 +1209,7 @@ window.GAME_DATA = {
         "unit": "bundle",
         "bulk": 1,
         "baseValue": 9,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "building-material"
         ]
@@ -1136,7 +1221,7 @@ window.GAME_DATA = {
         "unit": "pallet",
         "bulk": 2,
         "baseValue": 12,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "building-material"
         ]
@@ -1198,7 +1283,7 @@ window.GAME_DATA = {
         "unit": "crate",
         "bulk": 1,
         "baseValue": 20,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "fragile"
         ]
@@ -1210,7 +1295,7 @@ window.GAME_DATA = {
         "unit": "coil",
         "bulk": 1,
         "baseValue": 8,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "leather",
@@ -1219,7 +1304,7 @@ window.GAME_DATA = {
         "unit": "roll",
         "bulk": 1,
         "baseValue": 11,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "ironware",
@@ -1228,7 +1313,7 @@ window.GAME_DATA = {
         "unit": "crate",
         "bulk": 1,
         "baseValue": 22,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "fittings"
         ],
@@ -1241,7 +1326,7 @@ window.GAME_DATA = {
         "unit": "bundle",
         "bulk": 1,
         "baseValue": 15,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "wool",
@@ -1250,7 +1335,7 @@ window.GAME_DATA = {
         "unit": "sack",
         "bulk": 1,
         "baseValue": 6,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "flax",
@@ -1259,7 +1344,7 @@ window.GAME_DATA = {
         "unit": "sack",
         "bulk": 1,
         "baseValue": 5,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "cotton",
@@ -1268,7 +1353,7 @@ window.GAME_DATA = {
         "unit": "sack",
         "bulk": 1,
         "baseValue": 7,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "yarn",
@@ -1277,7 +1362,7 @@ window.GAME_DATA = {
         "unit": "bundle",
         "bulk": 1,
         "baseValue": 12,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "cloth",
@@ -1286,7 +1371,7 @@ window.GAME_DATA = {
         "unit": "bolt",
         "bulk": 1,
         "baseValue": 20,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "fine-cloth",
@@ -1307,7 +1392,7 @@ window.GAME_DATA = {
         "unit": "roll",
         "bulk": 1,
         "baseValue": 6,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "grain",
@@ -1316,7 +1401,7 @@ window.GAME_DATA = {
         "unit": "sack",
         "bulk": 1,
         "baseValue": 5,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "staple",
           "seed"
@@ -1330,7 +1415,7 @@ window.GAME_DATA = {
         "unit": "sack",
         "bulk": 1,
         "baseValue": 9,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "bread",
@@ -1339,7 +1424,7 @@ window.GAME_DATA = {
         "unit": "batch",
         "bulk": 1,
         "baseValue": 14,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 3,
         "tags": [
           "staple"
@@ -1354,7 +1439,7 @@ window.GAME_DATA = {
         "unit": "crate",
         "bulk": 1,
         "baseValue": 6,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 3
       },
       {
@@ -1364,7 +1449,7 @@ window.GAME_DATA = {
         "unit": "basket",
         "bulk": 1,
         "baseValue": 7,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 2,
         "tags": [
           "foraged",
@@ -1378,7 +1463,7 @@ window.GAME_DATA = {
         "unit": "basket",
         "bulk": 1,
         "baseValue": 5,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 2,
         "tags": [
           "foraged",
@@ -1392,7 +1477,7 @@ window.GAME_DATA = {
         "unit": "crate",
         "bulk": 1,
         "baseValue": 6,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 4
       },
       {
@@ -1402,7 +1487,7 @@ window.GAME_DATA = {
         "unit": "crate",
         "bulk": 1,
         "baseValue": 7,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 2
       },
       {
@@ -1412,7 +1497,7 @@ window.GAME_DATA = {
         "unit": "crate",
         "bulk": 1,
         "baseValue": 10,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 2
       },
       {
@@ -1422,7 +1507,7 @@ window.GAME_DATA = {
         "unit": "barrel",
         "bulk": 1,
         "baseValue": 18,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "preserved"
         ],
@@ -1435,7 +1520,7 @@ window.GAME_DATA = {
         "unit": "churn",
         "bulk": 1,
         "baseValue": 4,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 1,
         "tags": [
           "liquid"
@@ -1448,7 +1533,7 @@ window.GAME_DATA = {
         "unit": "wheel",
         "bulk": 1,
         "baseValue": 16,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "preserved"
         ]
@@ -1460,7 +1545,7 @@ window.GAME_DATA = {
         "unit": "jar",
         "bulk": 1,
         "baseValue": 12,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "potion-ingredient"
         ]
@@ -1472,7 +1557,7 @@ window.GAME_DATA = {
         "unit": "tray",
         "bulk": 1,
         "baseValue": 5,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 2
       },
       {
@@ -1482,7 +1567,7 @@ window.GAME_DATA = {
         "unit": "crate",
         "bulk": 1,
         "baseValue": 8,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 2
       },
       {
@@ -1492,7 +1577,7 @@ window.GAME_DATA = {
         "unit": "sack",
         "bulk": 1,
         "baseValue": 7,
-        "pricing": "glut"
+        "pricing": "staple"
       },
       {
         "id": "ale",
@@ -1501,7 +1586,7 @@ window.GAME_DATA = {
         "unit": "barrel",
         "bulk": 2,
         "baseValue": 24,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "liquid",
           "morale"
@@ -1543,7 +1628,7 @@ window.GAME_DATA = {
         "unit": "head",
         "bulk": 2,
         "baseValue": 18,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "breeds",
           "eats"
@@ -1556,7 +1641,7 @@ window.GAME_DATA = {
         "unit": "head",
         "bulk": 3,
         "baseValue": 30,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "breeds",
           "eats"
@@ -1569,7 +1654,7 @@ window.GAME_DATA = {
         "unit": "head",
         "bulk": 2,
         "baseValue": 20,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "breeds",
           "eats"
@@ -1582,7 +1667,7 @@ window.GAME_DATA = {
         "unit": "coop",
         "bulk": 1,
         "baseValue": 9,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "breeds",
           "eats"
@@ -1610,7 +1695,7 @@ window.GAME_DATA = {
         "unit": "each",
         "bulk": 1,
         "baseValue": 8,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "reusable"
         ],
@@ -1623,7 +1708,7 @@ window.GAME_DATA = {
         "unit": "each",
         "bulk": 1,
         "baseValue": 6,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "reusable"
         ]
@@ -1635,7 +1720,7 @@ window.GAME_DATA = {
         "unit": "each",
         "bulk": 0.5,
         "baseValue": 3,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "reusable"
         ]
@@ -1688,7 +1773,7 @@ window.GAME_DATA = {
         "unit": "bundle",
         "bulk": 0.5,
         "baseValue": 20,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "foraged",
           "potion-ingredient"
@@ -1714,7 +1799,7 @@ window.GAME_DATA = {
         "unit": "posy",
         "bulk": 0.5,
         "baseValue": 14,
-        "pricing": "glut",
+        "pricing": "perish",
         "perishRounds": 2,
         "tags": [
           "foraged",
@@ -1729,7 +1814,7 @@ window.GAME_DATA = {
         "unit": "bundle",
         "bulk": 0.5,
         "baseValue": 16,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "foraged",
           "potion-ingredient"
@@ -1743,7 +1828,7 @@ window.GAME_DATA = {
         "unit": "pouch",
         "bulk": 0.5,
         "baseValue": 12,
-        "pricing": "glut",
+        "pricing": "staple",
         "tags": [
           "foraged",
           "potion-ingredient"
@@ -1753,26 +1838,14 @@ window.GAME_DATA = {
     ]
   },
   "pricing": {
-    "$comment": "How a price is arrived at, and what the market remembers.\n\nPrices used to drift: one random family, one band, every round, and nothing anybody did to a market had any bearing on it. A player could sell four hundred grain into one town and the grain price would not notice. So this is the other thing - a price that is ROLLED from supply and demand, and then bent by what the market has already been through.\n\nThree dice and two tracks. Two red dice are demand, two blue dice are supply, and the difference between them is the swing. One green die says how violently that swing is felt this season - stable, volatile, or inelastic. The market board translates the result into a number of bands to move, and the commodity's own line on that board carries the memory: a modifier from -3 to +3 that is added to the swing before it is read.\n\nWHAT MOVES THE MEMORY IS THE COMMODITY'S OWN MODEL, and every commodity has exactly one. Grain rots when it does not sell and the memory sinks. Gold is bought because it is going up and the memory climbs after it. Iron ore comes out of a hole that does not refill, and its memory ratchets one way for the rest of the game. Three rules, sixty-six commodities, one board.\n\nNothing here is written down in play and nothing is remembered in a head. The dice are rolled, the tracks are read, the tokens are moved, and the whole history of a market is three pieces of wood standing on a printed line.\n\nThis file is the SYSTEM. Which model a commodity runs under is on the commodity (data/commodities.json `pricing`); the bands the price token walks are rules.json market.priceBands; the board that prints all of it is data/marketboard.json and data/components.json marketBoard. No commodity is named below, and no board dimension is either.",
-    "version": "0.1.0",
+    "$comment": "How a price is arrived at, and what a good's own nature does to it.\n\nPrices used to drift: one random family, one band, every round, and nothing anybody did to a market had any bearing on it. Then they were ROLLED and BENT - two red dice against two blue, a green die that multiplied the result, and a memory strip on the board that the commodity's model walked. That version was answerable and it was also the only sum in the game a player could get wrong: a swing halved and rounded toward zero, or doubled, with a modifier that had to go in BEFORE the multiplication.\n\nSo the multiplication is gone. THE WHOLE SUM IS ADDITION NOW, and it is one line:\n\n    net = Demand - Supply + Volatility + Modifier\n\nTwo BLUE dice are demand, two RED are supply, and one GREEN die says how rough the season is - minus two, nothing, or plus two, read off a strip of three cells. Whatever a good's own nature adds is the modifier, and it is added like everything else. Find the net on the swing ruler and walk the price that many bands. There is nothing to multiply, nothing to halve and nothing to round.\n\nThe colours changed with the sum, and for a reason that reaches past this file: BLUE IS WHAT YOU WANT AND RED IS WHAT STANDS IN THE WAY, everywhere in the game. In a market that is demand against supply. In a fight it is your dice against the thing you are fighting (rules.json conflict.battle) - the same two colours, the same subtraction, the same direction. A player who has rolled one market has already learned how a battle is scored.\n\nWHAT A GOOD IS decides what it adds, and every commodity is exactly one of four things. Most are STAPLE and add nothing - the dice are the whole story. A PERISHABLE adds nothing either and pays in a different currency: whatever is left at the end of the round faces the spoil die. A FINITE resource adds the lowest number still visible on its own depletion board, which only ever goes up, because every unit BURNED puts a token on that board and no token ever comes off. A SOUGHT good adds the move it made last round - it is bought because it is going up, and it is dumped for the same reason in reverse.\n\nFour models, sixty-six commodities, and not one of them needs a strip on a board any more. The price itself is written down, in ink, on the ledger (data/ledger.json), because a price is the one thing in this game worth having a record of.\n\nThis file is the SYSTEM. Which model a commodity runs under is on the commodity (data/commodities.json `pricing`); the bands the price walks are rules.json market.priceBands; the sheet that explains all of it is data/marketboard.json and data/components.json marketBoard; the sheet that records it is data/ledger.json. No commodity is named below, and no sheet dimension is either.",
+    "version": "0.3.0",
     "dice": {
-      "$comment": "Three colours, five dice, one roll. Colour is the whole interface: nobody has to remember which pair is which, because the red ones are the ones people want and the blue ones are the ones there are.",
+      "$comment": "Four colours, six dice, and the colour is the whole interface. BLUE is what you want; RED is what stands in your way; GREEN is how rough the weather is; OCHRE is what the season takes back. Nobody has to remember which pair is which, because the same two colours are subtracted the same way in a fight.\n\nThe fifth ink is BRUISE and it is the mana die (arcana.json manaDie), which is not a market die and is listed there. Between them the five dice are the palette's five inks, one each, and there is no sixth ink to make a seventh die out of.",
       "sets": [
         {
           "id": "demand",
           "name": "Demand",
-          "colour": "red",
-          "count": 2,
-          "faces": 6,
-          "range": [
-            2,
-            12
-          ],
-          "means": "How badly the town wants the stuff this season. Two dice rather than one because a market is a crowd, and a crowd averages: 7 is an ordinary appetite and 12 is a famine year."
-        },
-        {
-          "id": "supply",
-          "name": "Supply",
           "colour": "blue",
           "count": 2,
           "faces": 6,
@@ -1780,11 +1853,23 @@ window.GAME_DATA = {
             2,
             12
           ],
-          "means": "How much of it turned up. It is also the CAP on what the board will sell this round - see `stockCap` - so a low blue roll is a shortage twice over: dear, and rationed."
+          "means": "How badly the town wants the stuff this season. Two dice rather than one because a market is a crowd, and a crowd averages: 7 is an ordinary appetite and 12 is a famine year. Blue is added, always - in a market and in a fight."
         },
         {
-          "id": "elasticity",
-          "name": "Elasticity",
+          "id": "supply",
+          "name": "Supply",
+          "colour": "red",
+          "count": 2,
+          "faces": 6,
+          "range": [
+            2,
+            12
+          ],
+          "means": "How much of it turned up. It is also the CAP on what the board will sell this round - see `stockCap` - so a low red roll is a shortage twice over: dear, and rationed. Red is subtracted, always."
+        },
+        {
+          "id": "volatility",
+          "name": "Volatility",
           "colour": "green",
           "count": 1,
           "faces": 6,
@@ -1792,85 +1877,97 @@ window.GAME_DATA = {
             1,
             6
           ],
-          "means": "How hard the swing lands. Read on the elasticity strip printed on the market board; it multiplies the swing and nothing else."
+          "means": "How rough the season is. Read on the volatility strip printed on the market board: it adds minus two, nothing, or plus two, and that is the whole of it."
+        },
+        {
+          "id": "spoil",
+          "name": "Spoil",
+          "colour": "ochre",
+          "count": 1,
+          "faces": 6,
+          "range": [
+            1,
+            6
+          ],
+          "means": "What the season takes back. Rolled at the end of every round against any perishable goods still in a player's hands, and read on the spoil strip. It never touches a price."
         }
       ],
-      "note": "Five dice for the whole table, not five per player. One player rolls the market for every line on the board."
+      "note": "Six dice for the whole table, not six per player. One player rolls the market for every line on the ledger; every player rolls the spoil die for their own perishables."
     },
-    "elasticity": {
-      "$comment": "The green die, and the one number in the formula that is not a count of anything. It is why two identical supply-and-demand rolls can be a shrug in one season and a crash in the next.",
-      "die": "elasticity",
+    "volatility": {
+      "$comment": "The green die, and the one number in the sum that is not a count of anything. It used to be called ELASTICITY and it used to MULTIPLY. Neither survived. Elasticity is a word for how much a quantity answers a price, which is not what this die was ever doing - it was a weather roll on a market - and volatility is the word for that. And a multiplier in the middle of an addition is the one place a table gets a sum wrong: a swing of -7 halved toward zero, with a modifier that had to be folded in first, is three chances to slip in one line.\n\nThree cells, two faces each, and it adds. That is all it does now.",
+      "die": "volatility",
       "steps": [
         {
-          "id": "stable",
-          "name": "Stable",
+          "id": "slack",
+          "name": "Slack",
           "faces": [
             1,
             2
           ],
-          "multiply": 1,
-          "label": "×1",
-          "means": "An ordinary season. The swing is felt as it fell."
+          "add": -2,
+          "label": "−2",
+          "means": "A quiet season with nobody pushing. Two off the swing, whichever way it fell."
         },
         {
-          "id": "volatile",
-          "name": "Volatile",
+          "id": "even",
+          "name": "Even",
           "faces": [
             3,
             4
           ],
-          "multiply": 2,
-          "label": "×2",
-          "means": "A thin market with nobody willing to stand in the middle of it. Every point of the swing counts double, and this is where crashes and spikes come from."
+          "add": 0,
+          "label": "0",
+          "means": "An ordinary season. The dice are the whole story."
         },
         {
-          "id": "inelastic",
-          "name": "Inelastic",
+          "id": "rough",
+          "name": "Rough",
           "faces": [
             5,
             6
           ],
-          "multiply": 0.5,
-          "label": "÷2",
-          "means": "The town needs it whatever it costs, or cannot use a second one at any price. Half the swing, dropped toward zero - most inelastic seasons do not move the price at all."
+          "add": 2,
+          "label": "+2",
+          "means": "A thin, jumpy market. Two on, and this is where the spikes come from."
         }
       ],
-      "rounding": "toward-zero",
-      "$roundingNote": "Halving rounds toward zero, so an inelastic season can shrink a swing away to nothing but can never turn it around. Nothing in this game rounds a loss into a gain."
+      "$addNote": "It ADDS, so it can turn a swing around: a -1 in a rough season is a +1, and a +1 in a slack one is a -1. A multiplier could never do that, and a market that is never turned over by the weather is a market with no weather in it."
     },
     "formula": {
-      "$comment": "The whole sum, and it is deliberately one line. Everything difficult about this system is in what moves the memory, not in what is arithmetic at the table.",
-      "net": "(Demand − Supply + Memory) × Elasticity",
-      "then": "Read the net on the swing ruler printed on the market board. It says how many bands to move the commodity's price token. Move it; that is the new price.",
-      "price": "The price itself is unchanged from what it always was: the commodity's base value × the band its token now stands on. This system decides where the token goes, never what a band is worth.",
-      "memoryFirst": "The memory is added BEFORE the elasticity multiplies, which is the difference between a modifier and a nudge: in a volatile season a market's history counts double, exactly like everything else about that season.",
-      "clamp": "A token at the top of the ladder that is told to go up stays where it is, and the same at the bottom. A market can be at its ceiling; it cannot be above it."
+      "$comment": "The whole sum, and it is deliberately one line of addition. Everything difficult about this system is in what a good IS, not in what is arithmetic at the table.",
+      "net": "Demand − Supply + Volatility + Modifier",
+      "then": "Read the net on the swing ruler printed on the market board. It says how many bands to move the price. Move the band bar on the line's ledger column; that is the new band.",
+      "price": "The price is the commodity's base value at the band the bar now stands on. Every commodity's six prices are printed out in full in the annex, so the band is looked up and never multiplied. Write the new price in the ledger's next cell and strike the old one through.",
+      "modifier": "Whatever the good's own model adds, and three of the four add nothing. A finite resource adds the lowest number still visible on its depletion board; a sought good adds the move it made last round; a staple and a perishable add nothing at all.",
+      "clamp": "A band bar at the top of the ladder that is told to go up stays where it is, and the same at the bottom. A market can be at its ceiling; it cannot be above it.",
+      "noMultiplication": "There is none, anywhere in the round. Not in the die, not in the modifier, not in the price - the price ladder is a printed table, not a sum."
     },
     "ruler": {
-      "$comment": "The translation, and the reason the board exists rather than a table in a book. Seven cells across the foot of the market board: find the net in one of them and the cell says how far the price token moves.\n\nThe edges are not round numbers by accident. Two red dice against two blue is a triangular spread with its peak at nothing, so a hold band of one either side leaves the market moving in about two rounds in three - and a two-band move needs a swing of eight, which a stable season can only reach at the very ends of the dice and a volatile one reaches whenever the market is genuinely one-sided.",
+      "$comment": "The translation, and the reason the market board is worth printing rather than looking up. Seven cells across the sheet: find the net in one of them and the cell says how far the price moves.\n\nThe edges were re-cut when the multiplier went. Two blue dice against two red is a triangular spread peaking at nothing, and the green die widens it by two either way; the whole net now runs -12 to +12 before any modifier, where the old multiplied one reached 26. So the bins are tighter, and they are cut to leave the market moving in about seven rounds in ten - one band most of the time, two when the market is genuinely one-sided, and three only when the dice and the good's own nature are pulling together.",
       "bins": [
         {
           "id": "crash",
           "from": -99,
-          "to": -16,
+          "to": -9,
           "move": -3,
-          "label": "≤ −16",
+          "label": "≤ −9",
           "name": "Crash"
         },
         {
           "id": "slump",
-          "from": -15,
-          "to": -8,
+          "from": -8,
+          "to": -5,
           "move": -2,
-          "label": "−15 … −8",
+          "label": "−8 … −5",
           "name": "Slump"
         },
         {
           "id": "soften",
-          "from": -7,
+          "from": -4,
           "to": -2,
           "move": -1,
-          "label": "−7 … −2",
+          "label": "−4 … −2",
           "name": "Soften"
         },
         {
@@ -1884,183 +1981,220 @@ window.GAME_DATA = {
         {
           "id": "firm",
           "from": 2,
-          "to": 7,
+          "to": 4,
           "move": 1,
-          "label": "+2 … +7",
+          "label": "+2 … +4",
           "name": "Firm"
         },
         {
           "id": "rally",
-          "from": 8,
-          "to": 15,
+          "from": 5,
+          "to": 8,
           "move": 2,
-          "label": "+8 … +15",
+          "label": "+5 … +8",
           "name": "Rally"
         },
         {
           "id": "spike",
-          "from": 16,
+          "from": 9,
           "to": 99,
           "move": 3,
-          "label": "≥ +16",
+          "label": "≥ +9",
           "name": "Spike"
         }
       ],
+      "odds": {
+        "$comment": "What the ruler actually does, over all 7776 rolls of five dice, with no modifier. Restated here so a change to the bins can be checked against the intention rather than against a memory of it.",
+        "hold": 0.299,
+        "oneBand": 0.458,
+        "twoBands": 0.222,
+        "threeBands": 0.021
+      },
       "reach": {
-        "$comment": "The widest net the dice and the tracks can actually produce, checked by tools/validate-data.mjs against the bins above so the ruler can never have a hole in it.",
+        "$comment": "The widest net the dice and the modifiers can actually produce, checked by tools/validate-data.mjs against the bins above so the ruler can never have a hole in it.",
         "swing": [
           -10,
           10
         ],
-        "note": "(2−12) at the extremes, plus a memory of ±3, all doubled by a volatile season: ±26."
+        "note": "(2−12) at the extremes, plus a volatility of ±2, plus a modifier that runs -3 for a sought good in freefall and +6 for a seam that is worked out: -15 to +18."
       }
     },
-    "memory": {
-      "$comment": "The modifier track: one per line on the market board, seven cells, walked by a bar. Its number is added to the swing and it is the only thing on the table that remembers anything.\n\nThe range is ±3 because that is what the models need and no more. A memory of +3 turns a market that moved up in three rounds of ten into one that moves up in one round of two; a wider track would not make the market more interesting, it would make it decided.",
+    "modifier": {
+      "$comment": "The one number a good's own nature contributes, added like everything else in the sum. There is no strip on any board for it and no bar walks it, which is what changed: it used to be a MEMORY, seven cells at the head of every market line, and the board had to be re-laid every time a model wanted a different range.\n\nNow each model says where its number is READ FROM, and every one of them is read off something that is already on the table for another reason - the depletion board that the tokens are going on anyway, or the move box on the ledger row that was written down anyway. Nothing is remembered and nothing extra is tracked.",
+      "from": -3,
+      "to": 6,
+      "reads": "Add it to the swing. A bar on nothing is the ordinary case and three of the four models never leave it.",
+      "$rangeNote": "The floor is a sought good three bands into a fall; the ceiling is a finite resource whose depletion board is down to its last row. Nothing else in the game reaches either."
+    },
+    "spoil": {
+      "$comment": "The perishable model's die, and the one thing in the market that happens in a player's own hands rather than on a board. Rolled at the end of every round, once per perishable stack any player is still holding - grown, bought, looted or found, it makes no difference to a fish.\n\nIt replaced a countdown. Every perishable used to carry a number of rounds it kept for, which meant a token per stack with an age on it and a player who had to remember when the fish arrived. A die at the end of the round asks the same question and needs nothing written down: roll it, discard that many, move on.",
+      "die": "spoil",
+      "when": "At the end of the Feeding phase, before the market is rolled.",
+      "who": "Every player, for every perishable commodity they hold - in a town, in a hold, or on a figure's back. The board's own stock does not spoil; the board is not holding it, it is selling it.",
+      "keepsThreshold": 3,
+      "$thresholdNote": "A commodity whose `perishRounds` is below this keeps POORLY and reads the right-hand column; the rest read the left. Milk and fish are one column over from apples and bread, and that is the whole of the difference perishRounds makes now.",
+      "steps": [
+        {
+          "faces": [
+            1,
+            2
+          ],
+          "keepsWell": 0,
+          "keepsPoorly": 1,
+          "means": "A cold week."
+        },
+        {
+          "faces": [
+            3,
+            4
+          ],
+          "keepsWell": 1,
+          "keepsPoorly": 2,
+          "means": "The ordinary loss."
+        },
+        {
+          "faces": [
+            5,
+            6
+          ],
+          "keepsWell": 2,
+          "keepsPoorly": 3,
+          "means": "It turned."
+        }
+      ],
+      "cap": "You cannot lose more than you hold. A stack of one that is told to lose three loses one.",
+      "granary": "A stack held in a granary reads one row up the strip - a 5 or a 6 costs what a 3 or a 4 costs, and a 1 or a 2 costs nothing at all. That is what a granary is for, and it is why it takes food and drink and nothing else (rules.json storage.granaryAcceptsOnly).",
+      "price": "None. A perishable's price is the dice and nothing but the dice. What spoilage does to a market it does through the market's own front door: units that rot are units nobody sells, and the town notices that the same way it notices everything else."
+    },
+    "depletion": {
+      "$comment": "The finite model's board, and the only permanent mark in the game. One printed grid per finite commodity in play (data/marketboard.json depletion, drawn by tools/build-market.mjs onto its own sheet), and it works the way a seam works: the easy ore came out first, and what is left is dearer to win.\n\nA token goes on the grid every time a unit of that commodity is USED UP - burnt in a furnace, fed to an engine, consumed by a recipe. NOT when it is traded. Selling coal to a town moves coal; burning it destroys coal, and only the burning is what a seam notices. That distinction is the whole model: a merchant who never lights a fire can trade the same hundred tons of coal all game and the price will not move an inch for it.\n\nThe grid prints its numbers in rows. Cover cells from the lowest row up; the LOWEST NUMBER YOU CAN STILL SEE is the modifier, and it is added to the swing on every price check for that commodity. Nothing is written down and nothing is counted - you look at the grid and read the smallest number on it.\n\nTOKENS DO NOT COME BACK. A token placed here is out of the game for good. That is not an accounting convenience, it is the model: the ore is burnt, and burnt ore does not go back in the hill.",
+      "step": 1,
+      "per": 3,
+      "top": 6,
+      "$ladderNote": "Six steps of one, three cells to a step, plus a row of noughts to start on: seven rows of three, twenty-one cells, and the twenty-first unit burnt is the one that puts the price up by six for the rest of the game. `step` is what a row is worth, `per` is how many cells a row holds, `top` is the last row - and the grid is drawn from those three numbers, so making a seam last longer is one number here and a taller grid everywhere.",
+      "onUse": "One token per unit consumed. Cover the lowest uncovered cell.",
+      "onTrade": "Nothing. Buying and selling move a commodity; they do not spend it.",
+      "reads": "The lowest number still visible. A fresh grid reads 0.",
+      "recycle": false,
+      "$capNote": "At the top row the seam is as good as worked out: the line spends the rest of the game bid up by six before a die is thrown, which on the swing ruler is two bands of rally with no help from anybody. The town that owns the last deposit owns the market, and it always did - this is the version of that sentence you can see across a table."
+    },
+    "sought": {
+      "$comment": "The hype model's number, and the answer to the question it always begged: which delta?\n\nIt is the PREVIOUS move, in BANDS, and it is neither of the two things it could have been. Not the current move - that is what is being computed, and a modifier that depends on its own result is not a rule, it is an equation. Not the change in coin - 180 to 240 is +60 and no table wants a lookup that turns +60 into a number between -3 and +3.\n\nThe move in bands is already that number. The swing ruler produced it last round, it is between -3 and +3 by construction, and it is written in the move box on the ledger row where it happened. You do not compute the hype modifier; you read the box above the one you are about to write in.\n\nThat is why the market board could stop tracking anything. A sought good's whole memory is one pencil figure on a sheet that was being written on anyway.",
+      "reads": "the move box on the ledger row above - ledger.json column.moveBox",
       "from": -3,
       "to": 3,
       "start": 0,
-      "reads": "Add it to the swing before the elasticity multiplies.",
-      "tally": {
-        "$comment": "The counter beside the memory track, five cells, walked by a second bar. It is the BOARD'S OWN STOCK of that commodity: sell to the board and the bar walks up, buy from the board and it walks back down. What a full tally does is the model's business - it is a glut in one and a worked-out seam in another - but it fills the same way in both, from trades that actually happened.\n\nHype does not use it, and the board prints it anyway, for the same reason the player board prints a mana track for a character with no magic: a generic sheet prints the furniture and the piece standing on it says what is being played.",
-        "from": 0,
-        "to": 4,
-        "start": 0,
-        "$cellsNote": "Five resting cells, 0 to 4, and the fifth token has nowhere left to stand - which is what makes it a carry rather than a clamp. The capacity is the number of cells, so lengthening the strip by one cell is five tokens per memory step becoming six, and nothing else in the game has to hear about it.",
-        "fills": "One cell per token sold to the board; one cell back per token bought from it.",
-        "discharge": "A tally that fills discharges the moment it fills, not at the end of anything: walk the bar up as the tokens change hands, and the token that would take it off the end of the strip instead takes it back to empty, moves the memory one cell in the model's direction, and stands it on what is left over. Five tokens is one step of the memory and the sixth begins the next five - so a player who sells eleven in one round moves the memory twice and leaves the bar on 1, and nothing is lost to a bar that had nowhere further to go."
-      }
+      "$startNote": "At setup nothing has moved, so every sought line starts on nothing, and the first round is played on the dice alone.",
+      "$feedbackNote": "It is a feedback loop with a floor and a ceiling and no memory beyond one round, which is exactly the shape of the thing it is modelling. A rise makes buyers and buyers make a rise, until a bad roll turns it and the same machinery runs the other way just as fast. Two rounds of quiet and it is back to nothing, because a move of zero is what the next round reads."
     },
     "stockCap": {
-      "$comment": "What stops a player emptying a market. The board will sell at most this round's supply roll, across everybody, and it is the reason the blue dice are worth watching even when you are not buying.",
+      "$comment": "What stops a player emptying a market. The board will sell at most this round's supply roll, across everybody, and it is the reason the red dice are worth watching even when you are not buying.",
       "rule": "supply",
       "means": "The board sells at most Supply tokens of that commodity before the next Market phase, first come first served in turn order through the Actions phase. It will buy any quantity - a market always has room for more of what nobody wants."
     },
     "round": {
-      "$comment": "Where this sits in the round. It is the Market phase of rules.json round.phases, opened out.\n\nThe Market phase does NOT contain a trading window, and that is deliberate. Trading is an action like any other and it happens in the Actions phase, against the price the board is already showing - so a player can see what a thing is worth before they spend the hours getting it to market. What this phase does is fix the price everybody will trade at NEXT round, off the tallies this round's trading left behind. You act on a known price and find out afterwards what your acting did to it, which is the only honest way round for a market to work.",
+      "$comment": "Where this sits in the round. It is the Market phase of rules.json round.phases, opened out, with the spoil check sitting one phase earlier because rot is a thing that happens to food and not a thing that happens to a market.\n\nThe Market phase does NOT contain a trading window, and that is deliberate. Trading is an action like any other and it happens in the Actions phase, against the price the ledger is already showing - so a player can see what a thing is worth before they spend the hours getting it to market. What this phase does is fix the price everybody will trade at NEXT round. You act on a known price and find out afterwards what your acting did to it, which is the only honest way round for a market to work.",
       "phase": "market-turn",
       "steps": [
         {
-          "id": "roll",
-          "name": "Roll",
-          "does": "Roll two red, two blue and one green for a line, and again for each line on the board. One player rolls for the whole table."
+          "id": "spoil",
+          "name": "Spoil",
+          "does": "At the end of Feeding, every player rolls the ochre die once for each perishable stack they hold and discards what the spoil strip says. Nothing about this touches a price."
         },
         {
-          "id": "read",
-          "name": "Read the memory",
-          "does": "Add the line's memory bar to the swing, then multiply by the green die on the elasticity strip."
+          "id": "roll",
+          "name": "Roll",
+          "does": "Roll two blue, two red and one green for a line, and again for each line on the ledger. One player rolls for the whole table."
+        },
+        {
+          "id": "add",
+          "name": "Add the modifier",
+          "does": "A finite line adds the lowest number still visible on its depletion board. A sought line adds the move box on the row above. A staple and a perishable line add nothing."
         },
         {
           "id": "fix",
           "name": "Fix the price",
-          "does": "Find the net on the swing ruler and walk the price token that many bands. That is the price everyone trades at until this time next round, and the supply roll is what the board has to sell at it."
-        },
-        {
-          "id": "update",
-          "name": "Update the memory",
-          "does": "A glut line whose tally did not fill this round walks its memory one cell toward zero. A hype line moves its memory in the same gesture as its price token, or one toward zero if the token did not move. A depletion line does nothing: its memory only ever moves when its tally fills, and that happens in the Actions phase, in the hand of whoever sold."
+          "does": "Find the net on the swing ruler and walk the band bar that many bands. Write the new price in the ledger, strike the old one through, and write the move in the row's move box - that last figure is next round's modifier for a sought good and a record of the season for everybody else."
         }
       ],
-      "elsewhere": "The tally moves in the ACTIONS phase, as the trades happen, and it discharges there too - in the hand of the player who filled it. Nothing about it waits for this phase."
+      "elsewhere": "Depletion tokens go on in the ACTIONS phase, in the hand of whoever burnt the fuel, and they go on one at a time as it is burnt. Nothing about that waits for this phase, and nothing about it can be undone in it."
     },
-    "$modelsNote": "Each model says the same thing twice on purpose: once in prose for whoever is reading the rulebook, and once in numbers - onSell, onBuy, dischargeStep, followsPrice, decayToZero - for whatever is reading the data. docs/js/engine.js plays the game off the numbers and tools/build-annex.mjs prints the prose, so a model cannot be changed in one place and left saying the old thing in the other. `decayToZero` is when the memory walks one cell back toward nothing: `quiet-tally` at the end of a round the tally did not fill, `no-move` at the end of a round the price did not move, and null for a ratchet, which is the whole of the depletion model.",
+    "$modelsNote": "Each model says the same thing twice on purpose: once in prose for whoever is reading the rulebook, and once in a typed field - `modifier`, `reads`, `spoils`, `tokensOnUse` - for whatever is reading the data. docs/js/engine.js plays the game off the fields and tools/build-annex.mjs prints the prose, so a model cannot be changed in one place and left saying the old thing in the other.",
     "models": [
       {
-        "id": "glut",
-        "name": "Glut",
-        "line": "What does not sell rots.",
-        "history": "The oldest story in any market that grows things. A good harvest is a bad year: the stuff turns up whether anybody wants it or not, it keeps badly, and what is still in the warehouse when the season turns has to be shifted at whatever it will fetch. Two good years running and the price is on the floor before the third is planted.",
-        "tally": {
-          "uses": true,
-          "onSell": 1,
-          "onBuy": -1,
-          "dischargeStep": -1,
-          "means": "The board's unsold stock. Every token sold to the board goes on it; every token bought off the board comes back down.",
-          "full": "Take the bar back to empty and step the memory one cell DOWN. The stock rotted and the market has had its fill."
-        },
-        "memory": {
-          "from": -3,
-          "to": 0,
-          "followsPrice": false,
-          "decayToZero": "quiet-tally",
-          "moves": "Down one cell each time the tally fills.",
-          "decays": "Up one cell toward zero at the end of any Market phase in which the tally did NOT fill. A market forgets last year's glut as soon as it stops being dumped on - and the test is whether it was dumped on, not what the bar happens to be standing on, because a tally that has just discharged is standing on empty for the opposite of that reason.",
-          "note": "A glut memory never goes above zero. Wanting a thing badly is not this model's business; it is the swing's, and the red dice do it every round."
-        },
-        "assigns": "Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned.",
+        "id": "staple",
+        "name": "Staple",
+        "line": "It is worth what it is worth.",
+        "history": "Most of what is bought and sold, in this game and everywhere else. Stone, lumber, cloth, rope, ale. It keeps, it is not running out, and nobody wants it for what owning it says about them - so its price is the crowd wanting it against the amount that turned up, and there is no story underneath.\n\nThe model exists so the other three mean something. A game where every good has a special rule is a game where no good does.",
+        "modifier": 0,
+        "reads": null,
+        "spoils": false,
+        "tokensOnUse": false,
+        "assigns": "Anything durable that is neither dug out of a finite hole nor coveted for its own sake. The default, and the largest of the four by a long way.",
         "mark": {
-          "id": "heaped-measure",
-          "path": "M 2.2 20.6 H 21.8 M 3.6 12.2 H 20.4 M 3.6 12.2 Q 12 4.4 20.4 12.2 M 6.2 12.2 L 8.2 20.6 M 17.8 12.2 L 15.8 20.6",
-          "$note": "A bushel measure standing on the ground line, its rim wider than it is, and the harvest heaped over the rim past both edges. The overhang is the whole message: read at chit size it is a container with more in it than it holds. The first draft closed the measure at the bottom and sprang the heap from its widest point, which is a bucket with a handle, and a bucket says nothing at all."
+          "id": "level-beam",
+          "path": "M 12 4 V 8 M 4 8 H 20 M 6 8 V 12 M 18 8 V 12 M 3 12 H 9 M 3 12 Q 6 16.5 9 12 M 15 12 H 21 M 15 12 Q 18 16.5 21 12",
+          "$note": "A balance, hanging level. Nothing on either pan, nothing tipping it - which is the whole of what this model says. It is the only mark in the set that is symmetrical, and that is doing the work: the other three are all lopsided, because the other three all lean one way."
         }
       },
       {
-        "id": "hype",
-        "name": "Hype",
-        "line": "It is bought because it is going up.",
-        "history": "The market that runs on its own reputation. Nobody needs a jewel, a bolt of fine cloth or a famous horse - they want it because of what owning it says, and what it says is loudest when everybody can see the price climbing. So a rise makes buyers and buyers make a rise, until the day it does not and the whole thing runs the other way just as fast.",
-        "tally": {
-          "uses": false,
-          "onSell": 0,
-          "onBuy": 0,
-          "dischargeStep": 0,
-          "means": "Not used. A hype line's memory is the price's own last move, and a token that has just moved is its own counter - there is nothing left to count.",
-          "full": null
-        },
-        "memory": {
-          "from": -3,
-          "to": 3,
-          "followsPrice": true,
-          "decayToZero": "no-move",
-          "moves": "One cell in whatever direction the price token just went, moved in the same gesture: your hand is already on the line, push the memory bar the way you pushed the price.",
-          "decays": "One cell toward zero on any round the price token did not move at all.",
-          "note": "This is the only model whose memory moves every single round, and the only one that can be strongly negative and strongly positive in the same game. A hype line is where the money is and where the ruin is."
-        },
-        "assigns": "The luxury trade: low bulk, high value, wanted for what it is rather than for what it does.",
+        "id": "perish",
+        "name": "Perishable",
+        "line": "What you do not shift, you lose.",
+        "history": "The oldest problem in any market that grows things. The stuff turns up whether anybody wants it or not, it keeps badly, and what is still in the warehouse when the season turns is not an asset, it is a smell. A good harvest is a bad year, and it is a bad year for the person holding the harvest rather than for the market.\n\nThis is where the old GLUT model went. Glut bent the price down through a memory strip, which was a fair model of a market and a poor model of a fish: it punished the town for what the farmer did, and it never once made anybody hurry. The spoil die punishes the person actually holding the stuff, at the end of the round they failed to shift it, which is both truer and considerably more urgent.",
+        "modifier": 0,
+        "reads": null,
+        "spoils": true,
+        "tokensOnUse": false,
+        "spoilStrip": "pricing.spoil",
+        "assigns": "Anything that rots: food off the field, milk, meat, fish, fruit, and the one arcane herb that will not dry.",
         "mark": {
-          "id": "rising-run",
-          "path": "M 3 19 L 8.5 13.5 L 12.5 16.5 L 20 7 M 20 7 L 14.5 7 M 20 7 L 20 12.5",
-          "$note": "A run of prices going up, with the arrow at the top of it. The one mark in the set that says which way it is pointing."
+          "id": "picked-clean",
+          "path": "M 3 12 H 18 M 3 12 L 6 9 M 3 12 L 6 15 M 18 12 L 21.5 8.5 M 18 12 L 21.5 15.5 M 8.5 12 L 7.6 8.7 M 8.5 12 L 7.6 15.3 M 11.5 12 L 11 8.3 M 11.5 12 L 11 15.7 M 14.5 12 L 14.3 8.3 M 14.5 12 L 14.3 15.7",
+          "$note": "A fish skeleton: snout, spine, ribs, forked tail. It says gone off in every kitchen in the world and it engraves at chit size as five strokes and a fork. The first draft was a heaped measure overflowing its rim, which is a picture of a glut - and a glut is precisely what this model stopped being about."
         }
       },
       {
         "id": "deplete",
-        "name": "Depletion",
+        "name": "Finite",
         "line": "The easy ore came out first.",
-        "history": "The rule for anything that comes out of a hole. The first seam is at the surface and the last one is under water at the bottom of a shaft, so every ton that leaves makes the next ton dearer to win - and none of it grows back inside a lifetime. A mining town's prices only ever go one way, and the boom is the part before everybody notices.",
-        "tally": {
-          "uses": true,
-          "onSell": 1,
-          "onBuy": 0,
-          "dischargeStep": 1,
-          "means": "The depletion grid. Every token sold to the board came out of the ground and is gone; it goes on the tally and never comes off, because nobody can put it back.",
-          "full": "Take the bar back to empty and step the memory one cell UP. That step is permanent, and it is the only mark in this game that is."
-        },
-        "memory": {
-          "from": 0,
-          "to": 3,
-          "followsPrice": false,
-          "decayToZero": null,
-          "moves": "Up one cell each time the tally fills.",
-          "decays": "Never. This is the only track in the game that does not come back, and it is the whole point of the model.",
-          "note": "At +3 the seam is as good as worked out: the line spends the rest of the game bid up by three before a die is thrown, and the town that owns the last deposit owns the market."
-        },
+        "history": "The rule for anything that comes out of a hole. The first seam is at the surface and the last one is under water at the bottom of a shaft, so every ton that leaves makes the next ton dearer to win - and none of it grows back inside a lifetime. A mining town's prices only ever go one way, and the boom is the part before everybody notices.\n\nWhat changed is what counts as leaving. It used to be selling: a tally on the market board filled as tokens crossed to the board, and a market could be worked out by a merchant who never lit a fire. It is BURNING now. Coal that is traded is coal that still exists; coal that is fed to a furnace is gone, and only the furnace moves the number.",
+        "modifier": null,
+        "reads": "pricing.depletion",
+        "spoils": false,
+        "tokensOnUse": true,
         "assigns": "Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry.",
         "mark": {
           "id": "run-glass",
           "path": "M 5.5 3 H 18.5 M 5.5 21 H 18.5 M 6.5 3 L 12 12 L 6.5 21 M 17.5 3 L 12 12 L 17.5 21 M 8.8 19.4 Q 12 16 15.2 19.4",
           "$note": "A glass with the sand already down in the bottom bulb. Not a pick and not a shaft: what this model is about is the sand, not the digging - and not a trickle either, because a trickle drawn between two converging lines is invisible at the size this is engraved."
         }
+      },
+      {
+        "id": "hype",
+        "name": "Sought",
+        "line": "It is bought because it is going up.",
+        "history": "The market that runs on its own reputation. Nobody needs a jewel, a bolt of fine cloth or a famous horse - they want it because of what owning it says, and what it says is loudest when everybody can see the price climbing. So a rise makes buyers and buyers make a rise, until the day it does not and the whole thing runs the other way just as fast.",
+        "modifier": null,
+        "reads": "pricing.sought",
+        "spoils": false,
+        "tokensOnUse": false,
+        "assigns": "The luxury trade: low bulk, high value, wanted for what it is rather than for what it does.",
+        "mark": {
+          "id": "rising-run",
+          "path": "M 3 19 L 8.5 13.5 L 12.5 16.5 L 20 7 M 20 7 L 14.5 7 M 20 7 L 20 12.5",
+          "$note": "A run of prices going up, with the arrow at the top of it. The one mark in the set that says which way it is pointing."
+        }
       }
     ],
     "tokenMark": {
-      "$comment": "Where a player finds out which model a commodity runs under, without a lookup. The commodity's own hexagonal token carries its model's mark in a corner, beside the family mark it already carries - so the piece you are about to stand on a line tells you how that line behaves. The market board prints the three marks in its foot as a key, and never on a line, because a line is not about anything until a token is standing on it.",
+      "$comment": "Where a player finds out which model a commodity runs under, without a lookup. The commodity's own hexagonal token carries its model's mark in a corner, beside the family mark it already carries - so the piece you are about to stand on a ledger column tells you how that column behaves. The market board prints the four marks as its whole subject, because explaining them is now the only thing that board does.",
       "on": "components.json tokens.commodity",
       "drawnBy": "components.json marks.pricing"
     }
   },
   "tools": {
-    "$comment": "Tools are equipment, not commodities: they are owned as individual pieces, they wear out on a durability track, and they gate which recipes a worker may perform. They can still be bought, sold and stolen.",
+    "$comment": "Tools are equipment, not commodities: they are owned as individual pieces, they wear out, and they gate which recipes a worker may perform. They can still be bought, sold and stolen.\n\n`baseWear` is the most wear a tool will take, and it is ON THE BOARD'S SCALE now. It was `baseDurability` and it ran from 14 to 34, counted on the tool itself, because there was no track for it - and the reason there was no track was that a number running past twenty will not stand on a fourteen-rung ladder. There is a track now, four of them, one beside each kit slot on the player board (data/playerboard.json), so the number came down to meet the board rather than the board going up to meet the number - the same trade the kilogram made when a hero could not stand their own load on it.\n\nNothing got shorter, because the clock changed with the scale: wear was one point a LABOUR HOUR and is one point a JOB (rules.json wear). An axe was 24 wear at 3 hours a job, which is eight jobs; it is 10 wear at one a job, which is ten. Slightly longer-lived, and nobody adds hours up any more.\n\nA tool is not the only thing that wears any more either. Everything a figure carries does - see data/items.json - and this file is simply where the first things that did are kept.",
     "version": "0.1.0",
     "tools": [
       {
@@ -2084,7 +2218,7 @@ window.GAME_DATA = {
           "effortHours": 3
         },
         "baseValue": 30,
-        "baseDurability": 24,
+        "baseWear": 10,
         "sizes": [
           "small",
           "medium",
@@ -2118,7 +2252,7 @@ window.GAME_DATA = {
           "effortHours": 3
         },
         "baseValue": 32,
-        "baseDurability": 26,
+        "baseWear": 11,
         "sizes": [
           "small",
           "medium",
@@ -2151,7 +2285,7 @@ window.GAME_DATA = {
           "effortHours": 4
         },
         "baseValue": 42,
-        "baseDurability": 20,
+        "baseWear": 8,
         "sizes": [
           "small",
           "medium",
@@ -2189,7 +2323,7 @@ window.GAME_DATA = {
           "effortHours": 3
         },
         "baseValue": 28,
-        "baseDurability": 22,
+        "baseWear": 9,
         "sizes": [
           "small",
           "medium",
@@ -2226,7 +2360,7 @@ window.GAME_DATA = {
           "effortHours": 2
         },
         "baseValue": 24,
-        "baseDurability": 30,
+        "baseWear": 12,
         "sizes": [
           "small",
           "medium",
@@ -2257,7 +2391,7 @@ window.GAME_DATA = {
           "effortHours": 2
         },
         "baseValue": 18,
-        "baseDurability": 18,
+        "baseWear": 8,
         "sizes": [
           "small",
           "medium"
@@ -2285,7 +2419,7 @@ window.GAME_DATA = {
           "effortHours": 2
         },
         "baseValue": 20,
-        "baseDurability": 20,
+        "baseWear": 8,
         "sizes": [
           "small",
           "medium"
@@ -2315,7 +2449,7 @@ window.GAME_DATA = {
           "effortHours": 3
         },
         "baseValue": 30,
-        "baseDurability": 22,
+        "baseWear": 9,
         "sizes": [
           "small",
           "medium",
@@ -2352,7 +2486,7 @@ window.GAME_DATA = {
           "effortHours": 4
         },
         "baseValue": 55,
-        "baseDurability": 28,
+        "baseWear": 12,
         "sizes": [
           "small",
           "medium",
@@ -2384,7 +2518,7 @@ window.GAME_DATA = {
           "effortHours": 3
         },
         "baseValue": 26,
-        "baseDurability": 20,
+        "baseWear": 8,
         "sizes": [
           "small",
           "medium",
@@ -2414,7 +2548,7 @@ window.GAME_DATA = {
           "effortHours": 4
         },
         "baseValue": 48,
-        "baseDurability": 30,
+        "baseWear": 12,
         "sizes": [
           "small",
           "medium"
@@ -2447,7 +2581,7 @@ window.GAME_DATA = {
           "effortHours": 6
         },
         "baseValue": 70,
-        "baseDurability": 34,
+        "baseWear": 14,
         "sizes": [
           "small",
           "medium",
@@ -2474,7 +2608,7 @@ window.GAME_DATA = {
           "effortHours": 2
         },
         "baseValue": 20,
-        "baseDurability": 24,
+        "baseWear": 10,
         "sizes": [
           "small",
           "medium"
@@ -2508,7 +2642,7 @@ window.GAME_DATA = {
           "effortHours": 4
         },
         "baseValue": 65,
-        "baseDurability": 16,
+        "baseWear": 7,
         "sizes": [
           "small"
         ],
@@ -2537,7 +2671,7 @@ window.GAME_DATA = {
           "effortHours": 5
         },
         "baseValue": 90,
-        "baseDurability": 14,
+        "baseWear": 6,
         "sizes": [
           "small",
           "medium"
@@ -7137,7 +7271,7 @@ window.GAME_DATA = {
     ]
   },
   "peoples": {
-    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with AND what it carries with: kilograms are strength x rules.carrying.kgPerStrength, so a people's carrying is not a second number and never was. defence.base is what makes a blow miss, which is a different property from hitting hard and now has a number of its own. A character card prints its own strength and defence, that base adjusted for build and calling, in the summary strip across the top.",
+    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with AND what it carries with: kilograms are strength x rules.carrying.kgPerStrength, so a people's carrying is not a second number and never was. There is no defence.base any more - defence went when the to-hit roll it shifted went, and what stands between a figure and a blow is the armour it is wearing (rules.json conflict.armour), which is a thing a people is not born with. A character card prints its own strength, that base adjusted for build and calling, in the summary strip across the top.",
     "version": "0.3.0",
     "peoples": [
       {
@@ -7165,10 +7299,6 @@ window.GAME_DATA = {
         "strength": {
           "base": 3,
           "note": "The middle of every scale, this one included - a human wins no fight on build alone."
-        },
-        "defence": {
-          "base": 3,
-          "note": "The middle of every scale, this one included - a human neither turns a blow nor invites one."
         },
         "manaStorage": {
           "innate": 0,
@@ -7217,10 +7347,6 @@ window.GAME_DATA = {
           "base": 4,
           "note": "Low, braced and used to swinging something heavy in a confined space."
         },
-        "defence": {
-          "base": 3,
-          "note": "Low and braced. A dwarf is hard to knock over, which is most of what defence is."
-        },
         "manaStorage": {
           "innate": 0,
           "note": "Dwarves distrust mana in the flesh and keep it in worked metal, where it belongs."
@@ -7263,10 +7389,6 @@ window.GAME_DATA = {
         "strength": {
           "base": 2,
           "note": "An elf fights with reach and timing. Strength is the one contest they decline."
-        },
-        "defence": {
-          "base": 3,
-          "note": "Reach and timing, which is the contest they DO win - an elf is missed far more often than an elf is strong."
         },
         "manaStorage": {
           "innate": 3,
@@ -7311,10 +7433,6 @@ window.GAME_DATA = {
           "base": 2,
           "note": "Small, and entirely uninterested in being told about it."
         },
-        "defence": {
-          "base": 3,
-          "note": "A small target, and entirely willing to be one."
-        },
         "manaStorage": {
           "innate": 0,
           "note": "Halflings hold no mana and are privately relieved about it."
@@ -7358,10 +7476,6 @@ window.GAME_DATA = {
         "strength": {
           "base": 5,
           "note": "The strongest arm any figure in the game brings to a fight."
-        },
-        "defence": {
-          "base": 4,
-          "note": "Thick-hided, and used to being hit by things that meant it."
         },
         "manaStorage": {
           "innate": 0,
@@ -9023,7 +9137,7 @@ window.GAME_DATA = {
     }
   },
   "items": {
-    "$comment": "Equipment carried by workers, figures and soldiers. Unlike tools, most equipment does not wear down with production - armour and weapons take damage in combat, potions are consumed on use. Every item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, where the limit is strength x kgPerStrength and a character card prints the kilograms in its summary strip. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. A talisman card prints its capacity as an M box in the strip like everything else; the mana itself is walked on the player board's M track, because that is where every track in the game lives now (data/playerboard.json).",
+    "$comment": "Equipment carried by workers, figures and soldiers. EVERYTHING HERE WEARS OUT except the things that are drunk and the things that hold mana. `wear` is the most wear a thing will take: printed as the W box on its card, set on the W track beside that card's own slot on the player board, and knocked down a rung every time the thing is used (rules.json wear). It used to be tools alone that wore, which made a sword immortal, a rope eternal and buying an axe the only equipment decision anybody ever made twice.\n\nA weapon adds its `battle` number to your side of the battle roll and a piece of armour adds its `armour` number. Both are straight additions to one opposed total (rules.json conflict.battle). They were `combatDice` and `armourValue` - dice granted and hits cancelled - which were two different currencies for the same job in a system that no longer counts hits at all, and the effects that used to say 'ignore the first two hits' now say what they are worth.\n\nEvery item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, where the limit is strength x kgPerStrength and a character card prints the kilograms in its summary strip. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. A talisman card prints its capacity as an M box in the strip like everything else; the mana itself is walked on the player board's M track, because that is where every track in the game lives now (data/playerboard.json).",
     "version": "0.3.0",
     "classes": [
       {
@@ -9034,12 +9148,17 @@ window.GAME_DATA = {
       {
         "id": "armour",
         "name": "Armour",
-        "summary": "Reduces hits taken in combat."
+        "summary": "Adds its armour number to your battle total. Wears 1 for every round of every battle it is worn in - a blow you turned still dented the plate."
       },
       {
         "id": "weapon",
         "name": "Weapon",
-        "summary": "Adds or improves combat dice."
+        "summary": "Adds its battle number to your battle total. Wears 1 for every round of every battle it is swung in."
+      },
+      {
+        "id": "gear",
+        "name": "Gear",
+        "summary": "Kit that is not for fighting, wearing or drinking: rope, a hook, a bag, a glass. It does a job on the road and it frays doing it, and its card says what counts as a use."
       },
       {
         "id": "potion",
@@ -9073,6 +9192,7 @@ window.GAME_DATA = {
         "effortHours": 2,
         "baseValue": 26,
         "massKg": 0.5,
+        "wear": 3,
         "effects": [
           "Ignore the first -1 weather effort penalty each round."
         ]
@@ -9096,6 +9216,7 @@ window.GAME_DATA = {
         "effortHours": 3,
         "baseValue": 60,
         "massKg": 1.5,
+        "wear": 5,
         "effects": [
           "Immune to Hard Frost.",
           "No tundra or mountain effort penalty."
@@ -9105,6 +9226,7 @@ window.GAME_DATA = {
         "id": "travelling-cloak",
         "name": "Travelling Cloak",
         "class": "clothing",
+        "cardCode": "ITM-07",
         "slot": "back",
         "madeAt": "tailor",
         "inputs": [
@@ -9120,6 +9242,7 @@ window.GAME_DATA = {
         "effortHours": 3,
         "baseValue": 55,
         "massKg": 1,
+        "wear": 5,
         "effects": [
           "+1 move point for the figure wearing it."
         ]
@@ -9139,6 +9262,7 @@ window.GAME_DATA = {
         "effortHours": 2,
         "baseValue": 30,
         "massKg": 0.75,
+        "wear": 4,
         "effects": [
           "Marsh and mountain tiles cost 1 less to move through, minimum 1."
         ]
@@ -9162,6 +9286,7 @@ window.GAME_DATA = {
         "effortHours": 4,
         "baseValue": 180,
         "massKg": 0.75,
+        "wear": 3,
         "effects": [
           "A merchant wearing these gets a further 10% on every market sale.",
           "Worth 2 victory points at game end."
@@ -9171,7 +9296,7 @@ window.GAME_DATA = {
         "id": "leather-jerkin",
         "name": "Leather Jerkin",
         "class": "armour",
-        "cardCode": "ITM-01",
+        "cardCode": "ARM-01",
         "slot": "body",
         "madeAt": "tailor",
         "inputs": [
@@ -9185,15 +9310,17 @@ window.GAME_DATA = {
         "massKg": 2.5,
         "story": "Two hides, a winter of waxing, and the honest admission that it will stop a knife once and then go back to being a coat.",
         "effects": [
-          "Ignore the first hit in each battle."
+          "+1 to your battle total.",
+          "Wears 1 per round of battle. At 0 it is a coat."
         ],
-        "armourValue": 1
+        "armour": 1,
+        "wear": 5
       },
       {
         "id": "chain-mail",
         "name": "Chain Mail",
         "class": "armour",
-        "cardCode": "ITM-04",
+        "cardCode": "ARM-04",
         "slot": "body",
         "madeAt": "blacksmith",
         "inputs": [
@@ -9211,15 +9338,17 @@ window.GAME_DATA = {
         "massKg": 6,
         "story": "Twenty thousand rings, every one of them closed by hand. Smiths price a hauberk by the month rather than by the pound, and nobody has ever argued.",
         "effects": [
-          "Ignore the first two hits in each battle."
+          "+2 to your battle total.",
+          "Wears 1 per round of battle."
         ],
-        "armourValue": 2
+        "armour": 2,
+        "wear": 8
       },
       {
         "id": "plate-harness",
         "name": "Plate Harness",
         "class": "armour",
-        "cardCode": "ITM-05",
+        "cardCode": "ARM-05",
         "slot": "body",
         "madeAt": "blacksmith",
         "inputs": [
@@ -9238,16 +9367,18 @@ window.GAME_DATA = {
         "specialist": "smith",
         "story": "Fitted to one body and worth a farm. It turns a blade and it turns an arrow, and it turns a running man into a walking one.",
         "effects": [
-          "Ignore the first three hits in each battle.",
-          "-1 move point."
+          "+3 to your battle total.",
+          "-1 move point, which is also -1 pace when you are running from something.",
+          "Wears 1 per round of battle."
         ],
-        "armourValue": 3
+        "armour": 3,
+        "wear": 12
       },
       {
         "id": "helm",
         "name": "Helm",
         "class": "armour",
-        "cardCode": "ITM-02",
+        "cardCode": "ARM-02",
         "slot": "head",
         "madeAt": "blacksmith",
         "inputs": [
@@ -9261,15 +9392,17 @@ window.GAME_DATA = {
         "massKg": 1.25,
         "story": "A helm is cheap and a head is not. Every recruiting sergeant in the world has made that speech and none of them has ever had to improve it.",
         "effects": [
-          "Once per battle, cancel one hit."
+          "+1 to your battle total.",
+          "Wears 1 per round of battle, and a helm that goes at 0 has done its whole job once."
         ],
-        "armourValue": 1
+        "armour": 1,
+        "wear": 6
       },
       {
         "id": "shield",
         "name": "Shield",
         "class": "armour",
-        "cardCode": "ITM-03",
+        "cardCode": "ARM-03",
         "slot": "off-hand",
         "madeAt": "carpenter",
         "inputs": [
@@ -9287,15 +9420,17 @@ window.GAME_DATA = {
         "massKg": 2,
         "story": "Boards, hide glue, a rim and a boss. The cheapest thing in the armoury and the last one anybody puts down.",
         "effects": [
-          "+1 defence die."
+          "+1 to your battle total.",
+          "Wears 1 per round of battle. Boards are cheap - a shield is the thing you expect to replace."
         ],
-        "armourValue": 1
+        "armour": 1,
+        "wear": 5
       },
       {
         "id": "sword",
         "name": "Sword",
         "class": "weapon",
-        "cardCode": "ITM-06",
+        "cardCode": "WPN-01",
         "slot": "hand",
         "madeAt": "blacksmith",
         "inputs": [
@@ -9313,9 +9448,11 @@ window.GAME_DATA = {
         "massKg": 0.75,
         "story": "Every smith makes one and most never make another. Iron for the blade, leather for the grip, and a week of somebody’s life in the edge.",
         "effects": [
-          "+1 combat die."
+          "+1 to your battle total.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 1
+        "battle": 1,
+        "wear": 7
       },
       {
         "id": "steel-sword",
@@ -9338,15 +9475,19 @@ window.GAME_DATA = {
         "massKg": 0.75,
         "specialist": "smith",
         "effects": [
-          "+2 combat dice, and hits on 3+ instead of 4+."
+          "+2 to your battle total.",
+          "Roll a third blue die and keep the best two.",
+          "Wears 1 per round of battle. Steel holds an edge: it is the longest-lived blade in the deck."
         ],
-        "combatDice": 2
+        "battle": 2,
+        "extraDie": true,
+        "wear": 10
       },
       {
         "id": "war-axe",
         "name": "War Axe",
         "class": "weapon",
-        "cardCode": "ITM-07",
+        "cardCode": "WPN-02",
         "slot": "hand",
         "madeAt": "blacksmith",
         "inputs": [
@@ -9364,9 +9505,11 @@ window.GAME_DATA = {
         "massKg": 1.5,
         "story": "A woodsman’s axe with the beard drawn out and the haft left long. It costs a third of what a sword costs, and nobody has ever raised that during a fight.",
         "effects": [
-          "+1 combat die, +2 when attacking."
+          "+1 to your battle total, and +2 instead in any battle you started.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 1
+        "battle": 1,
+        "wear": 6
       },
       {
         "id": "pike",
@@ -9388,16 +9531,18 @@ window.GAME_DATA = {
         "baseValue": 70,
         "massKg": 2.25,
         "effects": [
-          "+2 combat dice when defending a town.",
-          "Cannot be used with a shield."
+          "+1 to your battle total, and +3 instead when defending a town or a wall.",
+          "Two hands: it cannot be used with a shield.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 1
+        "battle": 1,
+        "wear": 5
       },
       {
         "id": "bow",
         "name": "Bow",
         "class": "weapon",
-        "cardCode": "ITM-09",
+        "cardCode": "WPN-04",
         "slot": "two-hand",
         "madeAt": "carpenter",
         "inputs": [
@@ -9415,16 +9560,19 @@ window.GAME_DATA = {
         "massKg": 0.5,
         "story": "One stave, one string, and ten years learning to draw it. The bow sells for the price of a goat; the arm is not for sale.",
         "effects": [
-          "Rolls its dice before the enemy rolls theirs.",
+          "+2 to your battle total.",
+          "At reach: if you win the roll, nothing you are wearing takes wear this round.",
           "+1 output on Hunt Game.",
-          "Needs a quiver to fight."
+          "Needs a quiver to fight.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 1
+        "battle": 2,
+        "wear": 6
       },
       {
         "id": "quiver",
         "name": "Quiver of Arrows",
-        "class": "weapon",
+        "class": "gear",
         "slot": "belt",
         "madeAt": "carpenter",
         "inputs": [
@@ -9441,9 +9589,11 @@ window.GAME_DATA = {
         "baseValue": 30,
         "massKg": 1,
         "effects": [
-          "Holds 3 uses. Each battle with a bow spends 1."
+          "Holds 3 uses. Each battle with a bow or a crossbow spends 1.",
+          "The uses ARE the wear: an empty quiver is a spent quiver."
         ],
-        "uses": 3
+        "uses": 3,
+        "wear": 3
       },
       {
         "id": "sling",
@@ -9461,15 +9611,17 @@ window.GAME_DATA = {
         "baseValue": 12,
         "massKg": 0.25,
         "effects": [
-          "+1 combat die for halflings only. Everyone else may as well throw the stone."
+          "+1 to your battle total for halflings only. Everyone else may as well throw the stone.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 1
+        "battle": 1,
+        "wear": 3
       },
       {
         "id": "war-hammer",
         "name": "War Hammer",
         "class": "weapon",
-        "cardCode": "ITM-08",
+        "cardCode": "WPN-03",
         "slot": "two-hand",
         "madeAt": "blacksmith",
         "inputs": [
@@ -9487,15 +9639,19 @@ window.GAME_DATA = {
         "massKg": 3,
         "story": "Made for the century when armour won. It does not cut, it has never needed to, and it does not care in the least what you are wearing.",
         "effects": [
-          "+2 combat dice. Ignores enemy armour entirely."
+          "+2 to your battle total.",
+          "Ignores armour entirely: take the whole of the other side armour off their total, monster hide included.",
+          "Two hands.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 2
+        "battle": 2,
+        "wear": 9
       },
       {
         "id": "crossbow",
         "name": "Crossbow",
         "class": "weapon",
-        "cardCode": "ITM-10",
+        "cardCode": "WPN-05",
         "slot": "two-hand",
         "madeAt": "blacksmith",
         "inputs": [
@@ -9518,11 +9674,13 @@ window.GAME_DATA = {
         "specialist": "smith",
         "story": "Steel prod, seasoned tiller, six months at a bench. Hand it to a farmhand on the Monday and by Friday he can kill a knight.",
         "effects": [
-          "+3 combat dice, and ignores 1 point of enemy armour.",
-          "Slow: it rolls in the first round of a battle and every second round after.",
-          "Needs a quiver to fight."
+          "+3 to your battle total, and 1 off the other sides armour.",
+          "Slow: it counts in the first round of a battle and every second round after. In the rounds it is spanning you fight on strength alone.",
+          "Two hands. Needs a quiver to fight.",
+          "Wears 1 per round it counts in."
         ],
-        "combatDice": 3
+        "battle": 3,
+        "wear": 8
       },
       {
         "id": "harpoon",
@@ -9548,11 +9706,13 @@ window.GAME_DATA = {
         "baseValue": 75,
         "massKg": 2,
         "effects": [
-          "+1 combat die, and +3 instead against any water-element monster or anything bigger than a horse.",
-          "A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round.",
-          "+1 output on Fish."
+          "+1 to your battle total, and +3 instead against any water-element monster or anything bigger than a horse.",
+          "The line holds it: a struck monster cannot flee, and neither can you while it holds. It breaks on a d6 roll of 1 each round.",
+          "Two hands. +1 output on Fish.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 1
+        "battle": 1,
+        "wear": 5
       },
       {
         "id": "dirk",
@@ -9570,10 +9730,12 @@ window.GAME_DATA = {
         "baseValue": 35,
         "massKg": 0.4,
         "effects": [
-          "+1 combat die.",
-          "Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls."
+          "+1 to your battle total.",
+          "Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 1
+        "battle": 1,
+        "wear": 5
       },
       {
         "id": "greatsword",
@@ -9596,11 +9758,15 @@ window.GAME_DATA = {
         "massKg": 2,
         "specialist": "smith",
         "effects": [
-          "+3 combat dice, and hits on 3+ instead of 4+.",
-          "-1 move point, and it cannot be used with a shield.",
-          "Worth 1 victory point at game end."
+          "+3 to your battle total.",
+          "Roll a third blue die and keep the best two.",
+          "-1 move point. Two hands: no shield.",
+          "Worth 1 victory point at game end.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 3
+        "battle": 3,
+        "extraDie": true,
+        "wear": 11
       },
       {
         "id": "boar-spear",
@@ -9622,11 +9788,200 @@ window.GAME_DATA = {
         "baseValue": 55,
         "massKg": 1.5,
         "effects": [
-          "+1 combat die, and +3 in the first round against any monster that charges - anything of strength 4 or more that attacks first.",
-          "The crossbar holds it off you: ignore the first hit from that monster.",
-          "+1 output on Hunt Game."
+          "+1 to your battle total, and +3 instead in the first round against any monster that charges - anything of strength 4 or more that attacks first.",
+          "The crossbar holds it off you: take no wound at all in that first round, whatever the difference.",
+          "Two hands. +1 output on Hunt Game.",
+          "Wears 1 per round of battle."
         ],
-        "combatDice": 1
+        "battle": 1,
+        "wear": 5
+      },
+      {
+        "id": "dagger",
+        "name": "Dagger",
+        "class": "weapon",
+        "cardCode": "WPN-06",
+        "slot": "hand",
+        "madeAt": "blacksmith",
+        "inputs": [
+          {
+            "commodity": "pig-iron",
+            "qty": 1
+          }
+        ],
+        "effortHours": 1,
+        "baseValue": 20,
+        "massKg": 0.3,
+        "story": "The weapon everybody actually owns. It cuts rope, opens a letter, guts a fish, and settles an argument in a doorway where nothing longer would fit.",
+        "effects": [
+          "+1 to your battle total.",
+          "Light enough that it never fills a hand: a dagger sits in a kit slot with another weapon and both may be used.",
+          "Wears 1 per round of battle."
+        ],
+        "battle": 1,
+        "wear": 4
+      },
+      {
+        "id": "staff",
+        "name": "Staff",
+        "class": "weapon",
+        "cardCode": "WPN-07",
+        "slot": "two-hand",
+        "madeAt": "carpenter",
+        "inputs": [
+          {
+            "commodity": "lumber",
+            "qty": 1
+          }
+        ],
+        "effortHours": 1,
+        "baseValue": 25,
+        "massKg": 1.25,
+        "story": "Ash, shoulder high, worn pale where the hand goes. Nobody has ever been arrested for carrying one, which is most of the argument for it.",
+        "effects": [
+          "+1 to your battle total, and +2 instead for a figure holding any mana at all.",
+          "A staff is a road as much as a weapon: +1 pace on any leg made on foot.",
+          "Two hands: it cannot be used with a shield.",
+          "Wears 1 per round of battle."
+        ],
+        "battle": 1,
+        "wear": 6
+      },
+      {
+        "id": "coil-of-rope",
+        "name": "Coil of Rope",
+        "class": "gear",
+        "cardCode": "ITM-01",
+        "slot": "carried",
+        "madeAt": "weaver",
+        "inputs": [
+          {
+            "commodity": "rope",
+            "qty": 2
+          }
+        ],
+        "effortHours": 2,
+        "baseValue": 18,
+        "massKg": 2,
+        "wear": 6,
+        "story": "Fifteen fathoms of hemp, laid up by somebody who would be very unhappy to hear it called string. It is the first thing an expedition packs and the first thing it is glad of.",
+        "effects": [
+          "Hills and mountain cost the whole party 1 less to cross, minimum 1.",
+          "A grappling hook is useless without one.",
+          "Wears 1 for every leg it is used on, and 1 more for any fall it stops."
+        ]
+      },
+      {
+        "id": "grappling-hook",
+        "name": "Grappling Hook",
+        "class": "gear",
+        "cardCode": "ITM-04",
+        "slot": "carried",
+        "madeAt": "blacksmith",
+        "inputs": [
+          {
+            "commodity": "ironware",
+            "qty": 1
+          },
+          {
+            "commodity": "rope",
+            "qty": 1
+          }
+        ],
+        "effortHours": 2,
+        "baseValue": 45,
+        "massKg": 1.5,
+        "wear": 5,
+        "story": "Four flukes and a ring, and a reputation it has never once been able to shake. Quartermasters issue them for cliffs. Nobody has ever used one for a cliff.",
+        "effects": [
+          "With a coil of rope: cross one cliff, ravine or wall as though it were open ground, once per leg.",
+          "Board a ship at sea, or get over a town wall without troubling the gate.",
+          "Wears 1 per use, and 1 more on a d6 roll of 1 - a hook that skates does not come back the same shape."
+        ]
+      },
+      {
+        "id": "bag",
+        "name": "Bag",
+        "class": "gear",
+        "cardCode": "ITM-05",
+        "slot": "belt",
+        "madeAt": "tailor",
+        "inputs": [
+          {
+            "commodity": "cloth",
+            "qty": 1
+          }
+        ],
+        "effortHours": 1,
+        "baseValue": 12,
+        "massKg": 0.3,
+        "wear": 4,
+        "story": "A square of cloth, four seams and a drawstring. It costs less than a meal and it is the difference between carrying your money and leaving it behind.",
+        "effects": [
+          "+2 kg to what the figure can shoulder (rules.json carrying) - which is eighty coin, and that is what it is for.",
+          "Wears 1 for every leg it is carried full."
+        ]
+      },
+      {
+        "id": "satchel",
+        "name": "Satchel",
+        "class": "gear",
+        "cardCode": "ITM-06",
+        "slot": "back",
+        "madeAt": "tailor",
+        "inputs": [
+          {
+            "commodity": "leather",
+            "qty": 1
+          },
+          {
+            "commodity": "cloth",
+            "qty": 1
+          }
+        ],
+        "effortHours": 2,
+        "baseValue": 40,
+        "massKg": 0.6,
+        "wear": 5,
+        "story": "Oiled leather, a long strap and a flap that keeps the rain out of whatever matters most. Every herbalist, physician and surveyor in the world owns one and none of them will lend it.",
+        "effects": [
+          "+4 kg to what the figure can shoulder.",
+          "Name one item inside it when it is packed: that item is not lost when the figure falls at 0 health.",
+          "Wears 1 for every leg it is carried full."
+        ]
+      },
+      {
+        "id": "binoculars",
+        "name": "Binoculars",
+        "class": "gear",
+        "cardCode": "ITM-08",
+        "slot": "belt",
+        "madeAt": "glassworks",
+        "inputs": [
+          {
+            "commodity": "glass",
+            "qty": 1
+          },
+          {
+            "commodity": "ironware",
+            "qty": 1
+          },
+          {
+            "commodity": "leather",
+            "qty": 1
+          }
+        ],
+        "effortHours": 4,
+        "baseValue": 130,
+        "massKg": 0.75,
+        "wear": 3,
+        "story": "Two ground lenses in a brass tube, bound in leather against the weather it will certainly get. The guild that grinds them will not say how, and charges accordingly.",
+        "effects": [
+          "Look before you walk: reveal the terrain of any one hex up to three away, without entering it.",
+          "+1 on survey rolls.",
+          "Re-roll one discovery roll per round, and keep the second.",
+          "Wears 1 per use. Ground glass in a leather tube does not care for a road."
+        ]
       },
       {
         "id": "potion-vigour",
@@ -10004,6 +10359,7 @@ window.GAME_DATA = {
         "id": "torch",
         "name": "Torch",
         "class": "light",
+        "cardCode": "ITM-03",
         "madeAt": "carpenter",
         "inputs": [
           {
@@ -10018,6 +10374,7 @@ window.GAME_DATA = {
         "effortHours": 1,
         "baseValue": 10,
         "massKg": 0.25,
+        "wear": 1,
         "uses": 2,
         "effects": [
           "Travel one night leg at torch speed - see travel.json.",
@@ -10029,6 +10386,7 @@ window.GAME_DATA = {
         "id": "lantern",
         "name": "Lantern",
         "class": "light",
+        "cardCode": "ITM-02",
         "madeAt": "blacksmith",
         "inputs": [
           {
@@ -10043,6 +10401,7 @@ window.GAME_DATA = {
         "effortHours": 2,
         "baseValue": 55,
         "massKg": 0.75,
+        "wear": 8,
         "effects": [
           "Travel night legs at lantern speed - see travel.json.",
           "Explore caves without spending uses.",
@@ -11115,8 +11474,22 @@ window.GAME_DATA = {
         "markNote": "Three streamers, two of them curling off the end. Nothing touches the ground."
       }
     ],
+    "manaDie": {
+      "$comment": "The purple die, and the fifth and last die in the box. Blue is what you want, red is what stands in your way, green is the weather on a market, ochre is what the season takes back - and bruise is what a dead monster gives up. Five inks, five dice, and there is no sixth ink to make a seventh die out of (docs/art/palette.json inks).\n\nIt exists because a monster's mana yield was a PAYMENT and it should always have been a CEILING. Vhalrik was six mana every single time, which made the biggest fight in the game an errand with a known price on it. Now the number on the card is the most he can give up and the die says how much of it you actually caught, so the same monster is worth six one week and two the next, and the elf standing there with a phylactery has a reason to hold their breath.",
+      "id": "mana",
+      "name": "Mana",
+      "colour": "purple",
+      "ink": "bruise",
+      "count": 1,
+      "faces": 6,
+      "$facesNote": "Six faces because the deepest yield in the deck is six (monsters.json manaYield, Vhalrik). A die that could not reach the top of the deck would make the top of the deck unreachable, and a die that ran past it would have faces that never meant anything.",
+      "rule": "You take the LESSER of the monster's Y box and the roll. Never more than the monster had; often less.",
+      "worked": "A cinder wolf yields 1: any roll but a 1 is still 1, so a small monster is a reliable trickle. Vhalrik yields 6: the die is the whole story, and half the time you leave four of it on the ground.",
+      "when": "Once, the moment the monster reaches 0 health. Not per character and not per round.",
+      "split": "Among the characters who fought, as they agree. Mana with nowhere to hold it blows away at the end of the round, so an over-full party leaves some of it behind whatever the die said."
+    },
     "mana": {
-      "gained": "Slaying a monster yields its manaYield in mana of its element, to the characters who fought it. Some quests and hoards yield mana directly.",
+      "gained": "Slaying a monster yields mana of its element to the characters who fought it - the LESSER of the number in the monster's Y box and a roll of the purple mana die (manaDie above). Some quests and hoards yield mana directly, at the number they name, with no die.",
       "stored": "Mana must be held: in a body with innate capacity (elves, up to 3) or in a talisman. Mana gained with nowhere to hold it blows away at the end of the round.",
       "element": "Stored mana keeps its element. A talisman can hold a mix - note each element's share beside the bar.",
       "traded": "Characters in the same hex may pass mana freely between talismans. Mana in a talisman is stolen with the talisman.",
@@ -11316,15 +11689,15 @@ window.GAME_DATA = {
     }
   },
   "monsters": {
-    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow.\n\nCard layout: name and card code at the top, a SUMMARY STRIP under them - H health, S strength, D defence, Y mana yield, and the element's mark in the last box - then the portrait, and the story standing up the right-hand edge of the card (components.json storyRail). The portrait is taller than it is wide because of that: these plates are drawn on a portrait page, and the story panel that used to run across the bottom was taking the height the picture wanted.\n\nThe name on the card is the NAME. `unique` is a deck rule - there is one of this monster and it is not shuffled back in once it is resolved - and it lives here and in the annex, not printed after the creature's name where at card size it read as part of it. The strip prints maximums and nothing walks on the card: when this monster is met, its card is dealt onto a spare player board and its tracks are set from the strip, and from that moment it is run like a player who is not a person (rules.json exploration.discovery.encounter).\n\nStrength is what it swings with, defence is what makes you miss - two numbers now, where one used to do both jobs and made every strong thing armoured by accident. terrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
-    "version": "0.2.0",
+    "$comment": "The monster deck: what a discovery roll can put in front of you. Three of each element, and then the two dragons the sighting cards had been promising - the deck is built to grow.\n\nCard layout: name and card code at the top, a SUMMARY STRIP under them - H health, S strength, A armour, P pace, Y mana yield, and the element's mark in the last box - then the portrait, and the story standing up the right-hand edge of the card (components.json storyRail). The portrait is taller than it is wide because of that: these plates are drawn on a portrait page, and the story panel that used to run across the bottom was taking the height the picture wanted.\n\nThe name on the card is the NAME. `unique` is a deck rule - there is one of this monster and it is not shuffled back in once it is resolved - and it lives here and in the annex, not printed after the creature's name where at card size it read as part of it. The strip prints maximums and nothing walks on the card: when this monster is met, its card is dealt onto a spare player board and its tracks are set from the strip, and from that moment it is run like a player who is not a person (rules.json exploration.discovery.encounter).\n\nFOUR NUMBERS, and every one of them is now a number a player can also have. STRENGTH is the base of its side of the battle roll. ARMOUR is what it adds on top - the old DEFENCE, halved and renamed, because in an opposed total there was never any difference between a blow that missed and a blow that was turned. PACE is what you have to beat to run away from it, and it is the reason half this deck cannot be run away from. YIELD is the most mana its death is worth, and only the most: what you actually get is the lesser of that and the purple die (arcana.json manaDie).\n\nterrains is where the monster is at home: a monster drawn on a hex whose terrain is not listed is shuffled back and redrawn. Art prompts for every monster are in docs/art/prompts/monsters.md.",
+    "version": "0.3.0",
     "encounterOptions": {
-      "$comment": "Meeting a monster is a choice, and the choice is the player's unless the card says otherwise. The card lists which of the four options it allows; slay is always allowed.",
-      "slay": "Fight it, per the conflict rules in rules.json. Slaying yields the monster's manaYield in mana of its element, split among the characters who fought.",
-      "enslave": "Win the fight by 2 or more net hits WITHOUT killing it (declare before rolling). An enslaved monster works as a d4 worker in one of your towns, eats 1 food per round, and adds 1 unrest to that town while it lives there. It yields no mana.",
+      "$comment": "Meeting a monster is a choice, and the choice is the player's unless the card says otherwise. The card lists which of the four options it allows; slay is always allowed. Running away is not on the card, because whether you can run away is not the monster's decision - it is a footrace, and the card only prints one side of it.",
+      "slay": "Fight it, per rules.json conflict.battle: total strength, gear and dice on both sides, and the lower total loses health equal to the difference. Slaying yields mana of the monster's element - the LESSER of the number in its Y box and a roll of the purple mana die (arcana.json manaDie), split among the characters who fought. The yield is a ceiling, never a payment.",
+      "enslave": "Beat it by 2 or more on the battle roll WITHOUT taking it to 0 health (declare before rolling). An enslaved monster works as a d4 worker in one of your towns, eats 1 food per round, and adds 1 unrest to that town while it lives there. It yields no mana.",
       "befriend": "Offer the gift named on its card and roll d6: on 4+ it is befriended - it guards its hex for you, or travels with your party as a strength-equal escort. It leaves the first round you cannot feed it. No mana.",
       "domesticate": "Befriend it first, or win without killing, then spend 2 consecutive rounds with it at a pasture. A domesticated monster is livestock with the benefit on its card. No mana.",
-      "flee": "Any party may instead withdraw the way it came, ending its movement. A party that fled rolls no discovery this leg. Monsters of strength 4+ get one free round of hits against fleeing cargo vehicles.",
+      "flee": "Run, and you have to be faster than it: your party's pace must be GREATER than the P on its card. Succeed and you withdraw the way you came, ending your movement, with no discovery roll this leg and nothing looted. Fail the comparison and you may not run at all - the option is not offered. Monsters of strength 4 or more get one free round of the battle roll against a fleeing cargo vehicle whatever its pace. See rules.json conflict.flee.",
       "lair": "An unresolved monster stays on its hex as a figure. It attacks any party that ends a leg there, and event cards may move it."
     },
     "monsters": [
@@ -11334,7 +11707,8 @@ window.GAME_DATA = {
         "name": "Cinder Wolf",
         "element": "fire",
         "strength": 2,
-        "defence": 2,
+        "armour": 1,
+        "pace": 6,
         "health": 4,
         "manaYield": 1,
         "terrains": [
@@ -11357,7 +11731,8 @@ window.GAME_DATA = {
         "name": "Ash Drake",
         "element": "fire",
         "strength": 4,
-        "defence": 4,
+        "armour": 2,
+        "pace": 6,
         "health": 8,
         "manaYield": 3,
         "terrains": [
@@ -11378,7 +11753,8 @@ window.GAME_DATA = {
         "name": "Forge Wight",
         "element": "fire",
         "strength": 3,
-        "defence": 4,
+        "armour": 2,
+        "pace": 3,
         "health": 6,
         "manaYield": 2,
         "terrains": [
@@ -11400,7 +11776,8 @@ window.GAME_DATA = {
         "name": "Barrow Troll",
         "element": "earth",
         "strength": 4,
-        "defence": 4,
+        "armour": 2,
+        "pace": 3,
         "health": 10,
         "manaYield": 3,
         "terrains": [
@@ -11421,7 +11798,8 @@ window.GAME_DATA = {
         "name": "Stone Boar",
         "element": "earth",
         "strength": 2,
-        "defence": 4,
+        "armour": 2,
+        "pace": 4,
         "health": 6,
         "manaYield": 1,
         "terrains": [
@@ -11443,7 +11821,8 @@ window.GAME_DATA = {
         "name": "Gravel Wyrm",
         "element": "earth",
         "strength": 3,
-        "defence": 6,
+        "armour": 3,
+        "pace": 2,
         "health": 8,
         "manaYield": 2,
         "terrains": [
@@ -11463,7 +11842,8 @@ window.GAME_DATA = {
         "name": "Mire Strangler",
         "element": "water",
         "strength": 3,
-        "defence": 2,
+        "armour": 1,
+        "pace": 1,
         "health": 6,
         "manaYield": 2,
         "terrains": [
@@ -11482,7 +11862,8 @@ window.GAME_DATA = {
         "name": "Reef Serpent",
         "element": "water",
         "strength": 3,
-        "defence": 3,
+        "armour": 1,
+        "pace": 5,
         "health": 7,
         "manaYield": 2,
         "terrains": [
@@ -11504,7 +11885,8 @@ window.GAME_DATA = {
         "name": "The Deepwater Maw",
         "element": "water",
         "strength": 5,
-        "defence": 5,
+        "armour": 3,
+        "pace": 4,
         "health": 12,
         "manaYield": 4,
         "unique": true,
@@ -11524,7 +11906,8 @@ window.GAME_DATA = {
         "name": "Rime Harpy",
         "element": "air",
         "strength": 2,
-        "defence": 1,
+        "armour": 0,
+        "pace": 7,
         "health": 5,
         "manaYield": 1,
         "terrains": [
@@ -11546,7 +11929,8 @@ window.GAME_DATA = {
         "name": "Dust Devil",
         "element": "air",
         "strength": 2,
-        "defence": 3,
+        "armour": 1,
+        "pace": 7,
         "health": 4,
         "manaYield": 2,
         "terrains": [
@@ -11566,7 +11950,8 @@ window.GAME_DATA = {
         "name": "Storm Roc",
         "element": "air",
         "strength": 4,
-        "defence": 3,
+        "armour": 1,
+        "pace": 8,
         "health": 9,
         "manaYield": 3,
         "terrains": [
@@ -11587,7 +11972,8 @@ window.GAME_DATA = {
         "name": "Vhalrik, the Cinder-Crowned",
         "element": "fire",
         "strength": 7,
-        "defence": 6,
+        "armour": 3,
+        "pace": 5,
         "health": 14,
         "manaYield": 6,
         "unique": true,
@@ -11611,7 +11997,8 @@ window.GAME_DATA = {
         "name": "The Hoarwyrm",
         "element": "air",
         "strength": 5,
-        "defence": 5,
+        "armour": 3,
+        "pace": 4,
         "health": 13,
         "manaYield": 4,
         "terrains": [
@@ -11822,7 +12209,7 @@ window.GAME_DATA = {
     ]
   },
   "characters": {
-    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a summary of their numbers and a story.\n\nCard layout: name and card code at the top, then a SUMMARY STRIP across the card - one lettered box per number, the letter the same one the player board's track carries, so H 10 on the card and the H track on the board are obviously the same thing. The strip prints the MAXIMUM and nothing else: there is no bar to walk on a card any more, because the board took the walking over and a card in a recess is a card whose edges you cannot reach. Under the strip the portrait runs the full width the frame allows, and the story sits low.\n\nThe numbers on the strip are health, strength, defence, mana, starting gold, and the kilograms the hero can shoulder - which is derived, not designed: strength x rules.carrying.kgPerStrength. Burden was a bar and then a track and is now neither; strength does that job. A character at 0 health is carried to the nearest settlement and mends only under medical aid (rules.json rest); a character at 0 strength does not fight and carries nothing, and one night's sleep puts all of it back. Art prompts in docs/art/prompts/characters.md.",
+    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a summary of their numbers and a story.\n\nCard layout: name and card code at the top, then a SUMMARY STRIP across the card - one lettered box per number, the letter the same one the player board's track carries, so H 10 on the card and the H track on the board are obviously the same thing. The strip prints the MAXIMUM and nothing else: there is no bar to walk on a card any more, because the board took the walking over and a card in a recess is a card whose edges you cannot reach. Under the strip the portrait runs the full width the frame allows, and the story sits low.\n\nThe numbers on the strip are health, strength, mana, starting gold, and the kilograms the hero can shoulder - which is derived, not designed: strength x rules.carrying.kgPerStrength. Burden was a bar and then a track and is now neither; strength does that job, and the coin in the purse counts against it like everything else (rules.json carrying.coin). DEFENCE has gone off the strip along with the to-hit roll it existed to shift: a battle is one opposed total now (rules.json conflict.battle), and what a character brings to it besides strength is the gear in their kit slots. A character at 0 health is carried to the nearest settlement and mends only under medical aid (rules.json rest); a character at 0 strength does not fight and carries nothing, and one night's sleep puts all of it back. Art prompts in docs/art/prompts/characters.md.",
     "version": "0.3.0",
     "characters": [
       {
@@ -11832,7 +12219,6 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Wayfarer",
         "strength": 3,
-        "defence": 3,
         "health": 10,
         "startingGold": 45,
         "manaCapacity": 0,
@@ -11852,7 +12238,6 @@ window.GAME_DATA = {
         "people": "dwarf",
         "calling": "Prospector",
         "strength": 4,
-        "defence": 3,
         "health": 12,
         "startingGold": 55,
         "manaCapacity": 0,
@@ -11872,7 +12257,6 @@ window.GAME_DATA = {
         "people": "elf",
         "calling": "Herbalist",
         "strength": 2,
-        "defence": 2,
         "health": 8,
         "startingGold": 70,
         "manaCapacity": 3,
@@ -11891,7 +12275,6 @@ window.GAME_DATA = {
         "people": "halfling",
         "calling": "Provisioner",
         "strength": 2,
-        "defence": 2,
         "health": 8,
         "startingGold": 80,
         "manaCapacity": 0,
@@ -11909,7 +12292,6 @@ window.GAME_DATA = {
         "people": "orc",
         "calling": "Caravan Guard",
         "strength": 6,
-        "defence": 5,
         "health": 13,
         "startingGold": 50,
         "manaCapacity": 0,
@@ -11929,7 +12311,6 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Physician",
         "strength": 2,
-        "defence": 2,
         "health": 9,
         "startingGold": 65,
         "manaCapacity": 0,
@@ -11949,7 +12330,6 @@ window.GAME_DATA = {
         "people": "dwarf",
         "calling": "Engineer",
         "strength": 4,
-        "defence": 3,
         "health": 10,
         "startingGold": 60,
         "manaCapacity": 0,
@@ -11967,7 +12347,6 @@ window.GAME_DATA = {
         "people": "human",
         "calling": "Hedge-Witch",
         "strength": 2,
-        "defence": 2,
         "health": 7,
         "startingGold": 35,
         "manaCapacity": 0,
@@ -12547,19 +12926,22 @@ window.GAME_DATA = {
         "$note": "The strip sits in one boxed row under the kicker, each cell ruled ONCE, so it reads as a table and not as a sentence. There is no second rule inside a cell: the letter and its figure are one pair in one box."
       },
       "letters": {
-        "$comment": "The letter a stat is called by, across the whole game. The five that the player board also has a track for MUST match data/playerboard.json - tools/validate-data.mjs checks that they do, and fails the build if a card and a board ever start calling the same number by different names. The rest are card-only: a number that is printed and never walked has no track to borrow a letter from, so it gets one here.\n\nThese are conventions, not content: no card is named here and no value is stated here.",
+        "$comment": "The letter a stat is called by, across the whole game. The ones the player board also has a track for MUST match data/playerboard.json - tools/validate-data.mjs checks that they do, and fails the build if a card and a board ever start calling the same number by different names. The rest are card-only: a number that is printed and never walked has no track to borrow a letter from, so it gets one here.\n\nThe list is at its high-water mark of borrowed letters. H, S, P, M and W are all board tracks now - W joined them when wear came off the tool and onto four ladders against the kit slots - and D left the list altogether when defence did. A card-only letter is a promise that nothing moves; a track letter is a promise that something does; and the only thing that has ever moved a letter between the two lists is a rule changing underneath it.\n\nThese are conventions, not content: no card is named here and no value is stated here.",
         "health": "H",
         "strength": "S",
-        "defence": "D",
+        "pace": "P",
         "mana": "M",
+        "wear": "W",
+        "armour": "A",
         "gold": "¤",
         "carry": "KG",
         "cargo": "C",
         "yield": "Y",
         "value": "¤",
         "mass": "KG",
-        "wear": "W",
-        "$wearNote": "How much work is left in a tool before it is finished - tools.json baseDurability. It is the one printed maximum in the game with no track under it, and it is not going to get one: it runs past twenty, the board stops at fourteen, and an axe wearing out is counted on the axe rather than walked on the board (data/playerboard.json ceiling).",
+        "$wearNote": "How much work is left in a thing before it is finished - items.json wear, tools.json baseWear. This note used to say the opposite of what it says now: that W was the one printed maximum in the game with no track under it and never would get one, because wear ran past twenty and the board stops at fourteen. There are four tracks under it now, one against each kit slot (data/playerboard.json), and wear runs to fourteen. The number came down to meet the board, which is how this game has always settled that argument - it is what the kilogram did when a hero could not stand their own load on the ladder.",
+        "$armourNote": "What a figure adds to its side of the battle roll besides its own strength, and it is CARD-ONLY: no token walks it, because it does not move. A monster prints it. A character does not - a character's armour is the gear in the kit slots and changes every time they put something down - so it is the one number on a monster card with no track under it, and the ceiling sweep leaves it alone for exactly that reason (playerboard.json ceiling.$notWalked).",
+        "$defenceNote": "There is no D any more. Defence was a rating that shifted a to-hit roll, and there is no to-hit roll: a battle is one opposed total (rules.json conflict.battle), in which a number that makes you harder to hit and a number that soaks the hit are the same number. It is called armour and it is above.",
         "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so."
       }
     },
@@ -12584,16 +12966,29 @@ window.GAME_DATA = {
         "cornerRadiusMm": 6,
         "$note": "A4 landscape. The corner is bigger than a card's because the sheet is bigger; a board cut square looks like a print-out, which is exactly what it would be."
       },
-      "marginMm": 8,
-      "gutterMm": 6,
-      "$marginNote": "One margin, all four sides - with no border to clear, nothing needs a wider side than any other. 8 mm is the least a home printer can be trusted to put ink inside.",
+      "marginMm": 6,
+      "gutterMm": 4,
+      "$marginNote": "One margin, all four sides - with no border to clear, nothing needs a wider side than any other. Both came in by two when the board had to find room for four wear ladders it did not have before. 6 mm is still inside what a home printer can be trusted with, and 4 mm is still wider than a finger reaching between two cards needs, because the thing either side of a gutter is a recess a card sits IN rather than a card sitting proud of the paper.\n\nWhat the tightening bought, exactly: the four column tracks come out over 15 mm wide, against the 13.6 that five of them managed on the old margins. So the board gained four wear ladders AND wider columns in one change - which is not luck, it is what deriving the geometry is for. Take a column out of the middle, give two millimetres back at the edges, and the arithmetic hands the difference to whatever is left standing.",
+      "kitTrack": {
+        "$comment": "The WEAR ladder against each kit recess: a narrow numbered strip, one per slot, walked by a pip (tokens.pip). What it counts is content and lives in data/playerboard.json as the track with place `kit`; this is only its shape.\n\nIt is the first thing on this board that is not about the figure in the big recess. The four columns up the middle belong to whoever is sitting there; these four belong to the CARDS - the axe, the sword, the lantern - and they are drawn against the card they count so nobody has to remember which ladder is which. That is also why there are four of them and not one: a player carries four things, and one W column could only ever have counted one of them.\n\nNothing below is a position. The ladder is as wide as the piece that stands on it plus its clearance, exactly as a market strip cell was; it is as TALL as the recess beside it, so its rungs are the card's height over the board's own rung count. Change the pip and the ladder widens and the columns narrow, in that order, and the build fails before a column gets too narrow for a bar.",
+        "clearanceMm": 1.2,
+        "gapMm": 1.5,
+        "$gapNote": "Between the ladder and the recess it belongs to. Just enough that the ladder does not read as part of the card's own groove, and not so much that it could be mistaken for the neighbour's.",
+        "side": "left",
+        "$sideNote": "The ladder goes on the LEFT of its recess, so it is read before the card rather than after it - and so the two ladders in the right-hand column are not jammed against the edge of the paper.",
+        "strokeWidth": 1.2,
+        "cellStrokeWidth": 0.6,
+        "labelMm": 3.4,
+        "$rungNote": "Fifteen rungs down an 88 mm recess is just under six millimetres a rung, which is why the piece that walks it is a 4.5 mm pip and not a 7 mm bar. Every fifth rung rules heavier and carries its figure, the same `ruleEvery` motif the columns use; the rest are plain cells. Numbering all fifteen at this width would be numbering nothing legibly."
+      },
       "slot": {
         "$comment": "A recess a card drops into, cut round the card's own trim plus a clearance either side. The corner follows: a rounded card in a square hole is a card that has to be aimed.",
-        "clearanceMm": 1,
+        "clearanceMm": 0.8,
         "cornerRadiusMm": 4.5,
         "strokeWidth": 2.6,
         "grooveInset": 6,
         "bracketMm": 9,
+        "$clearanceNote": "It was 1 mm. A fifth of a millimetre either side of a card is not a thing a hand can feel, and eight of them across the sheet is most of a rung.",
         "$bracketNote": "Corner brackets rather than a fourth rule - the eye reads a bracket as a place to put something and a rule as a picture frame."
       },
       "track": {
@@ -12656,7 +13051,7 @@ window.GAME_DATA = {
         }
       },
       "pricing": {
-        "$comment": "The three market-memory marks: a heaped measure, a rising run, a running glass. Same bargain as the element and terrain marks one storey up - the PATH is data on the model (data/pricing.json models[].mark) and this says how to draw it - and for the same reason. The mark is engraved in a corner of every commodity token and printed once in the foot of the market board as a key, so the piece in your hand and the sheet you are about to stand it on say `this is a glut good` the same way.\n\nThere are three of them and there will only ever be three, so they are held apart by SHAPE rather than by detail: a triangle sitting on a line, a line climbing to a point, an hourglass pinched in the middle. At token size the detail is gone and the silhouette is all that is left, which is the test every mark in this game is drawn to.",
+        "$comment": "The four marks that say what KIND OF GOOD a commodity is: a level balance, a picked-clean fish, a running glass, a rising run. Same bargain as the element and terrain marks one storey up - the PATH is data on the model (data/pricing.json models[].mark) and this says how to draw it - and for the same reason. The mark is engraved in a corner of every commodity token and printed on the market board, which is a sheet about nothing else now, so the piece in your hand and the sheet you are reading say `this one rots` the same way.\n\nTHERE ARE FOUR, AND THERE WERE THREE. The fourth is STAPLE, and it is not a new rule - it is the absence of one, given a face. More than half the commodities in the game run under it - thirty-four of sixty-six - and they used to be filed as gluts, which quietly claimed that stone and rope could be drowned in a market the way fish can. They cannot. A mark that says `nothing special happens here` is worth engraving, because the alternative is a blank corner that could equally mean somebody forgot.\n\nThey are held apart by SHAPE rather than by detail: a symmetrical beam, a horizontal spine with ribs, an hourglass pinched in the middle, a line climbing to a point. At token size the detail is gone and the silhouette is all that is left, which is the test every mark in this game is drawn to - and the balance is the only symmetrical one in the set, on purpose, because the other three all lean.",
         "pathsFrom": "pricing.models[].mark.path",
         "viewBox": "0 0 24 24",
         "fill": "none",
@@ -12671,8 +13066,9 @@ window.GAME_DATA = {
           "$note": "About a third of the token's width, tucked into the flat below the family mark. It is the second thing you read, never the first - the family mark says what it is and this says how its market behaves."
         },
         "onBoard": {
-          "$comment": "The key in the foot of the market board: the three marks in a row, each beside its model's name and its one line. It is the only place on the sheet where a mark appears at reading size.",
-          "sizeMm": 6.4
+          "$comment": "The market board. It used to be a key in the foot, a row of three marks under six lines of price tracking; the board is ABOUT these marks now and nothing else, so each one heads its own panel at the size a woodcut initial would be, and the key size is what a mark shrinks to where it is cited inside a panel's prose.",
+          "sizeMm": 6.4,
+          "panelSizeMm": 13
         }
       }
     },
@@ -12775,7 +13171,8 @@ window.GAME_DATA = {
       "plateFormat": "the page the artist draws - see docs/art/09-framing-and-composition.md",
       "plateKind": "drawn, and an artist supplies the plate; or generated, and a tool in this repository draws it from the card's own data. The same field, and the same reason, as a map's plate.kind in data/maps/ - see itemPlate below and tools/draw-item.mjs. Absent means drawn.",
       "drawnBy": "the tool that draws a generated deck's plates, so the mint queue can name it instead of asking for an artist who is not coming",
-      "filter": "which cards of the source file this deck deals, where one file holds more than one deck's worth. Prose: the enumeration lives in cardsOfDeck in tools/lib/mint.mjs, one dull branch per deck, and this says what that branch is for.",
+      "sourceFilter": "WHICH cards of the source file this deck deals, where one file holds more than one deck's worth, and it is read for real - `{ class: \"weapon\" }` keeps that class, `{ classNot: [...] }` drops those. It was prose only, with the real enumeration written out as one dull branch per deck in tools/lib/mint.mjs, tools/build-cards.mjs and docs/js/data.js - three copies of the same list, and splitting the weapons and the armour out of the items deck meant editing all three or having them disagree. This file's own comment promises that adding a deck is an entry here plus its content file; that promise is kept now. One place resolves it: decksOf in docs/js/decks.js, shim-loaded by tools/lib/decks.mjs the way framing and the graph already are.",
+      "filter": "the same thing said in prose, for whoever is reading rather than running. It states the intent; sourceFilter states the rule.",
       "minting": "true if tools/mint-queue.mjs should chase this deck's missing plates",
       "storyRail": "true if this deck's story runs up the right-hand edge instead of across the bottom - see storyRail. The decks drawn on a portrait page take it, because that is where a taller window pays.",
       "back": "how this deck's card back is drawn - word, motif and ink"
@@ -12837,6 +13234,9 @@ window.GAME_DATA = {
         "id": "talismans",
         "name": "Talismans",
         "source": "items.json",
+        "sourceFilter": {
+          "class": "talisman"
+        },
         "filter": "class == talisman",
         "back": {
           "word": "TALISMANS",
@@ -12917,10 +13317,61 @@ window.GAME_DATA = {
         "id": "items",
         "name": "Items",
         "source": "items.json",
-        "filter": "class != talisman - a talisman is an arcane subject and deals in its own deck",
+        "sourceFilter": {
+          "classNot": [
+            "talisman",
+            "weapon",
+            "armour"
+          ]
+        },
+        "filter": "everything that is not a talisman, a weapon or a piece of armour - the rope, the lantern, the bag, the cloak. Each of the other three is an arcane, a fighting or a wearing subject and deals in its own deck.",
         "back": {
           "word": "ITEMS",
           "motif": "rivet",
+          "ink": "slate"
+        }
+      },
+      {
+        "prefix": "WPN",
+        "storyRail": true,
+        "plateId": "item-{id}",
+        "promptFile": "items.md",
+        "plateFormat": "square",
+        "plateKind": "generated",
+        "drawnBy": "tools/draw-item.mjs",
+        "minting": true,
+        "id": "weapons",
+        "name": "Weapons",
+        "source": "items.json",
+        "sourceFilter": {
+          "class": "weapon"
+        },
+        "filter": "class == weapon",
+        "back": {
+          "word": "WEAPONS",
+          "motif": "blade",
+          "ink": "oxide"
+        }
+      },
+      {
+        "prefix": "ARM",
+        "storyRail": true,
+        "plateId": "item-{id}",
+        "promptFile": "items.md",
+        "plateFormat": "square",
+        "plateKind": "generated",
+        "drawnBy": "tools/draw-item.mjs",
+        "minting": true,
+        "id": "armour",
+        "name": "Armour",
+        "source": "items.json",
+        "sourceFilter": {
+          "class": "armour"
+        },
+        "filter": "class == armour",
+        "back": {
+          "word": "ARMOUR",
+          "motif": "mail",
           "ink": "slate"
         }
       },
@@ -12963,6 +13414,10 @@ window.GAME_DATA = {
         "rayed": "M12 2.4V21.6M2.4 12H21.6M5.2 5.2 18.8 18.8M18.8 5.2 5.2 18.8M12 8.2a3.8 3.8 0 1 0 .001 0z",
         "$socketNote": "The one thing every tool in the deck has in common: a head with an eye through it, and a haft through the eye. Drawn on the family's construction - a ring, and what the thing does to it - and top-to-bottom symmetric like the rest, because the back mirrors the motif across the card's centre line.",
         "socket": "M12 2.6a9.4 9.4 0 1 0 .001 0zM12 8.2a3.8 3.8 0 1 0 .001 0zM8.6 2.6V21.4M15.4 2.6V21.4",
+        "$bladeNote": "WEAPONS. A blade through a crossguard - and then the same blade again, downward, because the back mirrors across the centre line and a sword is the one object in this game that is improved by the trick. It comes out as a court card: point up, point down, quillons through the middle, no way up. The guard is the widest thing on the grid, so the silhouette is a cross before it is a sword, and a cross is what carries at arm's length.",
+        "blade": "M12 2.4L9.4 6.4V11.2M12 2.4L14.6 6.4V11.2M12 21.6L9.4 17.6V12.8M12 21.6L14.6 17.6V12.8M4.2 12H19.8M9.4 11.2H14.6M9.4 12.8H14.6",
+        "$mailNote": "ARMOUR. Five rings of a hauberk interlocked on the cross - one at the centre and one at each quarter, set just close enough to overlap. It is the only motif in the set built out of REPEATS rather than out of one figure, which is precisely the point: mail is a thing made of twenty thousand identical small pieces, and at roundel size that is what it should look like. Symmetric top to bottom by construction, like everything else here.",
+        "mail": "M12 9.1a2.9 2.9 0 1 0 .001 0zM12 3.9a2.9 2.9 0 1 0 .001 0zM12 14.3a2.9 2.9 0 1 0 .001 0zM6.8 9.1a2.9 2.9 0 1 0 .001 0zM17.2 9.1a2.9 2.9 0 1 0 .001 0z",
         "$compassNote": "The compass is the one motif drawn to the edge of the grid. The rose keeps the 2.4 margin the others stop at; the bezel sits outside it, so the cardinal points meet the rim rather than stopping short of it.",
         "compass": "M12 0.6a11.4 11.4 0 1 0 .001 0zM21.6 12 14.96 13.22 16.17 16.17 13.22 14.96 12 21.6 10.78 14.96 7.83 16.17 9.04 13.22 2.4 12 9.04 10.78 7.83 7.83 10.78 9.04 12 2.4 13.22 9.04 16.17 7.83 14.96 10.78Z"
       }
@@ -13015,8 +13470,21 @@ window.GAME_DATA = {
         "shape": "round",
         "diameterMm": 7,
         "engravable": false,
-        "carries": "nothing - it is the marker that walks a track on the player board or the market board",
-        "$note": "Six of these per player board, one per track, plus one per commodity line in play on the market board."
+        "carries": "nothing - it is the marker that walks a column track on the player board, or the band ladder at the head of a column on the price ledger",
+        "$note": "Four of these per player board, one per column track, plus one per commodity column in play on the ledger. It was six, and then five: the vehicle column went when a wagon was dealt a board of its own, and the defence column went when a battle became one opposed total."
+      },
+      "pip": {
+        "shape": "round",
+        "diameterMm": 4.5,
+        "engravable": false,
+        "carries": "nothing, and it must not - there are hundreds of them and half of them are never coming back",
+        "does": [
+          "Walks a WEAR ladder beside a kit slot on the player board. Four per board, and they come off again when the thing they were counting is finished with.",
+          "Covers a cell on a DEPLETION grid. One per unit of a finite commodity burnt, laid down once and never lifted - data/pricing.json depletion."
+        ],
+        "$sizeNote": "Four and a half millimetres, two and a half off a bar, and both numbers are doing a job. A wear ladder is fifteen rungs down the side of an 88 mm card - not quite six millimetres a rung - and a 7 mm bar overhangs it, where a pip leaves a millimetre and a half to get a fingernail under. A depletion cell is then sized off the pip in turn, so a grid is as small as the piece standing on it allows and a whole set of them fits on one sheet.",
+        "$oneShapeNote": "One piece, two jobs, and that is deliberate rather than thrifty. A pip means ONE USE OF ONE THING HAS BEEN SPENT, whether the thing is an axe or a coal seam. The two uses differ only in whether the spending can be undone, and the piece has no business knowing which sheet it has been put on.",
+        "howMany": "Four per player board, plus enough to fill every depletion grid in play - twenty-one to a grid (pricing.json depletion), so a table trading in five finite commodities will get through a hundred of them in a game. They are not recycled and there is no reserve: running out of pips is running out of seam, which is exactly the right thing for it to mean."
       },
       "route": {
         "$comment": "Road and rail, laid on the map hex by hex, and the piece that finally puts a player's name on the thing they paid for (rules.json infrastructure). A route token is a BAR, not a chit: it lies along the line between two hex centres, which is where a road actually is, and it is the length of that line so a run of them reads as a continuous road rather than as a row of counters.\n\nThe sizing is not typed here, because it is not ours to type - a map hex is whatever the map's print preset makes it (data/maps/<id>.json print.presets[].hexAcrossFlatsMm), and the bar has to match. So the token is stated as fractions of the hex and tools/build-map.mjs prints the millimetres for every preset it derives. At the default four-sheet Korvane Reach board - a 16.7 mm hex - that is a 15 x 3.7 mm road bar and a 15 x 5.3 mm rail bar, both cuttable in 3 mm ply and both big enough to pick up.",
@@ -13084,7 +13552,7 @@ window.GAME_DATA = {
       }
     },
     "marketBoard": {
-      "$comment": "The market board: one A4 sheet of identical market lines, and every line the same three strips.\n\nA town's price for a commodity is its base value times a band (rules.json market.priceBands), and the band is the only part that moves. What MOVES it is data/pricing.json - two red dice, two blue, one green, bent by what the line has already been through. So a line is three strips read left to right: a TALLY of what the board is holding, a MEMORY from -3 to +3 that the tally moves, and the price LADDER the commodity's own token walks.\n\nNo commodity is named on any of it. You say which commodity a line is about by standing that commodity's hexagonal token on the ladder, and the token carries its pricing model's mark (marks.pricing.onToken) so it also says which of the three rules the tally and the memory are running under. The token is the label, the reading and the rulebook. One generic board serves any commodity, any town and any table, and a game that adds a sixty-seventh commodity reprints nothing.\n\nThere is no name strip down the side, and that is the design rather than an omission. A strip would need a second token, or a pencil, to say what a line was about - and the line already has a token saying exactly that.\n\nThe geometry is derived the way the player board's is, and there is not a coordinate below. The strips take a bar token's width plus its clearance; the ladder takes everything the strips and the gutters left; the sheet holds however many lines fit under the head and over the foot. A bigger commodity token makes a taller line and fewer of them. A seventh band narrows the ladder cells. An eighth ruler bin narrows the ruler. Nothing ever runs off the paper, and a cell too narrow for the piece that stands in it fails the build instead of printing.",
+      "$comment": "The market board: one A4 sheet that explains how a price moves and holds no price at all. Two things live in this block - the RULES SHEET and, under `depletion`, the second sheet of grids that goes with it. Both are drawn by tools/build-market.mjs.\n\nIt was a price tracker: six identical lines of tally, memory and price ladder, and the whole of the geometry here was about making a commodity token fit a band cell. None of that is on the sheet now. The price is on the ledger (components.json ledger), the memory is gone because nothing remembers anything, and what is left is a head that says what the six dice do and a body of four panels, one per kind of good.\n\nThe geometry is derived the way it always was and there is not a coordinate below. The head takes the height its three strips need; the foot takes the height its rows need; the panels take everything left, divided by however many kinds of good pricing.json declares. Declare a fifth and the panels narrow. Nothing ever runs off the paper.",
       "sheet": {
         "widthMm": 297,
         "heightMm": 210,
@@ -13093,69 +13561,49 @@ window.GAME_DATA = {
       },
       "marginMm": 8,
       "gutterMm": 6,
-      "headMm": 16,
-      "$headNote": "One head, at the top of the sheet, in two rows: the strip names and the band multipliers across the top, the per-cell numbers under them. Not one head over every line - six repetitions of 0 1 2 3 4 5 / -3 -2 -1 0 +1 +2 +3 / x0.5 x0.75 x1 down a page is six chances for the eye to lose which column it is in; one head and a ruled column edge does the job.",
-      "$footNote": "The foot is not a caption, it is the working half of the sheet: the dice, the elasticity strip that reads the green die, and the swing ruler that turns a roll into a number of bands. See `foot` below. Everything the round needs is on this one piece of paper.",
-      "line": {
-        "$comment": "One commodity's whole market, read left to right: what the board is holding, what the market remembers, what it costs.",
-        "clearanceMm": 1.5,
-        "$heightNote": "A line's height is not stated: it is the commodity token's acrossFlats plus a clearance either side, so the token can be picked up out of a cell without lifting its neighbours.",
-        "strokeWidth": 1.6,
-        "bandStrokeWidth": 0.9
-      },
-      "strip": {
-        "$comment": "The two memory strips at the head of every line - the tally and the modifier - each walked by a bar token rather than by the commodity's hexagon. That is why they are narrow: a bar is 7 mm and a commodity token is 18 mm, so thirteen strip cells cost less paper than four band cells and the ladder keeps the width it needs.\n\nWhich cells there are is not the board's business either. The tally runs pricing.json memory.tally from..to and the modifier runs pricing.json memory from..to, read at build time, because a board that restated them is a board that could disagree with the game.",
-        "clearanceMm": 1.2,
-        "$widthNote": "A strip cell is the bar token's diameter plus this clearance either side. Nothing else decides it, so a fatter bar widens the strips and narrows the ladder - in that order, and the build fails before the ladder gets too narrow for a hexagon.",
-        "gutterMm": 5,
-        "$gutterNote": "Between the tally and the modifier, and between the modifier and the ladder. Wide enough that a hand reaching for a bar does not knock the price token.",
-        "strokeWidth": 1.2,
-        "cellStrokeWidth": 0.6,
-        "zeroRule": {
-          "strokeWidth": 2,
-          "$note": "The zero cell of the modifier strip and the empty cell of the tally rule heavier, and are where both bars start. A board at setup is three straight columns of pieces: the tallies at empty, the modifiers at zero, the prices at the starting band."
-        }
-      },
-      "cell": {
-        "minMm": 18,
-        "$note": "A band cell has to be wider than a commodity token is across the CORNERS, which for a flat-top hex is acrossFlats x 2/root-3 - about 21 mm for an 18 mm token. tools/build-market.mjs checks it and fails rather than printing a board a token overhangs."
-      },
-      "startBandRule": {
-        "strokeWidth": 2.4,
-        "$note": "The starting band (rules.json market.startingBandIndex) rules heavier and is where every price token is placed at setup."
-      },
-      "foot": {
-        "$comment": "Three rows under the ladders, and they are the reason this board is worth printing rather than looking up. The round is: roll five dice, read the elasticity strip, read the swing ruler, move the token. All four of those things are on this foot.\n\nIts columns are the LINE's columns, not new ones: the dice and the elasticity strip sit under the two memory strips and are exactly as wide, the swing ruler sits under the ladder and is exactly as wide. So the foot cannot drift out of alignment with the board above it - it is measured off the same arithmetic.",
+      "head": {
+        "$comment": "THE ROLL, across the top of the sheet in one band: the dice on the left, the volatility strip in the middle, the swing ruler on the right. The three of them are the round in the order it happens, so the head reads left to right as an instruction.\n\nIts columns are proportions of the working width rather than of anything else, because there is no longer a set of strips underneath for them to line up with. They are the widths the three things need: the dice block is a count of pieces, the volatility strip is three cells, and the ruler is seven - so the ruler takes the most and gets it.",
+        "heightMm": 34,
+        "titleMm": 6,
+        "columns": {
+          "dice": 0.3,
+          "volatility": 0.22,
+          "ruler": 0.48
+        },
+        "$columnNote": "Fractions of the working width, summing to one. They are not typed positions: the tool multiplies them out and lays the three blocks left to right with a gutter between, so widening the ruler narrows the other two rather than pushing anything off the sheet.",
         "ruleStrokeWidth": 1.2,
-        "gapMm": 3,
-        "rows": [
-          {
-            "id": "ruler",
-            "heightMm": 19,
-            "$note": "The dice key and the elasticity strip on the left; the swing ruler on the right, one cell per bin in pricing.json ruler.bins, each printing the net it covers and the bands it moves."
-          },
-          {
-            "id": "models",
-            "heightMm": 13,
-            "$note": "The three market-memory models across the full width: mark, name, and the one line that says what the model is. The key to the corner mark on every commodity token."
-          },
-          {
-            "id": "panel",
-            "heightMm": 9,
-            "$note": "The prose. marketboard.json panel, and the only sentences on the sheet."
-          }
-        ],
-        "$heightNote": "The foot's height is the sum of its rows plus a gap above each - so adding a row shortens the ladders and takes a line or two off the sheet, which is the correct thing for it to do and the reason no height is typed twice.",
-        "cellStrokeWidth": 0.8,
-        "diceInk": {
-          "$comment": "The three dice are called red, blue and green at the table (pricing.json dice[].colour) and the palette has no red, blue or green - it has oxide, slate and verdigris (docs/art/palette.json). This is the one place the two vocabularies are tied together, so the sheet cannot invent a colour and the rulebook does not have to learn a pigment name.",
+        "cellStrokeWidth": 0.8
+      },
+      "dice": {
+        "$comment": "The die swatches in the head. A die drawn at the size a die is, the colour on the WASH plate and the outline and the face figure on the ink, so the black-and-white edition still has six distinguishable dice - which matters more here than anywhere, because the colour IS the interface.",
+        "swatchMm": 6.2,
+        "gapMm": 1.4,
+        "groupGapMm": 4.2,
+        "ink": {
+          "$comment": "The dice are called red, blue, green and ochre at the table (pricing.json dice[].colour, arcana.json manaDie.colour) and the palette has no red, blue or green - it has oxide, slate, verdigris, ochre and bruise. This is the one place the two vocabularies are tied together, so a sheet cannot invent a colour and a rulebook does not have to learn a pigment name.\n\nAll five inks are a die now, one each, and there is no sixth ink to make a seventh die out of. That is not a coincidence anybody engineered; it is what happens when a game with a five-colour press decides that colour should mean something.",
           "red": "oxide",
           "blue": "slate",
           "green": "verdigris",
-          "swatchMm": 6.2,
-          "$swatchNote": "A die drawn at the size a die is. The colour is on the WASH plate and the outline and the face letter on the ink, so the black-and-white edition still has three distinguishable dice."
-        },
-        "$slackNote": "Whatever the paper has left between the last line and the foot is slack - the remainder of a division, nothing more, and usually a millimetre or two. It is deliberately not ruled into a dice tray: at A4 there is no room for one that a hand could throw into, and a tray too small to use is a line of six commodities thrown away for a decoration. The dice are rolled on the table beside the board, where dice have always been rolled."
+          "ochre": "ochre",
+          "purple": "bruise"
+        }
+      },
+      "panels": {
+        "$comment": "The body: one panel per entry in pricing.json models, side by side across the full working width, each headed by that model's own mark. This is the sheet's whole subject.\n\nA panel's width is the working width over the number of models - so four panels are narrower than three were, and a fifth kind of good narrows them again rather than running off the edge. What goes IN one is content and lives in data/marketboard.json kinds; this says how tall the mark is and how the prose is set.",
+        "markMm": 13,
+        "titleMm": 5.2,
+        "lineMm": 3.6,
+        "bodyMm": 2.9,
+        "padMm": 4,
+        "ruleStrokeWidth": 1.2,
+        "$dividerNote": "A hairline rule between panels and nothing at the ends. A box round each panel would be four rules where one does, and at this size four rules is a table rather than a page.",
+        "extraMm": 22,
+        "$extraNote": "The height reserved at the foot of a panel for the one strip or grid it needs - the spoil strip for a perishable, an example grid for a finite resource. A staple needs nothing and its panel simply has more air, which is the correct thing for the panel about the goods that do nothing special to look like."
+      },
+      "panelFoot": {
+        "$comment": "The prose. marketboard.json panel, and the only sentences on the sheet that are not about one particular kind of good.",
+        "heightMm": 15,
+        "ruleStrokeWidth": 1.2
       },
       "timber": {
         "boardWidthMm": 26,
@@ -13164,6 +13612,105 @@ window.GAME_DATA = {
         "grainOpacity": 0.5,
         "knots": 2,
         "$note": "The same sawn ground as the player board. They are the same piece of furniture in two sizes and they should look it."
+      },
+      "depletion": {
+        "$comment": "The second sheet: a page of identical numbered grids, one per finite commodity in play, covered a pip at a time as the stuff is burnt and never uncovered.\n\nEVERY NUMBER HERE IS DERIVED. A cell is the pip that covers it plus its clearance. A grid is the ladder in data/pricing.json depletion - `per` cells across, `top` + 1 rows down - so making a seam last longer is one number in pricing.json and a taller grid here. How many grids fit is a division. A bigger pip makes bigger cells, wider grids and fewer of them per sheet, in that order, and the build fails before a grid gets too wide for the sheet rather than printing one that runs off it.",
+        "sheet": {
+          "widthMm": 297,
+          "heightMm": 210,
+          "bleedMm": 3,
+          "cornerRadiusMm": 6
+        },
+        "marginMm": 8,
+        "gutterMm": 5,
+        "headMm": 14,
+        "footMm": 9,
+        "cell": {
+          "clearanceMm": 1.2,
+          "$note": "A cell is the pip's diameter plus this either side. Nothing else decides it.",
+          "strokeWidth": 0.7,
+          "digitMm": 3.2,
+          "$digitNote": "The figure printed in a cell, and it must fit INSIDE THE PIP that covers it - the pip is 4.5 mm across, so 3.2 mm of figure disappears completely under one. A number peeping out from behind the piece that has taken it would make `the lowest one you can still see` a matter of opinion, and tools/build-market.mjs fails the build rather than print one."
+        },
+        "grid": {
+          "seatClearanceMm": 1.5,
+          "$seatNote": "The hexagonal blank at the head of a grid, where the commodity's own token stands for the whole game. Its size is the token plus this either side - the same arithmetic the market lines used to seat a price token with, which is the one piece of that board worth keeping.",
+          "seatStrokeWidth": 0.8,
+          "labelMm": 3.4,
+          "gapMm": 2.5,
+          "$gapNote": "Between the seat and the top row of cells."
+        },
+        "timber": {
+          "boardWidthMm": 26,
+          "seamStrokeWidth": 1.1,
+          "grainStrokeWidth": 0.7,
+          "grainOpacity": 0.5,
+          "knots": 2
+        }
+      }
+    },
+    "ledger": {
+      "$comment": "The price ledger: one A4 PORTRAIT sheet, the only place a price lives, and the one component in the game that is written on.\n\nPortrait, and the numbers chose it. Landscape gives 273 mm of width - eleven columns nobody needs - and about 150 mm of history; portrait gives 239 mm of history and lands on six columns, which is a town's real traded list. A ledger wants rows.\n\nEVERY NUMBER HERE IS DERIVED, and the two that bind are worth naming. A COLUMN is at least as wide as the commodity token that heads it, measured across the corners, plus the move box beside the figures - the same argument that made a market line one token tall. A ROW is the working height over rules.json victory.gameLengthRounds, which is the honest number of rows because a price can change at most once a round. That second one has teeth: lengthen the game and the rows get shorter, the digits get shorter with them, and at 25 rounds the digit falls under `digit.minHeightMm` and the build fails rather than printing figures nobody can colour in.",
+      "sheet": {
+        "widthMm": 210,
+        "heightMm": 297,
+        "bleedMm": 3,
+        "cornerRadiusMm": 6
+      },
+      "marginMm": 8,
+      "gutterMm": 4,
+      "roundGutterMm": 7,
+      "$roundGutterNote": "The strip down the left-hand edge carrying the round numbers, 1 to the game length. It is OUTSIDE the columns and printed once, not repeated in every column - which is what a row label is, and it hands each column nine millimetres back.",
+      "head": {
+        "heightMm": 27,
+        "titleMm": 6,
+        "seatClearanceMm": 1.5,
+        "seatStrokeWidth": 0.8,
+        "$note": "The token's hexagonal seat and nothing else. There is no band strip: six cells of a 7 mm bar is 56 mm against a 31 mm column, and it was not worth having anyway - the price on the sheet IS the band, read against the commodity's own row of six in the annex."
+      },
+      "column": {
+        "padMm": 1.2,
+        "gapMm": 1.2,
+        "moveBoxMm": 6,
+        "$moveBoxNote": "The small ruled box beside each row's figures, for the number of places the price just stepped. It is the only thing on the sheet that is written rather than filled, and it is not optional: a sought good's whole memory is the box on the row above (pricing.json sought).",
+        "moveBoxStrokeWidth": 0.7,
+        "ruleStrokeWidth": 0.5,
+        "dividerStrokeWidth": 1
+      },
+      "digit": {
+        "$comment": "A seven-segment figure, hollow, to be filled in with a pencil. All seven segments are printed whether they belong to any particular number or not - an unlit segment is what makes a hollow figure read as a number WAITING, and drawing only the lit ones would mean this tool knew a price, which it must not.\n\nThe segments are mitred bars - hexagons with 45-degree ends - which is how a seven-segment display has been drawn since somebody first drew one, and the reason is that mitres let seven identical bars meet at six corners without overlapping.\n\nThe proportions are one number and three ratios of it. The width ratio is NOT a taste: for all seven bars to come out the same length, w must be h/2 + t/2, which the tool derives rather than reads.",
+        "count": 3,
+        "minHeightMm": 8,
+        "$minHeightNote": "Below this a segment's colourable core is thinner than a pencil stroke and the sheet stops being fillable. It is the check with teeth, and the game length is what pushes on it: 24 rounds gives an 8.4 mm digit, 25 gives exactly 8.0 and is the last one that passes, and 26 gives 7.63 and fails, naming rules.json victory.gameLengthRounds as the cause. A longer game wants a second sheet, not smaller figures.",
+        "thicknessPerHeight": 0.12,
+        "gapPerHeight": 0.055,
+        "$gapNote": "Mitre clearance, so two segments never quite touch at a corner. Without it a filled 8 is a solid block - and at 0.05 of the height it very nearly still is. The thickness came down from 0.17 for the same reason: proofed at true size (node tools/ledger-proof.mjs) a 0.17 bar in a 4.9 mm figure is almost square, and ten of them in a row read as a line of rosettes rather than as numbers. The enlargement looked fine throughout, which is exactly why the proof prints a millimetre ruler.",
+        "digitGapPerHeight": 0.16,
+        "outlineStrokeMm": 0.24,
+        "$outlineNote": "Hairline, and above the 0.15 mm print floor in palette.json rules.printSafety. It has to be light enough that a filled segment reads as filled rather than as outlined."
+      },
+      "row": {
+        "padMm": 0.8,
+        "ruleStrokeWidth": 0.5,
+        "ruleEvery": 5,
+        "$ruleNote": "Every fifth row rules heavier, which is the same tally motif the board tracks use and for the same reason: it lets somebody find round 17 without counting to 17.",
+        "numberMm": 2.6
+      },
+      "foot": {
+        "heightMm": 14,
+        "markMm": 6.4,
+        "titleMm": 3.2,
+        "lineMm": 2.6,
+        "ruleStrokeWidth": 1.2,
+        "$note": "The four kind-of-good marks in a row, so a player who has just stood a token in a seat can read its corner mark without getting up."
+      },
+      "timber": {
+        "boardWidthMm": 26,
+        "seamStrokeWidth": 1.1,
+        "grainStrokeWidth": 0.7,
+        "grainOpacity": 0.5,
+        "knots": 2,
+        "$note": "The same sawn ground, turned through ninety degrees with the sheet - the seams run the long way on every component in the game, so a portrait sheet's run up it."
       }
     },
     "buildingTile": {
@@ -13522,26 +14069,28 @@ window.GAME_DATA = {
     ]
   },
   "playerboard": {
-    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, and the five numbered tracks it walks a token along.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, defence, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the five columns left over got wider.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
+    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, four numbered tracks up the middle for the figure, and a narrow fifth against every kit slot for the thing lying in it.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the columns left over got wider.\n\nThen the fifth went the same way, for the opposite reason. DEFENCE was a rating a token barely ever moved, and when a battle became one opposed total (rules.json conflict.battle) there was nothing left for it to do that armour on a card was not already doing. Four columns up the middle now, at 15.6 mm apiece against the 13.6 that five of them managed - and what the paper bought is the thing the board never had room for: a WEAR ladder against every one of the four kit slots, so the axe, the sword and the lantern are each counted down beside their own card. The middle of the board is about the figure; the edge of it is about what the figure is carrying.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
     "version": "0.4.0",
     "board": {
       "id": "player-board",
       "name": "Player Board",
       "sheet": "A4 landscape",
-      "summary": "One per player, one per vehicle in play, and one spare for the table, and every one identical. The card in play top left, five tracks up the middle, four cards of kit on the right, and the round's phases under it.",
+      "summary": "One per player, one per vehicle in play, and one spare for the table, and every one identical. The card in play top left, four tracks up the middle, four cards of kit on the right each with its own wear ladder against it, and the round's phases under it.",
       "spare": "Print more than there are players: one spare for the ENCOUNTER, and one for every vehicle anybody expects to have on the road at once. The encounter board is the one a monster or a stranger is dealt onto when a discovery roll turns one up - its tracks are set from the card's summary strip and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter). A vehicle board is the same board doing the same job for a hull instead of a body.",
-      "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, and with five tracks rather than six each column is over two millimetres wider than it was.",
-      "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person, or alive. People, calling, health, strength, defence and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster, a stranger met on the road and the wagon they are all arguing about."
+      "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, and with four tracks rather than six each column is nearly two millimetres wider than it was even after the wear ladders have taken theirs.",
+      "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person, or alive. People, calling, health, strength, armour and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster, a stranger met on the road and the wagon they are all arguing about."
     },
     "$trackKeys": {
-      "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, and numbered in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the five columns are one grid rather than five scales a player has to keep straight.",
+      "$comment": "What a track entry means. A track is a printed ladder walked by a token: a bar (components.json tokens.bar) on the four columns up the middle, a smaller pip (tokens.pip) on the wear ladders, which are narrow enough that a bar would overhang. Rungs numbered from the bottom, step apart, in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and EVERY track runs the whole way, wear ladders included, so the whole sheet is one grid rather than a set of scales a player has to keep straight.",
       "letter": "the single letter printed at the head of the column - what a player calls the track across the table",
       "label": "the full name, printed beside the letter",
       "unit": "printed under the letter where the track counts something other than itself - hexes, on the one track that does",
       "step": "how much one rung is worth; `stepFrom` instead means 'read it from that dotted path in the data, do not restate it'",
-      "kind": "harm | capacity | leg | rating - decides the ink the column washes in",
+      "kind": "harm | capacity | leg | rating - decides the ink the track washes in",
+      "place": "column (one ladder up the middle of the sheet, about the figure in the recess) or kit (a narrow ladder against a card slot, about the card lying in it). Absent means column.",
+      "count": "how many of this track are ruled. Absent means one; a kit track says four, because there are four slots.",
       "covers": "the largest value the printed game can reach, so the ceiling can be checked against it. `paths` is where that number comes from, and tools/validate-data.mjs recomputes it: a character with 15 health fails the check rather than running off the top of the track",
-      "reads": "who reads the number and which way round - defence is read by your opponent, not by you",
+      "reads": "who reads the number and which way round - a wear track is its owner's business and nobody else's",
       "$marksNote": "There is no `mark` any more. Every rung used to carry a little ink-plate glyph saying which KIND of number it was - a notch down for harm, a pip for a rating - and at 11 mm a column it fought the number for the same three millimetres and won often enough to matter. The columns are numbered and nothing else: no glyph, no plus, no minus. Which way a token walks is on the track's `walks` line and in the rulebook, where a sentence has room to say it."
     },
     "tracks": [
@@ -13592,29 +14141,6 @@ window.GAME_DATA = {
         "rule": "rules.json conflict.strength, rules.json carrying, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
       },
       {
-        "id": "defence",
-        "name": "Defence",
-        "letter": "D",
-        "label": "DEFENCE",
-        "unit": null,
-        "kind": "rating",
-        "ink": "slate",
-        "step": 1,
-        "covers": {
-          "value": 6,
-          "paths": [
-            "monsters.monsters[].defence",
-            "characters.characters[].defence"
-          ],
-          "note": "The gravel wyrm's plated shale, and Vhalrik's hide - the two hardest things in the game to land a blow on."
-        },
-        "walks": "Rarely. Set it from the card at setup; a spell, a shield wall or a piece of ground may lend or take a point for a fight.",
-        "atZero": "Nothing between the blow and you.",
-        "reads": "Your opponent reads it, not you: they add your defence to the number they need. Armour is a separate thing and always was - it soaks hits after they land (items.json armourValue), where defence stops them landing.",
-        "note": "New, and it is the half of the old strength that had no business being there. Strength used to sit on both sides of the attack roll, which quietly made every strong thing armoured; a stone boar barely swings and turns a sword, and now it can say so.",
-        "rule": "rules.json conflict.defence, rules.json conflict.attack, monsters.json defence, characters.json defence, peoples.json defence.base"
-      },
-      {
         "id": "pace",
         "name": "Pace",
         "letter": "P",
@@ -13625,7 +14151,10 @@ window.GAME_DATA = {
         "step": 1,
         "covers": {
           "value": 8,
-          "note": "Mounted on a road - the fastest anything crosses country in a day leg (travel.json speeds.overrides road)."
+          "paths": [
+            "monsters.monsters[].pace"
+          ],
+          "note": "Mounted on a road - the fastest anything crosses country in a day leg (travel.json speeds.overrides road) - and, on the same number, the storm roc, which is why nobody on foot has ever got away from one."
         },
         "walks": "Set it at the start of a leg to the speed in travel.json for the mode and the ground, then walk it down a rung per hex entered. Halve it for a night leg under a lantern; a torch buys one hex, two on a road.",
         "atZero": "The leg is over. Roll for discovery where you stopped.",
@@ -13654,25 +14183,52 @@ window.GAME_DATA = {
         "atZero": "Empty. Mana crystals are frozen mana - shatter one for 2 of any element - but mana never freezes back.",
         "note": "The only arcane thing on the board, so the only thing that gets the slip: the wash is struck a shade off the line, the way this world's presses could never quite get magic to sit still. In the black-and-white edition there is no slip and nothing is lost.",
         "rule": "arcana.json, items.json manaCapacity, peoples.json manaStorage"
+      },
+      {
+        "id": "wear",
+        "name": "Wear",
+        "letter": "W",
+        "label": "WEAR",
+        "unit": null,
+        "place": "kit",
+        "count": 4,
+        "kind": "harm",
+        "ink": "slate",
+        "step": 1,
+        "covers": {
+          "value": 14,
+          "paths": [
+            "items.items[].wear",
+            "tools.tools[].baseWear"
+          ],
+          "note": "A large loom, the longest-lived thing anybody owns. The deepest a figure carries on its back is the plate harness at 12."
+        },
+        "walks": "Down. Set it from the W box on the card the moment the thing is put in the slot beside it, knock it down a rung every time the thing is used, and put it back up as a blacksmith mends it - three rungs a round, four coin a rung.",
+        "atZero": "Worn out. The card is discarded and the track cleared, and whatever the thing was doing for its owner it stops doing at once.",
+        "reads": "Only its owner. A wear track is about a possession, not a person, and nobody else at the table has to know how blunt your axe is until you swing it.",
+        "note": "FOUR OF THEM, one beside each kit slot rather than one column up the middle, because wear is the first number on this board that belongs to a CARD rather than to whoever is sitting behind it. A single W column could only ever have counted one item's wear, and a player carries four. So it is drawn where the thing it counts is lying, in a narrow ladder against the recess, walked by a pip rather than a bar (components.json tokens.pip) - which is what makes fifteen rungs fit down the side of an 88 mm card.\n\nIt is the track that paid for itself. The D column went out of the middle of the board the same day this arrived at the edge of it, and the four columns left are wider than the five ever were: 15.6 mm against 13.6.\n\nThe strip letter for wear already existed (components.json statStrip.letters) and its note said there would never be a track under it, because wear ran past twenty and the board stops at fourteen. There is a track under it now, and wear runs to fourteen - the number came down to meet the board, which is the way round this game has always settled that argument.",
+        "rule": "rules.json wear, items.json wear, tools.json baseWear"
       }
     ],
+    "$placeNote": "A track's `place` says where on the sheet it is ruled. `column` is the grid up the middle - one column per track, all the same height, the shape this board has always had. `kit` is a short ladder against a card recess, drawn `count` times, once per slot. The distinction is not decoration: a column track counts something about the FIGURE in the recess, and there is one of those; a kit track counts something about a CARD in a slot, and there are four of those. tools/build-board.mjs partitions on it and never on a track's name.",
     "ceiling": {
       "$comment": "The board's ceiling is the game's ceiling. Every number a token walks in this game has to fit between components.json board.track.from and .to, and these are all of them - tools/validate-data.mjs sweeps the lot and fails the build on anything that has grown past it. That is the whole reason the mass scale was halved: a hero carrying 28 kg could not stand on a track that stops at 14, so the kilogram got smaller rather than the board getting longer.\n\nWhat is deliberately NOT here: a vehicle's cargoCapacity, which runs to 100. Cargo is bulk in a hold, printed once on the vehicle's card as a maximum, and counted by the cargo itself sitting in the kit slots - no token stands on a column for it. A number only belongs on this list if the board has a column for it.",
       "paths": [
         "characters.characters[].health",
         "characters.characters[].strength",
-        "characters.characters[].defence",
         "characters.characters[].manaCapacity",
         "monsters.monsters[].health",
         "monsters.monsters[].strength",
-        "monsters.monsters[].defence",
+        "monsters.monsters[].pace",
         "monsters.monsters[].manaYield",
         "vehicles.vehicles[].hull",
         "items.items[].manaCapacity",
+        "items.items[].wear",
+        "tools.tools[].baseWear",
         "peoples.peoples[].strength.base",
-        "peoples.peoples[].defence.base",
         "peoples.peoples[].manaStorage.innate"
-      ]
+      ],
+      "$notWalked": "A monster's ARMOUR is not on this list and must not be. It is a number printed on a card and added to a total; no token stands on a column for it, exactly as a vehicle's cargo capacity has never been on this list. A number belongs here only if the board has a track for it - and after that, the sweep is merciless: a character with one more point of health fails the build rather than walking a token off the top of a board somebody has already printed."
     },
     "slots": [
       {
@@ -13694,11 +14250,13 @@ window.GAME_DATA = {
         "count": 4,
         "takes": [
           "items",
+          "tools",
           "modifications",
           "quests",
           "commodities"
         ],
-        "note": "Whatever the thing in the recess has in play and needs to see. On a character's board that is a weapon, a lantern, a talisman, the quest they have accepted; on a vehicle's board it is the same four slots holding its cargo and the modifications bolted to it. Four, because five cards on the table is a hand and four is a kit - and because anybody who wants a fifth thing has to put something down, which is the same argument the strength limit is making. A vehicle card no longer sits here: it has a board of its own."
+        "wearTrack": true,
+        "note": "Whatever the thing in the recess has in play and needs to see. On a character's board that is a weapon, a lantern, a talisman, the quest they have accepted; on a vehicle's board it is the same four slots holding its cargo and the modifications bolted to it. Four, because five cards on the table is a hand and four is a kit - and because anybody who wants a fifth thing has to put something down, which is the same argument the strength limit is making. A vehicle card no longer sits here: it has a board of its own.\n\nEVERY SLOT HAS A WEAR LADDER AGAINST IT, and that is what the four slots stopped being merely a hand limit and started being an accounting: the thing in the slot has a W on its card, a pip stands on the ladder beside it, and it walks down as the thing is used. A fifth thing in play would be a fifth thing whose wear nobody is counting. Tools joined the list of what a slot takes on the same day, because a tool is now the same kind of object as a sword - something you own, carry and use up."
       }
     ],
     "panel": {
@@ -13709,86 +14267,189 @@ window.GAME_DATA = {
       "foot": "Turn order passes to the left.",
       "aside": {
         "title": "IN A FIGHT",
-        "source": "rules.conflict.attack",
+        "source": "rules.conflict.battle",
         "note": "Printed from the rule rather than restated, so the board and the rulebook cannot drift."
       }
     }
   },
   "marketboard": {
-    "$comment": "The market board: the sheet the price of everything lives on, and now the sheet that decides it.\n\nPrices were a number in a rulebook and a sum done in somebody's head - base value times a band, six bands, drifting one step a round for one random family - and nobody could see them and nothing anybody did to a market had any bearing on it. This is that sum made physical AND made answerable. Five dice are thrown, the swing ruler across the foot says how far the price moves, and the two strips at the head of every line say what the market already knows: what the board is still holding, and how that has bent it.\n\nEvery line is IDENTICAL and no commodity is named on the sheet. That is still the whole design. A line is not the grain line until somebody stands the grain token on it, and it stops being the grain line when they take it off. The token brings everything particular with it - which commodity, what base value, and which of the three market-memory models the strips are running under, engraved in its corner. So one board serves a table of two or of five, any commodity, any town, and adding a sixty-seventh commodity to the game reprints nothing.\n\nThis file is content: what a line is for, what a token on it means, what the panel says. How the board is DRAWN - sheet, margin, how tall a line is cut, how wide a strip cell gets - is declared once in components.json under `marketBoard`, the same division as the player board. The BANDS are rules.json market.priceBands and the PRICING SYSTEM is data/pricing.json, both read at build time, because a board that restated them is a board that could disagree with the game.",
-    "version": "0.2.0",
+    "$comment": "The market board: two sheets that say HOW A PRICE MOVES and WHAT KIND OF THING IS MOVING. Neither of them records a price, and that is the change.\n\nThe old board was a price tracker. Six identical lines, each with a tally of what the board was holding, a memory strip from -3 to +3, and a six-cell price ladder walked by the commodity's own token - and the whole apparatus existed because the three market models needed somewhere to remember things. They do not remember anything any more. A perishable's rule happens in a player's hands at the end of the round; a finite resource's number is read off its own depletion grid; a sought good's number is the move it made last round, which is written on the ledger anyway. Nothing was left for six lines to hold.\n\nSo the price went to the LEDGER (data/ledger.json), where a price belongs - written down, in figures, struck through when it changes, which is what people have done with prices since people have had prices. And the board became the thing a board is actually good at: one sheet, in front of everybody, saying what the rules are.\n\nSHEET ONE, THE MARKET BOARD. The roll across the top - the six dice, the volatility strip, the swing ruler - and under it four panels, one per kind of good, each headed by the mark that is engraved on that good's own token. A player who has picked up a commodity token and does not know what the fish skeleton in its corner means looks at this sheet and finds out.\n\nSHEET TWO, THE DEPLETION SHEET. A grid of numbered cells for every finite commodity in play, covered a cell at a time as the stuff is burnt, never uncovered. It is the one board in the game that only goes one way, and it is on its own sheet because it is the one board that is CONSUMED - a game leaves it covered in pips that are out of the box for good.\n\nThis file is content: what each sheet is for, what its panels say, what a grid means. How they are DRAWN - sheet, margin, how tall a panel is cut, how wide a grid cell gets - is declared once in data/components.json under `marketBoard` and `depletionBoard`, the same division as everywhere else. The DICE and the FOUR MODELS are data/pricing.json and the BANDS are rules.json market.priceBands, all read at build time, because a board that restated them is a board that could disagree with the game.",
+    "version": "0.3.0",
     "board": {
       "id": "market-board",
       "name": "Market Board",
       "sheet": "A4 landscape",
-      "summary": "One sheet of identical market lines. Each carries a tally of what the board is holding, a memory from -3 to +3, and a price ladder walked by the commodity's own token - and the foot carries the dice, the elasticity strip and the swing ruler that move it.",
-      "note": "The same sawn workbench as the player board (docs/art/06-components.md), routed with lines instead of columns. It carries no border, for the same reason the player board carries none: the paper the border took is another line.",
-      "generic": "Nothing on this board names a commodity, a town or a player. It is three strips repeated until the paper runs out, and everything particular arrives on a token.",
-      "howMany": "One per town whose market the table is actually trading in - which in practice is one board for the neutral market plus one per player town that buys and sells. Six lines is a town's real traded list rather than its whole catalogue; a town dealing in more than six prints a second sheet.",
-      "dice": "Rolled on the table beside the board. The sheet carries what the dice MEAN - the roll key, the elasticity strip, the swing ruler - and does not pretend to be a tray it has no room to be."
+      "summary": "One sheet, and it holds no state at all. The roll across the head - what each die is and what it does - and four panels under it, one for each kind of good there is.",
+      "note": "The same sawn workbench as the player board (docs/art/06-components.md). It carries no border, for the same reason the player board carries none: the paper a border takes is a paragraph.",
+      "generic": "Nothing on this board names a commodity, a town or a player, and now nothing on it is a place to put a piece either. It is a rule, printed. One sheet serves any table and any number of them.",
+      "howMany": "One per table. It was one per town, because it held every one of that town's prices; a sheet that holds no prices is a sheet everybody can read at once.",
+      "dice": "Rolled on the table beside the board. The sheet carries what the dice MEAN and does not pretend to be a tray it has no room to be."
     },
-    "line": {
-      "$comment": "One commodity's whole market, read left to right: what is left, what is remembered, what it costs.",
-      "identity": "The token IS the label. A line is not the grain line until somebody stands the grain token on it, and it stops being the grain line when they take it off - so a line has no name printed on it and needs none. The model mark on the token's corner says which of the three memory rules the strips on that line are running under, which is the other thing a name would have had to carry.",
-      "walks": "Three pieces: a bar on the tally, a bar on the memory, and the commodity's own hexagon on the ladder (components.json tokens).",
-      "reads": "price = the commodity's baseValue x the band the token stands on. The base value is on the commodity's card and in the annex; the board holds the multiplier and only the multiplier.",
-      "setup": "Every piece in play starts on the heavier-ruled cell of its strip: tallies empty, memories at zero, price tokens on the starting band (rules.json market.startingBandIndex). A board at setup is three straight columns.",
-      "moves": "In the Market phase, roll two red, two blue and one green for the line. Net = (Demand - Supply + Memory) x Elasticity, read the net on the swing ruler in the foot, and walk the price token that many bands. The whole sum is data/pricing.json formula.",
-      "spread": "What a player pays or receives when trading with the board rather than another player is the band price plus market.buySpread or plus market.sellSpread. The board does not print the spread - it is the same two numbers everywhere and it belongs in the rulebook, not on six lines."
-    },
-    "tally": {
-      "$comment": "The first strip: what the board is holding. It is not an abstraction and nothing has to be remembered to keep it right - it is a count of trades that just happened, walked as they happen.",
-      "is": "The board's own stock of that commodity. Sell a token to the board and the bar walks up one; buy one off the board and it walks back down one.",
-      "full": "A tally discharges the moment it fills, in the same gesture that filled it: when the bar would step past the top cell, take it back to empty, move the memory one cell in the direction the commodity's model says, and stand it on whatever is left over. Which direction that is is the only thing the three models disagree about here.",
-      "unused": "A hype line never uses it - its memory is the price's own last move. The strip prints on every line anyway, exactly as the player board prints a mana track for a character with no magic: a generic sheet prints the furniture and the piece standing on it says what is being played."
-    },
-    "memory": {
-      "$comment": "The second strip, and the only thing on the table that remembers anything. Its number is added to the swing before the green die multiplies, so in a volatile season a market's history counts double - like everything else about that season.",
-      "is": "A modifier from -3 to +3, walked by a bar. Read it straight: a bar on -2 takes two off the swing this round and every round until something moves it.",
-      "moves": "What moves it is the commodity's model, and the model arrives on the token: a glut sinks each time the board is left holding a full tally and eases back on any round it is not, a hype climbs after its own price, a depletion ratchets up as the seam is worked out and never comes back down. data/pricing.json models.",
-      "why": "This is what replaced the drift. Prices used to move for no reason anybody at the table had caused; now a market that has been dumped on stays cheap, and the player who dumped on it did that."
-    },
-    "tokens": {
-      "$comment": "What stands on this board, and why it is that shape. The shapes themselves are components.json tokens.",
-      "commodity": "A hexagon, because there are hundreds of them and hexagons nest on a laser bed with shared cuts. It carries its family's mark and its pricing model's mark, and never a number - the number is where the token is standing.",
-      "bar": "A disc, and two per line: one on the tally and one on the memory. They carry nothing, which is right - a marker that said something would be a marker somebody had to put back the right way up.",
-      "coin": "A disc, because a coin is round. Coins never go on this board; they cross the table when the trade is made.",
-      "note": "A player short of commodity tokens may stand a bar token on a ladder and remember what it is. They will not remember what it is."
-    },
-    "foot": {
-      "$comment": "The working half of the sheet. The round is roll, read, move, and all three are printed here.",
+    "roll": {
+      "$comment": "The head of the sheet: the whole round, in the order it happens. Roll six dice, read three strips, and the price has moved. It is one line of addition and the board is where you check that you have it the right way round.",
+      "title": "THE ROLL",
+      "formula": "Demand − Supply + Volatility + what the good is",
+      "$formulaNote": "Printed from pricing.json formula.net rather than restated, so the sheet and the rulebook cannot drift.",
       "dice": {
-        "title": "THE ROLL",
+        "title": "THE DICE",
         "source": "pricing.dice",
-        "note": "Five dice for the whole table, not five per player. One player rolls the market for every line on the board."
+        "note": "Blue is what you want. Red is what stands in your way. It is the same subtraction in a fight, with the same two colours (rules.json conflict.battle), which is the one thing on this sheet that is not about markets at all and is here because it is the reason the colours are what they are."
       },
-      "elasticity": {
-        "title": "ELASTICITY — THE GREEN DIE",
-        "source": "pricing.elasticity",
-        "note": "How hard the swing lands this season. Three cells, read straight off the green die."
+      "volatility": {
+        "title": "VOLATILITY — THE GREEN DIE",
+        "source": "pricing.volatility",
+        "note": "How rough the season is. Three cells, two faces each, and it ADDS - minus two, nothing, plus two. It used to multiply, and a multiplier in the middle of an addition is the one place a table gets a sum wrong."
       },
       "ruler": {
         "title": "THE SWING",
         "source": "pricing.ruler",
-        "note": "Find the net in a cell; the cell says how many bands the price token moves. This strip is the reason the board exists rather than a table in a book."
-      },
-      "models": {
-        "title": "WHAT A MARKET REMEMBERS",
-        "source": "pricing.models",
-        "note": "The key to the mark in the corner of every commodity token. Three rules, and a token tells you which one its line is running under."
+        "note": "Find the net in a cell; the cell says how many places the price steps along the commodity's own printed row of six. This strip is the reason this sheet is worth printing rather than looking up."
       }
     },
+    "kinds": {
+      "$comment": "The body of the sheet, and its whole subject: four panels, one per model in pricing.json, each headed by the mark engraved in the corner of that model's commodity tokens. Four, and there were three - STAPLE is the new one, and it is not a new rule but the absence of one, given a face and a panel. More than half the commodities in the game run under it - thirty-four of sixty-six.\n\nThe panels are drawn from the models themselves - name, line, history, and whichever of the model's own strips it needs - so adding a fifth kind of good would be an entry in pricing.json and a narrower panel, and not one line of layout.",
+      "title": "FOUR KINDS OF GOODS",
+      "source": "pricing.models",
+      "shows": [
+        "mark",
+        "name",
+        "line",
+        "what it adds to the swing",
+        "what else it does to you"
+      ],
+      "extras": {
+        "$comment": "The one strip or grid each panel needs beyond its own prose. A staple needs nothing, which is the point of it.",
+        "staple": null,
+        "perish": "pricing.spoil - the spoil strip, two columns and three rows: how many units go at the end of the round, for a good that keeps well and for one that does not.",
+        "deplete": "pricing.depletion - one grid, drawn at the size the depletion sheet draws them, as the example. The real ones are on the other sheet.",
+        "hype": "pricing.sought - the range, and the sentence that says it is the PREVIOUS move and not this one."
+      },
+      "worked": {
+        "$comment": "One example per panel, done out in full, and the reason the panels are the size they are. A rule stated is a rule half the table will read the wrong way round the first time; a rule WORKED is one nobody argues about. Every one of them is the same four lines - roll, add, read, step - so the shape of the sum is learned once and then only the middle line differs.\n\nThey are content and they live here, because a worked example names a commodity and a number, and tools/build-market.mjs is not allowed to know either.",
+        "staple": [
+          "Stone. Blue 4 and 3, red 6 and 2.",
+          "Demand 7 - supply 8 = −1. Green rolls 5: rough, +2.",
+          "Net +1. Nothing to add: a staple adds nothing.",
+          "+1 is HOLD. The price does not move, and the move box gets a dash."
+        ],
+        "perish": [
+          "Fish. Blue 6 and 5, red 3 and 2.",
+          "Demand 11 - supply 5 = +6. Green rolls 2: slack, −2.",
+          "Net +4. A perishable adds nothing to the swing.",
+          "+4 is FIRM: one step up. Then, at the end of the round, every fish anybody still holds faces the ochre die - and fish keeps badly, so it reads the right-hand column."
+        ],
+        "deplete": [
+          "Coal, twelve units burnt this game.",
+          "Blue 4 and 4, red 5 and 3. Demand 8 - supply 8 = 0. Green rolls 3: even, nothing.",
+          "Twelve pips is four full rows, so the lowest number still visible is 4.",
+          "Net +4 - FIRM, one step up, on a roll that came to nothing. That is what a worked-out seam does."
+        ],
+        "hype": [
+          "Wine, which rose two places last round.",
+          "Blue 5 and 4, red 4 and 4. Demand 9 - supply 8 = +1. Green rolls 1: slack, −2.",
+          "The move box on the row above says +2. Add it.",
+          "Net +1 - HOLD. The rise ran out, the box gets a dash, and next round wine adds nothing at all."
+        ]
+      }
+    },
+    "depletion": {
+      "$comment": "The second sheet. One numbered grid per finite commodity in play, and a pip goes on it every time a unit of that commodity is BURNT - not traded, burnt. Read the lowest number you can still see and add it to the swing.\n\nIt is on its own sheet for a reason that is not room. This is the only board in the game that is spent: at the end of a game it is covered in pips that are out of the box for good, and it cannot be put away and got out again the way every other component can. A sheet you print fresh for each game is a different kind of object from a sheet you keep, and it should not be printed on the back of one you keep.",
+      "sheet": "A4 landscape",
+      "name": "Depletion Sheet",
+      "summary": "A page of identical grids. Each is headed by a hexagonal seat the commodity's own token stands in - the token is the label, as it always was - and holds the ladder in pricing.json depletion: seven rows of three, nought at the top and six at the bottom.",
+      "howMany": "One sheet holds more grids than the game has finite commodities, so one sheet is one game. Print a fresh one every time; the old one is a record of a game that has been played and is no use to the next.",
+      "identity": "The token IS the label. A grid is not the coal grid until somebody stands the coal token in its seat, and the mark in that token's corner is the running glass, which is what says this grid belongs to it at all.",
+      "reads": "The lowest number still visible. A fresh grid reads nought.",
+      "fills": "Cover the lowest uncovered cell, one pip per unit consumed. Nothing is ever lifted off.",
+      "notFilled": "Buying and selling. A merchant who never lights a fire can trade the same hundred tons of coal all game and this grid will not notice - which is the whole model, and it is why the trigger moved off the market board in the first place.",
+      "$underThePiece": "The number is printed small enough to sit UNDER the pip that covers it, inside the pip's own diameter, so a covered cell is a cell whose number has actually gone. A number peeping out from behind the piece that is supposed to have taken it would make `the lowest one you can still see` a matter of opinion. tools/build-market.mjs checks it."
+    },
+    "tokens": {
+      "$comment": "What stands on these two sheets. Nothing stands on the market board at all - it is a rule, printed, and there is nothing on it to move. The depletion sheet takes two pieces and neither of them ever leaves.",
+      "commodity": "A hexagon, one per finite commodity in play, standing in the seat at the head of its own depletion grid for the whole game. It carries its family's mark and its pricing model's mark, and never a number.",
+      "pip": "A 4.5 mm disc (components.json tokens.pip), one per unit of that commodity burnt, laid on the lowest uncovered cell. It is not recycled, it is not lifted, and running out of them is running out of seam.",
+      "bar": "None. The bars went with the strips, back to the player board where the tracks are.",
+      "note": "A player short of commodity tokens may stand anything in a grid's seat and remember what it is. They will not remember what it is."
+    },
     "panel": {
-      "$comment": "The one thing a market board has to say out loud, printed from rules.json and pricing.json rather than restated here so the sheet and the rulebook cannot drift.",
+      "$comment": "The one thing the market board has to say out loud that is not one of the four panels, printed from rules.json rather than restated here so the sheet and the rulebook cannot drift.",
       "id": "the-market",
       "title": "THE MARKET",
       "source": "rules.market",
       "lines": [
-        "Town price = the commodity's base value × the band its token stands on.",
+        "The price is written on the ledger. This sheet says how it moves; it never says what it is.",
         "Buying from the board costs the spread on top; selling to it takes the spread off.",
         "The board sells no more of a commodity in a round than that round's supply roll. It will buy any quantity."
       ],
-      "foot": "Roll the market once per line, every Market phase."
+      "foot": "Roll the market once per column on the ledger, every Market phase."
+    }
+  },
+  "ledger": {
+    "$comment": "The price ledger: one A4 sheet, and the only place in this game where a price lives.\n\nPrices were on a board. Six lines, each with a token standing on one of six bands, and the price was that band's multiplier times the commodity's base value - a sum somebody did in their head every time anybody asked what grain was worth. Then a memory strip beside it, and a tally beside that, and three pieces to walk per line per round. What the table could actually SEE at the end of all that was a token standing on a cell. Not a price. Not last round's price. Not whether the price had been climbing for four rounds, which is precisely the thing anybody trading would want to know.\n\nA ledger is what merchants have always used instead, and it is better at every one of those jobs. The price is written down as a number, in figures a metre away can read. Last round's is directly above it with a line through it. The whole history of a market is one column you can run your eye down.\n\nTHE FIGURES ARE HOLLOW AND YOU COLOUR THEM IN. Three seven-segment digits per cell, printed as outlines, filled with a pencil - which is a stranger idea on paper than it sounds and turns out to be the right one for three reasons. A written number is somebody's handwriting and gets argued about across a table; a filled figure is a figure. Colouring in seven bars is fast and it is EXACTLY as fast for 188 as for 8, where writing is not. And a wrong digit is corrected by filling one more segment rather than by rubbing out, which is what lets the whole sheet be worked in pencil at speed.\n\nNO BANDS ON THIS SHEET, AND NO TOKEN. Every commodity's six prices are printed as one row of six figures in the annex - grain is 3 · 4 · 5 · 6 · 8 · 10 - so a move is a STEP ALONG THAT ROW. You have last round's price written in front of you; it is one of the six; the swing ruler says how many places to step; the figure you land on is the new price. There is nothing to multiply, no band to remember and nothing to walk. That is what let the price ladder come off the market board with nothing replacing it.\n\nThis file is content: what a column is, what a row is, what the head holds and what the foot says. How the sheet is DRAWN - the paper, the margins, how tall a digit is cut, how thick a segment is - is declared once in data/components.json under `ledger`, the same division as the two boards. The ROUNDS are rules.json victory.gameLengthRounds and the MOVE RANGE is pricing.json ruler, both read at build time, because a sheet that restated them is a sheet that could disagree with the game.",
+    "version": "0.1.0",
+    "sheet": {
+      "id": "price-ledger",
+      "name": "Price Ledger",
+      "sheet": "A4 portrait",
+      "summary": "Commodities across the top, one column each. Rounds down the left, one row each. Every cell is three hollow seven-segment figures and a small box beside them.",
+      "$portraitNote": "PORTRAIT, and the numbers chose it rather than taste. A ledger wants rows: landscape gives 273 mm of width - eleven columns nobody needs - and only about 150 mm of history. Portrait gives 239 mm of history and lands on six columns, which is a town's real traded list. A price ledger is a tall thing.",
+      "note": "The same sawn workbench ground as the boards (docs/art/06-components.md), ruled rather than routed. It is the one sheet in the game that is written on, so it is the one sheet that is printed fresh for every game.",
+      "generic": "No commodity is named on it. A column is not the grain column until somebody stands the grain token in the seat at its head, and it stops being the grain column when they take it off - the same doctrine the market board's lines ran under, inherited by the sheet that took the job over.",
+      "howMany": "One per town whose market the table is actually trading in. Six columns is a town's real traded list; a town dealing in more than six prints a second sheet, which is what a second sheet is for."
+    },
+    "column": {
+      "$comment": "One commodity's whole market, read top to bottom: what it is, and then what it cost, every round, for the whole game.",
+      "identity": "The token IS the label. A hairline hexagonal seat at the head of the column, and the commodity's own token stands in it - carrying its family's mark and, in the corner, the mark that says which of the four kinds of good it is. So the column head says what this is AND how it behaves, and neither is printed on the sheet.",
+      "seat": "A ruled blank, not a printed name. A table short of a token writes a name in it in pencil, the way the mini-map sheets rule a blank hex for the same reason: the thing that goes there changes every time the sheet is put down.",
+      "reads": "Straight down. The one un-struck figure in a column is the price now; every struck one above it is what it was, in order, with the gaps where the market held.",
+      "moveBox": {
+        "$comment": "The small box beside each row's figures, and the only thing on this sheet that is written rather than filled. Write the number of places the price just stepped: -3 to +3, or a dash if it held.\n\nIt earns its width twice. It is the RECORD - a column of moves is the shape of a market at a glance, where a column of prices is only its level. And for a SOUGHT good it is the rule: the hype modifier is the move box on the row above, which is how a market that runs on its own reputation gets a memory without anything having to remember it (pricing.json sought).",
+        "range": "pricing.ruler bins move",
+        "holds": "one figure, signed, or a dash",
+        "$dashNote": "A held round writes a dash rather than a nought, and rather than nothing. A dash says the roll happened and came to nothing; an empty box says somebody forgot to roll this column, and those are different problems."
+      }
+    },
+    "row": {
+      "$comment": "One round. Not one price change - one ROUND, whether the price moved or not, because a row that is only written when something happens is a row you cannot count backwards from.",
+      "is": "A round of the game, numbered down the left-hand edge of the sheet from 1 to rules.json victory.gameLengthRounds.",
+      "$whyRoundsNote": "The market rolls once per column per Market phase, so a price can change at most as many times as there are rounds - which makes the round count the honest number of rows, and makes the sheet impossible to run off the bottom of. It also makes `the row above` mean exactly one thing for the sought good's rule. In a free-running list a round that held would write nothing, and `the row above` would quietly mean two rounds ago.",
+      "blankIsInformation": "About three rounds in ten hold (pricing.json ruler.odds), so a column has gaps in it, and the gaps are the market holding. A gap in one column where every other column has a figure is somebody who forgot to roll a line.",
+      "strikeThrough": "When the price changes, rule a line through the figure in the row above and fill the new one in this row. It is the gesture the whole sheet is built around and it is the reason the figures are filled rather than written: a struck figure is still perfectly readable, where struck handwriting is a smudge."
+    },
+    "digits": {
+      "$comment": "Three of them, hollow, per row per column. Three because the dearest thing in the game is worth 110 at base and 220 at the top band, and a fourth digit would be a column of noughts on every sheet ever printed.\n\nSeven segments each, all seven printed whether they are part of the figure or not - an unlit segment is what makes a hollow figure read as a NUMBER WAITING rather than as a shape. Drawing only the lit ones would also mean the tool knew the price, which it must not: this sheet is printed before anybody has rolled anything.",
+      "count": 3,
+      "range": [
+        0,
+        999
+      ],
+      "$rangeNote": "Base values run 1 to 110 and the top band is double, so 220 is the dearest price the printed game can produce. Three digits is right, with room, and the check that says so is in tools/validate-data.mjs rather than in this sentence.",
+      "filled": "With a pencil. One segment at a time, and a wrong digit is corrected by filling one more segment rather than by rubbing anything out.",
+      "leadingZeros": "Leave them blank. A price of 8 is a blank, a blank and an 8, not 008 - nobody has ever written 008 on a ledger."
+    },
+    "head": {
+      "$comment": "The top of every column: the token's seat, and nothing else. There is no band strip, no starting price and no name.",
+      "title": "PRICE LEDGER",
+      "holds": [
+        "the commodity token's hexagonal seat"
+      ],
+      "$nothingElseNote": "A band strip was tried here and does not fit: six cells of a 7 mm bar plus clearance is 56 mm against a 31 mm column. It was not worth widening the sheet for, because it was not worth having - the price on the ledger IS the band, read against the commodity's own printed row of six in the annex."
+    },
+    "foot": {
+      "$comment": "One row across the bottom of the sheet: the four marks a column head can be carrying, so a player who has just stood a token in a seat can read what its corner mark means without getting up. The same four that head the market board's panels, at key size.",
+      "title": "WHAT KIND OF GOOD",
+      "source": "pricing.models",
+      "shows": [
+        "mark",
+        "name",
+        "line"
+      ],
+      "note": "The one thing this sheet says that is not a number. It is here because the sheet is what a trader has in front of them, and the mark on the token they just picked up is the question they are most likely to have."
+    },
+    "printing": {
+      "$comment": "The one component in the game that is consumed by being used, alongside the depletion sheet - and the two are consumed differently, which is worth saying. A depletion sheet is spent because pieces are left on it; a ledger is spent because it is written on. Neither can be put away and got out again.",
+      "fresh": "One per game, per town being traded in. Print a few spares; a game that runs long or a table that opens a seventh market wants another sheet and should not have to stop.",
+      "pencil": "Pencil, not ink, whatever the flavour text says. The sheet is designed for a mistake to be recoverable by filling one more segment, and that only works if the fill can also be rubbed out when somebody has genuinely mis-read the ruler."
     }
   },
   "minimap": {

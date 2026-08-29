@@ -23,8 +23,23 @@
       "markNote": "Three streamers, two of them curling off the end. Nothing touches the ground." }
   ],
 
+  "manaDie": {
+    "$comment": "The purple die, and the fifth and last die in the box. Blue is what you want, red is what stands in your way, green is the weather on a market, ochre is what the season takes back - and bruise is what a dead monster gives up. Five inks, five dice, and there is no sixth ink to make a seventh die out of (docs/art/palette.json inks).\n\nIt exists because a monster's mana yield was a PAYMENT and it should always have been a CEILING. Vhalrik was six mana every single time, which made the biggest fight in the game an errand with a known price on it. Now the number on the card is the most he can give up and the die says how much of it you actually caught, so the same monster is worth six one week and two the next, and the elf standing there with a phylactery has a reason to hold their breath.",
+    "id": "mana",
+    "name": "Mana",
+    "colour": "purple",
+    "ink": "bruise",
+    "count": 1,
+    "faces": 6,
+    "$facesNote": "Six faces because the deepest yield in the deck is six (monsters.json manaYield, Vhalrik). A die that could not reach the top of the deck would make the top of the deck unreachable, and a die that ran past it would have faces that never meant anything.",
+    "rule": "You take the LESSER of the monster's Y box and the roll. Never more than the monster had; often less.",
+    "worked": "A cinder wolf yields 1: any roll but a 1 is still 1, so a small monster is a reliable trickle. Vhalrik yields 6: the die is the whole story, and half the time you leave four of it on the ground.",
+    "when": "Once, the moment the monster reaches 0 health. Not per character and not per round.",
+    "split": "Among the characters who fought, as they agree. Mana with nowhere to hold it blows away at the end of the round, so an over-full party leaves some of it behind whatever the die said."
+  },
+
   "mana": {
-    "gained": "Slaying a monster yields its manaYield in mana of its element, to the characters who fought it. Some quests and hoards yield mana directly.",
+    "gained": "Slaying a monster yields mana of its element to the characters who fought it - the LESSER of the number in the monster's Y box and a roll of the purple mana die (manaDie above). Some quests and hoards yield mana directly, at the number they name, with no die.",
     "stored": "Mana must be held: in a body with innate capacity (elves, up to 3) or in a talisman. Mana gained with nowhere to hold it blows away at the end of the round.",
     "element": "Stored mana keeps its element. A talisman can hold a mix - note each element's share beside the bar.",
     "traded": "Characters in the same hex may pass mana freely between talismans. Mana in a talisman is stolen with the talisman.",

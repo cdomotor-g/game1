@@ -1,5 +1,5 @@
 {
-  "$comment": "Tools are equipment, not commodities: they are owned as individual pieces, they wear out on a durability track, and they gate which recipes a worker may perform. They can still be bought, sold and stolen.",
+  "$comment": "Tools are equipment, not commodities: they are owned as individual pieces, they wear out, and they gate which recipes a worker may perform. They can still be bought, sold and stolen.\n\n`baseWear` is the most wear a tool will take, and it is ON THE BOARD'S SCALE now. It was `baseDurability` and it ran from 14 to 34, counted on the tool itself, because there was no track for it - and the reason there was no track was that a number running past twenty will not stand on a fourteen-rung ladder. There is a track now, four of them, one beside each kit slot on the player board (data/playerboard.json), so the number came down to meet the board rather than the board going up to meet the number - the same trade the kilogram made when a hero could not stand their own load on it.\n\nNothing got shorter, because the clock changed with the scale: wear was one point a LABOUR HOUR and is one point a JOB (rules.json wear). An axe was 24 wear at 3 hours a job, which is eight jobs; it is 10 wear at one a job, which is ten. Slightly longer-lived, and nobody adds hours up any more.\n\nA tool is not the only thing that wears any more either. Everything a figure carries does - see data/items.json - and this file is simply where the first things that did are kept.",
   "version": "0.1.0",
   "tools": [
     {
@@ -7,7 +7,7 @@
       "summary": "Fells trees standing on forest tiles.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
-      "baseValue": 30, "baseDurability": 24, "sizes": ["small", "medium", "large"],
+      "baseValue": 30, "baseWear": 10, "sizes": ["small", "medium", "large"],
       "story": "The first tool a settlement buys and the last one it will let go. Forest into lumber, and lumber into everything else there is.",
       "enables": ["fell-timber", "clear-forest", "hew-timber"]
     },
@@ -16,7 +16,7 @@
       "summary": "Turns logs into lumber at a sawmill.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
-      "baseValue": 32, "baseDurability": 26, "sizes": ["small", "medium", "large"],
+      "baseValue": 32, "baseWear": 11, "sizes": ["small", "medium", "large"],
       "story": "An axe takes the tree down; a saw decides what it becomes. The teeth are the expensive part and the reason it sleeps indoors.",
       "enables": ["saw-lumber", "build-timber-frame"]
     },
@@ -25,7 +25,7 @@
       "summary": "Breaks rock. Required for coal, ore and stone.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 2 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 4 },
-      "baseValue": 42, "baseDurability": 20, "sizes": ["small", "medium", "large"],
+      "baseValue": 42, "baseWear": 8, "sizes": ["small", "medium", "large"],
       "story": "Everything under the hills comes up through the eye of one of these. Miners name theirs, which tells you most of what you need to know about mining.",
       "enables": ["mine-coal", "mine-iron-ore", "mine-copper-ore", "mine-gold-ore", "mine-gems", "mine-salt", "mine-mana-crystal", "quarry-stone"]
     },
@@ -34,7 +34,7 @@
       "summary": "Moves loose ground: clay, sand, peat, earthworks.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
-      "baseValue": 28, "baseDurability": 22, "sizes": ["small", "medium", "large"],
+      "baseValue": 28, "baseWear": 9, "sizes": ["small", "medium", "large"],
       "enables": ["dig-clay", "dig-sand", "cut-peat", "gather-stone", "lay-roadbed", "sink-mineshaft", "dig-ember-root"]
     },
     {
@@ -42,7 +42,7 @@
       "summary": "The general construction tool, and the smith's own tool.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 2 },
-      "baseValue": 24, "baseDurability": 30, "sizes": ["small", "medium", "large"],
+      "baseValue": 24, "baseWear": 12, "sizes": ["small", "medium", "large"],
       "story": "The tool that makes the tools. A smithy is a fire, an anvil and this, and the first two can be borrowed.",
       "enables": ["forge-ironware", "forge-tool", "repair-tool", "build-generic", "lay-rail"]
     },
@@ -51,7 +51,7 @@
       "summary": "Butchery, skinning and fine work.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }], "effortHours": 2 },
-      "baseValue": 18, "baseDurability": 18, "sizes": ["small", "medium"],
+      "baseValue": 18, "baseWear": 8, "sizes": ["small", "medium"],
       "enables": ["butcher-livestock", "hunt-game", "harvest-herbs", "scrape-frost-lichen"]
     },
     {
@@ -59,7 +59,7 @@
       "summary": "Takes fleece off a sheep without taking the sheep off the board.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }], "effortHours": 2 },
-      "baseValue": 20, "baseDurability": 20, "sizes": ["small", "medium"],
+      "baseValue": 20, "baseWear": 8, "sizes": ["small", "medium"],
       "enables": ["shear-sheep"]
     },
     {
@@ -67,7 +67,7 @@
       "summary": "Harvests ripe crops.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }, { "commodity": "lumber", "qty": 1 }], "effortHours": 3 },
-      "baseValue": 30, "baseDurability": 22, "sizes": ["small", "medium", "large"], "optional": true,
+      "baseValue": 30, "baseWear": 9, "sizes": ["small", "medium", "large"], "optional": true,
       "story": "Set the nibs to the man, never the man to the snaith. A harvest is won in the fitting and lost in the sharpening.",
       "enables": ["harvest-grain", "harvest-flax", "harvest-hops", "harvest-vegetables", "harvest-cotton"],
       "optionalNote": "Harvesting is possible bare-handed; a scythe doubles the yield."
@@ -77,7 +77,7 @@
       "summary": "Breaks ground for sowing. A draught animal doubles its output.",
       "madeAt": "carpenter",
       "craft": { "inputs": [{ "commodity": "lumber", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "effortHours": 4 },
-      "baseValue": 55, "baseDurability": 28, "sizes": ["small", "medium", "large"],
+      "baseValue": 55, "baseWear": 12, "sizes": ["small", "medium", "large"],
       "enables": ["sow-grain", "sow-flax", "sow-vegetables", "sow-hops", "sow-cotton"],
       "optional": true, "optionalNote": "Sowing is possible bare-handed; a plough halves the hours."
     },
@@ -86,7 +86,7 @@
       "summary": "Worked from a dock or a boat on a water tile.",
       "madeAt": "weaver",
       "craft": { "inputs": [{ "commodity": "rope", "qty": 2 }], "effortHours": 3 },
-      "baseValue": 26, "baseDurability": 20, "sizes": ["small", "medium", "large"],
+      "baseValue": 26, "baseWear": 8, "sizes": ["small", "medium", "large"],
       "enables": ["net-fish"]
     },
     {
@@ -94,7 +94,7 @@
       "summary": "Fibre into yarn.",
       "madeAt": "carpenter",
       "craft": { "inputs": [{ "commodity": "lumber", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "effortHours": 4 },
-      "baseValue": 48, "baseDurability": 30, "sizes": ["small", "medium"],
+      "baseValue": 48, "baseWear": 12, "sizes": ["small", "medium"],
       "enables": ["spin-yarn"]
     },
     {
@@ -102,7 +102,7 @@
       "summary": "Yarn into cloth. Bulky enough that it lives inside a weaver's shed.",
       "madeAt": "carpenter",
       "craft": { "inputs": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "rope", "qty": 1 }, { "commodity": "ironware", "qty": 1 }], "effortHours": 6 },
-      "baseValue": 70, "baseDurability": 34, "sizes": ["small", "medium", "large"],
+      "baseValue": 70, "baseWear": 14, "sizes": ["small", "medium", "large"],
       "enables": ["weave-cloth", "weave-fine-cloth"]
     },
     {
@@ -110,7 +110,7 @@
       "summary": "Bricklaying and stonework.",
       "madeAt": "blacksmith",
       "craft": { "inputs": [{ "commodity": "pig-iron", "qty": 1 }], "effortHours": 2 },
-      "baseValue": 20, "baseDurability": 24, "sizes": ["small", "medium"],
+      "baseValue": 20, "baseWear": 10, "sizes": ["small", "medium"],
       "enables": ["build-masonry", "fire-bricks"]
     },
     {
@@ -118,7 +118,7 @@
       "summary": "Carried by a prospector. Turns a hunch into a marked deposit.",
       "madeAt": "carpenter",
       "craft": { "inputs": [{ "commodity": "lumber", "qty": 1 }, { "commodity": "parchment", "qty": 1 }, { "commodity": "copper", "qty": 1 }], "effortHours": 4 },
-      "baseValue": 65, "baseDurability": 16, "sizes": ["small"],
+      "baseValue": 65, "baseWear": 7, "sizes": ["small"],
       "enables": ["survey-deposit", "plan-route"]
     },
     {
@@ -126,7 +126,7 @@
       "summary": "Glass still for brewing potions at an alchemist's.",
       "madeAt": "glassworks",
       "craft": { "inputs": [{ "commodity": "glass", "qty": 2 }, { "commodity": "copper", "qty": 1 }], "effortHours": 5 },
-      "baseValue": 90, "baseDurability": 14, "sizes": ["small", "medium"],
+      "baseValue": 90, "baseWear": 6, "sizes": ["small", "medium"],
       "enables": ["brew-potion"]
     }
   ]

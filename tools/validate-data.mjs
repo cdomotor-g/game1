@@ -329,11 +329,26 @@ if (!waterside) {
 // by the same name, or a player setting up reads H off a card and looks for a
 // letter that is not on the board.
 const stripLetters = datasets.components?.statStrip?.letters ?? {};
+const trackLetters = new Map((datasets.playerboard?.tracks ?? []).map((t) => [t.letter, t.id]));
 for (const t of datasets.playerboard?.tracks ?? []) {
   const onStrip = stripLetters[t.id];
-  if (onStrip === undefined) continue;
+  if (onStrip === undefined) {
+    errors.push(`components: the board has a ${t.label} track and statStrip.letters says nothing about "${t.id}" - a card that prints that number would have no letter to print it under`);
+    continue;
+  }
   if (onStrip !== t.letter) {
     errors.push(`components: the strip letters "${t.id}" ${onStrip} and the board letters it ${t.letter} - a card and a board may not call one number two things`);
+  }
+}
+/* And the converse, which is the half that was missing: a CARD-ONLY letter may
+   not borrow a letter a track already has. A monster's armour prints an A and
+   nothing walks an A; the day something does, this says so rather than letting
+   two different numbers answer to one letter across a table. */
+for (const [stat, letter] of Object.entries(stripLetters)) {
+  if (stat.startsWith('$')) continue;
+  const owner = trackLetters.get(letter);
+  if (owner && owner !== stat) {
+    errors.push(`components: statStrip.letters calls "${stat}" ${letter}, and the board's ${owner} track is already ${letter} - one letter, one number`);
   }
 }
 
@@ -432,19 +447,50 @@ if (boardSpec && boardShape) {
 
   /* The board's geometry is what is left over once the cards have had theirs,
      so adding a track or growing a card silently narrows the columns. Below the
-     width of the token that walks them, the board has run out of room. */
+     width of the token that walks them, the board has run out of room.
+
+     Two kinds of track now, and only one of them is in the middle. A COLUMN
+     track counts something about the figure in the recess and there is one of
+     those; a KIT track counts something about a card in a slot and there are
+     four of those, drawn as narrow ladders against the recesses. So the kit
+     block is wider than the two cards by four ladders, and the columns get
+     what is left after that - which is the arithmetic that has to be recomputed
+     here rather than trusted, because it is exactly the sum tools/build-board.mjs
+     is also doing and the two must not be able to agree by sharing a bug. */
   const card = datasets.components.stock.card;
   const slotW = card.widthMm + 2 * boardShape.slot.clearanceMm;
+  const slotH = card.heightMm + 2 * boardShape.slot.clearanceMm;
   const contentW = boardShape.sheet.widthMm - 2 * boardShape.marginMm;
   const kitCount = (boardSpec.slots ?? []).find((s) => s.id === 'kit')?.count ?? 0;
-  const kitW = 2 * slotW + boardShape.gutterMm;
-  const columnW = (contentW - slotW - kitW - 2 * boardShape.gutterMm) / (boardSpec.tracks?.length || 1);
+  const tracks = boardSpec.tracks ?? [];
+  const columnTracks = tracks.filter((t) => (t.place ?? 'column') === 'column');
+  const kitTracks = tracks.filter((t) => t.place === 'kit');
+  const pipMm = datasets.components.tokens?.pip?.diameterMm ?? 0;
+  const KT = boardShape.kitTrack;
+  const ladderW = kitTracks.length && KT ? pipMm + 2 * KT.clearanceMm + KT.gapMm : 0;
+  const kitW = 2 * (slotW + ladderW) + boardShape.gutterMm;
+  const columnW = (contentW - slotW - kitW - 2 * boardShape.gutterMm) / (columnTracks.length || 1);
   const tokenMm = datasets.components.tokens?.bar?.diameterMm ?? 7;
   if (columnW < tokenMm + 2) {
-    errors.push(`playerboard: ${boardSpec.tracks.length} tracks leave ${columnW.toFixed(1)}mm a column, and the token that walks them is ${tokenMm}mm - the board has run out of middle`);
+    errors.push(`playerboard: ${columnTracks.length} column tracks and ${kitTracks.length ? 'four wear ladders' : 'no wear ladders'} leave ${columnW.toFixed(1)}mm a column, and the bar that walks one is ${tokenMm}mm - the board has run out of middle`);
   }
   if (kitCount % 2 !== 0) {
     warnings.push(`playerboard: ${kitCount} kit slots do not fill the two columns the board draws them in`);
+  }
+
+  /* A kit track runs the same 0-14 as everything else, down the side of a card
+     recess rather than the length of the sheet - so its rungs are a third the
+     height of a column's, and the piece that walks it had to shrink to match.
+     This is the check that says which piece: a bar overhangs, a pip does not. */
+  for (const t of kitTracks) {
+    if ((t.count ?? 1) !== kitCount) {
+      errors.push(`playerboard: the ${t.label} track says there are ${t.count ?? 1} of it and there are ${kitCount} kit slots - one ladder per slot or a player has a card whose wear nobody is counting`);
+    }
+    const rungs = boardShape.track.to - boardShape.track.from + 1;
+    const rungH = slotH / rungs;
+    if (pipMm && rungH < pipMm) {
+      errors.push(`playerboard: the ${t.label} ladder is ${rungs} rungs down an ${slotH}mm recess, which is ${rungH.toFixed(2)}mm a rung, and the pip that walks it is ${pipMm}mm - the piece overhangs its own rung`);
+    }
   }
 }
 
@@ -470,34 +516,95 @@ for (const m of datasets.monsters?.monsters ?? []) {
   }
 }
 
-// Defence is the other half, and the half a fight is actually resolved against:
-// the attacker adds it to the number they need. A figure without one cannot be
-// attacked by the rules as written, so every figure in the game has to carry it.
-for (const p of peoples) {
-  if (typeof p.defence?.base !== 'number') errors.push(`peoples: "${p.id}" has no defence.base - every attack roll adds a defence to the number it needs`);
+// Armour is the other half of a battle total, and DEFENCE is not - there is no
+// defence any more anywhere in the game. It was a rating that shifted a to-hit
+// roll, and there is no to-hit roll: a battle is one opposed total, in which a
+// number that makes you harder to hit and a number that soaks the hit are the
+// same number. So the check that used to demand a defence now forbids one, and
+// it forbids it on every record in the game rather than on the three that used
+// to carry it - a field left lying around in one file is how two halves of a
+// repository end up playing different games.
+const RETIRED_FIELDS = [
+  { field: 'defence', became: 'armour, and only on a monster - a character\'s armour is whatever is in their kit slots' },
+  { field: 'combatDice', became: 'battle, a flat number added to your side of the roll' },
+  { field: 'armourValue', became: 'armour' },
+  { field: 'baseDurability', became: 'baseWear, on the board\'s own 0-14 scale' },
+];
+for (const [key, ds] of Object.entries(datasets)) {
+  const walk = (node, path) => {
+    if (Array.isArray(node)) { node.forEach((v, i) => walk(v, `${path}[${i}]`)); return; }
+    if (!node || typeof node !== 'object') return;
+    for (const r of RETIRED_FIELDS) {
+      if (Object.prototype.hasOwnProperty.call(node, r.field)) {
+        errors.push(`${key}: ${path}.${r.field} is a retired field - it is ${r.became} now`);
+      }
+    }
+    for (const [k, v] of Object.entries(node)) if (!k.startsWith('$')) walk(v, `${path}.${k}`);
+  };
+  walk(ds, key);
 }
-const defenceOf = new Map(peoples.map((p) => [p.id, p.defence?.base]));
-for (const c of characters) {
-  if (typeof c.defence !== 'number' || c.defence <= 0) {
-    errors.push(`characters: "${c.id}" has no defence - the thing fighting them reads it off the card`);
-    continue;
-  }
-  const base = defenceOf.get(c.people);
-  if (typeof base === 'number' && Math.abs(c.defence - base) > 2) {
-    warnings.push(`characters: "${c.id}" is defence ${c.defence} against a ${c.people} base of ${base} - a long way off their people`);
-  }
-}
+
+// A monster brings two numbers to a meeting that a character does not: what its
+// hide is worth in a battle, and how fast it is - because whether you may run
+// away at all is a comparison against that second one.
 for (const m of datasets.monsters?.monsters ?? []) {
-  if (typeof m.defence !== 'number' || m.defence <= 0) {
-    errors.push(`monsters: "${m.id}" has no defence - it is half of every attack roll made against it`);
+  if (typeof m.armour !== 'number' || m.armour < 0) {
+    errors.push(`monsters: "${m.id}" has no armour - it is added to its side of every battle roll, and a monster with none has to say so with a 0`);
+  }
+  if (typeof m.pace !== 'number' || m.pace < 1) {
+    errors.push(`monsters: "${m.id}" has no pace - a party may only flee something it can outpace (rules.json conflict.flee), and a monster with no pace cannot be fled from or stood against`);
   }
 }
 
-// A hireling is a figure in a fight like any other, and conflict.attack reads a
-// strength and a defence off both sides of every roll.
+// A hireling is a figure in a battle like any other, and conflict.battle totals
+// a strength, a weapon and what they are wearing off whoever is fighting.
 for (const h of datasets.rules?.hirelings?.options ?? []) {
-  if (typeof h.strength !== 'number' || typeof h.defence !== 'number') {
-    errors.push(`rules: hireling "${h.id}" has no strength/defence - the inn's board prints both, and a fight needs both`);
+  if (typeof h.strength !== 'number' || typeof h.armour !== 'number' || typeof h.battle !== 'number') {
+    errors.push(`rules: hireling "${h.id}" needs a strength, an armour and a battle - the inn's board prints all three, and a battle total needs all three`);
+  }
+}
+
+// The one line of arithmetic the player board prints, and it cannot print a
+// missing one.
+const battle = datasets.rules?.conflict?.battle;
+if (!battle?.rule || !battle?.formula) {
+  errors.push('rules: no conflict.battle with a rule and a formula - the player board prints this and data/playerboard.json panel.aside points at it');
+}
+if (!datasets.rules?.conflict?.flee?.rule) {
+  errors.push('rules: no conflict.flee.rule - running away is an option on every monster card and the rule for it has to exist somewhere');
+}
+
+// Coin has mass now, and the two halves of that statement have to agree: a
+// weight on the currency, and coin off the list of things that are not carried.
+const currency = datasets.rules?.currency ?? {};
+if (typeof currency.massKgEach !== 'number' || currency.massKgEach <= 0) {
+  errors.push('rules: currency.massKgEach is not a positive number - a coin weighs something now (rules.json carrying.coin) and the number is what a figure is loaded against');
+}
+if ((datasets.rules?.carrying?.notCarried ?? []).some((x) => /^coin\b/i.test(String(x).trim()))) {
+  errors.push('rules: carrying.notCarried still lists coin, and carrying.coin says it counts - one of the two is wrong and a player would find whichever suited them');
+}
+
+// Everything a figure carries wears out, and the two files that say so have to
+// agree about which things do not: a potion is drunk and a talisman holds mana,
+// and friction is not what either of them is about.
+for (const i of datasets.items?.items ?? []) {
+  const exempt = i.class === 'potion' || i.class === 'talisman';
+  if (exempt && i.wear !== undefined) {
+    errors.push(`items: "${i.id}" is a ${i.class} and carries a wear - a ${i.class} is spent rather than worn out (rules.json wear.neverWears)`);
+  }
+  if (!exempt && (typeof i.wear !== 'number' || i.wear < 1)) {
+    errors.push(`items: "${i.id}" has no wear - every item a figure carries walks a W track beside its own kit slot, and a card with no W box is a card the board cannot be set from`);
+  }
+  if (i.class === 'weapon' && (typeof i.battle !== 'number' || i.battle < 1)) {
+    errors.push(`items: weapon "${i.id}" has no battle - it is what the weapon adds to your side of the roll`);
+  }
+  if (i.class === 'armour' && (typeof i.armour !== 'number' || i.armour < 1)) {
+    errors.push(`items: armour "${i.id}" has no armour - it is what the piece adds to your side of the roll`);
+  }
+}
+for (const t of datasets.tools?.tools ?? []) {
+  if (typeof t.baseWear !== 'number' || t.baseWear < 1) {
+    errors.push(`tools: "${t.id}" has no baseWear - a tool is the first thing in this game that wore out and it is still one of them`);
   }
 }
 
@@ -509,80 +616,104 @@ for (const c of characters) {
   }
 }
 
-// The attack formula is printed on the player board straight out of the rules.
-// It has to exist, and it has to be a clamp a fight can survive.
-const attack = datasets.rules?.conflict?.attack;
-if (!attack) errors.push('rules: no conflict.attack - the player board prints this rule and cannot print a missing one');
-else {
-  const [best, worst] = attack.clamp ?? [];
-  if (typeof best !== 'number' || typeof worst !== 'number' || best < 2 || worst > 6 || best >= worst) {
-    errors.push(`rules: conflict.attack.clamp is ${JSON.stringify(attack.clamp)} - a d6 fight clamps somewhere inside 2..6 or it is decided before it is rolled`);
+// The battle roll is two dice a side, and the two sides have to be rolling the
+// same number of the same kind of die. There is no clamp to check any more,
+// because there is no target number to clamp: the check that replaced it is that
+// the colours are the market's own, which is the whole reason this rule reads the
+// way it does.
+{
+  const bd = datasets.rules?.conflict?.battleDice ?? {};
+  const colours = new Set((datasets.pricing?.dice?.sets ?? []).map((d) => d.colour));
+  if (typeof bd.count !== 'number' || bd.count < 1 || typeof bd.faces !== 'number' || bd.faces < 2) {
+    errors.push(`rules: conflict.battleDice is ${JSON.stringify(bd)} - a battle is an opposed roll and both sides need a count and a face count`);
+  }
+  for (const side of ['yours', 'theirs']) {
+    if (!colours.has(bd[side])) {
+      errors.push(`rules: conflict.battleDice.${side} is "${bd[side]}", which is not a colour the market rolls (${[...colours].join(', ')}) - the whole point of the battle roll is that it is the market's own two colours subtracted the same way`);
+    }
+  }
+  if (bd.yours === bd.theirs) {
+    errors.push('rules: conflict.battleDice rolls the same colour on both sides - blue is what you want and red is what stands in your way, and a fight where both are the same is a fight nobody can read across a table');
   }
 }
 
 // The market, and the ruler that has to be able to read every roll it can make.
 //
-// A price is (Demand - Supply + Memory) x Elasticity, read on a seven-cell strip
-// printed across the foot of the market board. Every part of that sentence is a
+// A price is Demand - Supply + Volatility + Modifier, all addition, read on a
+// seven-cell strip printed on the market board. Every part of that sentence is a
 // number somebody can change, and three of the ways of changing it produce a
 // board that is quietly broken rather than loudly wrong: a ruler with a hole in
-// it (a roll nobody can read), a memory track a model can walk off, and a strip
-// wide enough to squeeze the price ladder narrower than the token that walks it.
-// None of the three shows up in a diff. All three show up here.
+// it (a roll nobody can read), a die face nothing on a strip accounts for, and a
+// model that neither adds a number nor points at something that does. None of
+// the three shows up in a diff. All three show up here.
+//
+// What is NOT checked any more, because it no longer exists: the memory strip's
+// range, a model's bar walking off it, and the tally length. Nothing on any board
+// remembers anything, so there is no strip to walk off.
 {
   const pricing = datasets.pricing;
   const market = datasets.rules?.market;
   if (!pricing) errors.push('pricing: no pricing.json - nothing says how a price is arrived at');
   else {
     const models = pricing.models ?? [];
-    const mem = pricing.memory ?? {};
-    const tally = mem.tally ?? {};
     const bins = pricing.ruler?.bins ?? [];
-    const steps = pricing.elasticity?.steps ?? [];
+    const dice = pricing.dice?.sets ?? [];
+    const dieById = new Map(dice.map((d) => [d.id, d]));
 
-    /* Every commodity prices by something. The manifest reference check catches
-       a model that does not exist; this catches the one that was never named. */
+    /* Every commodity is one of the four kinds of good. The manifest reference
+       check catches a model that does not exist; this catches the one that was
+       never named, and the model nothing is. */
     for (const c of commodities) {
-      if (!c.pricing) errors.push(`commodities: "${c.id}" has no pricing model - every line on the market board runs under one of ${models.map((m) => m.id).join('/')}`);
+      if (!c.pricing) errors.push(`commodities: "${c.id}" has no pricing model - every commodity is one of ${models.map((m) => m.id).join('/')}`);
     }
     for (const m of models) {
       if (!commodities.some((c) => c.pricing === m.id)) {
-        warnings.push(`pricing: nothing prices by "${m.id}" - a model no commodity uses is a rule nobody will ever read`);
+        warnings.push(`pricing: nothing prices by "${m.id}" - a kind of good nothing is is a rule nobody will ever read`);
       }
     }
 
-    /* The green die has six faces and the elasticity strip has to account for
-       all of them, once each. A face nobody claimed is a roll with no ruling. */
-    const green = (pricing.dice?.sets ?? []).find((d) => d.id === pricing.elasticity?.die);
-    if (!green) errors.push(`pricing: elasticity reads the "${pricing.elasticity?.die}" die, which is not one of the dice`);
-    else {
+    /* A strip that reads a die has to account for every face of it, once each.
+       A face nobody claimed is a roll with no ruling, and the two strips that
+       read a die are checked the same way because they are the same mistake. */
+    const coverFaces = (label, dieId, steps) => {
+      const die = dieById.get(dieId);
+      if (!die) { errors.push(`pricing: ${label} reads the "${dieId}" die, which is not one of the dice`); return; }
       const seen = new Map();
-      for (const step of steps) for (const f of step.faces ?? []) {
-        if (seen.has(f)) errors.push(`pricing: the green die's ${f} is claimed by both "${seen.get(f)}" and "${step.id}"`);
-        else seen.set(f, step.id);
+      for (const step of steps ?? []) for (const f of step.faces ?? []) {
+        if (seen.has(f)) errors.push(`pricing: the ${die.colour} die's ${f} is claimed twice on the ${label} strip`);
+        else seen.set(f, true);
       }
-      for (let f = 1; f <= green.faces; f++) {
-        if (!seen.has(f)) errors.push(`pricing: nothing on the elasticity strip covers a green ${f}`);
+      for (let f = 1; f <= die.faces; f++) {
+        if (!seen.has(f)) errors.push(`pricing: nothing on the ${label} strip covers a ${die.colour} ${f}`);
       }
+    };
+    coverFaces('volatility', pricing.volatility?.die, pricing.volatility?.steps);
+    coverFaces('spoil', pricing.spoil?.die, pricing.spoil?.steps);
+
+    /* The volatility strip ADDS. A step that multiplies is the old rule left
+       lying in the new file, and it would be read straight past. */
+    for (const st of pricing.volatility?.steps ?? []) {
+      if (typeof st.add !== 'number') errors.push(`pricing: volatility step "${st.id}" has no add - the green die adds now, it does not multiply`);
+      if (st.multiply !== undefined) errors.push(`pricing: volatility step "${st.id}" still carries a multiply - nothing in the round multiplies any more`);
     }
 
-    /* What the dice and the tracks can actually produce, and whether the ruler
-       can read all of it. The reach is derived from the dice rather than read
-       off pricing.ruler.reach - that field is a restatement, and it is checked
-       against the derivation rather than trusted, exactly as a player board
-       track's `covers` is. */
-    const demand = (pricing.dice?.sets ?? []).find((d) => d.id === 'demand');
-    const supply = (pricing.dice?.sets ?? []).find((d) => d.id === 'supply');
-    if (demand && supply && steps.length && typeof mem.from === 'number') {
+    /* What the dice and the modifiers can actually produce, and whether the
+       ruler can read all of it. The reach is derived rather than read off
+       pricing.ruler.reach - that field is a restatement of the DICE half, and it
+       is checked against the derivation rather than trusted, exactly as a player
+       board track's `covers` is. */
+    const demand = dieById.get('demand');
+    const supply = dieById.get('supply');
+    const adds = (pricing.volatility?.steps ?? []).map((st) => st.add ?? 0);
+    const modifier = pricing.modifier ?? {};
+    if (demand && supply && adds.length) {
       const swing = [demand.range[0] - supply.range[1], demand.range[1] - supply.range[0]];
       const stated = pricing.ruler?.reach?.swing;
       if (stated && (stated[0] !== swing[0] || stated[1] !== swing[1])) {
         errors.push(`pricing: ruler.reach.swing says ${JSON.stringify(stated)}, and ${demand.count} ${demand.colour} against ${supply.count} ${supply.colour} reaches ${JSON.stringify(swing)}`);
       }
-      const biggest = Math.max(...steps.map((st) => st.multiply));
-      const trim = (n) => (n < 0 ? Math.ceil(n) : Math.floor(n));
-      const lo = trim((swing[0] + mem.from) * biggest);
-      const hi = trim((swing[1] + mem.to) * biggest);
+      const lo = swing[0] + Math.min(...adds) + (modifier.from ?? 0);
+      const hi = swing[1] + Math.max(...adds) + (modifier.to ?? 0);
 
       /* No hole and no overlap, cell by cell, across everything reachable. */
       const sorted = [...bins].sort((a, b) => a.from - b.from);
@@ -596,29 +727,43 @@ else {
         if (sorted[sorted.length - 1].to < hi) errors.push(`pricing: a net of ${hi} is reachable and the swing ruler stops at ${sorted[sorted.length - 1].to}`);
       }
 
-      /* A cell that moves a token further than the ladder is long is a cell
-         nobody can obey - the clamp would swallow it whole, every time. */
+      /* A cell that moves a price further than the printed row of prices is long
+         is a cell nobody can obey - the clamp would swallow it whole, every time. */
       const rungs = (market?.priceBands?.length ?? 1) - 1;
       for (const bin of bins) {
         if (Math.abs(bin.move) > rungs) {
-          errors.push(`pricing: the "${bin.id}" cell moves ${bin.move} bands and the ladder is ${rungs} long`);
+          errors.push(`pricing: the "${bin.id}" cell moves ${bin.move} bands and the row of prices is ${rungs} steps long`);
         }
       }
     }
 
-    /* A model may not walk its bar off the strip the board prints. */
+    /* WHAT A MODEL IS, now that none of them remembers anything: a mark, and
+       exactly one answer to `what do you add to the swing`. A model that gives
+       both a flat number and a path is a model with two answers, and a model
+       that gives neither is a kind of good the round cannot resolve. */
+    const resolves = (path) => {
+      if (typeof path !== 'string') return false;
+      let node = datasets;
+      for (const part of path.split('.')) {
+        if (node == null || typeof node !== 'object') return false;
+        node = node[part];
+      }
+      return node !== undefined;
+    };
     for (const m of models) {
-      const r = m.memory ?? {};
-      if (typeof r.from !== 'number' || typeof r.to !== 'number') {
-        errors.push(`pricing: model "${m.id}" does not say how far its memory runs`);
-        continue;
+      if (!m.mark?.path) errors.push(`pricing: model "${m.id}" has no mark - every commodity token carries one in its corner and the market board prints all four`);
+      const flat = typeof m.modifier === 'number';
+      const points = m.reads !== null && m.reads !== undefined;
+      if (flat === points) {
+        errors.push(`pricing: model "${m.id}" ${flat ? 'both states a modifier and points at one' : 'neither states a modifier nor points at one'} - a kind of good adds a number to the swing, and it says where that number comes from exactly once`);
       }
-      if (r.from < mem.from || r.to > mem.to) {
-        errors.push(`pricing: model "${m.id}" runs ${r.from}..${r.to} and the memory strip is ${mem.from}..${mem.to} - its bar would walk off the board`);
+      if (points && !resolves(m.reads)) {
+        errors.push(`pricing: model "${m.id}" reads its modifier from "${m.reads}", which does not resolve`);
       }
-      if (!m.mark?.path) errors.push(`pricing: model "${m.id}" has no mark - every commodity token carries one in its corner`);
-      if (m.tally?.uses && typeof tally.to !== 'number') {
-        errors.push(`pricing: model "${m.id}" fills a tally and pricing.memory.tally does not say how long one is`);
+      if (typeof m.spoils !== 'boolean') errors.push(`pricing: model "${m.id}" does not say whether it spoils - the end of every round asks that question of every stack on the table`);
+      if (typeof m.tokensOnUse !== 'boolean') errors.push(`pricing: model "${m.id}" does not say whether burning it puts a token on a depletion grid`);
+      if (m.memory !== undefined || m.tally !== undefined) {
+        errors.push(`pricing: model "${m.id}" still carries a memory or a tally - nothing on any board remembers anything now`);
       }
     }
     {
@@ -626,8 +771,57 @@ else {
       for (const m of models) {
         const id = m.mark?.id;
         if (!id) continue;
-        if (seen.has(id)) errors.push(`pricing: "${m.id}" and "${seen.get(id)}" both draw the "${id}" mark - one model, one symbol`);
+        if (seen.has(id)) errors.push(`pricing: "${m.id}" and "${seen.get(id)}" both draw the "${id}" mark - one kind of good, one symbol`);
         else seen.set(id, m.id);
+      }
+    }
+
+    /* Exactly one model spoils and exactly one takes tokens. Two of either is
+       two rules doing one job, and none is a die or a sheet nobody uses. */
+    for (const [flag, what] of [['spoils', 'rolls the spoil die'], ['tokensOnUse', 'fills a depletion grid']]) {
+      const n = models.filter((m) => m[flag]).length;
+      if (n !== 1) errors.push(`pricing: ${n} models say they ${what} - exactly one should, or the ${flag === 'spoils' ? 'ochre die' : 'depletion sheet'} belongs to nobody or to everybody`);
+    }
+
+    /* The depletion ladder, which is the one thing in the game that only ever
+       goes one way. Its top has to be reachable inside the modifier range the
+       ruler was cut for, or the sheet prints a row nothing can ever read. */
+    const dep = pricing.depletion ?? {};
+    if (typeof dep.step !== 'number' || dep.step < 1) errors.push('pricing: depletion.step is what one row of the grid is worth and it has to be a whole number of bands');
+    if (typeof dep.per !== 'number' || dep.per < 1) errors.push('pricing: depletion.per is how many cells a row holds and it has to be at least one');
+    if (typeof dep.top !== 'number' || dep.top < 1) errors.push('pricing: depletion.top is the last row of the grid');
+    if (dep.recycle !== false) errors.push('pricing: depletion.recycle is not false - a pip on that grid is out of the game, and it is the only permanent mark in this one');
+    if (typeof dep.top === 'number' && typeof modifier.to === 'number' && dep.top > modifier.to) {
+      errors.push(`pricing: a worked-out seam adds ${dep.top} and pricing.modifier stops at ${modifier.to} - the swing ruler was cut for a reach the grid can exceed`);
+    }
+
+    /* The sought good's memory is one round long and lives in a box on the
+       ledger. It cannot ask for more than the ruler can produce. */
+    const sought = pricing.sought ?? {};
+    const moves = bins.map((b) => b.move);
+    if (moves.length && (sought.from < Math.min(...moves) || sought.to > Math.max(...moves))) {
+      errors.push(`pricing: sought runs ${sought.from}..${sought.to} and the ruler only ever produces ${Math.min(...moves)}..${Math.max(...moves)} - the move box could never hold the numbers it is asked for`);
+    }
+
+    /* The spoil strip has two columns because a commodity keeps well or it does
+       not, and the threshold that sorts them has to sort something. */
+    const spoil = pricing.spoil ?? {};
+    if (typeof spoil.keepsThreshold !== 'number') {
+      errors.push('pricing: spoil.keepsThreshold is missing - it is the whole of what perishRounds does now, and without it the strip has two identical columns');
+    } else {
+      const perishable = commodities.filter((c) => c.pricing === 'perish');
+      for (const c of perishable) {
+        if (typeof c.perishRounds !== 'number') {
+          errors.push(`commodities: "${c.id}" is perishable and has no perishRounds - it is which column of the spoil strip the stack reads`);
+        }
+      }
+      for (const c of commodities) {
+        if (c.perishRounds !== undefined && c.pricing !== 'perish') {
+          errors.push(`commodities: "${c.id}" has a perishRounds and is priced "${c.pricing}" - only a perishable rolls the spoil die, and a rot clock on anything else is a rule nobody applies`);
+        }
+      }
+      if (perishable.length && !perishable.some((c) => c.perishRounds < spoil.keepsThreshold)) {
+        warnings.push(`pricing: nothing perishes faster than spoil.keepsThreshold (${spoil.keepsThreshold}) - the right-hand column of the spoil strip is printed for nobody`);
       }
     }
 
@@ -644,27 +838,89 @@ else {
       }
     }
 
-    /* The market board's own geometry, checked the way the player board's is:
-       the strips take a bar's width each, the ladder takes what is left, and
-       below the width of a commodity token the sheet has run out of middle. */
+    /* The market board's own geometry, checked the way the player board's is and
+       recomputed here in plain millimetres so the sheet and the sweep cannot
+       agree by sharing a bug. What is checked has changed with what the sheet
+       is: there are no strips to squeeze a ladder any more, so the questions are
+       whether the head's three blocks add up to the paper, and whether a
+       depletion grid's figure actually disappears under the piece that covers it. */
     const MB = datasets.components?.marketBoard;
-    const bar = datasets.components?.tokens?.bar?.diameterMm;
     const flats = datasets.components?.tokens?.commodity?.acrossFlatsMm;
-    if (MB && bar && flats && typeof mem.from === 'number' && typeof tally.from === 'number') {
-      const cells = (mem.to - mem.from + 1) + (tally.to - tally.from + 1);
-      const stripCell = bar + 2 * MB.strip.clearanceMm;
-      const stripsW = cells * stripCell + MB.strip.gutterMm;
-      const contentW = MB.sheet.widthMm - 2 * MB.marginMm;
-      const bandW = (contentW - stripsW - MB.strip.gutterMm) / (market?.priceBands?.length || 1);
-      const corners = flats * 2 / Math.sqrt(3);
-      if (bandW < corners) {
-        errors.push(`marketboard: the tally and the memory take ${stripsW.toFixed(1)}mm, leaving ${bandW.toFixed(1)}mm a band, and a ${flats}mm token is ${corners.toFixed(1)}mm across the corners - the sheet has run out of middle`);
+    const pip = datasets.components?.tokens?.pip?.diameterMm;
+    if (MB && flats && pip) {
+      const cols = Object.values(MB.head?.columns ?? {});
+      const sum = cols.reduce((a, b) => a + b, 0);
+      if (cols.length && Math.abs(sum - 1) > 0.001) {
+        errors.push(`marketboard: the head's columns are fractions of the working width and they sum to ${sum.toFixed(3)} - at anything but 1 the roll either overruns the paper or leaves a gap nobody meant`);
       }
-      const foot = MB.foot.rows.reduce((sum, r) => sum + r.heightMm + MB.foot.gapMm, 0);
-      const lineH = flats + 2 * MB.line.clearanceMm;
-      const lines = Math.floor((MB.sheet.heightMm - 2 * MB.marginMm - MB.headMm - foot) / lineH);
-      if (lines < 1) errors.push(`marketboard: the head and a ${foot}mm foot leave room for no line at all`);
-      else if (lines < 4) warnings.push(`marketboard: only ${lines} price lines fit the sheet - a town trades more than that`);
+      const panels = (datasets.pricing?.models ?? []).length || 1;
+      const panelW = (MB.sheet.widthMm - 2 * MB.marginMm - (panels - 1) * MB.gutterMm) / panels;
+      if (panelW < MB.panels.markMm + 2 * MB.panels.padMm) {
+        errors.push(`marketboard: ${panels} kinds of good leave ${panelW.toFixed(1)}mm a panel and the mark alone is ${MB.panels.markMm}mm - the sheet has run out of width`);
+      }
+
+      /* The depletion sheet: a covered cell has to be a cell whose number has
+         actually gone, or `the lowest one you can still see` is a matter of
+         opinion. This is a class of check nothing else in the build makes -
+         everywhere else a piece stands BESIDE what it means, and here it stands
+         ON it. */
+      const D = MB.depletion ?? {};
+      if (D.cell) {
+        if (D.cell.digitMm > pip) {
+          errors.push(`marketboard: a depletion cell prints its figure at ${D.cell.digitMm}mm and the pip that covers it is ${pip}mm across - the number would peep out from behind the piece that is supposed to have taken it`);
+        }
+        const dep = datasets.pricing?.depletion ?? {};
+        const cell = pip + 2 * D.cell.clearanceMm;
+        const seatW = flats * 2 / Math.sqrt(3) + 2 * D.grid.seatClearanceMm;
+        const gridW = Math.max((dep.per ?? 1) * cell, seatW);
+        const gridH = flats + 2 * D.grid.seatClearanceMm + D.grid.gapMm + ((dep.top ?? 0) + 1) * cell + D.grid.labelMm;
+        const cw = D.sheet.widthMm - 2 * D.marginMm;
+        const chH = D.sheet.heightMm - 2 * D.marginMm - D.headMm - D.footMm;
+        const across = Math.floor((cw + D.gutterMm) / (gridW + D.gutterMm));
+        const down = Math.floor((chH + D.gutterMm) / (gridH + D.gutterMm));
+        const fits = Math.max(0, across) * Math.max(0, down);
+        const finiteCount = commodities.filter((c) => c.pricing === 'deplete').length;
+        if (fits < 1) errors.push(`marketboard: a depletion grid is ${gridW.toFixed(1)}x${gridH.toFixed(1)}mm and not one of them fits the sheet`);
+        else if (fits < finiteCount) {
+          warnings.push(`marketboard: ${fits} depletion grids fit a sheet and ${finiteCount} commodities are finite - the table needs a second sheet`);
+        }
+      }
+    }
+
+    /* The price ledger, recomputed the same way and for the same reason. Two of
+       these bind, and the second is the one with teeth: a longer game means
+       shorter rows means smaller figures, and below a floor the sheet stops
+       being something anybody can colour in with a pencil. */
+    const LG = datasets.components?.ledger;
+    if (LG && flats) {
+      const corners = flats * 2 / Math.sqrt(3);
+      const contentW = LG.sheet.widthMm - 2 * LG.marginMm;
+      const contentH = LG.sheet.heightMm - 2 * LG.marginMm;
+      const usableW = contentW - LG.roundGutterMm;
+      const colMin = corners + 2 * LG.column.padMm + LG.column.moveBoxMm + LG.column.gapMm;
+      const cols = Math.floor(usableW / colMin);
+      if (cols < 1) {
+        errors.push(`ledger: a column needs ${colMin.toFixed(1)}mm and the sheet has ${usableW.toFixed(1)}mm - not one commodity fits`);
+      } else {
+        const colW = usableW / cols;
+        const rounds = datasets.rules?.victory?.gameLengthRounds ?? 0;
+        const rowH = (contentH - LG.head.heightMm - LG.foot.heightMm) / (rounds || 1);
+        const h = rowH - 2 * LG.row.padMm;
+        if (h < LG.digit.minHeightMm) {
+          errors.push(`ledger: ${rounds} rounds is ${rounds} rows, which leaves a ${h.toFixed(2)}mm digit against a ${LG.digit.minHeightMm}mm floor - a longer game (rules.json victory.gameLengthRounds) wants a second sheet, not smaller figures`);
+        }
+        const t = LG.digit.thicknessPerHeight * h;
+        const w = h / 2 + t / 2;
+        const group = LG.digit.count * w + (LG.digit.count - 1) * LG.digit.digitGapPerHeight * h;
+        const room = colW - 2 * LG.column.padMm - LG.column.moveBoxMm - LG.column.gapMm;
+        if (group > room) {
+          errors.push(`ledger: ${LG.digit.count} figures come to ${group.toFixed(1)}mm and a column leaves ${room.toFixed(1)}mm beside the move box`);
+        }
+        if (colW < corners) {
+          errors.push(`ledger: a column is ${colW.toFixed(1)}mm and the token that heads it is ${corners.toFixed(1)}mm across the corners`);
+        }
+        if (cols < 6) warnings.push(`ledger: ${cols} columns fit the sheet and a town trades six - a table would be printing two sheets for one market`);
+      }
     }
   }
 }

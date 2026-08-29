@@ -16,5 +16,13 @@ docs/art/aim/
 # it, and a picture of a generated file has no business in history either.
 docs/art/proofs/
 
+# And `node tools/ledger-proof.mjs` puts every seven-segment figure on one sheet
+# at TRUE SIZE against a millimetre ruler, plus one enlarged so you can see what
+# shape it is. It exists because the figures were drawn, validated, committed and
+# looked at only enlarged - where they were perfect - and at 4.9 x 8.4 mm a row of
+# them read as rosettes. A proof is a photograph of the artefact, never the
+# artefact, and it does not belong in history either.
+docs/ledger/proof/
+
 node_modules/
 .DS_Store

@@ -31,7 +31,11 @@ getting more hours, better hours, or more out of each hour.
 
 **1. Effort is the real currency, not coin.**
 Coin is useful. Hours are scarce. Every interesting decision in the game is "what do I
-do with these eleven hours?" — and the answer changes when a die comes up 2.
+do with these eleven hours?" — and the answer changes when a die comes up 2. Coin is not
+even weightless any more: it is 25 g a piece, forty to the kilogram, on the same scales as
+the sword and the rope, so a strength-3 figure could shoulder 360 of it and nothing else.
+A fortune is a thing that has to be *carried home*, which was the last place coin could
+still pretend to be pure score.
 
 **2. Everything is a chain, and you can always see the whole chain.**
 Steel is coal plus iron plus a smelter plus a steelworks plus four hours. That should

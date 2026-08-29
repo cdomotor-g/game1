@@ -27,22 +27,44 @@ wing on an existing file.
 
 ## A price is a system, and it lives in `data/pricing.json`
 
-Two red dice for demand, two blue for supply, one green for elasticity, and every line
-on the market board carries a memory from -3 to +3 that is added to the swing before the
-green die multiplies it. What moves that memory is the commodity's own model — `glut`,
-`hype` or `deplete`, one per commodity in `commodities.json`, engraved as a mark in the
-corner of that commodity's token.
+**The whole sum is addition.** Two BLUE dice for demand, two RED for supply, one GREEN
+that adds −2, 0 or +2 for how rough the season is, and whatever the good's own nature
+adds. Find the net on the swing ruler and step the price that many places. Nothing
+multiplies, nothing is halved and nothing rounds — the green die used to do all three and
+it was the only arithmetic in the game a table could get wrong.
 
-Nothing else may own a piece of that. The bands the price token walks are
-`rules.json market.priceBands`; the board that prints the ruler is `marketboard.json` +
-`components.json marketBoard`; `docs/js/engine.js` plays it off the same numbers rather
-than a second copy of them. Each model states its rule twice on purpose — prose for the
-rulebook, `onSell`/`onBuy`/`dischargeStep`/`followsPrice`/`decayToZero` for the tools —
-so it cannot be changed in one place and left saying the old thing in the other.
+Blue is what you want and red is what stands in your way, **everywhere**: a battle is the
+same two colours subtracted the same way (`rules.json conflict.battle`), so a player who
+has rolled one market has already learned how a fight is scored.
+
+**Four kinds of good, not three,** one per commodity in `commodities.json`, engraved as a
+mark in the corner of that commodity's token. `staple` adds nothing and is more than half
+of the game - thirty-four commodities of sixty-six — it is not a new rule but the absence of one, given a face, because filing
+stone and rope as gluts quietly claimed they could be drowned in a market the way fish
+can. `perish` adds nothing either and pays in a different currency: the ochre spoil die,
+at the end of every round, on every stack anybody is still holding. `deplete` adds the
+lowest number still visible on its own depletion grid, and a pip goes on that grid for
+every unit **burnt** — never for one traded, because a merchant who never lights a fire
+can trade the same hundred tons of coal all game and a seam will not notice. `hype` adds
+the move it made **last** round.
+
+**Nothing on any board remembers anything.** The memory strip and the tally are gone. Each
+model says where its number is READ FROM, and every one of them is read off something
+already on the table for another reason — the grid the pips were going on anyway, or the
+move box on the ledger row that was written down anyway.
+
+Nothing else may own a piece of that. The bands are `rules.json market.priceBands`; the
+sheets that print the rule are `marketboard.json` + `components.json marketBoard`; the
+sheet that RECORDS the price is `ledger.json` + `components.json ledger`; and
+`docs/js/engine.js` plays it off the same numbers rather than a second copy of them. Each
+model states its rule twice on purpose — prose for the rulebook, `modifier`/`reads`/
+`spoils`/`tokensOnUse` for the tools — so it cannot be changed in one place and left
+saying the old thing in the other.
 
 `validate-data.mjs` will not let the swing ruler have a hole in it, will not let a model
-walk its bar off the strip the board prints, and will not let the strips squeeze the
-price ladder narrower than the hexagon that walks it.
+both state a modifier and point at one (or do neither), will not let a die face go
+unaccounted for on a strip that reads it, and will not let a depletion cell print a figure
+the pip that covers it cannot hide.
 
 ## How a component looks is declared once, in `data/components.json`
 
@@ -54,15 +76,27 @@ sheet and the explorer previews all move together.
 
 **No card carries a bar.** Every number a card has is printed once, as a maximum,
 in the lettered strip across its top, and the letters are the player board's own
-track letters — `validate-data.mjs` fails the build if the two ever disagree.
-Everything that moves is on a board.
+track letters — `validate-data.mjs` fails the build if the two ever disagree, in
+*both* directions: a track with no letter, and a card-only letter that collides
+with a track's. Everything that moves is on a board.
+
+The one card-only figure left is a monster's **A — armour**, and it is card-only
+for the right reason rather than a leftover one: a monster's armour is its hide and
+is the same number in every fight it is ever in, where a character's is whatever is
+in their kit slots this round. Nothing walks an A.
+
+**W got a track, having been promised it never would.** The note beside it used to
+say wear "runs past twenty, the board stops at fourteen" — so the number came down
+to meet the board rather than the board going up to meet the number, which is how
+this repository has always settled that argument and exactly what the kilogram did
+before it. There are four W tracks now, one against each kit slot.
 
 That file holds **no content**. No card says anything in it, no monster is named
 in it. If you are about to write a name or a number that belongs to one specific
 card, it goes in that card's own file.
 
 The same rule runs down: a *mark* is data on the thing it is of — an element in
-`data/arcana.json`, a terrain in `data/terrain.json`, a market-memory model in
+`data/arcana.json`, a terrain in `data/terrain.json`, a kind of good in
 `data/pricing.json` — how to *draw* one is in `components.json`, and
 `tools/build-icons.mjs` turns the two into `docs/art/icons/`. Nothing draws a
 mark by hand, and nothing that shows one invents it.
@@ -70,7 +104,8 @@ mark by hand, and nothing that shows one invents it.
 ## Every board is computed, not laid out
 
 `tools/build-board.mjs` holds no coordinates. The track columns are the width left over
-once the card recesses and the gutters have taken theirs; the rungs are the height left
+once the card recesses, their WEAR LADDERS and the gutters have taken theirs; the rungs
+are the height left
 once the head and the seat have. So a sixth track narrows the columns and a bigger card
 narrows them further — and nothing ever runs off the paper. If you find yourself typing
 an x or a y into that file, the number belongs in `data/components.json` under `board`
@@ -87,13 +122,18 @@ The board is generic on purpose. Anything that differs between one player and th
 belongs on the character card in the recess, never printed into the board — and that is
 also why a monster met on the road is dealt onto a spare one and run like a player.
 
-The same division holds for the other two boards. `tools/build-market.mjs` +
-`data/marketboard.json`: identical lines of tally, memory and price ladder,
-nothing on the sheet names a commodity, and a line is exactly one commodity token
-tall — a bigger token makes a taller line and fewer of them, never a token that
-overhangs. What the strips *count* is not the board's either: the tally and the
-memory are `data/pricing.json`, the bands are `rules.json`, and a board that
-restated them is a board that could disagree with the game. `tools/build-minimaps.mjs`
+The same division holds for the other sheets. `tools/build-market.mjs` +
+`data/marketboard.json` draws TWO: a rules sheet whose body is one panel per kind
+of good — declare a fifth in `pricing.json` and the panels narrow — and a depletion
+sheet of grids sized off the pip that covers their cells and the ladder in
+`pricing.json depletion`. Nothing on either names a commodity, and the build fails
+rather than print a grid whose figure peeps out from behind its own piece, or a sheet
+short of a grid for a finite commodity. `tools/build-ledger.mjs` + `data/ledger.json`:
+A4 portrait, a column at least as wide as the token that heads it, and a row for every
+round the game runs — so lengthening the game shortens the rows, shortens the
+seven-segment figures with them, and past `digit.minHeightMm` fails the build naming
+`victory.gameLengthRounds` as the cause. A longer game wants a second sheet, never
+smaller figures. `tools/build-minimaps.mjs`
 + `data/minimap.json`: a flat terrain colour and a hex grid, no art at all, and **a
 mini-map cell is a world-map hex read off the map's own print preset** — not a number
 anybody types.
@@ -224,8 +264,8 @@ says otherwise, and `buildPoints` cannot stand in for it — effort is not area,
 leaned on hard enough it made a twenty-point trading house wider than a ten-point
 sawmill.
 
-There will only ever be three yards, for the reason there are only ever three pricing
-models. Four was tried: the top two came out 0.2 of a cell apart, which is a
+There will only ever be three yards, for the reason there are only four pricing models
+and three of them do something. Four was tried: the top two came out 0.2 of a cell apart, which is a
 distinction doing knife-edge work and nothing else.
 
 The one thing a building may say about its own tile is `shortName`, and only when
@@ -412,6 +452,7 @@ node tools/aim-solve.mjs   <code> --keep x0,y0,x1,y1 --spend top|bottom|even
 node tools/aim-preview.mjs <code>   # the CROP, before the framing numbers are settled
 node tools/card-proof.mjs  <code>   # the CARD as built, after
 node tools/tile-proof.mjs  <id>     # the TILE as built - both sides, on one sheet
+node tools/ledger-proof.mjs         # the LEDGER'S FIGURES at true size, against a ruler
 ```
 
 `tile-envelope` is the earliest of these and the only one that runs before a
@@ -429,6 +470,14 @@ which edge you are willing to spend, it says what the box has to be. It does not
 invert the arithmetic, it searches, so it cannot drift from the crop the cards
 use; and it writes `note: TODO`, because where the loss goes is a decision and
 only somebody looking at the picture can make it.
+
+`ledger-proof` is the newest of them and it exists because of a mistake it would
+have caught the first time. The seven-segment figures were drawn, validated,
+committed and looked at ONLY enlarged — where they were perfect — and at their real
+4.9 × 8.4 mm a row of them read as a line of rosettes rather than as numbers. The
+thickness came down from 0.17 of the height to 0.12 on the strength of that one
+look. So the proof prints every figure at TRUE SIZE against a millimetre ruler, and
+the enlargement beside it is there to show what shape it is and never to flatter it.
 
 `tile-proof` is `card-proof`'s sibling and puts a tile's face and back on **one
 sheet** with a millimetre ruler under them - both, because a tile's two sides do
@@ -483,7 +532,8 @@ node tools/build-flows.mjs     # redraw docs/art/flows/ - one diagram per place 
 node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
 node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + components
-node tools/build-market.mjs    # regenerate docs/markets/ from marketboard + components
+node tools/build-market.mjs    # regenerate docs/markets/ - the rules sheet AND the depletion sheet
+node tools/build-ledger.mjs    # regenerate docs/ledger/ from ledger + components
 node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap + terrain
 node tools/build-tiles.mjs     # regenerate docs/tiles/ from buildingtiles + buildings + recipes
 node tools/build-book.mjs      # regenerate docs/book/ from docs/design/*.md

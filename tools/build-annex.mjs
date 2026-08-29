@@ -40,6 +40,7 @@ const quests = read('quests.json');
 const arcana = read('arcana.json');
 const modifications = read('modifications.json');
 const pricing = read('pricing.json');
+const ledger = read('ledger.json');
 
 const lines = [];
 const say = (s = '') => lines.push(s);
@@ -65,9 +66,11 @@ const list = (arr) => (arr && arr.length ? arr.join(', ') : '—');
  * rendered book, on GitHub, and in a plain markdown reader alike.
  */
 const elementMark = (id) => `![](../art/icons/element-${id}.svg)`;
-/* The same bargain for the three market-memory marks: one set of paths in
+/* The same bargain for the four kind-of-good marks: one set of paths in
    data/pricing.json, drawn once by tools/build-icons.mjs, and the annex says
-   "glut" with the mark that is engraved on the token. */
+   "perishable" with the fish skeleton that is engraved in the corner of the
+   token. The icon is named for the MODEL and not for the mark, which is what
+   leaves every reference standing when a mark is redrawn. */
 const pricingMark = (id) => `![](../art/icons/pricing-${id}.svg)`;
 const priceModel = (id) => {
   const m = pricing.models.find((x) => x.id === id);
@@ -75,6 +78,70 @@ const priceModel = (id) => {
 };
 const element = (id) => `${elementMark(id)} ${id}`;
 const io = (arr) => (arr && arr.length ? arr.map((i) => `${i.qty} ${i.commodity}`).join(' + ') : '—');
+
+/*
+ * The market's arithmetic, in one place, because four sections downstream read
+ * it: the price table, the four worked scenarios, the commodities table and the
+ * ledger note. THE ROUNDING IS THE LEDGER'S OWN - tools/build-ledger.mjs works a
+ * price out with exactly this line, and an annex that disagreed with the sheet
+ * the price is written on would be worse than no table at all.
+ */
+const BANDS = rules.market.priceBands;
+const priceRow = (c) => BANDS.map((b) => Math.max(1, Math.round(c.baseValue * b)));
+const clampTo = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const signOf = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${Math.abs(n)}` : '0');
+const coin = (n) => `${n.toFixed(2)}${rules.currency.symbol}`;
+const pct = (n) => `${(n * 100).toFixed(1)}%`;
+const ORDINAL = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'];
+/* Small counts are spelled out, because the annex is prose wherever it is not a
+   table and "There are 5 kinds of die" is not a sentence anybody wrote. */
+const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
+  'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen',
+  'eighteen', 'nineteen', 'twenty'];
+const word = (n) => WORDS[n] ?? String(n);
+const Word = (n) => { const w = word(n); return w[0].toUpperCase() + w.slice(1); };
+const an = (s) => (/^[aeiou]/i.test(s) ? 'an' : 'a');
+const upper1 = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s);
+const lower1 = (s) => (s ? s[0].toLowerCase() + s.slice(1) : s);
+/** A data sentence with its first sentence taken off - used where the field's
+    opening restates a number this file has just printed from the same field. */
+const rest = (s) => s.replace(/^[^.]*\.\s*/, '');
+
+/** What a model puts into the sum, added up out of its own typed fields. */
+const addsOf = (m) => {
+  if (m.modifier === 0) return '**nothing**';
+  if (m.reads === 'pricing.depletion') {
+    return `the lowest number still visible on its own depletion grid, **0 to ${signOf(pricing.depletion.top)}**`;
+  }
+  if (m.reads === 'pricing.sought') {
+    return `the move it made **last** round, **${signOf(pricing.sought.from)} to ${signOf(pricing.sought.to)}**, ` +
+      `read off ${pricing.sought.reads.split(' - ')[0]}`;
+  }
+  return '—';
+};
+/** And what it does to you instead, for the two that do something instead. */
+const alsoOf = (m) => {
+  if (m.spoils) {
+    return `The ochre spoil die, ${lower1(pricing.spoil.when).replace(/\.$/, '')}, ` +
+      'against every stack of it a player is still holding.';
+  }
+  if (m.tokensOnUse) {
+    return `${pricing.depletion.onUse} Trading does none of it: ${lower1(rest(pricing.depletion.onTrade))}`;
+  }
+  return '—';
+};
+/** The modifier a line adds this round, off whatever that model reads. */
+const modifierOf = (model, pips, lastStep) => {
+  if (model.modifier === 0) return 0;
+  if (model.reads === 'pricing.depletion') {
+    const d = pricing.depletion;
+    return Math.min(d.top, Math.floor(pips / d.per) * d.step);
+  }
+  if (model.reads === 'pricing.sought') {
+    return clampTo(lastStep, pricing.sought.from, pricing.sought.to);
+  }
+  return 0;
+};
 
 say('# 14 — Annex: the reference tables');
 say();
@@ -190,68 +257,211 @@ table(
   ])
 );
 
-/* -------------------------------------------------------------- commodities */
+/* ------------------------------------------------------------------- market */
 say('## The market');
 say();
-say('Every Market phase, per commodity line in play: roll two red dice for demand, two');
-say('blue for supply and one green for elasticity, add what the line remembers, and read');
-say('the result on the swing ruler printed across the foot of the market board.');
+say('Every Market phase, one player rolls for every column on the ledger: two **blue** dice');
+say('for demand, two **red** for supply, one **green** for volatility, and then whatever the');
+say('good’s own nature adds. Find the net on the swing ruler, and step the price that many');
+say('places along the row of six printed for that commodity below.');
 say();
 say('```');
 say(pricing.formula.net);
 say('```');
 say();
+say('**The whole sum is addition, and the multiplication is not hiding anywhere.**');
+say(pricing.formula.noMultiplication);
+say('Nothing is halved and nothing is rounded, because there is nothing left in the line for a');
+say('rounding to happen to — and that is what the rebuild was for. The version before this one');
+say('multiplied the swing by the green die and folded the modifier in *first*, which is three');
+say('chances to slip in a line a table works through once per traded commodity per round. They');
+say('got slipped.');
+say();
 table(
-  ['Dice', 'Colour', 'Range', 'What it is'],
-  pricing.dice.sets.map((d) => [`${d.count} d${d.faces}`, d.colour, `${d.range[0]}–${d.range[1]}`, d.name])
-);
-table(
-  ['Green die', 'Elasticity', '', ''],
-  pricing.elasticity.steps.map((e) => [
-    `**${e.faces[0]}–${e.faces[e.faces.length - 1]}**`, `**${e.label}**`, e.name, e.means,
+  ['Dice', 'Ink', 'Range', 'What it is', 'What it does'],
+  pricing.dice.sets.map((d) => [
+    `${d.count} d${d.faces}`, `**${d.colour}**`, `${d.range[0]}–${d.range[1]}`, `**${d.name}**`, d.means,
   ])
 );
-say('Halving rounds toward zero, so an inelastic season can shrink a swing away to');
-say('nothing but can never turn it around.');
+say('**Blue is what you want and red is what stands in your way** — here, and in a fight. The');
+say('same two colours, the same subtraction, the same direction (`rules.json conflict.battle`),');
+say('so a player who has rolled one market has already learned how a battle is scored. That is');
+say('worth more than either system’s private preference about which colour ought to mean which,');
+say('and it is why the two pairs swapped when the sum did.');
+say();
+say(`There are ${word(pricing.dice.sets.length + 1)} kinds of die and one ink apiece. The ${word(arcana.manaDie.count)} ${arcana.manaDie.colour} **${arcana.manaDie.name}**`);
+say(`die (\`arcana.json manaDie\`) is the ${ORDINAL[pricing.dice.sets.length]}, and it is not a market die at all — it is what a`);
+say(`dead monster gives up. ${arcana.manaDie.rule} It is named here because the palette is the`);
+say(`interface: ${word(pricing.dice.sets.length + 1)} inks, ${word(pricing.dice.sets.length + 1)} kinds of die, and no sixth ink left to make a seventh out of,`);
+say('which is a constraint worth having rather than a shortage.');
+say();
+say(pricing.dice.note);
+say();
+say('### Volatility — the green die');
+say();
+say('It was called **elasticity** and it **multiplied** — ×1, ×2, ÷2 — and neither the name nor');
+say('the multiplication survived. Elasticity is a word for how much a quantity answers a price,');
+say('which is not what this die was ever doing: it is a weather roll on a market, and volatility');
+say('is the word for that. Three cells, two faces each, and it adds.');
+say();
+table(
+  ['Green die', 'Season', 'Adds', 'What it means'],
+  pricing.volatility.steps.map((v) => [
+    `**${v.faces[0]}–${v.faces[v.faces.length - 1]}**`, `**${v.name}**`, `**${v.label}**`, v.means,
+  ])
+);
+say(pricing.volatility.$addNote);
 say();
 say('### The swing ruler');
 say();
 table(
   ['Net', ...pricing.ruler.bins.map((b) => `**${b.label}**`)],
   [
-    ['Bands', ...pricing.ruler.bins.map((b) => (b.move === 0 ? 'hold' : b.move > 0 ? `+${b.move}` : `\u2212${Math.abs(b.move)}`))],
+    ['Places', ...pricing.ruler.bins.map((b) => (b.move === 0 ? 'hold' : signOf(b.move)))],
     ['', ...pricing.ruler.bins.map((b) => b.name.toLowerCase())],
   ]
 );
-say(`The board sells no more of a commodity in a round than that round's supply roll,`);
-say('first come first served in turn order. It will buy any quantity.');
+const VOL_ADDS = pricing.volatility.steps.map((v) => v.add);
+say('**The bins were re-cut when the multiplier went, and they had to be.** Two blue dice');
+say(`against two red is a triangular spread peaking at nothing (${signOf(pricing.ruler.reach.swing[0])} to ${signOf(pricing.ruler.reach.swing[1])}); the green die`);
+say(`widens it by ${word(Math.max(...VOL_ADDS))} either way; so the whole net runs ${signOf(pricing.ruler.reach.swing[0] + Math.min(...VOL_ADDS))} to ${signOf(pricing.ruler.reach.swing[1] + Math.max(...VOL_ADDS))} before any`);
+say('modifier, where the old multiplied one reached 26. Left where they were, the old bins on');
+say('the new net would have moved three places in no round of any game ever played, because the');
+say('dice could no longer reach the cell.');
 say();
-say('### What a market remembers');
+say(`Cut where they are now, over all 7776 rolls of the five dice with no modifier, the market **holds in ${pct(pricing.ruler.odds.hold)}`);
+say(`of rounds, moves one place in ${pct(pricing.ruler.odds.oneBand)}, two in ${pct(pricing.ruler.odds.twoBands)} and three in ${pct(pricing.ruler.odds.threeBands)}** — so it moves in about`);
+say('seven rounds in ten, two places is a genuinely one-sided market rather than a weekly event,');
+say('and three only happens when the dice and the good’s own nature are pulling together. Those');
+say('figures are worked out from the bins rather than claimed, and `validate-data.mjs` separately');
+say('refuses to let the ruler have a hole in it — every value the dice and the modifiers can');
+say(`actually reach has to land in a cell. ${pricing.ruler.reach.note}`);
 say();
-say(`Each line carries a tally of the board's own stock — up one cell per token sold to`);
-say(`the board, down one per token bought off it — and a modifier from \u2212${Math.abs(pricing.memory.from)} to`);
-say(`+${pricing.memory.to} that the tally moves. Every ${pricing.memory.tally.to} tokens the tally fills, which takes it`);
-say('back to empty and steps the modifier one cell. Which way it steps is the');
-say(`commodity's own model, and the model's mark is engraved in the corner of that`);
-say(`commodity's token.`);
+say('A price at the top of its row that is told to go up stays where it is, and the same at the');
+say(`foot. ${rest(pricing.formula.clamp)}`);
+say();
+say(pricing.stockCap.means);
+say();
+say('### What kind of good it is');
+say();
+say('This section was called *what a market remembers*, and the title had to go, because nothing');
+say('remembers anything now. **There is no memory strip and there is no tally.** Every line on');
+say('the old market board carried both — a modifier from −3 to +3 walked by a bar, and beside it');
+say('a count of the board’s own stock that filled every few tokens traded, emptied, and stepped');
+say('the modifier one cell in whatever direction the commodity’s model said.');
+say();
+say('**What that machinery bought was real, and it is worth saying before it is thrown away.** It');
+say('gave a market a history instead of a mood, it was legible across a table, and it put the');
+say('consequence of trading in the same gesture as the trade. **What it cost** was three pieces');
+say('to walk per line per round, a board that had to be re-laid every time a model wanted a');
+say('different range, and a modifier that went in *before* the multiplication — so a market’s');
+say('history counted double in a volatile season, for no reason anybody could defend.');
+say();
+say(`Every commodity in the game is exactly one of **${word(pricing.models.length)} kinds of good**, and the kind is engraved in`);
+say('the corner of that commodity’s own token, so the piece you stand in a ledger column tells');
+const SILENT = pricing.models.filter((m) => m.modifier === 0).length;
+say(`you how that column behaves. ${Word(SILENT)} of the ${word(pricing.models.length)} add nothing to the sum at all. The other`);
+say(`${word(pricing.models.length - SILENT)} read their number off something already on the table for another reason — the`);
+say('depletion grid the pips were going on anyway, and the move box that was being written');
+say('anyway. That is what let the board stop tracking anything.');
 say();
 table(
-  ['Model', 'Memory', 'Tally', 'What it is'],
+  ['Mark', 'Kind', 'Adds to the swing', 'What it does instead', 'Goods'],
   pricing.models.map((m) => [
-    priceModel(m.id),
-    `${m.memory.from < 0 ? `\u2212${Math.abs(m.memory.from)}` : m.memory.from} to ${m.memory.to > 0 ? '+' : ''}${m.memory.to}`,
-    m.tally.uses ? `${m.tally.dischargeStep > 0 ? '+' : '−'}1 when full` : '—',
-    `**${m.line}** ${m.assigns}`,
+    pricingMark(m.id), `**${m.name}**`, addsOf(m), alsoOf(m),
+    commodities.commodities.filter((c) => c.pricing === m.id).length,
   ])
 );
+for (const m of pricing.models) {
+  say(`**${pricingMark(m.id)} ${m.name} — “${m.line}”** ${m.assigns}`);
+  say();
+  for (const para of m.history.split('\n\n')) { say(para); say(); }
+  say(`*The mark: **${m.mark.id.replace(/-/g, ' ')}**.* ${m.mark.$note}`);
+  say();
+  /* The one strip or grid each model needs beyond its own prose - printed here
+     because the strip is on the market board and the player holding the fish is
+     not. A staple gets nothing, which is the point of a staple. */
+  if (m.spoils) {
+    table(
+      ['Ochre die', 'Keeps well', 'Keeps poorly', 'What it is'],
+      pricing.spoil.steps.map((s) => [
+        `**${s.faces[0]}–${s.faces[s.faces.length - 1]}**`, s.keepsWell, s.keepsPoorly, s.means,
+      ])
+    );
+    say(`A commodity whose \`perishRounds\` is under ${pricing.spoil.keepsThreshold} keeps **poorly** and reads the right-hand`);
+    say('column; everything else reads the left, and that is the whole of the difference');
+    say(`\`perishRounds\` makes now. ${pricing.spoil.cap} ${pricing.spoil.granary}`);
+    say();
+    say(`**It never touches a price.** ${pricing.spoil.price.replace(/^None\. /, '')}`);
+    say();
+  }
+  if (m.tokensOnUse) {
+    const d = pricing.depletion;
+    const rungs = [];
+    for (let n = 0; n <= d.top; n += d.step) {
+      const from = (n / d.step) * d.per;
+      rungs.push([n === d.top ? `${from}+` : `${from}–${from + d.per - 1}`, signOf(n)]);
+    }
+    table(['Units burnt', ...rungs.map((r) => `**${r[0]}**`)], [['The grid reads', ...rungs.map((r) => r[1])]]);
+    say(`${Word(d.top / d.step + 1)} rows of ${word(d.per)} cells, nought at the top and ${word(d.top)} at the bottom, ${(d.top / d.step + 1) * d.per} cells in all.`);
+    say('Cover from the lowest row up, and the modifier is **the lowest number you can still see**.');
+    say('Nothing is written down and nothing is counted — you look at the grid and read the');
+    say('smallest number left on it, and a fresh grid reads nought.');
+    say();
+    say(d.$capNote);
+    say();
+  }
+  if (m.reads === 'pricing.sought') {
+    say(`${pricing.sought.$startNote} ${pricing.sought.$feedbackNote}`);
+    say();
+  }
+}
+
+/* ------------------------------------------------------------ every price */
+/*
+ * The table the ledger stands on, and the reason it is here rather than nowhere:
+ * data/ledger.json and rules.json market.$bandNote both promise, in as many
+ * words, that it exists. The sheet has no band strip and no token BECAUSE the
+ * six prices are printed out here, so a move is a step along a row somebody can
+ * read. Delete this section and the ledger is a page of empty boxes with no
+ * lawful way to fill one in.
+ */
+const DEAREST = Math.max(...commodities.commodities.flatMap((c) => priceRow(c)));
+say('### Every price in the game');
+say();
+say('**A price move is a step along one of these rows.** The price you last wrote in a ledger');
+say('column is one of the six figures in that commodity’s row; the swing ruler says how many');
+say('places to step; the figure you land on is the new price. There is no band index to');
+say('remember, no token to walk and nothing to multiply — which is exactly what let the price');
+say('ladder come off the market board with nothing replacing it (`rules.json market.$bandNote`,');
+say('`data/ledger.json`).');
+say();
+say(`That is ${commodities.commodities.length} commodities by ${BANDS.length} bands — ${commodities.commodities.length * BANDS.length} multiplications, all of them the same ones every`);
+say('game, and every one of them formerly done at a table, because a token standing on a cell');
+say('tells you a band index and not a price. They are done here instead, once, at the press, by');
+say(`a tool that cannot get one wrong. The dearest figure below is **${DEAREST}**, which is why the ledger`);
+say(`prints ${word(ledger.digits.count)} hollow figures per cell and not four.`);
+say();
+table(
+  ['Commodity', 'Kind', ...BANDS.map((b) => `×${Number.isInteger(b) ? b.toFixed(1) : b}`)],
+  commodities.commodities.map((c) => {
+    const model = pricing.models.find((m) => m.id === c.pricing);
+    return [c.name, model ? model.name : c.pricing, ...priceRow(c)];
+  })
+);
+say(`Every column starts on the **${ORDINAL[rules.market.startingBandIndex]}** figure of its row. Buying from the board costs the`);
+say(`spread on top and selling to it takes the spread off — ${Math.round(rules.market.buySpread * 100)}% either way, and it is the house`);
+say('cut for trading with a board rather than with another player, not part of the price.');
+say();
 
 /* ------------------------------------------------------------ worked markets */
 /*
- * Three markets played out, one per model. The DICE are chosen — a worked
- * example shows the interesting case, not a random one — and every number
- * downstream of them is computed from data/pricing.json, so this section cannot
- * quietly stop being true when a ruler bin moves. That is the same bargain the
- * rest of the annex makes; it is just doing arithmetic rather than transcribing.
+ * Four markets played out, one per kind of good. The DICE are chosen - a worked
+ * example shows the interesting case, not a random one - and every number
+ * downstream of them is computed from data/pricing.json and data/rules.json, so
+ * this section cannot quietly stop being true when a ruler bin moves or a base
+ * value changes. That is the same bargain the rest of the annex makes; it is
+ * just doing arithmetic rather than transcribing.
  */
 const WORKED = [
   {
@@ -259,160 +469,265 @@ const WORKED = [
     commodity: 'grain',
     blurb: 'Bram has a farm and a surplus, and sells it into his own town three rounds running.',
     rounds: [
-      { note: 'His first surplus.', sell: 3, red: [4, 3], blue: [5, 6], green: 2 },
-      { note: 'A thin market — and he sells into it anyway.', sell: 3, red: [6, 5], blue: [3, 2], green: 4 },
-      { note: 'And again.', sell: 4, red: [3, 3], blue: [4, 4], green: 1 },
-      { note: 'Nobody sells. The memory bites.', red: [5, 4], blue: [4, 3], green: 3 },
-      { note: 'A famine year, and the market has just about forgotten him.', red: [6, 6], blue: [2, 1], green: 4 },
+      { note: 'His first surplus, into a town that already has plenty.', sell: 3, blue: [4, 3], red: [5, 6], green: 3 },
+      { note: 'A thin market — and he sells into it anyway.', sell: 3, blue: [6, 5], red: [3, 2], green: 4 },
+      { note: 'And again, four sacks this time.', sell: 4, blue: [3, 3], red: [4, 4], green: 2 },
+      { note: 'Nobody trades a sack all round.', blue: [5, 4], red: [4, 3], green: 5 },
+      { note: 'A famine year.', blue: [6, 6], red: [2, 1], green: 5 },
     ],
+    closes: (s) =>
+      `Ten sacks sold into one town, and not one of them moved the row a place. That is the ` +
+      `staple bargain stated plainly: a price is the crowd wanting it against the amount that ` +
+      `turned up, and one farmer with a cart is neither of those things. Under the memory strip ` +
+      `those ten sacks would have filled a tally twice over and bent the price down under him — ` +
+      `which punished the town for what the farmer did, and is the job the fish skeleton took ` +
+      `over and now does to the person actually holding the stock.`,
+  },
+  {
+    title: 'The catch',
+    commodity: 'fish',
+    blurb: 'Nella lands fish at a coast village and cannot shift it fast enough.',
+    rounds: [
+      { note: 'A good first haul.', lands: 5, sell: 2, ochre: 4, blue: [5, 6], red: [2, 3], green: 3 },
+      { note: 'Four more out of the water, three away.', lands: 4, sell: 3, ochre: 2, blue: [3, 4], red: [5, 5], green: 5 },
+      { note: 'The last crate goes, and there is nothing left to roll against.', sell: 1, blue: [2, 3], red: [6, 4], green: 2 },
+      { note: 'Six crates, and no market day to sell them into.', lands: 6, ochre: 6, blue: [4, 4], red: [4, 3], green: 4 },
+      { note: 'What survived, sold.', sell: 3, blue: [5, 5], red: [3, 3], green: 3 },
+    ],
+    closes: (s) =>
+      `${Word(s.tot.landed)} crates out of the water, ${word(s.tot.sold)} sold and **${word(s.tot.lost)} thrown away** — and the price did ` +
+      `exactly what the blue and red dice said in all five rounds, because a perishable adds ` +
+      `nothing whatever to the swing. Everything that happened to Nella happened at the end of a ` +
+      `round, in her own hands. That is the trade the spoil die made: glut moved the price ` +
+      `everybody traded at, which left the player with a hold full of fish no worse off than the ` +
+      `player with none, and slightly better informed. The die is aimed at the person holding the ` +
+      `stuff, on the round they failed to shift it, and it needs one die and no strip on any board.`,
+  },
+  {
+    title: 'The seam runs out',
+    commodity: 'coal',
+    blurb: 'A smelting town, its furnaces, and one merchant who thinks she is working the market.',
+    rounds: [
+      { note: 'The town lights its furnaces.', burnt: 3, blue: [4, 4], red: [5, 3], green: 3 },
+      { note: 'Ilsa sells twelve loads to the board. Watch what it does to the price.', sell: 12, burnt: 3, blue: [3, 4], red: [4, 5], green: 4 },
+      { note: 'A busy week at the smelter, and a roll that says nothing at all.', burnt: 4, blue: [4, 3], red: [4, 3], green: 3 },
+      { note: 'A bad roll — and look what it does not do.', burnt: 3, blue: [3, 2], red: [5, 4], green: 2 },
+      { note: 'Everything they have, into the furnace.', burnt: 5, blue: [4, 5], red: [4, 4], green: 4 },
+    ],
+    closes: (s) =>
+      `${Word(s.tot.burnt)} loads burnt, the grid reading **${signOf(modifierOf(s.model, s.pips, 0))}**, and it will never read less again — the ` +
+      `third round is the one to look at, where a roll that came to nothing put the price up a ` +
+      `place on the strength of the grid alone. Ilsa’s twelve loads in round two did nothing at ` +
+      `all, and that is the model rather than an oversight: selling coal to a town moves coal, ` +
+      `burning it destroys coal, and only the burning is what a seam notices. A merchant who ` +
+      `never lights a fire can trade the same hundred tons all game and the hill will not run dry ` +
+      `from the paperwork.`,
   },
   {
     title: 'A run on gold',
     commodity: 'gold',
-    blurb: 'Nobody trades a single ingot. A hype line does all of this on its own.',
+    blurb: 'Nobody trades a single ingot in five rounds. A sought line does all of this on its own.',
     rounds: [
-      { note: 'Gold firms.', red: [5, 6], blue: [2, 3], green: 2 },
-      { note: 'And firms again. The run is building.', red: [4, 5], blue: [3, 3], green: 1 },
-      { note: 'A roll that says nothing — but the hype carries it.', red: [3, 4], blue: [4, 4], green: 1 },
-      { note: 'The turn.', red: [2, 2], blue: [6, 5], green: 4 },
-      { note: 'And it runs the other way just as fast.', red: [3, 3], blue: [5, 4], green: 4 },
+      { note: 'Gold firms. Nothing has moved yet, so there is nothing to add.', blue: [5, 6], red: [2, 3], green: 3 },
+      { note: 'The run builds, and now it is adding its own last move.', blue: [4, 5], red: [3, 3], green: 2 },
+      { note: 'A roll that says nothing, with a slack season under it.', blue: [3, 4], red: [4, 4], green: 4 },
+      { note: 'The turn.', blue: [2, 2], red: [6, 5], green: 2 },
+      { note: 'And it runs the other way just as fast.', blue: [3, 3], red: [5, 4], green: 3 },
     ],
-  },
-  {
-    title: 'The seam runs out',
-    commodity: 'iron-ore',
-    blurb: 'Ilsa opens a mine and ships everything she digs. The rolls are ordinary throughout.',
-    rounds: [
-      { note: 'She opens the mine.', sell: 4, red: [4, 4], blue: [4, 5], green: 1 },
-      { note: 'Another four out of the ground.', sell: 4, red: [5, 3], blue: [3, 4], green: 2 },
-      { note: 'And another four.', sell: 4, red: [4, 5], blue: [4, 4], green: 1 },
-      { note: 'A bad roll — and look what it does not do.', sell: 3, red: [3, 4], blue: [5, 5], green: 1 },
-      { note: 'Nobody mines at all this round.', red: [4, 3], blue: [4, 4], green: 2 },
-    ],
+    closes: (s) =>
+      `Two places up, then one, then a dash; then three down and two. Gold went from ` +
+      `${s.row[s.startedOn]}${rules.currency.symbol} an ingot to ${s.row[s.row.length - 1]}${rules.currency.symbol} and finished at ${s.row[s.band]}${rules.currency.symbol}, the foot of its own row, ` +
+      `without a single ingot changing hands. The whole memory of that is one pencil figure in ` +
+      `the move box of the row above, and the third round is where the machinery shows: the ` +
+      `price held, so the box got a dash, and a dash is what round four had to add. Two quiet ` +
+      `rounds and a sought good is priced on the dice like anything else.`,
   },
 ];
 
-const BANDS = rules.market.priceBands;
-const TALLY = pricing.memory.tally;
-const CAPACITY = TALLY.to - TALLY.from + 1;
-const clampTo = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-const towardZero = (n) => (n < 0 ? Math.ceil(n) : Math.floor(n));
-const signOf = (n) => (n > 0 ? `+${n}` : n < 0 ? `\u2212${Math.abs(n)}` : '0');
-const coin = (n) => `${n.toFixed(2)}${rules.currency.symbol}`;
-
-/** One scenario, played. Returns the markdown rows and the closing line. */
+/** One scenario, played. Returns the markdown rows and everything the closer needs. */
 function play(scene) {
   const c = commodities.commodities.find((x) => x.id === scene.commodity);
   const model = pricing.models.find((m) => m.id === c.pricing);
+  const row = priceRow(c);
   let band = rules.market.startingBandIndex;
-  let mem = pricing.memory.start;
-  let tally = TALLY.start;
-  let filled = false;
+  let stepped = pricing.sought.start; /* what last round's move box says */
+  let pips = 0;
+  let held = 0;
+  const tot = { landed: 0, sold: 0, lost: 0, burnt: 0 };
   const rows = [];
 
   for (const [i, r] of scene.rounds.entries()) {
-    /* Actions phase: the trade happens at the price already on the board, and
-       the tally walks — and discharges — in the hand of whoever traded. */
-    let did = '—';
+    /* ACTIONS. Trade at the price the ledger is already showing, land what is
+       landed, burn what is burnt. A depletion pip goes on in THIS phase, in the
+       hand of whoever burnt the fuel, and never in the Market phase. */
+    const acts = [];
+    if (r.lands) { held += r.lands; tot.landed += r.lands; acts.push(`lands **${r.lands}**`); }
     if (r.sell) {
-      const each = c.baseValue * BANDS[band] * (1 + rules.market.sellSpread);
-      did = `sells **${r.sell}** at ${coin(each)} = **${coin(each * r.sell)}**`;
-      const t = model.tally;
-      if (t.uses && t.onSell) {
-        let n = tally + t.onSell * r.sell;
-        let steps = 0;
-        while (n > TALLY.to) { n -= CAPACITY; steps += 1; }
-        tally = Math.max(TALLY.from, n);
-        if (steps) {
-          filled = true;
-          mem = clampTo(mem + steps * t.dischargeStep, model.memory.from, model.memory.to);
-          did += ` · tally fills → memory **${signOf(mem)}**, tally ${tally}`;
-        } else {
-          did += ` · tally ${tally}`;
-        }
+      const each = row[band] * (1 + rules.market.sellSpread);
+      held = Math.max(0, held - r.sell);
+      tot.sold += r.sell;
+      acts.push(`sells **${r.sell}** at ${coin(each)} = **${coin(each * r.sell)}**`);
+    }
+    if (r.burnt) { pips += r.burnt; tot.burnt += r.burnt; acts.push(`burns **${r.burnt}**`); }
+
+    /* FEEDING. The ochre die, against what is still in the hands that landed it -
+       one phase before the market rolls, because rot happens to food and not to
+       a market. */
+    let spoilCell = '—';
+    if (model.spoils) {
+      if (held > 0 && r.ochre) {
+        const s = pricing.spoil.steps.find((x) => x.faces.includes(r.ochre));
+        const keeps = c.perishRounds < pricing.spoil.keepsThreshold ? 'keepsPoorly' : 'keepsWell';
+        const gone = Math.min(held, s[keeps]);
+        held -= gone;
+        tot.lost += gone;
+        spoilCell = `ochre **${r.ochre}** — ${gone} gone, ${held} left`;
+      } else {
+        spoilCell = held > 0 ? '—' : 'nothing held';
       }
     }
 
-    /* Market phase: roll, fix the price for next round, then update the memory. */
-    const D = r.red[0] + r.red[1];
-    const S = r.blue[0] + r.blue[1];
-    const step = pricing.elasticity.steps.find((e) => e.faces.includes(r.green));
-    const memAtRoll = mem;
-    const net = towardZero((D - S + mem) * step.multiply);
+    /* MARKET. Roll, add the modifier, read the ruler, step along the row. */
+    const D = r.blue[0] + r.blue[1];
+    const S = r.red[0] + r.red[1];
+    const vol = pricing.volatility.steps.find((v) => v.faces.includes(r.green));
+    const mod = modifierOf(model, pips, stepped);
+    const net = D - S + vol.add + mod;
     const bin = pricing.ruler.bins.find((b) => net >= b.from && net <= b.to);
     const was = band;
-    band = clampTo(band + bin.move, 0, BANDS.length - 1);
-    const moved = band - was;
-
-    if (model.memory.followsPrice) {
-      if (moved > 0) mem += 1;
-      else if (moved < 0) mem -= 1;
-      else if (model.memory.decayToZero === 'no-move') mem -= Math.sign(mem);
-    } else if (model.tally.uses && model.memory.decayToZero === 'quiet-tally' && !filled) {
-      mem -= Math.sign(mem);
-    }
-    filled = false;
-    mem = clampTo(mem, model.memory.from, model.memory.to);
+    band = clampTo(band + bin.move, 0, row.length - 1);
+    stepped = band - was;
 
     rows.push([
       i + 1,
-      did,
+      [r.note, upper1(acts.join(' · '))].filter(Boolean).join(' '),
       `${D} − ${S}`,
-      signOf(memAtRoll),
-      step.label,
-      net < 0 ? `\u2212${Math.abs(net)}` : String(net),
-      bin.move === 0 ? 'hold' : signOf(bin.move),
-      `**×${BANDS[band]}** (${coin(c.baseValue * BANDS[band])})`,
-      signOf(mem),
-      model.tally.uses ? String(tally) : '—',
+      `${r.green} · ${vol.label}`,
+      signOf(mod),
+      signOf(net),
+      `${bin.name.toLowerCase()} ${stepped === 0 ? '—' : signOf(stepped)}` +
+        (stepped === bin.move ? '' : ` *(${band === 0 ? 'the foot' : 'the top'} of the row)*`),
+      `**${row[band]}${rules.currency.symbol}**`,
+      ...(model.spoils ? [spoilCell] : []),
+      ...(model.tokensOnUse ? [String(pips)] : []),
     ]);
   }
-  return { c, model, rows, band, mem };
+  return { c, model, row, band, pips, held, tot, rows, startedOn: rules.market.startingBandIndex };
 }
 
-say('## Three markets, played');
+say('## Four markets, played');
 say();
-say('One scenario per model, with the dice chosen to show what each one does. Everything');
-say('after the dice is worked from the tables above rather than transcribed, so these');
-say('cannot drift out of true. Trading happens in the **Actions** phase at the price');
-say('already on the board; the Market phase then fixes the price for the round to come.');
+say('One scenario per kind of good, with the dice chosen to show what each one does — a worked');
+say('example shows the interesting case, not a random one. Everything after the dice is computed');
+say('from the tables above rather than transcribed, so these cannot drift out of true.');
+say();
+say('Read a row left to right and it is the round in the order it happens. Trading is an action');
+say('like any other and happens in the **Actions** phase, at the price the ledger is already');
+say('showing; the ochre die is rolled one phase later, at the end of **Feeding**; and the');
+say('**Market** phase then fixes the price everybody will trade at next round. You act on a');
+say('known price and find out afterwards what your acting did to it, which is the only honest');
+say('way round for a market to work. Sales to the board are at the ledger price less the house');
+say('cut, so a figure in that column is not the printed price and is not meant to be.');
+say();
+say(`**Mod** is what the good’s own nature adds, and ${word(SILENT)} of the ${word(pricing.models.length)} never leave nought.`);
+say('**Net** is the whole sum. **The ruler** is the cell the net lands in, and after it the');
+say('figure that goes in the ledger’s move box — a dash when the price held, and the step the');
+say('price *actually took* rather than the one the ruler called for, on the rounds where it is');
+say('already standing at an end of its own row. **End of Feeding** and **Pips** are the two');
+say('columns that are not about the price at all: what the ochre die took, and how many units');
+say('have been burnt so far.');
 say();
 
 for (const scene of WORKED) {
-  const { c, model, rows, band, mem } = play(scene);
-  say(`### ${scene.title} — ${c.name} · ${priceModel(model.id)}`);
+  const s = play(scene);
+  say(`### ${scene.title} — ${s.c.name} · ${priceModel(s.model.id)}`);
   say();
-  say(`${scene.blurb} Base value ${c.baseValue}${rules.currency.symbol}; every token starts on ×${BANDS[rules.market.startingBandIndex]}, memory 0, tally 0.`);
+  say(`${scene.blurb} Base value ${s.c.baseValue}${rules.currency.symbol}, so the row is **${s.row.join(' · ')}**, and`);
+  say(`every column starts on the ${ORDINAL[rules.market.startingBandIndex]} figure of it — ${s.row[rules.market.startingBandIndex]}${rules.currency.symbol} ${an(s.c.unit)} ${s.c.unit}.`);
   say();
   table(
-    ['#', 'Actions phase', 'D − S', 'Mem', 'Green', 'Net', 'Bands', 'Price now', 'Mem after', 'Tally'],
-    rows
+    ['#', 'In the round', 'D − S', 'Green', 'Mod', 'Net', 'The ruler', 'Price',
+      ...(s.model.spoils ? ['End of Feeding'] : []),
+      ...(s.model.tokensOnUse ? ['Pips'] : [])],
+    s.rows
   );
-  say(`**After five rounds:** ×${BANDS[band]} — ${c.name} at ${coin(c.baseValue * BANDS[band])} a ${c.unit} — with the memory on ${signOf(mem)}. ${model.line}`);
+  say(`**After ${word(scene.rounds.length)} rounds — ${s.c.name} at ${s.row[s.band]}${rules.currency.symbol} ${an(s.c.unit)} ${s.c.unit}.** ${scene.closes(s)}`);
   say();
 }
 
 /* -------------------------------------------------------------- commodities */
 say('## Commodities');
 say();
+say('**Value** is the base value the row of six above is worked out from, not a price anybody');
+say('ever pays: what a town pays is the un-struck figure in that commodity’s ledger column.');
+say('**Keeps** is the column of the spoil strip a stack of it reads at the end of a round, and');
+say('only a perishable has one.');
+say();
 table(
-  ['Commodity', 'Category', 'Bulk', 'Value', 'Prices by', 'Perishes', 'Tags'],
-  commodities.commodities.map((c) => [
-    c.name, c.category, c.bulk, c.baseValue, priceModel(c.pricing),
-    c.perishRounds ? `${c.perishRounds} rounds` : '—', list(c.tags),
-  ])
+  ['Commodity', 'Category', 'Bulk', 'Value', 'Prices by', 'Keeps', 'Tags'],
+  commodities.commodities.map((c) => {
+    const model = pricing.models.find((m) => m.id === c.pricing);
+    const keeps = model?.spoils
+      ? (c.perishRounds < pricing.spoil.keepsThreshold ? '**poorly**' : 'well')
+      : '—';
+    return [c.name, c.category, c.bulk, c.baseValue, priceModel(c.pricing), keeps, list(c.tags)];
+  })
 );
+
+/* --------------------------------------------------------------------- wear */
+/*
+ * Wear is one system now and it spans two decks, so it gets a section of its
+ * own rather than a footnote under whichever table happens to print a W first.
+ * Every number in it is a dial in rules.json wear.
+ */
+say('## Wear');
+say();
+say('**Everything a figure carries wears out**, and until recently only tools did. A sword was');
+say('immortal, a suit of plate never dented, a rope never frayed and a lantern burned forever —');
+say('so the only equipment decision anybody made twice was which axe to buy. One rule, one unit,');
+say(`one scale: ${word(rules.wear.perUse)} ${rules.wear.unit} per use, for a tool, a weapon, a coat and a coil of rope alike.`);
+say();
+say('It is printed once, as the **W** box in the summary strip on the thing’s own card: the most');
+say('wear it will take, and like every number on a card it does not move, because the board took');
+say(`the walking over. It is walked on ${lower1(rules.wear.track)}`);
+say();
+say('**The scale is the board’s.**');
+say('Wear used to run past thirty and be counted on the tool itself, because there was no track');
+say('for it; there are four now, one beside each kit slot, so the number came down to meet the');
+say('board rather than the board going up to meet the number. **Nothing got shorter doing it,**');
+say('because the clock changed with the scale: an axe had twenty-four wear at one a labour hour,');
+say('which is eight three-hour jobs, and has ten at one a job, which is ten. A tool lasts');
+say('slightly longer than it did and nobody adds hours up any more.');
+say();
+table(
+  ['Wears', 'What counts as a use', 'Why'],
+  rules.wear.takes.map((t) => [t.applies, t.when, t.$note])
+);
+say(`**At 0.** ${rules.wear.atZero}`);
+say();
+say(`**Repair.** ${Word(rules.wear.repair.wearPerRound)} points a round at any settlement with a ${rules.wear.repair.requires}, ${word(rules.wear.repair.coinPerPoint)} coin a point`);
+say(`and ${word(rules.wear.repair.effortHours)} hours of somebody’s labour. ${rest(rules.wear.repair.$note)}`);
+say();
+say('**What never wears:**');
+say();
+for (const n of rules.wear.neverWears) say(`- ${n}`);
+say();
 
 /* -------------------------------------------------------------------- tools */
 say('## Tools');
 say();
+say('**W** is the most wear the tool will take, printed as the W box on its card and walked down');
+say(`the W track beside its own kit slot. One point per **job**, never per hour: ${lower1(rest(rules.wear.takes.find((t) => t.id === 'job')?.$note ?? ''))}`);
+say();
 table(
-  ['Tool', 'Made at', 'Craft', 'Hours', 'Value', 'Durability'],
+  ['Tool', 'Made at', 'Craft', 'Hours', 'Value', 'W'],
   tools.tools.map((t) => [
     t.name, t.madeAt, io(t.craft?.inputs), t.craft?.effortHours, t.baseValue,
-    t.baseDurability + (t.optional ? ' (optional)' : ''),
+    t.baseWear + (t.optional ? ' (optional)' : ''),
   ])
 );
+say(rules.tools.$sizesNote);
+say();
 
 /* ---------------------------------------------------------------- buildings */
 say('## Buildings');
@@ -428,11 +743,10 @@ table(
 say('## Peoples');
 say();
 table(
-  ['People', 'Die', 'Workers', 'Terrain comfort', 'Strength', 'Defence', 'Carries', 'Mana'],
+  ['People', 'Die', 'Workers', 'Terrain comfort', 'Strength', 'Carries', 'Mana'],
   peoples.peoples.map((p) => [
     p.name, p.effortDie, p.startingWorkers, list(p.terrainComfort),
     p.strength?.base,
-    p.defence?.base,
     `${(p.strength?.base ?? 0) * rules.carrying.kgPerStrength} kg`,
     p.manaStorage?.innate ? `${p.manaStorage.innate} innate` : 'talisman only',
   ])
@@ -441,6 +755,12 @@ say();
 say('Carrying is not a separate number and has not been since strength swallowed');
 say(`burden: a figure lifts strength × ${rules.carrying.kgPerStrength} ${rules.carrying.unit}, and the column above is that`);
 say('sum rather than a value anybody chose.');
+say();
+say('**There is no defence column, here or anywhere else.** It was the half of the old strength');
+say('that made a strong thing hard to hurt, which was a good fix for a to-hit roll and has');
+say('nothing to do in an opposed total: what a people brings to a fight is its strength, and');
+say('what is between it and the blow is the armour it is wearing.');
+say();
 say('### Traits');
 say();
 table(
@@ -465,20 +785,38 @@ say('bulk: bulk is a commodity\'s storage and shipping cost, and no item has one
 say();
 say(`No figure in the game shoulders more than ${Math.max(...peoples.peoples.map((p) => (p.strength?.base ?? 0) * rules.carrying.kgPerStrength), ...characters.characters.map((c) => c.strength * rules.carrying.kgPerStrength))} ${rules.carrying.unit} unaided, and`);
 say('nothing walks a token for it: a load either fits under the printed limit or');
-say('it does not.');
+say(`it does not. **Coin counts too** — ${rules.currency.massKgEach * 1000} grams a coin, ${rules.carrying.coin.perKg} to the kilogram — which is what`);
+say('turns a hold of jewellery sold into a question about how the money gets home.');
+say();
+say('**W** is the most wear the thing will take, on the one scale described under **Wear**');
+say('above. A potion has none, because it is drunk rather than worn out, and a talisman has');
+say('none, because mana is not friction. **Battle** and **Armour** are both straight additions');
+say('to one opposed total, and they were `combatDice` and `armourValue` — dice granted and hits');
+say('cancelled — which were two different currencies for the same job in a system that no longer');
+say('counts a hit at all.');
 say();
 for (const cls of items.classes) {
   const rows = items.items.filter((i) => i.class === cls.id);
   if (!rows.length) continue;
   say(`### ${cls.name}`);
   say();
-  const extra = cls.id === 'talisman' ? ['Capacity'] : [];
+  say(cls.summary);
+  say();
+  /* One extra number per class, and only where the class has one: a weapon's
+     battle, a suit's armour, a talisman's capacity. Nothing else in the deck
+     carries a number the strip does not already print. */
+  const extraHead =
+    cls.id === 'weapon' ? ['Battle'] : cls.id === 'armour' ? ['Armour'] : cls.id === 'talisman' ? ['M'] : [];
+  const extraOf = (i) =>
+    cls.id === 'weapon' ? [i.battle ?? '—'] : cls.id === 'armour' ? [i.armour ?? '—']
+      : cls.id === 'talisman' ? [i.manaCapacity ?? '—'] : [];
   table(
-    ['Item', 'Made at', 'Inputs', 'Hours', 'Value', 'Mass', ...extra, 'Effects'],
+    ['Item', 'Made at', 'Inputs', 'Hours', 'Value', 'Mass', 'W', ...extraHead, 'Effects'],
     rows.map((i) => [
       i.name + (i.cardCode ? ` (${i.cardCode})` : ''), i.madeAt, io(i.inputs), i.effortHours, i.baseValue,
       `${i.massKg} kg`,
-      ...(cls.id === 'talisman' ? [i.manaCapacity] : []),
+      i.wear ?? '—',
+      ...extraOf(i),
       (i.effects || []).join(' '),
     ])
   );
@@ -514,39 +852,85 @@ table(
 /* ----------------------------------------------------------------- monsters */
 say('## Monster deck');
 say();
+say('The five boxes of the summary strip across the top of every monster card, in the order');
+say('they are printed in, and then the element’s mark in the last box: **H** health, **S**');
+say('strength, **A** armour, **P** pace, **Y** the most mana its death is worth. Every one of');
+say('them is a number a player can also have, which is what lets a monster be dealt onto a');
+say('spare player board and run like a player who is not a person.');
+say();
 say('S = slay (always allowed), E = enslave, B = befriend, D = domesticate.');
-say('Slaying yields the mana; the other three trade mana away for a living asset.');
 say();
 table(
-  ['Code', 'Monster', 'Element', 'Str', 'Def', 'Health', 'Mana', 'Ground', 'Options'],
+  ['Code', 'Monster', 'H', 'S', 'A', 'P', 'Y', 'Element', 'Ground', 'Options'],
   monsters.monsters.map((m) => [
-    m.cardCode, m.name + (m.unique ? ' *(unique)*' : ''), element(m.element), m.strength, m.defence, m.health, m.manaYield,
+    m.cardCode, m.name + (m.unique ? ' *(unique)*' : ''),
+    m.health, m.strength, m.armour, m.pace, m.manaYield,
+    element(m.element),
     list(m.terrains),
     'S' + (m.options.enslave ? ' E' : '') + (m.options.befriend ? ' B' : '') + (m.options.domesticate ? ' D' : ''),
   ])
 );
 say();
-say(`In a fight: ${rules.conflict.attack.rule} ${rules.conflict.attack.formula}, clamped to`);
-say(`${rules.conflict.attack.clamp[0]}+ and ${rules.conflict.attack.clamp[1]}+. Strength is what a thing swings with, defence is what makes`);
-say('you miss — a stone boar barely swings and still turns a sword.');
+say(`**In a fight:** ${rules.conflict.battle.rule}`);
+say();
+say('```');
+say(rules.conflict.battle.formula);
+say('```');
+say();
+for (const w of rules.conflict.battle.worked) { say(`- ${w}`); }
+say();
+say(`**Gear.** ${rules.conflict.battle.gear}`);
+say();
+say(`**A tie.** ${rules.conflict.battle.ties} ${rules.conflict.battle.$simultaneousNote}`);
+say();
+say(`**A third die.** ${rules.conflict.battle.extraDice}`);
+say();
+say('**Defence is gone**, off this table and off every other. It was the half of the old');
+say('strength that made a hit miss, and armour was the half that cancelled it after it landed —');
+say('two numbers saying the same sentence, in a system that no longer counts hits. **A** is the');
+say('old defence rescaled: a stone boar barely swings and still turns a sword, which is a low');
+say('strength and a high armour, and that is two numbers saying two things.');
+say();
+say('**Running away is a footrace, and you have to win it.** Fleeing used to be free — withdraw');
+say('the way you came, lose your discovery roll, done — which made every monster optional and');
+say(`most of them decorative. ${rules.conflict.flee.rule} ${rules.conflict.flee.refused}`);
+say(rules.conflict.flee.cargo);
+say();
+const FASTEST = monsters.monsters.reduce((a, b) => (b.pace > a.pace ? b : a));
+say(`Half the bestiary above cannot be outrun on foot at all, and the P column tops out at`);
+say(`**${FASTEST.pace}** — the ${FASTEST.name.toLowerCase()}. That is what puts a road, a horse and a night's sleep`);
+say('into the same decision as a sword.');
+say();
+say(`**Slaying yields mana, and the Y box is a ceiling rather than a payment.** ${arcana.manaDie.rule}`);
+say(`Rolled once, ${arcana.manaDie.when.replace(/^Once, /, '')} ${arcana.manaDie.split}`);
+say();
+say(arcana.manaDie.worked);
+say();
+say('The other three options — enslave, befriend, domesticate — trade the mana away for a');
+say('living asset, and none of them pays any.');
+say();
 
 /* --------------------------------------------------------------- characters */
 say('## Character deck');
 say();
-say('The six boxes of the summary strip across the top of every character card,');
+say('The five boxes of the summary strip across the top of every character card,');
 say('in the order they are printed in — and the same letters the player board');
 say('calls its tracks, so setting up is reading across the strip and placing');
-say('tokens left to right.');
+say('tokens left to right. The kilograms are derived rather than designed:');
+say(`strength × ${rules.carrying.kgPerStrength}, and the purse counts against them like everything else.`);
 say();
 table(
-  ['Code', 'Character', 'People', 'Calling', 'H', 'S', 'D', 'M', rules.currency.symbol, 'KG', 'Traits'],
+  ['Code', 'Character', 'People', 'Calling', 'H', 'S', 'M', rules.currency.symbol, 'KG', 'Traits'],
   characters.characters.map((c) => [
     c.cardCode, c.name, c.people, c.calling,
-    c.health, c.strength, c.defence, c.manaCapacity || '—', c.startingGold,
+    c.health, c.strength, c.manaCapacity || '—', c.startingGold,
     c.strength * rules.carrying.kgPerStrength,
     (c.traits || []).join(' '),
   ])
 );
+say('There is no D box. What a character brings to a battle besides strength is the gear in');
+say('their four kit slots, and that is a thing they can change.');
+say();
 
 /* ------------------------------------------------------------------- quests */
 say('## Quest deck');

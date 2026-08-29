@@ -118,12 +118,23 @@ jobs:
       - name: Fail if the committed player boards are stale
         run: node tools/build-board.mjs --check
 
-      # The market board is generated from data/marketboard.json, the shapes in
-      # data/components.json and the price bands in data/rules.json. Committed and
-      # checked for the same reason the player board is - and it fails outright,
-      # not just staly, if a band cell ever gets narrower than a commodity token.
-      - name: Fail if the committed market board is stale
+      # The market board and the depletion sheet are generated from
+      # data/marketboard.json, the shapes in data/components.json and the pricing
+      # system in data/pricing.json. Committed and checked for the same reason the
+      # player board is - and both fail outright, not just stale, if a depletion
+      # cell's figure ever grows past the pip that is supposed to cover it, or if
+      # a sheet stops holding a grid for every finite commodity in the game.
+      - name: Fail if the committed market sheets are stale
         run: node tools/build-market.mjs --check
+
+      # The price ledger is the only place a price lives, and the only component
+      # whose geometry is pushed on by a rule somewhere else: lengthen the game
+      # (rules.json victory.gameLengthRounds) and the rows get shorter, the
+      # seven-segment figures get shorter with them, and past a floor the sheet
+      # stops being something anybody can colour in. That fails here rather than
+      # printing figures nobody can fill.
+      - name: Fail if the committed price ledger is stale
+        run: node tools/build-ledger.mjs --check
 
       # The mini-map sheets are a flat terrain colour and a hex grid whose cells are
       # world-map hexes, generated from data/minimap.json, data/terrain.json and the

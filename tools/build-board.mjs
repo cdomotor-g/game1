@@ -13,12 +13,27 @@
  *   contentW - (the card slot) - (two kit slots) - three gutters = the tracks
  *   contentH - (the heads)                                       = the rungs
  *
- * Give the board a sixth track and the columns get narrower; give it a bigger
+ * Give the board another track and the columns get narrower; give it a bigger
  * card and they get narrower still. Nothing moves off the paper, because nothing
  * was ever placed by hand. There were six columns here until a vehicle stopped
  * being a card on somebody else's board and started being dealt a board of its
  * own — its damage is its health, the V went, and the five that were left simply
  * got wider without a coordinate being touched.
+ *
+ * Then the fifth went too, and paid for something. DEFENCE was a rating a token
+ * barely ever moved, and when a battle became one opposed total there was nothing
+ * left for it to do that armour printed on a card was not already doing. What the
+ * paper bought is the thing this board never had room for: a WEAR LADDER against
+ * each of the four kit recesses, so the axe, the sword and the lantern are each
+ * counted down beside their own card. The middle of the sheet is about the figure
+ * in the recess; the edge of it is about what that figure is carrying.
+ *
+ * And the columns got wider anyway — 15.6 mm against the 13.6 that five of them
+ * managed — because the margins came in by two millimetres and the gutters by
+ * two in the same change. That is the whole argument for deriving a layout: take
+ * a column out of the middle, add four ladders at the edge, give a little back at
+ * the margins, and the arithmetic hands the difference to whatever is left
+ * standing. Nobody had to work out where anything went.
  *
  * ONE BOARD, not one per people, and not one per kind of thing. Everything that
  * differs between an orc and a halfling — strength, health, what they can
@@ -139,22 +154,72 @@ const SLOT = {
 
 const KIT_COLS = 2;
 const KIT_ROWS = 2;
-const KIT_W = KIT_COLS * SLOT.w + (KIT_COLS - 1) * GUT;
 
-/* Everything the cards do not want is the tracks'. */
+/* TWO KINDS OF TRACK, and only one of them is in the middle.
+ *
+ * A COLUMN track counts something about the FIGURE in the recess - its health,
+ * its strength, how far it has left to walk, what it is holding - and there is
+ * one figure, so there is one of each. A KIT track counts something about a CARD
+ * in a slot, and there are four slots, so there are four of it. That is the
+ * whole of the distinction and it is declared in the data (playerboard.json
+ * `place`), never inferred from a track's name here.
+ *
+ * The kit track is the wear ladder, and it is drawn against its recess rather
+ * than up the middle for a reason a column could not have satisfied: one W
+ * column could only ever have counted one item's wear, and a player carries
+ * four. Putting it where the card lies is what makes it unambiguous which axe
+ * is blunt without anybody labelling anything. */
 const TRACKS = spec.tracks;
+const COLUMN_TRACKS = TRACKS.filter((t) => (t.place ?? 'column') === 'column');
+const KIT_TRACK = TRACKS.find((t) => t.place === 'kit') ?? null;
+
+/* A wear ladder is as wide as the piece that walks it plus its clearance - the
+ * same arithmetic a market strip cell used, and for the same reason. It is a PIP
+ * and not a bar because fifteen rungs down an 88 mm recess is under six
+ * millimetres a rung: a 7 mm bar overhangs, a 4.5 mm pip leaves a millimetre and
+ * a half to get a fingernail under. */
+const KT = B.kitTrack;
+const PIP = mm(components.tokens.pip.diameterMm);
+const LADDER_W = KIT_TRACK ? PIP + 2 * mm(KT.clearanceMm) : 0;
+const LADDER_GAP = KIT_TRACK ? mm(KT.gapMm) : 0;
+const KIT_UNIT = LADDER_W + LADDER_GAP + SLOT.w;
+const KIT_W = KIT_COLS * KIT_UNIT + (KIT_COLS - 1) * GUT;
+
+/* Everything the cards and their ladders do not want is the columns'. */
 const TRACK_BLOCK = {
   x: CONTENT.x + SLOT.w + GUT,
   y: CONTENT.y,
   w: CONTENT.w - SLOT.w - KIT_W - 2 * GUT,
   h: CONTENT.h,
 };
-const CELL_W = TRACK_BLOCK.w / TRACKS.length;
+const CELL_W = TRACK_BLOCK.w / COLUMN_TRACKS.length;
 const HEAD = mm(B.track.headMm);
 const RUNGS = B.track.to - B.track.from + 1;
 const CELL_H = (TRACK_BLOCK.h - HEAD) / RUNGS;
+const WEAR_CELL_H = SLOT.h / RUNGS;
+
+/* The piece has to fit its own rung. Nothing else in this build checks that a
+ * marker fits the thing it stands on, because until the wear ladders arrived
+ * nothing on this board was narrower than the piece walking it. */
+if (KIT_TRACK && WEAR_CELL_H < PIP) {
+  throw new Error(
+    `a wear ladder is ${RUNGS} rungs down a ${num(SLOT.h / U)}mm recess, which is ` +
+    `${num(WEAR_CELL_H / U)}mm a rung, and the pip that walks it is ` +
+    `${components.tokens.pip.diameterMm}mm - the piece overhangs its own rung. ` +
+    `Either the ceiling (components.json board.track.to) comes down or the pip does.`
+  );
+}
+if (CELL_W < mm(components.tokens.bar.diameterMm + 2)) {
+  throw new Error(
+    `${COLUMN_TRACKS.length} column tracks and ${KIT_TRACK ? KIT_COLS * KIT_ROWS : 0} wear ladders ` +
+    `leave ${num(CELL_W / U)}mm a column, and the bar that walks one is ` +
+    `${components.tokens.bar.diameterMm}mm - the board has run out of middle.`
+  );
+}
 
 const KIT_X = CONTENT.x + CONTENT.w - KIT_W;
+/** The x of one kit unit - the ladder's left edge, with the recess to its right. */
+const kitUnitX = (i) => KIT_X + (i % KIT_COLS) * (KIT_UNIT + GUT);
 /* Two card recesses come up short of the sheet by more than a gutter, so the kit
    rows are spread rather than stacked: the top row lines up with the card in
    play and the bottom row with the foot of the round panel. Three columns of
@@ -311,6 +376,54 @@ function track(t, index) {
 }
 
 /**
+ * A WEAR LADDER: the same 0-to-ceiling ladder as a column, turned narrow and
+ * stood against a card recess rather than run up the sheet.
+ *
+ * It is the same grid as everything else on the board on purpose - a player who
+ * has learned to read one track has learned to read all five - but it is a third
+ * the height, so it cannot afford a number on every rung. Every `ruleEvery` rung
+ * rules heavier and carries its figure and the rest are plain cells, which is the
+ * same tally motif the columns use doing the same job at a smaller size: it lets
+ * somebody read 10 without counting to 10.
+ *
+ * The letter goes at the head, small, because the ladder is beside a card whose
+ * strip prints the same letter - and the whole point of the letter matching is
+ * that setting a token is reading across from one to the other.
+ */
+function wearLadder(x, y) {
+  const t = KIT_TRACK;
+  const step = t.step ?? dotted(t.stepFrom);
+  const wash = `<rect x="${num(x)}" y="${num(y)}" width="${num(LADDER_W)}" height="${num(SLOT.h)}" fill="${inkHex(t.ink)}" opacity="0.22"/>`;
+
+  const ink = [];
+  ink.push(`<rect x="${num(x)}" y="${num(y)}" width="${num(LADDER_W)}" height="${num(SLOT.h)}" rx="${num(mm(1))}" fill="none" stroke="${SOOT}" stroke-width="${KT.strokeWidth}"/>`);
+
+  const bottom = y + SLOT.h;
+  const numbers = [];
+  for (let i = 0; i < RUNGS; i++) {
+    const value = (B.track.from + i) * step;
+    const yLine = bottom - (i + 1) * WEAR_CELL_H;
+    const major = value % (B.track.ruleEvery * step) === 0;
+    if (i < RUNGS - 1) {
+      ink.push(`<path d="M ${num(x)},${num(yLine)} H ${num(x + LADDER_W)}" stroke="${SOOT}" stroke-width="${major ? KT.strokeWidth : KT.cellStrokeWidth}" opacity="${major ? 1 : 0.7}"/>`);
+    }
+    if (major) {
+      const midY = bottom - (i + 0.5) * WEAR_CELL_H;
+      numbers.push(
+        `<text x="${num(x + LADDER_W / 2)}" y="${num(midY + mm(KT.labelMm * 0.36))}" font-size="${num(mm(KT.labelMm))}" ` +
+        `text-anchor="middle" font-family="${SANS}" font-weight="bold">${value}</text>`
+      );
+    }
+  }
+  ink.push(`<g fill="${SOOT}">${numbers.join('')}</g>`);
+  ink.push(
+    `<text x="${num(x + LADDER_W / 2)}" y="${num(y - mm(1.2))}" font-size="${num(mm(3.2))}" text-anchor="middle" ` +
+    `font-family="${SANS}" font-weight="bold" fill="${T70}">${esc(t.letter)}</text>`
+  );
+  return { wash, ink: ink.join('\n    ') };
+}
+
+/**
  * The turn reference the bill of materials has always asked a player board for,
  * and under it the one piece of arithmetic a player needs while a monster card
  * is face up in front of them.
@@ -350,15 +463,20 @@ function panel() {
   let cursor = top + phases.length * rowH + mm(5);
   out.push(`<text x="${num(x + pad)}" y="${num(cursor)}" font-size="${num(mm(2.6))}" font-style="italic" fill="${T85}">${esc(spec.panel.foot)}</text>`);
 
-  /* Strength against defence is the new arithmetic, and it is the one thing on
-     this board a player will not already know. */
+  /* The battle roll is the one piece of arithmetic on this board a player will
+     not already know - and half of it they will, because it is the same
+     subtraction, in the same two colours, that they made on the market. */
   cursor += mm(5.8);
   out.push(`<path d="M ${num(x + pad)},${num(cursor - mm(3.6))} H ${num(x + PANEL.w - pad)}" stroke="${SOOT}" stroke-width="1.2"/>`);
   out.push(`<text x="${num(x + pad)}" y="${num(cursor)}" font-size="${num(mm(2.7))}" letter-spacing="${num(mm(0.7))}" font-family="${SANS}" fill="${T70}">${esc(spec.panel.aside.title)}</text>`);
 
+  /* `worked` is an array now - the battle roll is worth two examples, one each
+     way, where a target number only ever needed one. Take the first, because a
+     65 mm panel is not a rulebook. */
+  const workedFirst = Array.isArray(fight.worked) ? fight.worked[0] : fight.worked;
   const lines = [
     ...wrap(fight.rule, 40),
-    ...wrap(fight.worked, 40),
+    ...wrap(workedFirst, 40),
   ];
   lines.forEach((line, i) => {
     out.push(`<text x="${num(x + pad)}" y="${num(cursor + mm(4.2) + i * mm(3.15))}" font-size="${num(mm(2.5))}">${esc(line)}</text>`);
@@ -386,7 +504,7 @@ function dieMarks() {
   return `<g fill="none" stroke="${SOOT}" stroke-width="1.2" opacity="0.32">${arcs.map((d) => `<path d="${d}"/>`).join('')}</g>`;
 }
 
-/** Press wear: foxed corners, a ring where somebody put a cup down, specks. */
+/** Press wear: foxed corners and specks. No rings - see CLAUDE.md, and\n *  tools/validate-art.mjs, which fails the build on one. */
 function grime(seed) {
   const rand = rng(`grime-${seed}`);
   const specks = Array.from({ length: 9 }, () =>
@@ -403,15 +521,20 @@ function grime(seed) {
 /* --------------------------------------------------------------- the board */
 
 function board() {
-  const cols = TRACKS.map((t, i) => track(t, i));
+  const cols = COLUMN_TRACKS.map((t, i) => track(t, i));
   const kit = spec.slots.find((s) => s.id === 'kit');
   const figure = spec.slots.find((s) => s.id === 'figure');
 
   const kitSlots = [];
+  const ladders = [];
   for (let i = 0; i < kit.count; i++) {
-    const cx = KIT_X + (i % KIT_COLS) * (SLOT.w + GUT);
+    const ux = kitUnitX(i);
     const cy = CONTENT.y + Math.floor(i / KIT_COLS) * (SLOT.h + KIT_ROW_GAP);
-    kitSlots.push(slot(cx, cy, kit.label));
+    /* The ladder on the left, the recess to its right - so the ladder is read
+       before the card rather than after it, and so the two ladders in the
+       right-hand column are not jammed against the edge of the paper. */
+    if (KIT_TRACK) ladders.push(wearLadder(ux, cy));
+    kitSlots.push(slot(ux + LADDER_W + LADDER_GAP, cy, kit.label));
   }
 
   const arcane = TRACKS.filter((t) => t.arcane).map((t) => t.label.toLowerCase()).join(', ');
@@ -427,6 +550,7 @@ function board() {
 <g id="wash">
   <rect x="0" y="0" width="${num(W)}" height="${num(H)}" fill="${TALLOW}"/>
   ${cols.map((c) => c.wash).join('\n  ')}
+  ${ladders.map((l) => l.wash).join('\n  ')}
 </g>
 
 <!-- ============================================================ SLIP -->
@@ -454,7 +578,11 @@ function board() {
        card's edge bar is - the board is not allowed a second convention -->
   ${cols.map((c) => c.ink).join('\n  ')}
 
-  <!-- its kit: gear and quests for a figure, cargo and modifications for a hull -->
+  <!-- its kit: gear and quests for a figure, cargo and modifications for a hull -
+       and against each one the ladder that counts what is left in the thing
+       lying in it. The ladder is drawn BEFORE the recess so a bracket that
+       reaches over it stays on top. -->
+  ${ladders.map((l) => l.ink).join('\n  ')}
   ${kitSlots.join('\n  ')}
 </g>
 
@@ -534,13 +662,20 @@ const index = `<!doctype html>
 set your printer to 100% and landscape and turn off "fit to page", and the ${B.sheet.bleedMm}&nbsp;mm of bleed the board is
 drawn with runs off the edge of the paper, which is the only place bleed is any use.</p>
 
-<h2>The ${TRACKS.length} tracks</h2>
+<h2>The ${COLUMN_TRACKS.length} columns${KIT_TRACK ? `, and the ${KIT_TRACK.count} ladders` : ''}</h2>
+<p class="note">Four of them run up the middle of the sheet and are about the figure in the recess.
+The fifth is drawn ${KIT_TRACK ? KIT_TRACK.count : 0} times, once against each kit slot, and is about
+the card lying in that slot rather than about the player — which is why it is beside the card and not
+in the middle, and why it is walked by a ${components.tokens.pip.diameterMm}&nbsp;mm pip where a column
+takes a ${components.tokens.bar.diameterMm}&nbsp;mm bar.</p>
 <table>
-<tr><th></th><th>Track</th><th>Runs</th><th>What walks it</th></tr>
+<tr><th></th><th>Track</th><th>Where</th><th>Runs</th><th>What walks it</th></tr>
 ${TRACKS.map((t) => {
   const step = t.step ?? dotted(t.stepFrom);
   const unit = t.unit ? ' ' + esc(t.unit) : '';
+  const where = t.place === 'kit' ? `${t.count} ladders, one per kit slot` : 'a column up the middle';
   return `<tr><td class="letter">${esc(t.letter)}</td><td>${esc(t.label)}${t.unit ? ` <small>(${esc(t.unit)})</small>` : ''}</td>` +
+    `<td>${where}</td>` +
     `<td>${B.track.from * step}–${B.track.to * step}${unit}</td><td>${esc(t.walks)}</td></tr>`;
 }).join('\n')}
 </table>
@@ -587,8 +722,10 @@ if (checkOnly) {
   for (const f of stale) unlinkSync(join(OUT_DIR, f));
   console.log(
     `wrote docs/boards/${BOARD_FILE} — ${B.sheet.widthMm}x${B.sheet.heightMm}mm, ` +
-    `${TRACKS.length} tracks of ${B.track.from}-${B.track.to} ` +
-    `(${num(CELL_W / U)}x${num(CELL_H / U)}mm cells), ${spec.slots.reduce((n, s) => n + s.count, 0)} card slots` +
+    `${COLUMN_TRACKS.length} columns of ${B.track.from}-${B.track.to} ` +
+    `(${num(CELL_W / U)}x${num(CELL_H / U)}mm cells)` +
+    (KIT_TRACK ? `, ${KIT_TRACK.count} wear ladders (${num(LADDER_W / U)}x${num(WEAR_CELL_H / U)}mm rungs)` : '') +
+    `, ${spec.slots.reduce((n, s) => n + s.count, 0)} card slots` +
     (stale.length ? `; removed ${stale.length} board(s) no longer built` : '')
   );
 }

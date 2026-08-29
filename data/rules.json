@@ -1,7 +1,12 @@
 {
   "$comment": "Tunable constants for the whole game. Every number here is a dial, not a law. The web prototype reads these directly, so changing a value here changes the digital game AND the printed reference sheet.",
   "version": "0.1.0",
-  "currency": { "id": "coin", "name": "Coin", "symbol": "¤", "startingAmount": 60 },
+  "currency": {
+    "id": "coin", "name": "Coin", "symbol": "¤", "startingAmount": 60,
+    "massKgEach": 0.025,
+    "$massNote": "A gold coin weighs 25 grams, and it is the one thing on this list that used to weigh nothing. Coin was on carrying.notCarried - an abstraction that lived outside the world - and a purse of four hundred is ten kilograms, which is most of what a figure can shoulder. So it comes off that list and goes on the scales with everything else: what you are carrying is what you are carrying, and a fortune is heavy.\n\nIt is a real weight for a real coin. A sovereign is eight grams and a piece of eight is twenty-seven; twenty-five puts this one in the same purse as the coins it is drawn from, and forty of them to the kilogram is arithmetic a table can do without being asked to.",
+    "$carryNote": "Forty coin to the kilogram. A strength-3 figure can shoulder 9 kg, so an empty-handed one could carry 360 coin and nothing else; the 60 they start with is a kilogram and a half, which is a rounding error against a sword. The weight only bites when somebody is moving a fortune - which is exactly the moment it should."
+  },
 
   "round": {
     "phases": [
@@ -9,8 +14,8 @@
       { "id": "labour-roll", "name": "Labour Roll", "summary": "Each player rolls their effort dice: one die per worker. Pips = hours of effort available this round." },
       { "id": "actions", "name": "Actions", "summary": "In turn order, players spend effort, coin and commodities: allocate, build, move, trade, forage, fight." },
       { "id": "production-tick", "name": "Production Tick", "summary": "Advance every progress track: construction, crop growth, transport in transit, maturing goods." },
-      { "id": "feeding", "name": "Feeding", "summary": "Each town must pay food upkeep from stock held in or near that town. Shortfalls cause unrest." },
-      { "id": "market-turn", "name": "Market", "summary": "Roll the market for every line: two red, two blue, one green, plus what the line remembers. Trade at the new price, walk the tallies, and turn order passes to the left." }
+      { "id": "feeding", "name": "Feeding", "summary": "Each town must pay food upkeep from stock held in or near that town. Shortfalls cause unrest. Then every player rolls the ochre spoil die once for each perishable stack they are still holding." },
+      { "id": "market-turn", "name": "Market", "summary": "Roll the market for every line on the ledger: two blue, two red, one green, plus whatever the good's own nature adds. Read the swing ruler, walk the band, write the new price and strike the old one through. Turn order passes to the left." }
     ],
     "turnOrder": "clockwise-rotating"
   },
@@ -52,16 +57,41 @@
     "notes": "Materials are paid when the site is founded. Build points accumulate on a progress track; a building only produces once its track is full."
   },
 
+  "wear": {
+    "$comment": "What using a thing does to it, and it is now one rule for every made thing in the game rather than a private arrangement between tools and their own file.\n\nTools wore out and nothing else did. A sword was immortal, a suit of plate never dented, a rope never frayed and a lantern burned forever - so the only equipment decision anybody ever made twice was which axe to buy. Everything a player carries wears now, on one track, in one unit, at one wear point a use.\n\nTHE SCALE IS THE BOARD'S. Wear used to run to thirty-four and be counted on the tool, because there was no track for it and the strip note said there never would be: 'it runs past twenty, the board stops at fourteen.' The board has a track for it now - four of them, one beside each kit slot - so the number came down to meet the board rather than the board going up to meet the number. That is the same trade the kilogram made when a hero could not stand their own load on a fourteen-rung ladder, and it is the right way round: the ceiling is the game's, and a number that will not fit under it is a number that is wrong.\n\nRescaling did not shorten anything's life, because the CLOCK changed with the scale. An axe had twenty-four wear at one a labour hour, which is eight three-hour jobs. It has ten at one a JOB, which is ten. A tool lasts slightly longer than it did and nobody adds hours up any more.",
+    "unit": "wear-point",
+    "walks": "down",
+    "track": "The W track beside the item's own slot on the player board. Set it from the W box on the card when the thing is picked up, knock it down a rung each time the thing is used, and at 0 it is finished.",
+    "printedOn": "The card, as the W box in the summary strip: the most wear the thing will take. Nothing on a card ever moves - see data/playerboard.json.",
+    "perUse": 1,
+    "takes": [
+      { "id": "job", "applies": "a tool", "when": "each recipe it is used in", "$note": "Per job, not per hour. A worker who spends nine hours felling timber has run one job and blunted one axe by one." },
+      { "id": "battle", "applies": "a weapon, a shield, a helm or a suit of armour", "when": "each round of a battle it is swung or worn in", "$note": "Both sides, win or lose. A blow you turned still dented the plate." },
+      { "id": "night", "applies": "a light", "when": "each night leg it is burned on", "$note": "Which is what a torch is: one wear, one night, gone." },
+      { "id": "use", "applies": "anything else", "when": "each time its own card says", "$note": "A rope that takes a party down a cliff, a grappling hook that holds, a bag that is stuffed past its seams. The card says what counts as a use, because a rope and a pair of boots do not wear for the same reason." }
+    ],
+    "atZero": "Worn out. The card is discarded, the track is cleared, and whatever the thing was doing for its owner it stops doing at once - a broken tool does not refund the effort already spent on the job that broke it, and a sword that goes at 0 leaves you swinging with nothing for the rest of the battle.",
+    "neverWears": [
+      "Potions, which are drunk rather than worn out - the card is discarded on use and there is no W box on it.",
+      "Talismans. Mana is not friction; a phylactery that has been filled and emptied a hundred times is a phylactery.",
+      "Commodities, which are counted rather than owned."
+    ],
+    "repair": { "toFull": false, "wearPerRound": 3, "coinPerPoint": 4, "effortHours": 2, "requires": "blacksmith", "$note": "Any settlement with a blacksmith, three points a round, four coin a point and two hours of somebody's labour. A thing may be mended any number of times; what cannot be mended is a thing at 0, which is not damaged, it is gone." },
+    "$boardNote": "Four kit slots, four W tracks, so a player tracks the wear of everything they are actually carrying and nothing else. A fifth thing in play is a fifth thing whose wear nobody is counting, which is the same argument the four slots were already making."
+  },
+
   "tools": {
     "durabilityUnit": "wear-point",
-    "wearPerEffortHour": 1,
+    "wearPerJob": 1,
+    "wearRule": "rules.json wear - a tool is not special any more, it is the first thing that wore out.",
     "brokenToolEffect": "Tool is removed from play. Effort already spent this round is not refunded.",
     "repairCost": { "fractionOfBuildCost": 0.5, "effortHours": 2, "requires": "blacksmith" },
     "sizes": [
-      { "id": "small", "tier": 1, "outputMultiplier": 1.0, "durabilityMultiplier": 1.0, "costMultiplier": 1.0 },
-      { "id": "medium", "tier": 2, "outputMultiplier": 1.5, "durabilityMultiplier": 1.5, "costMultiplier": 2.0 },
-      { "id": "large", "tier": 3, "outputMultiplier": 2.0, "durabilityMultiplier": 2.0, "costMultiplier": 3.5 }
+      { "id": "small", "tier": 1, "outputMultiplier": 1.0, "costMultiplier": 1.0 },
+      { "id": "medium", "tier": 2, "outputMultiplier": 1.5, "costMultiplier": 2.0 },
+      { "id": "large", "tier": 3, "outputMultiplier": 2.0, "costMultiplier": 3.5 }
     ],
+    "$sizesNote": "A size used to multiply durability as well, and it does not any more. A bigger loom is a FASTER loom, not a longer-lived one - and a multiplied wear number is a number the ceiling sweep cannot see, because it never appears in the data at the size it is actually walked at. One multiplier fewer, one hole in the ceiling fewer, and one thing less to work out at a table.",
     "notes": "Output multipliers round down, minimum 1. A size-3 tool never lets one worker exceed a site's worker cap - it just makes that worker's hours count for more."
   },
 
@@ -79,14 +109,16 @@
     "startingBandIndex": 2,
     "buySpread": 0.15,
     "sellSpread": -0.15,
-    "pricedBy": "data/pricing.json. Every Market phase each town rolls two red dice for demand, two blue for supply and one green for elasticity, per commodity line in play, and reads the result on the swing ruler printed across the foot of the market board. The line's own memory strip, -3 to +3, is added to the swing before the green die multiplies it, and what moves that strip is the commodity's pricing model.",
+    "pricedBy": "data/pricing.json. Every Market phase each town rolls two BLUE dice for demand, two RED for supply and one GREEN for volatility, per commodity line on the ledger, and reads the result on the swing ruler printed on the market board. The whole sum is addition: Demand − Supply + Volatility + whatever the good's own nature adds. Nothing multiplies and nothing is halved.",
+    "recordedOn": "data/ledger.json - the price ledger. One column per commodity traded, one row per round, and the price written in three hollow seven-segment figures the player colours in, struck through when it changes and the new one written under it. No board tracks a price any more, and no token walks a band.",
+    "$bandNote": "THE BANDS ARE A PRINTED ROW, NOT A LADDER. Every commodity's six prices are worked out from its base value and printed as one row of six figures in the annex - grain is 3 · 4 · 5 · 6 · 8 · 10 - so a price move is a step ALONG THAT ROW. The price you last wrote in the ledger is one of the six; the swing ruler says how many places to step; the figure you land on is the new price. There is nothing to multiply, no band index to remember and no bar to walk, which is what let the price ladder come off the market board without anything replacing it.",
     "playerTradeIsFree": true,
     "merchantStock": {
       "$comment": "When a player meets a merchant - on the road via a discovery roll, or by visiting a settlement - shuffle the item deck and deal this many cards face up. That is what is for sale this visit, at base value +10%. Bigger places carry deeper stock.",
       "roadside": 2, "village": 3, "town": 5, "city": 7, "seat": 9,
       "notes": "Tools may be bought the same way at any settlement with a blacksmith rank town or better: deal from the tool list instead."
     },
-    "notes": "Base values live on each commodity. Town price = baseValue x band. The spread is the house cut when trading with the board rather than another player. What moves a band is not here: it is data/pricing.json, because a die roll and a memory track are a system rather than a constant."
+    "notes": "Base values live on each commodity. Town price = baseValue at the band its bar stands on, and every commodity's six prices are printed out in full in the annex so that lookup is never a multiplication. The spread is the house cut when trading with the board rather than another player. What moves a band is not here: it is data/pricing.json, because a die roll and four kinds of goods are a system rather than a constant."
   },
 
   "infrastructure": {
@@ -129,7 +161,14 @@
     "limit": "strength x kgPerStrength, in kilograms. Characters use the strength on their card; any other figure uses its people's strength.base (peoples.json).",
     "marker": "None. There is no burden track any more and no token to walk: total what the figure is wearing, wielding and stowing, and it either fits under the limit printed on the card or it does not.",
     "limitRule": "A figure may not take up an item that would put its load over the limit. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
-    "notCarried": ["Commodities in transit, which travel by transport mode and are measured in bulk.", "Coin.", "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."],
+    "coin": {
+      "$comment": "Coin was on the list below - weightless, an abstraction, the one thing a figure could hold an unlimited quantity of. It is not any more. A gold coin weighs 25 grams (currency.massKgEach), forty to the kilogram, and it goes on the scales with the sword and the rope.\n\nWhat that buys is a real decision at the top of the game. A strength-3 figure shoulders 9 kg; a strength-6 one, 18. Spend that on plate and a greatsword and there is nothing left for a fortune, and a party that has just sold a hold of jewellery has to work out how it is getting the money home. Coin is not a number in a corner of the sheet any more, it is cargo.",
+      "massKgEach": "rules.currency.massKgEach",
+      "perKg": 40,
+      "counts": "Against the same limit as everything else. Total what the figure is wearing, wielding, stowing and carrying in its purse.",
+      "elsewhere": "Coin in a strongbox on a wagon is cargo like any other and is measured in bulk, not on a figure's back. Coin left in a town is not being carried by anybody."
+    },
+    "notCarried": ["Commodities in transit, which travel by transport mode and are measured in bulk.", "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."],
     "onZeroHealth": "A figure carried to a settlement at 0 health loses everything it was carrying on the way.",
     "notes": "Burden used to be a bar up the right edge of every character card and a track on the player board. Both are gone: the bar went when the cards took a summary strip across the top instead, and the track went when strength swallowed it."
   },
@@ -175,7 +214,7 @@
       "encounter": {
         "$comment": "What to DO with a discovery roll that turns up a living thing, which the tables have always produced and the rules have never said how to run. The answer is the one piece of furniture already on the table: a player board. The thing you met gets one, and for the length of the encounter it is a player - a player who is not a person.",
         "rule": "Shuffle the deck the result names - monsters for a beast, characters for a stranger on the road - and deal one card face up onto a spare player board, into the character recess.",
-        "setUp": "Set that board's tracks from the card exactly as a player sets their own at setup: health, strength, defence and mana off the printed strip. It now has everything a player has and is run the same way, by whoever is to the left of the player who drew it.",
+        "setUp": "Set that board's tracks from the card exactly as a player sets their own at setup: health, strength, pace and mana off the printed strip. Its armour is a number on the card and does not move, so nothing walks it. It now has everything a player has and is run the same way, by whoever is to the left of the player who drew it.",
         "boards": "Print one player board per player plus one for the table. The spare is the encounter board, and it is why the board is generic (playerboard.json board.generic): the furniture does not care whether a person or a wolf is sitting behind it.",
         "afterwards": "When the encounter ends the card is put away - back into its deck, or onto the hex as a lair, or into the winner's hand if it was befriended, enslaved or domesticated (monsters.json encounterOptions). Clear the board's tokens. Nothing about the encounter is written down.",
         "why": "A monster with a board is a monster whose health and strength are visible to everyone, walked down in front of the table rather than tracked in one player's head - and a stranger met on the road is set up exactly like a hero, because that is exactly what they are to themselves."
@@ -205,45 +244,62 @@
 
   "hirelings": {
     "where": "Hired at any inn, in any settlement of village rank or better.",
-    "$statsNote": "Every figure in a fight needs a strength and a defence, hirelings included - conflict.attack reads both off whoever is swinging and whoever is being swung at, and a hireling with neither cannot be attacked by the rules as written. These are the numbers printed on the inn's board, and they are what you are paying for: the thug is strong and careless, the militiaman is neither and is wearing a coat of plates, and the blade is better at both than either.",
+    "$statsNote": "Every figure in a fight needs a strength and something to swing, hirelings included - conflict.battle totals both off whoever is fighting. These are the numbers printed on the inn's board, and they are what you are paying for: the thug is strong and carries nothing, the militiaman is ordinary and is wearing a coat of plates, and the blade is better than either and rolls a third die.",
     "options": [
-      { "id": "thug", "name": "Thug", "coinPerJourney": 20, "strength": 4, "defence": 2, "combatDice": 1, "note": "Refuses to fight monsters of strength 4 or more. Counts as a soldier for escort purposes." },
-      { "id": "militia", "name": "Militiaman", "coinPerJourney": 35, "strength": 3, "defence": 4, "combatDice": 1, "armourValue": 1, "note": "Steady. Fights anything." },
-      { "id": "blade", "name": "Hired Blade", "coinPerJourney": 60, "strength": 5, "defence": 4, "combatDice": 2, "note": "Fights anything, and rolls first like a bow." }
+      { "id": "thug", "name": "Thug", "coinPerJourney": 20, "strength": 4, "armour": 0, "battle": 1, "note": "Refuses to fight monsters of strength 4 or more. Counts as a soldier for escort purposes." },
+      { "id": "militia", "name": "Militiaman", "coinPerJourney": 35, "strength": 3, "armour": 2, "battle": 1, "note": "Steady. Fights anything." },
+      { "id": "blade", "name": "Hired Blade", "coinPerJourney": 60, "strength": 5, "armour": 1, "battle": 2, "extraDie": true, "note": "Fights anything, and rolls a third blue die, keeping the best two." }
     ],
     "notes": "A hireling escorts one journey - a travelling party or a cargo in transit - then goes home. Hirelings eat no food; the fee is everything. An escorted cargo drops its theft risk to 0, same as a soldier escort. They do not eat and they do not sleep on your account either, so upkeep never touches them."
   },
 
   "conflict": {
-    "combatDie": "d6",
-    "hitsOn": 4,
+    "$comment": "A battle is ONE SUBTRACTION and it is the same subtraction the market makes.\n\nIt used to be a to-hit roll: one die per unit, hit on a 4, shifted by your strength and their defence, clamped at both ends, with armour cancelling hits after they landed. That is four numbers, two of them doing nearly the same job, and a table that had to remember which way the clamp went.\n\nNow both sides total up and the difference is the wound. You roll TWO BLUE dice and add your strength and your gear; the thing you are fighting rolls TWO RED and adds its own. Whoever is lower loses health equal to the gap. Blue is what you want, red is what stands in your way, and it is the identical gesture a player has already made once this round on the market board - two blue against two red, subtract, read the difference. One pair of colours, two systems, no second thing to learn.\n\nDEFENCE IS GONE. It was the half of the old strength that made a strong thing hard to hurt, and it was a good fix for a to-hit roll. In an opposed total there is nothing for it to do that armour was not already doing: a stone boar that barely swings and turns a sword is a low strength and a high armour, which is two numbers saying two things, where strength-and-defence was two numbers saying one.",
+    "battleDice": { "yours": "blue", "theirs": "red", "count": 2, "faces": 6 },
     "roundsPerBattle": 1,
     "retreatAllowed": true,
     "lootFraction": 0.25,
+    "battle": {
+      "$comment": "The one line of arithmetic printed on the player board, because it is the only one a player needs while a monster card is face up in front of them.",
+      "rule": "Both sides total strength, gear and dice. The lower total loses health equal to the difference.",
+      "formula": "yours = your strength + your gear + 2 blue dice · theirs = its strength + its armour + 2 red dice · the lower loses health = the difference",
+      "gear": "Your weapon's battle number plus every piece of armour you are wearing. A monster's gear is its armour and nothing else - its weapon is itself.",
+      "worked": [
+        "Strength 4 with a sword (+1) and a leather jerkin (+1) rolls 7 on the blue: 13. A cinder wolf, strength 2, armour 1, rolls 7 on the red: 10. The wolf takes 3 - and it has 4 health, so one more exchange finishes it.",
+        "The same character against Vhalrik, strength 7, armour 3, who rolls 8: 18 against 13. The character takes 5, which is half of what they have.",
+        "Equal totals wound nobody. Two figures who are the same and roll the same have had a fight and neither of them has anything to show for it, which is the honest answer."
+      ],
+      "ties": "A difference of nothing is no damage to anybody.",
+      "simultaneous": false,
+      "$simultaneousNote": "There is only one roll and only one loser, so hits are no longer applied both ways. Attacking is still never free: the dice decide who was better on the day, and being the attacker buys nothing at all.",
+      "extraDice": "A few cards grant an extra die of your own colour - Ruk's escort trait, a hired blade. Roll it and KEEP THE BEST TWO. It is the only place in the game where more dice are rolled than are counted, and it is worth about a point and a half.",
+      "appliesTo": "Any figure with a strength: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the numbers printed on the inn's board."
+    },
     "strength": {
-      "$comment": "One number, three jobs, and it is the only number a figure brings to a fight of its own. Strength is what you SWING WITH - it shifts the number you need to hit. It is what you CARRY WITH - see carrying.kgPerStrength. And it is still the threat threshold some rules read off a monster card. It is also the number a hard night takes off you (upkeep.night), which is what ties the three together: an exhausted figure hits worse and carries less, and that is one token moving down one track.",
+      "$comment": "One number, three jobs, and it is the only number a figure brings to a fight of its own. Strength is what you SWING WITH - it is the base of your side of the battle roll. It is what you CARRY WITH - see carrying.kgPerStrength. And it is still the threat threshold some rules read off a monster card. It is also the number a hard night takes off you (upkeep.night), which is what ties the three together: an exhausted figure fights worse and carries less, and that is one token moving down one track.",
       "scale": "0 to the board's ceiling (components.json board.track). Characters run 2 to 6, monsters 2 to 7.",
       "carries": "strength x carrying.kgPerStrength kilograms. The card prints the kilograms; the track holds the strength.",
-      "notDice": "Strength never adds dice. Weapons and armour add dice and soak hits, exactly as they did; +1 combat die is still +1 combat die.",
+      "inABattle": "It is added to your total, straight, once. It never adds dice - everyone rolls two, and the very few things that grant a third say so on their own card.",
       "threshold": "Unchanged and read off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges.",
       "atZero": "A figure at 0 strength does not fight and carries nothing."
     },
-    "defence": {
-      "$comment": "The other half, and new. Strength used to sit on both sides of the attack roll - yours off the board, theirs off the card - which made a strong thing hard to hurt for no reason other than that it hit hard. Those are different properties and they now have different numbers: an ash drake is strong AND armoured, a dust devil is neither and is still almost impossible to land a blow on, and a stone boar barely swings at all and turns a sword.",
-      "scale": "0 to the board's ceiling, same as every other track. Characters run 2 to 5, monsters 1 to 6.",
-      "isNot": "Armour. Armour is items.json armourValue and still soaks hits after they land; defence is what makes them miss in the first place. A figure can have both, and a figure in plate usually does.",
-      "atZero": "Nothing between the blow and you. An attacker needs only its own hitsOn, less its strength."
+    "armour": {
+      "$comment": "What is between you and the blow, and the only piece of gear a monster has. It used to be two things - DEFENCE, which stopped a hit landing, and ARMOUR, which cancelled it after it had. In an opposed total there is no difference between those two sentences: both of them are a number that makes the other side's roll less likely to hurt you. So there is one number, it is called armour, and a monster's hide is on the same field as a suit of plate.",
+      "scale": "0 upward. A worn suit runs 1 to 3, and a figure wearing body, head and off-hand can reach 5. Monsters run 0 to 3.",
+      "adds": "Straight to your battle total, once per piece worn.",
+      "wears": "One wear point per round of battle, on every piece worn - see rules.json wear. A blow you turned still dented the plate.",
+      "$monsterNote": "A monster's armour is what its card prints in the A box, and it is the whole of the old defence rescaled: an ash drake is strong AND armoured, a rime harpy is neither, and a stone boar barely swings and still turns a sword."
     },
-    "attack": {
-      "$comment": "The one line of arithmetic printed on the player board, because it is the only one a player needs while a monster card is face up in front of them. It is a DIFFERENCE, which is what lets one number on the board and one number on the card settle the whole roll.",
-      "rule": "Shift the number you need: less your own strength, plus their defence.",
-      "formula": "target = hitsOn + opponentDefence - yourStrength",
-      "worked": "Strength 3 against defence 3: 4+. Strength 5 against defence 3: 2+. Strength 2 against defence 5: 6+.",
-      "clamp": [2, 6],
-      "clampNote": "Never better than 2+ and never worse than 6+. A fight is never decided before the dice are thrown - Vhalrik at defence 6 is terrifying, not arithmetic, and the halfling still lands one in six.",
-      "appliesTo": "Any figure with a strength and a defence: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the numbers printed on the inn's board."
+    "flee": {
+      "$comment": "The option a party has always had, and now the one it has to earn. Fleeing used to be free - withdraw the way you came, lose your discovery roll, done - which made every monster optional and most of them decorative. You have to be FASTER than the thing you are running from, and half the bestiary is faster than a person on foot.",
+      "rule": "A party may run only if its pace is GREATER than the monster's. Equal is not greater: a thing that matches you stays with you.",
+      "pace": "The party's pace for the leg it is on - the number on the P track, off travel.json for its mode and the ground. The monster's is printed on its card.",
+      "succeeds": "Withdraw the way you came and end your movement. No discovery roll this leg, and nothing is looted.",
+      "refused": "A party that cannot outpace the monster may not decline the fight. It may still befriend it, or offer it something, or die.",
+      "cargo": "Monsters of strength 4 or more get one free round of the battle roll against a fleeing cargo vehicle, whatever its pace.",
+      "$whyNote": "It puts a road, a horse and a night's sleep into the same decision as a sword. A mounted party outruns nearly everything; a party on foot at the end of a hard week has a pace of 2 and outruns a mire strangler and nothing else."
     },
-    "notes": "Attacker and defender each roll one die per unit, modified by weapons and armour, and hit on the number the strength-against-defence difference leaves them needing. Both sides apply hits simultaneously."
+    "notes": "One roll, one loser, one wound. Both sides total strength, gear and dice; the lower total loses health equal to the difference; and a tie hurts nobody."
   },
 
   "victory": {

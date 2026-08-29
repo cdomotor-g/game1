@@ -1,5 +1,5 @@
 {
-  "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with AND what it carries with: kilograms are strength x rules.carrying.kgPerStrength, so a people's carrying is not a second number and never was. defence.base is what makes a blow miss, which is a different property from hitting hard and now has a number of its own. A character card prints its own strength and defence, that base adjusted for build and calling, in the summary strip across the top.",
+  "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with AND what it carries with: kilograms are strength x rules.carrying.kgPerStrength, so a people's carrying is not a second number and never was. There is no defence.base any more - defence went when the to-hit roll it shifted went, and what stands between a figure and a blow is the armour it is wearing (rules.json conflict.armour), which is a thing a people is not born with. A character card prints its own strength, that base adjusted for build and calling, in the summary strip across the top.",
   "version": "0.3.0",
   "peoples": [
     {
@@ -11,7 +11,6 @@
       ],
       "foodPreference": [], "terrainComfort": ["grassland", "forest", "hills"],
       "strength": { "base": 3, "note": "The middle of every scale, this one included - a human wins no fight on build alone." },
-      "defence": { "base": 3, "note": "The middle of every scale, this one included - a human neither turns a blow nor invites one." },
       "manaStorage": { "innate": 0, "note": "A human body holds no mana. Every drop lives in a talisman." }
     },
     {
@@ -26,7 +25,6 @@
       ],
       "foodPreference": ["mead", "meat", "mushrooms"], "terrainComfort": ["mountain", "hills", "tundra"],
       "strength": { "base": 4, "note": "Low, braced and used to swinging something heavy in a confined space." },
-      "defence": { "base": 3, "note": "Low and braced. A dwarf is hard to knock over, which is most of what defence is." },
       "manaStorage": { "innate": 0, "note": "Dwarves distrust mana in the flesh and keep it in worked metal, where it belongs." }
     },
     {
@@ -40,7 +38,6 @@
       ],
       "foodPreference": ["berries", "wine", "vegetables"], "terrainComfort": ["forest", "hills", "grassland"],
       "strength": { "base": 2, "note": "An elf fights with reach and timing. Strength is the one contest they decline." },
-      "defence": { "base": 3, "note": "Reach and timing, which is the contest they DO win - an elf is missed far more often than an elf is strong." },
       "manaStorage": { "innate": 3, "note": "An elf may hold up to 3 mana in the body; anything beyond that needs a talisman like everyone else." }
     },
     {
@@ -54,7 +51,6 @@
       ],
       "foodPreference": ["bread", "cheese", "ale", "apples"], "terrainComfort": ["grassland", "forest"],
       "strength": { "base": 2, "note": "Small, and entirely uninterested in being told about it." },
-      "defence": { "base": 3, "note": "A small target, and entirely willing to be one." },
       "manaStorage": { "innate": 0, "note": "Halflings hold no mana and are privately relieved about it." }
     },
     {
@@ -68,7 +64,6 @@
       ],
       "foodPreference": ["meat", "salted-meat", "ale"], "terrainComfort": ["hills", "marsh", "tundra", "mountain"],
       "strength": { "base": 5, "note": "The strongest arm any figure in the game brings to a fight." },
-      "defence": { "base": 4, "note": "Thick-hided, and used to being hit by things that meant it." },
       "manaStorage": { "innate": 0, "note": "An orc who wants mana takes a talisman from someone who had one." }
     }
   ],

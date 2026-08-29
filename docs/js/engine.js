@@ -8,7 +8,7 @@
  * What it implements faithfully: effort dice, tool durability, recipe inputs and
  * outputs, fuel choice, maturation, construction tracks with a minimum-rounds
  * floor, storage caps, feeding and unrest, and the whole of data/pricing.json —
- * the red, blue and green dice, the swing ruler, and the tally and memory that
+ * the blue, red, green and ochre dice, the swing ruler, and the four kinds of good that
  * every market line remembers between rounds.
  *
  * What it fakes, and where the tabletop rule differs, is marked SIMPLIFIED.
@@ -95,11 +95,12 @@
       modifiers: [],
       event: null,
       /* One market line per commodity, exactly as the market board has one:
-         where the price token stands, where the memory bar stands, where the
-         tally bar stands, and how many the board will still sell this round. */
+         which band the price stands on, how many places it moved LAST round
+         (which is the whole of a sought good's memory), how many pips are on its
+         depletion grid, and how many the board will still sell this round. */
       bands: {},
-      memory: {},
-      tally: {},
+      lastMove: {},
+      depletion: {},
       discharged: {},
       marketStock: {},
       log: [],
@@ -117,10 +118,17 @@
 
   const nextUid = (s) => ++s.uid;
 
+  /**
+   * How much wear a tool has in it, and it no longer depends on its size.
+   *
+   * A size used to multiply durability as well as output. It does not: a bigger
+   * loom is a FASTER loom, not a longer-lived one - and a multiplied wear number
+   * is a number the board's ceiling sweep cannot see, because it never appears in
+   * the data at the size it is actually walked at (rules.json tools.$sizesNote).
+   */
   function toolMax(tool) {
     const def = D.byId.tool.get(tool.id);
-    const size = R.tools.sizes.find((x) => x.id === tool.size) || R.tools.sizes[0];
-    return Math.round(def.baseDurability * size.durabilityMultiplier);
+    return def ? def.baseWear : 0;
   }
 
   function toolOutputMultiplier(tool) {
@@ -332,8 +340,13 @@
 
     const { recipe, variant, fuel, hours, bonus } = job;
 
-    for (const i of variant.inputs) take(state, i.commodity, i.qty);
-    if (fuel) for (const i of fuel.inputs) take(state, i.commodity, i.qty);
+    /* THE ONE PLACE A PIP GOES ON A DEPLETION GRID. A recipe's inputs and its
+       fuel are CONSUMED - they are gone out of the game, not moved across a
+       table - and consumption is the only thing a finite seam notices. spend()
+       is a no-op for the three kinds of good that are not finite, so this does
+       not have to know which is which. */
+    for (const i of variant.inputs) { take(state, i.commodity, i.qty); spend(state, i.commodity, i.qty); }
+    if (fuel) for (const i of fuel.inputs) { take(state, i.commodity, i.qty); spend(state, i.commodity, i.qty); }
     state.effortSpent += hours;
 
     let multiplier = peopleBonus(state, recipe);
@@ -341,8 +354,12 @@
     if (recipe.tool) {
       tool = findTool(state, recipe.tool);
       multiplier = toolOutputMultiplier(tool);
-      const wearRate = state.peopleId === 'orc' ? 2 : R.tools.wearPerEffortHour;
-      tool.wear = Math.min(tool.max, tool.wear + hours * wearRate);
+      /* ONE WEAR POINT A JOB, not one an hour. A worker who spends nine hours
+         felling timber has run one job and blunted one axe by one - which is why
+         the numbers came down to the board's 0-14 scale without anything getting
+         shorter-lived (rules.json wear). Orcs are still hard on their tools. */
+      const wearRate = state.peopleId === 'orc' ? 2 : R.tools.wearPerJob;
+      tool.wear = Math.min(tool.max, tool.wear + wearRate);
       if (tool.wear >= tool.max) {
         log(state, 'bad', `The ${D.name('tool', tool.id)} breaks after ${D.name('recipe', recipe.id)}.`);
         state.tools = state.tools.filter((t) => t.uid !== tool.uid);
@@ -354,7 +371,7 @@
     // Optional tools: not required, but they wear down like any other when used.
     if (bonus) {
       multiplier *= (bonus.spec.outputMultiplier || 1) * toolOutputMultiplier(bonus.tool);
-      bonus.tool.wear = Math.min(bonus.tool.max, bonus.tool.wear + hours * R.tools.wearPerEffortHour);
+      bonus.tool.wear = Math.min(bonus.tool.max, bonus.tool.wear + R.tools.wearPerJob);
       if (bonus.tool.wear >= bonus.tool.max) {
         state.tools = state.tools.filter((t) => t.uid !== bonus.tool.uid);
         log(state, 'bad', `The ${D.name('tool', bonus.tool.id)} wears out.`);
@@ -502,7 +519,7 @@
 
     if (tool) {
       const t = findTool(state, tool);
-      t.wear = Math.min(t.max, t.wear + hours * R.tools.wearPerEffortHour);
+      t.wear = Math.min(t.max, t.wear + R.tools.wearPerJob);
       if (t.wear >= t.max) {
         state.tools = state.tools.filter((x) => x.uid !== t.uid);
         log(state, 'bad', `The ${D.name('tool', tool)} breaks on the ${D.name('building', site.id)} site.`);
@@ -517,15 +534,22 @@
   /* ------------------------------------------------------------- the market */
 
   /*
-   * data/pricing.json, played. The tabletop rule is: roll two red dice for
-   * demand and two blue for supply, add the line's memory, multiply by the
-   * green die, read the net on the swing ruler and walk the price token that
-   * many bands. Everything below is that, with the dice rolled by the engine's
-   * own RNG so a seed replays a market exactly.
+   * data/pricing.json, played. The tabletop rule is one line of ADDITION: roll
+   * two blue dice for demand and two red for supply, add the green die's
+   * volatility, add whatever the good's own nature adds, read the net on the
+   * swing ruler and step the price that many places along its own printed row of
+   * six. Everything below is that, with the dice rolled by the engine's own RNG
+   * so a seed replays a market exactly.
    *
-   * NOTHING here is a number this file invented. The bands are rules.json, the
-   * dice, the ruler, the memory range and the three models are pricing.json,
-   * and the model a commodity runs under is on the commodity.
+   * Nothing multiplies. There used to be a green die that doubled or halved the
+   * swing and rounded it toward zero, and a memory strip that had to be folded in
+   * BEFORE that multiplication - three chances to slip in one line, and the only
+   * arithmetic in the game a table could get wrong. The die adds now.
+   *
+   * NOTHING here is a number this file invented. The bands are rules.json; the
+   * dice, the ruler, the volatility strip, the spoil strip, the depletion ladder
+   * and the four kinds of good are pricing.json; and which kind a commodity is
+   * lives on the commodity.
    */
   const P = D.pricing;
   const modelOf = (commodityId) => {
@@ -539,83 +563,112 @@
     return total;
   };
   const diceSet = (id) => P.dice.sets.find((d) => d.id === id);
-  const towardZero = (n) => (n < 0 ? Math.ceil(n) : Math.floor(n));
   const rulerMove = (net) => {
     const bin = P.ruler.bins.find((b) => net >= b.from && net <= b.to);
     return bin ? bin.move : 0;
   };
 
-  /** Setup: every token on the starting band, both bars at their zero, and one
-      supply roll each so the board has something to sell in round one. */
+  /**
+   * What a finite commodity's depletion grid currently reads: the lowest number
+   * still visible on it.
+   *
+   * The grid is `per` cells to a row and each row is worth `step`, so covering a
+   * whole row is what puts the number up. A player at the table does not compute
+   * this - they look at the grid and read the smallest figure they can still see -
+   * and this is that reading, done in arithmetic because a program has no eyes.
+   */
+  function depletionModifier(state, commodityId) {
+    const pips = state.depletion[commodityId] ?? 0;
+    return clamp(Math.floor(pips / P.depletion.per) * P.depletion.step, 0, P.depletion.top);
+  }
+
+  /**
+   * A PIP GOES ON THE GRID WHEN A UNIT IS BURNT, NEVER WHEN ONE IS TRADED.
+   *
+   * That distinction is the whole of the finite model. Selling coal to a town
+   * moves coal; feeding it to a furnace destroys coal, and only the furnace is
+   * something a seam notices. A merchant who never lights a fire can trade the
+   * same hundred tons all game and the price will not move an inch for it.
+   *
+   * So this is called from wherever a commodity is CONSUMED - a recipe eating its
+   * inputs, an engine burning its fuel - and from nowhere in trade().
+   */
+  function spend(state, commodityId, qty) {
+    const c = D.byId.commodity.get(commodityId);
+    if (!c) return;
+    const model = P.models.find((m) => m.id === c.pricing);
+    if (!model || !model.tokensOnUse) return;
+    state.depletion[commodityId] = (state.depletion[commodityId] ?? 0) + qty;
+  }
+
+  /** Setup: every price on the starting band, no grid touched, nothing moved
+      yet, and one supply roll each so the board has something to sell in round one. */
   function dealTheBoard(state) {
     for (const c of D.commodities) {
       state.bands[c.id] = R.market.startingBandIndex;
-      state.memory[c.id] = P.memory.start;
-      state.tally[c.id] = P.memory.tally.start;
-      state.discharged[c.id] = false;
+      state.lastMove[c.id] = 0;
+      state.depletion[c.id] = 0;
       state.marketStock[c.id] = rollDice(state, diceSet('supply'));
     }
+  }
+
+  /**
+   * What a good's own nature adds to the swing. Three of the four add nothing,
+   * and the two that do read it off something that is already on the table for
+   * another reason - the grid the pips were going on anyway, or the move box that
+   * was written down anyway. Nothing is remembered and nothing extra is tracked.
+   */
+  function modifierOf(state, commodityId) {
+    const model = modelOf(commodityId);
+    if (typeof model.modifier === 'number') return model.modifier;
+    if (model.id === 'deplete') return depletionModifier(state, commodityId);
+    if (model.id === 'hype') {
+      return clamp(state.lastMove[commodityId] ?? 0, P.sought.from, P.sought.to);
+    }
+    return 0;
   }
 
   /** One line's market, rolled and read. Returns what happened, for the log. */
   function rollLine(state, commodityId) {
     const demand = rollDice(state, diceSet('demand'));
     const supply = rollDice(state, diceSet('supply'));
-    const green = rollDice(state, diceSet('elasticity'));
-    const step = P.elasticity.steps.find((s) => s.faces.includes(green)) || P.elasticity.steps[0];
-    const memory = state.memory[commodityId] ?? 0;
-    const net = towardZero((demand - supply + memory) * step.multiply);
+    const green = rollDice(state, diceSet('volatility'));
+    const step = P.volatility.steps.find((s2) => s2.faces.includes(green)) || P.volatility.steps[0];
+    const modifier = modifierOf(state, commodityId);
+    const net = (demand - supply) + step.add + modifier;
 
     const was = state.bands[commodityId] ?? R.market.startingBandIndex;
     const top = R.market.priceBands.length - 1;
     const now = clamp(was + rulerMove(net), 0, top);
     state.bands[commodityId] = now;
+    /* The move box on the ledger row, which is next round's modifier for a sought
+       good and a record of the season for everybody else. */
+    state.lastMove[commodityId] = now - was;
     /* The board sells no more than it has: this round's supply roll is the cap,
        and buying draws it down (pricing.json stockCap). */
     state.marketStock[commodityId] = supply;
-    return { demand, supply, green, step, memory, net, moved: now - was };
+    return { demand, supply, green, step, modifier, net, moved: now - was };
   }
 
   /**
-   * What the market learned this round. Three rules, one per model, and each of
-   * them is a piece of wood being moved on a printed strip — there is nothing
-   * here a table could not do without writing anything down.
-   */
-  function updateMemory(state, commodityId, moved) {
-    const model = modelOf(commodityId);
-    const range = model.memory;
-    const t = model.tally;
-    let mem = state.memory[commodityId] ?? 0;
-
-    if (range.followsPrice) {
-      /* Hype: the memory moves in the same gesture as the price token. */
-      if (moved > 0) mem += 1;
-      else if (moved < 0) mem -= 1;
-      else if (range.decayToZero === 'no-move') mem -= Math.sign(mem);
-    } else if (t.uses && range.decayToZero === 'quiet-tally' && !state.discharged[commodityId]) {
-      /* Glut: a market forgets last year's glut as soon as it stops being dumped
-         on. The discharge itself is not here — it happened in the trade that
-         caused it (walkTally), which is where a hand would have done it. */
-      mem -= Math.sign(mem);
-    }
-    state.discharged[commodityId] = false;
-    state.memory[commodityId] = clamp(mem, range.from, range.to);
-  }
-
-  /**
-   * The Market phase: every line rolled, then every line's memory updated.
+   * The Market phase: every line rolled, and nothing updated afterwards.
    *
-   * The printed board holds six lines and a town trades six commodities; a
-   * sandbox has no such limit, so it rolls all of them and reports only what
-   * the player is holding or what moved furthest. Every line is rolled either
-   * way — a market you are not watching still moves, which is the whole point
-   * of it being a market rather than a price list.
+   * There used to be a second pass here - updateMemory, one rule per model,
+   * walking a bar along a printed strip. There is no strip and there is no second
+   * pass: a sought good's memory is the move this roll just made, which is
+   * written down as part of making it, and every other kind of good remembers
+   * nothing at all.
+   *
+   * The printed ledger holds six columns and a town trades six commodities; a
+   * sandbox has no such limit, so it rolls all of them and reports only what the
+   * player is holding or what moved furthest. Every line is rolled either way - a
+   * market you are not watching still moves, which is the whole point of it being
+   * a market rather than a price list.
    */
   function rollMarket(state) {
     const moved = [];
     for (const c of D.commodities) {
       const roll = rollLine(state, c.id);
-      updateMemory(state, c.id, roll.moved);
       if (roll.moved) moved.push({ c, roll });
     }
     const mine = moved.filter((m) => (state.stock[m.c.id] ?? 0) > 0);
@@ -628,10 +681,44 @@
         `Market: ${c.name} ${roll.moved > 0 ? 'up' : 'down'} ${Math.abs(roll.moved)} ` +
         `band${Math.abs(roll.moved) === 1 ? '' : 's'} to ×${bandNow} ` +
         `(D${roll.demand} S${roll.supply} ${roll.step.label}` +
-        `${roll.memory ? `, memory ${roll.memory > 0 ? '+' : ''}${roll.memory}` : ''}).`);
+        `${roll.modifier ? `, ${modelOf(c.id).name.toLowerCase()} ${roll.modifier > 0 ? '+' : ''}${roll.modifier}` : ''}).`);
     }
     log(state, '', `Market: ${moved.length} of ${D.commodities.length} lines moved.`);
     return moved;
+  }
+
+  /**
+   * THE SPOIL CHECK, at the end of the round, on everything a player is still
+   * holding that will not keep.
+   *
+   * It replaced a countdown - every perishable used to carry a number of rounds
+   * it kept for, which meant a token per stack with an age on it and somebody
+   * having to remember when the fish arrived. A die at the end of the round asks
+   * the same question and needs nothing written down.
+   *
+   * A stack reads the right-hand column of the strip if the commodity keeps badly
+   * (perishRounds under the threshold) and the left if it keeps well, and it
+   * cannot lose more than it holds.
+   */
+  function rollSpoil(state) {
+    const lost = [];
+    for (const c of D.commodities) {
+      const model = P.models.find((m) => m.id === c.pricing);
+      if (!model || !model.spoils) continue;
+      const held = state.stock[c.id] ?? 0;
+      if (held <= 0) continue;
+      const face = rollDice(state, diceSet('spoil'));
+      const step = P.spoil.steps.find((s2) => s2.faces.includes(face)) || P.spoil.steps[0];
+      const poorly = (c.perishRounds ?? 99) < P.spoil.keepsThreshold;
+      const n = Math.min(held, poorly ? step.keepsPoorly : step.keepsWell);
+      if (!n) continue;
+      state.stock[c.id] = held - n;
+      lost.push({ c, n, face });
+    }
+    for (const { c, n, face } of lost) {
+      log(state, 'bad', `Spoiled: ${n} ${c.name.toLowerCase()} (ochre ${face}).`);
+    }
+    return lost;
   }
 
   /** Everything a market line is holding right now, for the sandbox to show. */
@@ -639,8 +726,9 @@
     const model = modelOf(commodityId);
     return {
       band: state.bands[commodityId] ?? R.market.startingBandIndex,
-      memory: state.memory[commodityId] ?? 0,
-      tally: state.tally[commodityId] ?? 0,
+      lastMove: state.lastMove[commodityId] ?? 0,
+      modifier: modifierOf(state, commodityId),
+      depletion: state.depletion[commodityId] ?? 0,
       stock: state.marketStock[commodityId] ?? 0,
       model,
     };
@@ -654,34 +742,81 @@
 
   const hasFreeMarket = (state) => ownedBuilding(state, 'trading-house') || hasSpecialist(state, 'merchant');
 
+  /* ------------------------------------------------------------- the battle */
+
   /**
-   * The tally bar, walked as the trade happens. A glut line takes stock on when
-   * you sell to it and gives it back when you buy; a depletion line takes it on
-   * and never gives it back, because the ore is out of the ground. Which of
-   * those it is comes off the commodity's model, never off a special case here.
+   * data/rules.json conflict.battle, played. ONE SUBTRACTION, and it is the same
+   * subtraction the market makes: you roll BLUE and add your strength and your
+   * gear, the thing you are fighting rolls RED and adds its own, and whoever is
+   * lower loses health equal to the gap.
+   *
+   * A tie wounds nobody, which is the honest answer: two figures who are the same
+   * and roll the same have had a fight and neither has anything to show for it.
+   *
+   * `extraDie` is the one place in the game where more dice are rolled than are
+   * counted - roll one more of your own colour and keep the best two. It is worth
+   * about a point and a half, and it belongs to the premium tier of weapon and to
+   * the hired blade.
    */
-  function walkTally(state, commodityId, when, qty) {
-    const model = modelOf(commodityId);
-    const t = model.tally;
-    if (!t.uses || !t[when]) return;
-    const { from, to } = P.memory.tally;
-    const capacity = to - from + 1;
-    let n = (state.tally[commodityId] ?? from) + t[when] * qty;
-    /* A ratchet, not a clamp. The token that would take the bar off the end of
-       the strip instead takes it back to empty and moves the memory one cell,
-       and whatever is left over starts the next tally — so the capacity is the
-       number of CELLS, and nothing is lost to a bar with nowhere further to go. */
-    while (n > to) {
-      n -= capacity;
-      state.memory[commodityId] = clamp(
-        (state.memory[commodityId] ?? 0) + t.dischargeStep, model.memory.from, model.memory.to
-      );
-      /* Remembered only until the next Market phase reads it. A tally that has
-         just discharged is standing on empty for the OPPOSITE reason to a tally
-         nobody touched, and the decay below must be able to tell them apart. */
-      state.discharged[commodityId] = true;
+  function battleRoll(state, dice) {
+    const faces = R.conflict.battleDice.faces;
+    const count = R.conflict.battleDice.count;
+    const rolls = [];
+    for (let i = 0; i < dice; i++) rolls.push(1 + Math.floor(state.rng() * faces));
+    rolls.sort((a, b) => b - a);
+    return rolls.slice(0, count).reduce((n, r) => n + r, 0);
+  }
+
+  /** What a side brings besides its dice: strength, plus a weapon, plus armour. */
+  function battleGear(side) {
+    const kit = side.items || [];
+    let gear = side.armour ?? 0;
+    let extra = side.extraDie ? 1 : 0;
+    for (const id of kit) {
+      const it = D.byId.item ? D.byId.item.get(id) : null;
+      if (!it) continue;
+      gear += (it.battle ?? 0) + (it.armour ?? 0);
+      if (it.extraDie) extra = 1;
     }
-    state.tally[commodityId] = Math.max(from, n);
+    return { gear, extra };
+  }
+
+  /**
+   * One exchange. `you` and `them` are anything with a strength - a character, a
+   * monster, a hireling - plus optionally `items` (ids), `armour` and `extraDie`.
+   * Returns who lost and by how much; the loser takes that much health.
+   */
+  function battle(state, you, them) {
+    const base = R.conflict.battleDice.count;
+    const mine = battleGear(you);
+    const theirs = battleGear(them);
+    const yours = (you.strength ?? 0) + mine.gear + battleRoll(state, base + mine.extra);
+    const its = (them.strength ?? 0) + theirs.gear + battleRoll(state, base + theirs.extra);
+    const diff = Math.abs(yours - its);
+    return {
+      yours, theirs: its,
+      wounded: yours === its ? null : (yours > its ? 'them' : 'you'),
+      damage: yours === its ? 0 : diff,
+    };
+  }
+
+  /**
+   * Whether a party may run at all. It is a footrace and the monster's card
+   * prints its half of it: equal is not greater, because a thing that matches you
+   * stays with you.
+   */
+  const canFlee = (partyPace, monster) => partyPace > (monster.pace ?? 0);
+
+  /**
+   * What a slain monster is worth: the LESSER of the number in its Y box and a
+   * roll of the purple mana die. The yield is a ceiling, never a payment - which
+   * is what stopped the biggest fight in the game being an errand with a known
+   * price on it.
+   */
+  function manaFrom(state, monster) {
+    const die = D.arcana && D.arcana.manaDie ? D.arcana.manaDie : { faces: 6 };
+    const roll = 1 + Math.floor(state.rng() * die.faces);
+    return Math.min(monster.manaYield ?? 0, roll);
   }
 
   function trade(state, commodityId, qty, side) {
@@ -704,13 +839,13 @@
       state.coin -= total;
       give(state, commodityId, qty);
       state.marketStock[commodityId] -= qty;
-      walkTally(state, commodityId, 'onBuy', qty);
+      /* No pip goes on any grid here. Trading moves a commodity; it does not
+         spend one, and a seam only ever notices the spending - see spend(). */
       log(state, '', `Bought ${qty} ${D.name('commodity', commodityId)} for ${total}${R.currency.symbol}.`);
     } else {
       if (!has(state, commodityId, qty)) return fail(state, 'Not enough in the stockpile.');
       take(state, commodityId, qty);
       state.coin += total;
-      walkTally(state, commodityId, 'onSell', qty);
       log(state, 'good', `Sold ${qty} ${D.name('commodity', commodityId)} for ${total}${R.currency.symbol}.`);
     }
     return true;
@@ -888,20 +1023,15 @@
     // 4. feeding — before spoilage, because you eat the fresh food first.
     feed(state);
 
-    // 5. spoilage
-    // SIMPLIFIED: the tabletop game ages each batch and loses it after `perishRounds`.
-    // Tracking batch ages needs board space the sandbox does not have, so what is
-    // left after the meal loses a quarter of its stack, unless a granary shelters it.
-    let sheltered = countBuilding(state, 'granary') * (D.byId.building.get('granary').storage || 0);
-    for (const id of Object.keys(state.stock)) {
-      const c = D.byId.commodity.get(id);
-      if (!c || !c.perishRounds) continue;
-      const bulk = c.bulk * state.stock[id];
-      if (sheltered >= bulk) { sheltered -= bulk; continue; }
-      const lost = Math.ceil(state.stock[id] * 0.25);
-      take(state, id, lost);
-      log(state, 'bad', `${lost} ${c.name} spoiled.`);
-    }
+    // 5. spoilage — the ochre die, once per perishable stack still held.
+    //
+    // This used to be an approximation and it is not any more. The tabletop game
+    // ONCE aged each batch and lost it after `perishRounds`, which needed a token
+    // per stack with an age on it, so this file lost a flat quarter instead and
+    // said so. Both are gone: the rule is a die roll now (pricing.json spoil),
+    // which is exactly as easy at a table as it is here, and this plays the
+    // printed rule rather than an approximation of a rule nobody liked.
+    rollSpoil(state);
 
     // 6. the Market phase
     rollMarket(state);
@@ -1006,7 +1136,8 @@
   global.Engine = {
     newGame, startRound, endRound,
     jobs, runJob, foundSite, workSite, buildOptions, buildRateFor,
-    trade, priceOf, marketOf, rollMarket, craftTool, buyTool, trainSpecialist,
+    trade, priceOf, marketOf, rollMarket, rollSpoil, spend, craftTool, buyTool, trainSpecialist,
+    battle, canFlee, manaFrom, depletionModifier,
     score, usedSlots, capacity, remainingEffort, findTool, ownedBuilding,
     toolMax,
   };

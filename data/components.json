@@ -40,19 +40,22 @@
     "rule": { "strokeWidth": 1.4, "$note": "The strip sits in one boxed row under the kicker, each cell ruled ONCE, so it reads as a table and not as a sentence. There is no second rule inside a cell: the letter and its figure are one pair in one box." },
 
     "letters": {
-      "$comment": "The letter a stat is called by, across the whole game. The five that the player board also has a track for MUST match data/playerboard.json - tools/validate-data.mjs checks that they do, and fails the build if a card and a board ever start calling the same number by different names. The rest are card-only: a number that is printed and never walked has no track to borrow a letter from, so it gets one here.\n\nThese are conventions, not content: no card is named here and no value is stated here.",
+      "$comment": "The letter a stat is called by, across the whole game. The ones the player board also has a track for MUST match data/playerboard.json - tools/validate-data.mjs checks that they do, and fails the build if a card and a board ever start calling the same number by different names. The rest are card-only: a number that is printed and never walked has no track to borrow a letter from, so it gets one here.\n\nThe list is at its high-water mark of borrowed letters. H, S, P, M and W are all board tracks now - W joined them when wear came off the tool and onto four ladders against the kit slots - and D left the list altogether when defence did. A card-only letter is a promise that nothing moves; a track letter is a promise that something does; and the only thing that has ever moved a letter between the two lists is a rule changing underneath it.\n\nThese are conventions, not content: no card is named here and no value is stated here.",
       "health": "H",
       "strength": "S",
-      "defence": "D",
+      "pace": "P",
       "mana": "M",
+      "wear": "W",
+      "armour": "A",
       "gold": "\u00a4",
       "carry": "KG",
       "cargo": "C",
       "yield": "Y",
       "value": "\u00a4",
       "mass": "KG",
-      "wear": "W",
-      "$wearNote": "How much work is left in a tool before it is finished - tools.json baseDurability. It is the one printed maximum in the game with no track under it, and it is not going to get one: it runs past twenty, the board stops at fourteen, and an axe wearing out is counted on the axe rather than walked on the board (data/playerboard.json ceiling).",
+      "$wearNote": "How much work is left in a thing before it is finished - items.json wear, tools.json baseWear. This note used to say the opposite of what it says now: that W was the one printed maximum in the game with no track under it and never would get one, because wear ran past twenty and the board stops at fourteen. There are four tracks under it now, one against each kit slot (data/playerboard.json), and wear runs to fourteen. The number came down to meet the board, which is how this game has always settled that argument - it is what the kilogram did when a hero could not stand their own load on the ladder.",
+      "$armourNote": "What a figure adds to its side of the battle roll besides its own strength, and it is CARD-ONLY: no token walks it, because it does not move. A monster prints it. A character does not - a character's armour is the gear in the kit slots and changes every time they put something down - so it is the one number on a monster card with no track under it, and the ceiling sweep leaves it alone for exactly that reason (playerboard.json ceiling.$notWalked).",
+      "$defenceNote": "There is no D any more. Defence was a rating that shifted a to-hit roll, and there is no to-hit roll: a battle is one opposed total (rules.json conflict.battle), in which a number that makes you harder to hit and a number that soaks the hit are the same number. It is called armour and it is above.",
       "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so."
     }
   },
@@ -73,17 +76,30 @@
     "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6,
       "$note": "A4 landscape. The corner is bigger than a card's because the sheet is bigger; a board cut square looks like a print-out, which is exactly what it would be." },
 
-    "marginMm": 8,
-    "gutterMm": 6,
-    "$marginNote": "One margin, all four sides - with no border to clear, nothing needs a wider side than any other. 8 mm is the least a home printer can be trusted to put ink inside.",
+    "marginMm": 6,
+    "gutterMm": 4,
+    "$marginNote": "One margin, all four sides - with no border to clear, nothing needs a wider side than any other. Both came in by two when the board had to find room for four wear ladders it did not have before. 6 mm is still inside what a home printer can be trusted with, and 4 mm is still wider than a finger reaching between two cards needs, because the thing either side of a gutter is a recess a card sits IN rather than a card sitting proud of the paper.\n\nWhat the tightening bought, exactly: the four column tracks come out over 15 mm wide, against the 13.6 that five of them managed on the old margins. So the board gained four wear ladders AND wider columns in one change - which is not luck, it is what deriving the geometry is for. Take a column out of the middle, give two millimetres back at the edges, and the arithmetic hands the difference to whatever is left standing.",
+    "kitTrack": {
+      "$comment": "The WEAR ladder against each kit recess: a narrow numbered strip, one per slot, walked by a pip (tokens.pip). What it counts is content and lives in data/playerboard.json as the track with place `kit`; this is only its shape.\n\nIt is the first thing on this board that is not about the figure in the big recess. The four columns up the middle belong to whoever is sitting there; these four belong to the CARDS - the axe, the sword, the lantern - and they are drawn against the card they count so nobody has to remember which ladder is which. That is also why there are four of them and not one: a player carries four things, and one W column could only ever have counted one of them.\n\nNothing below is a position. The ladder is as wide as the piece that stands on it plus its clearance, exactly as a market strip cell was; it is as TALL as the recess beside it, so its rungs are the card's height over the board's own rung count. Change the pip and the ladder widens and the columns narrow, in that order, and the build fails before a column gets too narrow for a bar.",
+      "clearanceMm": 1.2,
+      "gapMm": 1.5,
+      "$gapNote": "Between the ladder and the recess it belongs to. Just enough that the ladder does not read as part of the card's own groove, and not so much that it could be mistaken for the neighbour's.",
+      "side": "left",
+      "$sideNote": "The ladder goes on the LEFT of its recess, so it is read before the card rather than after it - and so the two ladders in the right-hand column are not jammed against the edge of the paper.",
+      "strokeWidth": 1.2,
+      "cellStrokeWidth": 0.6,
+      "labelMm": 3.4,
+      "$rungNote": "Fifteen rungs down an 88 mm recess is just under six millimetres a rung, which is why the piece that walks it is a 4.5 mm pip and not a 7 mm bar. Every fifth rung rules heavier and carries its figure, the same `ruleEvery` motif the columns use; the rest are plain cells. Numbering all fifteen at this width would be numbering nothing legibly."
+    },
 
     "slot": {
       "$comment": "A recess a card drops into, cut round the card's own trim plus a clearance either side. The corner follows: a rounded card in a square hole is a card that has to be aimed.",
-      "clearanceMm": 1,
+      "clearanceMm": 0.8,
       "cornerRadiusMm": 4.5,
       "strokeWidth": 2.6,
       "grooveInset": 6,
       "bracketMm": 9,
+      "$clearanceNote": "It was 1 mm. A fifth of a millimetre either side of a card is not a thing a hand can feel, and eight of them across the sheet is most of a rung.",
       "$bracketNote": "Corner brackets rather than a fourth rule - the eye reads a bracket as a place to put something and a rule as a picture frame."
     },
 
@@ -144,7 +160,7 @@
       }
     },
     "pricing": {
-      "$comment": "The three market-memory marks: a heaped measure, a rising run, a running glass. Same bargain as the element and terrain marks one storey up - the PATH is data on the model (data/pricing.json models[].mark) and this says how to draw it - and for the same reason. The mark is engraved in a corner of every commodity token and printed once in the foot of the market board as a key, so the piece in your hand and the sheet you are about to stand it on say `this is a glut good` the same way.\n\nThere are three of them and there will only ever be three, so they are held apart by SHAPE rather than by detail: a triangle sitting on a line, a line climbing to a point, an hourglass pinched in the middle. At token size the detail is gone and the silhouette is all that is left, which is the test every mark in this game is drawn to.",
+      "$comment": "The four marks that say what KIND OF GOOD a commodity is: a level balance, a picked-clean fish, a running glass, a rising run. Same bargain as the element and terrain marks one storey up - the PATH is data on the model (data/pricing.json models[].mark) and this says how to draw it - and for the same reason. The mark is engraved in a corner of every commodity token and printed on the market board, which is a sheet about nothing else now, so the piece in your hand and the sheet you are reading say `this one rots` the same way.\n\nTHERE ARE FOUR, AND THERE WERE THREE. The fourth is STAPLE, and it is not a new rule - it is the absence of one, given a face. More than half the commodities in the game run under it - thirty-four of sixty-six - and they used to be filed as gluts, which quietly claimed that stone and rope could be drowned in a market the way fish can. They cannot. A mark that says `nothing special happens here` is worth engraving, because the alternative is a blank corner that could equally mean somebody forgot.\n\nThey are held apart by SHAPE rather than by detail: a symmetrical beam, a horizontal spine with ribs, an hourglass pinched in the middle, a line climbing to a point. At token size the detail is gone and the silhouette is all that is left, which is the test every mark in this game is drawn to - and the balance is the only symmetrical one in the set, on purpose, because the other three all lean.",
       "pathsFrom": "pricing.models[].mark.path",
       "viewBox": "0 0 24 24",
       "fill": "none",
@@ -159,8 +175,9 @@
         "$note": "About a third of the token's width, tucked into the flat below the family mark. It is the second thing you read, never the first - the family mark says what it is and this says how its market behaves."
       },
       "onBoard": {
-        "$comment": "The key in the foot of the market board: the three marks in a row, each beside its model's name and its one line. It is the only place on the sheet where a mark appears at reading size.",
-        "sizeMm": 6.4
+        "$comment": "The market board. It used to be a key in the foot, a row of three marks under six lines of price tracking; the board is ABOUT these marks now and nothing else, so each one heads its own panel at the size a woodcut initial would be, and the key size is what a mark shrinks to where it is cited inside a panel's prose.",
+        "sizeMm": 6.4,
+        "panelSizeMm": 13
       }
     }
   },
@@ -224,7 +241,8 @@
     "plateFormat": "the page the artist draws - see docs/art/09-framing-and-composition.md",
     "plateKind": "drawn, and an artist supplies the plate; or generated, and a tool in this repository draws it from the card's own data. The same field, and the same reason, as a map's plate.kind in data/maps/ - see itemPlate below and tools/draw-item.mjs. Absent means drawn.",
     "drawnBy": "the tool that draws a generated deck's plates, so the mint queue can name it instead of asking for an artist who is not coming",
-    "filter": "which cards of the source file this deck deals, where one file holds more than one deck's worth. Prose: the enumeration lives in cardsOfDeck in tools/lib/mint.mjs, one dull branch per deck, and this says what that branch is for.",
+    "sourceFilter": "WHICH cards of the source file this deck deals, where one file holds more than one deck's worth, and it is read for real - `{ class: \"weapon\" }` keeps that class, `{ classNot: [...] }` drops those. It was prose only, with the real enumeration written out as one dull branch per deck in tools/lib/mint.mjs, tools/build-cards.mjs and docs/js/data.js - three copies of the same list, and splitting the weapons and the armour out of the items deck meant editing all three or having them disagree. This file's own comment promises that adding a deck is an entry here plus its content file; that promise is kept now. One place resolves it: decksOf in docs/js/decks.js, shim-loaded by tools/lib/decks.mjs the way framing and the graph already are.",
+    "filter": "the same thing said in prose, for whoever is reading rather than running. It states the intent; sourceFilter states the rule.",
     "minting": "true if tools/mint-queue.mjs should chase this deck's missing plates",
     "storyRail": "true if this deck's story runs up the right-hand edge instead of across the bottom - see storyRail. The decks drawn on a portrait page take it, because that is where a taller window pays.",
     "back": "how this deck's card back is drawn - word, motif and ink"
@@ -275,6 +293,7 @@
       "id": "talismans",
       "name": "Talismans",
       "source": "items.json",
+      "sourceFilter": { "class": "talisman" },
       "filter": "class == talisman",
       "back": { "word": "TALISMANS", "motif": "rayed", "ink": "bruise" }
     },
@@ -335,8 +354,41 @@
       "id": "items",
       "name": "Items",
       "source": "items.json",
-      "filter": "class != talisman - a talisman is an arcane subject and deals in its own deck",
+      "sourceFilter": { "classNot": ["talisman", "weapon", "armour"] },
+      "filter": "everything that is not a talisman, a weapon or a piece of armour - the rope, the lantern, the bag, the cloak. Each of the other three is an arcane, a fighting or a wearing subject and deals in its own deck.",
       "back": { "word": "ITEMS", "motif": "rivet", "ink": "slate" }
+    },
+    {
+      "prefix": "WPN",
+      "storyRail": true,
+      "plateId": "item-{id}",
+      "promptFile": "items.md",
+      "plateFormat": "square",
+      "plateKind": "generated",
+      "drawnBy": "tools/draw-item.mjs",
+      "minting": true,
+      "id": "weapons",
+      "name": "Weapons",
+      "source": "items.json",
+      "sourceFilter": { "class": "weapon" },
+      "filter": "class == weapon",
+      "back": { "word": "WEAPONS", "motif": "blade", "ink": "oxide" }
+    },
+    {
+      "prefix": "ARM",
+      "storyRail": true,
+      "plateId": "item-{id}",
+      "promptFile": "items.md",
+      "plateFormat": "square",
+      "plateKind": "generated",
+      "drawnBy": "tools/draw-item.mjs",
+      "minting": true,
+      "id": "armour",
+      "name": "Armour",
+      "source": "items.json",
+      "sourceFilter": { "class": "armour" },
+      "filter": "class == armour",
+      "back": { "word": "ARMOUR", "motif": "mail", "ink": "slate" }
     },
     {
       "prefix": "TOL",
@@ -374,6 +426,10 @@
       "rayed": "M12 2.4V21.6M2.4 12H21.6M5.2 5.2 18.8 18.8M18.8 5.2 5.2 18.8M12 8.2a3.8 3.8 0 1 0 .001 0z",
       "$socketNote": "The one thing every tool in the deck has in common: a head with an eye through it, and a haft through the eye. Drawn on the family's construction - a ring, and what the thing does to it - and top-to-bottom symmetric like the rest, because the back mirrors the motif across the card's centre line.",
     "socket": "M12 2.6a9.4 9.4 0 1 0 .001 0zM12 8.2a3.8 3.8 0 1 0 .001 0zM8.6 2.6V21.4M15.4 2.6V21.4",
+      "$bladeNote": "WEAPONS. A blade through a crossguard - and then the same blade again, downward, because the back mirrors across the centre line and a sword is the one object in this game that is improved by the trick. It comes out as a court card: point up, point down, quillons through the middle, no way up. The guard is the widest thing on the grid, so the silhouette is a cross before it is a sword, and a cross is what carries at arm's length.",
+    "blade": "M12 2.4L9.4 6.4V11.2M12 2.4L14.6 6.4V11.2M12 21.6L9.4 17.6V12.8M12 21.6L14.6 17.6V12.8M4.2 12H19.8M9.4 11.2H14.6M9.4 12.8H14.6",
+      "$mailNote": "ARMOUR. Five rings of a hauberk interlocked on the cross - one at the centre and one at each quarter, set just close enough to overlap. It is the only motif in the set built out of REPEATS rather than out of one figure, which is precisely the point: mail is a thing made of twenty thousand identical small pieces, and at roundel size that is what it should look like. Symmetric top to bottom by construction, like everything else here.",
+    "mail": "M12 9.1a2.9 2.9 0 1 0 .001 0zM12 3.9a2.9 2.9 0 1 0 .001 0zM12 14.3a2.9 2.9 0 1 0 .001 0zM6.8 9.1a2.9 2.9 0 1 0 .001 0zM17.2 9.1a2.9 2.9 0 1 0 .001 0z",
     "$compassNote": "The compass is the one motif drawn to the edge of the grid. The rose keeps the 2.4 margin the others stop at; the bezel sits outside it, so the cardinal points meet the rim rather than stopping short of it.",
       "compass": "M12 0.6a11.4 11.4 0 1 0 .001 0zM21.6 12 14.96 13.22 16.17 16.17 13.22 14.96 12 21.6 10.78 14.96 7.83 16.17 9.04 13.22 2.4 12 9.04 10.78 7.83 7.83 10.78 9.04 12 2.4 13.22 9.04 16.17 7.83 14.96 10.78Z"
     }
@@ -406,8 +462,20 @@
     },
     "bar": {
       "shape": "round", "diameterMm": 7, "engravable": false,
-      "carries": "nothing - it is the marker that walks a track on the player board or the market board",
-      "$note": "Six of these per player board, one per track, plus one per commodity line in play on the market board."
+      "carries": "nothing - it is the marker that walks a column track on the player board, or the band ladder at the head of a column on the price ledger",
+      "$note": "Four of these per player board, one per column track, plus one per commodity column in play on the ledger. It was six, and then five: the vehicle column went when a wagon was dealt a board of its own, and the defence column went when a battle became one opposed total."
+    },
+
+    "pip": {
+      "shape": "round", "diameterMm": 4.5, "engravable": false,
+      "carries": "nothing, and it must not - there are hundreds of them and half of them are never coming back",
+      "does": [
+        "Walks a WEAR ladder beside a kit slot on the player board. Four per board, and they come off again when the thing they were counting is finished with.",
+        "Covers a cell on a DEPLETION grid. One per unit of a finite commodity burnt, laid down once and never lifted - data/pricing.json depletion."
+      ],
+      "$sizeNote": "Four and a half millimetres, two and a half off a bar, and both numbers are doing a job. A wear ladder is fifteen rungs down the side of an 88 mm card - not quite six millimetres a rung - and a 7 mm bar overhangs it, where a pip leaves a millimetre and a half to get a fingernail under. A depletion cell is then sized off the pip in turn, so a grid is as small as the piece standing on it allows and a whole set of them fits on one sheet.",
+      "$oneShapeNote": "One piece, two jobs, and that is deliberate rather than thrifty. A pip means ONE USE OF ONE THING HAS BEEN SPENT, whether the thing is an axe or a coal seam. The two uses differ only in whether the spending can be undone, and the piece has no business knowing which sheet it has been put on.",
+      "howMany": "Four per player board, plus enough to fill every depletion grid in play - twenty-one to a grid (pricing.json depletion), so a table trading in five finite commodities will get through a hundred of them in a game. They are not recycled and there is no reserve: running out of pips is running out of seam, which is exactly the right thing for it to mean."
     },
 
     "route": {
@@ -448,55 +516,145 @@
   },
 
   "marketBoard": {
-    "$comment": "The market board: one A4 sheet of identical market lines, and every line the same three strips.\n\nA town's price for a commodity is its base value times a band (rules.json market.priceBands), and the band is the only part that moves. What MOVES it is data/pricing.json - two red dice, two blue, one green, bent by what the line has already been through. So a line is three strips read left to right: a TALLY of what the board is holding, a MEMORY from -3 to +3 that the tally moves, and the price LADDER the commodity's own token walks.\n\nNo commodity is named on any of it. You say which commodity a line is about by standing that commodity's hexagonal token on the ladder, and the token carries its pricing model's mark (marks.pricing.onToken) so it also says which of the three rules the tally and the memory are running under. The token is the label, the reading and the rulebook. One generic board serves any commodity, any town and any table, and a game that adds a sixty-seventh commodity reprints nothing.\n\nThere is no name strip down the side, and that is the design rather than an omission. A strip would need a second token, or a pencil, to say what a line was about - and the line already has a token saying exactly that.\n\nThe geometry is derived the way the player board's is, and there is not a coordinate below. The strips take a bar token's width plus its clearance; the ladder takes everything the strips and the gutters left; the sheet holds however many lines fit under the head and over the foot. A bigger commodity token makes a taller line and fewer of them. A seventh band narrows the ladder cells. An eighth ruler bin narrows the ruler. Nothing ever runs off the paper, and a cell too narrow for the piece that stands in it fails the build instead of printing.",
+    "$comment": "The market board: one A4 sheet that explains how a price moves and holds no price at all. Two things live in this block - the RULES SHEET and, under `depletion`, the second sheet of grids that goes with it. Both are drawn by tools/build-market.mjs.\n\nIt was a price tracker: six identical lines of tally, memory and price ladder, and the whole of the geometry here was about making a commodity token fit a band cell. None of that is on the sheet now. The price is on the ledger (components.json ledger), the memory is gone because nothing remembers anything, and what is left is a head that says what the six dice do and a body of four panels, one per kind of good.\n\nThe geometry is derived the way it always was and there is not a coordinate below. The head takes the height its three strips need; the foot takes the height its rows need; the panels take everything left, divided by however many kinds of good pricing.json declares. Declare a fifth and the panels narrow. Nothing ever runs off the paper.",
+
     "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6 },
     "marginMm": 8,
     "gutterMm": 6,
-    "headMm": 16,
-    "$headNote": "One head, at the top of the sheet, in two rows: the strip names and the band multipliers across the top, the per-cell numbers under them. Not one head over every line - six repetitions of 0 1 2 3 4 5 / -3 -2 -1 0 +1 +2 +3 / x0.5 x0.75 x1 down a page is six chances for the eye to lose which column it is in; one head and a ruled column edge does the job.",
-    "$footNote": "The foot is not a caption, it is the working half of the sheet: the dice, the elasticity strip that reads the green die, and the swing ruler that turns a roll into a number of bands. See `foot` below. Everything the round needs is on this one piece of paper.",
-    "line": {
-      "$comment": "One commodity's whole market, read left to right: what the board is holding, what the market remembers, what it costs.",
-      "clearanceMm": 1.5,
-      "$heightNote": "A line's height is not stated: it is the commodity token's acrossFlats plus a clearance either side, so the token can be picked up out of a cell without lifting its neighbours.",
-      "strokeWidth": 1.6,
-      "bandStrokeWidth": 0.9
-    },
-    "strip": {
-      "$comment": "The two memory strips at the head of every line - the tally and the modifier - each walked by a bar token rather than by the commodity's hexagon. That is why they are narrow: a bar is 7 mm and a commodity token is 18 mm, so thirteen strip cells cost less paper than four band cells and the ladder keeps the width it needs.\n\nWhich cells there are is not the board's business either. The tally runs pricing.json memory.tally from..to and the modifier runs pricing.json memory from..to, read at build time, because a board that restated them is a board that could disagree with the game.",
-      "clearanceMm": 1.2,
-      "$widthNote": "A strip cell is the bar token's diameter plus this clearance either side. Nothing else decides it, so a fatter bar widens the strips and narrows the ladder - in that order, and the build fails before the ladder gets too narrow for a hexagon.",
-      "gutterMm": 5,
-      "$gutterNote": "Between the tally and the modifier, and between the modifier and the ladder. Wide enough that a hand reaching for a bar does not knock the price token.",
-      "strokeWidth": 1.2,
-      "cellStrokeWidth": 0.6,
-      "zeroRule": { "strokeWidth": 2, "$note": "The zero cell of the modifier strip and the empty cell of the tally rule heavier, and are where both bars start. A board at setup is three straight columns of pieces: the tallies at empty, the modifiers at zero, the prices at the starting band." }
-    },
-    "cell": { "minMm": 18, "$note": "A band cell has to be wider than a commodity token is across the CORNERS, which for a flat-top hex is acrossFlats x 2/root-3 - about 21 mm for an 18 mm token. tools/build-market.mjs checks it and fails rather than printing a board a token overhangs." },
-    "startBandRule": { "strokeWidth": 2.4, "$note": "The starting band (rules.json market.startingBandIndex) rules heavier and is where every price token is placed at setup." },
-    "foot": {
-      "$comment": "Three rows under the ladders, and they are the reason this board is worth printing rather than looking up. The round is: roll five dice, read the elasticity strip, read the swing ruler, move the token. All four of those things are on this foot.\n\nIts columns are the LINE's columns, not new ones: the dice and the elasticity strip sit under the two memory strips and are exactly as wide, the swing ruler sits under the ladder and is exactly as wide. So the foot cannot drift out of alignment with the board above it - it is measured off the same arithmetic.",
+
+    "head": {
+      "$comment": "THE ROLL, across the top of the sheet in one band: the dice on the left, the volatility strip in the middle, the swing ruler on the right. The three of them are the round in the order it happens, so the head reads left to right as an instruction.\n\nIts columns are proportions of the working width rather than of anything else, because there is no longer a set of strips underneath for them to line up with. They are the widths the three things need: the dice block is a count of pieces, the volatility strip is three cells, and the ruler is seven - so the ruler takes the most and gets it.",
+      "heightMm": 34,
+      "titleMm": 6,
+      "columns": { "dice": 0.3, "volatility": 0.22, "ruler": 0.48 },
+      "$columnNote": "Fractions of the working width, summing to one. They are not typed positions: the tool multiplies them out and lays the three blocks left to right with a gutter between, so widening the ruler narrows the other two rather than pushing anything off the sheet.",
       "ruleStrokeWidth": 1.2,
-      "gapMm": 3,
-      "rows": [
-        { "id": "ruler", "heightMm": 19, "$note": "The dice key and the elasticity strip on the left; the swing ruler on the right, one cell per bin in pricing.json ruler.bins, each printing the net it covers and the bands it moves." },
-        { "id": "models", "heightMm": 13, "$note": "The three market-memory models across the full width: mark, name, and the one line that says what the model is. The key to the corner mark on every commodity token." },
-        { "id": "panel", "heightMm": 9, "$note": "The prose. marketboard.json panel, and the only sentences on the sheet." }
-      ],
-      "$heightNote": "The foot's height is the sum of its rows plus a gap above each - so adding a row shortens the ladders and takes a line or two off the sheet, which is the correct thing for it to do and the reason no height is typed twice.",
-      "cellStrokeWidth": 0.8,
-      "diceInk": {
-        "$comment": "The three dice are called red, blue and green at the table (pricing.json dice[].colour) and the palette has no red, blue or green - it has oxide, slate and verdigris (docs/art/palette.json). This is the one place the two vocabularies are tied together, so the sheet cannot invent a colour and the rulebook does not have to learn a pigment name.",
+      "cellStrokeWidth": 0.8
+    },
+
+    "dice": {
+      "$comment": "The die swatches in the head. A die drawn at the size a die is, the colour on the WASH plate and the outline and the face figure on the ink, so the black-and-white edition still has six distinguishable dice - which matters more here than anywhere, because the colour IS the interface.",
+      "swatchMm": 6.2,
+      "gapMm": 1.4,
+      "groupGapMm": 4.2,
+      "ink": {
+        "$comment": "The dice are called red, blue, green and ochre at the table (pricing.json dice[].colour, arcana.json manaDie.colour) and the palette has no red, blue or green - it has oxide, slate, verdigris, ochre and bruise. This is the one place the two vocabularies are tied together, so a sheet cannot invent a colour and a rulebook does not have to learn a pigment name.\n\nAll five inks are a die now, one each, and there is no sixth ink to make a seventh die out of. That is not a coincidence anybody engineered; it is what happens when a game with a five-colour press decides that colour should mean something.",
         "red": "oxide",
         "blue": "slate",
         "green": "verdigris",
-        "swatchMm": 6.2,
-        "$swatchNote": "A die drawn at the size a die is. The colour is on the WASH plate and the outline and the face letter on the ink, so the black-and-white edition still has three distinguishable dice."
-      },
-      "$slackNote": "Whatever the paper has left between the last line and the foot is slack - the remainder of a division, nothing more, and usually a millimetre or two. It is deliberately not ruled into a dice tray: at A4 there is no room for one that a hand could throw into, and a tray too small to use is a line of six commodities thrown away for a decoration. The dice are rolled on the table beside the board, where dice have always been rolled."
+        "ochre": "ochre",
+        "purple": "bruise"
+      }
     },
+
+    "panels": {
+      "$comment": "The body: one panel per entry in pricing.json models, side by side across the full working width, each headed by that model's own mark. This is the sheet's whole subject.\n\nA panel's width is the working width over the number of models - so four panels are narrower than three were, and a fifth kind of good narrows them again rather than running off the edge. What goes IN one is content and lives in data/marketboard.json kinds; this says how tall the mark is and how the prose is set.",
+      "markMm": 13,
+      "titleMm": 5.2,
+      "lineMm": 3.6,
+      "bodyMm": 2.9,
+      "padMm": 4,
+      "ruleStrokeWidth": 1.2,
+      "$dividerNote": "A hairline rule between panels and nothing at the ends. A box round each panel would be four rules where one does, and at this size four rules is a table rather than a page.",
+      "extraMm": 22,
+      "$extraNote": "The height reserved at the foot of a panel for the one strip or grid it needs - the spoil strip for a perishable, an example grid for a finite resource. A staple needs nothing and its panel simply has more air, which is the correct thing for the panel about the goods that do nothing special to look like."
+    },
+
+    "panelFoot": {
+      "$comment": "The prose. marketboard.json panel, and the only sentences on the sheet that are not about one particular kind of good.",
+      "heightMm": 15,
+      "ruleStrokeWidth": 1.2
+    },
+
     "timber": { "boardWidthMm": 26, "seamStrokeWidth": 1.1, "grainStrokeWidth": 0.7, "grainOpacity": 0.5, "knots": 2,
-      "$note": "The same sawn ground as the player board. They are the same piece of furniture in two sizes and they should look it." }
+      "$note": "The same sawn ground as the player board. They are the same piece of furniture in two sizes and they should look it." },
+
+    "depletion": {
+      "$comment": "The second sheet: a page of identical numbered grids, one per finite commodity in play, covered a pip at a time as the stuff is burnt and never uncovered.\n\nEVERY NUMBER HERE IS DERIVED. A cell is the pip that covers it plus its clearance. A grid is the ladder in data/pricing.json depletion - `per` cells across, `top` + 1 rows down - so making a seam last longer is one number in pricing.json and a taller grid here. How many grids fit is a division. A bigger pip makes bigger cells, wider grids and fewer of them per sheet, in that order, and the build fails before a grid gets too wide for the sheet rather than printing one that runs off it.",
+      "sheet": { "widthMm": 297, "heightMm": 210, "bleedMm": 3, "cornerRadiusMm": 6 },
+      "marginMm": 8,
+      "gutterMm": 5,
+      "headMm": 14,
+      "footMm": 9,
+      "cell": {
+        "clearanceMm": 1.2,
+        "$note": "A cell is the pip's diameter plus this either side. Nothing else decides it.",
+        "strokeWidth": 0.7,
+        "digitMm": 3.2,
+        "$digitNote": "The figure printed in a cell, and it must fit INSIDE THE PIP that covers it - the pip is 4.5 mm across, so 3.2 mm of figure disappears completely under one. A number peeping out from behind the piece that has taken it would make `the lowest one you can still see` a matter of opinion, and tools/build-market.mjs fails the build rather than print one."
+      },
+      "grid": {
+        "seatClearanceMm": 1.5,
+        "$seatNote": "The hexagonal blank at the head of a grid, where the commodity's own token stands for the whole game. Its size is the token plus this either side - the same arithmetic the market lines used to seat a price token with, which is the one piece of that board worth keeping.",
+        "seatStrokeWidth": 0.8,
+        "labelMm": 3.4,
+        "gapMm": 2.5,
+        "$gapNote": "Between the seat and the top row of cells."
+      },
+      "timber": { "boardWidthMm": 26, "seamStrokeWidth": 1.1, "grainStrokeWidth": 0.7, "grainOpacity": 0.5, "knots": 2 }
+    }
+  },
+
+  "ledger": {
+    "$comment": "The price ledger: one A4 PORTRAIT sheet, the only place a price lives, and the one component in the game that is written on.\n\nPortrait, and the numbers chose it. Landscape gives 273 mm of width - eleven columns nobody needs - and about 150 mm of history; portrait gives 239 mm of history and lands on six columns, which is a town's real traded list. A ledger wants rows.\n\nEVERY NUMBER HERE IS DERIVED, and the two that bind are worth naming. A COLUMN is at least as wide as the commodity token that heads it, measured across the corners, plus the move box beside the figures - the same argument that made a market line one token tall. A ROW is the working height over rules.json victory.gameLengthRounds, which is the honest number of rows because a price can change at most once a round. That second one has teeth: lengthen the game and the rows get shorter, the digits get shorter with them, and at 25 rounds the digit falls under `digit.minHeightMm` and the build fails rather than printing figures nobody can colour in.",
+
+    "sheet": { "widthMm": 210, "heightMm": 297, "bleedMm": 3, "cornerRadiusMm": 6 },
+    "marginMm": 8,
+    "gutterMm": 4,
+
+    "roundGutterMm": 7,
+    "$roundGutterNote": "The strip down the left-hand edge carrying the round numbers, 1 to the game length. It is OUTSIDE the columns and printed once, not repeated in every column - which is what a row label is, and it hands each column nine millimetres back.",
+
+    "head": {
+      "heightMm": 27,
+      "titleMm": 6,
+      "seatClearanceMm": 1.5,
+      "seatStrokeWidth": 0.8,
+      "$note": "The token's hexagonal seat and nothing else. There is no band strip: six cells of a 7 mm bar is 56 mm against a 31 mm column, and it was not worth having anyway - the price on the sheet IS the band, read against the commodity's own row of six in the annex."
+    },
+
+    "column": {
+      "padMm": 1.2,
+      "gapMm": 1.2,
+      "moveBoxMm": 6,
+      "$moveBoxNote": "The small ruled box beside each row's figures, for the number of places the price just stepped. It is the only thing on the sheet that is written rather than filled, and it is not optional: a sought good's whole memory is the box on the row above (pricing.json sought).",
+      "moveBoxStrokeWidth": 0.7,
+      "ruleStrokeWidth": 0.5,
+      "dividerStrokeWidth": 1
+    },
+
+    "digit": {
+      "$comment": "A seven-segment figure, hollow, to be filled in with a pencil. All seven segments are printed whether they belong to any particular number or not - an unlit segment is what makes a hollow figure read as a number WAITING, and drawing only the lit ones would mean this tool knew a price, which it must not.\n\nThe segments are mitred bars - hexagons with 45-degree ends - which is how a seven-segment display has been drawn since somebody first drew one, and the reason is that mitres let seven identical bars meet at six corners without overlapping.\n\nThe proportions are one number and three ratios of it. The width ratio is NOT a taste: for all seven bars to come out the same length, w must be h/2 + t/2, which the tool derives rather than reads.",
+      "count": 3,
+      "minHeightMm": 8,
+      "$minHeightNote": "Below this a segment's colourable core is thinner than a pencil stroke and the sheet stops being fillable. It is the check with teeth, and the game length is what pushes on it: 24 rounds gives an 8.4 mm digit, 25 gives exactly 8.0 and is the last one that passes, and 26 gives 7.63 and fails, naming rules.json victory.gameLengthRounds as the cause. A longer game wants a second sheet, not smaller figures.",
+      "thicknessPerHeight": 0.12,
+      "gapPerHeight": 0.055,
+      "$gapNote": "Mitre clearance, so two segments never quite touch at a corner. Without it a filled 8 is a solid block - and at 0.05 of the height it very nearly still is. The thickness came down from 0.17 for the same reason: proofed at true size (node tools/ledger-proof.mjs) a 0.17 bar in a 4.9 mm figure is almost square, and ten of them in a row read as a line of rosettes rather than as numbers. The enlargement looked fine throughout, which is exactly why the proof prints a millimetre ruler.",
+      "digitGapPerHeight": 0.16,
+      "outlineStrokeMm": 0.24,
+      "$outlineNote": "Hairline, and above the 0.15 mm print floor in palette.json rules.printSafety. It has to be light enough that a filled segment reads as filled rather than as outlined."
+    },
+
+    "row": {
+      "padMm": 0.8,
+      "ruleStrokeWidth": 0.5,
+      "ruleEvery": 5,
+      "$ruleNote": "Every fifth row rules heavier, which is the same tally motif the board tracks use and for the same reason: it lets somebody find round 17 without counting to 17.",
+      "numberMm": 2.6
+    },
+
+    "foot": {
+      "heightMm": 14,
+      "markMm": 6.4,
+      "titleMm": 3.2,
+      "lineMm": 2.6,
+      "ruleStrokeWidth": 1.2,
+      "$note": "The four kind-of-good marks in a row, so a player who has just stood a token in a seat can read its corner mark without getting up."
+    },
+
+    "timber": { "boardWidthMm": 26, "seamStrokeWidth": 1.1, "grainStrokeWidth": 0.7, "grainOpacity": 0.5, "knots": 2,
+      "$note": "The same sawn ground, turned through ninety degrees with the sheet - the seams run the long way on every component in the game, so a portrait sheet's run up it." }
   },
 
   "buildingTile": {

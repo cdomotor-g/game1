@@ -1,26 +1,28 @@
 {
-  "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, and the five numbered tracks it walks a token along.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, defence, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the five columns left over got wider.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
+  "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, four numbered tracks up the middle for the figure, and a narrow fifth against every kit slot for the thing lying in it.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the columns left over got wider.\n\nThen the fifth went the same way, for the opposite reason. DEFENCE was a rating a token barely ever moved, and when a battle became one opposed total (rules.json conflict.battle) there was nothing left for it to do that armour on a card was not already doing. Four columns up the middle now, at 15.6 mm apiece against the 13.6 that five of them managed - and what the paper bought is the thing the board never had room for: a WEAR ladder against every one of the four kit slots, so the axe, the sword and the lantern are each counted down beside their own card. The middle of the board is about the figure; the edge of it is about what the figure is carrying.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
   "version": "0.4.0",
 
   "board": {
     "id": "player-board",
     "name": "Player Board",
     "sheet": "A4 landscape",
-    "summary": "One per player, one per vehicle in play, and one spare for the table, and every one identical. The card in play top left, five tracks up the middle, four cards of kit on the right, and the round's phases under it.",
+    "summary": "One per player, one per vehicle in play, and one spare for the table, and every one identical. The card in play top left, four tracks up the middle, four cards of kit on the right each with its own wear ladder against it, and the round's phases under it.",
     "spare": "Print more than there are players: one spare for the ENCOUNTER, and one for every vehicle anybody expects to have on the road at once. The encounter board is the one a monster or a stranger is dealt onto when a discovery roll turns one up - its tracks are set from the card's summary strip and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter). A vehicle board is the same board doing the same job for a hull instead of a body.",
-    "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, and with five tracks rather than six each column is over two millimetres wider than it was.",
-    "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person, or alive. People, calling, health, strength, defence and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster, a stranger met on the road and the wagon they are all arguing about."
+    "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, and with four tracks rather than six each column is nearly two millimetres wider than it was even after the wear ladders have taken theirs.",
+    "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person, or alive. People, calling, health, strength, armour and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster, a stranger met on the road and the wagon they are all arguing about."
   },
 
   "$trackKeys": {
-    "$comment": "What a track entry means. A track is a printed ladder walked by a bar token (components.json tokens.bar): rungs numbered from the bottom, step apart, and numbered in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and every track runs the whole way, so the five columns are one grid rather than five scales a player has to keep straight.",
+    "$comment": "What a track entry means. A track is a printed ladder walked by a token: a bar (components.json tokens.bar) on the four columns up the middle, a smaller pip (tokens.pip) on the wear ladders, which are narrow enough that a bar would overhang. Rungs numbered from the bottom, step apart, in plain figures with no sign on them. The first rung is zero - the board's ceiling and floor are declared once in components.json under board.track, and EVERY track runs the whole way, wear ladders included, so the whole sheet is one grid rather than a set of scales a player has to keep straight.",
     "letter": "the single letter printed at the head of the column - what a player calls the track across the table",
     "label": "the full name, printed beside the letter",
     "unit": "printed under the letter where the track counts something other than itself - hexes, on the one track that does",
     "step": "how much one rung is worth; `stepFrom` instead means 'read it from that dotted path in the data, do not restate it'",
-    "kind": "harm | capacity | leg | rating - decides the ink the column washes in",
+    "kind": "harm | capacity | leg | rating - decides the ink the track washes in",
+    "place": "column (one ladder up the middle of the sheet, about the figure in the recess) or kit (a narrow ladder against a card slot, about the card lying in it). Absent means column.",
+    "count": "how many of this track are ruled. Absent means one; a kit track says four, because there are four slots.",
     "covers": "the largest value the printed game can reach, so the ceiling can be checked against it. `paths` is where that number comes from, and tools/validate-data.mjs recomputes it: a character with 15 health fails the check rather than running off the top of the track",
-    "reads": "who reads the number and which way round - defence is read by your opponent, not by you",
+    "reads": "who reads the number and which way round - a wear track is its owner's business and nobody else's",
     "$marksNote": "There is no `mark` any more. Every rung used to carry a little ink-plate glyph saying which KIND of number it was - a notch down for harm, a pip for a rating - and at 11 mm a column it fought the number for the same three millimetres and won often enough to matter. The columns are numbered and nothing else: no glyph, no plus, no minus. Which way a token walks is on the track's `walks` line and in the rulebook, where a sentence has room to say it."
   },
 
@@ -45,19 +47,9 @@
       "rule": "rules.json conflict.strength, rules.json carrying, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
     },
     {
-      "id": "defence", "name": "Defence", "letter": "D", "label": "DEFENCE", "unit": null,
-      "kind": "rating", "ink": "slate", "step": 1,
-      "covers": { "value": 6, "paths": ["monsters.monsters[].defence", "characters.characters[].defence"], "note": "The gravel wyrm's plated shale, and Vhalrik's hide - the two hardest things in the game to land a blow on." },
-      "walks": "Rarely. Set it from the card at setup; a spell, a shield wall or a piece of ground may lend or take a point for a fight.",
-      "atZero": "Nothing between the blow and you.",
-      "reads": "Your opponent reads it, not you: they add your defence to the number they need. Armour is a separate thing and always was - it soaks hits after they land (items.json armourValue), where defence stops them landing.",
-      "note": "New, and it is the half of the old strength that had no business being there. Strength used to sit on both sides of the attack roll, which quietly made every strong thing armoured; a stone boar barely swings and turns a sword, and now it can say so.",
-      "rule": "rules.json conflict.defence, rules.json conflict.attack, monsters.json defence, characters.json defence, peoples.json defence.base"
-    },
-    {
       "id": "pace", "name": "Pace", "letter": "P", "label": "PACE", "unit": "hexes",
       "kind": "leg", "ink": "verdigris", "step": 1,
-      "covers": { "value": 8, "note": "Mounted on a road - the fastest anything crosses country in a day leg (travel.json speeds.overrides road)." },
+      "covers": { "value": 8, "paths": ["monsters.monsters[].pace"], "note": "Mounted on a road - the fastest anything crosses country in a day leg (travel.json speeds.overrides road) - and, on the same number, the storm roc, which is why nobody on foot has ever got away from one." },
       "walks": "Set it at the start of a leg to the speed in travel.json for the mode and the ground, then walk it down a rung per hex entered. Halve it for a night leg under a lantern; a torch buys one hex, two on a road.",
       "atZero": "The leg is over. Roll for discovery where you stopped.",
       "note": "The one track that is not a number off a card. A party counts hexes every single round of the game and has had nowhere to count them, which is what a board is for. It rules in verdigris - the ground you cross - so it cannot be mistaken for harm or for a rating at a glance. It is called pace rather than speed because strength has the S.",
@@ -71,26 +63,39 @@
       "atZero": "Empty. Mana crystals are frozen mana - shatter one for 2 of any element - but mana never freezes back.",
       "note": "The only arcane thing on the board, so the only thing that gets the slip: the wash is struck a shade off the line, the way this world's presses could never quite get magic to sit still. In the black-and-white edition there is no slip and nothing is lost.",
       "rule": "arcana.json, items.json manaCapacity, peoples.json manaStorage"
+    },
+    {
+      "id": "wear", "name": "Wear", "letter": "W", "label": "WEAR", "unit": null,
+      "place": "kit", "count": 4,
+      "kind": "harm", "ink": "slate", "step": 1,
+      "covers": { "value": 14, "paths": ["items.items[].wear", "tools.tools[].baseWear"], "note": "A large loom, the longest-lived thing anybody owns. The deepest a figure carries on its back is the plate harness at 12." },
+      "walks": "Down. Set it from the W box on the card the moment the thing is put in the slot beside it, knock it down a rung every time the thing is used, and put it back up as a blacksmith mends it - three rungs a round, four coin a rung.",
+      "atZero": "Worn out. The card is discarded and the track cleared, and whatever the thing was doing for its owner it stops doing at once.",
+      "reads": "Only its owner. A wear track is about a possession, not a person, and nobody else at the table has to know how blunt your axe is until you swing it.",
+      "note": "FOUR OF THEM, one beside each kit slot rather than one column up the middle, because wear is the first number on this board that belongs to a CARD rather than to whoever is sitting behind it. A single W column could only ever have counted one item's wear, and a player carries four. So it is drawn where the thing it counts is lying, in a narrow ladder against the recess, walked by a pip rather than a bar (components.json tokens.pip) - which is what makes fifteen rungs fit down the side of an 88 mm card.\n\nIt is the track that paid for itself. The D column went out of the middle of the board the same day this arrived at the edge of it, and the four columns left are wider than the five ever were: 15.6 mm against 13.6.\n\nThe strip letter for wear already existed (components.json statStrip.letters) and its note said there would never be a track under it, because wear ran past twenty and the board stops at fourteen. There is a track under it now, and wear runs to fourteen - the number came down to meet the board, which is the way round this game has always settled that argument.",
+      "rule": "rules.json wear, items.json wear, tools.json baseWear"
     }
   ],
+  "$placeNote": "A track's `place` says where on the sheet it is ruled. `column` is the grid up the middle - one column per track, all the same height, the shape this board has always had. `kit` is a short ladder against a card recess, drawn `count` times, once per slot. The distinction is not decoration: a column track counts something about the FIGURE in the recess, and there is one of those; a kit track counts something about a CARD in a slot, and there are four of those. tools/build-board.mjs partitions on it and never on a track's name.",
 
   "ceiling": {
     "$comment": "The board's ceiling is the game's ceiling. Every number a token walks in this game has to fit between components.json board.track.from and .to, and these are all of them - tools/validate-data.mjs sweeps the lot and fails the build on anything that has grown past it. That is the whole reason the mass scale was halved: a hero carrying 28 kg could not stand on a track that stops at 14, so the kilogram got smaller rather than the board getting longer.\n\nWhat is deliberately NOT here: a vehicle's cargoCapacity, which runs to 100. Cargo is bulk in a hold, printed once on the vehicle's card as a maximum, and counted by the cargo itself sitting in the kit slots - no token stands on a column for it. A number only belongs on this list if the board has a column for it.",
     "paths": [
       "characters.characters[].health",
       "characters.characters[].strength",
-      "characters.characters[].defence",
       "characters.characters[].manaCapacity",
       "monsters.monsters[].health",
       "monsters.monsters[].strength",
-      "monsters.monsters[].defence",
+      "monsters.monsters[].pace",
       "monsters.monsters[].manaYield",
       "vehicles.vehicles[].hull",
       "items.items[].manaCapacity",
+      "items.items[].wear",
+      "tools.tools[].baseWear",
       "peoples.peoples[].strength.base",
-      "peoples.peoples[].defence.base",
       "peoples.peoples[].manaStorage.innate"
-    ]
+    ],
+    "$notWalked": "A monster's ARMOUR is not on this list and must not be. It is a number printed on a card and added to a total; no token stands on a column for it, exactly as a vehicle's cargo capacity has never been on this list. A number belongs here only if the board has a track for it - and after that, the sweep is merciless: a character with one more point of health fails the build rather than walking a token off the top of a board somebody has already printed."
   },
 
   "slots": [
@@ -101,8 +106,9 @@
     },
     {
       "id": "kit", "name": "Kit slots", "label": "ITEM", "count": 4,
-      "takes": ["items", "modifications", "quests", "commodities"],
-      "note": "Whatever the thing in the recess has in play and needs to see. On a character's board that is a weapon, a lantern, a talisman, the quest they have accepted; on a vehicle's board it is the same four slots holding its cargo and the modifications bolted to it. Four, because five cards on the table is a hand and four is a kit - and because anybody who wants a fifth thing has to put something down, which is the same argument the strength limit is making. A vehicle card no longer sits here: it has a board of its own."
+      "takes": ["items", "tools", "modifications", "quests", "commodities"],
+      "wearTrack": true,
+      "note": "Whatever the thing in the recess has in play and needs to see. On a character's board that is a weapon, a lantern, a talisman, the quest they have accepted; on a vehicle's board it is the same four slots holding its cargo and the modifications bolted to it. Four, because five cards on the table is a hand and four is a kit - and because anybody who wants a fifth thing has to put something down, which is the same argument the strength limit is making. A vehicle card no longer sits here: it has a board of its own.\n\nEVERY SLOT HAS A WEAR LADDER AGAINST IT, and that is what the four slots stopped being merely a hand limit and started being an accounting: the thing in the slot has a W on its card, a pip stands on the ladder beside it, and it walks down as the thing is used. A fifth thing in play would be a fifth thing whose wear nobody is counting. Tools joined the list of what a slot takes on the same day, because a tool is now the same kind of object as a sword - something you own, carry and use up."
     }
   ],
 
@@ -114,7 +120,7 @@
     "foot": "Turn order passes to the left.",
     "aside": {
       "title": "IN A FIGHT",
-      "source": "rules.conflict.attack",
+      "source": "rules.conflict.battle",
       "note": "Printed from the rule rather than restated, so the board and the rulebook cannot drift."
     }
   }

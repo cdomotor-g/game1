@@ -20,10 +20,11 @@ deposit, a gem vein. A deposit is not a commodity and never enters a stockpile. 
 a place that *yields* a commodity when you build the right building and spend effort.
 Defined in `data/deposits.json`.
 
-**Tool** — a piece of equipment owned as an individual object with its own durability
+**Tool** — a piece of equipment owned as an individual object with its own wear
 track. Tools gate or improve recipes. They can be bought, sold and stolen like a
 commodity, but they are tracked one at a time with wear, not as a stacked quantity.
-Defined in `data/tools.json`.
+They were the only things in the game that wore out; everything a figure carries does
+now. Defined in `data/tools.json`.
 
 **Item** — clothing, armour, weapons and potions. Like tools, owned individually;
 unlike tools, they are carried by a figure or worker rather than used at a work site.
@@ -51,14 +52,25 @@ character was carrying; **strength** does that job now. What a figure can should
 nothing walks a token for it: a load either fits under the printed limit or it does
 not. See `rules.json → carrying`.
 
-**Defence** — what makes a blow miss. Whoever is attacking a figure *adds* that
-figure's defence to the number they need on the die, exactly as they subtract their
-own strength. It is not armour: armour (`items.json → armourValue`) soaks hits after
-they land, and a figure in plate has both. Every character and every monster has one.
-See `rules.json → conflict.defence`.
+**Armour** — what is between you and the blow, added straight to your side of the
+battle roll. A worn suit runs 1 to 3 and a figure wearing body, head and off-hand can
+reach 5; a monster's hide is the same field and runs 0 to 3, printed in the A box on
+its card. It wears a point for every round of every battle it is worn in — a blow you
+turned still dented the plate. See `rules.json → conflict.armour`.
+
+**Defence** — retired. It was a rating that shifted a to-hit roll, and there is no
+to-hit roll: a battle is one opposed total, in which a number that makes you harder to
+hit and a number that soaks the hit are the same number. It is called armour and it is
+above. Nothing in `data/` carries a `defence` any more and `validate-data.mjs` fails
+the build on one.
+
+**Battle roll** — one subtraction, and the same one the market makes. You total your
+strength, your gear and two BLUE dice; the thing in front of you totals its strength,
+its armour and two RED dice; the lower total loses health equal to the difference, and
+a tie wounds nobody. See `rules.json → conflict.battle`.
 
 **Character** — a named adventurer card that a player's hero figure takes on: a face,
-health, strength, defence, sometimes mana, and the coin they start with — all of
+health, strength, sometimes mana, and the coin they start with — all of
 it printed in the summary strip across the top of the card. Defined in
 `data/characters.json`. A
 character is not a worker and rolls no effort die.
@@ -172,5 +184,19 @@ per player.
 **Unrest** — what a town accumulates when it cannot feed itself. Three unrest starts a
 riot.
 
-**Wear point** — one point off a tool's durability track, spent per hour of effort
-worked with that tool.
+**Wear point** — one point off the W track beside a thing's own kit slot on the player
+board, and every made thing in the game has some. A tool spends one per JOB, a weapon
+or a piece of armour one per round of battle, a light one per night leg, and anything
+else when its own card says. At 0 the thing is finished, not damaged. The scale is the
+board's own 0–14, which is why tool wear came down from a range that ran past twenty —
+the number came down to meet the board rather than the board going up to meet the
+number. See `rules.json → wear`.
+
+**Pip** — the 4.5 mm disc that walks a wear ladder and covers a depletion cell. One
+piece, two jobs: a pip means one use of one thing has been spent. The ones on a
+depletion grid are never lifted off.
+
+**Spoil die** — the ochre die, rolled at the end of every round against every
+perishable stack anybody is still holding. What it says, you discard. It replaced a
+per-batch countdown, which needed a token with an age on it for every stack on the
+table.

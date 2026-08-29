@@ -19,6 +19,7 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { matchesFilter } from './decks.mjs';
 import { plateIdFor } from './plates.mjs';
 import { pngSize } from './png.mjs';
 import { tileSubjects, plateIdOf, platesOf, formatFor, boxOf, bandOf, largestHexMm } from './tiles.mjs';
@@ -329,20 +330,35 @@ export function windowNote(root, line, row) {
  */
 export function cardsOfDeck(root, deck) {
   const file = readJson(join(root, 'data', deck.source));
-  const pick = {
+  /* Which array in the file, and then which of its rows. The first is a switch
+     because a file's collection is its own business and the manifest already
+     names it; the second is NOT, any more - a deck's slice is declared on the
+     deck (components.json decks[].sourceFilter) and resolved once, in
+     docs/js/decks.js, for this tool, the card builder and the explorer alike.
+
+     It was a switch here too, and the same list was written out in two other
+     files. Splitting the weapons and the armour out of the items deck meant
+     editing all three or having them disagree about which cards existed - which
+     is exactly the failure components.json's own comment promises against when
+     it says adding a deck is an entry there plus a content file. */
+  const collection = {
     characters: () => file.characters,
     vehicles: () => file.vehicles,
     monsters: () => file.monsters,
-    talismans: () => file.items.filter((i) => i.class === 'talisman'),
     modifications: () => file.modifications,
     spells: () => file.spells,
     events: () => file.cards,
     quests: () => file.quests,
-    items: () => file.items.filter((i) => i.class !== 'talisman'),
     tools: () => file.tools,
+    items: () => file.items,
+    weapons: () => file.items,
+    armour: () => file.items,
+    talismans: () => file.items,
   }[deck.id];
-  if (!pick) throw new Error(`the mint does not know how to read the ${deck.id} deck`);
-  return (pick() || []).filter((c) => c.cardCode);
+  if (!collection) throw new Error(`the mint does not know which collection the ${deck.id} deck deals`);
+  return (collection() || [])
+    .filter((c) => matchesFilter(c, deck.sourceFilter))
+    .filter((c) => c.cardCode);
 }
 
 /**

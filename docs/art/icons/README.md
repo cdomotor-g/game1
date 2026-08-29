@@ -16,9 +16,10 @@ node tools/build-icons.mjs
 | [`element-water.svg`](element-water.svg) | Water — the ground line has become swell - three of them, and no ground at all |
 | [`element-air.svg`](element-air.svg) | Air — three streamers, two of them curling off the end. nothing touches the ground |
 | [`elements.svg`](elements.svg) | All four together, for the art docs and the rulebook |
-| [`pricing-glut.svg`](pricing-glut.svg) | Glut — what does not sell rots |
-| [`pricing-hype.svg`](pricing-hype.svg) | Hype — it is bought because it is going up |
-| [`pricing-deplete.svg`](pricing-deplete.svg) | Depletion — the easy ore came out first |
+| [`pricing-staple.svg`](pricing-staple.svg) | Staple — it is worth what it is worth |
+| [`pricing-perish.svg`](pricing-perish.svg) | Perishable — what you do not shift, you lose |
+| [`pricing-deplete.svg`](pricing-deplete.svg) | Finite — the easy ore came out first |
+| [`pricing-hype.svg`](pricing-hype.svg) | Sought — it is bought because it is going up |
 | [`pricing.svg`](pricing.svg) | All three together — the key to the corner of every commodity token |
 
 The **element** marks are stroked, never filled, on a 24-unit grid, and each one

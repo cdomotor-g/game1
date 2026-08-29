@@ -208,193 +208,477 @@ Monster element weights by table:
 
 ## The market
 
-Every Market phase, per commodity line in play: roll two red dice for demand, two
-blue for supply and one green for elasticity, add what the line remembers, and read
-the result on the swing ruler printed across the foot of the market board.
+Every Market phase, one player rolls for every column on the ledger: two **blue** dice
+for demand, two **red** for supply, one **green** for volatility, and then whatever the
+good’s own nature adds. Find the net on the swing ruler, and step the price that many
+places along the row of six printed for that commodity below.
 
 ```
-(Demand − Supply + Memory) × Elasticity
+Demand − Supply + Volatility + Modifier
 ```
 
-| Dice | Colour | Range | What it is |
-| --- | --- | --- | --- |
-| 2 d6 | red | 2–12 | Demand |
-| 2 d6 | blue | 2–12 | Supply |
-| 1 d6 | green | 1–6 | Elasticity |
+**The whole sum is addition, and the multiplication is not hiding anywhere.**
+There is none, anywhere in the round. Not in the die, not in the modifier, not in the price - the price ladder is a printed table, not a sum.
+Nothing is halved and nothing is rounded, because there is nothing left in the line for a
+rounding to happen to — and that is what the rebuild was for. The version before this one
+multiplied the swing by the green die and folded the modifier in *first*, which is three
+chances to slip in a line a table works through once per traded commodity per round. They
+got slipped.
 
-| Green die | Elasticity |  |  |
-| --- | --- | --- | --- |
-| **1–2** | **×1** | Stable | An ordinary season. The swing is felt as it fell. |
-| **3–4** | **×2** | Volatile | A thin market with nobody willing to stand in the middle of it. Every point of the swing counts double, and this is where crashes and spikes come from. |
-| **5–6** | **÷2** | Inelastic | The town needs it whatever it costs, or cannot use a second one at any price. Half the swing, dropped toward zero - most inelastic seasons do not move the price at all. |
+| Dice | Ink | Range | What it is | What it does |
+| --- | --- | --- | --- | --- |
+| 2 d6 | **blue** | 2–12 | **Demand** | How badly the town wants the stuff this season. Two dice rather than one because a market is a crowd, and a crowd averages: 7 is an ordinary appetite and 12 is a famine year. Blue is added, always - in a market and in a fight. |
+| 2 d6 | **red** | 2–12 | **Supply** | How much of it turned up. It is also the CAP on what the board will sell this round - see `stockCap` - so a low red roll is a shortage twice over: dear, and rationed. Red is subtracted, always. |
+| 1 d6 | **green** | 1–6 | **Volatility** | How rough the season is. Read on the volatility strip printed on the market board: it adds minus two, nothing, or plus two, and that is the whole of it. |
+| 1 d6 | **ochre** | 1–6 | **Spoil** | What the season takes back. Rolled at the end of every round against any perishable goods still in a player's hands, and read on the spoil strip. It never touches a price. |
 
-Halving rounds toward zero, so an inelastic season can shrink a swing away to
-nothing but can never turn it around.
+**Blue is what you want and red is what stands in your way** — here, and in a fight. The
+same two colours, the same subtraction, the same direction (`rules.json conflict.battle`),
+so a player who has rolled one market has already learned how a battle is scored. That is
+worth more than either system’s private preference about which colour ought to mean which,
+and it is why the two pairs swapped when the sum did.
+
+There are five kinds of die and one ink apiece. The one purple **Mana**
+die (`arcana.json manaDie`) is the fifth, and it is not a market die at all — it is what a
+dead monster gives up. You take the LESSER of the monster's Y box and the roll. Never more than the monster had; often less. It is named here because the palette is the
+interface: five inks, five kinds of die, and no sixth ink left to make a seventh out of,
+which is a constraint worth having rather than a shortage.
+
+Six dice for the whole table, not six per player. One player rolls the market for every line on the ledger; every player rolls the spoil die for their own perishables.
+
+### Volatility — the green die
+
+It was called **elasticity** and it **multiplied** — ×1, ×2, ÷2 — and neither the name nor
+the multiplication survived. Elasticity is a word for how much a quantity answers a price,
+which is not what this die was ever doing: it is a weather roll on a market, and volatility
+is the word for that. Three cells, two faces each, and it adds.
+
+| Green die | Season | Adds | What it means |
+| --- | --- | --- | --- |
+| **1–2** | **Slack** | **−2** | A quiet season with nobody pushing. Two off the swing, whichever way it fell. |
+| **3–4** | **Even** | **0** | An ordinary season. The dice are the whole story. |
+| **5–6** | **Rough** | **+2** | A thin, jumpy market. Two on, and this is where the spikes come from. |
+
+It ADDS, so it can turn a swing around: a -1 in a rough season is a +1, and a +1 in a slack one is a -1. A multiplier could never do that, and a market that is never turned over by the weather is a market with no weather in it.
 
 ### The swing ruler
 
-| Net | **≤ −16** | **−15 … −8** | **−7 … −2** | **−1 … +1** | **+2 … +7** | **+8 … +15** | **≥ +16** |
+| Net | **≤ −9** | **−8 … −5** | **−4 … −2** | **−1 … +1** | **+2 … +4** | **+5 … +8** | **≥ +9** |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Bands | −3 | −2 | −1 | hold | +1 | +2 | +3 |
+| Places | −3 | −2 | −1 | hold | +1 | +2 | +3 |
 |  | crash | slump | soften | hold | firm | rally | spike |
 
-The board sells no more of a commodity in a round than that round's supply roll,
-first come first served in turn order. It will buy any quantity.
+**The bins were re-cut when the multiplier went, and they had to be.** Two blue dice
+against two red is a triangular spread peaking at nothing (−10 to +10); the green die
+widens it by two either way; so the whole net runs −12 to +12 before any
+modifier, where the old multiplied one reached 26. Left where they were, the old bins on
+the new net would have moved three places in no round of any game ever played, because the
+dice could no longer reach the cell.
 
-### What a market remembers
+Cut where they are now, over all 7776 rolls of the five dice with no modifier, the market **holds in 29.9%
+of rounds, moves one place in 45.8%, two in 22.2% and three in 2.1%** — so it moves in about
+seven rounds in ten, two places is a genuinely one-sided market rather than a weekly event,
+and three only happens when the dice and the good’s own nature are pulling together. Those
+figures are worked out from the bins rather than claimed, and `validate-data.mjs` separately
+refuses to let the ruler have a hole in it — every value the dice and the modifiers can
+actually reach has to land in a cell. (2−12) at the extremes, plus a volatility of ±2, plus a modifier that runs -3 for a sought good in freefall and +6 for a seam that is worked out: -15 to +18.
 
-Each line carries a tally of the board's own stock — up one cell per token sold to
-the board, down one per token bought off it — and a modifier from −3 to
-+3 that the tally moves. Every 4 tokens the tally fills, which takes it
-back to empty and steps the modifier one cell. Which way it steps is the
-commodity's own model, and the model's mark is engraved in the corner of that
-commodity's token.
+A price at the top of its row that is told to go up stays where it is, and the same at the
+foot. A market can be at its ceiling; it cannot be above it.
 
-| Model | Memory | Tally | What it is |
+The board sells at most Supply tokens of that commodity before the next Market phase, first come first served in turn order through the Actions phase. It will buy any quantity - a market always has room for more of what nobody wants.
+
+### What kind of good it is
+
+This section was called *what a market remembers*, and the title had to go, because nothing
+remembers anything now. **There is no memory strip and there is no tally.** Every line on
+the old market board carried both — a modifier from −3 to +3 walked by a bar, and beside it
+a count of the board’s own stock that filled every few tokens traded, emptied, and stepped
+the modifier one cell in whatever direction the commodity’s model said.
+
+**What that machinery bought was real, and it is worth saying before it is thrown away.** It
+gave a market a history instead of a mood, it was legible across a table, and it put the
+consequence of trading in the same gesture as the trade. **What it cost** was three pieces
+to walk per line per round, a board that had to be re-laid every time a model wanted a
+different range, and a modifier that went in *before* the multiplication — so a market’s
+history counted double in a volatile season, for no reason anybody could defend.
+
+Every commodity in the game is exactly one of **four kinds of good**, and the kind is engraved in
+the corner of that commodity’s own token, so the piece you stand in a ledger column tells
+you how that column behaves. Two of the four add nothing to the sum at all. The other
+two read their number off something already on the table for another reason — the
+depletion grid the pips were going on anyway, and the move box that was being written
+anyway. That is what let the board stop tracking anything.
+
+| Mark | Kind | Adds to the swing | What it does instead | Goods |
+| --- | --- | --- | --- | --- |
+| ![](../art/icons/pricing-staple.svg) | **Staple** | **nothing** | — | 34 |
+| ![](../art/icons/pricing-perish.svg) | **Perishable** | **nothing** | The ochre spoil die, at the end of the Feeding phase, before the market is rolled, against every stack of it a player is still holding. | 11 |
+| ![](../art/icons/pricing-deplete.svg) | **Finite** | the lowest number still visible on its own depletion grid, **0 to +6** | One token per unit consumed. Cover the lowest uncovered cell. Trading does none of it: buying and selling move a commodity; they do not spend it. | 14 |
+| ![](../art/icons/pricing-hype.svg) | **Sought** | the move it made **last** round, **−3 to +3**, read off the move box on the ledger row above | — | 7 |
+
+**![](../art/icons/pricing-staple.svg) Staple — “It is worth what it is worth.”** Anything durable that is neither dug out of a finite hole nor coveted for its own sake. The default, and the largest of the four by a long way.
+
+Most of what is bought and sold, in this game and everywhere else. Stone, lumber, cloth, rope, ale. It keeps, it is not running out, and nobody wants it for what owning it says about them - so its price is the crowd wanting it against the amount that turned up, and there is no story underneath.
+
+The model exists so the other three mean something. A game where every good has a special rule is a game where no good does.
+
+*The mark: **level beam**.* A balance, hanging level. Nothing on either pan, nothing tipping it - which is the whole of what this model says. It is the only mark in the set that is symmetrical, and that is doing the work: the other three are all lopsided, because the other three all lean one way.
+
+**![](../art/icons/pricing-perish.svg) Perishable — “What you do not shift, you lose.”** Anything that rots: food off the field, milk, meat, fish, fruit, and the one arcane herb that will not dry.
+
+The oldest problem in any market that grows things. The stuff turns up whether anybody wants it or not, it keeps badly, and what is still in the warehouse when the season turns is not an asset, it is a smell. A good harvest is a bad year, and it is a bad year for the person holding the harvest rather than for the market.
+
+This is where the old GLUT model went. Glut bent the price down through a memory strip, which was a fair model of a market and a poor model of a fish: it punished the town for what the farmer did, and it never once made anybody hurry. The spoil die punishes the person actually holding the stuff, at the end of the round they failed to shift it, which is both truer and considerably more urgent.
+
+*The mark: **picked clean**.* A fish skeleton: snout, spine, ribs, forked tail. It says gone off in every kitchen in the world and it engraves at chit size as five strokes and a fork. The first draft was a heaped measure overflowing its rim, which is a picture of a glut - and a glut is precisely what this model stopped being about.
+
+| Ochre die | Keeps well | Keeps poorly | What it is |
 | --- | --- | --- | --- |
-| ![](../art/icons/pricing-glut.svg) Glut | −3 to 0 | −1 when full | **What does not sell rots.** Anything grown, felled, herded or made to order - which is most of the game. If a player can decide to produce more of it next round, its price can be drowned. |
-| ![](../art/icons/pricing-hype.svg) Hype | −3 to +3 | — | **It is bought because it is going up.** The luxury trade: low bulk, high value, wanted for what it is rather than for what it does. |
-| ![](../art/icons/pricing-deplete.svg) Depletion | 0 to +3 | +1 when full | **The easy ore came out first.** Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry. |
+| **1–2** | 0 | 1 | A cold week. |
+| **3–4** | 1 | 2 | The ordinary loss. |
+| **5–6** | 2 | 3 | It turned. |
 
-## Three markets, played
+A commodity whose `perishRounds` is under 3 keeps **poorly** and reads the right-hand
+column; everything else reads the left, and that is the whole of the difference
+`perishRounds` makes now. You cannot lose more than you hold. A stack of one that is told to lose three loses one. A stack held in a granary reads one row up the strip - a 5 or a 6 costs what a 3 or a 4 costs, and a 1 or a 2 costs nothing at all. That is what a granary is for, and it is why it takes food and drink and nothing else (rules.json storage.granaryAcceptsOnly).
 
-One scenario per model, with the dice chosen to show what each one does. Everything
-after the dice is worked from the tables above rather than transcribed, so these
-cannot drift out of true. Trading happens in the **Actions** phase at the price
-already on the board; the Market phase then fixes the price for the round to come.
+**It never touches a price.** A perishable's price is the dice and nothing but the dice. What spoilage does to a market it does through the market's own front door: units that rot are units nobody sells, and the town notices that the same way it notices everything else.
 
-### A good harvest — Grain · ![](../art/icons/pricing-glut.svg) Glut
+**![](../art/icons/pricing-deplete.svg) Finite — “The easy ore came out first.”** Anything a deposit yields, and anything smelted straight out of one. tools/validate-data.mjs checks the first half of that: a commodity a deposit yields and does not price by depletion is a hole in the ground that never runs dry.
 
-Bram has a farm and a surplus, and sells it into his own town three rounds running. Base value 5¤; every token starts on ×1, memory 0, tally 0.
+The rule for anything that comes out of a hole. The first seam is at the surface and the last one is under water at the bottom of a shaft, so every ton that leaves makes the next ton dearer to win - and none of it grows back inside a lifetime. A mining town's prices only ever go one way, and the boom is the part before everybody notices.
 
-| # | Actions phase | D − S | Mem | Green | Net | Bands | Price now | Mem after | Tally |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | sells **3** at 4.25¤ = **12.75¤** · tally 3 | 7 − 11 | 0 | ×1 | −4 | −1 | **×0.75** (3.75¤) | 0 | 3 |
-| 2 | sells **3** at 3.19¤ = **9.56¤** · tally fills → memory **−1**, tally 1 | 11 − 5 | −1 | ×2 | 10 | +2 | **×1.25** (6.25¤) | −1 | 1 |
-| 3 | sells **4** at 5.31¤ = **21.25¤** · tally fills → memory **−2**, tally 0 | 6 − 8 | −2 | ×1 | −4 | −1 | **×1** (5.00¤) | −2 | 0 |
-| 4 | — | 9 − 7 | −2 | ×2 | 0 | hold | **×1** (5.00¤) | −1 | 0 |
-| 5 | — | 12 − 3 | −1 | ×2 | 16 | +3 | **×2** (10.00¤) | 0 | 0 |
+What changed is what counts as leaving. It used to be selling: a tally on the market board filled as tokens crossed to the board, and a market could be worked out by a merchant who never lit a fire. It is BURNING now. Coal that is traded is coal that still exists; coal that is fed to a furnace is gone, and only the furnace moves the number.
 
-**After five rounds:** ×2 — Grain at 10.00¤ a sack — with the memory on 0. What does not sell rots.
+*The mark: **run glass**.* A glass with the sand already down in the bottom bulb. Not a pick and not a shaft: what this model is about is the sand, not the digging - and not a trickle either, because a trickle drawn between two converging lines is invisible at the size this is engraved.
 
-### A run on gold — Gold · ![](../art/icons/pricing-hype.svg) Hype
+| Units burnt | **0–2** | **3–5** | **6–8** | **9–11** | **12–14** | **15–17** | **18+** |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| The grid reads | 0 | +1 | +2 | +3 | +4 | +5 | +6 |
 
-Nobody trades a single ingot. A hype line does all of this on its own. Base value 40¤; every token starts on ×1, memory 0, tally 0.
+Seven rows of three cells, nought at the top and six at the bottom, 21 cells in all.
+Cover from the lowest row up, and the modifier is **the lowest number you can still see**.
+Nothing is written down and nothing is counted — you look at the grid and read the
+smallest number left on it, and a fresh grid reads nought.
 
-| # | Actions phase | D − S | Mem | Green | Net | Bands | Price now | Mem after | Tally |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | — | 11 − 5 | 0 | ×1 | 6 | +1 | **×1.25** (50.00¤) | +1 | — |
-| 2 | — | 9 − 6 | +1 | ×1 | 4 | +1 | **×1.5** (60.00¤) | +2 | — |
-| 3 | — | 7 − 8 | +2 | ×1 | 1 | hold | **×1.5** (60.00¤) | +1 | — |
-| 4 | — | 4 − 11 | +1 | ×2 | −12 | −2 | **×1** (40.00¤) | 0 | — |
-| 5 | — | 6 − 9 | 0 | ×2 | −6 | −1 | **×0.75** (30.00¤) | −1 | — |
+At the top row the seam is as good as worked out: the line spends the rest of the game bid up by six before a die is thrown, which on the swing ruler is two bands of rally with no help from anybody. The town that owns the last deposit owns the market, and it always did - this is the version of that sentence you can see across a table.
 
-**After five rounds:** ×0.75 — Gold at 30.00¤ a ingot — with the memory on −1. It is bought because it is going up.
+**![](../art/icons/pricing-hype.svg) Sought — “It is bought because it is going up.”** The luxury trade: low bulk, high value, wanted for what it is rather than for what it does.
 
-### The seam runs out — Iron Ore · ![](../art/icons/pricing-deplete.svg) Depletion
+The market that runs on its own reputation. Nobody needs a jewel, a bolt of fine cloth or a famous horse - they want it because of what owning it says, and what it says is loudest when everybody can see the price climbing. So a rise makes buyers and buyers make a rise, until the day it does not and the whole thing runs the other way just as fast.
 
-Ilsa opens a mine and ships everything she digs. The rolls are ordinary throughout. Base value 6¤; every token starts on ×1, memory 0, tally 0.
+*The mark: **rising run**.* A run of prices going up, with the arrow at the top of it. The one mark in the set that says which way it is pointing.
 
-| # | Actions phase | D − S | Mem | Green | Net | Bands | Price now | Mem after | Tally |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | sells **4** at 5.10¤ = **20.40¤** · tally 4 | 8 − 9 | 0 | ×1 | −1 | hold | **×1** (6.00¤) | 0 | 4 |
-| 2 | sells **4** at 5.10¤ = **20.40¤** · tally fills → memory **+1**, tally 3 | 8 − 7 | +1 | ×1 | 2 | +1 | **×1.25** (7.50¤) | +1 | 3 |
-| 3 | sells **4** at 6.38¤ = **25.50¤** · tally fills → memory **+2**, tally 2 | 9 − 8 | +2 | ×1 | 3 | +1 | **×1.5** (9.00¤) | +2 | 2 |
-| 4 | sells **3** at 7.65¤ = **22.95¤** · tally fills → memory **+3**, tally 0 | 7 − 10 | +3 | ×1 | 0 | hold | **×1.5** (9.00¤) | +3 | 0 |
-| 5 | — | 7 − 8 | +3 | ×1 | 2 | +1 | **×2** (12.00¤) | +3 | 0 |
+At setup nothing has moved, so every sought line starts on nothing, and the first round is played on the dice alone. It is a feedback loop with a floor and a ceiling and no memory beyond one round, which is exactly the shape of the thing it is modelling. A rise makes buyers and buyers make a rise, until a bad roll turns it and the same machinery runs the other way just as fast. Two rounds of quiet and it is back to nothing, because a move of zero is what the next round reads.
 
-**After five rounds:** ×2 — Iron Ore at 12.00¤ a load — with the memory on +3. The easy ore came out first.
+### Every price in the game
+
+**A price move is a step along one of these rows.** The price you last wrote in a ledger
+column is one of the six figures in that commodity’s row; the swing ruler says how many
+places to step; the figure you land on is the new price. There is no band index to
+remember, no token to walk and nothing to multiply — which is exactly what let the price
+ladder come off the market board with nothing replacing it (`rules.json market.$bandNote`,
+`data/ledger.json`).
+
+That is 66 commodities by 6 bands — 396 multiplications, all of them the same ones every
+game, and every one of them formerly done at a table, because a token standing on a cell
+tells you a band index and not a price. They are done here instead, once, at the press, by
+a tool that cannot get one wrong. The dearest figure below is **220**, which is why the ledger
+prints three hollow figures per cell and not four.
+
+| Commodity | Kind | ×0.5 | ×0.75 | ×1.0 | ×1.25 | ×1.5 | ×2.0 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Logs | Staple | 2 | 3 | 4 | 5 | 6 | 8 |
+| Stone | Staple | 3 | 4 | 5 | 6 | 8 | 10 |
+| Clay | Finite | 2 | 2 | 3 | 4 | 5 | 6 |
+| Sand | Finite | 1 | 2 | 2 | 3 | 3 | 4 |
+| Iron Ore | Finite | 3 | 5 | 6 | 8 | 9 | 12 |
+| Copper Ore | Finite | 4 | 5 | 7 | 9 | 11 | 14 |
+| Gold Ore | Finite | 7 | 11 | 14 | 18 | 21 | 28 |
+| Salt | Finite | 3 | 5 | 6 | 8 | 9 | 12 |
+| Water | Staple | 1 | 1 | 1 | 1 | 2 | 2 |
+| Coal | Finite | 4 | 6 | 8 | 10 | 12 | 16 |
+| Peat | Finite | 2 | 2 | 3 | 4 | 5 | 6 |
+| Charcoal | Staple | 4 | 5 | 7 | 9 | 11 | 14 |
+| Crude Oil | Finite | 8 | 12 | 16 | 20 | 24 | 32 |
+| Lumber | Staple | 5 | 7 | 9 | 11 | 14 | 18 |
+| Brick | Staple | 6 | 9 | 12 | 15 | 18 | 24 |
+| Pig Iron | Finite | 7 | 11 | 14 | 18 | 21 | 28 |
+| Steel | Finite | 13 | 20 | 26 | 33 | 39 | 52 |
+| Copper | Finite | 9 | 14 | 18 | 23 | 27 | 36 |
+| Gold | Sought | 20 | 30 | 40 | 50 | 60 | 80 |
+| Glass | Staple | 10 | 15 | 20 | 25 | 30 | 40 |
+| Rope | Staple | 4 | 6 | 8 | 10 | 12 | 16 |
+| Leather | Staple | 6 | 8 | 11 | 14 | 17 | 22 |
+| Ironware | Staple | 11 | 17 | 22 | 28 | 33 | 44 |
+| Parchment | Staple | 8 | 11 | 15 | 19 | 23 | 30 |
+| Wool | Staple | 3 | 5 | 6 | 8 | 9 | 12 |
+| Flax | Staple | 3 | 4 | 5 | 6 | 8 | 10 |
+| Cotton | Staple | 4 | 5 | 7 | 9 | 11 | 14 |
+| Yarn | Staple | 6 | 9 | 12 | 15 | 18 | 24 |
+| Cloth | Staple | 10 | 15 | 20 | 25 | 30 | 40 |
+| Fine Cloth | Sought | 19 | 29 | 38 | 48 | 57 | 76 |
+| Hide | Staple | 3 | 5 | 6 | 8 | 9 | 12 |
+| Grain | Staple | 3 | 4 | 5 | 6 | 8 | 10 |
+| Flour | Staple | 5 | 7 | 9 | 11 | 14 | 18 |
+| Bread | Perishable | 7 | 11 | 14 | 18 | 21 | 28 |
+| Vegetables | Perishable | 3 | 5 | 6 | 8 | 9 | 12 |
+| Mushrooms | Perishable | 4 | 5 | 7 | 9 | 11 | 14 |
+| Berries | Perishable | 3 | 4 | 5 | 6 | 8 | 10 |
+| Apples | Perishable | 3 | 5 | 6 | 8 | 9 | 12 |
+| Fish | Perishable | 4 | 5 | 7 | 9 | 11 | 14 |
+| Meat | Perishable | 5 | 8 | 10 | 13 | 15 | 20 |
+| Salted Meat | Staple | 9 | 14 | 18 | 23 | 27 | 36 |
+| Milk | Perishable | 2 | 3 | 4 | 5 | 6 | 8 |
+| Cheese | Staple | 8 | 12 | 16 | 20 | 24 | 32 |
+| Honey | Staple | 6 | 9 | 12 | 15 | 18 | 24 |
+| Eggs | Perishable | 3 | 4 | 5 | 6 | 8 | 10 |
+| Grapes | Perishable | 4 | 6 | 8 | 10 | 12 | 16 |
+| Hops | Staple | 4 | 5 | 7 | 9 | 11 | 14 |
+| Ale | Staple | 12 | 18 | 24 | 30 | 36 | 48 |
+| Mead | Sought | 16 | 24 | 32 | 40 | 48 | 64 |
+| Wine | Sought | 20 | 30 | 40 | 50 | 60 | 80 |
+| Sheep | Staple | 9 | 14 | 18 | 23 | 27 | 36 |
+| Cattle | Staple | 15 | 23 | 30 | 38 | 45 | 60 |
+| Pig | Staple | 10 | 15 | 20 | 25 | 30 | 40 |
+| Chickens | Staple | 5 | 7 | 9 | 11 | 14 | 18 |
+| Horse | Sought | 23 | 34 | 45 | 56 | 68 | 90 |
+| Barrel | Staple | 4 | 6 | 8 | 10 | 12 | 16 |
+| Crate | Staple | 3 | 5 | 6 | 8 | 9 | 12 |
+| Sack | Staple | 2 | 2 | 3 | 4 | 5 | 6 |
+| Spices | Sought | 23 | 34 | 45 | 56 | 68 | 90 |
+| Gems | Finite | 30 | 45 | 60 | 75 | 90 | 120 |
+| Jewellery | Sought | 55 | 83 | 110 | 138 | 165 | 220 |
+| Arcane Herb | Staple | 10 | 15 | 20 | 25 | 30 | 40 |
+| Mana Crystal | Finite | 28 | 41 | 55 | 69 | 83 | 110 |
+| Moon Blossom | Perishable | 7 | 11 | 14 | 18 | 21 | 28 |
+| Ember Root | Staple | 8 | 12 | 16 | 20 | 24 | 32 |
+| Frost Lichen | Staple | 6 | 9 | 12 | 15 | 18 | 24 |
+
+Every column starts on the **third** figure of its row. Buying from the board costs the
+spread on top and selling to it takes the spread off — 15% either way, and it is the house
+cut for trading with a board rather than with another player, not part of the price.
+
+## Four markets, played
+
+One scenario per kind of good, with the dice chosen to show what each one does — a worked
+example shows the interesting case, not a random one. Everything after the dice is computed
+from the tables above rather than transcribed, so these cannot drift out of true.
+
+Read a row left to right and it is the round in the order it happens. Trading is an action
+like any other and happens in the **Actions** phase, at the price the ledger is already
+showing; the ochre die is rolled one phase later, at the end of **Feeding**; and the
+**Market** phase then fixes the price everybody will trade at next round. You act on a
+known price and find out afterwards what your acting did to it, which is the only honest
+way round for a market to work. Sales to the board are at the ledger price less the house
+cut, so a figure in that column is not the printed price and is not meant to be.
+
+**Mod** is what the good’s own nature adds, and two of the four never leave nought.
+**Net** is the whole sum. **The ruler** is the cell the net lands in, and after it the
+figure that goes in the ledger’s move box — a dash when the price held, and the step the
+price *actually took* rather than the one the ruler called for, on the rounds where it is
+already standing at an end of its own row. **End of Feeding** and **Pips** are the two
+columns that are not about the price at all: what the ochre die took, and how many units
+have been burnt so far.
+
+### A good harvest — Grain · ![](../art/icons/pricing-staple.svg) Staple
+
+Bram has a farm and a surplus, and sells it into his own town three rounds running. Base value 5¤, so the row is **3 · 4 · 5 · 6 · 8 · 10**, and
+every column starts on the third figure of it — 5¤ a sack.
+
+| # | In the round | D − S | Green | Mod | Net | The ruler | Price |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | His first surplus, into a town that already has plenty. Sells **3** at 4.25¤ = **12.75¤** | 7 − 11 | 3 · 0 | 0 | −4 | soften −1 | **4¤** |
+| 2 | A thin market — and he sells into it anyway. Sells **3** at 3.40¤ = **10.20¤** | 11 − 5 | 4 · 0 | 0 | +6 | rally +2 | **6¤** |
+| 3 | And again, four sacks this time. Sells **4** at 5.10¤ = **20.40¤** | 6 − 8 | 2 · −2 | 0 | −4 | soften −1 | **5¤** |
+| 4 | Nobody trades a sack all round. | 9 − 7 | 5 · +2 | 0 | +4 | firm +1 | **6¤** |
+| 5 | A famine year. | 12 − 3 | 5 · +2 | 0 | +11 | spike +2 *(the top of the row)* | **10¤** |
+
+**After five rounds — Grain at 10¤ a sack.** Ten sacks sold into one town, and not one of them moved the row a place. That is the staple bargain stated plainly: a price is the crowd wanting it against the amount that turned up, and one farmer with a cart is neither of those things. Under the memory strip those ten sacks would have filled a tally twice over and bent the price down under him — which punished the town for what the farmer did, and is the job the fish skeleton took over and now does to the person actually holding the stock.
+
+### The catch — Fish · ![](../art/icons/pricing-perish.svg) Perishable
+
+Nella lands fish at a coast village and cannot shift it fast enough. Base value 7¤, so the row is **4 · 5 · 7 · 9 · 11 · 14**, and
+every column starts on the third figure of it — 7¤ a crate.
+
+| # | In the round | D − S | Green | Mod | Net | The ruler | Price | End of Feeding |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | A good first haul. Lands **5** · sells **2** at 5.95¤ = **11.90¤** | 11 − 5 | 3 · 0 | 0 | +6 | rally +2 | **11¤** | ochre **4** — 2 gone, 1 left |
+| 2 | Four more out of the water, three away. Lands **4** · sells **3** at 9.35¤ = **28.05¤** | 7 − 10 | 5 · +2 | 0 | −1 | hold — | **11¤** | ochre **2** — 1 gone, 1 left |
+| 3 | The last crate goes, and there is nothing left to roll against. Sells **1** at 9.35¤ = **9.35¤** | 5 − 10 | 2 · −2 | 0 | −7 | slump −2 | **7¤** | nothing held |
+| 4 | Six crates, and no market day to sell them into. Lands **6** | 8 − 7 | 4 · 0 | 0 | +1 | hold — | **7¤** | ochre **6** — 3 gone, 3 left |
+| 5 | What survived, sold. Sells **3** at 5.95¤ = **17.85¤** | 10 − 6 | 3 · 0 | 0 | +4 | firm +1 | **9¤** | nothing held |
+
+**After five rounds — Fish at 9¤ a crate.** Fifteen crates out of the water, nine sold and **six thrown away** — and the price did exactly what the blue and red dice said in all five rounds, because a perishable adds nothing whatever to the swing. Everything that happened to Nella happened at the end of a round, in her own hands. That is the trade the spoil die made: glut moved the price everybody traded at, which left the player with a hold full of fish no worse off than the player with none, and slightly better informed. The die is aimed at the person holding the stuff, on the round they failed to shift it, and it needs one die and no strip on any board.
+
+### The seam runs out — Coal · ![](../art/icons/pricing-deplete.svg) Finite
+
+A smelting town, its furnaces, and one merchant who thinks she is working the market. Base value 8¤, so the row is **4 · 6 · 8 · 10 · 12 · 16**, and
+every column starts on the third figure of it — 8¤ a load.
+
+| # | In the round | D − S | Green | Mod | Net | The ruler | Price | Pips |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | The town lights its furnaces. Burns **3** | 8 − 8 | 3 · 0 | +1 | +1 | hold — | **8¤** | 3 |
+| 2 | Ilsa sells twelve loads to the board. Watch what it does to the price. Sells **12** at 6.80¤ = **81.60¤** · burns **3** | 7 − 9 | 4 · 0 | +2 | 0 | hold — | **8¤** | 6 |
+| 3 | A busy week at the smelter, and a roll that says nothing at all. Burns **4** | 7 − 7 | 3 · 0 | +3 | +3 | firm +1 | **10¤** | 10 |
+| 4 | A bad roll — and look what it does not do. Burns **3** | 5 − 9 | 2 · −2 | +4 | −2 | soften −1 | **8¤** | 13 |
+| 5 | Everything they have, into the furnace. Burns **5** | 9 − 8 | 4 · 0 | +6 | +7 | rally +2 | **12¤** | 18 |
+
+**After five rounds — Coal at 12¤ a load.** Eighteen loads burnt, the grid reading **+6**, and it will never read less again — the third round is the one to look at, where a roll that came to nothing put the price up a place on the strength of the grid alone. Ilsa’s twelve loads in round two did nothing at all, and that is the model rather than an oversight: selling coal to a town moves coal, burning it destroys coal, and only the burning is what a seam notices. A merchant who never lights a fire can trade the same hundred tons all game and the hill will not run dry from the paperwork.
+
+### A run on gold — Gold · ![](../art/icons/pricing-hype.svg) Sought
+
+Nobody trades a single ingot in five rounds. A sought line does all of this on its own. Base value 40¤, so the row is **20 · 30 · 40 · 50 · 60 · 80**, and
+every column starts on the third figure of it — 40¤ an ingot.
+
+| # | In the round | D − S | Green | Mod | Net | The ruler | Price |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Gold firms. Nothing has moved yet, so there is nothing to add. | 11 − 5 | 3 · 0 | 0 | +6 | rally +2 | **60¤** |
+| 2 | The run builds, and now it is adding its own last move. | 9 − 6 | 2 · −2 | +2 | +3 | firm +1 | **80¤** |
+| 3 | A roll that says nothing, with a slack season under it. | 7 − 8 | 4 · 0 | +1 | 0 | hold — | **80¤** |
+| 4 | The turn. | 4 − 11 | 2 · −2 | 0 | −9 | crash −3 | **40¤** |
+| 5 | And it runs the other way just as fast. | 6 − 9 | 3 · 0 | −3 | −6 | slump −2 | **20¤** |
+
+**After five rounds — Gold at 20¤ an ingot.** Two places up, then one, then a dash; then three down and two. Gold went from 40¤ an ingot to 80¤ and finished at 20¤, the foot of its own row, without a single ingot changing hands. The whole memory of that is one pencil figure in the move box of the row above, and the third round is where the machinery shows: the price held, so the box got a dash, and a dash is what round four had to add. Two quiet rounds and a sought good is priced on the dice like anything else.
 
 ## Commodities
 
-| Commodity | Category | Bulk | Value | Prices by | Perishes | Tags |
+**Value** is the base value the row of six above is worked out from, not a price anybody
+ever pays: what a town pays is the un-struck figure in that commodity’s ledger column.
+**Keeps** is the column of the spoil strip a stack of it reads at the end of a round, and
+only a perishable has one.
+
+| Commodity | Category | Bulk | Value | Prices by | Keeps | Tags |
 | --- | --- | --- | --- | --- | --- | --- |
-| Logs | raw | 2 | 4 | ![](../art/icons/pricing-glut.svg) Glut | — | bulky |
-| Stone | raw | 2 | 5 | ![](../art/icons/pricing-glut.svg) Glut | — | bulky |
-| Clay | raw | 2 | 3 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky |
-| Sand | raw | 2 | 2 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky |
-| Iron Ore | raw | 2 | 6 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, ore |
-| Copper Ore | raw | 2 | 7 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, ore |
-| Gold Ore | raw | 2 | 14 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, ore |
-| Salt | raw | 1 | 6 | ![](../art/icons/pricing-deplete.svg) Depletion | — | preservative |
-| Water | raw | 1 | 1 | ![](../art/icons/pricing-glut.svg) Glut | — | liquid |
-| Coal | fuel | 2 | 8 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, fuel |
-| Peat | fuel | 2 | 3 | ![](../art/icons/pricing-deplete.svg) Depletion | — | bulky, fuel |
-| Charcoal | fuel | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | — | fuel |
-| Crude Oil | fuel | 2 | 16 | ![](../art/icons/pricing-deplete.svg) Depletion | — | liquid, fuel, late-game |
-| Lumber | material | 1 | 9 | ![](../art/icons/pricing-glut.svg) Glut | — | building-material |
-| Brick | material | 2 | 12 | ![](../art/icons/pricing-glut.svg) Glut | — | building-material |
-| Pig Iron | material | 1 | 14 | ![](../art/icons/pricing-deplete.svg) Depletion | — | metal |
-| Steel | material | 1 | 26 | ![](../art/icons/pricing-deplete.svg) Depletion | — | metal, tier3 |
-| Copper | material | 1 | 18 | ![](../art/icons/pricing-deplete.svg) Depletion | — | metal |
-| Gold | material | 1 | 40 | ![](../art/icons/pricing-hype.svg) Hype | — | metal, precious |
-| Glass | material | 1 | 20 | ![](../art/icons/pricing-glut.svg) Glut | — | fragile |
-| Rope | material | 1 | 8 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Leather | material | 1 | 11 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Ironware | manufactured | 1 | 22 | ![](../art/icons/pricing-glut.svg) Glut | — | fittings |
-| Parchment | manufactured | 1 | 15 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Wool | textile | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Flax | textile | 1 | 5 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Cotton | textile | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Yarn | textile | 1 | 12 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Cloth | textile | 1 | 20 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Fine Cloth | textile | 1 | 38 | ![](../art/icons/pricing-hype.svg) Hype | — | tier3 |
-| Hide | textile | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Grain | food | 1 | 5 | ![](../art/icons/pricing-glut.svg) Glut | — | staple, seed |
-| Flour | food | 1 | 9 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Bread | food | 1 | 14 | ![](../art/icons/pricing-glut.svg) Glut | 3 rounds | staple |
-| Vegetables | food | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | 3 rounds | — |
-| Mushrooms | food | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | foraged, potion-ingredient |
-| Berries | food | 1 | 5 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | foraged, potion-ingredient |
-| Apples | food | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | 4 rounds | — |
-| Fish | food | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | — |
-| Meat | food | 1 | 10 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | — |
-| Salted Meat | food | 1 | 18 | ![](../art/icons/pricing-glut.svg) Glut | — | preserved |
-| Milk | food | 1 | 4 | ![](../art/icons/pricing-glut.svg) Glut | 1 rounds | liquid |
-| Cheese | food | 1 | 16 | ![](../art/icons/pricing-glut.svg) Glut | — | preserved |
-| Honey | food | 1 | 12 | ![](../art/icons/pricing-glut.svg) Glut | — | potion-ingredient |
-| Eggs | food | 1 | 5 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | — |
-| Grapes | food | 1 | 8 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | — |
-| Hops | food | 1 | 7 | ![](../art/icons/pricing-glut.svg) Glut | — | — |
-| Ale | drink | 2 | 24 | ![](../art/icons/pricing-glut.svg) Glut | — | liquid, morale |
-| Mead | drink | 2 | 32 | ![](../art/icons/pricing-hype.svg) Hype | — | liquid, morale |
-| Wine | drink | 2 | 40 | ![](../art/icons/pricing-hype.svg) Hype | — | liquid, morale, luxury-adjacent |
-| Sheep | livestock | 2 | 18 | ![](../art/icons/pricing-glut.svg) Glut | — | breeds, eats |
-| Cattle | livestock | 3 | 30 | ![](../art/icons/pricing-glut.svg) Glut | — | breeds, eats |
-| Pig | livestock | 2 | 20 | ![](../art/icons/pricing-glut.svg) Glut | — | breeds, eats |
-| Chickens | livestock | 1 | 9 | ![](../art/icons/pricing-glut.svg) Glut | — | breeds, eats |
-| Horse | livestock | 3 | 45 | ![](../art/icons/pricing-hype.svg) Hype | — | breeds, eats, draught |
-| Barrel | container | 1 | 8 | ![](../art/icons/pricing-glut.svg) Glut | — | reusable |
-| Crate | container | 1 | 6 | ![](../art/icons/pricing-glut.svg) Glut | — | reusable |
-| Sack | container | 0.5 | 3 | ![](../art/icons/pricing-glut.svg) Glut | — | reusable |
-| Spices | luxury | 0.5 | 45 | ![](../art/icons/pricing-hype.svg) Hype | — | trade-good, import-only |
-| Gems | luxury | 0.5 | 60 | ![](../art/icons/pricing-deplete.svg) Depletion | — | trade-good, theft-target |
-| Jewellery | luxury | 0.5 | 110 | ![](../art/icons/pricing-hype.svg) Hype | — | trade-good, theft-target, tier3 |
-| Arcane Herb | arcane | 0.5 | 20 | ![](../art/icons/pricing-glut.svg) Glut | — | foraged, potion-ingredient |
-| Mana Crystal | arcane | 0.5 | 55 | ![](../art/icons/pricing-deplete.svg) Depletion | — | potion-ingredient, theft-target |
-| Moon Blossom | arcane | 0.5 | 14 | ![](../art/icons/pricing-glut.svg) Glut | 2 rounds | foraged, potion-ingredient |
-| Ember Root | arcane | 0.5 | 16 | ![](../art/icons/pricing-glut.svg) Glut | — | foraged, potion-ingredient |
-| Frost Lichen | arcane | 0.5 | 12 | ![](../art/icons/pricing-glut.svg) Glut | — | foraged, potion-ingredient |
+| Logs | raw | 2 | 4 | ![](../art/icons/pricing-staple.svg) Staple | — | bulky |
+| Stone | raw | 2 | 5 | ![](../art/icons/pricing-staple.svg) Staple | — | bulky |
+| Clay | raw | 2 | 3 | ![](../art/icons/pricing-deplete.svg) Finite | — | bulky |
+| Sand | raw | 2 | 2 | ![](../art/icons/pricing-deplete.svg) Finite | — | bulky |
+| Iron Ore | raw | 2 | 6 | ![](../art/icons/pricing-deplete.svg) Finite | — | bulky, ore |
+| Copper Ore | raw | 2 | 7 | ![](../art/icons/pricing-deplete.svg) Finite | — | bulky, ore |
+| Gold Ore | raw | 2 | 14 | ![](../art/icons/pricing-deplete.svg) Finite | — | bulky, ore |
+| Salt | raw | 1 | 6 | ![](../art/icons/pricing-deplete.svg) Finite | — | preservative |
+| Water | raw | 1 | 1 | ![](../art/icons/pricing-staple.svg) Staple | — | liquid |
+| Coal | fuel | 2 | 8 | ![](../art/icons/pricing-deplete.svg) Finite | — | bulky, fuel |
+| Peat | fuel | 2 | 3 | ![](../art/icons/pricing-deplete.svg) Finite | — | bulky, fuel |
+| Charcoal | fuel | 1 | 7 | ![](../art/icons/pricing-staple.svg) Staple | — | fuel |
+| Crude Oil | fuel | 2 | 16 | ![](../art/icons/pricing-deplete.svg) Finite | — | liquid, fuel, late-game |
+| Lumber | material | 1 | 9 | ![](../art/icons/pricing-staple.svg) Staple | — | building-material |
+| Brick | material | 2 | 12 | ![](../art/icons/pricing-staple.svg) Staple | — | building-material |
+| Pig Iron | material | 1 | 14 | ![](../art/icons/pricing-deplete.svg) Finite | — | metal |
+| Steel | material | 1 | 26 | ![](../art/icons/pricing-deplete.svg) Finite | — | metal, tier3 |
+| Copper | material | 1 | 18 | ![](../art/icons/pricing-deplete.svg) Finite | — | metal |
+| Gold | material | 1 | 40 | ![](../art/icons/pricing-hype.svg) Sought | — | metal, precious |
+| Glass | material | 1 | 20 | ![](../art/icons/pricing-staple.svg) Staple | — | fragile |
+| Rope | material | 1 | 8 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Leather | material | 1 | 11 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Ironware | manufactured | 1 | 22 | ![](../art/icons/pricing-staple.svg) Staple | — | fittings |
+| Parchment | manufactured | 1 | 15 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Wool | textile | 1 | 6 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Flax | textile | 1 | 5 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Cotton | textile | 1 | 7 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Yarn | textile | 1 | 12 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Cloth | textile | 1 | 20 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Fine Cloth | textile | 1 | 38 | ![](../art/icons/pricing-hype.svg) Sought | — | tier3 |
+| Hide | textile | 1 | 6 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Grain | food | 1 | 5 | ![](../art/icons/pricing-staple.svg) Staple | — | staple, seed |
+| Flour | food | 1 | 9 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Bread | food | 1 | 14 | ![](../art/icons/pricing-perish.svg) Perishable | well | staple |
+| Vegetables | food | 1 | 6 | ![](../art/icons/pricing-perish.svg) Perishable | well | — |
+| Mushrooms | food | 1 | 7 | ![](../art/icons/pricing-perish.svg) Perishable | **poorly** | foraged, potion-ingredient |
+| Berries | food | 1 | 5 | ![](../art/icons/pricing-perish.svg) Perishable | **poorly** | foraged, potion-ingredient |
+| Apples | food | 1 | 6 | ![](../art/icons/pricing-perish.svg) Perishable | well | — |
+| Fish | food | 1 | 7 | ![](../art/icons/pricing-perish.svg) Perishable | **poorly** | — |
+| Meat | food | 1 | 10 | ![](../art/icons/pricing-perish.svg) Perishable | **poorly** | — |
+| Salted Meat | food | 1 | 18 | ![](../art/icons/pricing-staple.svg) Staple | — | preserved |
+| Milk | food | 1 | 4 | ![](../art/icons/pricing-perish.svg) Perishable | **poorly** | liquid |
+| Cheese | food | 1 | 16 | ![](../art/icons/pricing-staple.svg) Staple | — | preserved |
+| Honey | food | 1 | 12 | ![](../art/icons/pricing-staple.svg) Staple | — | potion-ingredient |
+| Eggs | food | 1 | 5 | ![](../art/icons/pricing-perish.svg) Perishable | **poorly** | — |
+| Grapes | food | 1 | 8 | ![](../art/icons/pricing-perish.svg) Perishable | **poorly** | — |
+| Hops | food | 1 | 7 | ![](../art/icons/pricing-staple.svg) Staple | — | — |
+| Ale | drink | 2 | 24 | ![](../art/icons/pricing-staple.svg) Staple | — | liquid, morale |
+| Mead | drink | 2 | 32 | ![](../art/icons/pricing-hype.svg) Sought | — | liquid, morale |
+| Wine | drink | 2 | 40 | ![](../art/icons/pricing-hype.svg) Sought | — | liquid, morale, luxury-adjacent |
+| Sheep | livestock | 2 | 18 | ![](../art/icons/pricing-staple.svg) Staple | — | breeds, eats |
+| Cattle | livestock | 3 | 30 | ![](../art/icons/pricing-staple.svg) Staple | — | breeds, eats |
+| Pig | livestock | 2 | 20 | ![](../art/icons/pricing-staple.svg) Staple | — | breeds, eats |
+| Chickens | livestock | 1 | 9 | ![](../art/icons/pricing-staple.svg) Staple | — | breeds, eats |
+| Horse | livestock | 3 | 45 | ![](../art/icons/pricing-hype.svg) Sought | — | breeds, eats, draught |
+| Barrel | container | 1 | 8 | ![](../art/icons/pricing-staple.svg) Staple | — | reusable |
+| Crate | container | 1 | 6 | ![](../art/icons/pricing-staple.svg) Staple | — | reusable |
+| Sack | container | 0.5 | 3 | ![](../art/icons/pricing-staple.svg) Staple | — | reusable |
+| Spices | luxury | 0.5 | 45 | ![](../art/icons/pricing-hype.svg) Sought | — | trade-good, import-only |
+| Gems | luxury | 0.5 | 60 | ![](../art/icons/pricing-deplete.svg) Finite | — | trade-good, theft-target |
+| Jewellery | luxury | 0.5 | 110 | ![](../art/icons/pricing-hype.svg) Sought | — | trade-good, theft-target, tier3 |
+| Arcane Herb | arcane | 0.5 | 20 | ![](../art/icons/pricing-staple.svg) Staple | — | foraged, potion-ingredient |
+| Mana Crystal | arcane | 0.5 | 55 | ![](../art/icons/pricing-deplete.svg) Finite | — | potion-ingredient, theft-target |
+| Moon Blossom | arcane | 0.5 | 14 | ![](../art/icons/pricing-perish.svg) Perishable | **poorly** | foraged, potion-ingredient |
+| Ember Root | arcane | 0.5 | 16 | ![](../art/icons/pricing-staple.svg) Staple | — | foraged, potion-ingredient |
+| Frost Lichen | arcane | 0.5 | 12 | ![](../art/icons/pricing-staple.svg) Staple | — | foraged, potion-ingredient |
+
+## Wear
+
+**Everything a figure carries wears out**, and until recently only tools did. A sword was
+immortal, a suit of plate never dented, a rope never frayed and a lantern burned forever —
+so the only equipment decision anybody made twice was which axe to buy. One rule, one unit,
+one scale: one wear-point per use, for a tool, a weapon, a coat and a coil of rope alike.
+
+It is printed once, as the **W** box in the summary strip on the thing’s own card: the most
+wear it will take, and like every number on a card it does not move, because the board took
+the walking over. It is walked on the W track beside the item's own slot on the player board. Set it from the W box on the card when the thing is picked up, knock it down a rung each time the thing is used, and at 0 it is finished.
+
+**The scale is the board’s.**
+Wear used to run past thirty and be counted on the tool itself, because there was no track
+for it; there are four now, one beside each kit slot, so the number came down to meet the
+board rather than the board going up to meet the number. **Nothing got shorter doing it,**
+because the clock changed with the scale: an axe had twenty-four wear at one a labour hour,
+which is eight three-hour jobs, and has ten at one a job, which is ten. A tool lasts
+slightly longer than it did and nobody adds hours up any more.
+
+| Wears | What counts as a use | Why |
+| --- | --- | --- |
+| a tool | each recipe it is used in | Per job, not per hour. A worker who spends nine hours felling timber has run one job and blunted one axe by one. |
+| a weapon, a shield, a helm or a suit of armour | each round of a battle it is swung or worn in | Both sides, win or lose. A blow you turned still dented the plate. |
+| a light | each night leg it is burned on | Which is what a torch is: one wear, one night, gone. |
+| anything else | each time its own card says | A rope that takes a party down a cliff, a grappling hook that holds, a bag that is stuffed past its seams. The card says what counts as a use, because a rope and a pair of boots do not wear for the same reason. |
+
+**At 0.** Worn out. The card is discarded, the track is cleared, and whatever the thing was doing for its owner it stops doing at once - a broken tool does not refund the effort already spent on the job that broke it, and a sword that goes at 0 leaves you swinging with nothing for the rest of the battle.
+
+**Repair.** Three points a round at any settlement with a blacksmith, four coin a point
+and two hours of somebody’s labour. A thing may be mended any number of times; what cannot be mended is a thing at 0, which is not damaged, it is gone.
+
+**What never wears:**
+
+- Potions, which are drunk rather than worn out - the card is discarded on use and there is no W box on it.
+- Talismans. Mana is not friction; a phylactery that has been filled and emptied a hundred times is a phylactery.
+- Commodities, which are counted rather than owned.
 
 ## Tools
 
-| Tool | Made at | Craft | Hours | Value | Durability |
+**W** is the most wear the tool will take, printed as the W box on its card and walked down
+the W track beside its own kit slot. One point per **job**, never per hour: a worker who spends nine hours felling timber has run one job and blunted one axe by one.
+
+| Tool | Made at | Craft | Hours | Value | W |
 | --- | --- | --- | --- | --- | --- |
-| Axe | blacksmith | 1 pig-iron + 1 lumber | 3 | 30 | 24 |
-| Saw | blacksmith | 1 pig-iron + 1 lumber | 3 | 32 | 26 |
-| Pick | blacksmith | 2 pig-iron + 1 lumber | 4 | 42 | 20 |
-| Shovel | blacksmith | 1 pig-iron + 1 lumber | 3 | 28 | 22 |
-| Hammer | blacksmith | 1 pig-iron + 1 lumber | 2 | 24 | 30 |
-| Knife | blacksmith | 1 pig-iron | 2 | 18 | 18 |
-| Shears | blacksmith | 1 pig-iron | 2 | 20 | 20 |
-| Scythe | blacksmith | 1 pig-iron + 1 lumber | 3 | 30 | 22 (optional) |
-| Plough | carpenter | 2 lumber + 1 ironware | 4 | 55 | 28 (optional) |
-| Fishing Net | weaver | 2 rope | 3 | 26 | 20 |
-| Spinning Wheel | carpenter | 2 lumber + 1 ironware | 4 | 48 | 30 |
-| Loom | carpenter | 3 lumber + 1 rope + 1 ironware | 6 | 70 | 34 |
-| Trowel | blacksmith | 1 pig-iron | 2 | 20 | 24 |
-| Surveyor's Kit | carpenter | 1 lumber + 1 parchment + 1 copper | 4 | 65 | 16 |
-| Alembic | glassworks | 2 glass + 1 copper | 5 | 90 | 14 |
+| Axe | blacksmith | 1 pig-iron + 1 lumber | 3 | 30 | 10 |
+| Saw | blacksmith | 1 pig-iron + 1 lumber | 3 | 32 | 11 |
+| Pick | blacksmith | 2 pig-iron + 1 lumber | 4 | 42 | 8 |
+| Shovel | blacksmith | 1 pig-iron + 1 lumber | 3 | 28 | 9 |
+| Hammer | blacksmith | 1 pig-iron + 1 lumber | 2 | 24 | 12 |
+| Knife | blacksmith | 1 pig-iron | 2 | 18 | 8 |
+| Shears | blacksmith | 1 pig-iron | 2 | 20 | 8 |
+| Scythe | blacksmith | 1 pig-iron + 1 lumber | 3 | 30 | 9 (optional) |
+| Plough | carpenter | 2 lumber + 1 ironware | 4 | 55 | 12 (optional) |
+| Fishing Net | weaver | 2 rope | 3 | 26 | 8 |
+| Spinning Wheel | carpenter | 2 lumber + 1 ironware | 4 | 48 | 12 |
+| Loom | carpenter | 3 lumber + 1 rope + 1 ironware | 6 | 70 | 14 |
+| Trowel | blacksmith | 1 pig-iron | 2 | 20 | 10 |
+| Surveyor's Kit | carpenter | 1 lumber + 1 parchment + 1 copper | 4 | 65 | 7 |
+| Alembic | glassworks | 2 glass + 1 copper | 5 | 90 | 6 |
+
+A size used to multiply durability as well, and it does not any more. A bigger loom is a FASTER loom, not a longer-lived one - and a multiplied wear number is a number the ceiling sweep cannot see, because it never appears in the data at the size it is actually walked at. One multiplier fewer, one hole in the ceiling fewer, and one thing less to work out at a table.
 
 ## Buildings
 
@@ -455,18 +739,24 @@ Ilsa opens a mine and ships everything she digs. The rolls are ordinary througho
 
 ## Peoples
 
-| People | Die | Workers | Terrain comfort | Strength | Defence | Carries | Mana |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Humans | d6 | 2 | grassland, forest, hills | 3 | 3 | 9 kg | talisman only |
-| Dwarves | d6 | 2 | mountain, hills, tundra | 4 | 3 | 12 kg | talisman only |
-| Elves | d6 | 2 | forest, hills, grassland | 2 | 3 | 6 kg | 3 innate |
-| Halflings | d6 | 3 | grassland, forest | 2 | 3 | 6 kg | talisman only |
-| Orcs | d8 | 2 | hills, marsh, tundra, mountain | 5 | 4 | 15 kg | talisman only |
+| People | Die | Workers | Terrain comfort | Strength | Carries | Mana |
+| --- | --- | --- | --- | --- | --- | --- |
+| Humans | d6 | 2 | grassland, forest, hills | 3 | 9 kg | talisman only |
+| Dwarves | d6 | 2 | mountain, hills, tundra | 4 | 12 kg | talisman only |
+| Elves | d6 | 2 | forest, hills, grassland | 2 | 6 kg | 3 innate |
+| Halflings | d6 | 3 | grassland, forest | 2 | 6 kg | talisman only |
+| Orcs | d8 | 2 | hills, marsh, tundra, mountain | 5 | 15 kg | talisman only |
 
 
 Carrying is not a separate number and has not been since strength swallowed
 burden: a figure lifts strength × 3 kg, and the column above is that
 sum rather than a value anybody chose.
+
+**There is no defence column, here or anywhere else.** It was the half of the old strength
+that made a strong thing hard to hurt, which was a good fix for a to-hit roll and has
+nothing to do in an opposed total: what a people brings to a fight is its strength, and
+what is between it and the blow is the armour it is wearing.
+
 ### Traits
 
 | People | Trait | Effect |
@@ -515,84 +805,118 @@ bulk: bulk is a commodity's storage and shipping cost, and no item has one.
 
 No figure in the game shoulders more than 18 kg unaided, and
 nothing walks a token for it: a load either fits under the printed limit or
-it does not.
+it does not. **Coin counts too** — 25 grams a coin, 40 to the kilogram — which is what
+turns a hold of jewellery sold into a question about how the money gets home.
+
+**W** is the most wear the thing will take, on the one scale described under **Wear**
+above. A potion has none, because it is drunk rather than worn out, and a talisman has
+none, because mana is not friction. **Battle** and **Armour** are both straight additions
+to one opposed total, and they were `combatDice` and `armourValue` — dice granted and hits
+cancelled — which were two different currencies for the same job in a system that no longer
+counts a hit at all.
 
 ### Clothing
 
-| Item | Made at | Inputs | Hours | Value | Mass | Effects |
-| --- | --- | --- | --- | --- | --- | --- |
-| Tunic | tailor | 1 cloth | 2 | 26 | 0.5 kg | Ignore the first -1 weather effort penalty each round. |
-| Winter Coat | tailor | 2 cloth + 2 wool | 3 | 60 | 1.5 kg | Immune to Hard Frost. No tundra or mountain effort penalty. |
-| Travelling Cloak | tailor | 2 cloth + 1 leather | 3 | 55 | 1 kg | +1 move point for the figure wearing it. |
-| Sturdy Boots | tailor | 1 leather | 2 | 30 | 0.75 kg | Marsh and mountain tiles cost 1 less to move through, minimum 1. |
-| Fine Robes | tailor | 2 fine-cloth + 1 gold | 4 | 180 | 0.75 kg | A merchant wearing these gets a further 10% on every market sale. Worth 2 victory points at game end. |
+Protects against weather and event penalties.
+
+| Item | Made at | Inputs | Hours | Value | Mass | W | Effects |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Tunic | tailor | 1 cloth | 2 | 26 | 0.5 kg | 3 | Ignore the first -1 weather effort penalty each round. |
+| Winter Coat | tailor | 2 cloth + 2 wool | 3 | 60 | 1.5 kg | 5 | Immune to Hard Frost. No tundra or mountain effort penalty. |
+| Travelling Cloak (ITM-07) | tailor | 2 cloth + 1 leather | 3 | 55 | 1 kg | 5 | +1 move point for the figure wearing it. |
+| Sturdy Boots | tailor | 1 leather | 2 | 30 | 0.75 kg | 4 | Marsh and mountain tiles cost 1 less to move through, minimum 1. |
+| Fine Robes | tailor | 2 fine-cloth + 1 gold | 4 | 180 | 0.75 kg | 3 | A merchant wearing these gets a further 10% on every market sale. Worth 2 victory points at game end. |
 
 ### Armour
 
-| Item | Made at | Inputs | Hours | Value | Mass | Effects |
-| --- | --- | --- | --- | --- | --- | --- |
-| Leather Jerkin (ITM-01) | tailor | 2 leather | 3 | 50 | 2.5 kg | Ignore the first hit in each battle. |
-| Chain Mail (ITM-04) | blacksmith | 2 ironware + 1 leather | 5 | 130 | 6 kg | Ignore the first two hits in each battle. |
-| Plate Harness (ITM-05) | blacksmith | 3 steel + 2 leather | 8 | 320 | 12.5 kg | Ignore the first three hits in each battle. -1 move point. |
-| Helm (ITM-02) | blacksmith | 1 ironware | 2 | 45 | 1.25 kg | Once per battle, cancel one hit. |
-| Shield (ITM-03) | carpenter | 1 lumber + 1 ironware | 2 | 40 | 2 kg | +1 defence die. |
+Adds its armour number to your battle total. Wears 1 for every round of every battle it is worn in - a blow you turned still dented the plate.
+
+| Item | Made at | Inputs | Hours | Value | Mass | W | Armour | Effects |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Leather Jerkin (ARM-01) | tailor | 2 leather | 3 | 50 | 2.5 kg | 5 | 1 | +1 to your battle total. Wears 1 per round of battle. At 0 it is a coat. |
+| Chain Mail (ARM-04) | blacksmith | 2 ironware + 1 leather | 5 | 130 | 6 kg | 8 | 2 | +2 to your battle total. Wears 1 per round of battle. |
+| Plate Harness (ARM-05) | blacksmith | 3 steel + 2 leather | 8 | 320 | 12.5 kg | 12 | 3 | +3 to your battle total. -1 move point, which is also -1 pace when you are running from something. Wears 1 per round of battle. |
+| Helm (ARM-02) | blacksmith | 1 ironware | 2 | 45 | 1.25 kg | 6 | 1 | +1 to your battle total. Wears 1 per round of battle, and a helm that goes at 0 has done its whole job once. |
+| Shield (ARM-03) | carpenter | 1 lumber + 1 ironware | 2 | 40 | 2 kg | 5 | 1 | +1 to your battle total. Wears 1 per round of battle. Boards are cheap - a shield is the thing you expect to replace. |
 
 ### Weapon
 
-| Item | Made at | Inputs | Hours | Value | Mass | Effects |
-| --- | --- | --- | --- | --- | --- | --- |
-| Sword (ITM-06) | blacksmith | 2 pig-iron + 1 leather | 4 | 95 | 0.75 kg | +1 combat die. |
-| Steel Sword | blacksmith | 2 steel + 1 leather | 5 | 210 | 0.75 kg | +2 combat dice, and hits on 3+ instead of 4+. |
-| War Axe (ITM-07) | blacksmith | 2 pig-iron + 1 lumber | 3 | 80 | 1.5 kg | +1 combat die, +2 when attacking. |
-| Pike | blacksmith | 1 pig-iron + 2 lumber | 3 | 70 | 2.25 kg | +2 combat dice when defending a town. Cannot be used with a shield. |
-| Bow (ITM-09) | carpenter | 1 lumber + 1 rope | 3 | 65 | 0.5 kg | Rolls its dice before the enemy rolls theirs. +1 output on Hunt Game. Needs a quiver to fight. |
-| Quiver of Arrows | carpenter | 1 lumber + 1 leather | 2 | 30 | 1 kg | Holds 3 uses. Each battle with a bow spends 1. |
-| Sling | weaver | 1 cloth | 1 | 12 | 0.25 kg | +1 combat die for halflings only. Everyone else may as well throw the stone. |
-| War Hammer (ITM-08) | blacksmith | 2 steel + 1 lumber | 5 | 190 | 3 kg | +2 combat dice. Ignores enemy armour entirely. |
-| Crossbow (ITM-10) | blacksmith | 1 steel + 2 lumber + 1 rope | 5 | 175 | 2.5 kg | +3 combat dice, and ignores 1 point of enemy armour. Slow: it rolls in the first round of a battle and every second round after. Needs a quiver to fight. |
-| Harpoon | blacksmith | 1 pig-iron + 1 lumber + 2 rope | 3 | 75 | 2 kg | +1 combat die, and +3 instead against any water-element monster or anything bigger than a horse. A struck monster cannot flee while the line holds - it breaks on a d6 roll of 1 each round. +1 output on Fish. |
-| Dirk | blacksmith | 1 pig-iron | 2 | 35 | 0.4 kg | +1 combat die. Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls. |
-| Greatsword | blacksmith | 3 steel + 1 leather | 7 | 340 | 2 kg | +3 combat dice, and hits on 3+ instead of 4+. -1 move point, and it cannot be used with a shield. Worth 1 victory point at game end. |
-| Boar Spear | blacksmith | 1 pig-iron + 1 lumber | 2 | 55 | 1.5 kg | +1 combat die, and +3 in the first round against any monster that charges - anything of strength 4 or more that attacks first. The crossbar holds it off you: ignore the first hit from that monster. +1 output on Hunt Game. |
+Adds its battle number to your battle total. Wears 1 for every round of every battle it is swung in.
+
+| Item | Made at | Inputs | Hours | Value | Mass | W | Battle | Effects |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Sword (WPN-01) | blacksmith | 2 pig-iron + 1 leather | 4 | 95 | 0.75 kg | 7 | 1 | +1 to your battle total. Wears 1 per round of battle. |
+| Steel Sword | blacksmith | 2 steel + 1 leather | 5 | 210 | 0.75 kg | 10 | 2 | +2 to your battle total. Roll a third blue die and keep the best two. Wears 1 per round of battle. Steel holds an edge: it is the longest-lived blade in the deck. |
+| War Axe (WPN-02) | blacksmith | 2 pig-iron + 1 lumber | 3 | 80 | 1.5 kg | 6 | 1 | +1 to your battle total, and +2 instead in any battle you started. Wears 1 per round of battle. |
+| Pike | blacksmith | 1 pig-iron + 2 lumber | 3 | 70 | 2.25 kg | 5 | 1 | +1 to your battle total, and +3 instead when defending a town or a wall. Two hands: it cannot be used with a shield. Wears 1 per round of battle. |
+| Bow (WPN-04) | carpenter | 1 lumber + 1 rope | 3 | 65 | 0.5 kg | 6 | 2 | +2 to your battle total. At reach: if you win the roll, nothing you are wearing takes wear this round. +1 output on Hunt Game. Needs a quiver to fight. Wears 1 per round of battle. |
+| Sling | weaver | 1 cloth | 1 | 12 | 0.25 kg | 3 | 1 | +1 to your battle total for halflings only. Everyone else may as well throw the stone. Wears 1 per round of battle. |
+| War Hammer (WPN-03) | blacksmith | 2 steel + 1 lumber | 5 | 190 | 3 kg | 9 | 2 | +2 to your battle total. Ignores armour entirely: take the whole of the other side armour off their total, monster hide included. Two hands. Wears 1 per round of battle. |
+| Crossbow (WPN-05) | blacksmith | 1 steel + 2 lumber + 1 rope | 5 | 175 | 2.5 kg | 8 | 3 | +3 to your battle total, and 1 off the other sides armour. Slow: it counts in the first round of a battle and every second round after. In the rounds it is spanning you fight on strength alone. Two hands. Needs a quiver to fight. Wears 1 per round it counts in. |
+| Harpoon | blacksmith | 1 pig-iron + 1 lumber + 2 rope | 3 | 75 | 2 kg | 5 | 1 | +1 to your battle total, and +3 instead against any water-element monster or anything bigger than a horse. The line holds it: a struck monster cannot flee, and neither can you while it holds. It breaks on a d6 roll of 1 each round. Two hands. +1 output on Fish. Wears 1 per round of battle. |
+| Dirk | blacksmith | 1 pig-iron | 2 | 35 | 0.4 kg | 5 | 1 | +1 to your battle total. Carried out of sight: bandits, tolls and confiscations never take it, and it is not lost when a character falls. Wears 1 per round of battle. |
+| Greatsword | blacksmith | 3 steel + 1 leather | 7 | 340 | 2 kg | 11 | 3 | +3 to your battle total. Roll a third blue die and keep the best two. -1 move point. Two hands: no shield. Worth 1 victory point at game end. Wears 1 per round of battle. |
+| Boar Spear | blacksmith | 1 pig-iron + 1 lumber | 2 | 55 | 1.5 kg | 5 | 1 | +1 to your battle total, and +3 instead in the first round against any monster that charges - anything of strength 4 or more that attacks first. The crossbar holds it off you: take no wound at all in that first round, whatever the difference. Two hands. +1 output on Hunt Game. Wears 1 per round of battle. |
+| Dagger (WPN-06) | blacksmith | 1 pig-iron | 1 | 20 | 0.3 kg | 4 | 1 | +1 to your battle total. Light enough that it never fills a hand: a dagger sits in a kit slot with another weapon and both may be used. Wears 1 per round of battle. |
+| Staff (WPN-07) | carpenter | 1 lumber | 1 | 25 | 1.25 kg | 6 | 1 | +1 to your battle total, and +2 instead for a figure holding any mana at all. A staff is a road as much as a weapon: +1 pace on any leg made on foot. Two hands: it cannot be used with a shield. Wears 1 per round of battle. |
+
+### Gear
+
+Kit that is not for fighting, wearing or drinking: rope, a hook, a bag, a glass. It does a job on the road and it frays doing it, and its card says what counts as a use.
+
+| Item | Made at | Inputs | Hours | Value | Mass | W | Effects |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Quiver of Arrows | carpenter | 1 lumber + 1 leather | 2 | 30 | 1 kg | 3 | Holds 3 uses. Each battle with a bow or a crossbow spends 1. The uses ARE the wear: an empty quiver is a spent quiver. |
+| Coil of Rope (ITM-01) | weaver | 2 rope | 2 | 18 | 2 kg | 6 | Hills and mountain cost the whole party 1 less to cross, minimum 1. A grappling hook is useless without one. Wears 1 for every leg it is used on, and 1 more for any fall it stops. |
+| Grappling Hook (ITM-04) | blacksmith | 1 ironware + 1 rope | 2 | 45 | 1.5 kg | 5 | With a coil of rope: cross one cliff, ravine or wall as though it were open ground, once per leg. Board a ship at sea, or get over a town wall without troubling the gate. Wears 1 per use, and 1 more on a d6 roll of 1 - a hook that skates does not come back the same shape. |
+| Bag (ITM-05) | tailor | 1 cloth | 1 | 12 | 0.3 kg | 4 | +2 kg to what the figure can shoulder (rules.json carrying) - which is eighty coin, and that is what it is for. Wears 1 for every leg it is carried full. |
+| Satchel (ITM-06) | tailor | 1 leather + 1 cloth | 2 | 40 | 0.6 kg | 5 | +4 kg to what the figure can shoulder. Name one item inside it when it is packed: that item is not lost when the figure falls at 0 health. Wears 1 for every leg it is carried full. |
+| Binoculars (ITM-08) | glassworks | 1 glass + 1 ironware + 1 leather | 4 | 130 | 0.75 kg | 3 | Look before you walk: reveal the terrain of any one hex up to three away, without entering it. +1 on survey rolls. Re-roll one discovery roll per round, and keep the second. Wears 1 per use. Ground glass in a leather tube does not care for a road. |
 
 ### Potion
 
-| Item | Made at | Inputs | Hours | Value | Mass | Effects |
-| --- | --- | --- | --- | --- | --- | --- |
-| Draught of Vigour | alchemist | 2 arcane-herb + 1 honey | 3 | 70 | 0.25 kg | Step one worker's effort die up two sizes for one round. |
-| Tireless Toil | alchemist | 1 arcane-herb + 2 mushrooms | 3 | 60 | 0.25 kg | Re-roll every effort die of one worker and keep the better result. |
-| Brewmaster's Round | alchemist | 1 ale + 2 arcane-herb | 4 | 120 | 0.25 kg | +1 flat effort to every worker in one town this round. |
-| Healing Draught | alchemist | 2 arcane-herb + 2 berries | 3 | 85 | 0.25 kg | Cancel one worker loss, or ignore one Plague card. Or restore 3 health to one character. |
-| Swiftfoot | alchemist | 1 arcane-herb + 1 mana-crystal | 3 | 140 | 0.25 kg | Double one figure's move points, or move one cargo token its full speed again this round. |
-| Stonehide | alchemist | 1 mana-crystal + 2 mushrooms | 4 | 150 | 0.25 kg | One unit ignores all hits in one battle. |
-| Prospector's Clarity | alchemist | 1 mana-crystal + 2 arcane-herb | 4 | 160 | 0.25 kg | Automatically succeed on one survey, and reveal all deposits on adjacent tiles. |
-| Merchant's Fortune | alchemist | 1 gold + 2 arcane-herb | 4 | 200 | 0.25 kg | Shift one commodity family's price band two steps in your favour for your next sale only. |
-| Owl's Eye | alchemist | 2 moon-blossom + 1 arcane-herb | 3 | 90 | 0.25 kg | One figure or party travels night legs this round as if carrying a lantern. |
-| Physic Tonic | alchemist | 2 frost-lichen + 1 honey | 3 | 95 | 0.25 kg | Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick. |
-| Emberguard Salve | alchemist | 2 ember-root + 1 honey | 3 | 100 | 0.25 kg | One unit or character ignores every hit from a fire-element monster in one battle. |
-| Ley Tincture | alchemist | 1 mana-crystal + 3 arcane-herb | 5 | 220 | 0.25 kg | For one round the drinker holds 3 mana in the body, talisman or no talisman. Mana still there when the round ends blows away, and the drinker takes 1 damage. |
-| Innkeeper's Forbearance | alchemist | 2 mead + 1 arcane-herb | 3 | 80 | 0.5 kg | Broached at an inn, it clears 2 unrest in that town and everyone forgives everyone. Anywhere else it clears 1 unrest and starts an argument. |
-| Long Ration | alchemist | 1 honey + 1 salted-meat + 1 arcane-herb | 3 | 75 | 0.25 kg | One travelling party eats nothing for two rounds, and nobody complains until the third. |
-| Dragonsbane Draught | alchemist | 2 ember-root + 2 frost-lichen + 1 mana-crystal | 6 | 380 | 0.25 kg | For one battle, the drinker's party ignores the free first round any monster of strength 5 or more gets, and halves its hits, rounded up. It does not help you win. It helps you still be there at the end. |
-| Aeronaut's Nerve | alchemist | 1 moon-blossom + 1 ale + 1 arcane-herb | 3 | 110 | 0.25 kg | Re-roll one airship wind roll and keep the better result - see travel.json. The crew are steady at any height for the rest of the journey, which matters more than the roll does. |
+One-shot consumable, usually spent during the Labour Roll or a battle.
+
+| Item | Made at | Inputs | Hours | Value | Mass | W | Effects |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Draught of Vigour | alchemist | 2 arcane-herb + 1 honey | 3 | 70 | 0.25 kg | — | Step one worker's effort die up two sizes for one round. |
+| Tireless Toil | alchemist | 1 arcane-herb + 2 mushrooms | 3 | 60 | 0.25 kg | — | Re-roll every effort die of one worker and keep the better result. |
+| Brewmaster's Round | alchemist | 1 ale + 2 arcane-herb | 4 | 120 | 0.25 kg | — | +1 flat effort to every worker in one town this round. |
+| Healing Draught | alchemist | 2 arcane-herb + 2 berries | 3 | 85 | 0.25 kg | — | Cancel one worker loss, or ignore one Plague card. Or restore 3 health to one character. |
+| Swiftfoot | alchemist | 1 arcane-herb + 1 mana-crystal | 3 | 140 | 0.25 kg | — | Double one figure's move points, or move one cargo token its full speed again this round. |
+| Stonehide | alchemist | 1 mana-crystal + 2 mushrooms | 4 | 150 | 0.25 kg | — | One unit ignores all hits in one battle. |
+| Prospector's Clarity | alchemist | 1 mana-crystal + 2 arcane-herb | 4 | 160 | 0.25 kg | — | Automatically succeed on one survey, and reveal all deposits on adjacent tiles. |
+| Merchant's Fortune | alchemist | 1 gold + 2 arcane-herb | 4 | 200 | 0.25 kg | — | Shift one commodity family's price band two steps in your favour for your next sale only. |
+| Owl's Eye | alchemist | 2 moon-blossom + 1 arcane-herb | 3 | 90 | 0.25 kg | — | One figure or party travels night legs this round as if carrying a lantern. |
+| Physic Tonic | alchemist | 2 frost-lichen + 1 honey | 3 | 95 | 0.25 kg | — | Cure one illness anywhere: a sick worker recovers, or a town ignores one illness event card. In a healer's hands at an infirmary it cures the whole town - see Tend the Sick. |
+| Emberguard Salve | alchemist | 2 ember-root + 1 honey | 3 | 100 | 0.25 kg | — | One unit or character ignores every hit from a fire-element monster in one battle. |
+| Ley Tincture | alchemist | 1 mana-crystal + 3 arcane-herb | 5 | 220 | 0.25 kg | — | For one round the drinker holds 3 mana in the body, talisman or no talisman. Mana still there when the round ends blows away, and the drinker takes 1 damage. |
+| Innkeeper's Forbearance | alchemist | 2 mead + 1 arcane-herb | 3 | 80 | 0.5 kg | — | Broached at an inn, it clears 2 unrest in that town and everyone forgives everyone. Anywhere else it clears 1 unrest and starts an argument. |
+| Long Ration | alchemist | 1 honey + 1 salted-meat + 1 arcane-herb | 3 | 75 | 0.25 kg | — | One travelling party eats nothing for two rounds, and nobody complains until the third. |
+| Dragonsbane Draught | alchemist | 2 ember-root + 2 frost-lichen + 1 mana-crystal | 6 | 380 | 0.25 kg | — | For one battle, the drinker's party ignores the free first round any monster of strength 5 or more gets, and halves its hits, rounded up. It does not help you win. It helps you still be there at the end. |
+| Aeronaut's Nerve | alchemist | 1 moon-blossom + 1 ale + 1 arcane-herb | 3 | 110 | 0.25 kg | — | Re-roll one airship wind roll and keep the better result - see travel.json. The crew are steady at any height for the rest of the journey, which matters more than the roll does. |
 
 ### Light
 
-| Item | Made at | Inputs | Hours | Value | Mass | Effects |
-| --- | --- | --- | --- | --- | --- | --- |
-| Torch | carpenter | 1 lumber + 1 cloth | 1 | 10 | 0.25 kg | Travel one night leg at torch speed - see travel.json. Enter a cave. Each night leg or cave visit spends one use; at zero it is gone. |
-| Lantern | blacksmith | 1 ironware + 1 glass | 2 | 55 | 0.75 kg | Travel night legs at lantern speed - see travel.json. Explore caves without spending uses. Does not wear out, but it can be lost, sold or stolen like any item. |
+Lets a party travel at night and enter caves. See travel.json.
+
+| Item | Made at | Inputs | Hours | Value | Mass | W | Effects |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Torch (ITM-03) | carpenter | 1 lumber + 1 cloth | 1 | 10 | 0.25 kg | 1 | Travel one night leg at torch speed - see travel.json. Enter a cave. Each night leg or cave visit spends one use; at zero it is gone. |
+| Lantern (ITM-02) | blacksmith | 1 ironware + 1 glass | 2 | 55 | 0.75 kg | 8 | Travel night legs at lantern speed - see travel.json. Explore caves without spending uses. Does not wear out, but it can be lost, sold or stolen like any item. |
 
 ### Talisman
 
-| Item | Made at | Inputs | Hours | Value | Mass | Capacity | Effects |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Bone Charm (TAL-01) | carpenter | 1 lumber + 1 leather | 2 | 30 | 0.25 kg | 2 | Stores up to 2 mana. |
-| Weaver's Knot (TAL-02) | weaver | 2 yarn | 3 | 45 | 0.25 kg | 3 | Stores up to 3 mana. |
-| Copper Amulet (TAL-03) | blacksmith | 1 copper | 3 | 60 | 0.25 kg | 4 | Stores up to 4 mana. |
-| Gold Locket (TAL-04) | blacksmith | 1 gold | 4 | 120 | 0.25 kg | 6 | Stores up to 6 mana. |
-| Gemfire Pendant (TAL-05) | blacksmith | 1 gems + 1 copper | 5 | 190 | 0.25 kg | 8 | Stores up to 8 mana. |
-| Crystal Phylactery (TAL-06) | alchemist | 1 mana-crystal + 1 glass + 1 gold | 6 | 320 | 0.5 kg | 10 | Stores up to 10 mana. Worth 1 victory point at game end. |
+Stores mana. Most peoples cannot hold mana in the body at all - see peoples.json manaStorage. Track stored mana on the player board's M track - the card prints the capacity and nothing more.
+
+| Item | Made at | Inputs | Hours | Value | Mass | W | M | Effects |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Bone Charm (TAL-01) | carpenter | 1 lumber + 1 leather | 2 | 30 | 0.25 kg | — | 2 | Stores up to 2 mana. |
+| Weaver's Knot (TAL-02) | weaver | 2 yarn | 3 | 45 | 0.25 kg | — | 3 | Stores up to 3 mana. |
+| Copper Amulet (TAL-03) | blacksmith | 1 copper | 3 | 60 | 0.25 kg | — | 4 | Stores up to 4 mana. |
+| Gold Locket (TAL-04) | blacksmith | 1 gold | 4 | 120 | 0.25 kg | — | 6 | Stores up to 6 mana. |
+| Gemfire Pendant (TAL-05) | blacksmith | 1 gems + 1 copper | 5 | 190 | 0.25 kg | — | 8 | Stores up to 8 mana. |
+| Crystal Phylactery (TAL-06) | alchemist | 1 mana-crystal + 1 glass + 1 gold | 6 | 320 | 0.5 kg | — | 10 | Stores up to 10 mana. Worth 1 victory point at game end. |
 
 ## Transport modes
 
@@ -636,47 +960,92 @@ track, and the cargo and modifications lie in its four kit slots.
 
 ## Monster deck
 
+The five boxes of the summary strip across the top of every monster card, in the order
+they are printed in, and then the element’s mark in the last box: **H** health, **S**
+strength, **A** armour, **P** pace, **Y** the most mana its death is worth. Every one of
+them is a number a player can also have, which is what lets a monster be dealt onto a
+spare player board and run like a player who is not a person.
+
 S = slay (always allowed), E = enslave, B = befriend, D = domesticate.
-Slaying yields the mana; the other three trade mana away for a living asset.
 
-| Code | Monster | Element | Str | Def | Health | Mana | Ground | Options |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| MON-01 | Cinder Wolf | ![](../art/icons/element-fire.svg) fire | 2 | 2 | 4 | 1 | desert, hills, grassland | S B D |
-| MON-02 | Ash Drake | ![](../art/icons/element-fire.svg) fire | 4 | 4 | 8 | 3 | mountain, desert | S E |
-| MON-03 | Forge Wight | ![](../art/icons/element-fire.svg) fire | 3 | 4 | 6 | 2 | mountain, hills | S E B |
-| MON-04 | Barrow Troll | ![](../art/icons/element-earth.svg) earth | 4 | 4 | 10 | 3 | hills, grassland | S E |
-| MON-05 | Stone Boar | ![](../art/icons/element-earth.svg) earth | 2 | 4 | 6 | 1 | forest, hills | S B D |
-| MON-06 | Gravel Wyrm | ![](../art/icons/element-earth.svg) earth | 3 | 6 | 8 | 2 | mountain, desert | S |
-| MON-07 | Mire Strangler | ![](../art/icons/element-water.svg) water | 3 | 2 | 6 | 2 | marsh | S |
-| MON-08 | Reef Serpent | ![](../art/icons/element-water.svg) water | 3 | 3 | 7 | 2 | shallow-water, deep-water | S B |
-| MON-09 | The Deepwater Maw *(unique)* | ![](../art/icons/element-water.svg) water | 5 | 5 | 12 | 4 | deep-water | S |
-| MON-10 | Rime Harpy | ![](../art/icons/element-air.svg) air | 2 | 1 | 5 | 1 | tundra, mountain | S E B |
-| MON-11 | Dust Devil | ![](../art/icons/element-air.svg) air | 2 | 3 | 4 | 2 | desert, grassland | S |
-| MON-12 | Storm Roc | ![](../art/icons/element-air.svg) air | 4 | 3 | 9 | 3 | mountain, hills | S D |
-| MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | ![](../art/icons/element-fire.svg) fire | 7 | 6 | 14 | 6 | mountain, hills, desert | S B |
-| MON-14 | The Hoarwyrm | ![](../art/icons/element-air.svg) air | 5 | 5 | 13 | 4 | tundra, mountain, lake | S D |
+| Code | Monster | H | S | A | P | Y | Element | Ground | Options |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| MON-01 | Cinder Wolf | 4 | 2 | 1 | 6 | 1 | ![](../art/icons/element-fire.svg) fire | desert, hills, grassland | S B D |
+| MON-02 | Ash Drake | 8 | 4 | 2 | 6 | 3 | ![](../art/icons/element-fire.svg) fire | mountain, desert | S E |
+| MON-03 | Forge Wight | 6 | 3 | 2 | 3 | 2 | ![](../art/icons/element-fire.svg) fire | mountain, hills | S E B |
+| MON-04 | Barrow Troll | 10 | 4 | 2 | 3 | 3 | ![](../art/icons/element-earth.svg) earth | hills, grassland | S E |
+| MON-05 | Stone Boar | 6 | 2 | 2 | 4 | 1 | ![](../art/icons/element-earth.svg) earth | forest, hills | S B D |
+| MON-06 | Gravel Wyrm | 8 | 3 | 3 | 2 | 2 | ![](../art/icons/element-earth.svg) earth | mountain, desert | S |
+| MON-07 | Mire Strangler | 6 | 3 | 1 | 1 | 2 | ![](../art/icons/element-water.svg) water | marsh | S |
+| MON-08 | Reef Serpent | 7 | 3 | 1 | 5 | 2 | ![](../art/icons/element-water.svg) water | shallow-water, deep-water | S B |
+| MON-09 | The Deepwater Maw *(unique)* | 12 | 5 | 3 | 4 | 4 | ![](../art/icons/element-water.svg) water | deep-water | S |
+| MON-10 | Rime Harpy | 5 | 2 | 0 | 7 | 1 | ![](../art/icons/element-air.svg) air | tundra, mountain | S E B |
+| MON-11 | Dust Devil | 4 | 2 | 1 | 7 | 2 | ![](../art/icons/element-air.svg) air | desert, grassland | S |
+| MON-12 | Storm Roc | 9 | 4 | 1 | 8 | 3 | ![](../art/icons/element-air.svg) air | mountain, hills | S D |
+| MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | 14 | 7 | 3 | 5 | 6 | ![](../art/icons/element-fire.svg) fire | mountain, hills, desert | S B |
+| MON-14 | The Hoarwyrm | 13 | 5 | 3 | 4 | 4 | ![](../art/icons/element-air.svg) air | tundra, mountain, lake | S D |
 
 
-In a fight: Shift the number you need: less your own strength, plus their defence. target = hitsOn + opponentDefence - yourStrength, clamped to
-2+ and 6+. Strength is what a thing swings with, defence is what makes
-you miss — a stone boar barely swings and still turns a sword.
+**In a fight:** Both sides total strength, gear and dice. The lower total loses health equal to the difference.
+
+```
+yours = your strength + your gear + 2 blue dice · theirs = its strength + its armour + 2 red dice · the lower loses health = the difference
+```
+
+- Strength 4 with a sword (+1) and a leather jerkin (+1) rolls 7 on the blue: 13. A cinder wolf, strength 2, armour 1, rolls 7 on the red: 10. The wolf takes 3 - and it has 4 health, so one more exchange finishes it.
+- The same character against Vhalrik, strength 7, armour 3, who rolls 8: 18 against 13. The character takes 5, which is half of what they have.
+- Equal totals wound nobody. Two figures who are the same and roll the same have had a fight and neither of them has anything to show for it, which is the honest answer.
+
+**Gear.** Your weapon's battle number plus every piece of armour you are wearing. A monster's gear is its armour and nothing else - its weapon is itself.
+
+**A tie.** A difference of nothing is no damage to anybody. There is only one roll and only one loser, so hits are no longer applied both ways. Attacking is still never free: the dice decide who was better on the day, and being the attacker buys nothing at all.
+
+**A third die.** A few cards grant an extra die of your own colour - Ruk's escort trait, a hired blade. Roll it and KEEP THE BEST TWO. It is the only place in the game where more dice are rolled than are counted, and it is worth about a point and a half.
+
+**Defence is gone**, off this table and off every other. It was the half of the old
+strength that made a hit miss, and armour was the half that cancelled it after it landed —
+two numbers saying the same sentence, in a system that no longer counts hits. **A** is the
+old defence rescaled: a stone boar barely swings and still turns a sword, which is a low
+strength and a high armour, and that is two numbers saying two things.
+
+**Running away is a footrace, and you have to win it.** Fleeing used to be free — withdraw
+the way you came, lose your discovery roll, done — which made every monster optional and
+most of them decorative. A party may run only if its pace is GREATER than the monster's. Equal is not greater: a thing that matches you stays with you. A party that cannot outpace the monster may not decline the fight. It may still befriend it, or offer it something, or die.
+Monsters of strength 4 or more get one free round of the battle roll against a fleeing cargo vehicle, whatever its pace.
+
+Half the bestiary above cannot be outrun on foot at all, and the P column tops out at
+**8** — the storm roc. That is what puts a road, a horse and a night's sleep
+into the same decision as a sword.
+
+**Slaying yields mana, and the Y box is a ceiling rather than a payment.** You take the LESSER of the monster's Y box and the roll. Never more than the monster had; often less.
+Rolled once, the moment the monster reaches 0 health. Not per character and not per round. Among the characters who fought, as they agree. Mana with nowhere to hold it blows away at the end of the round, so an over-full party leaves some of it behind whatever the die said.
+
+A cinder wolf yields 1: any roll but a 1 is still 1, so a small monster is a reliable trickle. Vhalrik yields 6: the die is the whole story, and half the time you leave four of it on the ground.
+
+The other three options — enslave, befriend, domesticate — trade the mana away for a
+living asset, and none of them pays any.
+
 ## Character deck
 
-The six boxes of the summary strip across the top of every character card,
+The five boxes of the summary strip across the top of every character card,
 in the order they are printed in — and the same letters the player board
 calls its tracks, so setting up is reading across the strip and placing
-tokens left to right.
+tokens left to right. The kilograms are derived rather than designed:
+strength × 3, and the purse counts against them like everything else.
 
-| Code | Character | People | Calling | H | S | D | M | ¤ | KG | Traits |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| CHR-01 | Corin Vale | human | Wayfarer | 10 | 3 | 3 | — | 45 | 9 | Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere. |
-| CHR-02 | Berga Understone | dwarf | Prospector | 12 | 4 | 3 | — | 55 | 12 | Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1. |
-| CHR-03 | Sylvae of the Duskmere | elf | Herbalist | 8 | 2 | 2 | 3 | 70 | 6 | Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross. |
-| CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 8 | 2 | 2 | — | 80 | 6 | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
-| CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 13 | 6 | 5 | — | 50 | 18 | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
-| CHR-06 | Doctor Elspeth Marrow | human | Physician | 9 | 2 | 2 | — | 65 | 6 | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
-| CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 4 | 3 | — | 60 | 12 | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands. |
-| CHR-08 | Old Mother Keswick | human | Hedge-Witch | 7 | 2 | 2 | — | 35 | 6 | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
+| Code | Character | People | Calling | H | S | M | ¤ | KG | Traits |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CHR-01 | Corin Vale | human | Wayfarer | 10 | 3 | — | 45 | 9 | Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere. |
+| CHR-02 | Berga Understone | dwarf | Prospector | 12 | 4 | — | 55 | 12 | Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1. |
+| CHR-03 | Sylvae of the Duskmere | elf | Herbalist | 8 | 2 | 3 | 70 | 6 | Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross. |
+| CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 8 | 2 | — | 80 | 6 | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
+| CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 13 | 6 | — | 50 | 18 | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
+| CHR-06 | Doctor Elspeth Marrow | human | Physician | 9 | 2 | — | 65 | 6 | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
+| CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 4 | — | 60 | 12 | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands. |
+| CHR-08 | Old Mother Keswick | human | Hedge-Witch | 7 | 2 | — | 35 | 6 | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
+
+There is no D box. What a character brings to a battle besides strength is the gear in
+their four kit slots, and that is a thing they can change.
 
 ## Quest deck
 

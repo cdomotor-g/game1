@@ -251,12 +251,12 @@
       el('h3', 'Market'),
       el('p.hint', hasMarket
         ? `Prices are base value × band. The board takes ${Math.round(R.market.buySpread * 100)}% unless you have a trading house or a merchant. ` +
-          'Stock is what this round\u2019s supply roll left the board to sell; memory and tally are the two strips on that commodity\u2019s line of the market board.'
+          'Stock is what this round\u2019s supply roll left the board to sell; ADDS is what the good\u2019s own nature puts on the swing, and MOVED is the step it last took \u2014 the move box on its ledger row.'
         : 'Build a Market before you can trade with the board.'),
       el('div.table-wrap', el('table', [
         el('thead', el('tr', [
           el('th', 'Commodity'), el('th', 'Prices by'), el('th.num', 'Held'),
-          el('th.num', 'Stock'), el('th.num', 'Tally'), el('th.num', 'Memory'),
+          el('th.num', 'Stock'), el('th.num', 'Adds'), el('th.num', 'Moved'),
           el('th.num', 'Buy'), el('th.num', 'Sell'), el('th', ''),
         ])),
         el('tbody', rows.map((c) => {
@@ -269,8 +269,8 @@
             el('td', { title: m.model.line }, el('span.hint', m.model.name)),
             el('td.num', String(s.stock[c.id] || 0)),
             el('td.num', String(m.stock)),
-            el('td.num', m.model.tally.uses ? String(m.tally) : '—'),
-            el('td.num', m.memory ? (m.memory > 0 ? `+${m.memory}` : String(m.memory)) : '0'),
+            el('td.num', m.modifier ? (m.modifier > 0 ? `+${m.modifier}` : String(m.modifier)) : '—'),
+            el('td.num', m.lastMove ? (m.lastMove > 0 ? `+${m.lastMove}` : String(m.lastMove)) : '—'),
             el('td.num', String(buy)),
             el('td.num', String(sell)),
             el('td', { style: 'text-align:right;white-space:nowrap' }, [

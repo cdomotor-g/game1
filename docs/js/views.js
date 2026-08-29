@@ -197,7 +197,7 @@
       key: 'commodities', query,
       title: 'Commodities',
       blurb: 'Storable, tradeable goods. Bulk is the storage slot cost; value is what one unit fetches at price band 1.0 before the market takes its cut. '
-        + 'Every one of them runs under one of three market-memory models — glut, hype or depletion — and that is what its price does between rounds.',
+        + 'Every one of them is one of four kinds of good — staple, perishable, finite or sought — and that is what its price does between rounds, and what happens to it in your hands at the end of one.',
       items: D.commodities,
       categories: D.categories.commodity,
       categoryOf: (c) => c.category,
@@ -287,7 +287,7 @@
           el('div.card-head', [el('span.card-title', t.name), pill(t.family)]),
           el('div.card-sub', t.summary),
           el('div.card-meta', [
-            pill(`${t.baseDurability} wear`, 'accent'),
+            pill(`${t.baseWear} wear`, 'accent'),
             pill(`${t.craft.effortHours}h to make`),
             pill(`at the ${D.name('building', t.madeAt)}`),
           ]),
@@ -369,8 +369,9 @@
         [
           pill(`${i.baseValue}${R.currency.symbol}`, 'accent'),
           pill(`${i.massKg} kg`),
-          i.combatDice ? pill(`+${i.combatDice} dice`, 'bad') : null,
-          i.armourValue ? pill(`armour ${i.armourValue}`, 'good') : null,
+          i.battle ? pill(`+${i.battle} in a battle`, 'bad') : null,
+          i.armour ? pill(`armour ${i.armour}`, 'good') : null,
+          i.wear ? pill(`${i.wear} wear`, 'accent') : null,
           i.madeAt ? pill(D.name('building', i.madeAt)) : null,
         ].filter(Boolean),
         () => open('item', i.id)
@@ -542,7 +543,6 @@
         deckCard('character', c, `${D.name('people', c.people)} · ${c.calling}`, [
           pill(`health ${c.health}`, 'bad'),
           pill(`strength ${c.strength}`),
-          pill(`defence ${c.defence}`),
           pill(`carries ${carryKg(c.strength)} kg`),
           pill(`${c.startingGold}${R.currency.symbol} to start`),
           c.manaCapacity ? pill(`mana ${c.manaCapacity}`, 'accent') : null,
@@ -559,7 +559,8 @@
         deckCard('monster', m, m.story, [
           elementPill(m.element),
           pill(`str ${m.strength}`),
-          pill(`def ${m.defence}`),
+          pill(`armour ${m.armour}`),
+          pill(`pace ${m.pace}`),
           pill(`health ${m.health}`, 'bad'),
           pill(`mana ${m.manaYield}`, 'accent'),
         ])
@@ -771,7 +772,7 @@
             ])),
             el('h4', { style: 'margin-top:12px' }, 'The green die'),
             el('div.table-wrap', el('table', [
-              el('tbody', D.pricing.elasticity.steps.map((e) => el('tr', [
+              el('tbody', D.pricing.volatility.steps.map((e) => el('tr', [
                 el('td', `${e.faces[0]}–${e.faces[e.faces.length - 1]}`),
                 el('td', el('strong', e.label)), el('td', e.name),
               ]))),
@@ -789,13 +790,14 @@
             ])),
             el('p.hint', { style: 'margin-top:8px' }, D.pricing.stockCap.means),
             el('a.btn.small', { href: 'markets/index.html' }, 'The market board and its odds'),
+            el('a.btn.small', { href: 'ledger/index.html', style: 'margin-left:8px' }, 'The price ledger'),
           ]),
         ]),
       ]),
       el('div.panel', [
         el('h3', 'Tool sizes'),
         el('div.table-wrap', el('table', [
-          el('thead', el('tr', [el('th', 'Size'), el('th.num', 'Output ×'), el('th.num', 'Durability ×'), el('th.num', 'Cost ×')])),
+          el('thead', el('tr', [el('th', 'Size'), el('th.num', 'Output ×'), el('th.num', 'Cost ×')])),
           el('tbody', R.tools.sizes.map((s) =>
             el('tr', [el('td', titleize(s.id)), el('td.num', String(s.outputMultiplier)), el('td.num', String(s.durabilityMultiplier)), el('td.num', String(s.costMultiplier))])
           )),
@@ -884,12 +886,15 @@
         ]),
       ]),
       el('div.deflist', { style: 'margin-top:8px' }, [
-        el('dt', 'Memory'), el('dd', `${m.memory.from} to ${m.memory.to > 0 ? '+' : ''}${m.memory.to} — ${m.memory.moves}`),
-        el('dt', 'Decays'), el('dd', m.memory.decays),
-        el('dt', 'Tally'), el('dd', m.tally.uses ? `${m.tally.means} ${m.tally.full}` : m.tally.means),
+        el('dt', 'Adds'), el('dd', typeof m.modifier === 'number'
+          ? (m.modifier === 0 ? 'Nothing. The dice are the whole story.' : String(m.modifier))
+          : `Read off ${m.reads}.`),
+        el('dt', 'Spoils'), el('dd', m.spoils ? 'Yes — the ochre die, on every stack still held at the end of a round.' : 'No.'),
+        el('dt', 'Burning it'), el('dd', m.tokensOnUse ? 'Puts a pip on its depletion grid, for good.' : 'Does nothing to its price.'),
+        el('dt', 'Assigns'), el('dd', m.assigns),
       ]),
       el('p.hint', { style: 'margin-top:8px' },
-        `Price is rolled every Market phase: ${P.formula.net}, read on the swing ruler in the foot of the market board.`),
+        `Price is rolled every Market phase: ${P.formula.net}, read on the swing ruler on the market board and written on the price ledger.`),
     ]);
   }
 
@@ -1009,7 +1014,7 @@
         el('h4', 'Durability'),
         el('div.deflist', R.tools.sizes.filter((s) => t.sizes.includes(s.id)).flatMap((s) => [
           el('dt', titleize(s.id)),
-          el('dd', `${Math.round(t.baseDurability * s.durabilityMultiplier)} wear · ×${s.outputMultiplier} output · ×${s.costMultiplier} cost`),
+          el('dd', `${t.baseWear} wear · ×${s.outputMultiplier} output · ×${s.costMultiplier} cost`),
         ])),
         el('p.prose', `One wear point per hour of effort. ${R.tools.brokenToolEffect}`),
       ]),
@@ -1188,7 +1193,8 @@
         el('h4', 'Numbers'),
         el('div.deflist', [
           el('dt', 'S — strength'), el('dd', `${m.strength}. What it swings with.`),
-          el('dt', 'D — defence'), el('dd', `${m.defence}. Add it to the number you need to hit.`),
+          el('dt', 'A — armour'), el('dd', `${m.armour}. Added to its side of the battle roll.`),
+          el('dt', 'P — pace'), el('dd', `${m.pace}. Beat it or you may not run.`),
           el('dt', 'H — health'), el('dd', String(m.health)),
           el('dt', 'Y — mana yield'), el('dd', `${m.manaYield} ${m.element} mana, split among the slayers`),
           el('dt', 'Home ground'), el('dd', m.terrains.map((t) => D.name('terrain', t)).join(', ')),
@@ -1234,7 +1240,7 @@
         el('div.deflist', [
           el('dt', 'H — health'), el('dd', `${c.health}. Only medical aid puts it back; sleeping does not.`),
           el('dt', 'S — strength'), el('dd', `${c.strength}. What ${c.name.split(' ')[0]} swings with, and ${carryKg(c.strength)} kg of what they can shoulder.`),
-          el('dt', 'D — defence'), el('dd', `${c.defence}. Read by whoever is attacking them, never by them.`),
+          
           el('dt', 'M — mana'), el('dd', c.manaCapacity ? `${c.manaCapacity} held in the body.` : 'none held in the body — talismans only.'),
           el('dt', `${R.currency.symbol} — gold`), el('dd', `${c.startingGold} to start.`),
           el('dt', 'KG — carries'), el('dd', `${carryKg(c.strength)} kg. Derived, not designed: strength × ${R.carrying.kgPerStrength}.`),

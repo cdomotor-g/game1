@@ -44,6 +44,15 @@ The simulator gets one town to ten buildings in 24 rounds. Tier-3 chains are rea
 but rarely worth it. Either the game is longer, buildings are cheaper, or the deep
 chains need to pay much better. Unresolved and important.
 
+**The first of those three now has a physical ceiling**, which it did not have before the
+price ledger. A ledger row is a round, and the rows divide a fixed sheet height: 24 rounds
+gives an 8.4 mm digit, 25 gives exactly 8.0 mm, and **26 fails the build** because below
+8 mm a seven-segment figure's colourable core is thinner than a pencil stroke. So "make the
+game longer" is free up to 25 and costs a second sheet after that, and the build says so by
+name rather than letting somebody print figures nobody can fill in. That is not an argument
+against a longer game — a second sheet is a sheet — but it does mean the answer to this
+question is no longer only about the economy.
+
 ## Economy
 
 ### 4. Should storage be per-town or per-building?
@@ -52,18 +61,50 @@ Currently a town has one pool of slots and warehouses add to it. The alternative
 live *in* a specific warehouse — makes theft cards much more interesting (which
 warehouse?) and bookkeeping much worse.
 
-### 5. Does anything stop a player hoarding one commodity? — *half answered*
+### 5. Does anything stop a player hoarding one commodity? — *answered four different ways, and one of them is worse than it was*
 
-Nothing stops the hoarding. What is answered is the other half of it: **selling** the
-hoard is now self-punishing. Every commodity runs a market-memory model, and for the 45
-that price by **glut**, every five tokens sold into a town's board steps that line's
-memory down a cell — to a floor of −3, which is a market that will not come back up until
-somebody buys the stock out again. A player sitting on 40 grain can no longer sell 40
-grain. See [04-trade.md](04-trade.md#what-a-market-remembers).
+This used to have a clean half-answer: 45 commodities priced by **glut**, five tokens sold
+into a town stepped that line's memory down a cell to a floor of −3, and a player sitting on
+40 grain could not sell 40 grain. That machinery is gone with the memory strip — nothing on
+any board remembers anything now — and glut is gone with it. The question therefore has to
+be asked once per **kind of good**, and the four answers are not the same answer.
 
-Still open: rising storage cost for holding it, and whether the variety bonus's single
-effort point is doing anything at all. Hoarding may still be a fine strategy — it is just
-no longer a fine strategy to *liquidate* in one round.
+**Perishables (11).** Answered, and better than glut ever answered it: you cannot hoard them
+at all. The ochre spoil die is rolled at the end of every round against every perishable
+stack a player is holding, and a stack loses one, two or three of itself whether anybody
+buys any of it or not. Glut punished the *town* for what the farmer did and never once made
+anybody hurry; the spoil die punishes the person actually holding the fish, in the round they
+failed to shift it. A granary reads one row up the strip, which is what a granary is for.
+
+**Staples (34).** Nothing stops it, and — this is the regression — nothing punishes the
+liquidation either. The `stockCap` limits what the board will **sell** to that round's supply
+roll; it will **buy any quantity**, on the entirely reasonable grounds that a market always
+has room for more of what nobody wants. So 40 grain can now go into one town in one round and
+the price will not notice, because there is nothing left to notice with. Thirty-four
+commodities were in the glut model only because glut was where everything went, and taking
+the memory off the board took the one brake they had.
+
+**Finite (14).** Hoarding is actively *rewarded*, and that is intended: the depletion grid
+only moves when somebody **burns** the stuff, so a merchant who never lights a fire can trade
+the same hundred tons of coal all game and the price will not move an inch for it.
+
+**Sought (7).** Self-correcting, and the only one of the four that is. Dumping drives the
+price down, the move box records the fall, and the fall is next round's modifier — the hype
+loop running backwards at the same speed it ran forwards.
+
+What is left holding the line for staples is **storage**, which is a real limit and always
+was: ten free slots a town, twelve more per warehouse, and anything above capacity spoils by
+half at the end of the Feeding phase. That caps the size of a hoard and says nothing about
+the speed of a sale.
+
+So the open part is narrower and sharper than it was: **should selling into a market move
+that market at all any more?** Three candidates, and none of them is free. A *buy cap*
+mirroring the sell cap is the cheap one and it is a lie about markets. A *rising storage
+cost* is honest and is bookkeeping. Reading a town's holdings into the demand die is the
+truest and is the one thing the redesign spent a whole board getting rid of. It may also be
+that the answer is genuinely nothing — that a town paying full price for a fourth cargo of
+grain is the game working, and the brake belongs on the *carrying* of the money instead, now
+that coin has mass.
 
 ### 6. Are the spread numbers right?
 
@@ -71,6 +112,55 @@ no longer a fine strategy to *liquidate* in one round.
 makes player-to-player trade obviously better than the board. Probably correct — the
 board should be the fallback, not the plan — but the gap may be too wide to leave any
 reason to build a market at all beyond the safety net.
+
+### 22. Is twenty-one pips the right length of a seam?
+
+A finite commodity's depletion grid is seven rows of three: `step` 1, `per` 3, `top` 6 in
+`data/pricing.json`. Twenty-one cells, one pip per unit **burnt**, nothing ever lifted off,
+and the twenty-first pip puts that commodity's price up by six for the rest of the game —
+which on the swing ruler is two full bands of rally before a single die is thrown. The town
+holding the last deposit owns the market, and it always did; this is the version of that
+sentence you can see across a table.
+
+Whether twenty-one is a mid-game cliff or scenery depends entirely on how industrial the
+table is, and the same number cannot be both. A table running two furnaces burns coal fast
+enough to reach the bottom row well before the end; a table that trades ore and never smelts
+it will not cover the first row all game, and the whole model is a grid nobody touched. That
+is not a balance failure on its own — it is the model saying *burning is what empties a
+hill* — but it means the dial has never been set against anything, because no play has been
+watched and the sandbox does not model a second town's furnace.
+
+The dial is three numbers and they are not free. `step` is what a row is worth, `per` is how
+many cells a row holds, and `top` is the last row, and the grid is drawn from those three:
+lengthening a seam makes every grid taller, and grids are laid out nine across and two down
+on one A4 sheet, so a longer seam is also **fewer grids per sheet**. `tools/build-market.mjs`
+fails the build rather than print a grid that runs off the paper, which is the right failure
+to have but does mean the answer to this question is partly a stationery question.
+
+### 23. Is one round of memory too short for a sought good?
+
+The hype modifier is the move box on the ledger row above — the number of bands the price
+moved *last* round, −3 to +3, and nothing else. It is a feedback loop with a floor, a ceiling
+and no memory beyond one round, which is deliberately the shape of the thing it models: a
+rise makes buyers and buyers make a rise, until a bad roll turns it and the same machinery
+runs backwards just as fast. Two quiet rounds and it is at nothing again, because a move of
+zero is what the next round reads.
+
+The worry is that it can never build. The ruler holds 29.9% of the time and moves one band
+45.8%, so **three quarters of all rolls hand the next round a modifier of 0 or ±1** — and a
+±1 on a net that runs −12 to +12 is very nearly nothing. A run needs three or four
+consecutive rises to become something a table can see, and each one is a coin flip against a
+symmetric spread. It is entirely possible that all seven sought goods behave, at the table,
+exactly like staples with a rounding error attached, in which case the game has a fourth
+pricing model, a fourth panel on the market board and a fourth token mark for a rule nobody
+ever feels.
+
+What is **not** the fix is a longer memory. A memory that spans rounds is a memory strip, and
+a memory strip is precisely what came off the market board — it wanted a printed cell per
+line and gave the model somewhere to hide. If the modifier is too weak the dial is what the
+box is *worth*: read the move as ±2 a band rather than ±1, which costs nothing on the sheet
+because the box already holds the same figure. That is one line in `pricing.json sought` and
+a simulator run, and it should be decided that way rather than by adding paper.
 
 ## Map and movement
 
@@ -110,17 +200,66 @@ able to take your only smith? Dramatic, and possibly infuriating.
 
 ## Conflict
 
-### 12. Is one round of combat enough?
+### 12. Is one round of combat enough — and what does an inconclusive one leave behind?
 
-One exchange, hits on 4+, both sides simultaneous. It is fast and it keeps war from
-swallowing the game, but it may make outcomes too swingy to justify the investment in
-soldiers.
+The rule is `roundsPerBattle: 1`, and it survived the redesign unchanged while everything
+underneath it moved. There is no to-hit roll, no 4+, nothing simultaneous and no hits
+counted: both sides total strength, gear and dice, and the lower total loses health equal to
+the difference. The old worry was swinginess. The new worry is the opposite at one end and
+much worse at the other, and the arithmetic says both plainly.
+
+**Two evenly matched figures.** Over all 1296 exchanges, 11.3% are ties that wound nobody,
+and the average wound is **1.37 health to each side per round**. A cinder wolf has 4 health.
+So an even fight is three or four exchanges — and because a round of combat is a round of the
+*game*, that is three or four rounds of everything else, with an unresolved monster sitting
+on its hex attacking whoever ends a leg there. One round of combat does not mean a short
+fight. It means a **standing appointment**, and the party can only decline it if its pace
+beats the monster's.
+
+**A mismatch.** The board's own worked example — strength 4, sword, jerkin, against a cinder
+wolf — is a 3-point edge, and a 3-point edge deals **3.35** and takes **0.35** a round. The
+same character against Vhalrik is a 4-point deficit: **0.19 dealt, 4.19 taken**, which is
+death in three rounds while doing essentially nothing back, with no flight unless their pace
+beats 5. An opposed difference amplifies an edge far harder than a shifted to-hit number ever
+did, because the edge is added to the damage rather than to the chance of doing any. Each
+point of gear is worth roughly two thirds of a point dealt *and* two thirds not taken, every
+round, for ever.
+
+So the question splits. Is one roll enough to **resolve** a fight — no, and the data says so.
+Is it enough to be **worth soldiers** — probably yes, and possibly too much so. What needs
+deciding is what happens in the gap: whether a fight that neither side can win and neither
+side can leave should stay on the hex indefinitely, or whether something (morale, a second
+flee check at a penalty, a monster that wanders off) ends it. This wants plays, not an
+opinion, and `tools/simulate.mjs` cannot answer it because nothing in the sandbox is standing
+on a hex.
 
 ### 13. What stops a player from being eliminated early?
 
 Nothing yet. Losing all your workers is possible and there is no floor under it. A
 player knocked out at round 8 has a bad evening. Needs either a hard floor (you always
 keep one worker and one hut) or a comeback mechanism.
+
+### 24. Are four kit slots a harder limit than they were?
+
+Four recesses, and the argument for four has always been that a hero who wants a fifth thing
+has to put something down. That was a preference dressed as a rule. It is a rule now: every
+slot has a **wear ladder** ruled against it, so a fifth thing in play is a fifth thing whose
+wear nobody is counting, and there is nowhere to count it.
+
+Meanwhile the redesign put more claimants on those four slots than have ever been on them.
+Armour is one card per piece, and a figure wearing body, head and off-hand is wearing
+**three cards** to reach armour 5 — plus a weapon is four, and the board is full before a
+lantern, an axe, a talisman or an accepted quest has anywhere to go. A properly armoured
+character cannot carry a light. That is either a wonderful constraint or an obvious bug, and
+it has never been played.
+
+Three ways out, in ascending order of cost. Armour stops being one card per piece — a *suit*
+is one card and the helm and shield fold into it, which loses the pleasure of assembling a
+kit. Worn gear stops occupying a kit slot and lives somewhere else on the board, which needs
+a fifth recess the board's geometry does not have room for. Or the slot count goes up, which
+is the expensive one: four slots is precisely what the board's columns and wear ladders were
+re-derived around, and a fifth recess takes back the width that retiring the defence column
+paid for.
 
 ## The adventure layer
 
