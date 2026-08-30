@@ -692,6 +692,32 @@
         0.4
       ]
     },
+    "tile-town-hall": {
+      "subject": [
+        0.1,
+        0,
+        0.82,
+        0.88
+      ],
+      "focal": [
+        0.55,
+        0.62
+      ],
+      "note": "The hall on its open arcade, the outside stair and its hooded doorway, and the paved floor with daylight running all the way under it. A pair window is 1.73 against a 3:2 page, so the full width is kept and 13.4% of the height goes; it is spent off the BOTTOM, pinning the crop to the top edge of the plate, and only 1.4% of the ink goes with it - foreground cobble.\n\nWhat the DIE takes is the BELL COTE, and no aim reaches it. The cote is drawn at 53%-65% across with its roof 2% down the page. A pair is two pointy-top hexes side by side, so the notch where they meet descends from the top edge to a quarter of the tile's height at exactly half-width, and at 60% across the tile does not begin until 15% down. The cote spans 2%-24% of the tile's height, so its base and the lower half of the bell survive and its own little roof goes. The crop is ALREADY hard against the top of the plate and a pair has no horizontal freedom whatever - the full width is kept, so there is nothing to slide - which is to say this was decided when the plate was drawn and not here. The brick house's chimney, exactly, and the same lesson: on a pair the tallest thing belongs over a hex peak, a quarter or three quarters across, never over the middle. Here it is at 60%.\n\nWhole and inside the cut: the first-floor hall with its four tall mullioned windows, all six columns of the arcade with paper showing between them, the outside stair and the hood over its door, and the benches under the arcade. The arcade is the silhouette and it is untouched, which is why the loss above is worth accepting rather than redrawing.\n\nThe focal is the arcade rather than the doorway. There is no working end on a moot hall; what tells it from a house at 37 mm is that the building is standing in the air on legs, and that is a gap rather than a thing. The band falls on the paving and the foot of the stair, which the brief set aside for it."
+    },
+    "tile-trading-house": {
+      "subject": [
+        0.13,
+        0.0785,
+        0.84,
+        0.8915
+      ],
+      "focal": [
+        0.42,
+        0.55
+      ],
+      "note": "The counting house with the arched carriage entry through it, the beam scale on its stand, and the cart in the passage mouth. A pair window is 1.73 against a 3:2 page: full width, 13.4% of the height spent, and here EVENLY - 5.2% off each end - which is a decision rather than the default.\n\nIt was pinned to the top first, the way the town hall is, and that put both the bound chest and most of the hand cart outside the cut. The even spend buys them back. What it costs is a CHIMNEY, and the chimney is the cheapest thing on this plate: it is not in the brief at all - the subject paragraph names the arch, the door, the shuttered bay, the cart, the scale, the bales and the chest, and the roof only in the wash line - and it is drawn at 53%-57% across, dead in the notch, so it was never going to survive whichever way the height was spent. An unbriefed thing already lost, traded for a briefed thing that was recoverable.\n\nWhat the DIE still takes is the three corded bales and the scale's graded weights, drawn at 51%-62% across and below 76% down the page. The bottom notch rises from the bottom edge to three quarters of the height at half-width, which is precisely where they sit - the same corner the granary's scoop went into, and no aim reaches it either. Accepted rather than redrawn: the beam scale, its stand and its hanging pan are whole and inside the cut, and the bales were supporting that cue rather than carrying one of their own.\n\nWhole and inside the cut: the two storeys and all six windows, the panelled door with its steps and iron handrail, the shuttered bay, the arch with its shadowed passage and the fence at the far end of it, the part-loaded hand cart, the beam scale and the bound chest.\n\nThe focal is the carriage arch - dark, dead centre, and the brief's own test of a trading house against a warehouse. The band falls on swept paving and the foot of the door steps, and covers neither the arch nor the scale."
+    },
     "tile-vineyard": {
       "subject": [
         0.01,
@@ -744,6 +770,19 @@
       ],
       "note": "The whole page, near enough, and for the warehouse's reason: a triad's window is 0.99 against a square plate, so the crop keeps the ink from edge to edge and nothing is spent there. On this shape the crop is never where anything is lost.\n\nWhat IS lost is the hexagon, and aim-solve measures a rectangle and cannot see it. The range is drawn corner to corner - the wording told it to run \"towards the far corner\", which is an instruction to span the diagonal, and it did - so the two ends of the building are the exposed parts. The far end sits high on the left, where a triad is full width and keeps it. The near end sits low on the right, where a triad has narrowed to its centre half, and that end loses its gable corner. That was accepted rather than redrawn: the rank of windows, the yard wall, the gate, the spear rack and the drill post are all inside the cut and whole, and the near gable is the one part of this plate the tile can afford to lose.\n\nThe focal is the gate and the spear rack beside it. The window rank is what makes this building regular, but regularity is a texture and a texture has no point to land on; the rack and the drill post are what make it military rather than a long house, and they sit together just inside the yard wall. Left of centre here, unlike the granary and the warehouse, because this plate runs the other way: the business of it is at the near end, and the near end is bottom-left of the roof ridge rather than right of it."
     },
+    "tile-brewery": {
+      "subject": [
+        0.05,
+        0.056,
+        0.9,
+        0.864
+      ],
+      "focal": [
+        0.47,
+        0.48
+      ],
+      "note": "The brewhouse, its vented ridge, and the barrel rick and ramp running out to the right. A pair window is 1.73 against a 3:2 page: full width, 13.4% of the height spent off the bottom bar three per cent, and what goes is bare ground.\n\nThis is the best-composed plate of the five and it is worth writing down why, because the other four are all paying the same bill. The louvred cupola - which the brief calls the signature and the first thing to draw - is at 29% across. A pair's hex peaks are at a quarter and three quarters, and 29% is all but exactly on one: the tile reaches the top edge of the page there, so the cupola survives whole, steam and all. The town hall's bell cote is the same kind of object nine per cent further in, and the notch has most of it. Nothing else about the two plates differs.\n\nWhole and inside the cut: the long louvred cupola along the ridge with steam standing out of its slats; the copper mash tun lit through the open doorway; the stone ramp down to the cellar hatch with two barrels rolling on it; the rick of six barrels chocked on their sides; the brick shell, its slate plinth and its four small windows.\n\nThe focal is the mash tun in the doorway. It is the working end, the only lit thing on the plate and the only copper thing, and it is what tells a brewhouse from a brick barn once the cupola has been read as a roof vent. The band falls on the hop sack and the heap of spent grain at the lower left, the ground the brief set aside for it."
+    },
     "tile-brick-house": {
       "subject": [
         0.146,
@@ -782,6 +821,19 @@
         0.43
       ],
       "note": "The hut from the chimney down to the grass line, with the chopping block and the split rounds. Nothing is spent: a square plate in a 0.87 window loses 6.7% off each side and there is nothing out there but ground texture. Focal on the doorway - the one flat black shape on the plate, and the thing the tile is of."
+    },
+    "tile-winery": {
+      "subject": [
+        0.05,
+        0.0755,
+        0.9,
+        0.8445
+      ],
+      "focal": [
+        0.57,
+        0.4
+      ],
+      "note": "The press house: the great timber screw press, the vats beside it and the barrel rack below it. A pair window is 1.73 against a 3:2 page: full width, 13.4% of the height spent off the bottom, and 0.4% of the ink goes with it.\n\nThis is the one of the five the DIE costs nothing worth naming, and it is composition rather than luck. The press stands at 51%-68% across with its head 12% down - under the notch's descent rather than in it - so the beam, the screw and the counterweight all clear the cut. Set that beside the town hall's bell cote at 60% and the difference is about nine per cent of the page's width.\n\nWhole and inside the cut: the press entire - squared frame, the screw, the bed, the basket, and the stone hung from the beam above it - which the brief calls the tile; both shallow staved vats and the trough running between them; the stone rack two courses high with its eight barrels; the stone catch trough and its wooden spout; the piers and the tiled roof over the lot. No vines, which the brief was explicit about - the vineyard is its own tile.\n\nThe focal is the press basket and the foot of the screw. It is the working end, and at 37 mm an open shed on stone piers could be almost anything until the screw is read. The band falls on the stacked empty baskets and the swept floor at the lower left, the ground the brief set aside; the back, where the band is drawn hollow, keeps them."
     },
     "tool-axe": {
       "subject": [
@@ -990,6 +1042,19 @@
         0.4
       ],
       "note": "The lattice derrick and its crown block, the engine house and walking beam, both tanks on their bund, and as much of the slush pit as this shape will carry. A rhombus keeps the upper LEFT and lower RIGHT lobes - the manor's shape, and the manor's problem. The pit is drawn into the lower left, which is both the corner the die cuts and the corner the band covers, so it can never be wholly had. Shifted hard left, and that is measured rather than judged: the pit goes from 43% to 75% of its area and the derrick tower from 95% to 99%, paid for out of the outer tank (100% to 87%, a sliver off its right side). The tower is worth paying for - the brief calls its openwork against the paper the entire silhouette, and it is the only lattice tower in the set. The blackened ground around the well head survives whole and carries the oil where the pit itself is under the band. The upper-left lobe is bare grass: the plate's own empty ground, and no aim reaches it."
+    },
+    "tile-market": {
+      "subject": [
+        0.18,
+        0.046,
+        0.67,
+        0.854
+      ],
+      "focal": [
+        0.52,
+        0.55
+      ],
+      "note": "The shelter, its four posts and the open floor under it. A pair window is 1.73 against a 3:2 page: full width, 13.4% of the height spent, taken off the bottom bar two per cent, and all of it foreground flags.\n\nWhole and inside the cut, and this is the whole point of the tile: the daylight going straight through underneath the roof between the posts. The brief calls that gap the entire silhouette and says it must not be closed, and it is the one thing here that no part of the cut touches - it sits in the middle band where a pair keeps its full width. Also whole: all four posts, both trestles, the baskets and the crate stack, the beam scale hung from its tie, and the pole with the rolled awning lashed to it.\n\nWhat the DIE takes is the finial and the apex of the pyramid roof, drawn at 53% across and 2% down - the notch again. It is the cheapest loss of the five: a hipped roof reads as a hipped roof without its point, and nothing about this piece is being carried by the roofline. The posts and the gap are carrying it.\n\nThe focal is under the roof, between the loaded trestle and the hanging scale. There is no door here and no working end - a market is a gap with furniture in it - so the honest place to aim is the middle of the furniture rather than any one piece of it. The band falls on the sacks and the flags at the lower left, which is the ground the brief set aside for it."
     },
     "tile-mine": {
       "subject": [
