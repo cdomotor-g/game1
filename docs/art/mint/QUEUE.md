@@ -15,9 +15,9 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 81/83 · maps 1/1 · building tiles 44/54**
+**cards 81/156 · maps 1/1 · building tiles 44/54**
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 81 of 83 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 81 of 156 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
@@ -28,18 +28,91 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**81 of 83 minted.** 0 waiting on a brief, 2 waiting on art, 0 waiting on frame.
+**81 of 156 minted.** 0 waiting on a brief, 75 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 2 cards
+### 2 · DRAW — the artist — 75 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
+| `SPL-01` | Kindle | Spells | `spell-kindle` | ✓ | · | · |
+| `SPL-02` | Ember Lash | Spells | `spell-ember-lash` | ✓ | · | · |
+| `SPL-03` | Mend Stone | Spells | `spell-mend-stone` | ✓ | · | · |
+| `SPL-04` | Bulwark | Spells | `spell-bulwark` | ✓ | · | · |
+| `SPL-05` | Cleanse | Spells | `spell-cleanse` | ✓ | · | · |
+| `SPL-06` | Mist Veil | Spells | `spell-mist-veil` | ✓ | · | · |
+| `SPL-07` | Fair Wind | Spells | `spell-fair-wind` | ✓ | · | · |
+| `SPL-08` | Stormcall | Spells | `spell-stormcall` | ✓ | · | · |
+| `SPL-09` | Wayfire | Spells | `spell-wayfire` | ✓ | · | · |
+| `SPL-10` | Seam-Sense | Spells | `spell-seam-sense` | ✓ | · | · |
+| `SPL-11` | Root-Snare | Spells | `spell-root-snare` | ✓ | · | · |
+| `SPL-12` | Deep Draught | Spells | `spell-deep-draught` | ✓ | · | · |
+| `SPL-13` | Farspeak | Spells | `spell-farspeak` | ✓ | · | · |
+| `SPL-14` | Loft | Spells | `spell-loft` | ✓ | · | · |
+| `EVT-01` | Hard Frost | Events | `event-hard-frost` | ✓ | · | · |
+| `EVT-02` | Drought | Events | `event-drought` | ✓ | · | · |
+| `EVT-03` | Long Summer | Events | `event-long-summer` | ✓ | · | · |
+| `EVT-04` | Storms at Sea | Events | `event-storms` | ✓ | · | · |
+| `EVT-05` | Flood | Events | `event-flood` | ✓ | · | · |
+| `EVT-06` | Earthquake | Events | `event-earthquake` | ✓ | · | · |
+| `EVT-07` | Wildfire | Events | `event-wildfire` | ✓ | · | · |
+| `EVT-08` | Mine Collapse | Events | `event-mine-collapse` | ✓ | · | · |
+| `EVT-09` | Warehouse Heist | Events | `event-warehouse-heist` | ✓ | · | · |
+| `EVT-10` | Caravan Robbery | Events | `event-caravan-robbery` | ✓ | · | · |
+| `EVT-11` | Train Heist | Events | `event-train-heist` | ✓ | · | · |
+| `EVT-12` | Piracy | Events | `event-piracy` | ✓ | · | · |
+| `EVT-13` | Smuggling Ring | Events | `event-smuggling-ring` | ✓ | · | · |
+| `EVT-14` | Wolf Pack | Events | `event-wolf-pack` | ✓ | · | · |
+| `EVT-15` | Boar in the Fields | Events | `event-boar-in-the-fields` | ✓ | · | · |
+| `EVT-16` | Dragon Sighting | Events | `event-dragon-sighting` | ✓ | · | · |
+| `EVT-17` | Raiders | Events | `event-raiders` | ✓ | · | · |
+| `EVT-18` | Border Dispute | Events | `event-border-dispute` | ✓ | · | · |
+| `EVT-19` | Mercenaries for Hire | Events | `event-mercenaries-for-hire` | ✓ | · | · |
+| `EVT-20` | Plague | Events | `event-plague` | ✓ | · | · |
+| `EVT-21` | Migrants | Events | `event-migrants` | ✓ | · | · |
+| `EVT-22` | Strike | Events | `event-strike` | ✓ | · | · |
+| `EVT-23` | Festival | Events | `event-festival` | ✓ | · | · |
+| `EVT-24` | Travelling Master | Events | `event-master-craftsman` | ✓ | · | · |
+| `EVT-25` | Iron Shortage | Events | `event-iron-shortage` | ✓ | · | · |
+| `EVT-26` | Glut | Events | `event-glut` | ✓ | · | · |
+| `EVT-27` | Foreign Demand | Events | `event-foreign-demand` | ✓ | · | · |
+| `EVT-28` | Tax Levy | Events | `event-tax-levy` | ✓ | · | · |
+| `EVT-29` | Ley Surge | Events | `event-ley-surge` | ✓ | · | · |
+| `EVT-30` | Curdled Brew | Events | `event-curdled-brew` | ✓ | · | · |
+| `EVT-31` | Wandering Wizard | Events | `event-wandering-wizard` | ✓ | · | · |
+| `EVT-32` | Camp Fever | Events | `event-camp-fever` | ✓ | · | · |
+| `EVT-33` | Marsh Ague | Events | `event-marsh-ague` | ✓ | · | · |
+| `EVT-34` | The Grey Pox | Events | `event-grey-pox` | ✓ | · | · |
+| `EVT-35` | Impure Smelt | Events | `event-impure-smelt` | ✓ | · | · |
+| `EVT-36` | Blood Moon | Events | `event-blood-moon` | ✓ | · | · |
+| `EVT-37` | The Quiet Season | Events | `event-quiet-season` | ✓ | · | · |
+| `EVT-38` | Black Sails on the Horizon | Events | `event-black-sails` | ✓ | · | · |
+| `EVT-39` | Letter of Marque | Events | `event-letter-of-marque` | ✓ | · | · |
+| `EVT-40` | Press Gang | Events | `event-press-gang` | ✓ | · | · |
+| `EVT-41` | The Dragon's Tithe | Events | `event-dragons-tithe` | ✓ | · | · |
+| `EVT-42` | The Aerial Post | Events | `event-aerial-post` | ✓ | · | · |
+| `EVT-43` | Gale | Events | `event-gale` | ✓ | · | · |
+| `EVT-44` | Early Thaw | Events | `event-early-thaw` | ✓ | · | · |
+| `EVT-45` | Clipped Coin | Events | `event-clipped-coin` | ✓ | · | · |
+| `EVT-46` | Guild Embargo | Events | `event-guild-embargo` | ✓ | · | · |
+| `EVT-47` | New Tolls | Events | `event-new-tolls` | ✓ | · | · |
+| `EVT-48` | The Sign of the Green Man | Events | `event-green-man` | ✓ | · | · |
+| `EVT-49` | The Mead Run | Events | `event-mead-run` | ✓ | · | · |
+| `EVT-50` | Ley Drought | Events | `event-ley-drought` | ✓ | · | · |
+| `EVT-51` | Boom Town | Events | `event-boom-town` | ✓ | · | · |
+| `QST-01` | The Miller's Debt | Quests | `quest-millers-debt` | ✓ | · | · |
+| `QST-02` | Lanterns for Coldwater | Quests | `quest-lanterns-for-coldwater` | ✓ | · | · |
+| `QST-03` | The Boar of Bramblehold | Quests | `quest-boar-of-bramblehold` | ✓ | · | · |
+| `QST-04` | Word to Dry Wells | Quests | `quest-word-to-dry-wells` | ✓ | · | · |
+| `QST-05` | The Strangler in the Mire | Quests | `quest-strangler-in-the-mire` | ✓ | · | · |
+| `QST-06` | A Draught for Fen's End | Quests | `quest-draught-for-fens-end` | ✓ | · | · |
+| `QST-07` | The Ironspine Road | Quests | `quest-ironspine-road` | ✓ | · | · |
+| `QST-08` | The Drowned Bell of Taleowick | Quests | `quest-drowned-bell` | ✓ | · | · |
 | `ITM-09` | Quiver of Arrows | Items | `item-quiver` | ✓ | · | · |
 | `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
@@ -59,9 +132,6 @@ Declared, numbered, backed — and simply not being illustrated this round. Set 
 
 | Deck | Cards in the data | Plate format |
 | --- | --: | --- |
-| Spells | 14 | square |
-| Events | 51 | landscape scene |
-| Quests | 8 | landscape scene |
 | Buildings | 49 | the tile's own, derived from its footprint |
 
 ---

@@ -55,6 +55,7 @@ import { crop, readFraming, WHOLE_PLATE } from './lib/framing.mjs';
 import { plateIdFor } from './lib/plates.mjs';
 import { cardsOfDeck } from './lib/decks.mjs';
 import { tileSubjects } from './lib/tiles.mjs';
+import { cardsOfDeck as mintCardsOfDeck } from './lib/mint.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -1588,6 +1589,36 @@ if (unframed.length) {
 if (noStory.length) {
   console.warn(`warning  no story on ${noStory.join(', ')} - those cards print a blank rail. ` +
     'The story belongs in that card\'s own data file, beside its name.');
+}
+
+/* A DECK THIS TOOL CANNOT SET. Every loop above is one deck, written out by
+   hand, and until now nothing checked that the list of loops covers the list of
+   decks: a card no loop ever reached lands in neither `specs` nor `skipped`, so
+   the tool said nothing at all about it and the deck simply did not appear in
+   docs/cards/. That silence was harmless while the only decks turned on were the
+   ones with loops. It stopped being harmless the day the spells, events and
+   quests briefs were written and those three decks were put in the mint queue:
+   they are declared, backed, briefed and drawable now, and an accepted plate for
+   one of them would land on nothing and say nothing.
+
+   The sweep is the two lists against every deck's own cards, so it needs no
+   third list to be kept in step with the loops - the failure mode this whole
+   repository is built to refuse. What it CANNOT do is write the missing half: a
+   card is a picture and the words beside it, and an event card's rules text has
+   not been written. That is content and it goes in the card's own file. */
+const setByThisTool = new Set([...specs.map((s) => s.code), ...skipped]);
+const unset = [];
+for (const deck of DECKS) {
+  const missing = mintCardsOfDeck(ROOT, deck).filter((c) => !setByThisTool.has(c.cardCode));
+  if (!missing.length) continue;
+  const drawn = missing.filter((c) => hasRender(plateIdFor(deck, c))).length;
+  unset.push(`${deck.name} (${missing.length} card${missing.length === 1 ? '' : 's'}` +
+    `${drawn ? `, ${drawn} with an accepted plate already` : ''})`);
+}
+if (unset.length) {
+  console.warn(`warning  this tool has no loop for ${unset.join(', ')} - those decks are declared ` +
+    'and minting, and their plates land on nothing. A deck is turned on for the ARTIST by its brief; ' +
+    'it is turned on for the TABLE by the rules text that goes beside the picture, in each card\'s own file.');
 }
 
 if (checkOnly) {

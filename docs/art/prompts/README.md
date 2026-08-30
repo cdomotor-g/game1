@@ -35,6 +35,9 @@ in `data/maps/` and it appears there the moment the tool is run — see
 | [`vehicles.md`](vehicles.md) | The 17 vehicle cards | A4 landscape plate, full profile |
 | [`talismans.md`](talismans.md) | The 6 talisman cards | Single object study |
 | [`modifications.md`](modifications.md) | The 11 modification cards | Single object study |
+| [`spells.md`](spells.md) | The 14 spell cards | Square plate, one ordinary thing mid-working |
+| [`events.md`](events.md) | The 51 event cards | A4 landscape plate, the aftermath |
+| [`quests.md`](quests.md) | The 8 quest cards | A4 landscape plate, the threshold |
 | [`items.md`](items.md) | The 10 item cards — the armour and the weapons | Single object study |
 | [`tools.md`](tools.md) | The 5 tool cards | Single object study |
 | [`maps.md`](maps.md) | Every board in `data/maps/` | Whole map plate, landscape root-two |
