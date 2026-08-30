@@ -44,27 +44,38 @@ in a deck of generated ones.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
-Black ink line art on warm unbleached paper, in the style of a worn 1600s
-armourer's pattern book: heavy uneven woodcut-style outlines, interior
-shading built only from hand-drawn hatching and cross-hatching, over-inked
-pooling where lines meet at sharp angles, bare paper for the lit surfaces.
+Fine pen-and-ink drawing on aged paper, finished by hand with thin
+watercolour washes: a plate from an illustrated catalogue of arms and
+equipment. Drawn with a nib - a fine, springy, varied line, only a
+little heavier round the outside of a form than within it, thinning and
+breaking where the light catches an edge. Never a thick uniform outline.
 
-Flat muted spot colour sits UNDER the black line like a mis-registered
-letterpress run - solid areas of colour with no blending. Restricted palette:
-warm ochre for timber and horn, rust red for leather and cord, cold slate
-blue for iron and steel. Paper is warm oatmeal, never white. Ink is warm
-near-black, never pure black.
+All tone is hatching: short feathered strokes laid along the form and
+crossed over one another in the darks, fine and dense enough to read as
+continuous shadow at arm's length and still be separate strokes close
+up. Nearly every surface carries some. Bare paper is kept for the
+brightest highlights only.
 
-A single item, centred, three-quarter view, laid on a bench or stood against
-it with a short ground line, drawn at the scale of a pattern-book plate:
-every rivet, seam, lashing, grain and repair legible. In daily use and
-carefully kept - the grip worn where the hand goes, the edge honed narrow, a
-strap replaced in mismatched leather - never new, never ruined. Bold readable
-silhouette. The page is worn from the workshop: creases, a grimy corner,
-faint foxing.
+Thin translucent watercolour is washed OVER the finished ink, so the
+hatching reads through the colour everywhere: it tints the drawing, it
+never fills it. The washes are uneven - a little darker where they pool
+against an edge, stopping short of the line as often as they cross it.
+Muted and desaturated throughout, warm ochre for timber and horn, rust
+red for leather and cord, cold slate blue for iron and steel. Paper is
+warm aged oatmeal, never white. Ink is warm near-black, never pure
+black.
 
-Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading,
-no lens effects. No text, no letters, no dimension figures, no border rule.
+A single item, centred, three-quarter view, laid on a bench or stood
+against it with a short ground line, drawn at the scale of a
+pattern-book plate: every rivet, seam, lashing, grain and repair
+legible. In daily use and carefully kept - the grip worn where the hand
+goes, the edge honed narrow, a strap replaced in mismatched leather -
+never new, never ruined. The silhouette reads clearly. The page is worn
+from the workshop: creases, a grimy corner, faint foxing.
+
+Strictly no gradients, no glow, no drop shadows, no soft airbrushed
+shading, no lens effects. No text, no letters, no dimension figures, no
+border rule.
 ```
 
 The palette names three inks and every material is assigned one of them. Two
@@ -75,18 +86,21 @@ bare paper kept for the surface that catches the light.
 ## Negative prompt — for all twenty
 
 ```text
-coffee ring, cup ring, water ring, tea stain, circular stain,
-ring stain, watermark, blot, gradient, glow, bloom, lens flare,
-drop shadow, soft shading, airbrush, blur, depth of field, neon,
-saturated colours, pure white background, pure black, photorealistic,
-3d render, octane, unreal engine, digital painting, oil painting,
-concept art, anime, cel shaded, sparkles, magic, runes, watermark,
-signature, text, letters, numbers, logo, UI, frame border, blueprint,
-technical drawing, exploded diagram, callout lines, product photograph,
-lit flame, burning wick, firelight, light rays, sparks, embers, hands,
-arms, figure, wielder, mannequin, armour stand, coat hanger,
-clothes rail, battle, blood, grimdark, ruined, rusted through,
-shattered
+coffee ring, cup ring, water ring, tea stain, circular stain, ring
+stain, watermark, blot, gradient, glow, bloom, lens flare, drop shadow,
+soft shading, airbrush, blur, depth of field, neon, saturated colours,
+pure white background, pure black, photorealistic, 3d render, octane,
+unreal engine, digital painting, oil painting, concept art, anime, cel
+shaded, sparkles, signature, text, letters, logo, UI, frame border,
+woodcut, linocut, block print, flat vector, vector illustration, flat
+colour fill, solid colour block, thick uniform outline, heavy black
+outline, bold outline, infographic, diagram, icon, minimalist, clip art,
+screen print, poster art, comic, cartoon, colouring book, magic, runes,
+numbers, blueprint, technical drawing, exploded diagram, callout lines,
+product photograph, lit flame, burning wick, firelight, light rays,
+sparks, embers, hands, arms, figure, wielder, mannequin, armour stand,
+coat hanger, clothes rail, battle, blood, grimdark, ruined, rusted
+through, shattered
 ```
 
 ## The framing block

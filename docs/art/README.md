@@ -6,7 +6,7 @@ generates.
 ## The 60-second version
 
 **Look:** a working settlement's trade almanac, printed on a tired press and carried in a
-pocket for a season. The world is documented, not depicted. Heavy woodcut-style ink line,
+pocket for a season. The world is documented, not depicted. Fine pen-and-ink line with hand-tinted washes,
 hatching for shade, bare paper for light.
 
 **Dirty · rustic · magical** — each owns a different layer:

@@ -33,41 +33,57 @@ collection.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
-Black ink line art on warm unbleached paper, in the style of a worn 1600s
-workshop inventory plate: heavy uneven woodcut-style outlines, interior
-shading built only from hand-drawn hatching and cross-hatching, over-inked
-pooling where lines meet at sharp angles, bare paper for the lit surfaces.
+Fine pen-and-ink drawing on aged paper, finished by hand with thin
+watercolour washes: a plate from an illustrated catalogue of working
+tools. Drawn with a nib - a fine, springy, varied line, only a little
+heavier round the outside of a form than within it, thinning and
+breaking where the light catches an edge. Never a thick uniform outline.
 
-Flat muted spot colour sits UNDER the black line like a mis-registered
-letterpress run - solid areas of colour with no blending. Restricted palette:
-warm ochre for timber, cold slate blue for iron and steel, rust red for
-leather and cord. Paper is warm oatmeal, never white. Ink is warm near-black,
-never pure black.
+All tone is hatching: short feathered strokes laid along the form and
+crossed over one another in the darks, fine and dense enough to read as
+continuous shadow at arm's length and still be separate strokes close
+up. Nearly every surface carries some. Bare paper is kept for the
+brightest highlights only.
 
-A single tool, centred, three-quarter view, stood against a bench or laid on
-one with a short ground line, drawn at the scale of an inventory plate: every
-wedge, ferrule, rivet, grain line and repair legible. WORN BY USE and kept in
-service - the haft polished dark where the hands go, the edge hollowed back
-from years of sharpening, a split bound with wire rather than replaced. In
-daily use, never new, never abandoned. Bold readable silhouette. The page is
-worn from the workshop: creases, a grimy corner, faint foxing.
+Thin translucent watercolour is washed OVER the finished ink, so the
+hatching reads through the colour everywhere: it tints the drawing, it
+never fills it. The washes are uneven - a little darker where they pool
+against an edge, stopping short of the line as often as they cross it.
+Muted and desaturated throughout, warm ochre for timber, cold slate blue
+for iron and steel, rust red for leather and cord. Paper is warm aged
+oatmeal, never white. Ink is warm near-black, never pure black.
 
-Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading,
-no lens effects. No text, no letters, no dimension figures, no border rule.
+A single tool, centred, three-quarter view, stood against a bench or
+laid on one with a short ground line, drawn at the scale of an inventory
+plate: every wedge, ferrule, rivet, grain line and repair legible. WORN
+BY USE and kept in service - the haft polished dark where the hands go,
+the edge hollowed back from years of sharpening, a split bound with wire
+rather than replaced. In daily use, never new, never abandoned. The
+silhouette reads clearly. The page is worn from the workshop: creases, a
+grimy corner, faint foxing.
+
+Strictly no gradients, no glow, no drop shadows, no soft airbrushed
+shading, no lens effects. No text, no letters, no dimension figures, no
+border rule.
 ```
 
 ## Negative prompt — for all five
 
 ```text
-coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
-watermark, blot, gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
-depth of field, neon, saturated colours, pure white background, pure black,
-photorealistic, 3d render, octane, unreal engine, digital painting, oil
-painting, concept art, anime, cel shaded, sparkles, watermark, signature,
-text, letters, numbers, logo, UI, frame border, blueprint, technical
-drawing, exploded diagram, callout lines, product photograph, hands, arms,
-figure, weapon, battle axe, fantasy weapon, ornate, engraved, jewelled,
-brand new, chrome, ruined, rusted through, broken
+coffee ring, cup ring, water ring, tea stain, circular stain, ring
+stain, watermark, blot, gradient, glow, bloom, lens flare, drop shadow,
+soft shading, airbrush, blur, depth of field, neon, saturated colours,
+pure white background, pure black, photorealistic, 3d render, octane,
+unreal engine, digital painting, oil painting, concept art, anime, cel
+shaded, sparkles, signature, text, letters, logo, UI, frame border,
+woodcut, linocut, block print, flat vector, vector illustration, flat
+colour fill, solid colour block, thick uniform outline, heavy black
+outline, bold outline, infographic, diagram, icon, minimalist, clip art,
+screen print, poster art, comic, cartoon, colouring book, numbers,
+blueprint, technical drawing, exploded diagram, callout lines, product
+photograph, hands, arms, figure, weapon, battle axe, fantasy weapon,
+ornate, ornate engraving, jewelled, brand new, chrome, ruined, rusted
+through, broken
 ```
 
 ## The framing block

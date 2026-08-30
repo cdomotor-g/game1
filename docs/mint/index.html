@@ -145,9 +145,16 @@ I have not made, ask me rather than inventing one.</code></pre>
 <p>Ask it: <strong>&quot;run <code>node tools/mint-queue.mjs</code> and paste the output&quot;</strong>. If it comes back with a per-line breakdown, a shelved line for tiles and a note about plate sizes, it is reading the right things.</p>
 <hr>
 <h2 id="2-set-up-the-artist">2 · Set up the artist</h2>
-<p>The artist needs three things, in this order: the house style, the acceptance rules, and then one prompt at a time. Give it the first two <strong>once</strong> at the start of a session and it will hold them for the rest of it.</p>
+<p><strong>The artist is ChatGPT, pointed at this repository.</strong> That is the route, and it is the route because it was tried the other ways: a machine artist on Hugging Face cost a quota to produce plates nobody shipped (§4a, retired), and a summary of the house style pasted into a chat is a copy that goes stale the day the style changes — which is exactly what happened, and cost a set of plates.</p>
+<p>So do not describe the style. Point at it:</p>
+<ul><li><a href="../art/07-ai-agent-brief.md"><code>art/07-ai-agent-brief.md</code></a> — the preamble, the negative prompt and the <strong>acceptance checklist</strong>. Both prompt blocks in it are generated from <a href="../../data/artstyle.json"><code>../data/artstyle.json</code></a>, so they cannot be out of date.</li>
+<li>The brief itself — <code>art/prompts/&lt;deck&gt;.md</code>, at the <code>## &lt;plate-id&gt;</code> heading. It already carries the preamble, the subject and the <code>FRAMING.</code> block.</li>
+<li><a href="../art/09-framing-and-composition.md"><code>art/09-framing-and-composition.md</code></a> — where the subject goes on the page, for card plates.</li>
+<li><a href="../map/README.md"><code>map/README.md</code></a> — the seven rules a map plate has to follow to be traceable.</li></ul>
+<p><code>node tools/mint-request.mjs &lt;code&gt;</code> prints the whole commission with the brief pasted in full, which is the thing to hand over if the artist cannot browse.</p>
+<p>The finished plate goes to <code>docs/art/renders/&lt;plate-id&gt;.png</code>, named exactly as the brief's heading — the name is the contract, and nothing is built until the file is there under that name.</p>
 <h3 id="the-standing-instructions">The standing instructions</h3>
-<p>Paste this into a new chat before anything else:</p>
+<p>Paste this into a new chat before anything else. The style is deliberately <em>not</em> restated here — it is one link, so there is no copy to go stale:</p>
 <pre><code>You are the ARTIST on a plate-minting run for a tabletop game.
 
 Everything you draw is a PLATE: a whole drawn page, in one consistent house
@@ -155,17 +162,16 @@ style, which will later be cropped by machine. You will be given one complete
 prompt at a time. Follow it exactly. Do not improve it, do not add a border,
 do not add text or lettering, and do not add a grid of any kind.
 
-The house style, in short:
+The house style is the `## Prompt preamble` block in docs/art/07-ai-agent-brief.md
+in the repository I am giving you. Read it there and follow it exactly. Do not
+work from a summary and do not work from what the words remind you of: this is
+a FINE PEN-AND-INK drawing, hatched, and then TINTED with thin translucent
+watercolour that the hatching shows through. It is not a woodcut, not a block
+print, and not flat vector colour. If what you are about to draw has a thick
+even black outline round it and a flat fill inside, it is wrong.
 
-- Black ink line art on warm unbleached paper, in the manner of a worn 1600s
-  printed almanac: heavy uneven woodcut outlines, interior shading built only
-  from hand-drawn hatching and cross-hatching, bare paper for the lit surfaces.
-- Flat muted spot colour sits UNDER the black line like a mis-registered
-  letterpress run: solid areas, no blending, no gradients.
-- Palette: warm ochre, rust red, dusty grey-green, cold slate blue. Paper is
-  warm oatmeal, never white. Ink is warm near-black, never pure black.
-- Never: gradients, glow, bloom, drop shadow, soft or airbrushed shading, lens
-  effects, magic particles, 3D render, photographic texture, digital painting.
+Accepted plates to look at before you draw, in that same repository:
+docs/art/renders/character-chr-01.png and modification-spinnaker.png.
 
 Two rules that are not about how it looks, and that I will reject a plate for:
 
@@ -179,11 +185,6 @@ Two rules that are not about how it looks, and that I will reject a plate for:
 When you deliver, tell me: the pixel dimensions, and whether you had to change
 any wording to get an acceptable result. If you did, give me the exact wording
 you actually used.</code></pre>
-<h3 id="if-the-artist-can-read-the-repository">If the artist can read the repository</h3>
-<p>If you are using an agent that can browse or clone, point it at these three files instead of the summary above — they are the real thing:</p>
-<ul><li><a href="../art/07-ai-agent-brief.md"><code>art/07-ai-agent-brief.md</code></a> — the preamble, the negative prompt and the <strong>acceptance checklist</strong></li>
-<li><a href="../art/09-framing-and-composition.md"><code>art/09-framing-and-composition.md</code></a> — where the subject goes on the page, for card plates</li>
-<li><a href="../map/README.md"><code>map/README.md</code></a> — the seven rules a map plate has to follow to be traceable</li></ul>
 <hr>
 <h2 id="3-what-every-prompt-must-contain">3 · What every prompt must contain</h2>
 <p>A brief is not a sentence. Every one of them, in every line, has four parts, and the queue's step 1 is not finished until all four are there.</p>
@@ -218,7 +219,8 @@ git push</code></pre>
 <h3 id="step-6-merge">Step 6 — merge</h3>
 <p>Merge the pull request. The site rebuilds on push and the new card or map is on it.</p>
 <hr>
-<h2 id="4a-the-courier-when-the-artist-is-a-machine-on-hugging-face">4a · The courier, when the artist is a machine on Hugging Face</h2>
+<h2 id="4a-the-courier-when-the-artist-is-a-machine-on-hugging-face-retired">4a · The courier, when the artist is a machine on Hugging Face — RETIRED</h2>
+<blockquote><p><strong>This route is retired. Do not commission a plate through it.</strong> It is kept written down because the machinery still exists and works, and because the reason it was retired is worth not re-discovering: the plates it returned were not the house style, the quota it burned was real, and judging six candidates on a contact sheet is slower than one good plate from an artist who can read the brief. §2 is the route — ChatGPT, pointed at this repository.  Nothing is deleted: <code>tools/mint-job.mjs</code>, <code>tools/hf/draw-plate.py</code> and <a href="../../.github/workflows/fetch-plate.yml"><code>.github/workflows/fetch-plate.yml</code></a> are all intact, and this section comes back by using them.</p></blockquote>
 <p>An artist that draws on <a href="https://huggingface.co">Hugging Face</a> leaves the plate there, and it has to reach <code>docs/art/renders/</code> before anything can be built from it. Step 4 above assumes a person carries it. This is the version where nobody does.</p>
 <p>The awkwardness is that neither end can reach the other. A Claude Code session commissioning a plate cannot reach <code>huggingface.co</code> at all — the organisation's egress policy denies it, and that is a setting to respect rather than work around. A job running on Hugging Face can reach the internet freely, but pushing to this repository would need a GitHub credential, and the only way to hand one to a chat session is to paste it into the conversation, where it stays forever.</p>
 <p><strong>A GitHub Action can reach both, and it is already inside the repository</strong>, so it needs no credential to write here. That is what <a href="../../.github/workflows/fetch-plate.yml"><code>.github/workflows/fetch-plate.yml</code></a> is.</p>
@@ -334,7 +336,7 @@ git push</code></pre>
 <h2 id="the-two-agents">The two agents</h2>
 <div class="table-wrap"><table>
 <thead><tr><th></th><th><strong>Designer</strong></th><th><strong>Artist</strong></th></tr></thead>
-<tbody><tr><td>Default</td><td>Claude Code, in this repository</td><td>ChatGPT, or any image model</td></tr>
+<tbody><tr><td>Default</td><td>Claude Code, in this repository</td><td>ChatGPT, <strong>pointed at this repository</strong></td></tr>
 <tr><td>Owns</td><td><code>data/</code>, <code>docs/art/prompts/</code>, <code>docs/art/framing.json</code>, <code>data/maps/</code>, every tool</td><td>the plate files: <code>docs/art/renders/*.png</code>, <code>docs/map/*.png</code></td></tr>
 <tr><td>Cannot</td><td>draw</td><td>change the rules</td></tr></tbody></table></div>
 <p>The split is real, not ceremonial. The designer can write a perfect brief and cannot produce a plate; the artist can produce a beautiful plate and has no idea what a summary strip is, or why hills and marsh must never share a wash. Neither can finish a subject alone, which is why the handover has to be written down.</p>
@@ -409,7 +411,8 @@ Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt</code></pre>
 <li>A comment beginning <code>MINT REQUEST ·</code> is the artist's work item; a comment beginning <code>PLATE READY ·</code> is the designer's. Both are prefixes on purpose: they are greppable, and an agent can ignore everything else in the thread.</li>
 <li>The designer's wake-up is: pull, run <code>node tools/mint-queue.mjs</code>, and act on whatever is at step 3. It does not need to parse the comment to know what to do — the repository already says.</li></ul>
 <p>That last point is the load-bearing one, and the reason the queue is computed rather than tracked. <strong>The comments are a notification, not a state machine.</strong> If a comment is missed, dropped, posted twice or posted out of order, the next run of the tool still produces the correct worklist. Automating the notification is then a convenience rather than a dependency, and can be added, removed or broken without stranding anything half-minted.</p>
-<h2 id="when-the-artist-is-a-model-the-whole-run-from-one-request">When the artist is a model: the whole run from one request</h2>
+<h2 id="when-the-artist-is-a-model-the-whole-run-from-one-request-retired">When the artist is a model: the whole run from one request — RETIRED</h2>
+<blockquote><p><strong>Retired. Do not commission a plate through this.</strong> The route below draws on Hugging Face and carries the plate in by Action. It works, and what it drew was not the house style; the quota it spent was real. The live route is the two-agent handover above, with the artist being ChatGPT pointed at this repository — it reads the brief and the accepted plates itself, which is the thing a courier could never give it. See <a href="#s-setup"><code>MINT-SETUP.md</code></a> §2.  Nothing is deleted. <code>tools/mint-job.mjs</code>, <code>tools/hf/draw-plate.py</code> and <code>.github/workflows/fetch-plate.yml</code> are intact and this section is how they are used. <strong><code>mint-request --render</code> is NOT retired</strong> and is not part of this: the difference between a commission and a depiction prompt matters for any model artist, ChatGPT included.</p></blockquote>
 <p>The two-agent handover above is the version that always works, and it stays. This is the version where nobody carries anything, and it is what <code>/mint</code> drives.</p>
 <pre><code>tile-envelope ─▶ brief ─▶ mint-request --render ─▶ ONE draft job (6 on a sheet)
       ─▶ pick a seed ─▶ ONE final job ─▶ fetch-plate.yml carries it in

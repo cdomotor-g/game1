@@ -15,33 +15,49 @@ Render at 2000 px square or better, single object, centred.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
-Black ink line art on warm unbleached paper, in the style of a worn 1600s
-printed almanac: heavy uneven woodcut-style outlines, interior shading built
-only from hand-drawn hatching and cross-hatching, bare paper for the lit
-surfaces.
+Fine pen-and-ink drawing on aged paper, finished by hand with thin
+watercolour washes: a plate from an illustrated book of charms. Drawn
+with a nib - a fine, springy, varied line, only a little heavier round
+the outside of a form than within it, thinning and breaking where the
+light catches an edge. Never a thick uniform outline.
 
-A single small object, centred, three-quarter view, on a short ground line,
-drawn at the scale of a jeweller's study - every knot, rivet, scratch and
-repair legible. In daily use and carefully kept, never ruined.
+All tone is hatching: short feathered strokes laid along the form and
+crossed over one another in the darks, fine and dense enough to read as
+continuous shadow at arm's length and still be separate strokes close
+up. Nearly every surface carries some. Bare paper is kept for the
+brightest highlights only.
 
-Its ONLY unusual quality: a flat violet spot colour (#6B4C7D) printed out of
-register - offset about a millimetre from the black line, bleeding past the
-object's edge like a misprint on a cheap press. The black line itself is
-perfectly normal. No glow, no sparkle, no light source, no particles.
+A single small object, centred, three-quarter view, on a short ground
+line, drawn at the scale of a jeweller's study - every knot, rivet,
+scratch and repair legible. In daily use and carefully kept, never
+ruined.
 
-Paper is warm oatmeal, never white. Ink is warm near-black, never pure black.
-Strictly no gradients, no drop shadows, no soft shading. No text, no letters.
+Its ONLY unusual quality: a flat violet spot colour (#6B4C7D) printed
+out of register - offset about a millimetre from the black line,
+bleeding past the object's edge like a misprint on a cheap press. The
+black line itself is perfectly normal. No glow, no sparkle, no light
+source, no particles.
+
+Paper is warm oatmeal, never white. Ink is warm near-black, never pure
+black. Strictly no gradients, no drop shadows, no soft shading. No text,
+no letters.
 ```
 
 ## Negative prompt — for all six
 
 ```text
-coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
-watermark, blot, gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
-neon, saturated colours, pure white background, pure black, photorealistic,
-3d render, digital painting, concept art, anime, sparkles, magic particles,
-glowing runes, light rays, watermark, text, letters, logo, frame border,
-multiple objects, jewellery product photo
+coffee ring, cup ring, water ring, tea stain, circular stain, ring
+stain, watermark, blot, gradient, glow, bloom, lens flare, drop shadow,
+soft shading, airbrush, blur, depth of field, neon, saturated colours,
+pure white background, pure black, photorealistic, 3d render, octane,
+unreal engine, digital painting, oil painting, concept art, anime, cel
+shaded, sparkles, signature, text, letters, logo, UI, frame border,
+woodcut, linocut, block print, flat vector, vector illustration, flat
+colour fill, solid colour block, thick uniform outline, heavy black
+outline, bold outline, infographic, diagram, icon, minimalist, clip art,
+screen print, poster art, comic, cartoon, colouring book, magic
+particles, glowing runes, light rays, multiple objects, jewellery
+product photo
 ```
 
 ## talisman-tal-01 — Bone Charm

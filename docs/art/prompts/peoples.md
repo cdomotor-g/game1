@@ -11,37 +11,52 @@ is set later — never generated.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
-Black ink line art on warm unbleached paper, in the style of a worn 1600s
-printed almanac: heavy uneven woodcut-style outlines, interior shading built
-only from hand-drawn hatching and cross-hatching, over-inked pooling where
-lines meet at sharp angles, bare paper for the lit surfaces.
+Fine pen-and-ink drawing on aged paper, finished by hand with thin
+watercolour washes: a figure plate from an illustrated folio of peoples.
+Drawn with a nib - a fine, springy, varied line, only a little heavier
+round the outside of a form than within it, thinning and breaking where
+the light catches an edge. Never a thick uniform outline.
 
-Flat muted spot colour sits UNDER the black line like a mis-registered
-letterpress run - solid areas of colour with no blending. Restricted palette:
-warm ochre, rust red, dusty grey-green, cold slate blue. Paper is warm
-oatmeal, never white. Ink is warm near-black, never pure black.
+All tone is hatching: short feathered strokes laid along the form and
+crossed over one another in the darks, fine and dense enough to read as
+continuous shadow at arm's length and still be separate strokes close
+up. Nearly every surface carries some. Bare paper is kept for the
+brightest highlights only.
 
-A full-page folio plate: one full-length figure study filling the page, drawn
-from life at middle distance, standing on a short ground line with the tools
-and clutter of their work around their feet. The page itself is worn from
-travel - soft creases, a thumbed corner, faint foxing stains at the edges -
-but the drawing is careful and complete. Chunky exaggerated proportions with
-a bold readable silhouette.
+Thin translucent watercolour is washed OVER the finished ink, so the
+hatching reads through the colour everywhere: it tints the drawing, it
+never fills it. The washes are uneven - a little darker where they pool
+against an edge, stopping short of the line as often as they cross it.
+Muted and desaturated throughout, warm ochre, rust red, dusty
+grey-green, cold slate blue. Paper is warm aged oatmeal, never white.
+Ink is warm near-black, never pure black.
 
-Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading,
-no lens effects. No text, no letters, no border rule.
+A full-page folio plate: one full-length figure study filling the page,
+drawn from life at middle distance, standing on a short ground line with
+the tools and clutter of their work around their feet. The page itself
+is worn from travel - soft creases, a thumbed corner, faint foxing
+stains at the edges - but the drawing is careful and complete.
+Proportions are naturalistic and observed, never exaggerated. The
+silhouette reads clearly.
+
+Strictly no gradients, no glow, no drop shadows, no soft airbrushed
+shading, no lens effects. No text, no letters, no border rule.
 ```
 
 ## Negative prompt — for all five
 
 ```text
-coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
-watermark, blot, gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
-depth of field, neon, saturated colours, pure white background, pure black,
-photorealistic, 3d render, octane, unreal engine, digital painting, oil
-painting, concept art, anime, chibi, cute, cel shaded, sparkles, magic
-particles, glowing runes, watermark, signature, text, letters, logo, UI,
-frame border, grimdark, ruined, apocalyptic
+coffee ring, cup ring, water ring, tea stain, circular stain, ring
+stain, watermark, blot, gradient, glow, bloom, lens flare, drop shadow,
+soft shading, airbrush, blur, depth of field, neon, saturated colours,
+pure white background, pure black, photorealistic, 3d render, octane,
+unreal engine, digital painting, oil painting, concept art, anime, cel
+shaded, sparkles, signature, text, letters, logo, UI, frame border,
+woodcut, linocut, block print, flat vector, vector illustration, flat
+colour fill, solid colour block, thick uniform outline, heavy black
+outline, bold outline, infographic, diagram, icon, minimalist, clip art,
+screen print, poster art, comic, cartoon, colouring book, chibi, cute,
+magic particles, glowing runes, grimdark, ruined, apocalyptic
 ```
 
 ## people-human — Humans

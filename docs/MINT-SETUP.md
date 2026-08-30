@@ -88,13 +88,36 @@ sizes, it is reading the right things.
 
 ## 2 · Set up the artist
 
-The artist needs three things, in this order: the house style, the acceptance
-rules, and then one prompt at a time. Give it the first two **once** at the start
-of a session and it will hold them for the rest of it.
+**The artist is ChatGPT, pointed at this repository.** That is the route, and it
+is the route because it was tried the other ways: a machine artist on Hugging
+Face cost a quota to produce plates nobody shipped (§4a, retired), and a summary
+of the house style pasted into a chat is a copy that goes stale the day the style
+changes — which is exactly what happened, and cost a set of plates.
+
+So do not describe the style. Point at it:
+
+- [`art/07-ai-agent-brief.md`](art/07-ai-agent-brief.md) — the preamble, the
+  negative prompt and the **acceptance checklist**. Both prompt blocks in it are
+  generated from [`../data/artstyle.json`](../data/artstyle.json), so they cannot
+  be out of date.
+- The brief itself — `art/prompts/<deck>.md`, at the `## <plate-id>` heading. It
+  already carries the preamble, the subject and the `FRAMING.` block.
+- [`art/09-framing-and-composition.md`](art/09-framing-and-composition.md) — where
+  the subject goes on the page, for card plates.
+- [`map/README.md`](map/README.md) — the seven rules a map plate has to follow to
+  be traceable.
+
+`node tools/mint-request.mjs <code>` prints the whole commission with the brief
+pasted in full, which is the thing to hand over if the artist cannot browse.
+
+The finished plate goes to `docs/art/renders/<plate-id>.png`, named exactly as
+the brief's heading — the name is the contract, and nothing is built until the
+file is there under that name.
 
 ### The standing instructions
 
-Paste this into a new chat before anything else:
+Paste this into a new chat before anything else. The style is deliberately *not*
+restated here — it is one link, so there is no copy to go stale:
 
 ```text
 You are the ARTIST on a plate-minting run for a tabletop game.
@@ -104,17 +127,16 @@ style, which will later be cropped by machine. You will be given one complete
 prompt at a time. Follow it exactly. Do not improve it, do not add a border,
 do not add text or lettering, and do not add a grid of any kind.
 
-The house style, in short:
+The house style is the `## Prompt preamble` block in docs/art/07-ai-agent-brief.md
+in the repository I am giving you. Read it there and follow it exactly. Do not
+work from a summary and do not work from what the words remind you of: this is
+a FINE PEN-AND-INK drawing, hatched, and then TINTED with thin translucent
+watercolour that the hatching shows through. It is not a woodcut, not a block
+print, and not flat vector colour. If what you are about to draw has a thick
+even black outline round it and a flat fill inside, it is wrong.
 
-- Black ink line art on warm unbleached paper, in the manner of a worn 1600s
-  printed almanac: heavy uneven woodcut outlines, interior shading built only
-  from hand-drawn hatching and cross-hatching, bare paper for the lit surfaces.
-- Flat muted spot colour sits UNDER the black line like a mis-registered
-  letterpress run: solid areas, no blending, no gradients.
-- Palette: warm ochre, rust red, dusty grey-green, cold slate blue. Paper is
-  warm oatmeal, never white. Ink is warm near-black, never pure black.
-- Never: gradients, glow, bloom, drop shadow, soft or airbrushed shading, lens
-  effects, magic particles, 3D render, photographic texture, digital painting.
+Accepted plates to look at before you draw, in that same repository:
+docs/art/renders/character-chr-01.png and modification-spinnaker.png.
 
 Two rules that are not about how it looks, and that I will reject a plate for:
 
@@ -129,18 +151,6 @@ When you deliver, tell me: the pixel dimensions, and whether you had to change
 any wording to get an acceptable result. If you did, give me the exact wording
 you actually used.
 ```
-
-### If the artist can read the repository
-
-If you are using an agent that can browse or clone, point it at these three files
-instead of the summary above — they are the real thing:
-
-- [`art/07-ai-agent-brief.md`](art/07-ai-agent-brief.md) — the preamble, the
-  negative prompt and the **acceptance checklist**
-- [`art/09-framing-and-composition.md`](art/09-framing-and-composition.md) — where
-  the subject goes on the page, for card plates
-- [`map/README.md`](map/README.md) — the seven rules a map plate has to follow to
-  be traceable
 
 ---
 
@@ -235,7 +245,18 @@ it.
 
 ---
 
-## 4a · The courier, when the artist is a machine on Hugging Face
+## 4a · The courier, when the artist is a machine on Hugging Face — RETIRED
+
+> **This route is retired. Do not commission a plate through it.** It is kept
+> written down because the machinery still exists and works, and because the
+> reason it was retired is worth not re-discovering: the plates it returned were
+> not the house style, the quota it burned was real, and judging six candidates
+> on a contact sheet is slower than one good plate from an artist who can read
+> the brief. §2 is the route — ChatGPT, pointed at this repository.
+>
+> Nothing is deleted: `tools/mint-job.mjs`, `tools/hf/draw-plate.py` and
+> [`.github/workflows/fetch-plate.yml`](../.github/workflows/fetch-plate.yml) are
+> all intact, and this section comes back by using them.
 
 An artist that draws on [Hugging Face](https://huggingface.co) leaves the plate
 there, and it has to reach `docs/art/renders/` before anything can be built from

@@ -66,6 +66,31 @@ both state a modifier and point at one (or do neither), will not let a die face 
 unaccounted for on a strip that reads it, and will not let a depletion cell print a figure
 the pip that covers it cannot hide.
 
+## A drawn plate's style is declared once, in `data/artstyle.json`
+
+The line, the hatching, the wash and one **register** per brief. Every
+`## Shared preamble` and `## Negative prompt` block under `docs/art/prompts/`,
+and both prompt blocks in `docs/art/07-ai-agent-brief.md`, are written from it by
+`node tools/build-prompts.mjs`, and `--check` fails when a copy has drifted.
+Never hand-edit one of those blocks; change `artstyle.json` and run the tool.
+
+**A plate is a fine pen-and-ink drawing, hatched, then tinted with thin
+translucent watercolour the hatching shows through.** It is naturalistically
+proportioned. It is *not* a woodcut, not a block print, not flat spot colour and
+not a bold silhouette — every one of those words is in the negative prompt now,
+because every one of them was in the POSITIVE prompt for eleven hand-made copies
+of the preamble, and a literal image model drew exactly what it was told: a flat
+vector infographic. Look at `docs/art/renders/character-chr-01.png` and
+`modification-spinnaker.png` before writing anything about style.
+
+**Two registers, and they are not the same.** The *pieces* — chits, tokens, board
+marks, building tiles, anything this repository draws itself as SVG and prints at
+15–18 mm — really are exaggerated, heavily contoured and flat-washed, and
+`01-two-plate-system.md` separates their ink from their wash for real. The
+*plates* are none of those things. `03-line-and-texture.md` is scoped to the
+pieces and says so at the top; reading it as a plate instruction is half of how
+this went wrong.
+
 ## How a component looks is declared once, in `data/components.json`
 
 Card size, corner radius, frame weights, the summary strip, deck backs, the element
@@ -173,11 +198,17 @@ is tied back to the data, the thing builds. Only the third step's name changes
 between lines — a card is **framed** (a subject box in `framing.json`), a map is
 **traced** (the board in `data/maps/<id>.json`).
 
-**One request mints a thing, end to end.** `/mint <subject>` is the runbook and
-it does not stop halfway: the brief, the plate drawn on Hugging Face, the plate
-carried into the repository by `.github/workflows/fetch-plate.yml`, the crop
-aimed, built, proofed and pushed. Nobody moves a file — that Action exists so
-nobody has to, and it does not survive being asked a hundred times.
+**The artist is ChatGPT, pointed at this repository.** It reads the brief and the
+accepted plates itself and drops the PNG into `docs/art/renders/<plate-id>.png`;
+the designer aims, builds, proofs and pushes. The name is the contract — nothing
+builds until the file is there under the brief's own heading.
+
+**Drawing on Hugging Face is RETIRED, not deleted.** `tools/mint-job.mjs`,
+`tools/hf/draw-plate.py` and `.github/workflows/fetch-plate.yml` are intact and
+`docs/MINT.md` still documents the route, marked retired. Do not commission a
+plate through it, do not restart it, and do not spend quota on it. What it drew
+was not the house style, and an artist that can read the brief beats a courier
+that cannot.
 
 **An image model is never handed the commission.** A commission is written for a
 person and carries blocks they read as instructions — `FRAMING.`, `WINDOW.`,
@@ -187,30 +218,8 @@ depiction, every "no X" moved into the negative, and it prints what it moved so
 nothing goes silently. `renderPrompt` in `tools/lib/mint.mjs` is the one place
 that difference lives.
 
-**Drawing is metered, so draft first and draw once.** The granary cost about
-twenty-two minutes of `a100-large` across five jobs, returned eight plates, shipped
-one, and emptied the quota. Half that time drew nothing: every job re-downloads
-fifty gigabytes of Qwen-Image and reinstalls sixty-three packages before its first
-pixel, so the setup is two to three minutes whether the job then draws one picture
-or twelve.
-
-Two rules come out of that and they are not style preferences.
-
-**One job per subject, never one job per attempt.** `tools/hf/draw-plate.py` loads
-the model once and draws every candidate from that load. Six seeds is one job.
-
-**Judge composition cheaply, then draw once properly.** `MODE=draft` returns six
-candidates tiled on ONE contact sheet at 640 px and eight steps — about a tenth of
-a full plate — and five of the granary's six rejects were plainly visible at that
-size: a horizon that should not exist, a subject too big for the die, text rendered
-onto the page, a colour cast. Only the seed that survives the sheet earns
-`MODE=final`. `node tools/mint-job.mjs <id>` prints the call, because `with_deps`
-(not `with`) and `a100-large` (not `l40sx1`) have each already cost a job.
-
 Every rejection goes in `docs/art/renders/<plate>.attempts.md` with the reason. A
-rejection nobody wrote down is one somebody pays for twice — three of the granary's
-six went the same way because the wording that caused it was not written down the
-first time.
+rejection nobody wrote down is one somebody pays for twice.
 
 Run `node tools/mint-queue.mjs` to see where everything has got to — it works
 that out from the repository, so it cannot be wrong, only out of date. Adding a
@@ -521,6 +530,7 @@ below is for when `data/` has moved.
 
 ```bash
 node tools/validate-data.mjs   # referential integrity and design smells
+node tools/build-prompts.mjs   # write data/artstyle.json into every brief
 node tools/draw-map.mjs <id>   # generated maps: regrow the board and redraw the plate
 node tools/validate-map.mjs    # boards against terrain.json and against themselves
 node tools/build-map.mjs       # map proof sheets, and the derived print sizes

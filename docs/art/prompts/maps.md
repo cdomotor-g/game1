@@ -28,38 +28,46 @@ else: it is the one property of a plate that cannot be recovered later.
 
 ```text
 A hand-drawn fantasy region map on aged parchment, in the style of a
-17th-century printed atlas plate: fine engraved coastline, hand-lettered place
-names in a serif face, a decorative border rule, a title cartouche in one
-corner, a compass rose, a scale bar in leagues, and a legend panel in another
-corner.
+17th-century printed atlas plate: fine engraved coastline, hand-lettered
+place names in a serif face, a decorative border rule, a title cartouche
+in one corner, a compass rose, a scale bar in leagues, and a legend
+panel in another corner.
 
-Flat muted washes of colour with hard edges and no blending: dusty grey-green
-for woodland, pale yellow-green for open grass, warm ochre for sand and dry
-country, near-white for ice and tundra, muted slate blue for the sea, with the
-shallows a lighter tint of the same blue than the deep water. Paper is warm
-oatmeal, never white. Line is warm near-black, never pure black.
+Flat muted washes of colour with hard edges and no blending: dusty
+grey-green for woodland, pale yellow-green for open grass, warm ochre
+for sand and dry country, near-white for ice and tundra, muted slate
+blue for the sea, with the shallows a lighter tint of the same blue than
+the deep water. Paper is warm oatmeal, never white. Line is warm
+near-black, never pure black.
 
-Landforms are drawn as repeated small engraved glyphs on top of the wash:
-hatched triangular peaks for mountains, small arcs for hills, tiny conifers and
-round-topped trees for forest, low tufts for tundra, horizontal tufts for
-marsh, loose crescents for dunes. Rivers are thin cold-blue lines running from
-high ground to the sea. Roads are thin double lines, railways are hatched
-lines.
+Landforms are drawn as repeated small engraved glyphs on top of the
+wash: hatched triangular peaks for mountains, small arcs for hills, tiny
+conifers and round-topped trees for forest, low tufts for tundra,
+horizontal tufts for marsh, loose crescents for dunes. Rivers are thin
+cold-blue lines running from high ground to the sea. Roads are thin
+double lines, railways are hatched lines.
 
-Strictly no gradients, no glow, no drop shadow, no soft airbrushed shading, no
-photographic texture, no 3D relief or hillshading.
+Strictly no gradients, no glow, no drop shadow, no soft airbrushed
+shading, no photographic texture, no 3D relief or hillshading.
 ```
 
 ## Negative prompt — for every map
 
 ```text
-coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
-watermark, blot, hillshading, terrain relief shading, satellite imagery, contour lines, depth
-soundings, grid lines, hex grid, square grid, latitude longitude lines, modern
-typography, sans-serif labels, national borders, political colouring, minimap,
-game UI, gradient, glow, bloom, drop shadow, soft shading, airbrush, blur,
-photorealistic, 3d render, digital painting, concept art, watermark, signature,
-logo, frame border with figures
+coffee ring, cup ring, water ring, tea stain, circular stain, ring
+stain, watermark, blot, gradient, glow, bloom, lens flare, drop shadow,
+soft shading, airbrush, blur, depth of field, neon, saturated colours,
+pure white background, pure black, photorealistic, 3d render, octane,
+unreal engine, digital painting, oil painting, concept art, anime, cel
+shaded, sparkles, signature, text, letters, logo, UI, frame border,
+woodcut, linocut, block print, flat vector, vector illustration, flat
+colour fill, solid colour block, thick uniform outline, heavy black
+outline, bold outline, infographic, diagram, icon, minimalist, clip art,
+screen print, poster art, comic, cartoon, colouring book, hillshading,
+terrain relief shading, satellite imagery, contour lines, depth
+soundings, grid lines, hex grid, square grid, latitude longitude lines,
+modern typography, sans-serif labels, national borders, political
+colouring, minimap, game UI, frame border with figures
 ```
 
 `hex grid` is in there deliberately. **Never ask for a grid on the plate.** The

@@ -159,6 +159,13 @@ window.GAME_DATA = {
         "summary": "The mint: one line per kind of thing that goes designer -> artist -> build. Cards, maps, building tiles, and terrain tiles while they are shelved. Content-free, like components.json: it says what a line is, never what a card says."
       },
       {
+        "key": "artstyle",
+        "file": "artstyle.json",
+        "collection": "registers",
+        "idField": "id",
+        "summary": "The house style for a DRAWN plate, declared once: the line, the hatching, the wash, and one register per brief in docs/art/prompts/. Content-free like components.json and mint.json - it says what a family of plates IS, never what a subject is. tools/build-prompts.mjs writes it into every brief and --check fails when a copy has drifted."
+      },
+      {
         "key": "playerboard",
         "file": "playerboard.json",
         "collection": "tracks",
@@ -14064,6 +14071,365 @@ window.GAME_DATA = {
           "docs/art/06-components.md - the 60 mm hex tile face and back",
           "docs/design/08-components.md - 61 tiles in the bill of materials",
           "data/terrain.json - boardSetup.terrainMix, recommendedTiles, faceDownAtStart"
+        ]
+      }
+    ]
+  },
+  "artstyle": {
+    "$comment": "The house style for a DRAWN plate, declared once. Every brief in docs/art/prompts/ has its `## Shared preamble` and `## Negative prompt` blocks generated from this file by tools/build-prompts.mjs, and `--check` fails the build when one has drifted - which is the whole reason the file exists.\n\nIt exists because the style drifted and nobody could see it happen. The preamble was copied by hand into ten prompt files and into docs/art/07-ai-agent-brief.md, and what every copy described - `heavy uneven woodcut-style outlines`, `flat muted spot colour ... solid areas of colour with no blending`, `chunky exaggerated proportions with a bold readable silhouette` - is not what a single accepted plate in docs/art/renders/ actually is. Those plates are fine pen-and-ink with dense hatching, tinted with thin translucent watercolour, naturalistically proportioned. Early image models drew that anyway; literal ones drew what the words said, which is a flat vector infographic.\n\nSo the words now describe the plates. The flat register was not deleted - it moved to the negative, where `woodcut`, `flat vector` and `thick uniform outline` had always belonged.\n\nWhat is NOT here: the two-plate contract in docs/art/01-two-plate-system.md. That is about the GENERATED components - the SVG cards, boards and tiles this repository draws itself, where ink and wash really are separate layers and tools/validate-art.mjs enforces it. A drawn plate is one hand-tinted illustration and has never been separable that way. Reading the wash plate's `flat spot colour` as a rendering instruction for a drawn plate is how half of this went wrong.\n\nThis file holds no content: no card is named in it and no subject is described. A register says what a FAMILY of plates is a plate of, exactly as data/mint.json says what a line is.",
+    "version": "0.1.0",
+    "house": {
+      "line": [
+        "Fine pen-and-ink drawing on aged paper, finished by hand with thin watercolour washes: {plate}. Drawn with a nib - a fine, springy, varied line, only a little heavier round the outside of a form than within it, thinning and breaking where the light catches an edge. Never a thick uniform outline.",
+        "All tone is hatching: short feathered strokes laid along the form and crossed over one another in the darks, fine and dense enough to read as continuous shadow at arm's length and still be separate strokes close up. Nearly every surface carries some. Bare paper is kept for the brightest highlights only."
+      ],
+      "colour": "Thin translucent watercolour is washed OVER the finished ink, so the hatching reads through the colour everywhere: it tints the drawing, it never fills it. The washes are uneven - a little darker where they pool against an edge, stopping short of the line as often as they cross it. Muted and desaturated throughout, {palette}. Paper is warm aged oatmeal, never white. Ink is warm near-black, never pure black."
+    },
+    "negative": {
+      "$comment": "Shared terms first, then whatever one register needs on top. A term is added in one place and every brief gets it - which is what the ring-stain ban needed and did not have.",
+      "shared": [
+        "coffee ring",
+        "cup ring",
+        "water ring",
+        "tea stain",
+        "circular stain",
+        "ring stain",
+        "watermark",
+        "blot",
+        "gradient",
+        "glow",
+        "bloom",
+        "lens flare",
+        "drop shadow",
+        "soft shading",
+        "airbrush",
+        "blur",
+        "depth of field",
+        "neon",
+        "saturated colours",
+        "pure white background",
+        "pure black",
+        "photorealistic",
+        "3d render",
+        "octane",
+        "unreal engine",
+        "digital painting",
+        "oil painting",
+        "concept art",
+        "anime",
+        "cel shaded",
+        "sparkles",
+        "signature",
+        "text",
+        "letters",
+        "logo",
+        "UI",
+        "frame border",
+        "woodcut",
+        "linocut",
+        "block print",
+        "flat vector",
+        "vector illustration",
+        "flat colour fill",
+        "solid colour block",
+        "thick uniform outline",
+        "heavy black outline",
+        "bold outline",
+        "infographic",
+        "diagram",
+        "icon",
+        "minimalist",
+        "clip art",
+        "screen print",
+        "poster art",
+        "comic",
+        "cartoon",
+        "colouring book"
+      ]
+    },
+    "registers": [
+      {
+        "id": "characters",
+        "name": "Characters",
+        "plate": "a portrait plate from an illustrated folio of working people",
+        "palette": "warm ochre, rust red, dusty grey-green, cold slate blue",
+        "composition": [
+          "A three-quarter-length portrait plate of one person, drawn from life, mid-habit rather than posed, on a short ground line with their working gear about them. Clothes and kit are worn from real use and carefully mended - patches, re-stitched straps, a wrapped tool handle - never ruined. The page itself is tattered from time in the field: creases, a grimy thumbed corner, faint foxing at the edges. The silhouette reads clearly."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects, no magic particles. No text, no letters, no border rule.",
+        "negative": [
+          "chibi",
+          "cute",
+          "magic particles",
+          "glowing runes",
+          "grimdark",
+          "ruined",
+          "apocalyptic",
+          "heroic pose",
+          "action scene"
+        ]
+      },
+      {
+        "id": "peoples",
+        "name": "Peoples",
+        "plate": "a figure plate from an illustrated folio of peoples",
+        "palette": "warm ochre, rust red, dusty grey-green, cold slate blue",
+        "composition": [
+          "A full-page folio plate: one full-length figure study filling the page, drawn from life at middle distance, standing on a short ground line with the tools and clutter of their work around their feet. The page itself is worn from travel - soft creases, a thumbed corner, faint foxing stains at the edges - but the drawing is careful and complete. Proportions are naturalistic and observed, never exaggerated. The silhouette reads clearly."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no border rule.",
+        "negative": [
+          "chibi",
+          "cute",
+          "magic particles",
+          "glowing runes",
+          "grimdark",
+          "ruined",
+          "apocalyptic"
+        ]
+      },
+      {
+        "id": "monsters",
+        "name": "Monsters",
+        "plate": "a plate from an illustrated bestiary",
+        "palette": "warm ochre, rust red, dusty grey-green, cold slate blue",
+        "composition": [
+          "A full-page bestiary plate: one creature filling the page, full length, drawn from observation at a wary distance, standing in a strip of its own terrain on a short ground line. The pose is characteristic behaviour, not attack. The page is worn from travel - creases, a thumbed corner, faint foxing - but the drawing is careful. The silhouette reads clearly."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects, no magic particles. No text, no letters, no border rule.",
+        "negative": [
+          "chibi",
+          "cute",
+          "magic particles",
+          "glowing eyes",
+          "glowing runes",
+          "fire glow",
+          "light rays",
+          "battle scene",
+          "multiple creatures",
+          "human figures"
+        ]
+      },
+      {
+        "id": "vehicles",
+        "name": "Vehicles",
+        "plate": "a plate from an illustrated book of conveyances",
+        "palette": "warm ochre, rust red, dusty grey-green, cold slate blue",
+        "composition": [
+          "One vehicle in full working profile, filling the width of the page, on a short strip of its own ground - rail, water, or road. Every strap, rivet, lashing and repair visible and true; in daily use, well maintained, never ruined. The page is worn from the road: creases, a grimy corner, faint foxing. The silhouette reads clearly."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no livery lettering, no border rule.",
+        "negative": [
+          "numbers",
+          "grimdark",
+          "ruined",
+          "wrecked",
+          "apocalyptic",
+          "modern vehicle",
+          "diesel",
+          "car",
+          "truck"
+        ]
+      },
+      {
+        "id": "items",
+        "name": "Items, weapons and armour",
+        "plate": "a plate from an illustrated catalogue of arms and equipment",
+        "palette": "warm ochre for timber and horn, rust red for leather and cord, cold slate blue for iron and steel",
+        "composition": [
+          "A single item, centred, three-quarter view, laid on a bench or stood against it with a short ground line, drawn at the scale of a pattern-book plate: every rivet, seam, lashing, grain and repair legible. In daily use and carefully kept - the grip worn where the hand goes, the edge honed narrow, a strap replaced in mismatched leather - never new, never ruined. The silhouette reads clearly. The page is worn from the workshop: creases, a grimy corner, faint foxing."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no dimension figures, no border rule.",
+        "negative": [
+          "magic",
+          "runes",
+          "numbers",
+          "blueprint",
+          "technical drawing",
+          "exploded diagram",
+          "callout lines",
+          "product photograph",
+          "lit flame",
+          "burning wick",
+          "firelight",
+          "light rays",
+          "sparks",
+          "embers",
+          "hands",
+          "arms",
+          "figure",
+          "wielder",
+          "mannequin",
+          "armour stand",
+          "coat hanger",
+          "clothes rail",
+          "battle",
+          "blood",
+          "grimdark",
+          "ruined",
+          "rusted through",
+          "shattered"
+        ]
+      },
+      {
+        "id": "tools",
+        "name": "Tools",
+        "plate": "a plate from an illustrated catalogue of working tools",
+        "palette": "warm ochre for timber, cold slate blue for iron and steel, rust red for leather and cord",
+        "composition": [
+          "A single tool, centred, three-quarter view, stood against a bench or laid on one with a short ground line, drawn at the scale of an inventory plate: every wedge, ferrule, rivet, grain line and repair legible. WORN BY USE and kept in service - the haft polished dark where the hands go, the edge hollowed back from years of sharpening, a split bound with wire rather than replaced. In daily use, never new, never abandoned. The silhouette reads clearly. The page is worn from the workshop: creases, a grimy corner, faint foxing."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no dimension figures, no border rule.",
+        "negative": [
+          "numbers",
+          "blueprint",
+          "technical drawing",
+          "exploded diagram",
+          "callout lines",
+          "product photograph",
+          "hands",
+          "arms",
+          "figure",
+          "weapon",
+          "battle axe",
+          "fantasy weapon",
+          "ornate",
+          "ornate engraving",
+          "jewelled",
+          "brand new",
+          "chrome",
+          "ruined",
+          "rusted through",
+          "broken"
+        ]
+      },
+      {
+        "id": "talismans",
+        "name": "Talismans",
+        "plate": "a plate from an illustrated book of charms",
+        "palette": null,
+        "$noPalette": "A talisman's colour rule IS its composition - one violet laid out of register - so the house colour paragraph is skipped rather than contradicted.",
+        "composition": [
+          "A single small object, centred, three-quarter view, on a short ground line, drawn at the scale of a jeweller's study - every knot, rivet, scratch and repair legible. In daily use and carefully kept, never ruined.",
+          "Its ONLY unusual quality: a flat violet spot colour (#6B4C7D) printed out of register - offset about a millimetre from the black line, bleeding past the object's edge like a misprint on a cheap press. The black line itself is perfectly normal. No glow, no sparkle, no light source, no particles."
+        ],
+        "closing": "Paper is warm oatmeal, never white. Ink is warm near-black, never pure black. Strictly no gradients, no drop shadows, no soft shading. No text, no letters.",
+        "negative": [
+          "magic particles",
+          "glowing runes",
+          "light rays",
+          "multiple objects",
+          "jewellery product photo"
+        ]
+      },
+      {
+        "id": "modifications",
+        "name": "Modifications",
+        "plate": "a plate from an illustrated shipwright's catalogue of fittings",
+        "palette": "warm ochre, rust red, dusty grey-green, cold slate blue",
+        "composition": [
+          "A single fitting, centred, three-quarter view, laid out on a workshop floor or bench with a short ground line, drawn at the scale of a pattern-book plate: every rivet, seam, lashing, thread and repair legible. New or newly overhauled, ready to fit, never ruined and never installed - this is the part before it goes on. The page is worn from the workshop: creases, a grimy corner, faint foxing. The silhouette reads clearly."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no dimension figures, no border rule.",
+        "negative": [
+          "numbers",
+          "blueprint",
+          "technical drawing",
+          "exploded diagram",
+          "callout lines",
+          "grimdark",
+          "ruined",
+          "wrecked"
+        ]
+      },
+      {
+        "id": "buildingtiles",
+        "name": "Building tiles",
+        "plate": "a plate from an illustrated surveyor's notebook of buildings",
+        "palette": "warm ochre for thatch and timber, rust red for tile and brick, dusty grey-green for grass and crop, cold slate blue for stone, iron and water",
+        "composition": [
+          "ONE small building or one worked patch of ground, drawn from about thirty degrees above and thirty degrees to the left, standing on its own ground which runs to every edge of the page. The MASSING is simple and unmistakable - three or four shapes and no more, so the building is still itself when the whole plate prints seventeen millimetres across. That is a rule about the shapes, not about the drawing: the interior is hatched as finely as on any other plate. Built by hand out of local material and kept in repair - a patched roof, a leaning post, a worn path to the door - never new, never ruined, never abandoned.",
+          "Nobody in it. No figures, no animals unless the brief names them as the subject. No sky, no horizon, no middle distance, no background scenery: the ground fills the page."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no numerals, no signage. No border rule, no vignette, no grid.",
+        "negative": [
+          "chibi",
+          "cute",
+          "isometric video game asset",
+          "magic particles",
+          "numerals",
+          "signage",
+          "vignette",
+          "hex grid",
+          "square grid",
+          "ruled lines",
+          "horizon",
+          "sky",
+          "clouds",
+          "background scenery",
+          "distant mountains",
+          "people",
+          "figures",
+          "crowd",
+          "heroic",
+          "grimdark",
+          "ruined",
+          "apocalyptic",
+          "overgrown",
+          "abandoned",
+          "cutaway",
+          "floor plan",
+          "blueprint",
+          "elevation drawing",
+          "floating island",
+          "diorama",
+          "plinth",
+          "base slab",
+          "cut-out",
+          "isolated object on a plain background",
+          "white margin",
+          "empty border",
+          "caption",
+          "handwriting",
+          "manuscript text",
+          "book page",
+          "page border",
+          "plate number",
+          "framed illustration",
+          "mounted plate"
+        ]
+      },
+      {
+        "id": "maps",
+        "name": "Maps",
+        "$ownRegister": "A map is a different medium from every other plate here - an engraved atlas sheet, where a flat hard-edged wash is the right answer and not the drift. It keeps its own opening paragraphs.",
+        "house": {
+          "line": [
+            "A hand-drawn fantasy region map on aged parchment, in the style of a 17th-century printed atlas plate: fine engraved coastline, hand-lettered place names in a serif face, a decorative border rule, a title cartouche in one corner, a compass rose, a scale bar in leagues, and a legend panel in another corner."
+          ],
+          "colour": "Flat muted washes of colour with hard edges and no blending: dusty grey-green for woodland, pale yellow-green for open grass, warm ochre for sand and dry country, near-white for ice and tundra, muted slate blue for the sea, with the shallows a lighter tint of the same blue than the deep water. Paper is warm oatmeal, never white. Line is warm near-black, never pure black."
+        },
+        "composition": [
+          "Landforms are drawn as repeated small engraved glyphs on top of the wash: hatched triangular peaks for mountains, small arcs for hills, tiny conifers and round-topped trees for forest, low tufts for tundra, horizontal tufts for marsh, loose crescents for dunes. Rivers are thin cold-blue lines running from high ground to the sea. Roads are thin double lines, railways are hatched lines."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadow, no soft airbrushed shading, no photographic texture, no 3D relief or hillshading.",
+        "negative": [
+          "hillshading",
+          "terrain relief shading",
+          "satellite imagery",
+          "contour lines",
+          "depth soundings",
+          "grid lines",
+          "hex grid",
+          "square grid",
+          "latitude longitude lines",
+          "modern typography",
+          "sans-serif labels",
+          "national borders",
+          "political colouring",
+          "minimap",
+          "game UI",
+          "frame border with figures"
         ]
       }
     ]

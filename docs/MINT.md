@@ -144,7 +144,7 @@ The queue reports three separate things, because three different people fix them
 
 | | **Designer** | **Artist** |
 | --- | --- | --- |
-| Default | Claude Code, in this repository | ChatGPT, or any image model |
+| Default | Claude Code, in this repository | ChatGPT, **pointed at this repository** |
 | Owns | `data/`, `docs/art/prompts/`, `docs/art/framing.json`, `data/maps/`, every tool | the plate files: `docs/art/renders/*.png`, `docs/map/*.png` |
 | Cannot | draw | change the rules |
 
@@ -345,7 +345,20 @@ the tool still produces the correct worklist. Automating the notification is the
 a convenience rather than a dependency, and can be added, removed or broken
 without stranding anything half-minted.
 
-## When the artist is a model: the whole run from one request
+## When the artist is a model: the whole run from one request — RETIRED
+
+> **Retired. Do not commission a plate through this.** The route below draws on
+> Hugging Face and carries the plate in by Action. It works, and what it drew was
+> not the house style; the quota it spent was real. The live route is the two-agent
+> handover above, with the artist being ChatGPT pointed at this repository — it
+> reads the brief and the accepted plates itself, which is the thing a courier
+> could never give it. See [`MINT-SETUP.md`](MINT-SETUP.md) §2.
+>
+> Nothing is deleted. `tools/mint-job.mjs`, `tools/hf/draw-plate.py` and
+> `.github/workflows/fetch-plate.yml` are intact and this section is how they are
+> used. **`mint-request --render` is NOT retired** and is not part of this: the
+> difference between a commission and a depiction prompt matters for any model
+> artist, ChatGPT included.
 
 The two-agent handover above is the version that always works, and it stays. This
 is the version where nobody carries anything, and it is what `/mint` drives.

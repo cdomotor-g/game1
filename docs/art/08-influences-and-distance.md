@@ -26,12 +26,32 @@ work, because it skips the intermediary's stylistic fingerprints.
 
 | Reminded us of | What we're actually after | Where it comes from |
 |---|---|---|
-| Borderlands | Heavy black contour, hand-inked interior hatching, flat colour under line | Woodcut and wood engraving — Dürer, Bewick, 1800s trade catalogues |
+| Borderlands | A drawing carried entirely by ink line and hand hatching, with colour added afterwards and never doing the work | Pen-and-ink book illustration and wood engraving — Bewick, 1800s trade catalogues and natural-history plates |
 | Fallout | Salvage-industrial wear, make-do repair, printed ephemera as UI | Depression-era tool catalogues, WPA broadsides, patent drawings |
-| World of Warcraft | Exaggerated proportion for silhouette readability, oversized props | Medieval manuscript illumination and heraldry, where the same exaggeration solves the same legibility problem |
+| World of Warcraft | Exaggerated proportion for silhouette readability, oversized props | Medieval manuscript illumination and heraldry, where the same exaggeration solves the same legibility problem. **Applies to the pieces, not the plates** — see below |
 
 Every right-hand entry is public domain and centuries old. The techniques we want are
 available from the source, at higher quality, with no exposure.
+
+## Two registers, and which one you are working in
+
+This table used to have one register in it, and that cost the project a set of plates.
+
+**The pieces** — commodity chits, tokens, board marks, building tiles, anything this
+repository draws itself as SVG and prints at 15–18 mm — are exaggerated, heavily
+contoured and washed in flat spot colour. They have to be: at that size interior detail
+is noise, and [`01-two-plate-system.md`](01-two-plate-system.md) separates ink from wash
+for real, with `tools/validate-art.mjs` enforcing it.
+
+**The plates** — the drawn pictures in the card windows, `docs/art/renders/*.png` — are
+none of those things. They are fine pen-and-ink with dense hatching, tinted afterwards
+with thin translucent watercolour, and naturalistically proportioned. Look at
+[`renders/character-chr-01.png`](renders/character-chr-01.png) beside any building tile
+and the two registers are obvious.
+
+The plates' register is declared once, in [`../../data/artstyle.json`](../../data/artstyle.json),
+and written into every brief by `tools/build-prompts.mjs`. Nothing about the pieces
+belongs in it, and nothing in it belongs to the pieces.
 
 ## The three tests
 

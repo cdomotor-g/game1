@@ -110,32 +110,44 @@ would be a number that stops being true the day a map grows a print preset.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
-Black ink line art on warm unbleached paper, in the style of a worn 1600s
-surveyor's field book: heavy uneven woodcut-style outlines, interior shading
-built only from hand-drawn hatching and cross-hatching, over-inked pooling
-where lines meet at sharp angles, bare paper for the lit surfaces.
+Fine pen-and-ink drawing on aged paper, finished by hand with thin
+watercolour washes: a plate from an illustrated surveyor's notebook of
+buildings. Drawn with a nib - a fine, springy, varied line, only a
+little heavier round the outside of a form than within it, thinning and
+breaking where the light catches an edge. Never a thick uniform outline.
 
-Flat muted spot colour sits UNDER the black line like a mis-registered
-letterpress run - solid areas of colour with no blending. Restricted palette:
-warm ochre for thatch and timber, rust red for tile and brick, dusty
-grey-green for grass and crop, cold slate blue for stone, iron and water.
-Paper is warm oatmeal, never white. Ink is warm near-black, never pure black.
+All tone is hatching: short feathered strokes laid along the form and
+crossed over one another in the darks, fine and dense enough to read as
+continuous shadow at arm's length and still be separate strokes close
+up. Nearly every surface carries some. Bare paper is kept for the
+brightest highlights only.
 
-ONE small building or one worked patch of ground, drawn from about thirty
-degrees above and thirty degrees to the left, standing on its own ground
-which runs to every edge of the page. Bold, simple, unmistakable silhouette:
-three or four shapes and no more, readable when the whole plate is printed
-seventeen millimetres across. Built by hand out of local material and kept in
-repair - a patched roof, a leaning post, a worn path to the door - never new,
-never ruined, never abandoned.
+Thin translucent watercolour is washed OVER the finished ink, so the
+hatching reads through the colour everywhere: it tints the drawing, it
+never fills it. The washes are uneven - a little darker where they pool
+against an edge, stopping short of the line as often as they cross it.
+Muted and desaturated throughout, warm ochre for thatch and timber, rust
+red for tile and brick, dusty grey-green for grass and crop, cold slate
+blue for stone, iron and water. Paper is warm aged oatmeal, never white.
+Ink is warm near-black, never pure black.
+
+ONE small building or one worked patch of ground, drawn from about
+thirty degrees above and thirty degrees to the left, standing on its own
+ground which runs to every edge of the page. The MASSING is simple and
+unmistakable - three or four shapes and no more, so the building is
+still itself when the whole plate prints seventeen millimetres across.
+That is a rule about the shapes, not about the drawing: the interior is
+hatched as finely as on any other plate. Built by hand out of local
+material and kept in repair - a patched roof, a leaning post, a worn
+path to the door - never new, never ruined, never abandoned.
 
 Nobody in it. No figures, no animals unless the brief names them as the
-subject. No sky, no horizon, no middle distance, no background scenery: the
-ground fills the page.
+subject. No sky, no horizon, no middle distance, no background scenery:
+the ground fills the page.
 
-Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading,
-no lens effects. No text, no letters, no numerals, no signage. No border
-rule, no vignette, no grid.
+Strictly no gradients, no glow, no drop shadows, no soft airbrushed
+shading, no lens effects. No text, no letters, no numerals, no signage.
+No border rule, no vignette, no grid.
 ```
 
 ## Words that get drawn literally
@@ -155,19 +167,24 @@ simile. Two that have already cost a plate here:
 ## Negative prompt — for all of them
 
 ```text
-coffee ring, cup ring, water ring, tea stain, circular stain, ring stain,
-watermark, blot, gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
-depth of field, neon, saturated colours, pure white background, pure black,
-photorealistic, 3d render, octane, unreal engine, digital painting, oil
-painting, concept art, anime, chibi, cute, cel shaded, isometric video game
-asset, sparkles, magic particles, watermark, signature, text, letters,
-numerals, signage, logo, UI, frame border, vignette, hex grid, square grid,
-ruled lines, horizon, sky, clouds, background scenery, distant mountains,
-people, figures, crowd, heroic, grimdark, ruined, apocalyptic, overgrown,
-abandoned, cutaway, floor plan, blueprint, elevation drawing, floating island,
-diorama, plinth, base slab, cut-out, isolated object on a plain background,
-white margin, empty border, caption, handwriting, manuscript text, book page,
-page border, plate number, framed illustration, mounted plate
+coffee ring, cup ring, water ring, tea stain, circular stain, ring
+stain, watermark, blot, gradient, glow, bloom, lens flare, drop shadow,
+soft shading, airbrush, blur, depth of field, neon, saturated colours,
+pure white background, pure black, photorealistic, 3d render, octane,
+unreal engine, digital painting, oil painting, concept art, anime, cel
+shaded, sparkles, signature, text, letters, logo, UI, frame border,
+woodcut, linocut, block print, flat vector, vector illustration, flat
+colour fill, solid colour block, thick uniform outline, heavy black
+outline, bold outline, infographic, diagram, icon, minimalist, clip art,
+screen print, poster art, comic, cartoon, colouring book, chibi, cute,
+isometric video game asset, magic particles, numerals, signage,
+vignette, hex grid, square grid, ruled lines, horizon, sky, clouds,
+background scenery, distant mountains, people, figures, crowd, heroic,
+grimdark, ruined, apocalyptic, overgrown, abandoned, cutaway, floor
+plan, blueprint, elevation drawing, floating island, diorama, plinth,
+base slab, cut-out, isolated object on a plain background, white margin,
+empty border, caption, handwriting, manuscript text, book page, page
+border, plate number, framed illustration, mounted plate
 ```
 
 ## The back — and why it has no brief

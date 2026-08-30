@@ -29,34 +29,44 @@ Paste this ahead of any image prompt. It is written to survive the compression t
 models apply to long prompts — the load-bearing terms are front-loaded.
 
 ```text
-Black ink line art on warm unbleached paper, in the style of a worn 1600s printed
-almanac: heavy uneven woodcut-style outlines, interior shading built only from
-hand-drawn hatching and cross-hatching, over-inked pooling where lines meet at
-sharp angles, bare paper for the lit surfaces.
+Fine pen-and-ink drawing on aged paper, finished by hand with thin
+watercolour washes: a plate from an illustrated book. Drawn with a nib -
+a fine, springy, varied line, only a little heavier round the outside of
+a form than within it, thinning and breaking where the light catches an
+edge. Never a thick uniform outline.
 
-Flat muted spot colour sits UNDER the black line like a mis-registered letterpress
-run — solid areas of colour with no blending. Restricted palette: warm ochre,
-rust red, dusty grey-green, cold slate blue. Paper is warm oatmeal, never white.
+All tone is hatching: short feathered strokes laid along the form and
+crossed over one another in the darks, fine and dense enough to read as
+continuous shadow at arm's length and still be separate strokes close
+up. Nearly every surface carries some. Bare paper is kept for the
+brightest highlights only.
+
+Thin translucent watercolour is washed OVER the finished ink, so the
+hatching reads through the colour everywhere: it tints the drawing, it
+never fills it. The washes are uneven - a little darker where they pool
+against an edge, stopping short of the line as often as they cross it.
+Muted and desaturated throughout, warm ochre, rust red, dusty
+grey-green, cold slate blue. Paper is warm aged oatmeal, never white.
 Ink is warm near-black, never pure black.
 
-Everything is hand-made from timber, hammered iron, fired clay, rough cloth and
-rope, with visible rivets, straps, stitching and lashings. Objects are worn from
-daily use and carefully repaired, not ruined or abandoned. Chunky exaggerated
-proportions with a bold readable silhouette.
-
-Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no
-lens effects, no neon. Single subject, centred, on a plain ground line.
+Strictly no gradients, no glow, no drop shadows, no soft airbrushed
+shading, no lens effects, no magic particles. No text, no letters, no
+border rule.
 ```
 
 ## Negative prompt
 
 ```text
-gradient, glow, bloom, lens flare, drop shadow, soft shading, airbrush, blur,
-depth of field, neon, saturated colours, pure white background, pure black,
-photorealistic, 3d render, octane, unreal engine, digital painting, oil painting,
-concept art, anime, chibi, cute, cel shaded, comic book colouring, sparkles,
-magic particles, glowing runes, watermark, signature, text, letters, logo, UI,
-frame border, multiple objects, cluttered scene, grimdark, ruined, apocalyptic
+coffee ring, cup ring, water ring, tea stain, circular stain, ring
+stain, watermark, blot, gradient, glow, bloom, lens flare, drop shadow,
+soft shading, airbrush, blur, depth of field, neon, saturated colours,
+pure white background, pure black, photorealistic, 3d render, octane,
+unreal engine, digital painting, oil painting, concept art, anime, cel
+shaded, sparkles, signature, text, letters, logo, UI, frame border,
+woodcut, linocut, block print, flat vector, vector illustration, flat
+colour fill, solid colour block, thick uniform outline, heavy black
+outline, bold outline, infographic, diagram, icon, minimalist, clip art,
+screen print, poster art, comic, cartoon, colouring book
 ```
 
 `text, letters, logo` is in there deliberately. All type is set separately on the ink
@@ -247,10 +257,18 @@ platform terms-of-service violation.
 **Instead, name the technique.** Every one of these is public-domain, centuries old, and
 gets you closer to what we actually want:
 
-> woodcut · wood engraving · letterpress · linocut · scraperboard · heraldic hatching ·
-> Petra Sancta · Dürer · Bewick · chiaroscuro woodcut · broadside · chapbook · almanac ·
-> hornbook · trade catalogue engraving · botanical plate · patent drawing · risograph ·
-> spot colour · mis-registration
+> pen and ink · nib line · hatching · cross-hatching · feathered stroke · hand-tinted ·
+> watercolour wash · translucent wash · steel engraving · wood engraving · botanical
+> plate · natural-history plate · trade catalogue engraving · patent drawing · foxing ·
+> laid paper · plate from an illustrated book
+
+**The relief-print words are not on that list, and that is deliberate.** `woodcut`,
+`linocut`, `block print`, `chiaroscuro woodcut`, `broadside`, `chapbook` and `almanac`
+were on it, and they are why the style drifted: a model told "woodcut" draws a bold
+block print with flat colour, which is not a single accepted plate in
+[`renders/`](renders/). They are in the negative prompt now. `wood engraving` survives
+because it is the fine white-line technique and is genuinely close; `woodcut` is its
+coarse relation and is not.
 
 ---
 

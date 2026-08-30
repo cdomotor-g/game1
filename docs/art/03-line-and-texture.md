@@ -2,7 +2,25 @@
 
 How the ink plate is actually drawn. Everything here happens in one colour, `#1A1714`.
 
-## Silhouette first
+## What this document is scoped to
+
+**The pieces.** Everything about *silhouette, exaggerated proportion and line weight*
+below is written for something printed at 15–18 mm — a commodity chit, a token, a board
+mark, a building tile — where interior detail really is noise and the shape has to do all
+the work.
+
+**It is not the drawn plates.** The pictures in the card windows
+(`docs/art/renders/*.png`) are held in the hand at 60–90 mm, are drawn with a fine nib
+rather than a heavy contour, and are naturalistically proportioned. Applying the squint
+test to a character portrait is how the briefs ended up asking for a flat woodcut and
+getting one; see
+[08 — Two registers](08-influences-and-distance.md#two-registers-and-which-one-you-are-working-in).
+The plates' register is declared in [`../../data/artstyle.json`](../../data/artstyle.json).
+
+**Hatching, material vocabulary, wear and grime, below, apply to both.** Those four are
+the house hand, and they are why a token and a plate look like the same world.
+
+## Silhouette first — for the pieces
 
 A commodity chit is about 18mm across. A worker meeple is 15mm tall. Most art in this game
 is read at a size where interior detail is noise.
@@ -21,11 +39,14 @@ that identifies the object and shrink everything else:
 - A loom is all frame and no cloth.
 
 This exaggeration is the single biggest driver of the "chunky fantasy object" register the
-brief asked for, and it costs nothing at print size.
+brief asked for, and it costs nothing at print size — **on a piece**. On a drawn plate it
+costs the whole thing: a character exaggerated this way stops being a person.
 
-## Line weights
+## Line weights — for the pieces
 
-Four weights, at final print size. Do not invent a fifth.
+Four weights, at final print size. Do not invent a fifth. A drawn plate is not built this
+way: its line is a nib line, varying continuously, only a little heavier round the outside
+of a form than within it.
 
 | Weight | Size | Used for |
 |---|---|---|

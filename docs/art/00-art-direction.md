@@ -140,7 +140,10 @@ not want to be:
 - **Not gradients.** Volume comes from hatching. No airbrush, no glow, no drop shadow.
 - **Not photorealistic, and not painterly.** It is printed line art. If it looks like an
   oil painting or a render, it has left the conceit.
-- **Not cartoon-cute.** Chunky and exaggerated, yes. Rounded, big-eyed and friendly, no.
+- **Not cartoon-cute.** Chunky and exaggerated on the small pieces, yes — see
+  [08](08-influences-and-distance.md#two-registers-and-which-one-you-are-working-in),
+  which is a rule about tokens and tiles and not about the drawn plates. Rounded,
+  big-eyed and friendly, no.
 - **Not grimdark.** See tone, above.
 - **Not busy.** A commodity chit is 18mm across. Silhouette first, detail second, and
   detail only if it survives at 18mm.
