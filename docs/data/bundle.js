@@ -18227,6 +18227,21 @@ window.GAME_DATA = {
           0.84
         ]
       },
+      "tile-alchemist": {
+        "file": "art/renders/tile-alchemist.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          0.866
+        ],
+        "focal": [
+          0.72,
+          0.5
+        ]
+      },
       "tile-apiary": {
         "file": "art/renders/tile-apiary.png",
         "width": 1254,
@@ -18422,6 +18437,21 @@ window.GAME_DATA = {
           0.36
         ]
       },
+      "tile-harbour": {
+        "file": "art/renders/tile-harbour.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.39,
+          0.36
+        ]
+      },
       "tile-hut": {
         "file": "art/renders/tile-hut.png",
         "width": 1254,
@@ -18512,6 +18542,21 @@ window.GAME_DATA = {
           0.45
         ]
       },
+      "tile-palisade": {
+        "file": "art/renders/tile-palisade.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.134,
+          0,
+          0.866,
+          1
+        ],
+        "focal": [
+          0.74,
+          0.55
+        ]
+      },
       "tile-pasture": {
         "file": "art/renders/tile-pasture.png",
         "width": 1536,
@@ -18542,6 +18587,21 @@ window.GAME_DATA = {
           0.45
         ]
       },
+      "tile-rail-depot": {
+        "file": "art/renders/tile-rail-depot.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.84,
+          0.18
+        ]
+      },
       "tile-sand-pit": {
         "file": "art/renders/tile-sand-pit.png",
         "width": 1536,
@@ -18570,6 +18630,21 @@ window.GAME_DATA = {
         "focal": [
           0.5,
           0.4
+        ]
+      },
+      "tile-shrine": {
+        "file": "art/renders/tile-shrine.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.134,
+          0,
+          0.866,
+          1
+        ],
+        "focal": [
+          0.51,
+          0.45
         ]
       },
       "tile-smelter": {
