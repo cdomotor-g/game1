@@ -14479,7 +14479,28 @@ window.GAME_DATA = {
           "frame border with figures"
         ]
       }
-    ]
+    ],
+    "exemplars": {
+      "$comment": "The accepted plates an artist is pointed at, declared once. tools/build-styleref.mjs draws them into docs/art/style-reference.png - ONE small sheet, served by GitHub Pages, because the four-megabyte originals are not reachable through a GitHub connector and are a poor thing to fetch over a URL. The written style is what a plate is drawn FROM; this sheet is what it is checked against, and an artist that cannot see it draws anyway.",
+      "sheet": "docs/art/style-reference.png",
+      "plates": [
+        {
+          "plate": "character-chr-01",
+          "title": "CHR-01 — the line and the wash",
+          "note": "Look at the cloak. The colour is a thin translucent wash and the hatching reads straight through it - it tints the drawing, it never fills it. No shape on this page is outlined in a heavy even line. Proportions are a person's, not exaggerated."
+        },
+        {
+          "plate": "modification-spinnaker",
+          "title": "MOD-01 — an object study",
+          "note": "The same hand on made things, and the register MOD-02 is drawn in. Every surface carries hatching; bare paper is only the brightest highlights. The reds and blues are muted and uneven, pooling darker at the edges."
+        },
+        {
+          "plate": "monster-cinder-wolf",
+          "title": "MON-01 — the tone, on a monster",
+          "note": "A dangerous animal, drawn as a naturalist draws one: padding across burnt grass, doing what it ordinarily does. Coals between the ribs and a dropped shepherd's crook carry the threat. No snarl, no glowing eyes, no blood-red sky, no ruined castle. This is the tone for every plate in the game."
+        }
+      ]
+    }
   },
   "playerboard": {
     "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, four numbered tracks up the middle for the figure, and a narrow fifth against every kit slot for the thing lying in it.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the columns left over got wider.\n\nThen the fifth went the same way, for the opposite reason. DEFENCE was a rating a token barely ever moved, and when a battle became one opposed total (rules.json conflict.battle) there was nothing left for it to do that armour on a card was not already doing. Four columns up the middle now, at 15.6 mm apiece against the 13.6 that five of them managed - and what the paper bought is the thing the board never had room for: a WEAR ladder against every one of the four kit slots, so the axe, the sword and the lantern are each counted down beside their own card. The middle of the board is about the figure; the edge of it is about what the figure is carrying.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",

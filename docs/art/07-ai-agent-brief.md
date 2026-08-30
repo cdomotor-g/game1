@@ -23,6 +23,25 @@ The other documents in this folder explain the reasoning. This one is operationa
 
 ---
 
+## What it looks like
+
+The written preamble below is the rule. This is the same thing as a picture —
+three accepted plates, with captions saying what to look at:
+
+**<https://cdomotor-g.github.io/game1/art/style-reference.png>**
+
+Use the URL. A GitHub connector reads text and will not hand an agent the bytes of
+a PNG, which is what stopped a run: the artist could read every word of the brief
+and see none of the plates, and correctly refused to guess. It is one sheet of
+about 1.7 MB — `docs/art/style-reference.png`, built by
+[`tools/build-styleref.mjs`](../../tools/build-styleref.mjs) from the exemplars in
+[`../../data/artstyle.json`](../../data/artstyle.json), published with the rest of
+`docs/`.
+
+**If you cannot see it, draw anyway.** Say that you could not, and work from the
+preamble. The words are what a plate is drawn from; the sheet is what it is
+checked against.
+
 ## Prompt preamble
 
 Paste this ahead of any image prompt. It is written to survive the compression that image

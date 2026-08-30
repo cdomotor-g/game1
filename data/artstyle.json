@@ -402,5 +402,26 @@
         "frame border with figures"
       ]
     }
-  ]
+  ],
+  "exemplars": {
+    "$comment": "The accepted plates an artist is pointed at, declared once. tools/build-styleref.mjs draws them into docs/art/style-reference.png - ONE small sheet, served by GitHub Pages, because the four-megabyte originals are not reachable through a GitHub connector and are a poor thing to fetch over a URL. The written style is what a plate is drawn FROM; this sheet is what it is checked against, and an artist that cannot see it draws anyway.",
+    "sheet": "docs/art/style-reference.png",
+    "plates": [
+      {
+        "plate": "character-chr-01",
+        "title": "CHR-01 — the line and the wash",
+        "note": "Look at the cloak. The colour is a thin translucent wash and the hatching reads straight through it - it tints the drawing, it never fills it. No shape on this page is outlined in a heavy even line. Proportions are a person's, not exaggerated."
+      },
+      {
+        "plate": "modification-spinnaker",
+        "title": "MOD-01 — an object study",
+        "note": "The same hand on made things, and the register MOD-02 is drawn in. Every surface carries hatching; bare paper is only the brightest highlights. The reds and blues are muted and uneven, pooling darker at the edges."
+      },
+      {
+        "plate": "monster-cinder-wolf",
+        "title": "MON-01 — the tone, on a monster",
+        "note": "A dangerous animal, drawn as a naturalist draws one: padding across burnt grass, doing what it ordinarily does. Coals between the ribs and a dropped shepherd's crook carry the threat. No snarl, no glowing eyes, no blood-red sky, no ruined castle. This is the tone for every plate in the game."
+      }
+    ]
+  }
 }

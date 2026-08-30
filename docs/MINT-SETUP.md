@@ -156,10 +156,16 @@ ground. Even a monster is a naturalist's plate of an animal at a wary distance
 doing what it ordinarily does - not a horror poster. No glowing eyes, no bared
 fangs, no blood-red sky, no ruined castle on the skyline, no dead trees.
 
-LOOK AT THESE BEFORE YOU DRAW, in that same repository. They are the target, and
-they matter more than anything I can write here:
-docs/art/renders/character-chr-01.png
-docs/art/renders/modification-spinnaker.png
+THE REFERENCE SHEET. Three accepted plates with captions saying what to look at:
+
+  https://cdomotor-g.github.io/game1/art/style-reference.png
+
+Fetch it over that URL, not through the GitHub file interface - a GitHub
+connector will not hand you image bytes, only text. If you still cannot SEE it,
+do not stop and do not guess: say so plainly, ask me to paste it into the chat,
+and draw from the written preamble in the meantime. The words are what a plate is
+drawn FROM; the sheet is what it is checked AGAINST. A missing reference is never
+a reason to hold up a run.
 
 Two rules I will reject a plate for:
 

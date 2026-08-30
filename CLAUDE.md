@@ -74,6 +74,14 @@ and both prompt blocks in `docs/art/07-ai-agent-brief.md`, are written from it b
 `node tools/build-prompts.mjs`, and `--check` fails when a copy has drifted.
 Never hand-edit one of those blocks; change `artstyle.json` and run the tool.
 
+**The artist cannot see a plate, so there is one sheet that it can.** A GitHub
+connector hands an agent text and never the bytes of a PNG — pointed at
+`character-chr-01.png` it stopped and said so, which was right and still a stalled
+run. `tools/build-styleref.mjs` draws the exemplars named in `artstyle.json` onto
+`docs/art/style-reference.png`, which Pages publishes at a stable URL small enough
+to fetch or paste. **A missing reference is never a reason to hold up a run:** the
+briefs say to draw from the words and report that the sheet could not be seen.
+
 **A brief says whether it is still waiting, and it is not typed.** Under every
 `## <plate-id>` heading is a one-line marker — `WAITING — THIS ONE IS YOURS` or
 `ALREADY DRAWN — DO NOT DRAW THIS` — written by `build-prompts.mjs` from whether
@@ -546,6 +554,7 @@ below is for when `data/` has moved.
 ```bash
 node tools/validate-data.mjs   # referential integrity and design smells
 node tools/build-prompts.mjs   # write data/artstyle.json into every brief
+node tools/build-styleref.mjs  # redraw docs/art/style-reference.png - the artist's one picture
 node tools/draw-map.mjs <id>   # generated maps: regrow the board and redraw the plate
 node tools/validate-map.mjs    # boards against terrain.json and against themselves
 node tools/build-map.mjs       # map proof sheets, and the derived print sizes
