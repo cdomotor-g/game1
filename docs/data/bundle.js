@@ -18332,6 +18332,81 @@ window.GAME_DATA = {
           0.52
         ]
       },
+      "tile-crop-cotton": {
+        "file": "art/renders/tile-crop-cotton.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.145,
+          0,
+          0.855,
+          1
+        ],
+        "focal": [
+          0.83,
+          0.64
+        ]
+      },
+      "tile-crop-flax": {
+        "file": "art/renders/tile-crop-flax.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0895,
+          0,
+          0.8405,
+          1
+        ],
+        "focal": [
+          0.5,
+          0.48
+        ]
+      },
+      "tile-crop-grain": {
+        "file": "art/renders/tile-crop-grain.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focal": [
+          0.12,
+          0.45
+        ]
+      },
+      "tile-crop-hops": {
+        "file": "art/renders/tile-crop-hops.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0895,
+          0,
+          0.8405,
+          1
+        ],
+        "focal": [
+          0.71,
+          0.45
+        ]
+      },
+      "tile-crop-vegetables": {
+        "file": "art/renders/tile-crop-vegetables.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0895,
+          0,
+          0.8405,
+          1
+        ],
+        "focal": [
+          0.33,
+          0.45
+        ]
+      },
       "tile-dock": {
         "file": "art/renders/tile-dock.png",
         "width": 1254,
