@@ -943,6 +943,36 @@ table(
   ])
 );
 
+/* The stages in full, because a campaign card does not print them. It carries the
+   stage NAMES, the order and what the whole thing pays - three tasks and three
+   rewards ran to twenty-two lines and left that deck's window a negative number
+   of units tall. This is the other half, and it is where a player reads what
+   they actually have to do. */
+const paid = (r) => [
+  r?.coin ? `${r.coin}${rules.currency.symbol}` : null,
+  r?.vp ? `${r.vp} VP` : null,
+  r?.mana ? `${r.mana.qty} ${r.mana.element} mana` : null,
+  ...(r?.items ?? []).map((id) => items.items.find((i) => i.id === id)?.name ?? id),
+  r?.note,
+].filter(Boolean).join(' · ');
+
+const staged = quests.quests.filter((q) => q.stages?.length);
+if (staged.length) {
+  say('### The campaigns, stage by stage');
+  say();
+  say('A campaign is one card and prints its stage names, their order and what the whole');
+  say('thing pays. The tasks are here. Stages are taken in order.');
+  say();
+  table(
+    ['Code', 'Quest', '#', 'Stage', 'Task', 'Pays'],
+    staged.flatMap((q) => q.stages.map((st, i) => [
+      i === 0 ? q.cardCode : '', i === 0 ? q.name : '', i + 1, st.name, st.task, paid(st.reward),
+    ]))
+  );
+  for (const q of staged.filter((x) => x.notes)) say(`**${q.name}.** ${q.notes}`);
+  say();
+}
+
 /* ------------------------------------------------------ elements and arcana */
 say('## The elements');
 say();
@@ -990,12 +1020,41 @@ table(
 /* -------------------------------------------------------------------- events */
 say('## Event deck');
 say();
+say('What each card DOES is the `text` on each of its effects, in order - the sentence');
+say('the card prints beside the picture, and the one the explorer shows. It sits next to');
+say('a machine-readable effect the digital game runs, and `tools/validate-data.mjs` fails');
+say('the build if an effect ever loses its sentence.');
+say();
+const effectSaid = (fx) => (fx.type === 'choice' && fx.branches?.length
+  ? fx.branches.map((b) => `**${b.label}:** ${(b.effects ?? []).map((f) => f.text).filter(Boolean).join(' ') || 'nothing happens.'}`)
+  : (fx.text ? [fx.text] : []));
 table(
-  ['Card', 'Category', 'Scope', 'Copies'],
-  events.cards.map((c) => [c.name, c.category, c.scope, c.copies])
+  ['Code', 'Card', 'Category', 'Scope', 'Copies', 'What happens'],
+  events.cards.map((c) => [
+    c.cardCode, c.name, c.category, c.scope, c.copies,
+    (c.effects ?? []).flatMap(effectSaid).join(' '),
+  ])
 );
 say(`${events.deck.totalCards} cards. ${events.deck.when}`);
 say();
+
+/* The mitigations, in the book, because they are not on the card. A deck shares
+   one window and the wordiest card sets it: with these on the face, the Letter
+   of Marque drove the whole deck's picture to an aspect of 3.08 against a floor
+   of 2.0 (components.json window.floorAspect). They are a real rule and this is
+   where a table looks one up. */
+say('### What could have prevented it');
+say();
+say('These are not printed on the cards. A deck shares one picture window and the');
+say('wordiest card in it sets that window for every other card, so the mitigations come');
+say('off the face and live here and in the explorer instead - which is where somebody');
+say('looks up whether a brick house saved them anyway. The deck is built so that every');
+say('disaster has at least one of these that a player could have bought in advance.');
+say();
+table(
+  ['Code', 'Card', 'Mitigations'],
+  events.cards.filter((c) => c.mitigations?.length).map((c) => [c.cardCode, c.name, c.mitigations.join(' ')])
+);
 
 const out = lines.join('\n');
 if (checkOnly) {

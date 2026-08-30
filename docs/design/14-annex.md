@@ -1061,6 +1061,23 @@ their four kit slots, and that is a thing they can change.
 | QST-07 | The Ironspine Road | campaign | 4 | 3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel |
 | QST-08 | The Drowned Bell of Taleowick | campaign | 5 | 3 stages: The Tale at the Inn → The Sounding → What Rings It |
 
+### The campaigns, stage by stage
+
+A campaign is one card and prints its stage names, their order and what the whole
+thing pays. The tasks are here. Stages are taken in order.
+
+| Code | Quest | # | Stage | Task | Pays |
+| --- | --- | --- | --- | --- | --- |
+| QST-07 | The Ironspine Road | 1 | Survey the Pass | End a leg on 2 different mountain hexes between Vossgard and Port Malchior and succeed at a survey on each. | The Seat's cartographers share their notes: Plan Route costs you no effort, all game. |
+|  |  | 2 | Prove the Road | Escort a caravan (yours or a hired one) from Vossgard to Port Malchior without losing any cargo to any event, bandit or monster. | 100¤ |
+|  |  | 3 | The Thing in the Tunnel | The old bore under the pass is not empty. Enter with light and resolve a Forge Wight encounter - slay it, befriend it, or enslave it. | 2 VP · And the pass is yours by use and custom: rail you lay on mountain hexes costs half build-points, all game. |
+| QST-08 | The Drowned Bell of Taleowick | 1 | The Tale at the Inn | Rest a round at Taleowick and pay 10 coin for the whole story. | The sexton's map of the old channel: your ships and barges treat the four Splinter Isles hexes as home water - no discovery rolls there. |
+|  |  | 2 | The Sounding | End a ship or barge leg on 3 different shallow-water hexes within 2 hexes of Taleowick. Each triggers its discovery roll as normal; survive whatever answers. | The bell-clapper, hauled up in a net: counts as 1 gold, but keep it - it is the campaign's key. |
+|  |  | 3 | What Rings It | The Deepwater Maw has been using the bell as a lure. It rises against the ship carrying the clapper: fight and slay it. Strength 5, health 12, and it strikes first unless a character aboard has water mana stored. | 3 VP · 4 water mana · Crystal Phylactery · The phylactery is found inside the bell, which the village lets you keep the story of. |
+
+**The Ironspine Road.** Stages in order. Abandoning this campaign discards it for every player - the pass stays shut.
+**The Drowned Bell of Taleowick.** Stages in order. If the Maw is slain by anyone else first, stage 3 completes at the Maw's hex with the clapper aboard - the bell falls silent either way.
+
 ## The elements
 
 Four elements, four marks. The mark is data - one path per element in
@@ -1128,58 +1145,104 @@ shipwright and a hedge-witch are competing for the same hull.
 
 ## Event deck
 
-| Card | Category | Scope | Copies |
-| --- | --- | --- | --- |
-| Hard Frost | weather | global | 3 |
-| Drought | weather | local | 2 |
-| Long Summer | weather | global | 2 |
-| Storms at Sea | weather | global | 2 |
-| Flood | disaster | local | 2 |
-| Earthquake | disaster | local | 1 |
-| Wildfire | disaster | local | 2 |
-| Mine Collapse | disaster | targeted | 2 |
-| Warehouse Heist | crime | targeted | 3 |
-| Caravan Robbery | crime | targeted | 2 |
-| Train Heist | crime | targeted | 1 |
-| Piracy | crime | global | 1 |
-| Smuggling Ring | crime | offer | 2 |
-| Wolf Pack | wildlife | local | 2 |
-| Boar in the Fields | wildlife | local | 2 |
-| Dragon Sighting | wildlife | global | 1 |
-| Raiders | conflict | targeted | 3 |
-| Border Dispute | conflict | global | 2 |
-| Mercenaries for Hire | conflict | offer | 2 |
-| Plague | social | local | 1 |
-| Migrants | social | offer | 3 |
-| Strike | social | targeted | 2 |
-| Festival | social | global | 2 |
-| Travelling Master | social | offer | 2 |
-| Iron Shortage | market | global | 2 |
-| Glut | market | global | 2 |
-| Foreign Demand | market | global | 3 |
-| Tax Levy | market | global | 2 |
-| Ley Surge | arcane | global | 1 |
-| Curdled Brew | arcane | targeted | 1 |
-| Wandering Wizard | arcane | offer | 2 |
-| Camp Fever | social | targeted | 2 |
-| Marsh Ague | social | local | 2 |
-| The Grey Pox | social | global | 1 |
-| Impure Smelt | industry | global | 2 |
-| Blood Moon | arcane | global | 1 |
-| The Quiet Season | wildlife | global | 1 |
-| Black Sails on the Horizon | crime | global | 2 |
-| Letter of Marque | crime | offer | 1 |
-| Press Gang | crime | targeted | 2 |
-| The Dragon's Tithe | conflict | global | 1 |
-| The Aerial Post | industry | offer | 1 |
-| Gale | weather | global | 2 |
-| Early Thaw | weather | global | 2 |
-| Clipped Coin | market | global | 2 |
-| Guild Embargo | market | targeted | 2 |
-| New Tolls | social | local | 2 |
-| The Sign of the Green Man | social | offer | 2 |
-| The Mead Run | market | offer | 2 |
-| Ley Drought | arcane | global | 2 |
-| Boom Town | market | local | 2 |
+What each card DOES is the `text` on each of its effects, in order - the sentence
+the card prints beside the picture, and the one the explorer shows. It sits next to
+a machine-readable effect the digital game runs, and `tools/validate-data.mjs` fails
+the build if an effect ever loses its sentence.
+
+| Code | Card | Category | Scope | Copies | What happens |
+| --- | --- | --- | --- | --- | --- |
+| EVT-01 | Hard Frost | weather | global | 3 | Every growing crop stalls: nothing advances for one round. Every worker on tundra, mountain or hills produces 1 less effort. |
+| EVT-02 | Drought | weather | local | 2 | Every crop in the region yields half when it is harvested. Every town in the region loses 2 water. |
+| EVT-03 | Long Summer | weather | global | 2 | Every growing crop advances one step, free. Every worker produces 1 more effort. |
+| EVT-04 | Storms at Sea | weather | global | 2 | No ship or barge moves for one round. Every ship at sea loses half the cargo tokens aboard it. |
+| EVT-05 | Flood | disaster | local | 2 | Every crop growing on a farm in the region is destroyed. Every building on a river hex in the region stops for one round. Silt: a small consolation. |
+| EVT-06 | Earthquake | disaster | local | 1 | Halve the build track - the building stops until it is repaired. Nothing crosses a mountain hex for two rounds. |
+| EVT-07 | Wildfire | disaster | local | 2 | Roll a d6 for every timber building in the region: on 4 or more it burns down. Every town in the region loses 4 logs. |
+| EVT-08 | Mine Collapse | disaster | targeted | 2 | One of your mines stops for two rounds while the gallery is dug out. One worker is lost. |
+| EVT-09 | Warehouse Heist | crime | targeted | 3 | Lose half the contents of one warehouse, owner's choice of which items. |
+| EVT-10 | Caravan Robbery | crime | targeted | 2 | The highest-value cargo token in transit by road is taken. |
+| EVT-11 | Train Heist | crime | targeted | 1 | Three quarters of the cargo tokens on that train are taken, highest value first. That line carries nothing for one round. |
+| EVT-12 | Piracy | crime | global | 1 | Every player loses half the cargo tokens they have afloat, highest value first. |
+| EVT-13 | Smuggling Ring | crime | offer | 2 | **Deal:** Sell up to 6 bulk at 150% of base value. Gain 1 unrest. **Decline:** nothing happens. |
+| EVT-14 | Wolf Pack | wildlife | local | 2 | Every pasture in the region loses 2 sheep. A wolf pack, strength 2, is placed in the region and stays until it is killed. |
+| EVT-15 | Boar in the Fields | wildlife | local | 2 | One crop on one farm in the region is destroyed. **Hunt it:** Gain 3 meat. Spend 3 effort. **Let it be:** nothing happens. |
+| EVT-16 | Dragon Sighting | wildlife | global | 1 | Nothing crosses a mountain hex for two rounds. A dragon, strength 8, settles on a random mountain hex and stays there. Panic buying of portable wealth. |
+| EVT-17 | Raiders | conflict | targeted | 3 | Raiders, strength 3, attack one of the leader's towns. If the defence fails, that town loses a quarter of everything in it. |
+| EVT-18 | Border Dispute | conflict | global | 2 | **Concede:** Lose a tenth of the stock in one of your towns. **Contest:** Both players roll 2 combat dice. The loser gives the winner one tile's worth of infrastructure. |
+| EVT-19 | Mercenaries for Hire | conflict | offer | 2 | **Hire (50 coin):** Two soldiers join you for three rounds, then they leave. **Pass:** nothing happens. |
+| EVT-20 | Plague | social | local | 1 | Every town in the region loses a quarter of its workers. Workers in the region roll one die step lower for two rounds. |
+| EVT-21 | Migrants | social | offer | 3 | **Take them in:** Two workers join a town of yours that has housing and 4 food to spare. **Turn them away:** Gain 1 unrest. |
+| EVT-22 | Strike | social | targeted | 2 | Any town of yours with 1 or more unrest produces half its effort for one round. |
+| EVT-23 | Festival | social | global | 2 | Drink goes up two bands. Luxuries go up one band. Every town that can serve a drink loses 1 unrest. |
+| EVT-24 | Travelling Master | social | offer | 2 | **Apprentice (30 coin):** Train one specialist without a guildhall. **Pass:** nothing happens. |
+| EVT-25 | Iron Shortage | market | global | 2 | Metal goes up two bands for three rounds. |
+| EVT-26 | Glut | market | global | 2 | Food falls two bands for two rounds. |
+| EVT-27 | Foreign Demand | market | global | 3 | Roll for a commodity family: it goes up two bands for two rounds. |
+| EVT-28 | Tax Levy | market | global | 2 | Pay 3 coin per completed building. If you cannot pay, gain 1 unrest per unpaid building. |
+| EVT-29 | Ley Surge | arcane | global | 1 | Every town with an alchemist gains 1 mana crystal. Every worker rolls one die step higher for one round. |
+| EVT-30 | Curdled Brew | arcane | targeted | 1 | One of your towns loses every arcane herb in it. One alembic of yours is broken and comes off the board. |
+| EVT-31 | Wandering Wizard | arcane | offer | 2 | **Trade a mana crystal:** Take any 2 potions from items.json for free. **Pass:** nothing happens. |
+| EVT-32 | Camp Fever | social | targeted | 2 | Every figure and character in one of your travelling parties takes 2 damage. That party moves half as far for one round. |
+| EVT-33 | Marsh Ague | social | local | 2 | Workers in the region roll one die step lower for two rounds. Every town on or beside a marsh loses one worker. |
+| EVT-34 | The Grey Pox | social | global | 1 | Every town with 4 or more workers loses one. Every worker rolls one die step lower for one round. |
+| EVT-35 | Impure Smelt | industry | global | 2 | Every tool used this round takes double wear. Any tool forged this round is marked brittle: it breaks when its durability track reaches half, not zero. |
+| EVT-36 | Blood Moon | arcane | global | 1 | Monster bands on every discovery table widen by 3 for two rounds. |
+| EVT-37 | The Quiet Season | wildlife | global | 1 | Monster bands on every discovery table shrink by 2 for two rounds. |
+| EVT-38 | Black Sails on the Horizon | crime | global | 2 | Every player with cargo at sea loses one cargo token - highest value first. Anything that has to come by sea gets dearer. |
+| EVT-39 | Letter of Marque | crime | offer | 1 | Take it: for the next 3 rounds your ships may take one cargo token per round from any other player's ship in an adjacent water hex, and keep it. Every other player gains 1 unrest in every coastal town of yours they can reach, and your ships pay double harbour fees for the rest of the game. |
+| EVT-40 | Press Gang | crime | targeted | 2 | Two workers are gone. They may come back - see the mitigation. That town gains 1 unrest. |
+| EVT-41 | The Dragon's Tithe | conflict | global | 1 | Every player hands over 1 gold, 1 gems or 2 jewellery, their choice, from any one town. A player with none of those loses their highest-value commodity stack instead. Any player who refuses places Vhalrik on their richest town. He attacks it at the start of the next round. |
+| EVT-42 | The Aerial Post | industry | offer | 1 | Take it if you own an airship: 40 coin now, and 15 coin at the end of every round in which that airship ends its leg at a different settlement from the one it started at. Miss two rounds running and the contract is cancelled. |
+| EVT-43 | Gale | weather | global | 2 | Nothing flies. An airship in the air when this is drawn marks 2 damage and comes down on the nearest land hex. Ships and barges move half as far for one round. Roll a d6 for every timber building on the board: on a 6 it takes 1 damage. |
+| EVT-44 | Early Thaw | weather | global | 2 | The winter rule in travel.json lifts. Any sled standing on marsh or water is lost with its cargo. Every growing crop advances one step, free. The fens are impassable to everything. |
+| EVT-45 | Clipped Coin | market | global | 2 | Every price band shifts up one step. Prices are higher; the coin in your hand is not. Every town with a market gains 1 unrest. |
+| EVT-46 | Guild Embargo | market | targeted | 2 | Pick the commodity family you sell most of: you sell it at two bands worse for 3 rounds. Everyone else sells it at one band better. |
+| EVT-47 | New Tolls | social | local | 2 | 5 coin per cargo token entering or leaving the region by road, for 3 rounds. Pay, or go round. |
+| EVT-48 | The Sign of the Green Man | social | offer | 2 | Buy it for 70 coin: place an inn, free of build cost and build time, on any road or route tile you have travelled, inside or outside a town. It is yours, it earns like any inn, and other players may use it at your price. |
+| EVT-49 | The Mead Run | market | offer | 2 | Sell any quantity of mead or ale this round at double the current band, to the board, from any town connected to a route - no market building needed. Afterwards the cellars are full and the price falls a band. |
+| EVT-50 | Ley Drought | arcane | global | 2 | Every town loses 1 mana crystal. Every spell costs 1 extra mana for 2 rounds, and mana veins yield nothing. |
+| EVT-51 | Boom Town | market | local | 2 | The largest town in the region gains 2 workers. Food and drink in that region jump two bands. Everyone has to eat and nobody planted anything. Every town in the region gains 1 unrest. |
 
 94 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.
+
+### What could have prevented it
+
+These are not printed on the cards. A deck shares one picture window and the
+wordiest card in it sets that window for every other card, so the mitigations come
+off the face and live here and in the explorer instead - which is where somebody
+looks up whether a brick house saved them anyway. The deck is built so that every
+disaster has at least one of these that a player could have bought in advance.
+
+| Code | Card | Mitigations |
+| --- | --- | --- |
+| EVT-01 | Hard Frost | Workers living in a brick house or manor are unaffected. A town with 2+ fuel in stock ignores the effort penalty. |
+| EVT-02 | Drought | A town with a well loses no water. Towns on a marsh tile, or waterside on a river or a lake - anywhere with fresh water - are unaffected. |
+| EVT-04 | Storms at Sea | Cargo in a harbour tile is safe. |
+| EVT-07 | Wildfire | A town with a well or on a water-access tile rolls at 5+ instead. |
+| EVT-08 | Mine Collapse | A dwarf player halts for 1 round and loses no worker. |
+| EVT-09 | Warehouse Heist | A watchtower in that town cancels this card once per game. Soldiers garrisoned in the town halve the loss. |
+| EVT-10 | Caravan Robbery | An escorting soldier rolls a combat die; on 4+ the robbery fails. |
+| EVT-14 | Wolf Pack | Any soldier or hero in the region may fight the pack instead of losing animals. |
+| EVT-17 | Raiders | Palisade grants +1 defence die. Garrisoned soldiers defend automatically. |
+| EVT-20 | Plague | A town holding a Healing Draught spends it to ignore this card entirely. |
+| EVT-22 | Strike | Serve ale or wine at an inn to end the strike immediately. |
+| EVT-32 | Camp Fever | A healer character in the party shrugs it off: no damage, full speed. Spend a Healing Draught or Physic Tonic to cancel the card. |
+| EVT-33 | Marsh Ague | A town with an infirmary and a fed healer loses no worker. A Physic Tonic cancels the card for one town. |
+| EVT-34 | The Grey Pox | A town with an infirmary and a fed healer loses no worker. A Healing Draught spent by a town cancels its loss. This is the card that makes the infirmary worth its parchment. |
+| EVT-35 | Impure Smelt | A smelter or blacksmith burning coal this round is unaffected - coal runs hot enough to burn the impurities out. Peat and charcoal do not. A smith specialist may spend 2 hours re-tempering to clear one brittle mark. |
+| EVT-36 | Blood Moon | A party carrying a lit lantern is never surprised: it may always choose to withdraw before a monster encounter begins. |
+| EVT-38 | Black Sails on the Horizon | A ship with a Warded Hold or an escort of 2+ soldiers keeps its cargo. A player whose shore hex is patrolled by a befriended Reef Serpent is not touched. Cargo sitting in a harbour is safe - it just is not moving. |
+| EVT-39 | Letter of Marque | Passing costs nothing. The card goes round in turn order and is discarded if nobody takes it. A victim may buy the letter back from the holder at any agreed price; the licence is a piece of paper, and paper is tradeable. |
+| EVT-40 | Press Gang | A town with a palisade or a garrison of 1+ soldiers loses nobody. A town with an inn loses one worker instead of two: the innkeeper hides the regulars in the cellar. Roll d6 at the end of each following round; on a 6 the pressed workers walk home. |
+| EVT-41 | The Dragon's Tithe | A player who has befriended Vhalrik pays nothing and may not be attacked by him. Paying is always allowed and always ends it. That is the lesson. |
+| EVT-42 | The Aerial Post | Only a player with an airship may take it. If nobody has one it is discarded, and shuffled back in ten rounds later. Cancelling costs nothing but the contract. |
+| EVT-43 | Gale | An airship moored at a settlement takes no damage. A ship in harbour is unaffected. A sweep-rigged airship marks 1 damage instead of 2 - the crew can at least steer the descent. |
+| EVT-44 | Early Thaw | A sled on solid ground is fine - it just becomes a box on runners until the next frost. A player who moved every sled to a settlement last round loses nothing. |
+| EVT-45 | Clipped Coin | A player holding gold, gems or jewellery instead of coin loses nothing to this - metal does not care what the mint says. A trading house sets its own scales: its owner ignores the band shift for one sale. |
+| EVT-46 | Guild Embargo | A player with a merchant or a trading house may pay the guild off: 60 coin, and the card is discarded. Selling to another player instead of to the board sidesteps the embargo entirely - which is the whole point of having friends. |
+| EVT-47 | New Tolls | The player who built the road in that region collects the toll instead of paying it. Rail, water and air pay nothing - which is how everyone learns what a road is worth. |
+| EVT-48 | The Sign of the Green Man | Passing costs nothing. A player who already owns three inns may not take it - see buildings.json inn, and the reason there is a cap. |
+| EVT-49 | The Mead Run | Passing costs nothing. A player with an apiary and a brewery can usually take this twice a game, which is exactly the industry this card exists to make worth building. |
+| EVT-50 | Ley Drought | Mana already stored in a talisman is untouched - which is what talismans are for. An elf holds their innate mana as normal. A shrine in a town cancels the extra spell cost for characters standing in it. |
+| EVT-51 | Boom Town | A town with a granary holding 4+ food ignores the price jump and gains the workers anyway - which is the whole argument for granaries. The player who owns the nearest farm may sell into that region at the boom price. Demand is only a disaster if you have nothing to sell. |
