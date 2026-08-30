@@ -18046,6 +18046,21 @@ window.GAME_DATA = {
           0.645
         ]
       },
+      "tile-charcoal-kiln": {
+        "file": "art/renders/tile-charcoal-kiln.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          0.866
+        ],
+        "focal": [
+          0.637,
+          0.579
+        ]
+      },
       "tile-clay-pit": {
         "file": "art/renders/tile-clay-pit.png",
         "width": 1536,
@@ -18196,6 +18211,21 @@ window.GAME_DATA = {
           0.45
         ]
       },
+      "tile-pasture": {
+        "file": "art/renders/tile-pasture.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.0395,
+          0.02,
+          0.9405,
+          0.96
+        ],
+        "focal": [
+          0.62,
+          0.32
+        ]
+      },
       "tile-quarry": {
         "file": "art/renders/tile-quarry.png",
         "width": 1254,
@@ -18239,6 +18269,36 @@ window.GAME_DATA = {
         "focal": [
           0.5,
           0.4
+        ]
+      },
+      "tile-smelter": {
+        "file": "art/renders/tile-smelter.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.68,
+          0.62
+        ]
+      },
+      "tile-steelworks": {
+        "file": "art/renders/tile-steelworks.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.165,
+          0.02,
+          0.835,
+          0.98
+        ],
+        "focal": [
+          0.66,
+          0.45
         ]
       },
       "tile-timber-house": {

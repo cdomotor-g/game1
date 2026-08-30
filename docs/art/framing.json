@@ -653,6 +653,32 @@
       ],
       "note": "The whole page. A triad's window is 0.99 against a square plate, so the crop spends nothing and the tile keeps the ink edge to edge - the answer the warehouse, granary, barracks, quarry and lumber camp all got, and for their reason: on this shape the crop is never where anything is lost.\n\nWhat IS lost is the WATER WHEEL, and the die takes it - aim-solve measures a rectangle and reports that the ink fits, which is true and beside the point. Below the shoulder line a triad keeps only the middle half of its width. The wheel is drawn at 15%-28% across and 50%-68% down, which is outside that on both counts, and it goes but for the top of its arc. No aim reaches it: the crop has one per cent of freedom and the wheel is fifteen from the cut. Accepted rather than redrawn, because the brief asked for the crank shaft AND the pit wheel and the shaft is the half that survives - it runs along the top left with its iron collars, high on the piece where a triad is still full width, and it says water-driven without the wheel being there. Whole and inside the cut: the board roof and its frame, the blade on its carriage, the three chained logs on the deck, the sawdust and offcuts, and the stickered lumber stack.\n\nThe focal is the blade. It is the working end and it is the one thing on the plate that tells a sawmill from a cart shed at seventeen millimetres. For whoever briefs the next triad: a thing that must survive belongs above the shoulder line OR inside the middle half of the width - the wheel was outside both."
     },
+    "tile-smelter": {
+      "subject": [
+        0.01,
+        0.01,
+        0.98,
+        0.98
+      ],
+      "focal": [
+        0.68,
+        0.62
+      ],
+      "note": "The whole page, for the warehouse's reason - a triad's window is 0.99 against a square plate, so the crop spends nothing and the tile keeps the ink edge to edge. On this shape the crop is never where anything is lost.\n\nThis is the one plate of the four the DIE costs almost nothing, and it is composition rather than luck: the stack is drawn right of centre with its top well inside the upper margin, which is exactly what the brief asked for and exactly what the envelope wants. Whole and inside the cut: the stone stack battered inward with its open mouth, the tapping arch with the fire in it, the sand runner and the bar cast in it, the pot at the runner's head, the great bellows in the board lean-to with its nozzle through the wall, and the charging ramp of earth and timber running up the back. The ore heap on the right loses its outer half to the right lobe and still reads as broken rock; the black heap in the lower left goes under the band, which is the ground the brief set aside for it.\n\nThe focal is the tapping arch. It is the working end, it is the only lit thing on the plate, and it is what tells a smelter from a windmill or a kiln at thirty-seven millimetres - the stack alone is a tapering tower and could be anything."
+    },
+    "tile-steelworks": {
+      "subject": [
+        0.165,
+        0.02,
+        0.835,
+        0.98
+      ],
+      "focal": [
+        0.66,
+        0.45
+      ],
+      "note": "The brick shed with its six arched openings and its iron-framed roof, the coal heap with the plank run laid over it, the stacked ingots on the apron, and the chimney. A rhombus window is 1.24 against a 3:2 page, so the full height is kept and 15.5% of the width goes. All but half a per cent of it is spent off the LEFT - the crop keeps x 17.0%-99.5% - and that is the whole of the aiming decision here: the crop can start no further right than 17.5%, and every millimetre it moves right is a millimetre of chimney saved from the die. Measured the other way for comparison - the even spend puts the chimney at 78%-87% across the piece, where the rhombus has already fallen away, and takes most of its shaft as well as its cap.\n\nWhat the left spend costs is the brick-walled bay and the pale spent-lime waste in it, entirely: the crop takes most of it and the lower-left lobe would have taken the rest. That is the cheapest thing on the plate to lose - the brief itself set that corner aside for the name band.\n\nWhat is lost that is NOT cheap is the CHIMNEY'S CAP, and no aim reaches it. The stack is drawn at 73%-81% across and starts 2.6% down the page, which is outside the safe box on both counts, and a rhombus keeps the upper LEFT and lower RIGHT lobes - the manor's shape and the manor's problem. The upper-right diagonal cuts the stack at about 13% down, taking the corbelled top and one banded course and leaving the shaft running off the edge. Nothing about the aim can move it: the crop already sits as far right as the page allows, and there is only 2.6% of paper above the stack, so no crop can put ground over it. The brief said the chimney may be cut by nothing and the plate was drawn against that. Accepted rather than redrawn - one moulding survives at the cut and reads as a band, the shaft is still the tallest and blackest thing on the piece, and the shed, the arches, the coal and the ingots are all whole and inside the cut. Noted for the redraw: on a rhombus the tall thing belongs over the LEFT lobe, and nothing may touch the top edge of the page.\n\nThe focal is the near gable and the chimney foot together - the business end, and what separates this from the smelter at forty-six millimetres is that it is big, black and straight-lined. The band falls on the paved apron below the ingot stacks."
+    },
     "tile-timber-house": {
       "subject": [
         0.21,
@@ -835,6 +861,19 @@
       ],
       "note": "The whole page, for the sawmill's reason - a triad's window is 0.99 against a square plate and the crop spends nothing.\n\nThis is the one plate in the batch the DIE costs nothing worth naming either, and that is composition rather than luck: the brief asked for staggered rows corner to corner so the pattern would survive the hexagonal cut, and it does. Four trees are whole, two are clipped at the edges and read as trees anyway, and what the lower lobes trim is grass and windfalls. Whole and inside the cut: the goblet pruning and the clear trunks whitened at the foot - which is what says kept rather than grown - the ladder set up into the centre tree, the picking basket at its foot, and the windfalls under the next tree along.\n\nThe focal is the ladder. It is the only made thing on the plate and the only straight line on it, so it is both what the eye lands on and what tells a worked orchard from scrub at seventeen millimetres. The band falls on open grass, which is the ground the brief set aside for it."
     },
+    "tile-pasture": {
+      "subject": [
+        0.0395,
+        0.02,
+        0.9405,
+        0.96
+      ],
+      "focal": [
+        0.62,
+        0.32
+      ],
+      "note": "The fenced run: the thatched field shelter, the trough on its gutter, the gate on its stone post, and the stock between them. A rhombus window is 1.24 against a 3:2 page, so the full height is kept and 13.5% of the width goes, 6.8% off each side. Spent evenly, and that is a real choice rather than the default - the alternatives were measured. Spending it all off the left buys the fourth sheep and costs the shelter's left third, and the shelter is the only built thing on the plate and the whole of what separates a pasture from an open field; spending it off the right costs the shelter outright.\n\nWhat the DIE takes is the fourth sheep, which is drawn at 75%-88% across and below the shoulder on the right - the corner a rhombus does not have. Cheap: the brief asked for four sheep because a flock is a repeat, and three sheep and a cow still read as a flock at forty-six millimetres. The top-right run of fence goes with it, and the fence still carries three sides of the piece, which is what the brief wanted it for.\n\nWhole and inside the cut: the shelter with its thatch and its poles, the gate and its stone post at the foot, the trough with water in it and the wooden gutter feeding it, the cow, three sheep at three different angles, and the worn tracks between trough, shelter and gate - which are the second thing after the fence that says this ground is kept rather than wild.\n\nThe focal is the cow. It is the largest single animal, it is the only piece of colour on a grey-green plate, and on a tile with no building to aim at it is the one point that is a point rather than a texture. The band falls on grass and the bottom rail of the fence."
+    },
     "tile-quarry": {
       "subject": [
         0.01,
@@ -860,6 +899,19 @@
         0.28
       ],
       "note": "The riddle with its screened heap and the leaning shovel, the barrow at the head of the plank run, and the pit between them. A pair window is 1.73 against a 3:2 page, so the full WIDTH is kept and 13.4% of the height goes. It is spent off the BOTTOM, not evenly: the focal sits on the riddle, which pulls the window to the top of the page, and that is the right answer here because the bottom of this plate is loose pit floor and the top carries both pieces of furniture that say sand pit rather than hole. Measured rather than guessed - off the bottom keeps 71.1% of the page ink against 70.3% even and 68.2% off the top, and holds the riddle at 100% and the barrow at 87% where a true even spend leaves the barrow at 38%. The band falls on the pit slope, which is sand and nothing else."
+    },
+    "tile-charcoal-kiln": {
+      "subject": [
+        0,
+        0,
+        1,
+        0.866
+      ],
+      "focal": [
+        0.637,
+        0.579
+      ],
+      "note": "The clamp, its burnt ring and the cordwood stack. A pair window is 1.73 against a 3:2 page, so the full width is kept and 13.4% of the height goes. All of it is spent off the BOTTOM, and the subject box is set to the window's exact height so that nothing - not even the focal - can slide it back down. That is the whole decision, and it is worth 9% of the piece: the crown hole is drawn 15% down the page, and a pair's notch descends to a quarter of the tile's height at half-width, so where the crop sits decides whether the hole is in the piece or in the notch. Spent evenly it is cut and the dome is a mound of earth; pinned to the top edge it clears the notch by three per cent of the height and the tile has a chimney again.\n\nWhat the bottom spend costs is the shovel blade and the front of the finished charcoal, both in the corner the band covers anyway. What the DIE still costs is the dome's left shoulder and the ridge of its apex, which straddle the notch at its deepest - the brick house's lesson wearing turf, and the same rule applies: the tallest thing on the page belongs over a hex peak, a quarter or three quarters across, never over the middle. Here it is at 56% and the crown hole at 60%, which is why one of the two survives and the other does not. Whole and inside the cut: the turf skin with its patches and cracks, all three vent mouths with fire in two of them, the crown hole, the cordwood stack, and the burnt bare ground the clamp stands on.\n\nThe focal is the large lit vent under the dome's face. It is the only fire on the piece and the only thing that says burning rather than a heap of earth; the smoke that used to do that job is above the page's own top edge and was never reachable."
     },
     "tile-clay-pit": {
       "subject": [

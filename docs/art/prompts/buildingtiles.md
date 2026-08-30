@@ -771,7 +771,7 @@ them there.
 
 ## tile-pasture — four cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-pasture.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-pasture.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1155,7 +1155,7 @@ them there.
 
 ## tile-charcoal-kiln — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-charcoal-kiln.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-charcoal-kiln.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1199,7 +1199,7 @@ them there.
 
 ## tile-smelter — three cells, square
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-smelter.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-smelter.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1242,7 +1242,7 @@ them there.
 
 ## tile-steelworks — four cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-steelworks.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-steelworks.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
