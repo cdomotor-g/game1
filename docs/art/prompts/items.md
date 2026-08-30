@@ -153,14 +153,21 @@ part is furred and glazed where it has run over rock. Wash: rust red across
 the rope, flat, the whipping twine left as bare paper.
 
 FRAMING. Square plate, whole page drawn edge to edge. The whole coil, the
-spliced eye, the whipped end and both hanging tails inside the middle 84%.
+spliced eye, the whipped end and both hanging tails inside the middle 81%.
 Low ground line in the bottom third with the coil standing on it. Clear,
 quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-lantern — Lantern *(ITEMS deck · light, ITM-02)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-lantern.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-lantern.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -177,13 +184,20 @@ blue on the iron frame and the glazing, warm ochre on the horn pane, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The cap and its vent
 holes, the carrying ring, all four panes, the door catch, the candle stub and
-the waxed base inside the middle 84%. Low ground line in the bottom third
+the waxed base inside the middle 81%. Low ground line in the bottom third
 with the lantern standing on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-torch — Torch *(ITEMS deck · light, ITM-03)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-torch.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-torch.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -201,8 +215,15 @@ ink.
 
 FRAMING. Square plate, whole page drawn edge to edge. The whole stave from
 charred head to butt, the wedge, the packed cloth and every turn of the cord
-inside the middle 84%. Low ground line in the bottom third with the butt
+inside the middle 81%. Low ground line in the bottom third with the butt
 standing on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-grappling-hook — Grappling Hook *(ITEMS deck · gear, carried, ITM-04)*
@@ -224,8 +245,15 @@ blue on the iron, rust red on the rope and the seizing, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. All four flukes and
 their points, the shank, the ring, the thimble and the seized rope tail
-inside the middle 84%. Low ground line in the bottom third with the hook
+inside the middle 81%. Low ground line in the bottom third with the hook
 lying on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-bag — Bag *(ITEMS deck · gear, belt, ITM-05)*
@@ -248,8 +276,15 @@ paper.
 
 FRAMING. Square plate, whole page drawn edge to edge. The whole bag - all
 four seams, the gathered neck, both cord tails, the belt loop and the darned
-patch - inside the middle 84%. Low ground line in the bottom third with the
+patch - inside the middle 81%. Low ground line in the bottom third with the
 bag sitting on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-satchel — Satchel *(ITEMS deck · gear, back, ITM-06)*
@@ -272,8 +307,15 @@ across the leather, flat, cold slate blue on the buckles and the D-rings.
 
 FRAMING. Square plate, whole page drawn edge to edge. The body, both gussets,
 the flap, both buckled straps, both D-rings and the full loop of the shoulder
-strap inside the middle 84%. Low ground line in the bottom third with the
+strap inside the middle 81%. Low ground line in the bottom third with the
 satchel standing on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-travelling-cloak — Travelling Cloak *(ITEMS deck · clothing, back, ITM-07)*
@@ -297,13 +339,20 @@ toggle.
 
 FRAMING. Square plate, whole page drawn edge to edge. The hood, the shoulder
 cape, the throat strap and toggle, the full drop of the folds and the whole
-hem inside the middle 84%. Low ground line in the bottom third with the hem
+hem inside the middle 81%. Low ground line in the bottom third with the hem
 hanging above it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-binoculars — Binoculars *(ITEMS deck · gear, belt, ITM-08)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-binoculars.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-binoculars.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -323,9 +372,16 @@ leather and the cord, cold slate blue on the lens glass, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Both tubes end to end,
 both objective rims, both eyepiece collars, the hinged bridge and its screw,
-the leather binding and the knotted cord inside the middle 84%. Low ground
+the leather binding and the knotted cord inside the middle 81%. Low ground
 line in the bottom third with the glasses lying on it. Clear, quiet page
 above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-sword — Sword *(WEAPONS deck · weapon, hand, WPN-01)*
@@ -470,7 +526,7 @@ not a rule of thumb.)
 
 ## item-dagger — Dagger *(WEAPONS deck · weapon, hand, WPN-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-dagger.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-dagger.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -502,7 +558,7 @@ not a rule of thumb.)
 
 ## item-staff — Staff *(WEAPONS deck · weapon, two-hand, WPN-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-staff.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-staff.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]

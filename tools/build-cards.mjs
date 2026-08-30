@@ -248,8 +248,15 @@ function dieMarks() {
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const num = (n) => Number(n.toFixed(2));
 
-/** Greedy wrap by estimated glyph width — close enough for a serif at card size. */
+/** Greedy wrap by estimated glyph width — close enough for a serif at card size.
+ *
+ * Nothing wraps to no lines, and that is load-bearing rather than defensive:
+ * `story` is optional across items.json - the potions, the talismans and the two
+ * lights have never had one - and `String(undefined)` is the six-letter word
+ * "undefined", which wraps, measures and typesets exactly like prose. The lantern
+ * shipped with it set up its own story rail before anybody read the card. */
 function wrap(text, maxChars) {
+  if (text == null || text === '') return [];
   const words = String(text).split(/\s+/);
   const out = [];
   let line = '';
@@ -903,10 +910,16 @@ for (const i of gear) {
   const render = plateIdFor(deckByPrefix('ITM'), i);
   if (!hasRender(render)) { skipped.push(i.cardCode); continue; }
   const kind = itemClassName.get(i.class) || i.class;
+  /* `slot` is WHERE ON A BODY the thing is worn or held, and a third of this deck
+     has none: a potion, a talisman, a lantern and a torch go in a kit slot like
+     everything else, but nothing about them is worn anywhere in particular. So
+     the segment is omitted rather than emptied, which lands the kicker on exactly
+     the form the talismans have always printed - `light · made at the blacksmith`. */
+  const worn = i.slot ? ` · ${i.slot}` : '';
   specs.push({
     code: i.cardCode, name: i.name, portrait: render,
-    kicker: `${kind} · ${i.slot} · made at the ${i.madeAt}`,
-    desc: `Item card: ${i.name}, ${kind}. Worth ${i.baseValue}, weighs ${i.massKg}kg, ${i.wear} of wear in it, carried in the ${i.slot} slot.`,
+    kicker: `${kind}${worn} · made at the ${i.madeAt}`,
+    desc: `Item card: ${i.name}, ${kind}. Worth ${i.baseValue}, weighs ${i.massKg}kg, ${i.wear} of wear in it${i.slot ? `, carried in the ${i.slot} slot` : ''}.`,
     stats: [
       cell('wear', i.wear, 'slate'),
       cell('value', i.baseValue, 'ochre'),

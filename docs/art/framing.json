@@ -497,6 +497,19 @@
       ],
       "note": "The builder with the maul up and the frame he is raising behind him."
     },
+    "item-lantern": {
+      "subject": [
+        0.1845,
+        0.0865,
+        0.6165,
+        0.7955
+      ],
+      "focal": [
+        0.52,
+        0.68
+      ],
+      "note": "Carrying ring, cap and its vent holes, all four panes - the horn one and the cracked one - the door catch, the candle stub and the waxed base. The card holds the whole lantern; the 5:4 thumbnail is 1.4% short and spends the bottom rail, which is the one edge with nothing named on it. Focal on the candle stub. Drawn plate - measured off the picture."
+    },
     "item-leather-jerkin": {
       "subject": [
         0.12,
@@ -536,6 +549,19 @@
       ],
       "note": "Both pauldrons, the breastplate and all three fauld lames. The bench below is scenery the crop may spend. Focal on the centre ridge. Drawn plate - measured off the picture."
     },
+    "item-dagger": {
+      "subject": [
+        0.2,
+        0.0735,
+        0.68,
+        0.8615
+      ],
+      "focal": [
+        0.49,
+        0.575
+      ],
+      "note": "Point, edge, fuller, both arms of the cross, all three rivets and the whole grip. Drawn corner to corner at 88% of the page against an 81% window, so it keeps the point and spends the pommel - the same call item-sword made and for the same reason, that a blade reads from its tip. The card keeps the top of the butt ferrule, the thumbnail none of it. Focal on the cross. Drawn plate - measured off the picture."
+    },
     "item-helm": {
       "subject": [
         0.1,
@@ -562,6 +588,19 @@
       ],
       "note": "The whole disc, rim to rim, with the stapled split top-left. Focal on the boss. Drawn plate - measured off the picture."
     },
+    "item-staff": {
+      "subject": [
+        0.31,
+        0.145,
+        0.4,
+        0.788
+      ],
+      "focal": [
+        0.33,
+        0.83
+      ],
+      "note": "The waxed cord binding down to the iron shoe, both shoe rivets and its mushroomed rim, both worn grip bands and the planed knot. The stave is drawn 90% of the page tall against an 81% window, so the bare split top above the binding is spent: sharing the loss between the two ends instead cut the shoe through its rivets, and 'riveted through twice' is a countable thing the brief names. The thumbnail grazes the topmost turn of the cord, which is the 4 px the whole shoe costs. Focal on the shoe where it meets the ash. Drawn plate - measured off the picture."
+    },
     "item-sword": {
       "subject": [
         0.21,
@@ -575,6 +614,19 @@
       ],
       "note": "Point to pommel, both quillons and the whole grip. The sword is drawn corner to corner with no margin, so the box is nearly the page: the card window holds all of it, and the 5:4 thumbnail cannot - it keeps the point and spends the pommel. Drawn plate - measured off the picture."
     },
+    "item-torch": {
+      "subject": [
+        0.36,
+        0.024,
+        0.2,
+        0.906
+      ],
+      "focal": [
+        0.44,
+        0.37
+      ],
+      "note": "The charred head, the driven wedge, the packed cloth and every turn of the cord, down as far as the stave will go. The torch is drawn 88% of the page tall against a window holding 81%, so the butt and the ground line are spent and the stave runs out of the bottom. Spending the other end instead would blunt the charred tips to save a plain squared butt, which is the wrong way round - the head carries the card. The crop is pinned 2% above the tips rather than flush to them, and that headroom costs only stave that was already off the page. Focal on the binding. Drawn plate - measured off the picture."
+    },
     "item-war-axe": {
       "subject": [
         0.21,
@@ -587,6 +639,19 @@
         0.28
       ],
       "note": "Wedge and poll down to the knob, taking the beard and the binding. Focal on the eye where the bit meets the haft. Drawn plate - measured off the picture."
+    },
+    "item-binoculars": {
+      "subject": [
+        0.05,
+        0.19,
+        0.9,
+        0.68
+      ],
+      "focal": [
+        0.64,
+        0.26
+      ],
+      "note": "Both tubes end to end, both objective rims - the dented one included - both eyepiece collars, the hinged bridge and its knurled screw, the leather bindings and the knotted cord. The glasses lie across the page well inside the band, so both windows hold the whole of it and nothing is spent. Focal on the bridge screw. Drawn plate - measured off the picture."
     },
     "item-bow": {
       "subject": [
