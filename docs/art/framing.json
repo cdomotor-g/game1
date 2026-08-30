@@ -536,6 +536,11 @@
       ],
       "note": "Both pauldrons, the breastplate and all three fauld lames. The bench below is scenery the crop may spend. Focal on the centre ridge. Drawn plate - measured off the picture."
     },
+    "item-grappling-hook": {
+      "subject": [0.04, 0.17, 0.91, 0.73],
+      "focal": [0.44, 0.56],
+      "note": "All four flukes and their points, the shank, the ring, the thimble and the seized rope tail. Drawn corner to corner, so the box is 91% of the width: the ring runs out to 4% on the left and the sprung fourth fluke to 95% on the right. An earlier box called the left edge at 10% and the card window grazed the ring - measured again off the plate map, which puts it at 5%. Both windows now hold the whole of it. Focal on the crown where the four flukes leave the shank, not the middle of the box, which is bare bench. Drawn plate - measured off the picture."
+    },
     "item-helm": {
       "subject": [
         0.1,
@@ -548,6 +553,11 @@
         0.6
       ],
       "note": "Crown to the tip of the nasal, brow band and every rivet. Focal where the nasal meets the band. Drawn plate - measured off the picture."
+    },
+    "item-satchel": {
+      "subject": [0.02, 0.1235, 0.93, 0.7765],
+      "focal": [0.5, 0.45],
+      "note": "The body, both gussets, the flap, both buckled straps, both D-rings and the full loop of the shoulder strap. The loop is what makes this the widest box in the deck at 93% - it runs out to 2% on the left and 95% on the right, and it is named by the brief, so it is veto and not scenery. The top edge is the flap at 12%, not the 10% first guessed; that 2% is the whole reason the thumbnail holds this plate with nothing spent. Focal on the flap between the two buckles. Drawn plate - measured off the picture."
     },
     "item-shield": {
       "subject": [
@@ -575,6 +585,11 @@
       ],
       "note": "Point to pommel, both quillons and the whole grip. The sword is drawn corner to corner with no margin, so the box is nearly the page: the card window holds all of it, and the 5:4 thumbnail cannot - it keeps the point and spends the pommel. Drawn plate - measured off the picture."
     },
+    "item-travelling-cloak": {
+      "subject": [0.22, 0.098, 0.6, 0.782],
+      "focal": [0.5, 0.28],
+      "note": "The hood, the shoulder cape, the throat strap and toggle, the full drop of the folds and the whole hem. The trestle it hangs over is scenery on both sides and sits outside the box, so the crop may spend it and does. Focal on the hood and throat, high on the drop: the empty hood is what says travelling cloak, and a box round a full-length hanging garment centres on its knees. Drawn plate - measured off the picture."
+    },
     "item-war-axe": {
       "subject": [
         0.21,
@@ -587,6 +602,11 @@
         0.28
       ],
       "note": "Wedge and poll down to the knob, taking the beard and the binding. Focal on the eye where the bit meets the haft. Drawn plate - measured off the picture."
+    },
+    "item-bag": {
+      "subject": [0.1, 0.18, 0.78, 0.71],
+      "focal": [0.54, 0.29],
+      "note": "The whole bag - all four seams, the gathered neck, both cord tails and their knots, the belt loop and the darned patch. The drawstring swings out to 12% on the left and the box is loose to 10% to carry it. Both windows hold everything. Focal on the gathered neck rather than the body: the pleats and the cord are what say drawstring bag, and the round bottom is the part a reader can infer. Drawn plate - measured off the picture."
     },
     "item-bow": {
       "subject": [
@@ -613,6 +633,11 @@
         0.17
       ],
       "note": "Face and fluke across the top, both langets, and the haft down to the wrapped butt. Focal on the head where the langets start. Drawn plate - measured off the picture."
+    },
+    "item-coil-of-rope": {
+      "subject": [0.1565, 0.095, 0.6665, 0.78],
+      "focal": [0.49, 0.4],
+      "note": "The whole coil, the spliced eye, the whipped end and both hanging tails. Nothing is spent: a coil is a wheel, so the subject is nearly as wide as it is tall and both windows take it whole - the pad gives up the last 0.6% rather than any ink. Focal on the middle of the coil, where the hole is, because that is where an eye lands on a wheel of rope and centring on the box alone would aim at the same place by accident rather than on purpose. Drawn plate - measured off the picture."
     },
     "item-crossbow": {
       "subject": [

@@ -9250,6 +9250,7 @@ window.GAME_DATA = {
         "baseValue": 55,
         "massKg": 1,
         "wear": 5,
+        "story": "Heavy wool, a deep hood, and a hem turned up and restitched by two different owners. It does not make anybody walk faster; it makes them stop less, which the road cannot tell apart.",
         "effects": [
           "+1 move point for the figure wearing it."
         ]
@@ -17544,6 +17545,21 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "item-bag": {
+        "file": "art/renders/item-bag.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.1,
+          0.18,
+          0.78,
+          0.71
+        ],
+        "focal": [
+          0.54,
+          0.29
+        ]
+      },
       "item-bow": {
         "file": "art/renders/item-bow.png",
         "width": 1254,
@@ -17574,6 +17590,21 @@ window.GAME_DATA = {
           0.53
         ]
       },
+      "item-coil-of-rope": {
+        "file": "art/renders/item-coil-of-rope.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.1565,
+          0.095,
+          0.6665,
+          0.78
+        ],
+        "focal": [
+          0.49,
+          0.4
+        ]
+      },
       "item-crossbow": {
         "file": "art/renders/item-crossbow.png",
         "width": 1254,
@@ -17587,6 +17618,21 @@ window.GAME_DATA = {
         "focal": [
           0.53,
           0.27
+        ]
+      },
+      "item-grappling-hook": {
+        "file": "art/renders/item-grappling-hook.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.04,
+          0.17,
+          0.91,
+          0.73
+        ],
+        "focal": [
+          0.44,
+          0.56
         ]
       },
       "item-helm": {
@@ -17634,6 +17680,21 @@ window.GAME_DATA = {
           0.42
         ]
       },
+      "item-satchel": {
+        "file": "art/renders/item-satchel.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.02,
+          0.1235,
+          0.93,
+          0.7765
+        ],
+        "focal": [
+          0.5,
+          0.45
+        ]
+      },
       "item-shield": {
         "file": "art/renders/item-shield.png",
         "width": 1254,
@@ -17662,6 +17723,21 @@ window.GAME_DATA = {
         "focal": [
           0.44,
           0.72
+        ]
+      },
+      "item-travelling-cloak": {
+        "file": "art/renders/item-travelling-cloak.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.22,
+          0.098,
+          0.6,
+          0.782
+        ],
+        "focal": [
+          0.5,
+          0.28
         ]
       },
       "item-war-axe": {
