@@ -123,17 +123,19 @@ Sailmaker's palm and beeswax on the boards. Wash: rust red on the cloth in
 broad flat panels, ochre on the spar, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The heap of cloth, the
-stretched clew, the spar and both sheet coils inside the middle 84%.
+stretched clew, the spar and both sheet coils inside the middle 97%.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-sweep-rig — Sweep Rig *(rigging, MOD-02)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-sweep-rig.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-sweep-rig.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -157,17 +159,19 @@ spars, rust red on the ironwork.
 
 FRAMING. Square plate, whole page drawn edge to edge. The gooseneck pivot, the
 drawn pin, both spars end to end, the laced sail and every crew handle inside
-the middle 84%.
+the middle 97%.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-copper-sheathing — Copper Sheathing *(hull, MOD-03)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-copper-sheathing.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-copper-sheathing.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -181,18 +185,20 @@ dry dock with the first sheets already on and the rest of the run bare.
 Wash: rust red on the copper, cold slate on the dock stone, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The stack, the standing
-sheet, the keg and the tools inside the middle 84%; the ghosted hull may run
+sheet, the keg and the tools inside the middle 97%; the ghosted hull may run
 to the margins.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-iron-ram — Iron Ram *(hull, MOD-04)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-iron-ram.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-iron-ram.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -206,17 +212,19 @@ the bare stem of a ship in dock waiting for it. Wash: rust red on the iron,
 ochre on the cradle timber, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The ram, the cradle, the
-bolt row and the sledgehammer inside the middle 84%.
+bolt row and the sledgehammer inside the middle 97%.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-storm-shutters — Storm Shutters *(hull, MOD-05)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-storm-shutters.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-storm-shutters.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -229,17 +237,19 @@ tarred rope round the edge all read. A mallet and a keg of tacks on the floor.
 Wash: ochre on the boards, cold slate on the ironwork, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The propped row, the open
-shutter, the mallet and the keg inside the middle 84%.
+shutter, the mallet and the keg inside the middle 97%.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-ice-runners — Ice Runners *(running gear, MOD-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-ice-runners.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-ice-runners.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -252,17 +262,19 @@ floor beside them, plainly displaced. Spanner, screw box and a smear of tallow
 on a rag. Wash: cold slate on the steel, ochre on the timber, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Both runners, both
-brackets and the displaced wheel inside the middle 84%.
+brackets and the displaced wheel inside the middle 97%.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-compound-boiler — Compound Boiler *(powerplant, MOD-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-compound-boiler.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-compound-boiler.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -280,15 +292,17 @@ FRAMING. Square plate, whole page drawn edge to edge. Both cylinders, the
 receiver pipe between them, the crankshaft and the flywheel inside the middle
 84% - the two different diameters are the card, and they must both be in frame.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-keelbound — Keelbound *(enchantment, water, MOD-08)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-keelbound.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-keelbound.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]  [ARCANE RULES APPLY - see the talisman brief]
@@ -304,18 +318,20 @@ bleeding past it like a misprint. Nothing glows. Other wash: cold slate on the
 standing water, ochre on the timber, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The scarf, the chalk
-marks, the alchemist's hands and the crystal inside the middle 84%; the ends of
+marks, the alchemist's hands and the crystal inside the middle 97%; the ends of
 the keel may run to the margins.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-fleetfoot-binding — Fleetfoot Binding *(enchantment, air, MOD-09)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-fleetfoot-binding.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-fleetfoot-binding.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]  [ARCANE RULES APPLY - see the talisman brief]
@@ -330,17 +346,19 @@ REGISTER, offset from the black line. Nothing glows. Other wash: ochre on the
 timber, cold slate on the ironwork, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Her hands, the hub, the
-knotted cord and the crystal inside the middle 84%.
+knotted cord and the crystal inside the middle 97%.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-warded-hold — Warded Hold *(enchantment, earth, MOD-10)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-warded-hold.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-warded-hold.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]  [ARCANE RULES APPLY - see the talisman brief]
@@ -355,18 +373,20 @@ glows. Other wash: ochre on the crate timber, cold slate in the deck shadow,
 flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The proud lid, the bent
-crowbar and the nearest two marks inside the middle 84%; the row of crates may
+crowbar and the nearest two marks inside the middle 97%; the row of crates may
 run to the margins.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## modification-salamander-grate — Salamander Grate *(enchantment, fire, MOD-11)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-salamander-grate.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-salamander-grate.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]  [ARCANE RULES APPLY - see the talisman brief]
@@ -383,10 +403,12 @@ sits flat between the grate bars for heat. Nothing glows; the heat is hatching
 and flat colour only.
 
 FRAMING. Square plate, whole page drawn edge to edge. The grate, the bound
-shape in its cradle and the fireman's slice bar inside the middle 84%.
+shape in its cradle and the fireman's slice bar inside the middle 97%.
 
-WINDOW. The card cut from this plate keeps very nearly the whole page, so
-the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
-is not a rule of thumb.)
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 97% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 340.5 x 331, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```

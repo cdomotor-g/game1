@@ -87,6 +87,21 @@
       ],
       "note": "Old Mother Keswick shelling into the bowl. The cat comes along below if there is room."
     },
+    "modification-storm-shutters": {
+      "subject": [0.04, 0.154, 0.93, 0.786],
+      "focal": [0.5, 0.42],
+      "note": "The three propped shutters, the open one showing its hide lining, its tacks and the tarred rope round the rebate, with the mallet and the keg. One per cent off the bottom takes the foot of the mallet head; the lining, which is the thing this card is actually selling, stays whole."
+    },
+    "modification-sweep-rig": {
+      "subject": [0.03, 0.1535, 0.95, 0.7765],
+      "focal": [0.55, 0.46],
+      "note": "The gooseneck pivot with its drawn pin, both spars end to end, the laced sail and all four crew handles. Nothing is spent: at 78% of the page height the rig clears the flat window's 80% ceiling, so the card and the thumbnail both keep it whole. The quiet deck above the upper spar is what bought that."
+    },
+    "modification-warded-hold": {
+      "subject": [0.03, 0.18, 0.94, 0.72],
+      "focal": [0.5, 0.43],
+      "note": "The crate lid standing proud, the crowbar bent under it and plainly not moving, and the nearest two marks in the end grain. The box is 94% by 72% and the ink fits whole at both windows with room over. What the crop spends is the deckhead arch above and the run of floor planking below, both of which are there to say small cargo hold and neither of which the card names; the row of crates carrying the rest of the marks runs off the right margin as the brief allows."
+    },
     "monster-ash-drake": {
       "subject": [
         0.088,
@@ -448,6 +463,41 @@
       ],
       "note": "Stopper to base of the flask, with the crystal caged inside it."
     },
+    "modification-compound-boiler": {
+      "subject": [0.06, 0.104, 0.9, 0.796],
+      "focal": [0.42, 0.33],
+      "note": "Both cylinders and the plainly different diameters that make it a compound, the receiver pipe and its lagging band between them, the crankshaft with its cranks, and the flywheel. A square plate against a near-square card window keeps the page, and the 5:4 thumbnail is the one that has to be paid: it holds 80% of the height and the ink wants 82%. The 2% is spent off the BOTTOM - the bedplate's lower lip and the shadow under it - rather than off the top, because the top is the two domed cylinder tops with their standpipes, and the difference between those two diameters is the whole of what the card says. The oil can and the long-spouted feeder on the bedplate survive at both windows."
+    },
+    "modification-copper-sheathing": {
+      "subject": [0.05, 0.115, 0.92, 0.8335],
+      "focal": [0.42, 0.5],
+      "note": "The sheet stood on end at full height, the fanned stack behind it, the spilled keg and the shipwright's hammer. The standing sheet is the product and its height is the whole point of the picture, so the 6% the flat window cannot hold comes off the bottom: it spends the tin snips in the corner, which are a scale prop the card does not name. The ghosted hull may run to the margins."
+    },
+    "modification-fleetfoot-binding": {
+      "subject": [0.06, 0.1235, 0.87, 0.7765],
+      "focal": [0.65, 0.22],
+      "note": "Her face and both hands on the open hub, the knotted cord wound three times round the axle stock, and the crystal tied into the last knot. The leaning wheel is inside the box on purpose and not as scenery: the stock is drawn heavy, and the wheel off its hub with the trestles and the spanner is what makes this a wheelwright's yard rather than a gun on a carriage. Nothing has to be spent - 87% by 79% against the thumbnail's 80% of the height - so the straw, the grease pot and the spanner all survive the card window and only the last of them grazes the thumbnail's bottom edge."
+    },
+    "modification-ice-runners": {
+      "subject": [0.05, 0.14, 0.91, 0.74],
+      "focal": [0.46, 0.4],
+      "note": "Both runners with their cast brackets and U-bolts, and the displaced wheel that says what they come off. Nothing is spent: at 74% of the height it clears the flat window's ceiling with room over. The spanner, the screw box and the tallow rag along the foot are scenery the crop may have."
+    },
+    "modification-iron-ram": {
+      "subject": [0.1, 0.114, 0.85, 0.786],
+      "focal": [0.45, 0.42],
+      "note": "The ram on its cradle, the row of scarf bolts laid out beside it, and the sledgehammer leaning there for scale. One per cent off the bottom, which is the far end of the washer row; the ram itself is whole in both windows."
+    },
+    "modification-keelbound": {
+      "subject": [0.08, 0.16, 0.87, 0.76],
+      "focal": [0.53, 0.29],
+      "note": "The midships scarf with the run of out-of-register marks along the grain, the alchemist's chalk hand and the bowl in the other, and the mana crystal in its wooden cradle at the lower right. Nothing has to be spent at either window: the box is 87% by 76% and the 5:4 thumbnail holds 80% of the height, so the ink fits whole and the pad gives up the difference. The ends of the keel run off both margins, which is what the brief set them aside for, and the standing water and the slip timbering behind are the scenery that lets them."
+    },
+    "modification-salamander-grate": {
+      "subject": [0.05, 0.074, 0.93, 0.8],
+      "focal": [0.44, 0.55],
+      "note": "The grate stood on end with the heat flat between its bars, the bound shape strapped into its cradle underneath, and the fireman standing well back with his slice bar. The box is 93% by 80%, which is exactly the 5:4 thumbnail's budget, so the card window keeps the page and the thumbnail trims 2.4% off the BOTTOM. That is the tongs on the foundry floor, and they are the right thing to spend: the brief puts the tongs and the cooling trough beside the work and names only the grate, the bound shape and the slice bar as what may not be cut. The trough is at the right and survives both."
+    },
     "modification-spinnaker": {
       "subject": [
         0.04,
@@ -536,6 +586,11 @@
       ],
       "note": "Both pauldrons, the breastplate and all three fauld lames. The bench below is scenery the crop may spend. Focal on the centre ridge. Drawn plate - measured off the picture."
     },
+    "item-grappling-hook": {
+      "subject": [0.04, 0.17, 0.91, 0.73],
+      "focal": [0.44, 0.56],
+      "note": "All four flukes and their points, the shank, the ring, the thimble and the seized rope tail. Drawn corner to corner, so the box is 91% of the width: the ring runs out to 4% on the left and the sprung fourth fluke to 95% on the right. An earlier box called the left edge at 10% and the card window grazed the ring - measured again off the plate map, which puts it at 5%. Both windows now hold the whole of it. Focal on the crown where the four flukes leave the shank, not the middle of the box, which is bare bench. Drawn plate - measured off the picture."
+    },
     "item-helm": {
       "subject": [
         0.1,
@@ -548,6 +603,11 @@
         0.6
       ],
       "note": "Crown to the tip of the nasal, brow band and every rivet. Focal where the nasal meets the band. Drawn plate - measured off the picture."
+    },
+    "item-satchel": {
+      "subject": [0.02, 0.1235, 0.93, 0.7765],
+      "focal": [0.5, 0.45],
+      "note": "The body, both gussets, the flap, both buckled straps, both D-rings and the full loop of the shoulder strap. The loop is what makes this the widest box in the deck at 93% - it runs out to 2% on the left and 95% on the right, and it is named by the brief, so it is veto and not scenery. The top edge is the flap at 12%, not the 10% first guessed; that 2% is the whole reason the thumbnail holds this plate with nothing spent. Focal on the flap between the two buckles. Drawn plate - measured off the picture."
     },
     "item-shield": {
       "subject": [
@@ -575,6 +635,11 @@
       ],
       "note": "Point to pommel, both quillons and the whole grip. The sword is drawn corner to corner with no margin, so the box is nearly the page: the card window holds all of it, and the 5:4 thumbnail cannot - it keeps the point and spends the pommel. Drawn plate - measured off the picture."
     },
+    "item-travelling-cloak": {
+      "subject": [0.22, 0.098, 0.6, 0.782],
+      "focal": [0.5, 0.28],
+      "note": "The hood, the shoulder cape, the throat strap and toggle, the full drop of the folds and the whole hem. The trestle it hangs over is scenery on both sides and sits outside the box, so the crop may spend it and does. Focal on the hood and throat, high on the drop: the empty hood is what says travelling cloak, and a box round a full-length hanging garment centres on its knees. Drawn plate - measured off the picture."
+    },
     "item-war-axe": {
       "subject": [
         0.21,
@@ -587,6 +652,11 @@
         0.28
       ],
       "note": "Wedge and poll down to the knob, taking the beard and the binding. Focal on the eye where the bit meets the haft. Drawn plate - measured off the picture."
+    },
+    "item-bag": {
+      "subject": [0.1, 0.18, 0.78, 0.71],
+      "focal": [0.54, 0.29],
+      "note": "The whole bag - all four seams, the gathered neck, both cord tails and their knots, the belt loop and the darned patch. The drawstring swings out to 12% on the left and the box is loose to 10% to carry it. Both windows hold everything. Focal on the gathered neck rather than the body: the pleats and the cord are what say drawstring bag, and the round bottom is the part a reader can infer. Drawn plate - measured off the picture."
     },
     "item-bow": {
       "subject": [
@@ -613,6 +683,11 @@
         0.17
       ],
       "note": "Face and fluke across the top, both langets, and the haft down to the wrapped butt. Focal on the head where the langets start. Drawn plate - measured off the picture."
+    },
+    "item-coil-of-rope": {
+      "subject": [0.1565, 0.095, 0.6665, 0.78],
+      "focal": [0.49, 0.4],
+      "note": "The whole coil, the spliced eye, the whipped end and both hanging tails. Nothing is spent: a coil is a wheel, so the subject is nearly as wide as it is tall and both windows take it whole - the pad gives up the last 0.6% rather than any ink. Focal on the middle of the coil, where the hole is, because that is where an eye lands on a wheel of rope and centring on the box alone would aim at the same place by accident rather than on purpose. Drawn plate - measured off the picture."
     },
     "item-crossbow": {
       "subject": [
@@ -652,6 +727,19 @@
         0.4
       ],
       "note": "The whole page. A triad's window is 0.99 against a square plate, so the crop spends nothing and the tile keeps the ink edge to edge - the answer the warehouse, granary, barracks, quarry and lumber camp all got, and for their reason: on this shape the crop is never where anything is lost.\n\nWhat IS lost is the WATER WHEEL, and the die takes it - aim-solve measures a rectangle and reports that the ink fits, which is true and beside the point. Below the shoulder line a triad keeps only the middle half of its width. The wheel is drawn at 15%-28% across and 50%-68% down, which is outside that on both counts, and it goes but for the top of its arc. No aim reaches it: the crop has one per cent of freedom and the wheel is fifteen from the cut. Accepted rather than redrawn, because the brief asked for the crank shaft AND the pit wheel and the shaft is the half that survives - it runs along the top left with its iron collars, high on the piece where a triad is still full width, and it says water-driven without the wheel being there. Whole and inside the cut: the board roof and its frame, the blade on its carriage, the three chained logs on the deck, the sawdust and offcuts, and the stickered lumber stack.\n\nThe focal is the blade. It is the working end and it is the one thing on the plate that tells a sawmill from a cart shed at seventeen millimetres. For whoever briefs the next triad: a thing that must survive belongs above the shoulder line OR inside the middle half of the width - the wheel was outside both."
+    },
+    "tile-shrine": {
+      "subject": [
+        0.134,
+        0,
+        0.866,
+        1
+      ],
+      "focal": [
+        0.51,
+        0.45
+      ],
+      "note": "The canopy, the stone under it and the offerings at its foot. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes, and all of it is spent off the LEFT. That was measured by proofing both, not judged - the plate is drawn LARGE on its page, the canopy spanning some 40% of the width with its outer columns close to the corners the hexagon trims, and where the crop sits decides how many of the four columns stand clear. Spent evenly the rear right column is clipped at the top and the roof slab loses its right corner: the piece reads as a canopy with a leg missing. Spent left, all four columns are whole from base to capital and the slab is whole with them.\n\nWhat it costs is the approach of the beaten path at the far left, which the name band covers anyway. This is the cheapest 13.4% in the batch.\n\nWhole and inside the cut: the four columns, the low pitched slab roof, the daylight going straight through under it - which is the whole point of an open canopy and the first thing a tight crop kills - the rough standing stone, the stepped base of three courses, the shallow bowl and the bundle of cut stems. The slab's back-left corner touches the upper-left cut and is not taken by it.\n\nThe focal is the standing stone. It is what the shrine is of; the canopy is only the thing built to shelter it. The band falls on the worn ring and the path, which is the ground the brief set aside for it."
     },
     "tile-smelter": {
       "subject": [
@@ -744,6 +832,19 @@
       ],
       "note": "The whole page, near enough. A triad's window is 0.99 against a square plate, so nothing has to be spent and the tile keeps the ink from edge to edge - the one framing entry on this deck that is not a choice about what to lose.\n\nThe focal is the padlocked double door under the hoist beam, which is what the tile is of: it is the working end, and it is where the eye should land at seventeen millimetres rather than on the long dark side wall. Right of centre by design - the plate is drawn from thirty degrees above and thirty to the left, which puts the business of the building on the right and leaves the lower-left as the foreground grass the name band is printed over."
     },
+    "tile-alchemist": {
+      "subject": [
+        0,
+        0,
+        1,
+        0.866
+      ],
+      "focal": [
+        0.72,
+        0.5
+      ],
+      "note": "The house with its pot chimney and its glazed oriel bay. A pair window is 1.73 against a 3:2 page, so the full width is kept and 13.4% of the height goes - and every bit of it is spent off the BOTTOM, with the subject box set to the window's exact height so that nothing, not even the focal, can slide it back down. The charcoal kiln's trick for the charcoal kiln's reason, and here it is worth the whole tile: the chimney's top pot is drawn about 5% down the page, so an even spend cuts it with the CROP before the die ever gets a look, and a bottom-pinned crop clears it with room over the smoke.\n\nThe die then wants the same thing and gets it. A pair is two pointy-top hexes side by side, and the tallest thing on the page belongs over a hex peak, a quarter or three quarters across, never over the middle - the brick house's lesson. The chimney is drawn at about 70% across, which is very nearly the right-hand peak, and it stands the full stack of clay pots with its thread of smoke above them.\n\nWhat the bottom spend costs is the STONE MORTAR ON ITS BLOCK and the COVERED CROCK, both, and the doorstep of the house with them. The mortar and crock are the brief's own lower-left furniture and were always half under the band; the doorstep is a real loss and is the price of the chimney, which is not a close call - the brief says the pot chimney and the glassware are what name this tile, and a door names nothing.\n\nWhole and inside the cut: the oriel bay jettied out on its bracket with the pear-shaped alembic and both retorts silhouetted against its glass, the crooked lean of the house, the dormer, the slate roof, the four mortared clay pots and the smoke, the walled yard, the bed of tall strange-leaved plants. The left hex is largely open ground, which is the plate's own doing rather than the aim's: the yard was drawn low and the piece would be better with something standing in that cell. Noted for the redraw.\n\nThe focal is the oriel bay. It is the only lit thing on the piece, it is the working end - the glassware IS the trade - and it is what tells this from a crooked house at thirty-seven millimetres. The band falls on the plant bed and the yard wall."
+    },
     "tile-apiary": {
       "subject": [
         0.0725,
@@ -808,6 +909,19 @@
         0.36
       ],
       "note": "The whole page, near enough. A triad's window is 0.99 against a square plate, so nothing has to be spent and the tile keeps the ink from edge to edge - the same answer the warehouse got, and for the same reason: on this shape the crop is not where anything is lost.\n\nWhat IS lost is the hexagon, and no framing entry can argue with it. Below the shoulder line a triad keeps only the middle half of its width, and the proof says what that costs here: the wooden scoop goes entirely, and the base of the outermost staddle stone on each side goes with it. Both sacks, the ladder and the daylight gap under the floor are inside the cut and whole. That loss was accepted rather than solved - the plate would have to be redrawn smaller on its page to keep the scoop, and the scoop is the one item on it the tile can afford to lose.\n\nThe focal is the small hatch high in the gable that the ladder reaches: the working end, and the one thing that tells a granary from a shed at seventeen millimetres. Right of centre by design - the plate is drawn from thirty degrees above and thirty to the left, which puts the business of the building on the right and leaves the lower-left as the foreground grass the name band is printed over."
+    },
+    "tile-harbour": {
+      "subject": [
+        0.01,
+        0.01,
+        0.98,
+        0.98
+      ],
+      "focal": [
+        0.39,
+        0.36
+      ],
+      "note": "The whole page, for the warehouse's reason - a triad's window is 0.99 against a square plate and the crop spends nothing.\n\nThe die costs this plate very little, and again by composition: the brief asked for the quay to run from the lower left up and away to the right with the crane at the centre right, and the crane lands square in the wide band a triad keeps full width. The treadwheel, the crane house, the jib, the block and the hook are all whole. So is the vessel alongside, with its mast cut by the top edge exactly as the brief intended, and so is the flight of steps cut down into the water - which sits in the bottom lobe where a triad has narrowed to its middle half, and survives because the plate put it near the centre.\n\nWhat the die takes is the COIL OF HEAVY ROPE, drawn at 8%-22% across and 70%-77% down: outside the middle half and below the shoulder, the corner this shape does not have. The crates lose their outer edge to the left lobe and read as crates anyway; both barrels are whole. The rope is the right thing to lose - it is the one item on the plate that the dock also has, so it carries no identifying weight here.\n\nThe focal is the treadwheel. What separates this from the dock at thirty-seven millimetres is that everything here is stone and heavy where the dock is timber and small, and the wheel is where that argument is won: it is the only machine in either piece, it is a big plain circle among coursed rectangles, and it is a point rather than a texture. The band falls on swept quay stone, which is the ground the brief set aside for it."
     },
     "tile-hut": {
       "subject": [
@@ -913,6 +1027,19 @@
       ],
       "note": "The whole page, for the sawmill's reason - a triad's window is 0.99 against a square plate and the crop spends nothing.\n\nThis is the one plate in the batch the DIE costs nothing worth naming either, and that is composition rather than luck: the brief asked for staggered rows corner to corner so the pattern would survive the hexagonal cut, and it does. Four trees are whole, two are clipped at the edges and read as trees anyway, and what the lower lobes trim is grass and windfalls. Whole and inside the cut: the goblet pruning and the clear trunks whitened at the foot - which is what says kept rather than grown - the ladder set up into the centre tree, the picking basket at its foot, and the windfalls under the next tree along.\n\nThe focal is the ladder. It is the only made thing on the plate and the only straight line on it, so it is both what the eye lands on and what tells a worked orchard from scrub at seventeen millimetres. The band falls on open grass, which is the ground the brief set aside for it."
     },
+    "tile-palisade": {
+      "subject": [
+        0.134,
+        0,
+        0.866,
+        1
+      ],
+      "focal": [
+        0.74,
+        0.55
+      ],
+      "note": "The toothed run corner to corner, with the gate and its drawbar. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes, and all of it is spent off the LEFT rather than evenly. That is the whole of the decision and it is worth the gate - the drawbar and its iron ring are drawn out to 97% across, so an even spend cuts the bar in half and leaves the gate as two plain leaves. Spending left puts the ring inside the piece with room to spare, and the gate barred across is what makes this a defence rather than a paddock fence.\n\nWhat the left spend costs is the head of the ditch and the leftmost few logs. The ditch was going to the band regardless - the brief set that corner aside for it - and at 20.7 mm, the smallest piece in the set, a ditch was never going to read as anything but shadow.\n\nWhole and inside the cut: the axe-pointed tops running edge to edge, which the brief calls the entire silhouette and which is the one thing that had to survive; the gate, its two leaves, the drawbar and the ring; the plank walkway on its braced uprights with the rail above; the bank grass along the near side. The short ladder goes to the upper-left cut, and it is the one named thing here drawn outside the safe box.\n\nThe focal is the gate. There is no building on this tile and no working end in the usual sense, but a wall is read by its opening, and the gate is the only made thing on a plate that is otherwise a repeat."
+    },
     "tile-pasture": {
       "subject": [
         0.0395,
@@ -938,6 +1065,19 @@
         0.45
       ],
       "note": "The whole page. A triad window is 0.99 against a square plate, so the crop spends nothing and the tile keeps the ink edge to edge - the same answer the warehouse, granary and barracks got, and for the same reason. The DIE is the only thing that cuts: a triad keeps a wide band across the top and only the middle column below about 45%, so the spoil run in the lower left goes. That is the ground the brief already named as the band s to cover, so it costs nothing. The windlass at the derrick s foot is clipped where the right lobe falls away; the derrick, the slung block, the drilled face with its wedges and the barrow of chippings are all whole."
+    },
+    "tile-rail-depot": {
+      "subject": [
+        0.01,
+        0.01,
+        0.98,
+        0.98
+      ],
+      "focal": [
+        0.84,
+        0.18
+      ],
+      "note": "The whole page, for the warehouse's reason - a triad's window is 0.99 against a square plate, so the crop spends nothing and the tile keeps the ink edge to edge. On this shape the crop is never where anything is lost.\n\nThe DIE is generous here and it is composition rather than luck: the brief asked for the rails to run the full width and out of both ends, and below the shoulder line a triad keeps only the middle half of its width - so the bottom lobe of this piece is nothing but permanent way. Ballast, sleepers and two rails, filling a whole cell. That is the best thing on the tile and no aim chose it; the plate was drawn with the track low and across, which is the one composition this shape rewards.\n\nWhat the die takes is the BUFFER STOP, entirely, and the ballast heap and the stack of spare sleepers with it. All three are drawn in the lower left, outside the middle half, and no aim reaches them - the crop has one per cent of freedom and the buffer stop is twenty from the cut. Cheap, and cheaper than it looks: the brief itself set that corner aside for the name band, and a buffer stop is a rail END, which is the one thing this tile is not - it is where a town JOINS the network.\n\nWhole and inside the cut: the board shed with both sliding doors and their diagonal bracing, the stone platform with its timber edge, the water tower on its four braced legs with the swinging spout and the rust in its seams, the hand crane on the platform edge, the crates and the hand barrow.\n\nThe focal is the water tower. The shed is a shed and the platform is a platform - at thirty-seven millimetres the tank on its legs is the only POINT on the piece that says railway rather than goods yard, and the track that says it louder is a texture running the width, which is not a thing an eye can land on. It stands whole in the upper right lobe with its conical roof inside the margin, which is what the brief asked for and what this shape needed."
     },
     "tile-sand-pit": {
       "subject": [
