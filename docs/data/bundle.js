@@ -18001,6 +18001,21 @@ window.GAME_DATA = {
           0.84
         ]
       },
+      "tile-apiary": {
+        "file": "art/renders/tile-apiary.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0725,
+          0.249,
+          0.8675,
+          0.417
+        ],
+        "focal": [
+          0.5,
+          0.42
+        ]
+      },
       "tile-barracks": {
         "file": "art/renders/tile-barracks.png",
         "width": 1328,
@@ -18044,6 +18059,21 @@ window.GAME_DATA = {
         "focal": [
           0.52,
           0.52
+        ]
+      },
+      "tile-dock": {
+        "file": "art/renders/tile-dock.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.141,
+          0.286,
+          0.859,
+          0.3665
+        ],
+        "focal": [
+          0.62,
+          0.45
         ]
       },
       "tile-farm": {
@@ -18151,6 +18181,21 @@ window.GAME_DATA = {
           0.4
         ]
       },
+      "tile-orchard": {
+        "file": "art/renders/tile-orchard.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.6,
+          0.45
+        ]
+      },
       "tile-quarry": {
         "file": "art/renders/tile-quarry.png",
         "width": 1254,
@@ -18181,6 +18226,21 @@ window.GAME_DATA = {
           0.28
         ]
       },
+      "tile-sawmill": {
+        "file": "art/renders/tile-sawmill.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.5,
+          0.4
+        ]
+      },
       "tile-timber-house": {
         "file": "art/renders/tile-timber-house.png",
         "width": 1054,
@@ -18194,6 +18254,21 @@ window.GAME_DATA = {
         "focal": [
           0.45,
           0.4
+        ]
+      },
+      "tile-vineyard": {
+        "file": "art/renders/tile-vineyard.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.62,
+          0.6
         ]
       },
       "tile-warehouse": {

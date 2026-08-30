@@ -640,6 +640,19 @@
       ],
       "note": "The house, gable to gable, with the balustrade and the four clipped trees along its front and the mounting block on the sweep. Nothing is spent by the CROP that matters - the rhombus window is 1.24 against a 3:2 page, so the full height is kept and 9.7% of the width goes, off a left margin that is balustrade tip and bare ground. The DIE is what costs here, and it costs the walled kitchen garden entirely: a rhombus keeps the upper LEFT and lower RIGHT lobes, and the garden was drawn into the upper right - the one corner this shape does not have. No crop saves it; all four aims tested keep 60% of the page ink to within 0.3%, so the only question was which things go. Shifted 3% left of centre against the two the shift does buy: the leftmost clipped tree and the left chimney stack, both of which the centred crop cut. The plate was drawn to the full page against a brief that asked for the middle 60% - that is why a quarter of the piece is bare gravel and why the garden was never reachable. Not fixable by aiming; noted for the redraw."
     },
+    "tile-sawmill": {
+      "subject": [
+        0.01,
+        0.01,
+        0.98,
+        0.98
+      ],
+      "focal": [
+        0.5,
+        0.4
+      ],
+      "note": "The whole page. A triad's window is 0.99 against a square plate, so the crop spends nothing and the tile keeps the ink edge to edge - the answer the warehouse, granary, barracks, quarry and lumber camp all got, and for their reason: on this shape the crop is never where anything is lost.\n\nWhat IS lost is the WATER WHEEL, and the die takes it - aim-solve measures a rectangle and reports that the ink fits, which is true and beside the point. Below the shoulder line a triad keeps only the middle half of its width. The wheel is drawn at 15%-28% across and 50%-68% down, which is outside that on both counts, and it goes but for the top of its arc. No aim reaches it: the crop has one per cent of freedom and the wheel is fifteen from the cut. Accepted rather than redrawn, because the brief asked for the crank shaft AND the pit wheel and the shaft is the half that survives - it runs along the top left with its iron collars, high on the piece where a triad is still full width, and it says water-driven without the wheel being there. Whole and inside the cut: the board roof and its frame, the blade on its carriage, the three chained logs on the deck, the sawdust and offcuts, and the stickered lumber stack.\n\nThe focal is the blade. It is the working end and it is the one thing on the plate that tells a sawmill from a cart shed at seventeen millimetres. For whoever briefs the next triad: a thing that must survive belongs above the shoulder line OR inside the middle half of the width - the wheel was outside both."
+    },
     "tile-timber-house": {
       "subject": [
         0.21,
@@ -653,6 +666,19 @@
         0.4
       ]
     },
+    "tile-vineyard": {
+      "subject": [
+        0.01,
+        0.01,
+        0.98,
+        0.98
+      ],
+      "focal": [
+        0.62,
+        0.6
+      ],
+      "note": "The whole page, for the sawmill's reason - a triad's window is 0.99 against a square plate and the crop spends nothing.\n\nThe die takes the SHEARS. They are drawn at 78%-90% across and below the shoulder line, which is the corner this shape does not have, and no aim reaches them either. Accepted rather than redrawn: the basket is the same cue doing the same job, it is four times the size, and it survives - it sits just inside the notch at the head of the bottom lobe, losing only its right edge to that notch. Whole and inside the cut: the vine rows running corner to corner, which is what makes the combed bands read at all at this size; the chestnut posts and the wire between them; the dry-stone terrace wall across the lower third with the fallen course re-laid in it; and the dry worked ground between the rows. Nothing on this piece is tall, which is the whole of what tells it from the hop garden.\n\nThe focal is the basket on the wall - the human evidence, and the only point on a plate of repeating rows that is a point rather than a texture. The band falls on the terrace wall, which is stone and nothing else."
+    },
     "tile-warehouse": {
       "subject": [
         0.02,
@@ -665,6 +691,19 @@
         0.46
       ],
       "note": "The whole page, near enough. A triad's window is 0.99 against a square plate, so nothing has to be spent and the tile keeps the ink from edge to edge - the one framing entry on this deck that is not a choice about what to lose.\n\nThe focal is the padlocked double door under the hoist beam, which is what the tile is of: it is the working end, and it is where the eye should land at seventeen millimetres rather than on the long dark side wall. Right of centre by design - the plate is drawn from thirty degrees above and thirty to the left, which puts the business of the building on the right and leaves the lower-left as the foreground grass the name band is printed over."
+    },
+    "tile-apiary": {
+      "subject": [
+        0.0725,
+        0.249,
+        0.8675,
+        0.417
+      ],
+      "focal": [
+        0.5,
+        0.42
+      ],
+      "note": "The five skeps on their bench under the shingle roof, with the smoker and pail at the end of it. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes, 6.7% off each side, and this is the one plate in the batch where the spend costs nothing anybody would name - there is flowering grass on both edges and nothing else. Whole and inside the cut: all five skeps and the repeat of their domes, which the brief calls the entire silhouette; the plank bench and its posts; the roof; the bee scatter at the hive mouths; the smoker. The covered pail loses a sliver off its right, and to the DIE rather than the crop. Not shifted right to save it - that buys the pail at the price of the roof's left eave, and the roof is what makes this an apiary rather than five skeps standing in a field.\n\nThe focal is the middle skep. There is no working end on this one and no door: the subject is a row, and the middle of the row is the honest place to aim it. The band falls on flowering grass, which is what the lower half of this plate is for."
     },
     "tile-barracks": {
       "subject": [
@@ -783,6 +822,19 @@
       ],
       "note": "Blade tip to collar, both nibs, and the snaith to its butt. A tall narrow subject on a square page, so the crop brings paper either side. Focal on the collar where the tang is bolted. Drawn plate - measured off the picture."
     },
+    "tile-orchard": {
+      "subject": [
+        0.01,
+        0.01,
+        0.98,
+        0.98
+      ],
+      "focal": [
+        0.6,
+        0.45
+      ],
+      "note": "The whole page, for the sawmill's reason - a triad's window is 0.99 against a square plate and the crop spends nothing.\n\nThis is the one plate in the batch the DIE costs nothing worth naming either, and that is composition rather than luck: the brief asked for staggered rows corner to corner so the pattern would survive the hexagonal cut, and it does. Four trees are whole, two are clipped at the edges and read as trees anyway, and what the lower lobes trim is grass and windfalls. Whole and inside the cut: the goblet pruning and the clear trunks whitened at the foot - which is what says kept rather than grown - the ladder set up into the centre tree, the picking basket at its foot, and the windfalls under the next tree along.\n\nThe focal is the ladder. It is the only made thing on the plate and the only straight line on it, so it is both what the eye lands on and what tells a worked orchard from scrub at seventeen millimetres. The band falls on open grass, which is the ground the brief set aside for it."
+    },
     "tile-quarry": {
       "subject": [
         0.01,
@@ -834,6 +886,19 @@
         0.32
       ],
       "note": "The whole page, for the quarry s reason - a triad window is 0.99 against a square plate and the crop spends nothing. The stacks, the shear legs with the chain and hook, and the lean-to with the crosscut saw all sit in the wide upper band the die keeps; the skid track runs down into the lower lobe under the name band, which is the ground the brief set aside for it. The axe standing in its stump is on the left edge and loses its haft to the cut - it is the one thing here drawn outside the safe box, and it survives as a recognisable axe head."
+    },
+    "tile-dock": {
+      "subject": [
+        0.141,
+        0.286,
+        0.859,
+        0.3665
+      ],
+      "focal": [
+        0.62,
+        0.45
+      ],
+      "note": "The jetty on its piles with the boat made fast alongside, and as much of the bank as the band leaves. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes. All of it is spent off the LEFT, and that costs less than it looks - the left of this plate is the bank with the drying rack and the barrel on it, which is the ground the brief itself set aside for the name band, and the band covers that corner whether the crop does or not. Spending right instead would have cut the boat, and after the jetty the boat is what says dock. Whole and inside the cut: the decking and its rail, both bollards, the coiled rope, the chain, and the boat with the net heaped in it and its oar shipped. A fragment of the rack's crossbar survives above the band's top edge; the barrel is under it. Small and timber-built throughout, which is the whole of what keeps this from being read as the harbour.\n\nThe focal is the jetty head where the boat is made fast - the working end, and where the eye should land at seventeen millimetres rather than on the open water, which is rather more than half the piece by design."
     },
     "tile-farm": {
       "subject": [

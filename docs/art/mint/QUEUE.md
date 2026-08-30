@@ -15,13 +15,13 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 61/81 · maps 1/1 · building tiles 15/54**
+**cards 61/81 · maps 1/1 · building tiles 20/54**
 
 > **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 61 of 81 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
-> **Note.** buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 4 of 54 are under the 1289 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
+> **Note.** buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 7 of 54 are under the 1289 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
 
 
 ## Cards
@@ -121,24 +121,19 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**15 of 54 minted.** 0 waiting on a brief, 39 waiting on art, 0 waiting on frame.
+**20 of 54 minted.** 0 waiting on a brief, 34 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 39 tiles
+### 2 · DRAW — the artist — 34 tiles
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 797 px on the long side (a 67.5 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1594 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Tile | Category | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
 | `pasture` | Pasture | Extraction | `tile-pasture` | ✓ | · | · |
-| `orchard` | Orchard | Extraction | `tile-orchard` | ✓ | · | · |
-| `vineyard` | Vineyard | Extraction | `tile-vineyard` | ✓ | · | · |
-| `apiary` | Apiary | Extraction | `tile-apiary` | ✓ | · | · |
-| `dock` | Dock | Extraction | `tile-dock` | ✓ | · | · |
-| `sawmill` | Sawmill | Production | `tile-sawmill` | ✓ | · | · |
 | `charcoal-kiln` | Charcoal Kiln | Production | `tile-charcoal-kiln` | ✓ | · | · |
 | `smelter` | Smelter | Production | `tile-smelter` | ✓ | · | · |
 | `steelworks` | Steelworks | Production | `tile-steelworks` | ✓ | · | · |
@@ -179,7 +174,7 @@ Nothing waiting.
 
 ### Minted
 
-15 tiles complete: `hut`, `timber-house`, `brick-house`, `manor`, `lumber-camp`, `quarry`, `clay-pit`, `sand-pit`, `mine`, `oil-derrick`, `well`, `farm`, `warehouse`, `granary`, `barracks`.
+20 tiles complete: `hut`, `timber-house`, `brick-house`, `manor`, `lumber-camp`, `quarry`, `clay-pit`, `sand-pit`, `mine`, `oil-derrick`, `well`, `farm`, `orchard`, `vineyard`, `apiary`, `dock`, `sawmill`, `warehouse`, `granary`, `barracks`.
 
 Every minted tile is fully aimed: a `subject` box, a `focal` point and a one-line `note`.
 
