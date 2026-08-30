@@ -149,7 +149,7 @@ waiting one until you check.
 Tell me which subject you have taken, and its plate id, BEFORE you draw.
 
 ─── 2 · YOUR PROMPT ────────────────────────────────────────────────────
-Three parts, all in that same docs/art/prompts/<deck>.md file:
+Three parts, all in the same prompt file you opened at 1c:
 
   · the "## Shared preamble" block at the top — the house style
   · the fenced text block under your "## <plate-id>" heading — the subject,
@@ -217,11 +217,18 @@ AGAINST. A missing reference is never a reason to hold up a run.
 
 ─── 7 · I WILL REJECT A PLATE FOR ──────────────────────────────────────
   · card furniture — a frame, a panel, or lettering of any kind (§3)
+  · THE WRONG SHAPE. The first words of the FRAMING block name the page:
+    "Square plate", "A4 portrait", "Landscape 3:2". Deliver that shape. A
+    square deck given a 2:3 portrait page is cropped to a square anyway, so
+    a third of what you drew is thrown away and the composition with it
   · WIDTH below what the brief asks for on its long side. It is the one
     property that cannot be fixed afterwards
-  · ignoring the FRAMING block. The crop is taken by machine and cannot be
-    argued with, so a plate that ignores it is unusable even when the drawing
-    is good
+  · ignoring the rest of the FRAMING block, or the WINDOW or LABEL BAND
+    blocks. The crop is taken by machine and cannot be argued with, so a
+    plate that ignores them is unusable even when the drawing is good
+  · drawing the subject IN USE when the brief says it is laid out on its own.
+    A fitting is drawn dismounted, on a workshop floor, before it goes on —
+    not mounted on a vehicle, and not in a landscape
 
 ─── 8 · DELIVERY ───────────────────────────────────────────────────────
 Do not commit anything and do not open a pull request. The queue's own table
@@ -230,7 +237,7 @@ you. Ignore it.
 
 Show me the image in this chat and wait. With it, tell me:
 
-  · the plate id, and the pixel dimensions
+  · the plate id, the pixel dimensions, and the page shape you drew
   · whether you were able to see the reference sheet
   · any wording you had to change to get an acceptable result, quoted exactly
 
