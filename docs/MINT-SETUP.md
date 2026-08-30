@@ -203,17 +203,23 @@ doing what it ordinarily does. No snarl, no glowing eyes, no bared fangs, no
 blood-red sky, no ruined castle on the skyline, no dead trees, no wasteland.
 
 ─── 6 · THE REFERENCE SHEET ────────────────────────────────────────────
-Three accepted plates, captioned with what to look at:
+I will normally ATTACH it to this chat as an image — three accepted plates,
+captioned with what to look at. That is the reliable way, and if it is attached
+above, use it and ignore the rest of this section.
+
+If it is not attached, try:
 
   https://cdomotor-g.github.io/game1/art/style-reference.png
 
-Fetch it over that URL. A GitHub connector hands you text and never the bytes
-of an image, so the repository's own copy of a plate will not work.
+but do not expect it to work. Browsing returns text, and a GitHub connector
+hands you text and never the bytes of an image, so neither route reliably shows
+you a picture. That is a limitation of the tools, not a problem to solve.
 
-If you still cannot SEE it: do not stop and do not guess. Say so plainly, ask
-me to paste it into this chat, and draw from the written preamble meanwhile.
-The words are what a plate is drawn FROM; the sheet is what it is checked
-AGAINST. A missing reference is never a reason to hold up a run.
+IF YOU CANNOT SEE IT, DRAW ANYWAY. Say plainly that you could not see it, and
+work from the written preamble. Do not stop, do not guess at what the plates
+look like, and do not ask me for it a second time. The words are what a plate is
+drawn FROM; the sheet is what it is checked AGAINST, and I do that checking. A
+missing reference is never a reason to hold up a run.
 
 ─── 7 · I WILL REJECT A PLATE FOR ──────────────────────────────────────
   · card furniture — a frame, a panel, or lettering of any kind (§3)
