@@ -19,6 +19,7 @@
       "effects": ["Immune to Hard Frost.", "No tundra or mountain effort penalty."] },
     { "id": "travelling-cloak", "name": "Travelling Cloak", "class": "clothing", "cardCode": "ITM-07", "slot": "back", "madeAt": "tailor",
       "inputs": [{ "commodity": "cloth", "qty": 2 }, { "commodity": "leather", "qty": 1 }], "effortHours": 3, "baseValue": 55, "massKg": 1, "wear": 5,
+      "story": "Heavy wool, a deep hood, and a hem turned up and restitched by two different owners. It does not make anybody walk faster; it makes them stop less, which the road cannot tell apart.",
       "effects": ["+1 move point for the figure wearing it."] },
     { "id": "boots", "name": "Sturdy Boots", "class": "clothing", "slot": "feet", "madeAt": "tailor",
       "inputs": [{ "commodity": "leather", "qty": 1 }], "effortHours": 2, "baseValue": 30, "massKg": 0.75, "wear": 4,
