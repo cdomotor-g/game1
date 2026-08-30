@@ -15,7 +15,7 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 81/81 · maps 1/1 · building tiles 34/54**
+**cards 81/81 · maps 1/1 · building tiles 39/54**
 
 > **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 81 of 81 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
@@ -98,13 +98,13 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**34 of 54 minted.** 0 waiting on a brief, 20 waiting on art, 0 waiting on frame.
+**39 of 54 minted.** 0 waiting on a brief, 15 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 20 tiles
+### 2 · DRAW — the artist — 15 tiles
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 644 px on the long side (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1289 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -121,11 +121,6 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `bakery` | Bakery | Production | `tile-bakery` | ✓ | · | · |
 | `butcher` | Butcher | Production | `tile-butcher` | ✓ | · | · |
 | `dairy` | Dairy | Production | `tile-dairy` | ✓ | · | · |
-| `brewery` | Brewery | Production | `tile-brewery` | ✓ | · | · |
-| `winery` | Winery | Production | `tile-winery` | ✓ | · | · |
-| `market` | Market | Civic | `tile-market` | ✓ | · | · |
-| `trading-house` | Trading House | Civic | `tile-trading-house` | ✓ | · | · |
-| `town-hall` | Town Hall | Civic | `tile-town-hall` | ✓ | · | · |
 | `guildhall` | Guildhall | Civic | `tile-guildhall` | ✓ | · | · |
 | `inn` | Inn | Civic | `tile-inn` | ✓ | · | · |
 | `infirmary` | Infirmary | Civic | `tile-infirmary` | ✓ | · | · |
@@ -137,7 +132,7 @@ Nothing waiting.
 
 ### Minted
 
-34 tiles complete: `hut`, `timber-house`, `brick-house`, `manor`, `lumber-camp`, `quarry`, `clay-pit`, `sand-pit`, `mine`, `oil-derrick`, `well`, `farm`, `pasture`, `orchard`, `vineyard`, `apiary`, `dock`, `sawmill`, `charcoal-kiln`, `smelter`, `steelworks`, `warehouse`, `granary`, `barracks`, `palisade`, `alchemist`, `shrine`, `harbour`, `rail-depot`, `crop-grain`, `crop-vegetables`, `crop-flax`, `crop-cotton`, `crop-hops`.
+39 tiles complete: `hut`, `timber-house`, `brick-house`, `manor`, `lumber-camp`, `quarry`, `clay-pit`, `sand-pit`, `mine`, `oil-derrick`, `well`, `farm`, `pasture`, `orchard`, `vineyard`, `apiary`, `dock`, `sawmill`, `charcoal-kiln`, `smelter`, `steelworks`, `brewery`, `winery`, `warehouse`, `granary`, `market`, `trading-house`, `town-hall`, `barracks`, `palisade`, `alchemist`, `shrine`, `harbour`, `rail-depot`, `crop-grain`, `crop-vegetables`, `crop-flax`, `crop-cotton`, `crop-hops`.
 
 Every minted tile is fully aimed: a `subject` box, a `focal` point and a one-line `note`.
 

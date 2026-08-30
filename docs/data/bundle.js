@@ -18347,6 +18347,21 @@ window.GAME_DATA = {
           0.56
         ]
       },
+      "tile-brewery": {
+        "file": "art/renders/tile-brewery.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.05,
+          0.056,
+          0.9,
+          0.864
+        ],
+        "focal": [
+          0.47,
+          0.48
+        ]
+      },
       "tile-brick-house": {
         "file": "art/renders/tile-brick-house.png",
         "width": 1536,
@@ -18572,6 +18587,21 @@ window.GAME_DATA = {
           0.45
         ]
       },
+      "tile-market": {
+        "file": "art/renders/tile-market.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.18,
+          0.046,
+          0.67,
+          0.854
+        ],
+        "focal": [
+          0.52,
+          0.55
+        ]
+      },
       "tile-mine": {
         "file": "art/renders/tile-mine.png",
         "width": 1536,
@@ -18767,6 +18797,36 @@ window.GAME_DATA = {
           0.4
         ]
       },
+      "tile-town-hall": {
+        "file": "art/renders/tile-town-hall.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.1,
+          0,
+          0.82,
+          0.88
+        ],
+        "focal": [
+          0.55,
+          0.62
+        ]
+      },
+      "tile-trading-house": {
+        "file": "art/renders/tile-trading-house.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.13,
+          0.0785,
+          0.84,
+          0.8915
+        ],
+        "focal": [
+          0.42,
+          0.55
+        ]
+      },
       "tile-vineyard": {
         "file": "art/renders/tile-vineyard.png",
         "width": 1254,
@@ -18810,6 +18870,21 @@ window.GAME_DATA = {
         "focal": [
           0.55,
           0.48
+        ]
+      },
+      "tile-winery": {
+        "file": "art/renders/tile-winery.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.05,
+          0.0755,
+          0.9,
+          0.8445
+        ],
+        "focal": [
+          0.57,
+          0.4
         ]
       },
       "tool-axe": {

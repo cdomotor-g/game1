@@ -1761,7 +1761,7 @@ them there.
 
 ## tile-brewery — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-brewery.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-brewery.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1804,7 +1804,7 @@ them there.
 
 ## tile-winery — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-winery.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-winery.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1937,7 +1937,7 @@ them there.
 
 ## tile-market — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-market.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-market.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1981,7 +1981,7 @@ them there.
 
 ## tile-trading-house — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-trading-house.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-trading-house.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -2026,7 +2026,7 @@ them there.
 
 ## tile-town-hall — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-town-hall.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-town-hall.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
