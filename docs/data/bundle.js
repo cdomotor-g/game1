@@ -9250,6 +9250,7 @@ window.GAME_DATA = {
         "baseValue": 55,
         "massKg": 1,
         "wear": 5,
+        "story": "Heavy wool, a deep hood, and a hem turned up and restitched by two different owners. It does not make anybody walk faster; it makes them stop less, which the road cannot tell apart.",
         "effects": [
           "+1 move point for the figure wearing it."
         ]
@@ -17544,6 +17545,21 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "item-bag": {
+        "file": "art/renders/item-bag.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.1,
+          0.18,
+          0.78,
+          0.71
+        ],
+        "focal": [
+          0.54,
+          0.29
+        ]
+      },
       "item-bow": {
         "file": "art/renders/item-bow.png",
         "width": 1254,
@@ -17574,6 +17590,21 @@ window.GAME_DATA = {
           0.53
         ]
       },
+      "item-coil-of-rope": {
+        "file": "art/renders/item-coil-of-rope.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.1565,
+          0.095,
+          0.6665,
+          0.78
+        ],
+        "focal": [
+          0.49,
+          0.4
+        ]
+      },
       "item-crossbow": {
         "file": "art/renders/item-crossbow.png",
         "width": 1254,
@@ -17587,6 +17618,21 @@ window.GAME_DATA = {
         "focal": [
           0.53,
           0.27
+        ]
+      },
+      "item-grappling-hook": {
+        "file": "art/renders/item-grappling-hook.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.04,
+          0.17,
+          0.91,
+          0.73
+        ],
+        "focal": [
+          0.44,
+          0.56
         ]
       },
       "item-helm": {
@@ -17634,6 +17680,21 @@ window.GAME_DATA = {
           0.42
         ]
       },
+      "item-satchel": {
+        "file": "art/renders/item-satchel.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.02,
+          0.1235,
+          0.93,
+          0.7765
+        ],
+        "focal": [
+          0.5,
+          0.45
+        ]
+      },
       "item-shield": {
         "file": "art/renders/item-shield.png",
         "width": 1254,
@@ -17662,6 +17723,21 @@ window.GAME_DATA = {
         "focal": [
           0.44,
           0.72
+        ]
+      },
+      "item-travelling-cloak": {
+        "file": "art/renders/item-travelling-cloak.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.22,
+          0.098,
+          0.6,
+          0.782
+        ],
+        "focal": [
+          0.5,
+          0.28
         ]
       },
       "item-war-axe": {
@@ -17694,6 +17770,111 @@ window.GAME_DATA = {
           0.17
         ]
       },
+      "modification-compound-boiler": {
+        "file": "art/renders/modification-compound-boiler.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.06,
+          0.104,
+          0.9,
+          0.796
+        ],
+        "focal": [
+          0.42,
+          0.33
+        ]
+      },
+      "modification-copper-sheathing": {
+        "file": "art/renders/modification-copper-sheathing.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.05,
+          0.115,
+          0.92,
+          0.8335
+        ],
+        "focal": [
+          0.42,
+          0.5
+        ]
+      },
+      "modification-fleetfoot-binding": {
+        "file": "art/renders/modification-fleetfoot-binding.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.06,
+          0.1235,
+          0.87,
+          0.7765
+        ],
+        "focal": [
+          0.65,
+          0.22
+        ]
+      },
+      "modification-ice-runners": {
+        "file": "art/renders/modification-ice-runners.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.05,
+          0.14,
+          0.91,
+          0.74
+        ],
+        "focal": [
+          0.46,
+          0.4
+        ]
+      },
+      "modification-iron-ram": {
+        "file": "art/renders/modification-iron-ram.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.1,
+          0.114,
+          0.85,
+          0.786
+        ],
+        "focal": [
+          0.45,
+          0.42
+        ]
+      },
+      "modification-keelbound": {
+        "file": "art/renders/modification-keelbound.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.08,
+          0.16,
+          0.87,
+          0.76
+        ],
+        "focal": [
+          0.53,
+          0.29
+        ]
+      },
+      "modification-salamander-grate": {
+        "file": "art/renders/modification-salamander-grate.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.05,
+          0.074,
+          0.93,
+          0.8
+        ],
+        "focal": [
+          0.44,
+          0.55
+        ]
+      },
       "modification-spinnaker": {
         "file": "art/renders/modification-spinnaker.png",
         "width": 1254,
@@ -17707,6 +17888,51 @@ window.GAME_DATA = {
         "focal": [
           0.56,
           0.32
+        ]
+      },
+      "modification-storm-shutters": {
+        "file": "art/renders/modification-storm-shutters.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.04,
+          0.154,
+          0.93,
+          0.786
+        ],
+        "focal": [
+          0.5,
+          0.42
+        ]
+      },
+      "modification-sweep-rig": {
+        "file": "art/renders/modification-sweep-rig.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.03,
+          0.1535,
+          0.95,
+          0.7765
+        ],
+        "focal": [
+          0.55,
+          0.46
+        ]
+      },
+      "modification-warded-hold": {
+        "file": "art/renders/modification-warded-hold.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.03,
+          0.18,
+          0.94,
+          0.72
+        ],
+        "focal": [
+          0.5,
+          0.43
         ]
       },
       "monster-ash-drake": {
@@ -18001,6 +18227,21 @@ window.GAME_DATA = {
           0.84
         ]
       },
+      "tile-alchemist": {
+        "file": "art/renders/tile-alchemist.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          0.866
+        ],
+        "focal": [
+          0.72,
+          0.5
+        ]
+      },
       "tile-apiary": {
         "file": "art/renders/tile-apiary.png",
         "width": 1254,
@@ -18044,6 +18285,21 @@ window.GAME_DATA = {
         "focal": [
           0.46,
           0.56
+        ]
+      },
+      "tile-brewery": {
+        "file": "art/renders/tile-brewery.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.05,
+          0.056,
+          0.9,
+          0.864
+        ],
+        "focal": [
+          0.47,
+          0.48
         ]
       },
       "tile-brick-house": {
@@ -18106,6 +18362,81 @@ window.GAME_DATA = {
           0.52
         ]
       },
+      "tile-crop-cotton": {
+        "file": "art/renders/tile-crop-cotton.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.145,
+          0,
+          0.855,
+          1
+        ],
+        "focal": [
+          0.83,
+          0.64
+        ]
+      },
+      "tile-crop-flax": {
+        "file": "art/renders/tile-crop-flax.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0895,
+          0,
+          0.8405,
+          1
+        ],
+        "focal": [
+          0.5,
+          0.48
+        ]
+      },
+      "tile-crop-grain": {
+        "file": "art/renders/tile-crop-grain.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focal": [
+          0.12,
+          0.45
+        ]
+      },
+      "tile-crop-hops": {
+        "file": "art/renders/tile-crop-hops.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0895,
+          0,
+          0.8405,
+          1
+        ],
+        "focal": [
+          0.71,
+          0.45
+        ]
+      },
+      "tile-crop-vegetables": {
+        "file": "art/renders/tile-crop-vegetables.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0895,
+          0,
+          0.8405,
+          1
+        ],
+        "focal": [
+          0.33,
+          0.45
+        ]
+      },
       "tile-dairy": {
         "file": "art/renders/tile-dairy.png",
         "width": 1254,
@@ -18166,6 +18497,21 @@ window.GAME_DATA = {
           0.36
         ]
       },
+      "tile-harbour": {
+        "file": "art/renders/tile-harbour.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.39,
+          0.36
+        ]
+      },
       "tile-hut": {
         "file": "art/renders/tile-hut.png",
         "width": 1254,
@@ -18209,6 +18555,21 @@ window.GAME_DATA = {
         "focal": [
           0.4425,
           0.45
+        ]
+      },
+      "tile-market": {
+        "file": "art/renders/tile-market.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.18,
+          0.046,
+          0.67,
+          0.854
+        ],
+        "focal": [
+          0.52,
+          0.55
         ]
       },
       "tile-mill": {
@@ -18271,6 +18632,21 @@ window.GAME_DATA = {
           0.45
         ]
       },
+      "tile-palisade": {
+        "file": "art/renders/tile-palisade.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.134,
+          0,
+          0.866,
+          1
+        ],
+        "focal": [
+          0.74,
+          0.55
+        ]
+      },
       "tile-pasture": {
         "file": "art/renders/tile-pasture.png",
         "width": 1536,
@@ -18301,6 +18677,21 @@ window.GAME_DATA = {
           0.45
         ]
       },
+      "tile-rail-depot": {
+        "file": "art/renders/tile-rail-depot.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.84,
+          0.18
+        ]
+      },
       "tile-sand-pit": {
         "file": "art/renders/tile-sand-pit.png",
         "width": 1536,
@@ -18329,6 +18720,21 @@ window.GAME_DATA = {
         "focal": [
           0.5,
           0.4
+        ]
+      },
+      "tile-shrine": {
+        "file": "art/renders/tile-shrine.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.134,
+          0,
+          0.866,
+          1
+        ],
+        "focal": [
+          0.51,
+          0.45
         ]
       },
       "tile-smelter": {
@@ -18391,6 +18797,36 @@ window.GAME_DATA = {
           0.4
         ]
       },
+      "tile-town-hall": {
+        "file": "art/renders/tile-town-hall.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.1,
+          0,
+          0.82,
+          0.88
+        ],
+        "focal": [
+          0.55,
+          0.62
+        ]
+      },
+      "tile-trading-house": {
+        "file": "art/renders/tile-trading-house.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.13,
+          0.0785,
+          0.84,
+          0.8915
+        ],
+        "focal": [
+          0.42,
+          0.55
+        ]
+      },
       "tile-vineyard": {
         "file": "art/renders/tile-vineyard.png",
         "width": 1254,
@@ -18434,6 +18870,21 @@ window.GAME_DATA = {
         "focal": [
           0.55,
           0.48
+        ]
+      },
+      "tile-winery": {
+        "file": "art/renders/tile-winery.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.05,
+          0.0755,
+          0.9,
+          0.8445
+        ],
+        "focal": [
+          0.57,
+          0.4
         ]
       },
       "tool-axe": {
