@@ -17560,6 +17560,21 @@ window.GAME_DATA = {
           0.29
         ]
       },
+      "item-binoculars": {
+        "file": "art/renders/item-binoculars.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.05,
+          0.19,
+          0.9,
+          0.68
+        ],
+        "focal": [
+          0.64,
+          0.26
+        ]
+      },
       "item-bow": {
         "file": "art/renders/item-bow.png",
         "width": 1254,
@@ -17620,6 +17635,21 @@ window.GAME_DATA = {
           0.27
         ]
       },
+      "item-dagger": {
+        "file": "art/renders/item-dagger.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.2,
+          0.0735,
+          0.68,
+          0.8615
+        ],
+        "focal": [
+          0.49,
+          0.575
+        ]
+      },
       "item-grappling-hook": {
         "file": "art/renders/item-grappling-hook.png",
         "width": 1254,
@@ -17648,6 +17678,21 @@ window.GAME_DATA = {
         "focal": [
           0.39,
           0.6
+        ]
+      },
+      "item-lantern": {
+        "file": "art/renders/item-lantern.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.1845,
+          0.0865,
+          0.6165,
+          0.7955
+        ],
+        "focal": [
+          0.52,
+          0.68
         ]
       },
       "item-leather-jerkin": {
@@ -17710,6 +17755,21 @@ window.GAME_DATA = {
           0.49
         ]
       },
+      "item-staff": {
+        "file": "art/renders/item-staff.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.31,
+          0.145,
+          0.4,
+          0.788
+        ],
+        "focal": [
+          0.33,
+          0.83
+        ]
+      },
       "item-sword": {
         "file": "art/renders/item-sword.png",
         "width": 1254,
@@ -17723,6 +17783,21 @@ window.GAME_DATA = {
         "focal": [
           0.44,
           0.72
+        ]
+      },
+      "item-torch": {
+        "file": "art/renders/item-torch.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.36,
+          0.024,
+          0.2,
+          0.906
+        ],
+        "focal": [
+          0.44,
+          0.37
         ]
       },
       "item-travelling-cloak": {

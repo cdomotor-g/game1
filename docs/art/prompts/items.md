@@ -167,7 +167,7 @@ not a rule of thumb.)
 
 ## item-lantern — Lantern *(ITEMS deck · light, ITM-02)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-lantern.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-lantern.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -197,7 +197,7 @@ not a rule of thumb.)
 
 ## item-torch — Torch *(ITEMS deck · light, ITM-03)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-torch.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-torch.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -352,7 +352,7 @@ not a rule of thumb.)
 
 ## item-binoculars — Binoculars *(ITEMS deck · gear, belt, ITM-08)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-binoculars.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-binoculars.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -526,7 +526,7 @@ not a rule of thumb.)
 
 ## item-dagger — Dagger *(WEAPONS deck · weapon, hand, WPN-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-dagger.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-dagger.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -558,7 +558,7 @@ not a rule of thumb.)
 
 ## item-staff — Staff *(WEAPONS deck · weapon, two-hand, WPN-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-staff.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-staff.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]

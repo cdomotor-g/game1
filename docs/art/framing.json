@@ -88,18 +88,42 @@
       "note": "Old Mother Keswick shelling into the bowl. The cat comes along below if there is room."
     },
     "modification-storm-shutters": {
-      "subject": [0.04, 0.154, 0.93, 0.786],
-      "focal": [0.5, 0.42],
+      "subject": [
+        0.04,
+        0.154,
+        0.93,
+        0.786
+      ],
+      "focal": [
+        0.5,
+        0.42
+      ],
       "note": "The three propped shutters, the open one showing its hide lining, its tacks and the tarred rope round the rebate, with the mallet and the keg. One per cent off the bottom takes the foot of the mallet head; the lining, which is the thing this card is actually selling, stays whole."
     },
     "modification-sweep-rig": {
-      "subject": [0.03, 0.1535, 0.95, 0.7765],
-      "focal": [0.55, 0.46],
+      "subject": [
+        0.03,
+        0.1535,
+        0.95,
+        0.7765
+      ],
+      "focal": [
+        0.55,
+        0.46
+      ],
       "note": "The gooseneck pivot with its drawn pin, both spars end to end, the laced sail and all four crew handles. Nothing is spent: at 78% of the page height the rig clears the flat window's 80% ceiling, so the card and the thumbnail both keep it whole. The quiet deck above the upper spar is what bought that."
     },
     "modification-warded-hold": {
-      "subject": [0.03, 0.18, 0.94, 0.72],
-      "focal": [0.5, 0.43],
+      "subject": [
+        0.03,
+        0.18,
+        0.94,
+        0.72
+      ],
+      "focal": [
+        0.5,
+        0.43
+      ],
       "note": "The crate lid standing proud, the crowbar bent under it and plainly not moving, and the nearest two marks in the end grain. The box is 94% by 72% and the ink fits whole at both windows with room over. What the crop spends is the deckhead arch above and the run of floor planking below, both of which are there to say small cargo hold and neither of which the card names; the row of crates carrying the rest of the marks runs off the right margin as the brief allows."
     },
     "monster-ash-drake": {
@@ -464,38 +488,94 @@
       "note": "Stopper to base of the flask, with the crystal caged inside it."
     },
     "modification-compound-boiler": {
-      "subject": [0.06, 0.104, 0.9, 0.796],
-      "focal": [0.42, 0.33],
+      "subject": [
+        0.06,
+        0.104,
+        0.9,
+        0.796
+      ],
+      "focal": [
+        0.42,
+        0.33
+      ],
       "note": "Both cylinders and the plainly different diameters that make it a compound, the receiver pipe and its lagging band between them, the crankshaft with its cranks, and the flywheel. A square plate against a near-square card window keeps the page, and the 5:4 thumbnail is the one that has to be paid: it holds 80% of the height and the ink wants 82%. The 2% is spent off the BOTTOM - the bedplate's lower lip and the shadow under it - rather than off the top, because the top is the two domed cylinder tops with their standpipes, and the difference between those two diameters is the whole of what the card says. The oil can and the long-spouted feeder on the bedplate survive at both windows."
     },
     "modification-copper-sheathing": {
-      "subject": [0.05, 0.115, 0.92, 0.8335],
-      "focal": [0.42, 0.5],
+      "subject": [
+        0.05,
+        0.115,
+        0.92,
+        0.8335
+      ],
+      "focal": [
+        0.42,
+        0.5
+      ],
       "note": "The sheet stood on end at full height, the fanned stack behind it, the spilled keg and the shipwright's hammer. The standing sheet is the product and its height is the whole point of the picture, so the 6% the flat window cannot hold comes off the bottom: it spends the tin snips in the corner, which are a scale prop the card does not name. The ghosted hull may run to the margins."
     },
     "modification-fleetfoot-binding": {
-      "subject": [0.06, 0.1235, 0.87, 0.7765],
-      "focal": [0.65, 0.22],
+      "subject": [
+        0.06,
+        0.1235,
+        0.87,
+        0.7765
+      ],
+      "focal": [
+        0.65,
+        0.22
+      ],
       "note": "Her face and both hands on the open hub, the knotted cord wound three times round the axle stock, and the crystal tied into the last knot. The leaning wheel is inside the box on purpose and not as scenery: the stock is drawn heavy, and the wheel off its hub with the trestles and the spanner is what makes this a wheelwright's yard rather than a gun on a carriage. Nothing has to be spent - 87% by 79% against the thumbnail's 80% of the height - so the straw, the grease pot and the spanner all survive the card window and only the last of them grazes the thumbnail's bottom edge."
     },
     "modification-ice-runners": {
-      "subject": [0.05, 0.14, 0.91, 0.74],
-      "focal": [0.46, 0.4],
+      "subject": [
+        0.05,
+        0.14,
+        0.91,
+        0.74
+      ],
+      "focal": [
+        0.46,
+        0.4
+      ],
       "note": "Both runners with their cast brackets and U-bolts, and the displaced wheel that says what they come off. Nothing is spent: at 74% of the height it clears the flat window's ceiling with room over. The spanner, the screw box and the tallow rag along the foot are scenery the crop may have."
     },
     "modification-iron-ram": {
-      "subject": [0.1, 0.114, 0.85, 0.786],
-      "focal": [0.45, 0.42],
+      "subject": [
+        0.1,
+        0.114,
+        0.85,
+        0.786
+      ],
+      "focal": [
+        0.45,
+        0.42
+      ],
       "note": "The ram on its cradle, the row of scarf bolts laid out beside it, and the sledgehammer leaning there for scale. One per cent off the bottom, which is the far end of the washer row; the ram itself is whole in both windows."
     },
     "modification-keelbound": {
-      "subject": [0.08, 0.16, 0.87, 0.76],
-      "focal": [0.53, 0.29],
+      "subject": [
+        0.08,
+        0.16,
+        0.87,
+        0.76
+      ],
+      "focal": [
+        0.53,
+        0.29
+      ],
       "note": "The midships scarf with the run of out-of-register marks along the grain, the alchemist's chalk hand and the bowl in the other, and the mana crystal in its wooden cradle at the lower right. Nothing has to be spent at either window: the box is 87% by 76% and the 5:4 thumbnail holds 80% of the height, so the ink fits whole and the pad gives up the difference. The ends of the keel run off both margins, which is what the brief set them aside for, and the standing water and the slip timbering behind are the scenery that lets them."
     },
     "modification-salamander-grate": {
-      "subject": [0.05, 0.074, 0.93, 0.8],
-      "focal": [0.44, 0.55],
+      "subject": [
+        0.05,
+        0.074,
+        0.93,
+        0.8
+      ],
+      "focal": [
+        0.44,
+        0.55
+      ],
       "note": "The grate stood on end with the heat flat between its bars, the bound shape strapped into its cradle underneath, and the fireman standing well back with his slice bar. The box is 93% by 80%, which is exactly the 5:4 thumbnail's budget, so the card window keeps the page and the thumbnail trims 2.4% off the BOTTOM. That is the tongs on the foundry floor, and they are the right thing to spend: the brief puts the tongs and the cooling trough beside the work and names only the grate, the bound shape and the slice bar as what may not be cut. The trough is at the right and survives both."
     },
     "modification-spinnaker": {
@@ -587,8 +667,16 @@
       "note": "Both pauldrons, the breastplate and all three fauld lames. The bench below is scenery the crop may spend. Focal on the centre ridge. Drawn plate - measured off the picture."
     },
     "item-grappling-hook": {
-      "subject": [0.04, 0.17, 0.91, 0.73],
-      "focal": [0.44, 0.56],
+      "subject": [
+        0.04,
+        0.17,
+        0.91,
+        0.73
+      ],
+      "focal": [
+        0.44,
+        0.56
+      ],
       "note": "All four flukes and their points, the shank, the ring, the thimble and the seized rope tail. Drawn corner to corner, so the box is 91% of the width: the ring runs out to 4% on the left and the sprung fourth fluke to 95% on the right. An earlier box called the left edge at 10% and the card window grazed the ring - measured again off the plate map, which puts it at 5%. Both windows now hold the whole of it. Focal on the crown where the four flukes leave the shank, not the middle of the box, which is bare bench. Drawn plate - measured off the picture."
     },
     "item-helm": {
@@ -605,8 +693,16 @@
       "note": "Crown to the tip of the nasal, brow band and every rivet. Focal where the nasal meets the band. Drawn plate - measured off the picture."
     },
     "item-satchel": {
-      "subject": [0.02, 0.1235, 0.93, 0.7765],
-      "focal": [0.5, 0.45],
+      "subject": [
+        0.02,
+        0.1235,
+        0.93,
+        0.7765
+      ],
+      "focal": [
+        0.5,
+        0.45
+      ],
       "note": "The body, both gussets, the flap, both buckled straps, both D-rings and the full loop of the shoulder strap. The loop is what makes this the widest box in the deck at 93% - it runs out to 2% on the left and 95% on the right, and it is named by the brief, so it is veto and not scenery. The top edge is the flap at 12%, not the 10% first guessed; that 2% is the whole reason the thumbnail holds this plate with nothing spent. Focal on the flap between the two buckles. Drawn plate - measured off the picture."
     },
     "item-shield": {
@@ -636,8 +732,16 @@
       "note": "Point to pommel, both quillons and the whole grip. The sword is drawn corner to corner with no margin, so the box is nearly the page: the card window holds all of it, and the 5:4 thumbnail cannot - it keeps the point and spends the pommel. Drawn plate - measured off the picture."
     },
     "item-travelling-cloak": {
-      "subject": [0.22, 0.098, 0.6, 0.782],
-      "focal": [0.5, 0.28],
+      "subject": [
+        0.22,
+        0.098,
+        0.6,
+        0.782
+      ],
+      "focal": [
+        0.5,
+        0.28
+      ],
       "note": "The hood, the shoulder cape, the throat strap and toggle, the full drop of the folds and the whole hem. The trestle it hangs over is scenery on both sides and sits outside the box, so the crop may spend it and does. Focal on the hood and throat, high on the drop: the empty hood is what says travelling cloak, and a box round a full-length hanging garment centres on its knees. Drawn plate - measured off the picture."
     },
     "item-war-axe": {
@@ -654,8 +758,16 @@
       "note": "Wedge and poll down to the knob, taking the beard and the binding. Focal on the eye where the bit meets the haft. Drawn plate - measured off the picture."
     },
     "item-bag": {
-      "subject": [0.1, 0.18, 0.78, 0.71],
-      "focal": [0.54, 0.29],
+      "subject": [
+        0.1,
+        0.18,
+        0.78,
+        0.71
+      ],
+      "focal": [
+        0.54,
+        0.29
+      ],
       "note": "The whole bag - all four seams, the gathered neck, both cord tails and their knots, the belt loop and the darned patch. The drawstring swings out to 12% on the left and the box is loose to 10% to carry it. Both windows hold everything. Focal on the gathered neck rather than the body: the pleats and the cord are what say drawstring bag, and the round bottom is the part a reader can infer. Drawn plate - measured off the picture."
     },
     "item-bow": {
@@ -685,8 +797,16 @@
       "note": "Face and fluke across the top, both langets, and the haft down to the wrapped butt. Focal on the head where the langets start. Drawn plate - measured off the picture."
     },
     "item-coil-of-rope": {
-      "subject": [0.1565, 0.095, 0.6665, 0.78],
-      "focal": [0.49, 0.4],
+      "subject": [
+        0.1565,
+        0.095,
+        0.6665,
+        0.78
+      ],
+      "focal": [
+        0.49,
+        0.4
+      ],
       "note": "The whole coil, the spliced eye, the whipped end and both hanging tails. Nothing is spent: a coil is a wheel, so the subject is nearly as wide as it is tall and both windows take it whole - the pad gives up the last 0.6% rather than any ink. Focal on the middle of the coil, where the hole is, because that is where an eye lands on a wheel of rope and centring on the box alone would aim at the same place by accident rather than on purpose. Drawn plate - measured off the picture."
     },
     "item-crossbow": {
@@ -701,6 +821,71 @@
         0.27
       ],
       "note": "Both prod tips and lashings, the string, the whole tiller to the butt cap, the nut and the hanging trigger. Focal on the nut. Drawn plate - measured off the picture."
+    },
+    "item-binoculars": {
+      "subject": [
+        0.05,
+        0.19,
+        0.9,
+        0.68
+      ],
+      "focal": [
+        0.64,
+        0.26
+      ],
+      "note": "Both tubes end to end, both objective rims - the dented one included - both eyepiece collars, the hinged bridge and its knurled screw, the leather bindings and the knotted cord. The glasses lie across the page well inside the band, so both windows hold the whole of it and nothing is spent. Focal on the bridge screw. Drawn plate - measured off the picture."
+    },
+    "item-lantern": {
+      "subject": [
+        0.1845,
+        0.0865,
+        0.6165,
+        0.7955
+      ],
+      "focal": [
+        0.52,
+        0.68
+      ],
+      "note": "Carrying ring, cap and its vent holes, all four panes - the horn one and the cracked one - the door catch, the candle stub and the waxed base. The card holds the whole lantern; the 5:4 thumbnail is 1.4% short and spends the bottom rail, which is the one edge with nothing named on it. Focal on the candle stub. Drawn plate - measured off the picture."
+    },
+    "item-torch": {
+      "subject": [
+        0.36,
+        0.024,
+        0.2,
+        0.906
+      ],
+      "focal": [
+        0.44,
+        0.37
+      ],
+      "note": "The charred head, the driven wedge, the packed cloth and every turn of the cord, down as far as the stave will go. The torch is drawn 88% of the page tall against a window holding 81%, so the butt and the ground line are spent and the stave runs out of the bottom. Spending the other end instead would blunt the charred tips to save a plain squared butt, which is the wrong way round - the head carries the card. The crop is pinned 2% above the tips rather than flush to them, and that headroom costs only stave that was already off the page. Focal on the binding. Drawn plate - measured off the picture."
+    },
+    "item-dagger": {
+      "subject": [
+        0.2,
+        0.0735,
+        0.68,
+        0.8615
+      ],
+      "focal": [
+        0.49,
+        0.575
+      ],
+      "note": "Point, edge, fuller, both arms of the cross, all three rivets and the whole grip. Drawn corner to corner at 88% of the page against an 81% window, so it keeps the point and spends the pommel - the same call item-sword made and for the same reason, that a blade reads from its tip. The card keeps the top of the butt ferrule, the thumbnail none of it. Focal on the cross. Drawn plate - measured off the picture."
+    },
+    "item-staff": {
+      "subject": [
+        0.31,
+        0.145,
+        0.4,
+        0.788
+      ],
+      "focal": [
+        0.33,
+        0.83
+      ],
+      "note": "The waxed cord binding down to the iron shoe, both shoe rivets and its mushroomed rim, both worn grip bands and the planed knot. The stave is drawn 90% of the page tall against an 81% window, so the bare split top above the binding is spent: sharing the loss between the two ends instead cut the shoe through its rivets, and 'riveted through twice' is a countable thing the brief names. The thumbnail grazes the topmost turn of the cord, which is the 4 px the whole shoe costs. Focal on the shoe where it meets the ash. Drawn plate - measured off the picture."
     },
     "tile-manor": {
       "subject": [
@@ -1147,28 +1332,68 @@
       "note": "The whole page, for the quarry s reason - a triad window is 0.99 against a square plate and the crop spends nothing. The stacks, the shear legs with the chain and hook, and the lean-to with the crosscut saw all sit in the wide upper band the die keeps; the skid track runs down into the lower lobe under the name band, which is the ground the brief set aside for it. The axe standing in its stump is on the left edge and loses its haft to the cut - it is the one thing here drawn outside the safe box, and it survives as a recognisable axe head."
     },
     "tile-crop-cotton": {
-      "subject": [0.145, 0, 0.855, 1],
-      "focal": [0.83, 0.64],
+      "subject": [
+        0.145,
+        0,
+        0.855,
+        1
+      ],
+      "focal": [
+        0.83,
+        0.64
+      ],
       "note": "The whole page - a field is texture edge to edge and there is no object standing in it to protect. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes, and here it is spent off the LEFT, 11.9% off the left against 1.5% off the right. That is the whole of the aiming decision and the PICKING BASKET is what it buys. The basket is drawn well out at the right of the page; a centred crop takes it to the flat edge of the piece and past it, and the left spend brings it inside with the die's full width still under it - it sits between the corner vertices, where a hexagon has not begun to fall away. It is the human evidence on a plate of repeating bushes and it is the thing that tells cotton from any other white-flecked crop at seventeen millimetres, the bolls alone being small pale blobs. What goes off the left is the outermost bushes and bare ridged earth, which is the field again and costs nothing anybody would name. The band falls on dry earth and one bush at the lower left - a bush out of a dozen. Focal on the basket."
     },
     "tile-crop-flax": {
-      "subject": [0.0895, 0, 0.8405, 1],
-      "focal": [0.5, 0.48],
+      "subject": [
+        0.0895,
+        0,
+        0.8405,
+        1
+      ],
+      "focal": [
+        0.5,
+        0.48
+      ],
       "note": "The whole page, the crop keeping x 6.4%-93.0% and the 13.4% spent EVENLY, because there is no object on this plate at all - only the flower mass - and so nothing a lopsided spend could buy. What decides this tile is not the aim but the READ: flax and grain are both fine upright stems in ruled drills, and the one thing that separates them at seventeen millimetres is the cold slate blue flecked over the whole of this one against the ochre ears of the other. So the crop keeps that flecking edge to edge, which is the entire job, and any spend that traded flower for margin would be the wrong one. The trodden earth along the near edge sits in the lower left where the name band lands on it, which is the ground the brief set aside for it. Focal on the middle of the flower mass - a field of one crop offers no point to prefer, and saying so is more honest than aiming at an arbitrary flower."
     },
     "tile-crop-grain": {
-      "subject": [0, 0, 1, 1],
-      "focal": [0.12, 0.45],
+      "subject": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "focal": [
+        0.12,
+        0.45
+      ],
       "note": "The whole page. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes, all of it off the RIGHT, and that is the one decision on this tile. It buys the LEFT POPPY. The poppies are the only points on a plate of ruled drills - the brief asked for two or three and got two - and this one is drawn close enough to the left margin that a left spend cuts it outright and a centred one pushes it into the outer twentieth of the piece; the right spend sets it about an eighth of the way in from the flat, clear of the band and legible as a red mark rather than a red pixel. What the spend costs is the outermost column of ears, which is the same ears again. The second poppy survives whole at the lower right, just above the band's end and just above the corner vertex where the hexagon starts to fall away. The stubble and trodden earth along the near edge stay in the lower left, under the name band, which is the ground the brief set aside for it. Focal on the left poppy."
     },
     "tile-crop-hops": {
-      "subject": [0.0895, 0, 0.8405, 1],
-      "focal": [0.71, 0.45],
+      "subject": [
+        0.0895,
+        0,
+        0.8405,
+        1
+      ],
+      "focal": [
+        0.71,
+        0.45
+      ],
       "note": "The whole page, the crop keeping x 6.4%-93.0% and the 13.4% spent EVENLY - a pole grid repeats and no column of it is worth more than the next, so there is nothing to buy by leaning. The poles run off the TOP edge and are meant to be cut by it, which is the one thing this tile is of: it is the only crop in this game drawn upward, and the height of the poles against every other field is its whole identity. That is also why the composition rule that governs a building does not govern this one - a hop garden drawn to sit inside the top margin would read as a hedge. The die takes the top and bottom points of the page and the poles survive it for exactly that reason, being drawn the full height rather than standing in the middle of it. The band falls on bare trodden earth and a grass tuft at the lower left. Focal on the near pole at its twine ties, the one place where the structure is a point rather than a texture."
     },
     "tile-crop-vegetables": {
-      "subject": [0.0895, 0, 0.8405, 1],
-      "focal": [0.33, 0.45],
+      "subject": [
+        0.0895,
+        0,
+        0.8405,
+        1
+      ],
+      "focal": [
+        0.33,
+        0.45
+      ],
       "note": "The whole page, the crop keeping x 6.4%-93.0% and the 13.4% spent EVENLY, and here that is a decision rather than a default: both things the brief names besides the cabbages sit at opposite edges - the bean row on crossed poles in the upper left, the leek row in the lower right - so a left spend buys one and cuts the other and a right spend does the reverse. The even spend keeps both, and both then clear the die: the beans below the upper-left diagonal where the hexagon has come out to full width, the leeks just above the lower corner vertex before it falls away again. What it costs is the outer bed on each side, which is more cabbages. The band falls on ridged earth, straw and one cabbage at the lower left - a head out of fifteen, and the affordable kind of loss. Focal on the large central rosette: this tile is of cabbages, and that is the one head big enough to be a point rather than a texture."
     },
     "tile-dairy": {

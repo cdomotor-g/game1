@@ -914,10 +914,16 @@ for (const i of gear) {
   const render = plateIdFor(deckByPrefix('ITM'), i);
   if (!hasRender(render)) { skipped.push(i.cardCode); continue; }
   const kind = itemClassName.get(i.class) || i.class;
+  /* `slot` is WHERE ON A BODY the thing is worn or held, and a third of this deck
+     has none: a potion, a talisman, a lantern and a torch go in a kit slot like
+     everything else, but nothing about them is worn anywhere in particular. So
+     the segment is omitted rather than emptied, which lands the kicker on exactly
+     the form the talismans have always printed - `light · made at the blacksmith`. */
+  const worn = i.slot ? ` · ${i.slot}` : '';
   specs.push({
     code: i.cardCode, name: i.name, portrait: render,
-    kicker: `${kind} · ${i.slot} · made at the ${i.madeAt}`,
-    desc: `Item card: ${i.name}, ${kind}. Worth ${i.baseValue}, weighs ${i.massKg}kg, ${i.wear} of wear in it, carried in the ${i.slot} slot.`,
+    kicker: `${kind}${worn} · made at the ${i.madeAt}`,
+    desc: `Item card: ${i.name}, ${kind}. Worth ${i.baseValue}, weighs ${i.massKg}kg, ${i.wear} of wear in it${i.slot ? `, carried in the ${i.slot} slot` : ''}.`,
     stats: [
       cell('wear', i.wear, 'slate'),
       cell('value', i.baseValue, 'ochre'),
