@@ -40,54 +40,54 @@
     { "id": "hard-frost", "cardCode": "EVT-01", "name": "Hard Frost", "category": "weather", "scope": "global", "copies": 3,
       "text": "A cold snap grips the map. Crops stall and outdoor work is miserable.",
       "effects": [
-        { "type": "crop", "op": "pause", "target": "all-growing", "rounds": 1 },
-        { "type": "effort", "op": "flat", "value": -1, "target": "workers-on-terrain", "terrain": ["tundra", "mountain", "hills"] }
+        { "type": "crop", "op": "pause", "target": "all-growing", "rounds": 1, "text": "Every growing crop stalls: nothing advances for one round." },
+        { "type": "effort", "op": "flat", "value": -1, "target": "workers-on-terrain", "terrain": ["tundra", "mountain", "hills"], "text": "Every worker on tundra, mountain or hills produces 1 less effort." }
       ],
       "mitigations": ["Workers living in a brick house or manor are unaffected.", "A town with 2+ fuel in stock ignores the effort penalty."] },
     { "id": "drought", "cardCode": "EVT-02", "name": "Drought", "category": "weather", "scope": "local", "copies": 2,
       "text": "The wells run low. Nothing green does well this year.",
       "effects": [
-        { "type": "crop", "op": "yield-multiplier", "value": 0.5, "target": "region" },
-        { "type": "commodity-loss", "commodity": "water", "qty": 2, "target": "region-towns" }
+        { "type": "crop", "op": "yield-multiplier", "value": 0.5, "target": "region", "text": "Every crop in the region yields half when it is harvested." },
+        { "type": "commodity-loss", "commodity": "water", "qty": 2, "target": "region-towns", "text": "Every town in the region loses 2 water." }
       ],
       "mitigations": ["A town with a well loses no water.", "Towns on a marsh tile, or waterside on a river or a lake - anywhere with fresh water - are unaffected."] },
     { "id": "long-summer", "cardCode": "EVT-03", "name": "Long Summer", "category": "weather", "scope": "global", "copies": 2,
       "text": "A gift of a season.",
       "effects": [
-        { "type": "crop", "op": "advance", "value": 1, "target": "all-growing" },
-        { "type": "effort", "op": "flat", "value": 1, "target": "all-workers" }
+        { "type": "crop", "op": "advance", "value": 1, "target": "all-growing", "text": "Every growing crop advances one step, free." },
+        { "type": "effort", "op": "flat", "value": 1, "target": "all-workers", "text": "Every worker produces 1 more effort." }
       ] },
     { "id": "storms", "cardCode": "EVT-04", "name": "Storms at Sea", "category": "weather", "scope": "global", "copies": 2,
       "text": "Nothing sails this round, and something already at sea does not arrive.",
       "effects": [
-        { "type": "movement", "op": "block", "modes": ["ship", "barge"], "rounds": 1 },
-        { "type": "cargo", "op": "loss-fraction", "value": 0.5, "modes": ["ship"] }
+        { "type": "movement", "op": "block", "modes": ["ship", "barge"], "rounds": 1, "text": "No ship or barge moves for one round." },
+        { "type": "cargo", "op": "loss-fraction", "value": 0.5, "modes": ["ship"], "text": "Every ship at sea loses half the cargo tokens aboard it." }
       ],
       "mitigations": ["Cargo in a harbour tile is safe."] },
     { "id": "flood", "cardCode": "EVT-05", "name": "Flood", "category": "disaster", "scope": "local", "copies": 2,
       "text": "The river takes back its floodplain.",
       "effects": [
-        { "type": "crop", "op": "destroy", "target": "region-farms" },
-        { "type": "building", "op": "halt", "rounds": 1, "target": "region-river" },
+        { "type": "crop", "op": "destroy", "target": "region-farms", "text": "Every crop growing on a farm in the region is destroyed." },
+        { "type": "building", "op": "halt", "rounds": 1, "target": "region-river", "text": "Every building on a river hex in the region stops for one round." },
         { "type": "commodity-gain", "commodity": "clay", "qty": 3, "target": "region-towns", "text": "Silt: a small consolation." }
       ] },
     { "id": "earthquake", "cardCode": "EVT-06", "name": "Earthquake", "category": "disaster", "scope": "local", "copies": 1,
       "text": "The hills shrug.",
       "effects": [
         { "type": "building", "op": "damage", "value": 0.5, "target": "region-mines-and-masonry", "text": "Halve the build track - the building stops until it is repaired." },
-        { "type": "movement", "op": "block", "terrain": ["mountain"], "rounds": 2 }
+        { "type": "movement", "op": "block", "terrain": ["mountain"], "rounds": 2, "text": "Nothing crosses a mountain hex for two rounds." }
       ] },
     { "id": "wildfire", "cardCode": "EVT-07", "name": "Wildfire", "category": "disaster", "scope": "local", "copies": 2,
       "text": "Fire runs through the timber.",
       "effects": [
-        { "type": "building", "op": "destroy", "target": "region-timber-buildings", "chance": "d6 4+" },
-        { "type": "commodity-loss", "commodity": "logs", "qty": 4, "target": "region-towns" }
+        { "type": "building", "op": "destroy", "target": "region-timber-buildings", "chance": "d6 4+", "text": "Roll a d6 for every timber building in the region: on 4 or more it burns down." },
+        { "type": "commodity-loss", "commodity": "logs", "qty": 4, "target": "region-towns", "text": "Every town in the region loses 4 logs." }
       ],
       "mitigations": ["A town with a well or on a water-access tile rolls at 5+ instead."] },
     { "id": "mine-collapse", "cardCode": "EVT-08", "name": "Mine Collapse", "category": "disaster", "scope": "targeted", "copies": 2,
       "text": "A gallery comes down.",
       "effects": [
-        { "type": "building", "op": "halt", "rounds": 2, "target": "one-mine" },
+        { "type": "building", "op": "halt", "rounds": 2, "target": "one-mine", "text": "One of your mines stops for two rounds while the gallery is dug out." },
         { "type": "population", "op": "remove", "value": 1, "target": "mine-town", "text": "One worker is lost." }
       ],
       "mitigations": ["A dwarf player halts for 1 round and loses no worker."] },
@@ -106,57 +106,57 @@
     { "id": "train-heist", "cardCode": "EVT-11", "name": "Train Heist", "category": "crime", "scope": "targeted", "copies": 1,
       "text": "They knew the timetable.",
       "effects": [
-        { "type": "cargo", "op": "steal", "value": 0.75, "modes": ["train"] },
-        { "type": "movement", "op": "block", "modes": ["train"], "rounds": 1 }
+        { "type": "cargo", "op": "steal", "value": 0.75, "modes": ["train"], "text": "Three quarters of the cargo tokens on that train are taken, highest value first." },
+        { "type": "movement", "op": "block", "modes": ["train"], "rounds": 1, "text": "That line carries nothing for one round." }
       ] },
     { "id": "piracy", "cardCode": "EVT-12", "name": "Piracy", "category": "crime", "scope": "global", "copies": 1,
       "text": "A sail on the horizon, and it is not a friendly one.",
       "effects": [
-        { "type": "cargo", "op": "steal", "value": 0.5, "modes": ["ship", "barge"], "target": "all-players" }
+        { "type": "cargo", "op": "steal", "value": 0.5, "modes": ["ship", "barge"], "target": "all-players", "text": "Every player loses half the cargo tokens they have afloat, highest value first." }
       ] },
     { "id": "smuggling-ring", "cardCode": "EVT-13", "name": "Smuggling Ring", "category": "crime", "scope": "offer", "copies": 2,
       "text": "Someone offers to move goods without the market's cut - and without any guarantees.",
       "effects": [
         { "type": "choice", "branches": [
-          { "label": "Deal", "effects": [{ "type": "commodity-gain", "op": "sell-at-premium", "value": 1.5, "qty": 6, "text": "Sell up to 6 bulk at 150% of base value." }, { "type": "unrest", "op": "add", "value": 1 }] },
+          { "label": "Deal", "effects": [{ "type": "commodity-gain", "op": "sell-at-premium", "value": 1.5, "qty": 6, "text": "Sell up to 6 bulk at 150% of base value." }, { "type": "unrest", "op": "add", "value": 1, "text": "Gain 1 unrest." }] },
           { "label": "Decline", "effects": [] }
         ] }
       ] },
     { "id": "wolf-pack", "cardCode": "EVT-14", "name": "Wolf Pack", "category": "wildlife", "scope": "local", "copies": 2,
       "text": "Something is taking the livestock.",
       "effects": [
-        { "type": "commodity-loss", "commodity": "sheep", "qty": 2, "target": "region-pastures" },
-        { "type": "combat", "op": "spawn", "enemy": "wolves", "strength": 2, "target": "region" }
+        { "type": "commodity-loss", "commodity": "sheep", "qty": 2, "target": "region-pastures", "text": "Every pasture in the region loses 2 sheep." },
+        { "type": "combat", "op": "spawn", "enemy": "wolves", "strength": 2, "target": "region", "text": "A wolf pack, strength 2, is placed in the region and stays until it is killed." }
       ],
       "mitigations": ["Any soldier or hero in the region may fight the pack instead of losing animals."] },
     { "id": "boar-in-the-fields", "cardCode": "EVT-15", "name": "Boar in the Fields", "category": "wildlife", "scope": "local", "copies": 2,
       "text": "It has been in the crops for a week.",
       "effects": [
-        { "type": "crop", "op": "destroy-one", "target": "region-farms" },
+        { "type": "crop", "op": "destroy-one", "target": "region-farms", "text": "One crop on one farm in the region is destroyed." },
         { "type": "choice", "branches": [
-          { "label": "Hunt it", "effects": [{ "type": "commodity-gain", "commodity": "meat", "qty": 3 }, { "type": "effort", "op": "spend", "value": 3 }] },
+          { "label": "Hunt it", "effects": [{ "type": "commodity-gain", "commodity": "meat", "qty": 3, "text": "Gain 3 meat." }, { "type": "effort", "op": "spend", "value": 3, "text": "Spend 3 effort." }] },
           { "label": "Let it be", "effects": [] }
         ] }
       ] },
     { "id": "dragon-sighting", "cardCode": "EVT-16", "name": "Dragon Sighting", "category": "wildlife", "scope": "global", "copies": 1,
       "text": "A shape passes over the mountains. Everyone finds somewhere else to be.",
       "effects": [
-        { "type": "movement", "op": "block", "terrain": ["mountain"], "rounds": 2 },
-        { "type": "combat", "op": "spawn", "enemy": "dragon", "strength": 8, "target": "random-mountain" },
+        { "type": "movement", "op": "block", "terrain": ["mountain"], "rounds": 2, "text": "Nothing crosses a mountain hex for two rounds." },
+        { "type": "combat", "op": "spawn", "enemy": "dragon", "strength": 8, "target": "random-mountain", "text": "A dragon, strength 8, settles on a random mountain hex and stays there." },
         { "type": "price", "op": "shift", "family": "luxury", "value": 1, "text": "Panic buying of portable wealth." }
       ] },
     { "id": "raiders", "cardCode": "EVT-17", "name": "Raiders", "category": "conflict", "scope": "targeted", "copies": 3,
       "text": "An armed band comes over the border at whoever looks richest.",
       "effects": [
-        { "type": "combat", "op": "attack", "enemy": "raiders", "strength": 3, "target": "leader-town" },
-        { "type": "commodity-loss", "op": "fraction", "value": 0.25, "condition": "if the defence fails" }
+        { "type": "combat", "op": "attack", "enemy": "raiders", "strength": 3, "target": "leader-town", "text": "Raiders, strength 3, attack one of the leader's towns." },
+        { "type": "commodity-loss", "op": "fraction", "value": 0.25, "condition": "if the defence fails", "text": "If the defence fails, that town loses a quarter of everything in it." }
       ],
       "mitigations": ["Palisade grants +1 defence die. Garrisoned soldiers defend automatically."] },
     { "id": "border-dispute", "cardCode": "EVT-18", "name": "Border Dispute", "category": "conflict", "scope": "global", "copies": 2,
       "text": "Two towns claim the same ground.",
       "effects": [
         { "type": "choice", "branches": [
-          { "label": "Concede", "effects": [{ "type": "commodity-loss", "op": "fraction", "value": 0.1 }] },
+          { "label": "Concede", "effects": [{ "type": "commodity-loss", "op": "fraction", "value": 0.1, "text": "Lose a tenth of the stock in one of your towns." }] },
           { "label": "Contest", "effects": [{ "type": "combat", "op": "duel", "text": "Both players roll 2 combat dice. The loser gives the winner one tile's worth of infrastructure." }] }
         ] }
       ] },
@@ -164,37 +164,37 @@
       "text": "Swords, cheap, for as long as the coin lasts.",
       "effects": [
         { "type": "choice", "branches": [
-          { "label": "Hire (50 coin)", "effects": [{ "type": "population", "op": "add-soldier", "value": 2, "rounds": 3 }] },
+          { "label": "Hire (50 coin)", "effects": [{ "type": "population", "op": "add-soldier", "value": 2, "rounds": 3, "text": "Two soldiers join you for three rounds, then they leave." }] },
           { "label": "Pass", "effects": [] }
         ] }
       ] },
     { "id": "plague", "cardCode": "EVT-20", "name": "Plague", "category": "social", "scope": "local", "copies": 1,
       "text": "It moves faster than anyone can plan for.",
       "effects": [
-        { "type": "population", "op": "remove-fraction", "value": 0.25, "target": "region-towns" },
-        { "type": "effort", "op": "die-step", "value": -1, "target": "region-workers", "rounds": 2 }
+        { "type": "population", "op": "remove-fraction", "value": 0.25, "target": "region-towns", "text": "Every town in the region loses a quarter of its workers." },
+        { "type": "effort", "op": "die-step", "value": -1, "target": "region-workers", "rounds": 2, "text": "Workers in the region roll one die step lower for two rounds." }
       ],
       "mitigations": ["A town holding a Healing Draught spends it to ignore this card entirely."] },
     { "id": "migrants", "cardCode": "EVT-21", "name": "Migrants", "category": "social", "scope": "offer", "copies": 3,
       "text": "A column of families on the road, looking for somewhere with food.",
       "effects": [
         { "type": "choice", "branches": [
-          { "label": "Take them in", "effects": [{ "type": "population", "op": "add", "value": 2, "condition": "you must have housing and 4 food in that town" }] },
-          { "label": "Turn them away", "effects": [{ "type": "unrest", "op": "add", "value": 1 }] }
+          { "label": "Take them in", "effects": [{ "type": "population", "op": "add", "value": 2, "condition": "you must have housing and 4 food in that town", "text": "Two workers join a town of yours that has housing and 4 food to spare." }] },
+          { "label": "Turn them away", "effects": [{ "type": "unrest", "op": "add", "value": 1, "text": "Gain 1 unrest." }] }
         ] }
       ] },
     { "id": "strike", "cardCode": "EVT-22", "name": "Strike", "category": "social", "scope": "targeted", "copies": 2,
       "text": "They want feeding properly.",
       "effects": [
-        { "type": "effort", "op": "multiplier", "value": 0.5, "target": "unrest-town", "rounds": 1, "condition": "any town with 1+ unrest" }
+        { "type": "effort", "op": "multiplier", "value": 0.5, "target": "unrest-town", "rounds": 1, "condition": "any town with 1+ unrest", "text": "Any town of yours with 1 or more unrest produces half its effort for one round." }
       ],
       "mitigations": ["Serve ale or wine at an inn to end the strike immediately."] },
     { "id": "festival", "cardCode": "EVT-23", "name": "Festival", "category": "social", "scope": "global", "copies": 2,
       "text": "A week of noise and spending.",
       "effects": [
-        { "type": "price", "op": "shift", "family": "drink", "value": 2 },
-        { "type": "price", "op": "shift", "family": "luxury", "value": 1 },
-        { "type": "unrest", "op": "remove", "value": 1, "target": "all-towns", "condition": "if the town serves any drink" }
+        { "type": "price", "op": "shift", "family": "drink", "value": 2, "text": "Drink goes up two bands." },
+        { "type": "price", "op": "shift", "family": "luxury", "value": 1, "text": "Luxuries go up one band." },
+        { "type": "unrest", "op": "remove", "value": 1, "target": "all-towns", "condition": "if the town serves any drink", "text": "Every town that can serve a drink loses 1 unrest." }
       ] },
     { "id": "master-craftsman", "cardCode": "EVT-24", "name": "Travelling Master", "category": "social", "scope": "offer", "copies": 2,
       "text": "A master will take an apprentice, for a price.",
@@ -206,27 +206,27 @@
       ] },
     { "id": "iron-shortage", "cardCode": "EVT-25", "name": "Iron Shortage", "category": "market", "scope": "global", "copies": 2,
       "text": "Everyone wants metal and nobody has any.",
-      "effects": [{ "type": "price", "op": "shift", "family": "metal", "value": 2, "rounds": 3 }] },
+      "effects": [{ "type": "price", "op": "shift", "family": "metal", "value": 2, "rounds": 3, "text": "Metal goes up two bands for three rounds." }] },
     { "id": "glut", "cardCode": "EVT-26", "name": "Glut", "category": "market", "scope": "global", "copies": 2,
       "text": "A bumper year somewhere else. Prices fall through the floor.",
-      "effects": [{ "type": "price", "op": "shift", "family": "food", "value": -2, "rounds": 2 }] },
+      "effects": [{ "type": "price", "op": "shift", "family": "food", "value": -2, "rounds": 2, "text": "Food falls two bands for two rounds." }] },
     { "id": "foreign-demand", "cardCode": "EVT-27", "name": "Foreign Demand", "category": "market", "scope": "global", "copies": 3,
       "text": "A distant city sends buyers. Roll to see what they want.",
-      "effects": [{ "type": "price", "op": "shift-random-family", "value": 2, "rounds": 2 }] },
+      "effects": [{ "type": "price", "op": "shift-random-family", "value": 2, "rounds": 2, "text": "Roll for a commodity family: it goes up two bands for two rounds." }] },
     { "id": "tax-levy", "cardCode": "EVT-28", "name": "Tax Levy", "category": "market", "scope": "global", "copies": 2,
       "text": "The crown remembers you exist.",
       "effects": [{ "type": "commodity-loss", "op": "coin-per-building", "value": 3, "text": "Pay 3 coin per completed building. If you cannot pay, gain 1 unrest per unpaid building." }] },
     { "id": "ley-surge", "cardCode": "EVT-29", "name": "Ley Surge", "category": "arcane", "scope": "global", "copies": 1,
       "text": "The ground hums for a week.",
       "effects": [
-        { "type": "commodity-gain", "commodity": "mana-crystal", "qty": 1, "target": "towns-with-alchemist" },
-        { "type": "effort", "op": "die-step", "value": 1, "target": "all-workers", "rounds": 1 }
+        { "type": "commodity-gain", "commodity": "mana-crystal", "qty": 1, "target": "towns-with-alchemist", "text": "Every town with an alchemist gains 1 mana crystal." },
+        { "type": "effort", "op": "die-step", "value": 1, "target": "all-workers", "rounds": 1, "text": "Every worker rolls one die step higher for one round." }
       ] },
     { "id": "curdled-brew", "cardCode": "EVT-30", "name": "Curdled Brew", "category": "arcane", "scope": "targeted", "copies": 1,
       "text": "Something went wrong in the alembic.",
       "effects": [
-        { "type": "commodity-loss", "op": "all-of", "commodity": "arcane-herb", "target": "one-town" },
-        { "type": "tool", "op": "break", "tool": "alembic" }
+        { "type": "commodity-loss", "op": "all-of", "commodity": "arcane-herb", "target": "one-town", "text": "One of your towns loses every arcane herb in it." },
+        { "type": "tool", "op": "break", "tool": "alembic", "text": "One alembic of yours is broken and comes off the board." }
       ] },
     { "id": "wandering-wizard", "cardCode": "EVT-31", "name": "Wandering Wizard", "category": "arcane", "scope": "offer", "copies": 2,
       "text": "He will trade knowledge for something shiny.",
@@ -241,21 +241,21 @@
       "text": "Something in the water at last night's camp. Your travelling party wakes shivering.",
       "effects": [
         { "type": "health", "op": "damage", "value": 2, "target": "one-party", "text": "Every figure and character in one of your travelling parties takes 2 damage." },
-        { "type": "movement", "op": "multiplier", "value": 0.5, "target": "same-party", "rounds": 1 }
+        { "type": "movement", "op": "multiplier", "value": 0.5, "target": "same-party", "rounds": 1, "text": "That party moves half as far for one round." }
       ],
       "mitigations": ["A healer character in the party shrugs it off: no damage, full speed.", "Spend a Healing Draught or Physic Tonic to cancel the card."] },
     { "id": "marsh-ague", "cardCode": "EVT-33", "name": "Marsh Ague", "category": "social", "scope": "local", "copies": 2,
       "text": "The ague drifts out of the fens with the evening mist, and the village bell rings thin all week.",
       "effects": [
-        { "type": "effort", "op": "die-step", "value": -1, "target": "region-workers", "rounds": 2 },
-        { "type": "population", "op": "remove", "value": 1, "target": "region-towns", "condition": "only towns on or adjacent to a marsh tile" }
+        { "type": "effort", "op": "die-step", "value": -1, "target": "region-workers", "rounds": 2, "text": "Workers in the region roll one die step lower for two rounds." },
+        { "type": "population", "op": "remove", "value": 1, "target": "region-towns", "condition": "only towns on or adjacent to a marsh tile", "text": "Every town on or beside a marsh loses one worker." }
       ],
       "mitigations": ["A town with an infirmary and a fed healer loses no worker.", "A Physic Tonic cancels the card for one town."] },
     { "id": "grey-pox", "cardCode": "EVT-34", "name": "The Grey Pox", "category": "social", "scope": "global", "copies": 1,
       "text": "It starts in one market square and is everywhere by week's end. Whole streets shutter; the carts stop coming.",
       "effects": [
-        { "type": "population", "op": "remove", "value": 1, "target": "all-towns", "condition": "every town with 4 or more workers loses one" },
-        { "type": "effort", "op": "die-step", "value": -1, "target": "all-workers", "rounds": 1 }
+        { "type": "population", "op": "remove", "value": 1, "target": "all-towns", "condition": "every town with 4 or more workers loses one", "text": "Every town with 4 or more workers loses one." },
+        { "type": "effort", "op": "die-step", "value": -1, "target": "all-workers", "rounds": 1, "text": "Every worker rolls one die step lower for one round." }
       ],
       "mitigations": ["A town with an infirmary and a fed healer loses no worker.", "A Healing Draught spent by a town cancels its loss.", "This is the card that makes the infirmary worth its parchment."] },
 
@@ -296,7 +296,7 @@
       "text": "They came for the harbour taverns at midnight and left with whoever could walk.",
       "effects": [
         { "type": "population", "op": "remove", "value": 2, "target": "one-coastal-town", "text": "Two workers are gone. They may come back - see the mitigation." },
-        { "type": "unrest", "op": "add", "value": 1, "target": "that-town" }
+        { "type": "unrest", "op": "add", "value": 1, "target": "that-town", "text": "That town gains 1 unrest." }
       ],
       "mitigations": ["A town with a palisade or a garrison of 1+ soldiers loses nobody.", "A town with an inn loses one worker instead of two: the innkeeper hides the regulars in the cellar.", "Roll d6 at the end of each following round; on a 6 the pressed workers walk home."] },
     { "id": "dragons-tithe", "cardCode": "EVT-41", "name": "The Dragon's Tithe", "category": "conflict", "scope": "global", "copies": 1,
@@ -316,15 +316,15 @@
       "text": "It comes off the ice and does not stop until it reaches the sea.",
       "effects": [
         { "type": "movement", "op": "block", "modes": ["airship"], "rounds": 1, "text": "Nothing flies. An airship in the air when this is drawn marks 2 damage and comes down on the nearest land hex." },
-        { "type": "movement", "op": "slow", "value": 0.5, "modes": ["ship", "barge"], "rounds": 1 },
-        { "type": "building", "op": "damage", "value": 1, "target": "all-timber-buildings", "chance": "d6 6" }
+        { "type": "movement", "op": "slow", "value": 0.5, "modes": ["ship", "barge"], "rounds": 1, "text": "Ships and barges move half as far for one round." },
+        { "type": "building", "op": "damage", "value": 1, "target": "all-timber-buildings", "chance": "d6 6", "text": "Roll a d6 for every timber building on the board: on a 6 it takes 1 damage." }
       ],
       "mitigations": ["An airship moored at a settlement takes no damage.", "A ship in harbour is unaffected.", "A sweep-rigged airship marks 1 damage instead of 2 - the crew can at least steer the descent."] },
     { "id": "early-thaw", "cardCode": "EVT-44", "name": "Early Thaw", "category": "weather", "scope": "global", "copies": 2,
       "text": "The frost lets go three weeks before anybody planned for.",
       "effects": [
         { "type": "movement", "op": "block", "modes": ["sled"], "rounds": 2, "text": "The winter rule in travel.json lifts. Any sled standing on marsh or water is lost with its cargo." },
-        { "type": "crop", "op": "advance", "value": 1, "target": "all-growing" },
+        { "type": "crop", "op": "advance", "value": 1, "target": "all-growing", "text": "Every growing crop advances one step, free." },
         { "type": "movement", "op": "block", "terrain": ["marsh"], "rounds": 1, "text": "The fens are impassable to everything." }
       ],
       "mitigations": ["A sled on solid ground is fine - it just becomes a box on runners until the next frost.", "A player who moved every sled to a settlement last round loses nothing."] },
@@ -332,7 +332,7 @@
       "text": "Somebody has been shaving the edges, and everybody knows it but nobody will be first to refuse a coin.",
       "effects": [
         { "type": "price", "op": "band", "value": 1, "family": "all", "text": "Every price band shifts up one step. Prices are higher; the coin in your hand is not." },
-        { "type": "unrest", "op": "add", "value": 1, "target": "all-towns-with-a-market" }
+        { "type": "unrest", "op": "add", "value": 1, "target": "all-towns-with-a-market", "text": "Every town with a market gains 1 unrest." }
       ],
       "mitigations": ["A player holding gold, gems or jewellery instead of coin loses nothing to this - metal does not care what the mint says.", "A trading house sets its own scales: its owner ignores the band shift for one sale."] },
     { "id": "guild-embargo", "cardCode": "EVT-46", "name": "Guild Embargo", "category": "market", "scope": "targeted", "copies": 2,
@@ -363,16 +363,16 @@
     { "id": "ley-drought", "cardCode": "EVT-50", "name": "Ley Drought", "category": "arcane", "scope": "global", "copies": 2,
       "text": "The ground has gone quiet. Nobody can say why, and the ones who can will not.",
       "effects": [
-        { "type": "commodity-loss", "commodity": "mana-crystal", "qty": 1, "target": "all-towns" },
+        { "type": "commodity-loss", "commodity": "mana-crystal", "qty": 1, "target": "all-towns", "text": "Every town loses 1 mana crystal." },
         { "type": "effort", "op": "flat", "value": -1, "target": "workers-at-arcane-buildings", "text": "Every spell costs 1 extra mana for 2 rounds, and mana veins yield nothing." }
       ],
       "mitigations": ["Mana already stored in a talisman is untouched - which is what talismans are for.", "An elf holds their innate mana as normal.", "A shrine in a town cancels the extra spell cost for characters standing in it."] },
     { "id": "boom-town", "cardCode": "EVT-51", "name": "Boom Town", "category": "market", "scope": "local", "copies": 2,
       "text": "A strike is announced, the road fills with hopefuls, and a village of forty becomes a town of four hundred in a month.",
       "effects": [
-        { "type": "population", "op": "add", "value": 2, "target": "region-largest-town" },
+        { "type": "population", "op": "add", "value": 2, "target": "region-largest-town", "text": "The largest town in the region gains 2 workers." },
         { "type": "price", "op": "band", "value": 2, "family": "food", "target": "region", "text": "Food and drink in that region jump two bands. Everyone has to eat and nobody planted anything." },
-        { "type": "unrest", "op": "add", "value": 1, "target": "region-towns" }
+        { "type": "unrest", "op": "add", "value": 1, "target": "region-towns", "text": "Every town in the region gains 1 unrest." }
       ],
       "mitigations": ["A town with a granary holding 4+ food ignores the price jump and gains the workers anyway - which is the whole argument for granaries.", "The player who owns the nearest farm may sell into that region at the boom price. Demand is only a disaster if you have nothing to sell."] }
   ],

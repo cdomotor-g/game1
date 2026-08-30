@@ -1124,6 +1124,57 @@ for (const b of buildings) {
   }
 }
 
+/* --- a card that is dealt must say what it does ----------------------------- */
+/* Every event effect carries `text`, and it is the RULES LINE - the sentence
+   printed on the card and shown in the explorer, not a comment. It has always
+   been the designated slot: docs/js/views.js describeEffect returns fx.text when
+   there is one and falls back to dumping the fields when there is not, which is
+   how `effort · flat · -1 · → workers-on-terrain` came to be shown to a reader as
+   though it were a rule. Two thirds of the deck was in that state.
+
+   The pricing models already say a rule twice on purpose - prose for the people,
+   structured fields for the tools - so that neither can be changed and the other
+   left saying the old thing. This is the same bargain one storey down, and this
+   is the check that keeps it: an effect with no text is a card that cannot be
+   printed, so it fails the build rather than reaching a table half-written.
+
+   A `choice` is the one exemption, and for the reason the rule exists: a choice
+   node is structure, not content. What a player is actually choosing between is
+   the branches, and each branch's own effects carry their own text. */
+const sayEffect = (code, fx, path) => {
+  if (fx.type !== 'choice' && !(typeof fx.text === 'string' && fx.text.trim())) {
+    errors.push(`events: ${code} effect ${path} (${fx.type}${fx.op ? `/${fx.op}` : ''}) has no "text" - `
+      + 'that is the line the card prints and the explorer shows, and without it both fall back to dumping the fields');
+  }
+  if (fx.type === 'choice' && !(fx.branches?.length || (typeof fx.text === 'string' && fx.text.trim()))) {
+    errors.push(`events: ${code} effect ${path} is a choice with neither branches nor "text" - nothing to choose between`);
+  }
+  (fx.branches ?? []).forEach((b, i) => (b.effects ?? []).forEach((f, j) => sayEffect(code, f, `${path}.${i}.${j}`)));
+};
+for (const c of datasets.events?.cards ?? []) {
+  if (!c.effects?.length) errors.push(`events: ${c.cardCode} has no effects - a card that is dealt has to do something`);
+  (c.effects ?? []).forEach((fx, i) => sayEffect(c.cardCode, fx, String(i)));
+  if (!c.text?.trim()) errors.push(`events: ${c.cardCode} has no "text" - that is the card's story, and it prints a blank panel without one`);
+}
+
+/* The same rule for the two decks that carry their own prose in their own
+   fields, so a deck cannot be turned on for the mint and then print a card with
+   a hole in it: a spell's rule is its `effect` and its flavour is its `story`, a
+   quest's task is its `task` and its flavour is its `hook`. */
+for (const s of datasets.arcana?.spells ?? []) {
+  if (!s.effect?.trim()) errors.push(`arcana: ${s.cardCode} has no "effect" - the card would print no rule`);
+  if (!s.story?.trim()) errors.push(`arcana: ${s.cardCode} has no "story" - the card would print a blank rail`);
+}
+for (const q of datasets.quests?.quests ?? []) {
+  if (!q.hook?.trim()) errors.push(`quests: ${q.cardCode} has no "hook" - the card would print a blank panel`);
+  const stages = q.stages ?? [];
+  if (!q.task?.trim() && !stages.length) errors.push(`quests: ${q.cardCode} has neither a "task" nor "stages" - nothing to do`);
+  stages.forEach((st, i) => {
+    if (!st.name?.trim()) errors.push(`quests: ${q.cardCode} stage ${i + 1} has no name`);
+    if (!st.task?.trim()) errors.push(`quests: ${q.cardCode} stage ${i + 1} has no task`);
+  });
+}
+
 /* --- report ---------------------------------------------------------------- */
 if (!quiet) {
   for (const w of warnings) console.log(`  warn  ${w}`);

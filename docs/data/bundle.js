@@ -7744,7 +7744,8 @@ window.GAME_DATA = {
             "type": "crop",
             "op": "pause",
             "target": "all-growing",
-            "rounds": 1
+            "rounds": 1,
+            "text": "Every growing crop stalls: nothing advances for one round."
           },
           {
             "type": "effort",
@@ -7755,7 +7756,8 @@ window.GAME_DATA = {
               "tundra",
               "mountain",
               "hills"
-            ]
+            ],
+            "text": "Every worker on tundra, mountain or hills produces 1 less effort."
           }
         ],
         "mitigations": [
@@ -7776,13 +7778,15 @@ window.GAME_DATA = {
             "type": "crop",
             "op": "yield-multiplier",
             "value": 0.5,
-            "target": "region"
+            "target": "region",
+            "text": "Every crop in the region yields half when it is harvested."
           },
           {
             "type": "commodity-loss",
             "commodity": "water",
             "qty": 2,
-            "target": "region-towns"
+            "target": "region-towns",
+            "text": "Every town in the region loses 2 water."
           }
         ],
         "mitigations": [
@@ -7803,13 +7807,15 @@ window.GAME_DATA = {
             "type": "crop",
             "op": "advance",
             "value": 1,
-            "target": "all-growing"
+            "target": "all-growing",
+            "text": "Every growing crop advances one step, free."
           },
           {
             "type": "effort",
             "op": "flat",
             "value": 1,
-            "target": "all-workers"
+            "target": "all-workers",
+            "text": "Every worker produces 1 more effort."
           }
         ]
       },
@@ -7829,7 +7835,8 @@ window.GAME_DATA = {
               "ship",
               "barge"
             ],
-            "rounds": 1
+            "rounds": 1,
+            "text": "No ship or barge moves for one round."
           },
           {
             "type": "cargo",
@@ -7837,7 +7844,8 @@ window.GAME_DATA = {
             "value": 0.5,
             "modes": [
               "ship"
-            ]
+            ],
+            "text": "Every ship at sea loses half the cargo tokens aboard it."
           }
         ],
         "mitigations": [
@@ -7856,13 +7864,15 @@ window.GAME_DATA = {
           {
             "type": "crop",
             "op": "destroy",
-            "target": "region-farms"
+            "target": "region-farms",
+            "text": "Every crop growing on a farm in the region is destroyed."
           },
           {
             "type": "building",
             "op": "halt",
             "rounds": 1,
-            "target": "region-river"
+            "target": "region-river",
+            "text": "Every building on a river hex in the region stops for one round."
           },
           {
             "type": "commodity-gain",
@@ -7895,7 +7905,8 @@ window.GAME_DATA = {
             "terrain": [
               "mountain"
             ],
-            "rounds": 2
+            "rounds": 2,
+            "text": "Nothing crosses a mountain hex for two rounds."
           }
         ]
       },
@@ -7912,13 +7923,15 @@ window.GAME_DATA = {
             "type": "building",
             "op": "destroy",
             "target": "region-timber-buildings",
-            "chance": "d6 4+"
+            "chance": "d6 4+",
+            "text": "Roll a d6 for every timber building in the region: on 4 or more it burns down."
           },
           {
             "type": "commodity-loss",
             "commodity": "logs",
             "qty": 4,
-            "target": "region-towns"
+            "target": "region-towns",
+            "text": "Every town in the region loses 4 logs."
           }
         ],
         "mitigations": [
@@ -7938,7 +7951,8 @@ window.GAME_DATA = {
             "type": "building",
             "op": "halt",
             "rounds": 2,
-            "target": "one-mine"
+            "target": "one-mine",
+            "text": "One of your mines stops for two rounds while the gallery is dug out."
           },
           {
             "type": "population",
@@ -8014,7 +8028,8 @@ window.GAME_DATA = {
             "value": 0.75,
             "modes": [
               "train"
-            ]
+            ],
+            "text": "Three quarters of the cargo tokens on that train are taken, highest value first."
           },
           {
             "type": "movement",
@@ -8022,7 +8037,8 @@ window.GAME_DATA = {
             "modes": [
               "train"
             ],
-            "rounds": 1
+            "rounds": 1,
+            "text": "That line carries nothing for one round."
           }
         ]
       },
@@ -8043,7 +8059,8 @@ window.GAME_DATA = {
               "ship",
               "barge"
             ],
-            "target": "all-players"
+            "target": "all-players",
+            "text": "Every player loses half the cargo tokens they have afloat, highest value first."
           }
         ]
       },
@@ -8072,7 +8089,8 @@ window.GAME_DATA = {
                   {
                     "type": "unrest",
                     "op": "add",
-                    "value": 1
+                    "value": 1,
+                    "text": "Gain 1 unrest."
                   }
                 ]
               },
@@ -8097,14 +8115,16 @@ window.GAME_DATA = {
             "type": "commodity-loss",
             "commodity": "sheep",
             "qty": 2,
-            "target": "region-pastures"
+            "target": "region-pastures",
+            "text": "Every pasture in the region loses 2 sheep."
           },
           {
             "type": "combat",
             "op": "spawn",
             "enemy": "wolves",
             "strength": 2,
-            "target": "region"
+            "target": "region",
+            "text": "A wolf pack, strength 2, is placed in the region and stays until it is killed."
           }
         ],
         "mitigations": [
@@ -8123,7 +8143,8 @@ window.GAME_DATA = {
           {
             "type": "crop",
             "op": "destroy-one",
-            "target": "region-farms"
+            "target": "region-farms",
+            "text": "One crop on one farm in the region is destroyed."
           },
           {
             "type": "choice",
@@ -8134,12 +8155,14 @@ window.GAME_DATA = {
                   {
                     "type": "commodity-gain",
                     "commodity": "meat",
-                    "qty": 3
+                    "qty": 3,
+                    "text": "Gain 3 meat."
                   },
                   {
                     "type": "effort",
                     "op": "spend",
-                    "value": 3
+                    "value": 3,
+                    "text": "Spend 3 effort."
                   }
                 ]
               },
@@ -8166,14 +8189,16 @@ window.GAME_DATA = {
             "terrain": [
               "mountain"
             ],
-            "rounds": 2
+            "rounds": 2,
+            "text": "Nothing crosses a mountain hex for two rounds."
           },
           {
             "type": "combat",
             "op": "spawn",
             "enemy": "dragon",
             "strength": 8,
-            "target": "random-mountain"
+            "target": "random-mountain",
+            "text": "A dragon, strength 8, settles on a random mountain hex and stays there."
           },
           {
             "type": "price",
@@ -8198,13 +8223,15 @@ window.GAME_DATA = {
             "op": "attack",
             "enemy": "raiders",
             "strength": 3,
-            "target": "leader-town"
+            "target": "leader-town",
+            "text": "Raiders, strength 3, attack one of the leader's towns."
           },
           {
             "type": "commodity-loss",
             "op": "fraction",
             "value": 0.25,
-            "condition": "if the defence fails"
+            "condition": "if the defence fails",
+            "text": "If the defence fails, that town loses a quarter of everything in it."
           }
         ],
         "mitigations": [
@@ -8229,7 +8256,8 @@ window.GAME_DATA = {
                   {
                     "type": "commodity-loss",
                     "op": "fraction",
-                    "value": 0.1
+                    "value": 0.1,
+                    "text": "Lose a tenth of the stock in one of your towns."
                   }
                 ]
               },
@@ -8266,7 +8294,8 @@ window.GAME_DATA = {
                     "type": "population",
                     "op": "add-soldier",
                     "value": 2,
-                    "rounds": 3
+                    "rounds": 3,
+                    "text": "Two soldiers join you for three rounds, then they leave."
                   }
                 ]
               },
@@ -8291,14 +8320,16 @@ window.GAME_DATA = {
             "type": "population",
             "op": "remove-fraction",
             "value": 0.25,
-            "target": "region-towns"
+            "target": "region-towns",
+            "text": "Every town in the region loses a quarter of its workers."
           },
           {
             "type": "effort",
             "op": "die-step",
             "value": -1,
             "target": "region-workers",
-            "rounds": 2
+            "rounds": 2,
+            "text": "Workers in the region roll one die step lower for two rounds."
           }
         ],
         "mitigations": [
@@ -8324,7 +8355,8 @@ window.GAME_DATA = {
                     "type": "population",
                     "op": "add",
                     "value": 2,
-                    "condition": "you must have housing and 4 food in that town"
+                    "condition": "you must have housing and 4 food in that town",
+                    "text": "Two workers join a town of yours that has housing and 4 food to spare."
                   }
                 ]
               },
@@ -8334,7 +8366,8 @@ window.GAME_DATA = {
                   {
                     "type": "unrest",
                     "op": "add",
-                    "value": 1
+                    "value": 1,
+                    "text": "Gain 1 unrest."
                   }
                 ]
               }
@@ -8357,7 +8390,8 @@ window.GAME_DATA = {
             "value": 0.5,
             "target": "unrest-town",
             "rounds": 1,
-            "condition": "any town with 1+ unrest"
+            "condition": "any town with 1+ unrest",
+            "text": "Any town of yours with 1 or more unrest produces half its effort for one round."
           }
         ],
         "mitigations": [
@@ -8377,20 +8411,23 @@ window.GAME_DATA = {
             "type": "price",
             "op": "shift",
             "family": "drink",
-            "value": 2
+            "value": 2,
+            "text": "Drink goes up two bands."
           },
           {
             "type": "price",
             "op": "shift",
             "family": "luxury",
-            "value": 1
+            "value": 1,
+            "text": "Luxuries go up one band."
           },
           {
             "type": "unrest",
             "op": "remove",
             "value": 1,
             "target": "all-towns",
-            "condition": "if the town serves any drink"
+            "condition": "if the town serves any drink",
+            "text": "Every town that can serve a drink loses 1 unrest."
           }
         ]
       },
@@ -8439,7 +8476,8 @@ window.GAME_DATA = {
             "op": "shift",
             "family": "metal",
             "value": 2,
-            "rounds": 3
+            "rounds": 3,
+            "text": "Metal goes up two bands for three rounds."
           }
         ]
       },
@@ -8457,7 +8495,8 @@ window.GAME_DATA = {
             "op": "shift",
             "family": "food",
             "value": -2,
-            "rounds": 2
+            "rounds": 2,
+            "text": "Food falls two bands for two rounds."
           }
         ]
       },
@@ -8474,7 +8513,8 @@ window.GAME_DATA = {
             "type": "price",
             "op": "shift-random-family",
             "value": 2,
-            "rounds": 2
+            "rounds": 2,
+            "text": "Roll for a commodity family: it goes up two bands for two rounds."
           }
         ]
       },
@@ -8508,14 +8548,16 @@ window.GAME_DATA = {
             "type": "commodity-gain",
             "commodity": "mana-crystal",
             "qty": 1,
-            "target": "towns-with-alchemist"
+            "target": "towns-with-alchemist",
+            "text": "Every town with an alchemist gains 1 mana crystal."
           },
           {
             "type": "effort",
             "op": "die-step",
             "value": 1,
             "target": "all-workers",
-            "rounds": 1
+            "rounds": 1,
+            "text": "Every worker rolls one die step higher for one round."
           }
         ]
       },
@@ -8532,12 +8574,14 @@ window.GAME_DATA = {
             "type": "commodity-loss",
             "op": "all-of",
             "commodity": "arcane-herb",
-            "target": "one-town"
+            "target": "one-town",
+            "text": "One of your towns loses every arcane herb in it."
           },
           {
             "type": "tool",
             "op": "break",
-            "tool": "alembic"
+            "tool": "alembic",
+            "text": "One alembic of yours is broken and comes off the board."
           }
         ]
       },
@@ -8593,7 +8637,8 @@ window.GAME_DATA = {
             "op": "multiplier",
             "value": 0.5,
             "target": "same-party",
-            "rounds": 1
+            "rounds": 1,
+            "text": "That party moves half as far for one round."
           }
         ],
         "mitigations": [
@@ -8615,14 +8660,16 @@ window.GAME_DATA = {
             "op": "die-step",
             "value": -1,
             "target": "region-workers",
-            "rounds": 2
+            "rounds": 2,
+            "text": "Workers in the region roll one die step lower for two rounds."
           },
           {
             "type": "population",
             "op": "remove",
             "value": 1,
             "target": "region-towns",
-            "condition": "only towns on or adjacent to a marsh tile"
+            "condition": "only towns on or adjacent to a marsh tile",
+            "text": "Every town on or beside a marsh loses one worker."
           }
         ],
         "mitigations": [
@@ -8644,14 +8691,16 @@ window.GAME_DATA = {
             "op": "remove",
             "value": 1,
             "target": "all-towns",
-            "condition": "every town with 4 or more workers loses one"
+            "condition": "every town with 4 or more workers loses one",
+            "text": "Every town with 4 or more workers loses one."
           },
           {
             "type": "effort",
             "op": "die-step",
             "value": -1,
             "target": "all-workers",
-            "rounds": 1
+            "rounds": 1,
+            "text": "Every worker rolls one die step lower for one round."
           }
         ],
         "mitigations": [
@@ -8802,7 +8851,8 @@ window.GAME_DATA = {
             "type": "unrest",
             "op": "add",
             "value": 1,
-            "target": "that-town"
+            "target": "that-town",
+            "text": "That town gains 1 unrest."
           }
         ],
         "mitigations": [
@@ -8883,14 +8933,16 @@ window.GAME_DATA = {
               "ship",
               "barge"
             ],
-            "rounds": 1
+            "rounds": 1,
+            "text": "Ships and barges move half as far for one round."
           },
           {
             "type": "building",
             "op": "damage",
             "value": 1,
             "target": "all-timber-buildings",
-            "chance": "d6 6"
+            "chance": "d6 6",
+            "text": "Roll a d6 for every timber building on the board: on a 6 it takes 1 damage."
           }
         ],
         "mitigations": [
@@ -8921,7 +8973,8 @@ window.GAME_DATA = {
             "type": "crop",
             "op": "advance",
             "value": 1,
-            "target": "all-growing"
+            "target": "all-growing",
+            "text": "Every growing crop advances one step, free."
           },
           {
             "type": "movement",
@@ -8958,7 +9011,8 @@ window.GAME_DATA = {
             "type": "unrest",
             "op": "add",
             "value": 1,
-            "target": "all-towns-with-a-market"
+            "target": "all-towns-with-a-market",
+            "text": "Every town with a market gains 1 unrest."
           }
         ],
         "mitigations": [
@@ -9071,7 +9125,8 @@ window.GAME_DATA = {
             "type": "commodity-loss",
             "commodity": "mana-crystal",
             "qty": 1,
-            "target": "all-towns"
+            "target": "all-towns",
+            "text": "Every town loses 1 mana crystal."
           },
           {
             "type": "effort",
@@ -9100,7 +9155,8 @@ window.GAME_DATA = {
             "type": "population",
             "op": "add",
             "value": 2,
-            "target": "region-largest-town"
+            "target": "region-largest-town",
+            "text": "The largest town in the region gains 2 workers."
           },
           {
             "type": "price",
@@ -9114,7 +9170,8 @@ window.GAME_DATA = {
             "type": "unrest",
             "op": "add",
             "value": 1,
-            "target": "region-towns"
+            "target": "region-towns",
+            "text": "Every town in the region gains 1 unrest."
           }
         ],
         "mitigations": [
@@ -11510,7 +11567,8 @@ window.GAME_DATA = {
         "name": "Kindle",
         "element": "fire",
         "cost": 1,
-        "effect": "Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel."
+        "effect": "Light: the caster's party counts as carrying a torch until dawn (nothing to spend), or light any fire without fuel - a furnace so lit runs one batch without paying its fuel.",
+        "story": "Every carter learns it before they learn to load, and every carter still packs the tinderbox."
       },
       {
         "id": "ember-lash",
@@ -11518,7 +11576,8 @@ window.GAME_DATA = {
         "name": "Ember Lash",
         "element": "fire",
         "cost": 3,
-        "effect": "+2 combat dice to one unit or character for one battle."
+        "effect": "+2 combat dice to one unit or character for one battle.",
+        "story": "Fine on an edge and ruinous on a temper. The smith will want the blade back afterwards."
       },
       {
         "id": "mend-stone",
@@ -11526,7 +11585,8 @@ window.GAME_DATA = {
         "name": "Mend Stone",
         "element": "earth",
         "cost": 2,
-        "effect": "Repair 2 damage on one building or vehicle, or restore 4 wear to one tool."
+        "effect": "Repair 2 damage on one building or vehicle, or restore 4 wear to one tool.",
+        "story": "Masons hold that it is not repair but persuasion. The wall stands either way."
       },
       {
         "id": "bulwark",
@@ -11534,7 +11594,8 @@ window.GAME_DATA = {
         "name": "Bulwark",
         "element": "earth",
         "cost": 4,
-        "effect": "One unit or character ignores 2 hits in one battle."
+        "effect": "One unit or character ignores 2 hits in one battle.",
+        "story": "It does not stop the blow. It stops the blow mattering."
       },
       {
         "id": "cleanse",
@@ -11542,7 +11603,8 @@ window.GAME_DATA = {
         "name": "Cleanse",
         "element": "water",
         "cost": 2,
-        "effect": "Cure one illness marker, or restore 2 health to one character."
+        "effect": "Cure one illness marker, or restore 2 health to one character.",
+        "story": "The sisters at Fen's End teach it to anyone who will sit still long enough to learn."
       },
       {
         "id": "mist-veil",
@@ -11550,7 +11612,8 @@ window.GAME_DATA = {
         "name": "Mist Veil",
         "element": "water",
         "cost": 4,
-        "effect": "Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll."
+        "effect": "Treat one monster, bandit or pirate discovery result as Nothing. Cast after the roll.",
+        "story": "Nothing is hidden. The road simply stops being worth anybody's trouble."
       },
       {
         "id": "fair-wind",
@@ -11558,7 +11621,8 @@ window.GAME_DATA = {
         "name": "Fair Wind",
         "element": "air",
         "cost": 2,
-        "effect": "+2 hexes on one leg, any mode. A ship gets +3."
+        "effect": "+2 hexes on one leg, any mode. A ship gets +3.",
+        "story": "Bargemen buy it by the mile and reckon it cheap at the price."
       },
       {
         "id": "stormcall",
@@ -11566,7 +11630,8 @@ window.GAME_DATA = {
         "name": "Stormcall",
         "element": "air",
         "cost": 5,
-        "effect": "One party, vehicle or cargo you can see loses its next leg entirely."
+        "effect": "One party, vehicle or cargo you can see loses its next leg entirely.",
+        "story": "Called down on the guilty and the unlucky alike, and the weather cannot tell them apart."
       },
       {
         "id": "wayfire",
@@ -11574,7 +11639,8 @@ window.GAME_DATA = {
         "name": "Wayfire",
         "element": "fire",
         "cost": 3,
-        "effect": "Burn one blockage clear: a route blocked by an event card reopens, or one tile of forest or marsh costs your party nothing to cross this leg. The tile is scorched - nothing may be foraged there for the rest of the game."
+        "effect": "Burn one blockage clear: a route blocked by an event card reopens, or one tile of forest or marsh costs your party nothing to cross this leg. The tile is scorched - nothing may be foraged there for the rest of the game.",
+        "story": "It opens the road once. Nothing grows back on it for as long as anyone is counting."
       },
       {
         "id": "seam-sense",
@@ -11582,7 +11648,8 @@ window.GAME_DATA = {
         "name": "Seam-Sense",
         "element": "earth",
         "cost": 3,
-        "effect": "Look at the deposit token under your hex and under every hex adjacent to it, then put them back face down. You may tell the truth about them or not."
+        "effect": "Look at the deposit token under your hex and under every hex adjacent to it, then put them back face down. You may tell the truth about them or not.",
+        "story": "Lifting the turf is the easy half. Deciding what to say you saw is the rest of it."
       },
       {
         "id": "root-snare",
@@ -11590,7 +11657,8 @@ window.GAME_DATA = {
         "name": "Root-Snare",
         "element": "earth",
         "cost": 3,
-        "effect": "One monster, party or figure in your hex or adjacent to it may not move next round. A vehicle instead marks 1 damage tearing itself free."
+        "effect": "One monster, party or figure in your hex or adjacent to it may not move next round. A vehicle instead marks 1 damage tearing itself free.",
+        "story": "Roads are stone and roots are patient. This only asks them to hurry."
       },
       {
         "id": "deep-draught",
@@ -11598,7 +11666,8 @@ window.GAME_DATA = {
         "name": "Deep Draught",
         "element": "water",
         "cost": 2,
-        "effect": "Fill every empty barrel in one town with water, free, wherever it stands - and that town ignores Drought this round."
+        "effect": "Fill every empty barrel in one town with water, free, wherever it stands - and that town ignores Drought this round.",
+        "story": "A village's whole day of fetching, done between one breath and the next."
       },
       {
         "id": "farspeak",
@@ -11606,7 +11675,8 @@ window.GAME_DATA = {
         "name": "Farspeak",
         "element": "air",
         "cost": 2,
-        "effect": "Speak to any other character on the board, wherever they are. You may agree a trade, a price or an alliance at that distance, and either of you may hold to it or not, exactly as if you had met."
+        "effect": "Speak to any other character on the board, wherever they are. You may agree a trade, a price or an alliance at that distance, and either of you may hold to it or not, exactly as if you had met.",
+        "story": "The distance costs nothing. Keeping your word costs exactly what it always did."
       },
       {
         "id": "loft",
@@ -11614,7 +11684,8 @@ window.GAME_DATA = {
         "name": "Loft",
         "element": "air",
         "cost": 4,
-        "effect": "One vehicle - any mode, including a wagon or a sled - is lifted over one impassable hex and set down on the far side. An airship instead ignores its next wind roll and moves at full speed."
+        "effect": "One vehicle - any mode, including a wagon or a sled - is lifted over one impassable hex and set down on the far side. An airship instead ignores its next wind roll and moves at full speed.",
+        "story": "Over, not across. What was badly roped on does not come over with it."
       }
     ],
     "enchantments": {
@@ -12887,6 +12958,11 @@ window.GAME_DATA = {
         "safeMarginMm": 4
       },
       "unitsPerMm": 8
+    },
+    "window": {
+      "$comment": "The picture window, and the one shape rule it has.\n\nA window is not laid out: it is what is LEFT over on the card once the strip, the rules text and the flavour have taken theirs, and the rules text is sized for the WORDIEST CARD IN THE DECK so that a deck deals as one deck. That is the right construction and it has one consequence nobody was watching: a card landing with a long rule narrows the picture on every other card in its deck, and there was no bottom to how far.\n\nFLATTEST in tools/build-cards.mjs is the ASPIRATION - a 3:2 plate would rather be shown in a 3:2 slot, and the window is lifted to it wherever there is room. It is not a floor and never was: the arithmetic is min(what is left, what we would like), so what is left always wins, and the vehicles deck already sits at 1.60 against an aspiration of 1.34 with nobody having noticed.\n\nThis IS the floor, and it is the other kind of number: the point past which a window has stopped being a picture on a page and become a letterbox slot cut in one. It sits clear of every deck the game has actually printed - the flattest of those is the vehicles deck at 1.60 - so it catches nothing that works and fails the build on what does not. The events deck came out at 3.08 the day it was turned on, and the quests deck came out at MINUS 69 units tall, which is an SVG rectangle nobody can see and a card that would have been written, validated and committed without once being looked at.\n\nWhat to do when it fails is never to thin the picture. A wordier card wants fewer words - the same answer tools/build-ledger.mjs gives when a seven-segment figure falls under digit.minHeightMm, and for the same reason.",
+      "floorAspect": 2,
+      "$floorNote": "Width over height. A window twice as wide as it is tall is the limit; anything flatter fails the build, naming the deck and the card whose rules text set it."
     },
     "frame": {
       "$comment": "The timber-and-iron border every card in every deck carries, from docs/art/06-components.md. Insets are from the trim edge, in grid units. Both rules follow the card's corner, one radius inside the other, or the frame reads as a square box floating in a rounded card.",

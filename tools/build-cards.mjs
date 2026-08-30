@@ -137,9 +137,13 @@ const GAP = 26;                    // plate to rules, and rules to the flavour p
 /* The window runs frame to frame. It used to run between two bars, which cost it
    80 units of the 456 there are; the bars are on the player board now. */
 const PORTRAIT = { x: TRIM.x + 24, w: TRIM.w - 48 };
-/* The flattest a window may get. A 3:2 plate would rather be shown in a 3:2
-   slot, but below about this the window stops reading as a plate on a page and
-   starts reading as a letterbox slot cut in one. */
+/* What a window would LIKE to be, not what it may not go past. A 3:2 plate would
+   rather be shown in a 3:2 slot, so a window is lifted to this wherever there is
+   room - `Math.max(wanted, colW / FLATTEST)`. It is then handed to `Math.min`
+   against what the deck's words actually left, and what is left always wins:
+   this has never stopped anything, and the vehicles deck has sat at 1.60 against
+   it for as long as it has existed. The FLOOR is components.json window
+   .floorAspect, enforced by windowFloor below. */
 const FLATTEST = 1.34;
 
 /* One glyph's width as a fraction of the type size, for this serif at this size.
@@ -364,6 +368,39 @@ function frameOf(id) {
 }
 
 /**
+ * A DECK WHOSE WORDS HAVE EATEN ITS PICTURE.
+ *
+ * The window is what is left over once the deck's wordiest card has had its
+ * rules text, so a card that lands with a long rule narrows the picture on every
+ * card in that deck. There is a floor - FLATTEST, the flattest a card window is
+ * allowed to be - and until now nothing enforced it: `Math.min(room, ...)` let
+ * `room` win, and a deck wordy enough got a letterbox slit. A deck wordier still
+ * got a NEGATIVE height, which is an SVG rect nobody can see and a card that was
+ * written, validated and committed without ever being looked at.
+ *
+ * So it fails the build and names the cause, the way tools/build-ledger.mjs
+ * fails on a figure below `digit.minHeightMm` and names `gameLengthRounds`. The
+ * fix is the same shape too: a wordier card wants fewer words, never a thinner
+ * picture. What comes off is a decision about the deck, so this says which card
+ * and how many lines and stops.
+ */
+function windowFloor(deck, deckDef, height, colW) {
+  const floor = Math.ceil(colW / components.window.floorAspect);
+  if (height >= floor) return;
+  const lines = (s) => factLines(s, colW).length;
+  const worst = deck.reduce((a, b) => (lines(b) > lines(a) ? b : a));
+  const over = Math.ceil((floor - height) / FACT.lead);
+  throw new Error(
+    `the ${deckDef?.name ?? 'unnamed'} deck's rules text has eaten its picture: the window comes out ` +
+    `${colW} x ${height}, an aspect of ${(colW / height).toFixed(2)}, and components.json window.floorAspect ` +
+    `stops at ${components.window.floorAspect} - ${colW} x ${floor}. ` +
+    `The wordiest card in the deck sets it - ${worst.code} ${worst.name}, ${lines(worst)} lines - and ` +
+    `about ${over} line${over === 1 ? '' : 's'} has to come off it. Every card in a deck shares one ` +
+    'window, so this is the whole deck, not one card. Shorten the words in the card\'s own data file; ' +
+    'do not thin the picture.');
+}
+
+/**
  * The geometry every card in one deck shares.
  *
  * The words are laid out from the bottom up — the flavour panel sits on the
@@ -407,6 +444,7 @@ function deckGeometry(deck, deckDef) {
     const room = (FOOT - top) - GAP - (factMax - 1) * FACT.lead;
     const wanted = colW / (plate.width / plate.height);
     const height = Math.round(Math.min(room, Math.max(wanted, colW / FLATTEST)));
+    windowFloor(deck, deckDef, height, colW);
     const y = Math.round(top + (room - height) / 2);
 
     return {
@@ -428,6 +466,7 @@ function deckGeometry(deck, deckDef) {
   const room = (factFloor - top) - GAP - (factMax - 1) * FACT.lead;
   const wanted = PORTRAIT.w / (plate.width / plate.height);
   const height = Math.round(Math.min(room, Math.max(wanted, PORTRAIT.w / FLATTEST)));
+  windowFloor(deck, deckDef, height, PORTRAIT.w);
   const y = Math.round(top + (room - height) / 2);
 
   const window = { x: PORTRAIT.x, y, w: PORTRAIT.w, h: height };
@@ -698,6 +737,22 @@ const gear = [...deckCards('ITM'), ...deckCards('WPN'), ...deckCards('ARM')];
 const itemClassName = new Map(itemData.classes.map((c) => [c.id, c.name.toLowerCase()]));
 const toolkit = read('tools.json').tools.filter((t) => t.cardCode);
 const recipeName = new Map(read('recipes.json').recipes.map((r) => [r.id, r.name]));
+/* The three decks that were turned on with their briefs and could not be set
+   until their words were written. A spell's rule is its own `effect` and its
+   flavour its own `story`; an event's rule is the `text` on each of its effects
+   and its flavour is the card's own `text`; a quest's is its `task` and its
+   `hook`. None of it is composed here - this tool reads the sentence the card's
+   own file already carries, exactly as it does for a monster's quirk or an
+   item's effects, and tools/validate-data.mjs fails the build if one is
+   missing. */
+const spells = read('arcana.json').spells.filter((s) => s.cardCode);
+const eventData = read('events.json');
+const eventCards = eventData.cards.filter((c) => c.cardCode);
+const eventCategory = new Map(eventData.categories.map((c) => [c.id, c.name.toLowerCase()]));
+const eventScope = new Map(eventData.scopes.map((s) => [s.id, s]));
+const quests = read('quests.json').quests.filter((q) => q.cardCode);
+const itemName = new Map(read('items.json').items.map((i) => [i.id, i.name]));
+
 const modData = read('modifications.json');
 const modifications = modData.modifications;
 const modClassName = new Map(modData.classes.map((c) => [c.id, c.name.toLowerCase()]));
@@ -958,6 +1013,150 @@ for (const t of toolkit) {
       recipeLine(t.madeAt, t.specialist, t.craft?.inputs, t.craft?.effortHours),
     ].filter(Boolean),
     story: t.story,
+  });
+}
+
+/* A SPELL prints ONE number and it is the one you spend. M is the board's own
+   mana letter, so a caster reads M 3 and walks the mana token down three - which
+   is the whole point of the letters matching. It is the same letter a talisman
+   prints and it points the other way: a talisman's M is a ceiling you fill up
+   to, a spell's is a debit you pay. That is not two numbers answering to one
+   letter, which is what statStrip.letters forbids - it is one number, mana, on
+   the one track, read in the direction the card is about.
+
+   The element takes the last box as a MARK rather than a figure, exactly as it
+   does on a monster, and drawn from the same four in arcana.json - so a spell
+   and the thing it is cast at name their element the same way. */
+for (const s of spells) {
+  const render = plateIdFor(deckByPrefix('SPL'), s);
+  if (!hasRender(render)) { skipped.push(s.cardCode); continue; }
+  const element = ELEMENTS.get(s.element);
+  specs.push({
+    code: s.cardCode, name: s.name, portrait: render,
+    kicker: `spell · ${element ? element.name.toLowerCase() : s.element}`,
+    desc: `Spell card: ${s.name}, ${s.element}. Costs ${s.cost} mana to cast.`,
+    stats: [
+      cell('mana', s.cost, 'bruise'),
+      { element: s.element, tint: 'soot-tint-12' },
+    ],
+    facts: [s.effect],
+    story: s.story,
+  });
+}
+
+/* An EVENT has NO NUMBERS, and the empty strip is the right answer rather than a
+   gap. Everything an event does is a change to somebody else's number - a band,
+   a crop, a worker, a die step - and it is said in the sentence that does it.
+   The one figure a card of this deck owns is `copies`, how many of it are in the
+   deck, and that is a DECK rule and stays in the data the way a monster's
+   `unique` does.
+
+   The rules text is the `text` on each effect, in order, and nothing here
+   composes it: a structured effect is what the engine runs and the sentence
+   beside it is what the table reads, the same two-voiced bargain the pricing
+   models take, checked by validate-data.mjs so neither can be changed and the
+   other left saying the old thing. A CHOICE is the exception and is assembled,
+   because a choice is structure: its branches are the content and each branch's
+   own effects carry their own sentences.
+
+   The scope goes FIRST because it is the question a table asks before any other
+   one - whose problem is this? - and it is events.json's own summary, not a
+   phrase invented here.
+
+   The MITIGATIONS are not on the card, and that is the deck's window talking
+   rather than a judgement about how useful they are. Every card in a deck shares
+   one window and the wordiest card sets it: with the mitigations on, EVT-39 runs
+   to thirteen lines and the whole deck's picture comes out 456 x 148 - an aspect
+   of 3.08 against a floor of 2.0, which windowFloor now refuses. With them off
+   the worst card is eight. They are a real rule and they are not lost: the
+   explorer shows them under every event, and tools/build-annex.mjs prints all of
+   them in the rulebook, in their own table, which is where a player looks up
+   whether a brick house saved them. */
+const effectLines = (fx) => {
+  if (fx.type === 'choice' && fx.branches?.length) {
+    return fx.branches.map((b) => {
+      const said = (b.effects ?? []).map((f) => f.text).filter(Boolean).join(' ');
+      return `${b.label}: ${said || 'nothing happens.'}`;
+    });
+  }
+  return fx.text ? [fx.text] : [];
+};
+
+for (const e of eventCards) {
+  const render = plateIdFor(deckByPrefix('EVT'), e);
+  if (!hasRender(render)) { skipped.push(e.cardCode); continue; }
+  const scope = eventScope.get(e.scope);
+  specs.push({
+    code: e.cardCode, name: e.name, portrait: render,
+    kicker: `${eventCategory.get(e.category) ?? e.category} · ${e.scope}`,
+    desc: `Event card: ${e.name}, ${e.category}, ${e.scope}. ${scope ? scope.summary : ''}`,
+    stats: [],
+    facts: [
+      scope ? `${scope.name}: ${scope.summary.replace(/\.$/, '')}.` : null,
+      ...(e.effects ?? []).flatMap(effectLines),
+    ].filter(Boolean),
+    story: e.text,
+  });
+}
+
+/* A QUEST prints no strip either, and for a sharper reason than the events deck:
+   it has plenty of numbers and every one of them is already inside the sentence
+   that says what it is for. `Deliver 3 grain to Grist` and `25 coin, and your
+   next purchase there is at -10%` are the task and the reward; boxing one of
+   them as a bare figure would print it twice and boxing an arbitrary one of them
+   would say that figure was the card's number, which none of them is.
+
+   A CAMPAIGN is dealt as ONE card and does not print its stages in full. Both of
+   them tried: three named tasks with three rewards runs to twenty-two lines and
+   drove the whole deck's window to MINUS 69 units tall, which is how windowFloor
+   below came to exist. So a campaign card carries what a player needs in the
+   moment they take it - how many stages, what they are called, the order they go
+   in, and what the whole thing pays - and the tasks themselves are in the
+   rulebook and the explorer, both of which print them complete.
+
+   That is not the campaigns being trimmed to fit the minis. At six lines the
+   deck's wordiest cards are now QST-03 and QST-05, two MINI quests carrying their
+   own full task and reward; the campaigns land at five and six beside them. The
+   deck deals as one deck, which is what a shared window is for. */
+const questPaid = (r) => {
+  const bits = [];
+  if (!r) return bits;
+  if (r.coin) bits.push(`${r.coin}${rules.currency.symbol}`);
+  if (r.vp) bits.push(`${r.vp} victory point${r.vp === 1 ? '' : 's'}`);
+  if (r.mana) bits.push(`${r.mana.qty} ${r.mana.element} mana`);
+  for (const id of r.items ?? []) bits.push(itemName.get(id) ?? id);
+  return bits;
+};
+const COUNT_WORD = ['One', 'Two', 'Three', 'Four', 'Five'];
+
+for (const q of quests) {
+  const render = plateIdFor(deckByPrefix('QST'), q);
+  if (!hasRender(render)) { skipped.push(q.cardCode); continue; }
+  const stages = q.stages ?? [];
+  /* Summed across the stages, never invented: every figure here is a `reward`
+     somewhere in this quest's own file. What a sum cannot carry is a stage's
+     standing reward - "Plan Route costs you no effort, all game" is not a
+     number - so the card says there are such things and where to read them
+     rather than quietly dropping them. */
+  const paid = stages.length ? stages.flatMap((st) => questPaid(st.reward)) : questPaid(q.reward);
+  specs.push({
+    code: q.cardCode, name: q.name, portrait: render,
+    kicker: stages.length ? `campaign quest · ${stages.length} stages` : 'mini quest',
+    desc: `Quest card: ${q.name}, ${stages.length ? `a campaign in ${stages.length} stages` : 'a mini quest'}.`,
+    stats: [],
+    facts: (stages.length
+      ? [
+        `${COUNT_WORD[stages.length - 1] ?? stages.length} stages, taken in order: `
+          + `${stages.map((st, i) => `${i + 1}. ${st.name}`).join('; ')}.`,
+        paid.length ? `Pays ${paid.join(', ')} in all.` : null,
+        'Each stage names its own task and its own standing reward; they are in the rulebook.',
+      ]
+      : [
+        q.task,
+        [paid.length ? `Pays ${paid.join(', ')}.` : null, q.reward?.note].filter(Boolean).join(' ') || null,
+        q.notes,
+      ]).filter(Boolean),
+    story: q.hook,
   });
 }
 

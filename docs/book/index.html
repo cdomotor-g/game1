@@ -1856,6 +1856,17 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>QST-06</td><td>A Draught for Fen's End</td><td>mini</td><td>3</td><td>Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count.</td></tr>
 <tr><td>QST-07</td><td>The Ironspine Road</td><td>campaign</td><td>4</td><td>3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel</td></tr>
 <tr><td>QST-08</td><td>The Drowned Bell of Taleowick</td><td>campaign</td><td>5</td><td>3 stages: The Tale at the Inn → The Sounding → What Rings It</td></tr></tbody></table></div>
+<h3 id="the-campaigns-stage-by-stage">The campaigns, stage by stage</h3>
+<p>A campaign is one card and prints its stage names, their order and what the whole thing pays. The tasks are here. Stages are taken in order.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Quest</th><th>#</th><th>Stage</th><th>Task</th><th>Pays</th></tr></thead>
+<tbody><tr><td>QST-07</td><td>The Ironspine Road</td><td>1</td><td>Survey the Pass</td><td>End a leg on 2 different mountain hexes between Vossgard and Port Malchior and succeed at a survey on each.</td><td>The Seat's cartographers share their notes: Plan Route costs you no effort, all game.</td></tr>
+<tr><td></td><td></td><td>2</td><td>Prove the Road</td><td>Escort a caravan (yours or a hired one) from Vossgard to Port Malchior without losing any cargo to any event, bandit or monster.</td><td>100¤</td></tr>
+<tr><td></td><td></td><td>3</td><td>The Thing in the Tunnel</td><td>The old bore under the pass is not empty. Enter with light and resolve a Forge Wight encounter - slay it, befriend it, or enslave it.</td><td>2 VP · And the pass is yours by use and custom: rail you lay on mountain hexes costs half build-points, all game.</td></tr>
+<tr><td>QST-08</td><td>The Drowned Bell of Taleowick</td><td>1</td><td>The Tale at the Inn</td><td>Rest a round at Taleowick and pay 10 coin for the whole story.</td><td>The sexton's map of the old channel: your ships and barges treat the four Splinter Isles hexes as home water - no discovery rolls there.</td></tr>
+<tr><td></td><td></td><td>2</td><td>The Sounding</td><td>End a ship or barge leg on 3 different shallow-water hexes within 2 hexes of Taleowick. Each triggers its discovery roll as normal; survive whatever answers.</td><td>The bell-clapper, hauled up in a net: counts as 1 gold, but keep it - it is the campaign's key.</td></tr>
+<tr><td></td><td></td><td>3</td><td>What Rings It</td><td>The Deepwater Maw has been using the bell as a lure. It rises against the ship carrying the clapper: fight and slay it. Strength 5, health 12, and it strikes first unless a character aboard has water mana stored.</td><td>3 VP · 4 water mana · Crystal Phylactery · The phylactery is found inside the bell, which the village lets you keep the story of.</td></tr></tbody></table></div>
+<p><strong>The Ironspine Road.</strong> Stages in order. Abandoning this campaign discards it for every player - the pass stays shut. <strong>The Drowned Bell of Taleowick.</strong> Stages in order. If the Maw is slain by anyone else first, stage 3 completes at the Maw's hex with the clapper aboard - the bell falls silent either way.</p>
 <h2 id="the-elements">The elements</h2>
 <p>Four elements, four marks. The mark is data - one path per element in <code>data/arcana.json</code> - so a card, a chit, this table and the explorer all say fire the same way. <code>tools/build-icons.mjs</code> draws them.</p>
 <div class="table-wrap"><table>
@@ -1907,60 +1918,95 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>MOD-10</td><td>Warded Hold</td><td>enchantment</td><td>any</td><td>4 earth mana</td><td>Nothing is taken from this vehicle that its owner did not hand over. Cancel every theft, robbery, piracy and heist card aimed at its cargo. A boarder who wins a battle may still take the vehicle entire - the ward is on the hold, not on the owner.</td></tr>
 <tr><td>MOD-11</td><td>Salamander Grate</td><td>enchantment</td><td>train, ship, airship</td><td>6 fire mana</td><td>The firebox burns without fuel: the vehicle pays no fuel per leg, ever. It also never runs cold - the vehicle may take a night leg with no light, because the glare from the grate is light enough.</td></tr></tbody></table></div>
 <h2 id="event-deck">Event deck</h2>
+<p>What each card DOES is the <code>text</code> on each of its effects, in order - the sentence the card prints beside the picture, and the one the explorer shows. It sits next to a machine-readable effect the digital game runs, and <code>tools/validate-data.mjs</code> fails the build if an effect ever loses its sentence.</p>
 <div class="table-wrap"><table>
-<thead><tr><th>Card</th><th>Category</th><th>Scope</th><th>Copies</th></tr></thead>
-<tbody><tr><td>Hard Frost</td><td>weather</td><td>global</td><td>3</td></tr>
-<tr><td>Drought</td><td>weather</td><td>local</td><td>2</td></tr>
-<tr><td>Long Summer</td><td>weather</td><td>global</td><td>2</td></tr>
-<tr><td>Storms at Sea</td><td>weather</td><td>global</td><td>2</td></tr>
-<tr><td>Flood</td><td>disaster</td><td>local</td><td>2</td></tr>
-<tr><td>Earthquake</td><td>disaster</td><td>local</td><td>1</td></tr>
-<tr><td>Wildfire</td><td>disaster</td><td>local</td><td>2</td></tr>
-<tr><td>Mine Collapse</td><td>disaster</td><td>targeted</td><td>2</td></tr>
-<tr><td>Warehouse Heist</td><td>crime</td><td>targeted</td><td>3</td></tr>
-<tr><td>Caravan Robbery</td><td>crime</td><td>targeted</td><td>2</td></tr>
-<tr><td>Train Heist</td><td>crime</td><td>targeted</td><td>1</td></tr>
-<tr><td>Piracy</td><td>crime</td><td>global</td><td>1</td></tr>
-<tr><td>Smuggling Ring</td><td>crime</td><td>offer</td><td>2</td></tr>
-<tr><td>Wolf Pack</td><td>wildlife</td><td>local</td><td>2</td></tr>
-<tr><td>Boar in the Fields</td><td>wildlife</td><td>local</td><td>2</td></tr>
-<tr><td>Dragon Sighting</td><td>wildlife</td><td>global</td><td>1</td></tr>
-<tr><td>Raiders</td><td>conflict</td><td>targeted</td><td>3</td></tr>
-<tr><td>Border Dispute</td><td>conflict</td><td>global</td><td>2</td></tr>
-<tr><td>Mercenaries for Hire</td><td>conflict</td><td>offer</td><td>2</td></tr>
-<tr><td>Plague</td><td>social</td><td>local</td><td>1</td></tr>
-<tr><td>Migrants</td><td>social</td><td>offer</td><td>3</td></tr>
-<tr><td>Strike</td><td>social</td><td>targeted</td><td>2</td></tr>
-<tr><td>Festival</td><td>social</td><td>global</td><td>2</td></tr>
-<tr><td>Travelling Master</td><td>social</td><td>offer</td><td>2</td></tr>
-<tr><td>Iron Shortage</td><td>market</td><td>global</td><td>2</td></tr>
-<tr><td>Glut</td><td>market</td><td>global</td><td>2</td></tr>
-<tr><td>Foreign Demand</td><td>market</td><td>global</td><td>3</td></tr>
-<tr><td>Tax Levy</td><td>market</td><td>global</td><td>2</td></tr>
-<tr><td>Ley Surge</td><td>arcane</td><td>global</td><td>1</td></tr>
-<tr><td>Curdled Brew</td><td>arcane</td><td>targeted</td><td>1</td></tr>
-<tr><td>Wandering Wizard</td><td>arcane</td><td>offer</td><td>2</td></tr>
-<tr><td>Camp Fever</td><td>social</td><td>targeted</td><td>2</td></tr>
-<tr><td>Marsh Ague</td><td>social</td><td>local</td><td>2</td></tr>
-<tr><td>The Grey Pox</td><td>social</td><td>global</td><td>1</td></tr>
-<tr><td>Impure Smelt</td><td>industry</td><td>global</td><td>2</td></tr>
-<tr><td>Blood Moon</td><td>arcane</td><td>global</td><td>1</td></tr>
-<tr><td>The Quiet Season</td><td>wildlife</td><td>global</td><td>1</td></tr>
-<tr><td>Black Sails on the Horizon</td><td>crime</td><td>global</td><td>2</td></tr>
-<tr><td>Letter of Marque</td><td>crime</td><td>offer</td><td>1</td></tr>
-<tr><td>Press Gang</td><td>crime</td><td>targeted</td><td>2</td></tr>
-<tr><td>The Dragon's Tithe</td><td>conflict</td><td>global</td><td>1</td></tr>
-<tr><td>The Aerial Post</td><td>industry</td><td>offer</td><td>1</td></tr>
-<tr><td>Gale</td><td>weather</td><td>global</td><td>2</td></tr>
-<tr><td>Early Thaw</td><td>weather</td><td>global</td><td>2</td></tr>
-<tr><td>Clipped Coin</td><td>market</td><td>global</td><td>2</td></tr>
-<tr><td>Guild Embargo</td><td>market</td><td>targeted</td><td>2</td></tr>
-<tr><td>New Tolls</td><td>social</td><td>local</td><td>2</td></tr>
-<tr><td>The Sign of the Green Man</td><td>social</td><td>offer</td><td>2</td></tr>
-<tr><td>The Mead Run</td><td>market</td><td>offer</td><td>2</td></tr>
-<tr><td>Ley Drought</td><td>arcane</td><td>global</td><td>2</td></tr>
-<tr><td>Boom Town</td><td>market</td><td>local</td><td>2</td></tr></tbody></table></div>
+<thead><tr><th>Code</th><th>Card</th><th>Category</th><th>Scope</th><th>Copies</th><th>What happens</th></tr></thead>
+<tbody><tr><td>EVT-01</td><td>Hard Frost</td><td>weather</td><td>global</td><td>3</td><td>Every growing crop stalls: nothing advances for one round. Every worker on tundra, mountain or hills produces 1 less effort.</td></tr>
+<tr><td>EVT-02</td><td>Drought</td><td>weather</td><td>local</td><td>2</td><td>Every crop in the region yields half when it is harvested. Every town in the region loses 2 water.</td></tr>
+<tr><td>EVT-03</td><td>Long Summer</td><td>weather</td><td>global</td><td>2</td><td>Every growing crop advances one step, free. Every worker produces 1 more effort.</td></tr>
+<tr><td>EVT-04</td><td>Storms at Sea</td><td>weather</td><td>global</td><td>2</td><td>No ship or barge moves for one round. Every ship at sea loses half the cargo tokens aboard it.</td></tr>
+<tr><td>EVT-05</td><td>Flood</td><td>disaster</td><td>local</td><td>2</td><td>Every crop growing on a farm in the region is destroyed. Every building on a river hex in the region stops for one round. Silt: a small consolation.</td></tr>
+<tr><td>EVT-06</td><td>Earthquake</td><td>disaster</td><td>local</td><td>1</td><td>Halve the build track - the building stops until it is repaired. Nothing crosses a mountain hex for two rounds.</td></tr>
+<tr><td>EVT-07</td><td>Wildfire</td><td>disaster</td><td>local</td><td>2</td><td>Roll a d6 for every timber building in the region: on 4 or more it burns down. Every town in the region loses 4 logs.</td></tr>
+<tr><td>EVT-08</td><td>Mine Collapse</td><td>disaster</td><td>targeted</td><td>2</td><td>One of your mines stops for two rounds while the gallery is dug out. One worker is lost.</td></tr>
+<tr><td>EVT-09</td><td>Warehouse Heist</td><td>crime</td><td>targeted</td><td>3</td><td>Lose half the contents of one warehouse, owner's choice of which items.</td></tr>
+<tr><td>EVT-10</td><td>Caravan Robbery</td><td>crime</td><td>targeted</td><td>2</td><td>The highest-value cargo token in transit by road is taken.</td></tr>
+<tr><td>EVT-11</td><td>Train Heist</td><td>crime</td><td>targeted</td><td>1</td><td>Three quarters of the cargo tokens on that train are taken, highest value first. That line carries nothing for one round.</td></tr>
+<tr><td>EVT-12</td><td>Piracy</td><td>crime</td><td>global</td><td>1</td><td>Every player loses half the cargo tokens they have afloat, highest value first.</td></tr>
+<tr><td>EVT-13</td><td>Smuggling Ring</td><td>crime</td><td>offer</td><td>2</td><td><strong>Deal:</strong> Sell up to 6 bulk at 150% of base value. Gain 1 unrest. <strong>Decline:</strong> nothing happens.</td></tr>
+<tr><td>EVT-14</td><td>Wolf Pack</td><td>wildlife</td><td>local</td><td>2</td><td>Every pasture in the region loses 2 sheep. A wolf pack, strength 2, is placed in the region and stays until it is killed.</td></tr>
+<tr><td>EVT-15</td><td>Boar in the Fields</td><td>wildlife</td><td>local</td><td>2</td><td>One crop on one farm in the region is destroyed. <strong>Hunt it:</strong> Gain 3 meat. Spend 3 effort. <strong>Let it be:</strong> nothing happens.</td></tr>
+<tr><td>EVT-16</td><td>Dragon Sighting</td><td>wildlife</td><td>global</td><td>1</td><td>Nothing crosses a mountain hex for two rounds. A dragon, strength 8, settles on a random mountain hex and stays there. Panic buying of portable wealth.</td></tr>
+<tr><td>EVT-17</td><td>Raiders</td><td>conflict</td><td>targeted</td><td>3</td><td>Raiders, strength 3, attack one of the leader's towns. If the defence fails, that town loses a quarter of everything in it.</td></tr>
+<tr><td>EVT-18</td><td>Border Dispute</td><td>conflict</td><td>global</td><td>2</td><td><strong>Concede:</strong> Lose a tenth of the stock in one of your towns. <strong>Contest:</strong> Both players roll 2 combat dice. The loser gives the winner one tile's worth of infrastructure.</td></tr>
+<tr><td>EVT-19</td><td>Mercenaries for Hire</td><td>conflict</td><td>offer</td><td>2</td><td><strong>Hire (50 coin):</strong> Two soldiers join you for three rounds, then they leave. <strong>Pass:</strong> nothing happens.</td></tr>
+<tr><td>EVT-20</td><td>Plague</td><td>social</td><td>local</td><td>1</td><td>Every town in the region loses a quarter of its workers. Workers in the region roll one die step lower for two rounds.</td></tr>
+<tr><td>EVT-21</td><td>Migrants</td><td>social</td><td>offer</td><td>3</td><td><strong>Take them in:</strong> Two workers join a town of yours that has housing and 4 food to spare. <strong>Turn them away:</strong> Gain 1 unrest.</td></tr>
+<tr><td>EVT-22</td><td>Strike</td><td>social</td><td>targeted</td><td>2</td><td>Any town of yours with 1 or more unrest produces half its effort for one round.</td></tr>
+<tr><td>EVT-23</td><td>Festival</td><td>social</td><td>global</td><td>2</td><td>Drink goes up two bands. Luxuries go up one band. Every town that can serve a drink loses 1 unrest.</td></tr>
+<tr><td>EVT-24</td><td>Travelling Master</td><td>social</td><td>offer</td><td>2</td><td><strong>Apprentice (30 coin):</strong> Train one specialist without a guildhall. <strong>Pass:</strong> nothing happens.</td></tr>
+<tr><td>EVT-25</td><td>Iron Shortage</td><td>market</td><td>global</td><td>2</td><td>Metal goes up two bands for three rounds.</td></tr>
+<tr><td>EVT-26</td><td>Glut</td><td>market</td><td>global</td><td>2</td><td>Food falls two bands for two rounds.</td></tr>
+<tr><td>EVT-27</td><td>Foreign Demand</td><td>market</td><td>global</td><td>3</td><td>Roll for a commodity family: it goes up two bands for two rounds.</td></tr>
+<tr><td>EVT-28</td><td>Tax Levy</td><td>market</td><td>global</td><td>2</td><td>Pay 3 coin per completed building. If you cannot pay, gain 1 unrest per unpaid building.</td></tr>
+<tr><td>EVT-29</td><td>Ley Surge</td><td>arcane</td><td>global</td><td>1</td><td>Every town with an alchemist gains 1 mana crystal. Every worker rolls one die step higher for one round.</td></tr>
+<tr><td>EVT-30</td><td>Curdled Brew</td><td>arcane</td><td>targeted</td><td>1</td><td>One of your towns loses every arcane herb in it. One alembic of yours is broken and comes off the board.</td></tr>
+<tr><td>EVT-31</td><td>Wandering Wizard</td><td>arcane</td><td>offer</td><td>2</td><td><strong>Trade a mana crystal:</strong> Take any 2 potions from items.json for free. <strong>Pass:</strong> nothing happens.</td></tr>
+<tr><td>EVT-32</td><td>Camp Fever</td><td>social</td><td>targeted</td><td>2</td><td>Every figure and character in one of your travelling parties takes 2 damage. That party moves half as far for one round.</td></tr>
+<tr><td>EVT-33</td><td>Marsh Ague</td><td>social</td><td>local</td><td>2</td><td>Workers in the region roll one die step lower for two rounds. Every town on or beside a marsh loses one worker.</td></tr>
+<tr><td>EVT-34</td><td>The Grey Pox</td><td>social</td><td>global</td><td>1</td><td>Every town with 4 or more workers loses one. Every worker rolls one die step lower for one round.</td></tr>
+<tr><td>EVT-35</td><td>Impure Smelt</td><td>industry</td><td>global</td><td>2</td><td>Every tool used this round takes double wear. Any tool forged this round is marked brittle: it breaks when its durability track reaches half, not zero.</td></tr>
+<tr><td>EVT-36</td><td>Blood Moon</td><td>arcane</td><td>global</td><td>1</td><td>Monster bands on every discovery table widen by 3 for two rounds.</td></tr>
+<tr><td>EVT-37</td><td>The Quiet Season</td><td>wildlife</td><td>global</td><td>1</td><td>Monster bands on every discovery table shrink by 2 for two rounds.</td></tr>
+<tr><td>EVT-38</td><td>Black Sails on the Horizon</td><td>crime</td><td>global</td><td>2</td><td>Every player with cargo at sea loses one cargo token - highest value first. Anything that has to come by sea gets dearer.</td></tr>
+<tr><td>EVT-39</td><td>Letter of Marque</td><td>crime</td><td>offer</td><td>1</td><td>Take it: for the next 3 rounds your ships may take one cargo token per round from any other player's ship in an adjacent water hex, and keep it. Every other player gains 1 unrest in every coastal town of yours they can reach, and your ships pay double harbour fees for the rest of the game.</td></tr>
+<tr><td>EVT-40</td><td>Press Gang</td><td>crime</td><td>targeted</td><td>2</td><td>Two workers are gone. They may come back - see the mitigation. That town gains 1 unrest.</td></tr>
+<tr><td>EVT-41</td><td>The Dragon's Tithe</td><td>conflict</td><td>global</td><td>1</td><td>Every player hands over 1 gold, 1 gems or 2 jewellery, their choice, from any one town. A player with none of those loses their highest-value commodity stack instead. Any player who refuses places Vhalrik on their richest town. He attacks it at the start of the next round.</td></tr>
+<tr><td>EVT-42</td><td>The Aerial Post</td><td>industry</td><td>offer</td><td>1</td><td>Take it if you own an airship: 40 coin now, and 15 coin at the end of every round in which that airship ends its leg at a different settlement from the one it started at. Miss two rounds running and the contract is cancelled.</td></tr>
+<tr><td>EVT-43</td><td>Gale</td><td>weather</td><td>global</td><td>2</td><td>Nothing flies. An airship in the air when this is drawn marks 2 damage and comes down on the nearest land hex. Ships and barges move half as far for one round. Roll a d6 for every timber building on the board: on a 6 it takes 1 damage.</td></tr>
+<tr><td>EVT-44</td><td>Early Thaw</td><td>weather</td><td>global</td><td>2</td><td>The winter rule in travel.json lifts. Any sled standing on marsh or water is lost with its cargo. Every growing crop advances one step, free. The fens are impassable to everything.</td></tr>
+<tr><td>EVT-45</td><td>Clipped Coin</td><td>market</td><td>global</td><td>2</td><td>Every price band shifts up one step. Prices are higher; the coin in your hand is not. Every town with a market gains 1 unrest.</td></tr>
+<tr><td>EVT-46</td><td>Guild Embargo</td><td>market</td><td>targeted</td><td>2</td><td>Pick the commodity family you sell most of: you sell it at two bands worse for 3 rounds. Everyone else sells it at one band better.</td></tr>
+<tr><td>EVT-47</td><td>New Tolls</td><td>social</td><td>local</td><td>2</td><td>5 coin per cargo token entering or leaving the region by road, for 3 rounds. Pay, or go round.</td></tr>
+<tr><td>EVT-48</td><td>The Sign of the Green Man</td><td>social</td><td>offer</td><td>2</td><td>Buy it for 70 coin: place an inn, free of build cost and build time, on any road or route tile you have travelled, inside or outside a town. It is yours, it earns like any inn, and other players may use it at your price.</td></tr>
+<tr><td>EVT-49</td><td>The Mead Run</td><td>market</td><td>offer</td><td>2</td><td>Sell any quantity of mead or ale this round at double the current band, to the board, from any town connected to a route - no market building needed. Afterwards the cellars are full and the price falls a band.</td></tr>
+<tr><td>EVT-50</td><td>Ley Drought</td><td>arcane</td><td>global</td><td>2</td><td>Every town loses 1 mana crystal. Every spell costs 1 extra mana for 2 rounds, and mana veins yield nothing.</td></tr>
+<tr><td>EVT-51</td><td>Boom Town</td><td>market</td><td>local</td><td>2</td><td>The largest town in the region gains 2 workers. Food and drink in that region jump two bands. Everyone has to eat and nobody planted anything. Every town in the region gains 1 unrest.</td></tr></tbody></table></div>
 <p>94 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.</p>
+<h3 id="what-could-have-prevented-it">What could have prevented it</h3>
+<p>These are not printed on the cards. A deck shares one picture window and the wordiest card in it sets that window for every other card, so the mitigations come off the face and live here and in the explorer instead - which is where somebody looks up whether a brick house saved them anyway. The deck is built so that every disaster has at least one of these that a player could have bought in advance.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Card</th><th>Mitigations</th></tr></thead>
+<tbody><tr><td>EVT-01</td><td>Hard Frost</td><td>Workers living in a brick house or manor are unaffected. A town with 2+ fuel in stock ignores the effort penalty.</td></tr>
+<tr><td>EVT-02</td><td>Drought</td><td>A town with a well loses no water. Towns on a marsh tile, or waterside on a river or a lake - anywhere with fresh water - are unaffected.</td></tr>
+<tr><td>EVT-04</td><td>Storms at Sea</td><td>Cargo in a harbour tile is safe.</td></tr>
+<tr><td>EVT-07</td><td>Wildfire</td><td>A town with a well or on a water-access tile rolls at 5+ instead.</td></tr>
+<tr><td>EVT-08</td><td>Mine Collapse</td><td>A dwarf player halts for 1 round and loses no worker.</td></tr>
+<tr><td>EVT-09</td><td>Warehouse Heist</td><td>A watchtower in that town cancels this card once per game. Soldiers garrisoned in the town halve the loss.</td></tr>
+<tr><td>EVT-10</td><td>Caravan Robbery</td><td>An escorting soldier rolls a combat die; on 4+ the robbery fails.</td></tr>
+<tr><td>EVT-14</td><td>Wolf Pack</td><td>Any soldier or hero in the region may fight the pack instead of losing animals.</td></tr>
+<tr><td>EVT-17</td><td>Raiders</td><td>Palisade grants +1 defence die. Garrisoned soldiers defend automatically.</td></tr>
+<tr><td>EVT-20</td><td>Plague</td><td>A town holding a Healing Draught spends it to ignore this card entirely.</td></tr>
+<tr><td>EVT-22</td><td>Strike</td><td>Serve ale or wine at an inn to end the strike immediately.</td></tr>
+<tr><td>EVT-32</td><td>Camp Fever</td><td>A healer character in the party shrugs it off: no damage, full speed. Spend a Healing Draught or Physic Tonic to cancel the card.</td></tr>
+<tr><td>EVT-33</td><td>Marsh Ague</td><td>A town with an infirmary and a fed healer loses no worker. A Physic Tonic cancels the card for one town.</td></tr>
+<tr><td>EVT-34</td><td>The Grey Pox</td><td>A town with an infirmary and a fed healer loses no worker. A Healing Draught spent by a town cancels its loss. This is the card that makes the infirmary worth its parchment.</td></tr>
+<tr><td>EVT-35</td><td>Impure Smelt</td><td>A smelter or blacksmith burning coal this round is unaffected - coal runs hot enough to burn the impurities out. Peat and charcoal do not. A smith specialist may spend 2 hours re-tempering to clear one brittle mark.</td></tr>
+<tr><td>EVT-36</td><td>Blood Moon</td><td>A party carrying a lit lantern is never surprised: it may always choose to withdraw before a monster encounter begins.</td></tr>
+<tr><td>EVT-38</td><td>Black Sails on the Horizon</td><td>A ship with a Warded Hold or an escort of 2+ soldiers keeps its cargo. A player whose shore hex is patrolled by a befriended Reef Serpent is not touched. Cargo sitting in a harbour is safe - it just is not moving.</td></tr>
+<tr><td>EVT-39</td><td>Letter of Marque</td><td>Passing costs nothing. The card goes round in turn order and is discarded if nobody takes it. A victim may buy the letter back from the holder at any agreed price; the licence is a piece of paper, and paper is tradeable.</td></tr>
+<tr><td>EVT-40</td><td>Press Gang</td><td>A town with a palisade or a garrison of 1+ soldiers loses nobody. A town with an inn loses one worker instead of two: the innkeeper hides the regulars in the cellar. Roll d6 at the end of each following round; on a 6 the pressed workers walk home.</td></tr>
+<tr><td>EVT-41</td><td>The Dragon's Tithe</td><td>A player who has befriended Vhalrik pays nothing and may not be attacked by him. Paying is always allowed and always ends it. That is the lesson.</td></tr>
+<tr><td>EVT-42</td><td>The Aerial Post</td><td>Only a player with an airship may take it. If nobody has one it is discarded, and shuffled back in ten rounds later. Cancelling costs nothing but the contract.</td></tr>
+<tr><td>EVT-43</td><td>Gale</td><td>An airship moored at a settlement takes no damage. A ship in harbour is unaffected. A sweep-rigged airship marks 1 damage instead of 2 - the crew can at least steer the descent.</td></tr>
+<tr><td>EVT-44</td><td>Early Thaw</td><td>A sled on solid ground is fine - it just becomes a box on runners until the next frost. A player who moved every sled to a settlement last round loses nothing.</td></tr>
+<tr><td>EVT-45</td><td>Clipped Coin</td><td>A player holding gold, gems or jewellery instead of coin loses nothing to this - metal does not care what the mint says. A trading house sets its own scales: its owner ignores the band shift for one sale.</td></tr>
+<tr><td>EVT-46</td><td>Guild Embargo</td><td>A player with a merchant or a trading house may pay the guild off: 60 coin, and the card is discarded. Selling to another player instead of to the board sidesteps the embargo entirely - which is the whole point of having friends.</td></tr>
+<tr><td>EVT-47</td><td>New Tolls</td><td>The player who built the road in that region collects the toll instead of paying it. Rail, water and air pay nothing - which is how everyone learns what a road is worth.</td></tr>
+<tr><td>EVT-48</td><td>The Sign of the Green Man</td><td>Passing costs nothing. A player who already owns three inns may not take it - see buildings.json inn, and the reason there is a cap.</td></tr>
+<tr><td>EVT-49</td><td>The Mead Run</td><td>Passing costs nothing. A player with an apiary and a brewery can usually take this twice a game, which is exactly the industry this card exists to make worth building.</td></tr>
+<tr><td>EVT-50</td><td>Ley Drought</td><td>Mana already stored in a talisman is untouched - which is what talismans are for. An elf holds their innate mana as normal. A shrine in a town cancels the extra spell cost for characters standing in it.</td></tr>
+<tr><td>EVT-51</td><td>Boom Town</td><td>A town with a granary holding 4+ food ignores the price jump and gains the workers anyway - which is the whole argument for granaries. The player who owns the nearest farm may sell into that region at the boom price. Demand is only a disaster if you have nothing to sell.</td></tr></tbody></table></div>
 </section>
   </main>
 </div>
