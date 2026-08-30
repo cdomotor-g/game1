@@ -939,6 +939,31 @@
       ],
       "note": "The whole page, for the quarry s reason - a triad window is 0.99 against a square plate and the crop spends nothing. The stacks, the shear legs with the chain and hook, and the lean-to with the crosscut saw all sit in the wide upper band the die keeps; the skid track runs down into the lower lobe under the name band, which is the ground the brief set aside for it. The axe standing in its stump is on the left edge and loses its haft to the cut - it is the one thing here drawn outside the safe box, and it survives as a recognisable axe head."
     },
+    "tile-crop-cotton": {
+      "subject": [0.145, 0, 0.855, 1],
+      "focal": [0.83, 0.64],
+      "note": "The whole page - a field is texture edge to edge and there is no object standing in it to protect. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes, and here it is spent off the LEFT, 11.9% off the left against 1.5% off the right. That is the whole of the aiming decision and the PICKING BASKET is what it buys. The basket is drawn well out at the right of the page; a centred crop takes it to the flat edge of the piece and past it, and the left spend brings it inside with the die's full width still under it - it sits between the corner vertices, where a hexagon has not begun to fall away. It is the human evidence on a plate of repeating bushes and it is the thing that tells cotton from any other white-flecked crop at seventeen millimetres, the bolls alone being small pale blobs. What goes off the left is the outermost bushes and bare ridged earth, which is the field again and costs nothing anybody would name. The band falls on dry earth and one bush at the lower left - a bush out of a dozen. Focal on the basket."
+    },
+    "tile-crop-flax": {
+      "subject": [0.0895, 0, 0.8405, 1],
+      "focal": [0.5, 0.48],
+      "note": "The whole page, the crop keeping x 6.4%-93.0% and the 13.4% spent EVENLY, because there is no object on this plate at all - only the flower mass - and so nothing a lopsided spend could buy. What decides this tile is not the aim but the READ: flax and grain are both fine upright stems in ruled drills, and the one thing that separates them at seventeen millimetres is the cold slate blue flecked over the whole of this one against the ochre ears of the other. So the crop keeps that flecking edge to edge, which is the entire job, and any spend that traded flower for margin would be the wrong one. The trodden earth along the near edge sits in the lower left where the name band lands on it, which is the ground the brief set aside for it. Focal on the middle of the flower mass - a field of one crop offers no point to prefer, and saying so is more honest than aiming at an arbitrary flower."
+    },
+    "tile-crop-grain": {
+      "subject": [0, 0, 1, 1],
+      "focal": [0.12, 0.45],
+      "note": "The whole page. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes, all of it off the RIGHT, and that is the one decision on this tile. It buys the LEFT POPPY. The poppies are the only points on a plate of ruled drills - the brief asked for two or three and got two - and this one is drawn close enough to the left margin that a left spend cuts it outright and a centred one pushes it into the outer twentieth of the piece; the right spend sets it about an eighth of the way in from the flat, clear of the band and legible as a red mark rather than a red pixel. What the spend costs is the outermost column of ears, which is the same ears again. The second poppy survives whole at the lower right, just above the band's end and just above the corner vertex where the hexagon starts to fall away. The stubble and trodden earth along the near edge stay in the lower left, under the name band, which is the ground the brief set aside for it. Focal on the left poppy."
+    },
+    "tile-crop-hops": {
+      "subject": [0.0895, 0, 0.8405, 1],
+      "focal": [0.71, 0.45],
+      "note": "The whole page, the crop keeping x 6.4%-93.0% and the 13.4% spent EVENLY - a pole grid repeats and no column of it is worth more than the next, so there is nothing to buy by leaning. The poles run off the TOP edge and are meant to be cut by it, which is the one thing this tile is of: it is the only crop in this game drawn upward, and the height of the poles against every other field is its whole identity. That is also why the composition rule that governs a building does not govern this one - a hop garden drawn to sit inside the top margin would read as a hedge. The die takes the top and bottom points of the page and the poles survive it for exactly that reason, being drawn the full height rather than standing in the middle of it. The band falls on bare trodden earth and a grass tuft at the lower left. Focal on the near pole at its twine ties, the one place where the structure is a point rather than a texture."
+    },
+    "tile-crop-vegetables": {
+      "subject": [0.0895, 0, 0.8405, 1],
+      "focal": [0.33, 0.45],
+      "note": "The whole page, the crop keeping x 6.4%-93.0% and the 13.4% spent EVENLY, and here that is a decision rather than a default: both things the brief names besides the cabbages sit at opposite edges - the bean row on crossed poles in the upper left, the leek row in the lower right - so a left spend buys one and cuts the other and a right spend does the reverse. The even spend keeps both, and both then clear the die: the beans below the upper-left diagonal where the hexagon has come out to full width, the leeks just above the lower corner vertex before it falls away again. What it costs is the outer bed on each side, which is more cabbages. The band falls on ridged earth, straw and one cabbage at the lower left - a head out of fifteen, and the affordable kind of loss. Focal on the large central rosette: this tile is of cabbages, and that is the one head big enough to be a point rather than a texture."
+    },
     "tile-dock": {
       "subject": [
         0.141,
