@@ -178,6 +178,29 @@ function withCutNote(body, note) {
   return note ? [...kept, note].join('\n\n') : kept.join('\n\n');
 }
 
+/* How a tile's own page is said, in the two places a brief says it. Both are
+   DERIVED - the footprint comes off the ground model and ladder in
+   data/buildingtiles.json, and the page off the footprint's aspect - so both
+   were being typed by hand against a number that moves. Twenty-five of the
+   fifty-four had drifted, and an artist reading one found the heading and the
+   generated WINDOW block flatly contradicting each other. */
+const PAGE_IN_HEADING = { square: 'square', 'A4 landscape, 3:2': '3:2 landscape', 'A4 portrait': 'portrait' };
+const PAGE_IN_FRAMING = { square: 'Square plate', 'A4 landscape, 3:2': 'Landscape 3:2', 'A4 portrait': 'A4 portrait' };
+const CELL_WORD = { 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six' };
+
+function headingFor(row) {
+  const n = row.tile.cells.length;
+  return `## ${row.plate} — ${CELL_WORD[n] ?? n} cell${n === 1 ? '' : 's'}, ${PAGE_IN_HEADING[row.format] ?? row.format}`;
+}
+
+/* The page phrase only. Everything after the first comma is the author's
+   composition and is left exactly as written. */
+function withPage(body, row) {
+  const page = PAGE_IN_FRAMING[row.format];
+  if (!page) return body;
+  return body.replace(/^FRAMING\.\s*([^,\n]+),/m, `FRAMING. ${page},`);
+}
+
 function markCuts(text, file) {
   if (file !== 'docs/art/prompts/buildingtiles.md') return text;
   const lines = text.split('\n');
@@ -186,6 +209,9 @@ function markCuts(text, file) {
     out.push(lines[i]);
     if (!lines[i].startsWith('## ')) continue;
     const plate = lines[i].slice(3).trim().split(' ')[0];
+    const row = tileRows.get(plate);
+    if (!row) continue;
+    out[out.length - 1] = headingFor(row);
     const note = cutNoteFor(plate);
     if (!note) continue;
     /* Walk to this section's fence and rewrite what is inside it. */
@@ -198,7 +224,7 @@ function markCuts(text, file) {
     for (let j = open + 1; j < lines.length; j++) if (lines[j].startsWith('```')) { close = j; break; }
     if (close < 0) continue;
     out.push(...lines.slice(i + 1, open + 1));
-    out.push(...withCutNote(lines.slice(open + 1, close).join('\n'), note).split('\n'));
+    out.push(...withPage(withCutNote(lines.slice(open + 1, close).join('\n'), note), row).split('\n'));
     out.push(lines[close]);
     i = close;
   }
@@ -263,7 +289,28 @@ const tileEntry = survey(ROOT).lines.find((e) => e.line.id === 'buildingtiles' &
 const tileLine = tileEntry?.line ?? null;
 const tileRows = new Map((tileEntry?.rows ?? []).map((r) => [r.plate, r]));
 
-const clashes = vehicleClashes(ROOT);
+/* The heading and the FRAMING page are generated above, so they cannot drift.
+   This catches the other direction: a hand-written composition that names a page
+   shape its tile is not drawn on - "portrait" in the prose of a landscape tile -
+   which no amount of generating the opening clause would fix. */
+function pageClashes() {
+  const out = [];
+  const file = readFileSync(join(ROOT, 'docs/art/prompts/buildingtiles.md'), 'utf8');
+  for (const [plate, row] of tileRows) {
+    const m = file.match(new RegExp(`^## ${plate}[^\\n]*\\n[\\s\\S]*?\`\`\`text\\n([\\s\\S]*?)\\n\`\`\``, 'm'));
+    if (!m) continue;
+    /* Only the author's half: after the generated page phrase, before WINDOW. */
+    const prose = (m[1].match(/^FRAMING\.[^,]*,([\s\S]*?)(?=\n\nWINDOW\.|$)/m) || ['', ''])[1];
+    for (const [word, formats] of [['square', ['square']], ['landscape', ['A4 landscape, 3:2']], ['portrait', ['A4 portrait']]]) {
+      if (new RegExp(`\\b${word}\\b`, 'i').test(prose) && !formats.includes(row.format)) {
+        out.push(`  ${plate}: the composition says "${word}" but the tile is drawn ${row.format}`);
+      }
+    }
+  }
+  return out;
+}
+
+const clashes = [...pageClashes(), ...vehicleClashes(ROOT)];
 if (clashes.length) {
   console.error('build-prompts: a brief contradicts its own data —');
   console.error(clashes.join('\n'));

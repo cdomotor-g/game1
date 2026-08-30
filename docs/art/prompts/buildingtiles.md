@@ -255,7 +255,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -271,7 +273,7 @@ them there.
 
 ## tile-timber-house — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-timber-house.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-timber-house.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -292,7 +294,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -306,7 +310,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-brick-house — three cells, square
+## tile-brick-house — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-brick-house.png`.
 
@@ -320,7 +324,7 @@ well. A walled yard behind it with a washing line and a water butt at the
 downpipe. Cobbled apron in front. Wash: rust red on the brick and the tile,
 cold slate blue on the door, grey-green on the yard, flat.
 
-FRAMING. Square plate, ground to all four edges. House in the upper two
+FRAMING. Landscape 3:2, ground to all four edges. House in the upper two
 thirds, yard behind and to the right, cobbles running out of the lower edge.
 Chimney well inside the top margin; nothing in any corner.
 
@@ -329,7 +333,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -365,7 +371,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 82% of its width - between 9% and 91% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -383,7 +391,7 @@ them there.
 
 # Out of the ground
 
-## tile-lumber-camp — two cells, 3:2 landscape
+## tile-lumber-camp — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-lumber-camp.png`.
 
@@ -399,7 +407,7 @@ away between them. A lean-to of poles and boughs at the back with a
 crosscut saw hung on it. Wash: ochre on the cut ends and the bark, grey-green
 on the ground and the boughs, cold slate blue on the chain, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Stacks along the right and
+FRAMING. Square plate, ground to all four edges. Stacks along the right and
 centre where the shear legs stand over them; stumps and the skid track fill
 the left and the lower edge, which is ground the band may cover. No standing
 trees taller than the shear legs - this is cleared ground, not forest.
@@ -408,7 +416,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -422,7 +432,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-quarry — two cells, 3:2 landscape
+## tile-quarry — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-quarry.png`.
 
@@ -438,7 +448,7 @@ waste tipped down one side. Wash: cold slate blue on the rock and the
 blocks, ochre on the derrick timber, grey-green on the grass along the top
 of the face, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. The face runs across the
+FRAMING. Square plate, ground to all four edges. The face runs across the
 upper half with the grass line along its top; floor, blocks and derrick fill
 the lower half. Derrick right of centre. The spoil run takes the lower left,
 which is ground the band may cover.
@@ -447,7 +457,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -461,7 +473,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-clay-pit — one cell, square
+## tile-clay-pit — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-clay-pit.png`.
 
@@ -476,7 +488,7 @@ stiffen beside the pit, squared off with the back of the spade. Reeds along
 the wet edge. Wash: cold slate blue on the water and the wet clay, ochre on
 the planks and the barrow, grey-green on the reeds, flat.
 
-FRAMING. Square plate, ground to all four edges. The hollow fills the centre
+FRAMING. Landscape 3:2, ground to all four edges. The hollow fills the centre
 and lower right; the drying heap and boards sit upper left, the ramp runs
 out of the right edge. Wet, and unmistakably wet - that is the whole of what
 tells this from the sand pit.
@@ -486,7 +498,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -500,7 +514,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-sand-pit — one cell, square
+## tile-sand-pit — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-sand-pit.png`.
 
@@ -515,7 +529,7 @@ A barrow at the top of a plank run. A few dry stems at the rim and nothing
 green in the pit at all. Wash: ochre on the sand throughout, cold slate blue
 on the riddle mesh and the shovel, flat.
 
-FRAMING. Square plate, ground to all four edges. Pit through the centre and
+FRAMING. Landscape 3:2, ground to all four edges. Pit through the centre and
 lower right; riddle and screened heap upper left; the plank run leaves the
 right edge. Dry, loose and pale - which is what tells it from the clay pit
 at seventeen millimetres.
@@ -525,7 +539,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -566,7 +582,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -580,7 +598,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-oil-derrick — three cells, square
+## tile-oil-derrick — four cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-oil-derrick.png`.
 
@@ -598,7 +616,7 @@ the tanks, the cable and the ironwork, ochre on the derrick timber and the
 engine house, flat - and the pit and the stained ground as solid ink, the
 darkest shape on the page.
 
-FRAMING. Square plate, ground to all four edges. The derrick stands centre
+FRAMING. Landscape 3:2, ground to all four edges. The derrick stands centre
 and slightly right, its crown block well inside the top margin and daylight
 showing through the lattice on both sides. Engine house and beam at its
 foot; tanks right; the slush pit and stained ground fill the lower left,
@@ -608,7 +626,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 82% of its width - between 9% and 91% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -648,7 +668,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -688,7 +710,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -729,7 +753,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -766,7 +792,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 82% of its width - between 9% and 91% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -780,7 +808,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-orchard — one cell, square
+## tile-orchard — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-orchard.png`.
 
@@ -804,7 +832,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -818,7 +848,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-vineyard — two cells, 3:2 landscape
+## tile-vineyard — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-vineyard.png`.
 
@@ -833,7 +863,7 @@ and a pair of shears on the wall. The ground between the rows is dry, stony
 and worked. Wash: grey-green on the leaves, cold slate blue on the terrace
 stone, ochre on the posts and the dry ground, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Rows run corner to corner
+FRAMING. Square plate, ground to all four edges. Rows run corner to corner
 and away to the right; the terrace wall crosses the lower third. Basket and
 shears right of centre. Nothing tall - this is the opposite of the hop
 garden, and low against high is what tells them apart at seventeen
@@ -843,7 +873,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -881,7 +913,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -915,7 +949,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -949,7 +985,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -983,7 +1021,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1018,7 +1058,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1053,7 +1095,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1071,7 +1115,7 @@ them there.
 
 # Working buildings
 
-## tile-sawmill — two cells, 3:2 landscape
+## tile-sawmill — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-sawmill.png`.
 
@@ -1085,7 +1129,7 @@ and pit wheel where the water would drive it, whether or not there is water.
 Cut lumber stacked and stickered to season. Wash: ochre on the timber and the
 fresh-cut ends, cold slate blue on the blade and ironwork, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Mill left of centre, log
+FRAMING. Square plate, ground to all four edges. Mill left of centre, log
 deck and lumber stack running right. Roof ridge inside the upper third; the
 piece must read across.
 
@@ -1093,7 +1137,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -1107,7 +1153,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-charcoal-kiln — one cell, square
+## tile-charcoal-kiln — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-charcoal-kiln.png`.
 
@@ -1124,7 +1170,7 @@ charcoal on a bed of ash. The ground round the clamp is burnt bare and grey.
 Wash: ochre on the cordwood and the turf, grey-green on the grass beyond the
 burnt ring, flat - and the finished charcoal as solid ink.
 
-FRAMING. Square plate, ground to all four edges. The dome sits centre and
+FRAMING. Landscape 3:2, ground to all four edges. The dome sits centre and
 right, its crown inside the upper third; cordwood stack right, charcoal heap
 and tools at the lower left, which is ground the band may cover. No walls, no
 roof, no chimney stack - the moment this grows a building it becomes one of
@@ -1135,7 +1181,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1149,7 +1197,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-smelter — two cells, 3:2 landscape
+## tile-smelter — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-smelter.png`.
 
@@ -1166,7 +1214,7 @@ rock on one side and a heap of black slag on the other, glassy and lumpy.
 Wash: cold slate blue on the stone and the ore, ochre on the bellows leather
 and the ramp timber, flat - and the slag heap as solid ink.
 
-FRAMING. Landscape 3:2, ground to all four edges. Stack right of centre with
+FRAMING. Square plate, ground to all four edges. Stack right of centre with
 the tapping arch and its sand runner at its foot; bellows shed and charging
 ramp to the left so the piece reads across. Top of the stack well inside the
 upper margin. The slag heap takes the lower left, which is ground the band
@@ -1176,7 +1224,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -1190,7 +1240,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-steelworks — three cells, square
+## tile-steelworks — four cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-steelworks.png`.
 
@@ -1207,7 +1257,7 @@ and a spent-lime and cinder waste at the back. Everything rectilinear,
 everything sooted. Wash: rust red on the brick, cold slate blue on the iron
 roof frame and the ingots, flat - and the coal heap as solid ink.
 
-FRAMING. Square plate, ground to all four edges. Chimney right of centre and
+FRAMING. Landscape 3:2, ground to all four edges. Chimney right of centre and
 kept well inside the top margin - it may be cut by nothing. Shed running
 left and away from it; ingot stacks and coal across the lower half; cinder
 waste at the lower left, which is ground the band may cover. Big, black and
@@ -1217,7 +1267,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 82% of its width - between 9% and 91% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -1231,7 +1283,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-brickworks — two cells, 3:2 landscape
+## tile-brickworks — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-brickworks.png`.
 
@@ -1248,7 +1300,7 @@ arm in the yard, a barrow of clay, and a mound of raw clay weathering.
 Wash: rust red on the fired brick and the kiln, ochre on the green bricks,
 the racks and the roof boards, cold slate blue on the raw clay, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Kiln left of centre, firing
+FRAMING. Square plate, ground to all four edges. Kiln left of centre, firing
 arches full on to the viewer; drying hacks running right and away so the
 piece reads across. The pug mill and clay mound take the lower left, which is
 ground the band may cover. The stacked green bricks must read as stacked
@@ -1258,7 +1310,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -1300,7 +1354,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -1343,7 +1399,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1357,7 +1415,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-carpenter — two cells, 3:2 landscape
+## tile-carpenter — one cell, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-carpenter.png`.
 
@@ -1374,7 +1432,7 @@ them, a plough body finished and set aside, and a drift of curled shavings
 under the bench. Wash: ochre on the timber, the wheel and the shavings, cold
 slate blue on the saw, the vice and the tyre iron, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Shop across the right and
+FRAMING. Square plate, ground to all four edges. Shop across the right and
 centre, sawhorses in front of it; the wheel leaning at the right-hand end
 where the eye lands. Board stack and shavings run out of the lower left,
 which is ground the band may cover. No water wheel and no frame saw - that
@@ -1384,7 +1442,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1398,7 +1458,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-weaver — two cells, 3:2 landscape
+## tile-weaver — one cell, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-weaver.png`.
 
@@ -1415,7 +1475,7 @@ covered basket of fleece. Wash: ochre on the shingles and the tenter frame,
 grey-green on the cloth and the yarn, cold slate blue on the stone and the
 tenter hooks, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Shed along the back from
+FRAMING. Square plate, ground to all four edges. Shed along the back from
 the centre to the right, window range full on to the viewer and unbroken;
 tenter frame across the front and left, its stretched cloth the biggest
 plain shape on the page. Fleece basket at the lower left, which is ground
@@ -1425,7 +1485,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1439,7 +1501,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-tannery — one cell, square
+## tile-tannery — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-tannery.png`.
 
@@ -1465,7 +1527,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -1479,7 +1543,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-tailor — two cells, 3:2 landscape
+## tile-tailor — one cell, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-tailor.png`.
 
@@ -1497,7 +1561,7 @@ basket. Everything trim and square - this is the tidiest building in the set.
 Wash: rust red on the brick, ochre on the timber and the bolts, cold slate
 blue on the window leading, the shears and the iron, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Shop right of centre and
+FRAMING. Square plate, ground to all four edges. Shop right of centre and
 standing tall in the frame with its eaves inside the upper margin; the shelf,
 bolts and bench running left along the front so the piece reads across.
 Swept step and scrap basket at the lower left, which is ground the band may
@@ -1507,7 +1571,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1521,7 +1587,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-mill — one cell, square
+## tile-mill — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-mill.png`.
 
@@ -1537,7 +1603,7 @@ standing by the step, and an old millstone leaning against the tower foot.
 Wash: cold slate blue on the stone tower and the millstone, ochre on the cap,
 the sails and the sacks, grey-green on the grass, flat.
 
-FRAMING. Square plate, ground to all four edges. The tower stands centre and
+FRAMING. Landscape 3:2, ground to all four edges. The tower stands centre and
 slightly right; the sails may be cut by the top and right edges - they are
 meant to be, and cutting them is what makes the mill read as huge - but the
 cap and the windshaft must sit well inside. Sacks and millstone at the foot,
@@ -1549,7 +1615,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1563,7 +1631,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-bakery — two cells, 3:2 landscape
+## tile-bakery — one cell, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-bakery.png`.
 
@@ -1580,7 +1648,7 @@ faggot wood stacked to the eaves under the overhang. Wash: rust red on the
 brick and the pantiles, ochre on the loaves, the peel and the faggots, cold
 slate blue on the stone step and the flue cap, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Bakehouse left of centre
+FRAMING. Square plate, ground to all four edges. Bakehouse left of centre
 with the oven bulge turned to the viewer at its right-hand end; cooling rack
 and loaves running right so the piece reads across. Faggot stack at the
 lower left, which is ground the band may cover. Roof ridge inside the upper
@@ -1590,7 +1658,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1630,7 +1700,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1671,7 +1743,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1712,7 +1786,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1726,7 +1802,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-winery — three cells, square
+## tile-winery — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-winery.png`.
 
@@ -1744,7 +1820,7 @@ spout. Baskets stacked empty by a pier. Wash: cold slate blue on the stone
 piers, the racks and the troughs, ochre on the press timber, the vats and
 the barrels, rust red on the roof tiles, flat.
 
-FRAMING. Square plate, ground to all four edges. The press stands centre and
+FRAMING. Landscape 3:2, ground to all four edges. The press stands centre and
 right under the roof, its head well inside the upper margin; vats to its
 left, barrel rack across the lower right, stacked baskets and swept floor at
 the lower left, which is ground the band may cover. No vines - the vineyard
@@ -1755,7 +1831,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1795,7 +1873,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -1835,7 +1915,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -1853,7 +1935,7 @@ them there.
 
 # The town
 
-## tile-market — one cell, square
+## tile-market — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-market.png`.
 
@@ -1870,7 +1952,7 @@ a rolled awning lashed to it against one post. Sacks leaned at the foot of
 another. Wash: rust red on the roof tiles, ochre on the posts, the trestles
 and the baskets, cold slate blue on the flags and the scale, flat.
 
-FRAMING. Square plate, ground to all four edges. The shelter sits centre and
+FRAMING. Landscape 3:2, ground to all four edges. The shelter sits centre and
 slightly right with clear paper visible under the roof between the posts;
 flags and sacks spread to the lower left, which is ground the band may cover.
 Roof peak inside the upper third. No walls, no door, no shopfront - the
@@ -1881,7 +1963,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1895,7 +1979,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-trading-house — three cells, square
+## tile-trading-house — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-trading-house.png`.
 
@@ -1913,7 +1997,7 @@ weights, and three corded bales and a bound chest waiting to be weighed.
 Wash: rust red on the brick, cold slate blue on the roof slate, the scale
 and the ironwork, ochre on the bales, the chest and the cart, flat.
 
-FRAMING. Square plate, ground to all four edges. The building fills the
+FRAMING. Landscape 3:2, ground to all four edges. The building fills the
 upper two thirds with the carriage arch dead centre and dark; scale, bales
 and cart across the lower half; swept paving at the lower left, which is
 ground the band may cover. No hoist beam and no staddle stones - those are
@@ -1924,7 +2008,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -1965,7 +2051,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -2007,7 +2095,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -2050,7 +2140,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -2064,7 +2156,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-infirmary — one cell, square
+## tile-infirmary — two cells, 3:2 landscape
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-infirmary.png`.
 
@@ -2081,7 +2173,7 @@ butt at the corner of the nearest. Wash: cold slate blue on the stone and
 the water butt, ochre on the shingles, the porch bench and the gravel,
 grey-green on the herb beds, flat.
 
-FRAMING. Square plate, ground to all four edges. Hall across the upper half
+FRAMING. Landscape 3:2, ground to all four edges. Hall across the upper half
 with the porch centre right; the four herb beds fill the lower half and run
 corner to corner; the gravel path and the nearest bed take the lower left,
 which is ground the band may cover. Quiet and kept - no cross, no bell, no
@@ -2092,7 +2184,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -2160,7 +2254,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -2181,7 +2277,7 @@ one" drew gables and "none decorated" drew decoration, on sheet 2. Note that thi
 paragraph is outside the fence for the same reason — anything inside it is the
 prompt.
 
-## tile-watchtower — two cells, 3:2 landscape
+## tile-watchtower — one cell, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-watchtower.png`.
 
@@ -2199,7 +2295,7 @@ gate of two rails, and a heap of cut beacon wood under a board. Wash: cold
 slate blue on the stone and the ironwork, ochre on the hoarding timber, the
 stair rail and the beacon wood, grey-green on the grass, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Tower right of centre and
+FRAMING. Square plate, ground to all four edges. Tower right of centre and
 standing the full height of the plate with its parapet and beacon basket well
 inside the top margin - they may be cut by nothing. Wall, gate and beacon
 wood run left and out of the lower left, which is ground the band may cover.
@@ -2208,7 +2304,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -2249,7 +2347,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -2297,7 +2397,9 @@ of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
 pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
-a rule of thumb.)
+a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
+belongs in a wide band with ground running out to left and right; where the
+composition above says otherwise, this wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -2338,7 +2440,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 23% of the
@@ -2386,7 +2490,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the
@@ -2400,7 +2506,7 @@ the business of it fall to the right anyway - this is asking you to keep
 them there.
 ```
 
-## tile-rail-depot — two cells, 3:2 landscape
+## tile-rail-depot — three cells, square
 
 > ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-rail-depot.png`.
 
@@ -2419,7 +2525,7 @@ and a stack of spare sleepers on the ground. Wash: cold slate blue on the
 rails, the tank, the crane and the stone, ochre on the shed boards, the
 sleepers and the crates, rust red on the tank's rusted seams, flat.
 
-FRAMING. Landscape 3:2, ground to all four edges. Platform and shed across
+FRAMING. Square plate, ground to all four edges. Platform and shed across
 the back from the centre to the right, water tower at the right-hand end and
 inside the upper margin; rails running the full width and out of both ends so
 the piece reads across; buffer stop at the left. Ballast and spare sleepers
@@ -2430,7 +2536,9 @@ WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
 this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
-drawn at. It is not a rule of thumb.)
+drawn at. It is not a rule of thumb.) The cut piece reads square - no long
+axis to compose along; where the composition above says otherwise, this
+wins.
 
 LABEL BAND. A solid band carrying this tile's name is printed along the
 lower-left edge of the piece, running parallel to it and about 13% of the

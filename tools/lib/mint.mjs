@@ -242,9 +242,17 @@ export function windowNote(root, line, row) {
        footprint and is exact. */
     const box = boxOf(row.tile.cells, 1);
     win = { w: box.w, h: box.h };
+    /* Which way the PIECE reads, which is not the same question as which page it
+       is drawn on and is the one a composition gets wrong. The footprint's own
+       aspect answers it, so it cannot drift from the shape the way twenty-three
+       hand-written FRAMING blocks did. */
+    const reads = box.w / box.h > 1.25 ? 'ACROSS rather than up - the mass belongs in a wide band with ground running out to left and right'
+      : box.w / box.h < 0.8 ? 'UP rather than across - the mass belongs in a tall band with ground above and below'
+      : 'square - no long axis to compose along';
     provenance = `(Worked out from this tile's own ${row.tile.shape} footprint, ` +
       `${row.tile.cells.length} cell${row.tile.cells.length === 1 ? '' : 's'}, on the ${pw} x ${ph} page it is drawn at. ` +
-      'It is not a rule of thumb.)';
+      'It is not a rule of thumb.)' +
+      ` The cut piece reads ${reads}; where the composition above says otherwise, this wins.`;
 
     /* The one thing a card brief never has to say: a solid label band is printed
        over part of the piece, and whatever is drawn under it is gone. Said as a
