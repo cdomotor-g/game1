@@ -627,6 +627,19 @@
       ],
       "note": "Both prod tips and lashings, the string, the whole tiller to the butt cap, the nut and the hanging trigger. Focal on the nut. Drawn plate - measured off the picture."
     },
+    "tile-timber-house": {
+      "subject": [
+        0.21,
+        0.21,
+        0.71,
+        0.38
+      ],
+      "note": "The house, its chimney and the woodstore lean-to. The plate arrived PORTRAIT (1054x1492) for a pair tile whose window is 1.73 wide, so only 40.8% of the page height survives: the foreground path and both fence runs are spent, deliberately, and the building keeps the band. At 33mm across, that fence was never going to read anyway.",
+      "focal": [
+        0.45,
+        0.4
+      ]
+    },
     "tile-warehouse": {
       "subject": [
         0.02,

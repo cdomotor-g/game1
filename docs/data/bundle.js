@@ -18046,6 +18046,21 @@ window.GAME_DATA = {
           0.43
         ]
       },
+      "tile-timber-house": {
+        "file": "art/renders/tile-timber-house.png",
+        "width": 1054,
+        "height": 1492,
+        "subject": [
+          0.21,
+          0.21,
+          0.71,
+          0.38
+        ],
+        "focal": [
+          0.45,
+          0.4
+        ]
+      },
       "tile-warehouse": {
         "file": "art/renders/tile-warehouse.png",
         "width": 1328,

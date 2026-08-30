@@ -15,19 +15,12 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 61/81 · maps 1/1 · building tiles 4/54**
+**cards 61/81 · maps 1/1 · building tiles 5/54**
 
 > **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 61 of 81 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
-## Contract problems — 1 thing to fix
-
-These are not missing work, they are broken contracts: something the mint requires
-before a subject can be handed over, that is not there. `data/mint.json` says what
-each line requires and `tools/lib/mint.mjs` checks it.
-
-- buildingtiles/timber-house: the plate at docs/art/renders/tile-timber-house.png is not an image at all - the bytes carry no PNG, JPEG, WebP, GIF or SVG header, which is what a file mangled in upload looks like. Ask for it to be sent again
 
 ## Cards
 
@@ -126,19 +119,18 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**4 of 54 minted.** 0 waiting on a brief, 50 waiting on art, 0 waiting on frame.
+**5 of 54 minted.** 0 waiting on a brief, 49 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 50 tiles
+### 2 · DRAW — the artist — 49 tiles
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Tile | Category | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `timber-house` | Timber House | Housing | `tile-timber-house` | ✓ | ✓ | · |
 | `brick-house` | Brick House | Housing | `tile-brick-house` | ✓ | · | · |
 | `manor` | Manor | Housing | `tile-manor` | ✓ | · | · |
 | `lumber-camp` | Lumber Camp | Extraction | `tile-lumber-camp` | ✓ | · | · |
@@ -195,7 +187,7 @@ Nothing waiting.
 
 ### Minted
 
-4 tiles complete: `hut`, `warehouse`, `granary`, `barracks`.
+5 tiles complete: `hut`, `timber-house`, `warehouse`, `granary`, `barracks`.
 
 Every minted tile is fully aimed: a `subject` box, a `focal` point and a one-line `note`.
 
