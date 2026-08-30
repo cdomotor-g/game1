@@ -250,6 +250,23 @@ Wash: ochre on the thatch, grey-green on the grass, flat.
 FRAMING. Square plate, ground to all four edges. The hut sits in the upper
 half of the page with its path running down out of the lower edge. Nothing
 in any corner.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-timber-house — two cells, 3:2 landscape
@@ -269,6 +286,24 @@ shingles, rust red on the door, grey-green on the grass, flat.
 FRAMING. Landscape 3:2, ground to all four edges. House left of centre,
 woodstore and fence running right, so the piece reads across rather than up.
 Ridge line kept in the upper third.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-brick-house — three cells, square
@@ -288,6 +323,24 @@ cold slate blue on the door, grey-green on the yard, flat.
 FRAMING. Square plate, ground to all four edges. House in the upper two
 thirds, yard behind and to the right, cobbles running out of the lower edge.
 Chimney well inside the top margin; nothing in any corner.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-manor — four cells, 3:2 landscape
@@ -307,6 +360,23 @@ and stone, grey-green on the garden, ochre on the gravel, flat.
 FRAMING. Landscape 3:2, ground to all four edges. The house occupies the
 centre and left; garden and sweep fill the right so the piece reads as an
 estate rather than a large cottage. Chimneys well inside the top margin.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 82% of its width - between 9% and 91% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ---
@@ -333,6 +403,23 @@ FRAMING. Landscape 3:2, ground to all four edges. Stacks along the right and
 centre where the shear legs stand over them; stumps and the skid track fill
 the left and the lower edge, which is ground the band may cover. No standing
 trees taller than the shear legs - this is cleared ground, not forest.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-quarry — two cells, 3:2 landscape
@@ -355,6 +442,23 @@ FRAMING. Landscape 3:2, ground to all four edges. The face runs across the
 upper half with the grass line along its top; floor, blocks and derrick fill
 the lower half. Derrick right of centre. The spoil run takes the lower left,
 which is ground the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-clay-pit — one cell, square
@@ -376,6 +480,24 @@ FRAMING. Square plate, ground to all four edges. The hollow fills the centre
 and lower right; the drying heap and boards sit upper left, the ramp runs
 out of the right edge. Wet, and unmistakably wet - that is the whole of what
 tells this from the sand pit.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-sand-pit — one cell, square
@@ -397,6 +519,24 @@ FRAMING. Square plate, ground to all four edges. Pit through the centre and
 lower right; riddle and screened heap upper left; the plank run leaves the
 right edge. Dry, loose and pale - which is what tells it from the clay pit
 at seventeen millimetres.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-mine — two cells, 3:2 landscape
@@ -420,6 +560,24 @@ FRAMING. Landscape 3:2, ground to all four edges. Adit mouth left of centre
 in the rise, gin and shaft to the right of it so the piece reads across.
 The spoil tip runs out of the lower left, which is ground the band may
 cover. Nothing above the gin posts.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-oil-derrick — three cells, square
@@ -445,6 +603,23 @@ and slightly right, its crown block well inside the top margin and daylight
 showing through the lattice on both sides. Engine house and beam at its
 foot; tanks right; the slush pit and stained ground fill the lower left,
 which is ground the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 82% of its width - between 9% and 91% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-well — one cell, square
@@ -468,6 +643,23 @@ and slightly right, roof ridge inside the upper third. The trough is at the
 right; the worn ground and the path fill the lower left, which is ground the
 band may cover. Small object, whole page - do not fill the plate with
 scenery to make it look busier.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-dock — one cell, square
@@ -491,6 +683,23 @@ lower left, jetty running from it up and away to the right so the piece
 reads out over the water. Rack and barrel on the bank at the lower left,
 which is ground the band may cover. Small and timber-built: the harbour is
 the stone one, and this must not be mistaken for it.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ---
@@ -514,6 +723,24 @@ grass beyond the fence, flat.
 FRAMING. Landscape 3:2, ground to all four edges. Barn along the top, yard
 across the middle and bottom, gate at the lower right. The fields are
 separate tiles and must NOT appear here.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-pasture — four cells, 3:2 landscape
@@ -534,6 +761,23 @@ ochre on the shelter thatch, flat.
 FRAMING. Landscape 3:2, ground to all four edges. The fence line frames the
 piece; shelter in the upper left, trough at the centre right, animals spread
 across the middle band. Nothing important in any corner.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 82% of its width - between 9% and 91% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-orchard — one cell, square
@@ -555,6 +799,23 @@ FRAMING. Square plate, ground to all four edges. Rows run corner to corner
 so the pattern survives the hexagonal cut. Ladder and basket at the centre
 right; open grass at the lower left, which is ground the band may cover. No
 horizon, no sky, no fence, no building.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-vineyard — two cells, 3:2 landscape
@@ -577,6 +838,23 @@ and away to the right; the terrace wall crosses the lower third. Basket and
 shears right of centre. Nothing tall - this is the opposite of the hop
 garden, and low against high is what tells them apart at seventeen
 millimetres. No building.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-apiary — one cell, square
@@ -598,6 +876,23 @@ FRAMING. Square plate, ground to all four edges. The row of skeps runs
 across the upper middle so the domes repeat - the repeat is the whole
 silhouette; flowering grass fills the lower half and the lower left, which
 is ground the band may cover. No hollow log hives, no boxes - skeps.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-crop-grain — one cell, square
@@ -615,6 +910,23 @@ Wash: ochre on the ears, grey-green on the stems and margin, flat.
 
 FRAMING. Square plate, crop to all four edges. Drills run corner to corner so
 the pattern survives the hexagonal cut. No horizon, no sky, no building.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-crop-vegetables — one cell, square
@@ -632,6 +944,23 @@ and the poles, flat.
 
 FRAMING. Square plate, ground to all four edges. Beds run corner to corner.
 No horizon, no sky, no building.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-crop-flax — one cell, square
@@ -649,6 +978,23 @@ Wash: cold slate blue on the flowers, grey-green on the stems, flat.
 
 FRAMING. Square plate, crop to all four edges. Drills corner to corner. No
 horizon, no sky, no building.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-crop-cotton — one cell, square
@@ -667,6 +1013,23 @@ paper for the bolls, flat.
 
 FRAMING. Square plate, ground to all four edges. Rows corner to corner. No
 horizon, no sky, no building.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-crop-hops — one cell, square
@@ -685,6 +1048,23 @@ cones, flat.
 
 FRAMING. Square plate, ground to all four edges. Poles run to the top edge -
 they are meant to be cut by it. Rows corner to corner.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ---
@@ -708,6 +1088,23 @@ fresh-cut ends, cold slate blue on the blade and ironwork, flat.
 FRAMING. Landscape 3:2, ground to all four edges. Mill left of centre, log
 deck and lumber stack running right. Roof ridge inside the upper third; the
 piece must read across.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-charcoal-kiln — one cell, square
@@ -732,6 +1129,24 @@ right, its crown inside the upper third; cordwood stack right, charcoal heap
 and tools at the lower left, which is ground the band may cover. No walls, no
 roof, no chimney stack - the moment this grows a building it becomes one of
 the other four heat tiles.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-smelter — two cells, 3:2 landscape
@@ -756,6 +1171,23 @@ the tapping arch and its sand runner at its foot; bellows shed and charging
 ramp to the left so the piece reads across. Top of the stack well inside the
 upper margin. The slag heap takes the lower left, which is ground the band
 may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-steelworks — three cells, square
@@ -780,6 +1212,23 @@ kept well inside the top margin - it may be cut by nothing. Shed running
 left and away from it; ingot stacks and coal across the lower half; cinder
 waste at the lower left, which is ground the band may cover. Big, black and
 straight-lined - that is what separates it from the smelter.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 82% of its width - between 9% and 91% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-brickworks — two cells, 3:2 landscape
@@ -804,6 +1253,23 @@ arches full on to the viewer; drying hacks running right and away so the
 piece reads across. The pug mill and clay mound take the lower left, which is
 ground the band may cover. The stacked green bricks must read as stacked
 bricks at seventeen millimetres - that is the whole tile.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-glassworks — three cells, square
@@ -829,6 +1295,23 @@ right and its mouth must sit well inside the top margin with paper above it;
 annealing shed to its left; sand bay, faggots and cullet across the lower
 half, the cullet pile at the lower left where the band may cover it. Nothing
 may be drawn taller than the cone.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-blacksmith — two cells, 3:2 landscape
@@ -854,6 +1337,24 @@ visible inside it; anvil and slack tub out in the yard to the left, which is
 the reading of the tile - the anvil outdoors and alone is what says smith at
 seventeen millimetres. Coal and clinker at the lower left, which is ground
 the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-carpenter — two cells, 3:2 landscape
@@ -878,6 +1379,23 @@ centre, sawhorses in front of it; the wheel leaning at the right-hand end
 where the eye lands. Board stack and shavings run out of the lower left,
 which is ground the band may cover. No water wheel and no frame saw - that
 is the sawmill, and these two must not be confused.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-weaver — two cells, 3:2 landscape
@@ -902,6 +1420,23 @@ the centre to the right, window range full on to the viewer and unbroken;
 tenter frame across the front and left, its stretched cloth the biggest
 plain shape on the page. Fleece basket at the lower left, which is ground
 the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-tannery — one cell, square
@@ -925,6 +1460,23 @@ FRAMING. Square plate, ground to all four edges. Pits fill the centre and
 lower right and run corner to corner; rack and shed across the top; bark
 heap at the lower left, which is ground the band may cover. The pits must
 read as pits in the ground and not as tubs standing on it.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-tailor — two cells, 3:2 landscape
@@ -950,6 +1502,23 @@ standing tall in the frame with its eaves inside the upper margin; the shelf,
 bolts and bench running left along the front so the piece reads across.
 Swept step and scrap basket at the lower left, which is ground the band may
 cover. No dummy, no figure, no hanging garments over the street.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-mill — one cell, square
@@ -974,6 +1543,24 @@ meant to be, and cutting them is what makes the mill read as huge - but the
 cap and the windshaft must sit well inside. Sacks and millstone at the foot,
 grass at the lower left where the band may cover it. No water wheel: the
 sawmill has the wheel and this must not borrow it.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-bakery — two cells, 3:2 landscape
@@ -998,6 +1585,23 @@ with the oven bulge turned to the viewer at its right-hand end; cooling rack
 and loaves running right so the piece reads across. Faggot stack at the
 lower left, which is ground the band may cover. Roof ridge inside the upper
 third.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-butcher — one cell, square
@@ -1021,6 +1625,23 @@ FRAMING. Square plate, ground to all four edges. Shop across the upper and
 middle page with its open front to the viewer; barrel and trough at the
 front right; swept flags and the hide rail at the lower left, which is
 ground the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-dairy — one cell, square
@@ -1045,6 +1666,23 @@ centre, door open and turned to the viewer; press and churn out in front of
 it at the centre right, which is where the eye lands; grass and the well
 cover at the lower left, which is ground the band may cover. Cool, shaded
 and shut in - the opposite of the bakery, and it should read that way.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-brewery — two cells, 3:2 landscape
@@ -1068,6 +1706,24 @@ FRAMING. Landscape 3:2, ground to all four edges. Brewhouse across the back
 from the centre to the left with the cupola full along its ridge; ramp,
 hatch and barrel rick running right so the piece reads across. Spent grain
 and hop sack at the lower left, which is ground the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-winery — three cells, square
@@ -1093,6 +1749,24 @@ right under the roof, its head well inside the upper margin; vats to its
 left, barrel rack across the lower right, stacked baskets and swept floor at
 the lower left, which is ground the band may cover. No vines - the vineyard
 is its own tile and must not appear here.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ---
@@ -1116,6 +1790,23 @@ and barrels, flat.
 FRAMING. Square plate, ground to all four edges. The building fills the
 middle and upper page; the loading apron and its crates run out of the lower
 edge. Hoist beam well inside the top margin.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-granary — three cells, square
@@ -1139,6 +1830,23 @@ half below its shoulder and carries a V notch in the top centre, so a store
 drawn to the full width loses its outer staddle stones. The daylight gap under
 the floor is the one thing that must survive whole; ladder and sacks gather
 under the building, not out to the sides. Ground, not detail, in the lower-left.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ---
@@ -1167,6 +1875,24 @@ slightly right with clear paper visible under the roof between the posts;
 flags and sacks spread to the lower left, which is ground the band may cover.
 Roof peak inside the upper third. No walls, no door, no shopfront - the
 moment it has a wall it stops being a market.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-trading-house — three cells, square
@@ -1192,6 +1918,24 @@ upper two thirds with the carriage arch dead centre and dark; scale, bales
 and cart across the lower half; swept paving at the lower left, which is
 ground the band may cover. No hoist beam and no staddle stones - those are
 the warehouse's and this must not borrow them.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-town-hall — two cells, 3:2 landscape
@@ -1215,6 +1959,24 @@ right, the arcade beneath it with paper showing through between the columns;
 outside stair at the left-hand end so the piece reads across. Cupola and bell
 well inside the upper margin. Paving and benches at the lower left, which is
 ground the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-guildhall — two cells, 3:2 landscape
@@ -1239,6 +2001,24 @@ FRAMING. Landscape 3:2, ground to all four edges. Hall across the centre and
 right with the jetty full on to the viewer so the overhang casts its line;
 door and benches at the centre; the ground and step run out of the lower
 left, which is ground the band may cover. Gable inside the upper margin.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-inn — two cells, 3:2 landscape
@@ -1264,6 +2044,24 @@ trough, block and barrels along the front so the piece reads across. Yard
 cobbles at the lower left, which is ground the band may cover. The sign
 bracket must be empty - no board, no painted device, no lettering of any
 kind.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-infirmary — one cell, square
@@ -1288,6 +2086,24 @@ with the porch centre right; the four herb beds fill the lower half and run
 corner to corner; the gravel path and the nearest bed take the lower left,
 which is ground the band may cover. Quiet and kept - no cross, no bell, no
 shrine furniture.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ---
@@ -1339,6 +2155,23 @@ What is left that is this tile's own: the range is long in its own proportions
 and still narrow on the page, which is what the angle buys; and trodden bare
 earth goes in the lower left, which is ground the name band may cover. No
 banners, no devices, no painted arms.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 Keep negations out of that subject paragraph, and out of every other one in this
@@ -1370,6 +2203,23 @@ FRAMING. Landscape 3:2, ground to all four edges. Tower right of centre and
 standing the full height of the plate with its parapet and beacon basket well
 inside the top margin - they may be cut by nothing. Wall, gate and beacon
 wood run left and out of the lower left, which is ground the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-palisade — one cell, square
@@ -1394,6 +2244,23 @@ corner to corner so the line survives the hexagonal cut, gate right of
 centre; ditch and bank along the near side, walkway and ladder behind. The
 ditch and its grass take the lower left, which is ground the band may cover.
 No towers, no wall walk roofed over - a fence, seriously made.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ---
@@ -1424,6 +2291,24 @@ standing tall with the pot chimney inside the upper margin; the oriel bay
 turned to the viewer at eye height; walled yard and plant bed running left so
 the piece reads across. Mortar and crock at the lower left, which is ground
 the band may cover. No stars, no sigils, no glow of any kind.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps the full width
+of the page but only the middle 87% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this tile's own
+pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-shrine — one cell, square
@@ -1448,6 +2333,23 @@ slightly right, roof slab inside the upper third, paper showing between the
 columns; the worn ring and the path fill the lower left, which is ground the
 band may cover. Old and tended, never ruined and never overgrown. No figure,
 no carving, no symbol on the stone.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 87% of its width - between 7% and 93% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 23% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ---
@@ -1479,6 +2381,23 @@ the lower left up and away to the right with the crane at the centre right
 and the vessel beyond it; the mast is cut by the top edge and is meant to be.
 Crates, bollards and rope along the near quay; swept stone at the lower left,
 which is ground the band may cover.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```
 
 ## tile-rail-depot — two cells, 3:2 landscape
@@ -1506,4 +2425,21 @@ inside the upper margin; rails running the full width and out of both ends so
 the piece reads across; buffer stop at the left. Ballast and spare sleepers
 at the lower left, which is ground the band may cover. No locomotive, no
 wagon, no rolling stock of any kind.
+
+WINDOW. This plate is cut down to a tile, and the tile keeps only the
+middle 99% of its width - between 1% and 99% across. Outside that band
+nothing can be relied on, whatever else this brief says. (Worked out from
+this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+drawn at. It is not a rule of thumb.)
+
+LABEL BAND. A solid band carrying this tile's name is printed along the
+lower-left edge of the piece, running parallel to it and about 13% of the
+piece's height deep at its deepest. It is in the same corner on every tile
+in this set. Whatever is drawn under it is covered, so KEEP THE IMPORTANT
+DETAIL OUT OF THAT CORNER - not empty, which on a drawing this small looks
+like a mistake, but ground, water, wall, grass, spoil: something the piece
+can afford to lose. Never the door, the working end, the one thing the tile
+is of. The subject is drawn from above and to the left, so the lit face and
+the business of it fall to the right anyway - this is asking you to keep
+them there.
 ```

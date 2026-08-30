@@ -91,7 +91,9 @@ layout, trading card, game card, title bar, name banner, title banner,
 stat block, stat icons, rules text box, flavour text, caption box,
 panel, plate number, rounded corners, inset picture, picture window,
 matte, mount, numbers, blueprint, technical drawing, exploded diagram,
-callout lines, grimdark, ruined, wrecked
+callout lines, grimdark, ruined, wrecked, horizon, landscape, seascape,
+coastline, shoreline, beach, background scenery, distant hills, clouds,
+installed, in use, mounted on a vehicle, the vehicle it fits, outdoors
 ```
 
 ## The framing block
@@ -131,16 +133,26 @@ stretched clew, the spar and both sheet coils inside the middle 84%.
 ```text
 [PREAMBLE]
 
-One complete sweep, off the ship and laid on trestles: a long straight FIXED
-upper spar, a HINGED lower spar beneath it, an iron gooseneck pivot joining
-them at one end with the pin drawn out and lying beside it, and a tall
-trapezoid of laced sailcloth between the two spars. Two crew handles bolted to
-the lower spar. The lower spar is shown swung open, so the hinge angle is
-unmistakable. Guy lines coiled at the pivot end. Wash: dusty grey-green on the
-sailcloth, ochre on the spars, rust red on the ironwork, flat.
+WHAT THIS IS, because the name is misleading: a sweep is an OAR, and this one
+belongs to an AIRSHIP. It sweeps nothing. It is an enormous hand-worked wing -
+a sail slung between two spars, which eight of the crew haul on to drive the
+vessel when the wind has failed or turned against it. It is not a boat fitting,
+it has no wheels, and it touches no ground.
+
+One complete sweep, dismounted and laid across low trestles on a workshop
+floor. A long straight FIXED upper spar. Beneath it a HINGED lower spar, swung
+open to about thirty degrees so the hinge angle is unmistakable, with a tall
+trapezoid of sailcloth laced between the two along their whole length through
+worked eyelets. An iron gooseneck pivot joins the spars at the near end, its
+pin drawn out and lying beside it on the boards. Four crew handles - plain
+turned grips, like capstan bars - bolted along the lower spar where the haulers
+stand. Guy lines coiled at the pivot end. One cloth panel replaced in newer
+sailcloth than the rest. Wash: dusty grey-green on the sailcloth, ochre on the
+spars, rust red on the ironwork.
 
 FRAMING. Square plate, whole page drawn edge to edge. The gooseneck pivot, the
-pin, both spars and the laced sail inside the middle 84%.
+drawn pin, both spars end to end, the laced sail and every crew handle inside
+the middle 84%.
 ```
 
 ## modification-copper-sheathing — Copper Sheathing *(hull, MOD-03)*

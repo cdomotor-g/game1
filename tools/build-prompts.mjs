@@ -19,7 +19,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { survey } from './lib/mint.mjs';
+import { survey, windowNote } from './lib/mint.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK = process.argv.includes('--check');
@@ -146,6 +146,65 @@ function markSections(text, steps) {
   return out.join('\n');
 }
 
+/**
+ * The cut, written into the brief itself.
+ *
+ * `windowNote` computes what a plate loses when it is cut to its piece, and for a
+ * building tile it also says where the printed name band lands. Both were only
+ * ever produced by `mint-request` at commission time - so an artist reading the
+ * brief FILE, which is now the whole pipeline, never learned that part of its page
+ * is thrown away or that a solid band prints over one corner of it.
+ *
+ * Tiles only, and deliberately. A tile's note is measured off its own footprint
+ * and is deterministic. A card's is read off the BUILT card in docs/cards/, so
+ * writing it here would make this tool's output depend on whether build-cards had
+ * run yet, and --check would pass or fail by run order. A card brief's FRAMING
+ * block already names its band.
+ */
+function cutNoteFor(plate) {
+  const line = tileLine;
+  if (!line) return null;
+  const row = tileRows.get(plate);
+  if (!row) return null;
+  const note = windowNote(ROOT, line, row);
+  return note ? note.trim() : null;
+}
+
+/* Strip any previously written cut note, then lay the fresh one down. The note is
+   made of META paragraphs - WINDOW. and LABEL BAND. - which is the same shape
+   FRAMING. already has inside a brief, and is what renderPrompt lifts back out. */
+function withCutNote(body, note) {
+  const kept = body.split(/\n\s*\n/).filter((p) => !/^(WINDOW|LABEL BAND)\./.test(p.trim()));
+  return note ? [...kept, note].join('\n\n') : kept.join('\n\n');
+}
+
+function markCuts(text, file) {
+  if (file !== 'docs/art/prompts/buildingtiles.md') return text;
+  const lines = text.split('\n');
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    out.push(lines[i]);
+    if (!lines[i].startsWith('## ')) continue;
+    const plate = lines[i].slice(3).trim().split(' ')[0];
+    const note = cutNoteFor(plate);
+    if (!note) continue;
+    /* Walk to this section's fence and rewrite what is inside it. */
+    let open = -1;
+    for (let j = i + 1; j < lines.length && !lines[j].startsWith('## '); j++) {
+      if (lines[j].startsWith('```')) { open = j; break; }
+    }
+    if (open < 0) continue;
+    let close = -1;
+    for (let j = open + 1; j < lines.length; j++) if (lines[j].startsWith('```')) { close = j; break; }
+    if (close < 0) continue;
+    out.push(...lines.slice(i + 1, open + 1));
+    out.push(...withCutNote(lines.slice(open + 1, close).join('\n'), note).split('\n'));
+    out.push(lines[close]);
+    i = close;
+  }
+  return out.join('\n');
+}
+
 const targets = style.registers.map((r) => ({
   path: `docs/art/prompts/${r.id}.md`,
   preamble: /^shared preamble/i,
@@ -165,7 +224,51 @@ targets.push({
   register: { ...generic, plate: 'a plate from an illustrated book', composition: [], negative: [] },
 });
 
+/**
+ * A brief may not name a vehicle its own data says it does not fit.
+ *
+ * MOD-02 Sweep Rig fits an AIRSHIP, and its brief opened "off the ship". The
+ * artist read ship, then read "sweep", and drew a wheeled sailing street-sweeper
+ * with a bristle roller. Every word of that was a fair reading of the brief.
+ *
+ * Word boundaries matter here: "airship" must not count as "ship".
+ */
+const VEHICLES = ['airship', 'ship', 'barge', 'train', 'cart', 'caravan', 'sled', 'balloon', 'locomotive'];
+function vehicleClashes(root) {
+  const mods = JSON.parse(readFileSync(join(root, 'data/modifications.json'), 'utf8'));
+  const file = readFileSync(join(root, 'docs/art/prompts/modifications.md'), 'utf8');
+  const out = [];
+  for (const m of mods.modifications ?? mods) {
+    const fits = m.fits ?? [];
+    if (fits.includes('any')) continue;
+    const sec = file.match(new RegExp(`^## modification-${m.id}\\b[\\s\\S]*?\`\`\`text\\n([\\s\\S]*?)\\n\`\`\``, 'm'));
+    if (!sec) continue;
+    for (const v of VEHICLES) {
+      if (fits.includes(v)) continue;
+      /* Named as the thing's own home, not merely mentioned - "off the ship",
+         "on the train". A brief may say what a fitting is NOT for. */
+      if (new RegExp(`\\b(?:the|a|an|its|one)\\s+${v}\\b(?!\\s*,?\\s*(?:not|nor))`, 'i').test(sec[1])
+          && !new RegExp(`not (?:a|an|the) ${v}\\b`, 'i').test(sec[1])) {
+        out.push(`  ${m.cardCode} ${m.name}: the brief names "${v}" but data/modifications.json says it fits ${fits.join(', ')}`);
+      }
+    }
+  }
+  return out;
+}
+
 const steps = stepsByPlate();
+
+/* The tiles line and its rows, for the cut note above. */
+const tileEntry = survey(ROOT).lines.find((e) => e.line.id === 'buildingtiles' && !e.shelved);
+const tileLine = tileEntry?.line ?? null;
+const tileRows = new Map((tileEntry?.rows ?? []).map((r) => [r.plate, r]));
+
+const clashes = vehicleClashes(ROOT);
+if (clashes.length) {
+  console.error('build-prompts: a brief contradicts its own data —');
+  console.error(clashes.join('\n'));
+  process.exit(1);
+}
 
 let changed = 0;
 for (const t of targets) {
@@ -174,6 +277,7 @@ for (const t of targets) {
   let after = replaceBlock(before, t.preamble, preambleFor(t.register), t.path);
   after = replaceBlock(after, t.negative, negativeFor(t.register), t.path);
   if (t.register.id) after = markSections(after, steps);
+  after = markCuts(after, t.path);
   if (after === before) continue;
   changed++;
   if (CHECK) console.error(`  ${t.path} — the generated blocks have drifted from data/artstyle.json`);

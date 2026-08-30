@@ -115,7 +115,12 @@ chosen.forEach(({ line, row }, i) => {
     return;
   }
 
-  const prompt = assemble(brief, windowNote(ROOT, line, row));
+  /* The tile briefs now carry their own WINDOW and LABEL BAND, written in by
+     tools/build-prompts.mjs so an artist reading the FILE gets them too. Only
+     append the computed note where the brief has not already got one, or the
+     commission says everything twice. */
+  const carriesCut = /^(WINDOW|LABEL BAND)\./m.test(brief.subject);
+  const prompt = assemble(brief, carriesCut ? null : windowNote(ROOT, line, row));
   if (promptOnly) {
     console.log(prompt);
     if (i < chosen.length - 1) console.log('\n' + '─'.repeat(72) + '\n');

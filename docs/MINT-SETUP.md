@@ -129,13 +129,17 @@ Do not "take the first brief you find". Most briefs in that repository are for
 plates that were finished long ago, and a finished one looks identical to a
 waiting one until you check.
 
-  a. Open docs/art/mint/QUEUE.md. Under the "## Cards" heading, find
-     "### 2 · DRAW — the artist". That table is the worklist. (Maps and
-     Building tiles have their own DRAW tables further down — ignore those
-     unless I name one.)
-  b. Take the TOP row, unless I have named a subject.
-  c. Open its brief: the "## <plate-id>" heading in docs/art/prompts/<deck>.md.
-     The table gives you both the deck and the plate id.
+  a. Open docs/art/mint/QUEUE.md. It has one section per production line —
+     "## Cards", "## Maps", "## Building tiles" — and each has its own
+     "### 2 · DRAW — the artist" table.
+
+     Work the CARDS table unless I have said otherwise. If I have said
+     "building tiles", work that one instead; everything below is the same.
+
+  b. Take the TOP row of that table, unless I have named a subject.
+  c. Open its brief: the "## <plate-id>" heading in the line's prompt file —
+     docs/art/prompts/<deck>.md for a card, docs/art/prompts/buildingtiles.md
+     for a building tile. The table gives you the deck and the plate id.
   d. The one-line marker directly under that heading must read
      "WAITING — THIS ONE IS YOURS".
      If it reads "ALREADY DRAWN — DO NOT DRAW THIS", stop and tell me: the
@@ -154,6 +158,15 @@ Three parts, all in that same docs/art/prompts/<deck>.md file:
 
 Use them as written. Do not paraphrase them, do not improve them, and do not
 add anything the brief did not ask for.
+
+If the subject block carries a WINDOW or a LABEL BAND paragraph, those are not
+advice. WINDOW says how much of your page survives being cut to the piece.
+LABEL BAND says which corner gets a solid name band printed over it, so nothing
+that identifies the subject may sit there. Building tiles always carry both.
+
+READ THE WHOLE SUBJECT BLOCK BEFORE YOU START. If it opens by telling you what
+the thing IS, that is there because the name alone is misleading, and it
+outranks whatever the name suggests to you.
 
 ─── 3 · WHAT A PLATE IS ────────────────────────────────────────────────
 ONE WHOLE DRAWN PAGE OF ARTWORK, AND NOTHING ELSE. It is not a card.

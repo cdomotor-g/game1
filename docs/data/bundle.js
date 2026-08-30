@@ -14386,7 +14386,21 @@ window.GAME_DATA = {
           "callout lines",
           "grimdark",
           "ruined",
-          "wrecked"
+          "wrecked",
+          "horizon",
+          "landscape",
+          "seascape",
+          "coastline",
+          "shoreline",
+          "beach",
+          "background scenery",
+          "distant hills",
+          "clouds",
+          "installed",
+          "in use",
+          "mounted on a vehicle",
+          "the vehicle it fits",
+          "outdoors"
         ]
       },
       {
