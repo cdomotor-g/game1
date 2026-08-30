@@ -561,10 +561,10 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h1 id="the-mint-queue">The mint queue</h1>
 <p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
 <p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
-<p><strong>cards 61/81 · maps 1/1 · building tiles 11/54</strong></p>
+<p><strong>cards 61/81 · maps 1/1 · building tiles 15/54</strong></p>
 <blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 61 of 81 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
-<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 3 of 54 are under the 1289 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 4 of 54 are under the 1289 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
 <p><strong>61 of 81 minted.</strong> 0 waiting on a brief, 20 waiting on art, 0 waiting on frame.</p>
@@ -627,18 +627,14 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <hr>
 <h2 id="building-tiles">Building tiles</h2>
 <p>One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in <a href="../art/prompts/buildingtiles.md"><code>docs/art/prompts/buildingtiles.md</code></a>, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
-<p><strong>11 of 54 minted.</strong> 0 waiting on a brief, 43 waiting on art, 0 waiting on frame.</p>
+<p><strong>15 of 54 minted.</strong> 0 waiting on a brief, 39 waiting on art, 0 waiting on frame.</p>
 <h3 id="1-write-the-designer-2">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
-<h3 id="2-draw-the-artist-43-tiles">2 · DRAW — the artist — 43 tiles</h3>
-<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<h3 id="2-draw-the-artist-39-tiles">2 · DRAW — the artist — 39 tiles</h3>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 797 px on the long side (a 67.5 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1594 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
-<tbody><tr><td><code>mine</code></td><td>Mine</td><td>Extraction</td><td><code>tile-mine</code></td><td>✓</td><td>·</td><td>·</td></tr>
-<tr><td><code>oil-derrick</code></td><td>Oil Derrick</td><td>Extraction</td><td><code>tile-oil-derrick</code></td><td>✓</td><td>·</td><td>·</td></tr>
-<tr><td><code>well</code></td><td>Well</td><td>Extraction</td><td><code>tile-well</code></td><td>✓</td><td>·</td><td>·</td></tr>
-<tr><td><code>farm</code></td><td>Farm</td><td>Extraction</td><td><code>tile-farm</code></td><td>✓</td><td>·</td><td>·</td></tr>
-<tr><td><code>pasture</code></td><td>Pasture</td><td>Extraction</td><td><code>tile-pasture</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tbody><tr><td><code>pasture</code></td><td>Pasture</td><td>Extraction</td><td><code>tile-pasture</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>orchard</code></td><td>Orchard</td><td>Extraction</td><td><code>tile-orchard</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>vineyard</code></td><td>Vineyard</td><td>Extraction</td><td><code>tile-vineyard</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>apiary</code></td><td>Apiary</td><td>Extraction</td><td><code>tile-apiary</code></td><td>✓</td><td>·</td><td>·</td></tr>
@@ -680,7 +676,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h3 id="3-frame-whoever-accepts-the-plate-1">3 · FRAME — whoever accepts the plate</h3>
 <p>Nothing waiting.</p>
 <h3 id="minted-2">Minted</h3>
-<p>11 tiles complete: <code>hut</code>, <code>timber-house</code>, <code>brick-house</code>, <code>manor</code>, <code>lumber-camp</code>, <code>quarry</code>, <code>clay-pit</code>, <code>sand-pit</code>, <code>warehouse</code>, <code>granary</code>, <code>barracks</code>.</p>
+<p>15 tiles complete: <code>hut</code>, <code>timber-house</code>, <code>brick-house</code>, <code>manor</code>, <code>lumber-camp</code>, <code>quarry</code>, <code>clay-pit</code>, <code>sand-pit</code>, <code>mine</code>, <code>oil-derrick</code>, <code>well</code>, <code>farm</code>, <code>warehouse</code>, <code>granary</code>, <code>barracks</code>.</p>
 <p>Every minted tile is fully aimed: a <code>subject</code> box, a <code>focal</code> point and a one-line <code>note</code>.</p>
 <hr>
 <h2 id="shelved-lines">Shelved lines</h2>

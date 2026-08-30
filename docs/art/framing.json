@@ -834,6 +834,58 @@
         0.32
       ],
       "note": "The whole page, for the quarry s reason - a triad window is 0.99 against a square plate and the crop spends nothing. The stacks, the shear legs with the chain and hook, and the lean-to with the crosscut saw all sit in the wide upper band the die keeps; the skid track runs down into the lower lobe under the name band, which is the ground the brief set aside for it. The axe standing in its stump is on the left edge and loses its haft to the cut - it is the one thing here drawn outside the safe box, and it survives as a recognisable axe head."
+    },
+    "tile-farm": {
+      "subject": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "focal": [
+        0.45,
+        0.28
+      ],
+      "note": "The barn under its thatch, the cart shed with the cart backed into it, the muck heap and the trough, and the yard of ruts between them. A pair window is 1.73 against a 3:2 page: full width, 13.4% of the height spent, and the focal on the barn pulls that off the BOTTOM so the thatched ridge keeps its clearance at the top edge. What it costs is the stone trough, which ends up largely under the name band in the lower left. That is a plate-composition cost and not an aiming one: a pair has only vertical freedom, so nothing about the aim can move a thing out of that corner. The barn, the cart and the gate are what the tile is read by, and none of them is in it."
+    },
+    "tile-well": {
+      "subject": [
+        0.134,
+        0,
+        0.866,
+        1
+      ],
+      "focal": [
+        0.55,
+        0.48
+      ],
+      "note": "The wellhead, its shingled roof, the windlass and the bucket over the shaft, with the trough slopping over at the right. A single window is 0.87 against a square page: the full height is kept and 13.4% of the width goes. It is spent off the LEFT, all of it, and that was worth measuring - centring the crop clips the trough to 79% of its area, and the trough is a named part of this brief and the only thing on the page that shows the well is in use. Spending left instead puts it at 97% and costs the wellhead nothing (97% either way), because the left of this plate is the worn ground and path the brief already marked as expendable. This is the smallest piece in the set at 20.7 x 23.3 mm, which is why the name band takes proportionally the largest bite of any tile here; it falls on that same worn ring."
+    },
+    "tile-oil-derrick": {
+      "subject": [
+        0,
+        0.01,
+        0.7325,
+        0.98
+      ],
+      "focal": [
+        0.5,
+        0.4
+      ],
+      "note": "The lattice derrick and its crown block, the engine house and walking beam, both tanks on their bund, and as much of the slush pit as this shape will carry. A rhombus keeps the upper LEFT and lower RIGHT lobes - the manor's shape, and the manor's problem. The pit is drawn into the lower left, which is both the corner the die cuts and the corner the band covers, so it can never be wholly had. Shifted hard left, and that is measured rather than judged: the pit goes from 43% to 75% of its area and the derrick tower from 95% to 99%, paid for out of the outer tank (100% to 87%, a sliver off its right side). The tower is worth paying for - the brief calls its openwork against the paper the entire silhouette, and it is the only lattice tower in the set. The blackened ground around the well head survives whole and carries the oil where the pit itself is under the band. The upper-left lobe is bare grass: the plate's own empty ground, and no aim reaches it."
+    },
+    "tile-mine": {
+      "subject": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "focal": [
+        0.3,
+        0.32
+      ],
+      "note": "The adit with its cap piece and the tub on the rails in the left lobe, the winding gin over its collared shaft in the right, and the picking table of sorted ore below it. The piece reads ACROSS, which is what the brief asked a pair for and what the plate was drawn to. A pair window is 1.73 against a 3:2 page: full width, 13.4% of the height spent, pulled off the bottom by the focal on the adit mouth so the grass above the rise and the adit timbering both keep their clearance. The spoil tip runs out of the lower left under the name band, which is where the brief put it."
     }
   }
 }

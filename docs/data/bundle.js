@@ -18046,6 +18046,21 @@ window.GAME_DATA = {
           0.52
         ]
       },
+      "tile-farm": {
+        "file": "art/renders/tile-farm.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focal": [
+          0.45,
+          0.28
+        ]
+      },
       "tile-granary": {
         "file": "art/renders/tile-granary.png",
         "width": 1328,
@@ -18106,6 +18121,36 @@ window.GAME_DATA = {
           0.45
         ]
       },
+      "tile-mine": {
+        "file": "art/renders/tile-mine.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focal": [
+          0.3,
+          0.32
+        ]
+      },
+      "tile-oil-derrick": {
+        "file": "art/renders/tile-oil-derrick.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0.01,
+          0.7325,
+          0.98
+        ],
+        "focal": [
+          0.5,
+          0.4
+        ]
+      },
       "tile-quarry": {
         "file": "art/renders/tile-quarry.png",
         "width": 1254,
@@ -18164,6 +18209,21 @@ window.GAME_DATA = {
         "focal": [
           0.62,
           0.46
+        ]
+      },
+      "tile-well": {
+        "file": "art/renders/tile-well.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.134,
+          0,
+          0.866,
+          1
+        ],
+        "focal": [
+          0.55,
+          0.48
         ]
       },
       "tool-axe": {
