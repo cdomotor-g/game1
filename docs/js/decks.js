@@ -31,6 +31,17 @@
     if (!filter) return true;
     if (filter.class !== undefined && record.class !== filter.class) return false;
     if (Array.isArray(filter.classNot) && filter.classNot.indexOf(record.class) !== -1) return false;
+    /* `not` names a FIELD that has to be absent or falsy, where the two above
+       name a value. It is here for the BUILDINGS deck, which deals architecture
+       and not earthworks: road, rail and bridge carry `perTile`, are laid along a
+       route rather than placed on a cell, and are already a piece of their own
+       (components.json tokens.route). data/buildingtiles.json subjects.excludes
+       drops them from the tiles for exactly that reason, and a deck dealt off
+       tile plates has to drop them for the same one - so it says so with the same
+       word rather than by three buildings quietly having no card code. The next
+       per-tile thing somebody adds is then excluded by having been described,
+       which is the only kind of exclusion that stays true. */
+    if (filter.not !== undefined && record[filter.not]) return false;
     return true;
   }
 

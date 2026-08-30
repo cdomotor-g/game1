@@ -76,12 +76,23 @@ how big each one is comes out of `data/buildingtiles.json` and is never typed on
 - **12 monster cards**, **12 vehicle cards**, **8 character cards**, **8 quest cards** —
   the adventure decks, in `data/monsters.json`, `vehicles.json`, `characters.json` and
   `quests.json`, all built to grow
+- **49 building cards** — one per building in `data/buildings.json` that is cut a tile,
+  and the first **reference** deck in the box. Every other card here is a thing you hold
+  *instead of* a piece; this one is a thing you hold *as well as* one. The building on
+  the board is its **tile**, and the tile is what says where it stands in relation to
+  everything else — the one thing a card in a hand can never say. What the tile cannot
+  do is be read: it is 17 mm across, its picture is cut to a clump of hexagons, and it
+  carries no numbers at all by the same rule the cards follow. So the card carries what
+  the tile had to drop, and shows the drawn page the die cut away. Neither replaces the
+  other, and the pair is the point. Road, rail and bridge are not in it: they are laid
+  along a route rather than placed on a cell, they are already a piece of their own, and
+  no tile is cut for them.
 
 **Card codes.** Every card carries a deck prefix and a two-digit sequence — `VEH-03`,
 `MON-09`, `QST-07` — with a `v2` suffix if a card is ever reprinted changed. The scheme
 is data (`vehicles.json → cardIdScheme`), the numbering is this repository's own, and a
-fork is free to renumber. Two prefixes are new: `WPN` and `ARM`, dealt when weapons and
-armour became decks of their own. A card that moves between decks takes a new code rather
+fork is free to renumber. Three prefixes are new: `WPN` and `ARM`, dealt when weapons and
+armour became decks of their own, and `BLD`, dealt to the buildings. A card that moves between decks takes a new code rather
 than keeping an old one, because the prefix is which deck to put it back in.
 
 **The summary strip.** Every number a card has is printed once, as a **maximum**, in a
@@ -132,8 +143,9 @@ arm's length, before anybody is close enough to spell anything.
 | **Weapons** | **WEAPONS** | **blade** | **oxide** |
 | **Armour** | **ARMOUR** | **mail** | **slate** |
 | Tools | TOOLS | socket | verdigris |
+| **Buildings** | **BUILDINGS** | **bond** | **oxide** |
 
-Twelve decks, eight motifs and five inks, and a motif is allowed to repeat because the ink
+Thirteen decks, nine motifs and five inks, and a motif is allowed to repeat because the ink
 under it does not: rivet is a character in ochre, an event in oxide and an item in slate.
 One pair shares both — **talismans and spells are each a rayed mark in bruise** — and there
 the word is the entire distinction. That is the weak point of the convention rather than an
@@ -141,7 +153,22 @@ oversight in it: they are the two arcane decks, bruise is the arcane ink and it 
 and giving one of them a second colour would be worse than the ambiguity. It is the pair to
 look at first on a printed test sheet.
 
-**The two new backs are new because the decks are.** WEAPONS is a **double-ended blade
+**BUILDINGS is four courses of masonry in stretcher bond**, the perpends of one course
+falling on the middle of the stretchers above and below it. It is the second motif in the
+set built out of *repeats* rather than out of one figure — the mail is the other — and for
+the same reason: a wall is a thing made of many identical small pieces, and at roundel size
+that is what it should look like. It is symmetric about both axes by construction, so the
+mirror costs it nothing.
+
+Oxide gives it a third deck, which is one more than any other ink carries, and the choice
+was between that and slate. Slate is the more obvious colour for masonry and is the wrong
+answer: it would have put the buildings in with the **vehicles and the items**, which are
+the other cards a player keeps in front of them, where oxide puts them in with the
+**monsters and the events**, which are drawn from a shuffled stack and never sit in a
+player's own tableau at all. The confusion a shared ink can actually cause is between two
+stacks lying side by side, so the pairing to avoid is the one with the decks you own.
+
+**The two backs before it are new because the decks are.** WEAPONS is a **double-ended blade
 through a crossguard** in oxide; ARMOUR is **five interlocked mail rings** in slate. Both are
 top-to-bottom symmetric, and both had to be, because the back mirrors across the card's
 centre line — a motif that is not symmetric is mirrored into nonsense. A sword is the one

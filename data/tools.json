@@ -90,6 +90,15 @@
       "enables": ["net-fish"]
     },
     {
+      "id": "fishing-line", "name": "Fishing Line", "cardCode": "TOL-06", "family": "fishing",
+      "summary": "Rod, line and tackle. Fished off any bank, with no dock and no boat.",
+      "madeAt": "blacksmith",
+      "craft": { "inputs": [{ "commodity": "lumber", "qty": 1 }, { "commodity": "rope", "qty": 1 }, { "commodity": "ironware", "qty": 1 }], "effortHours": 2 },
+      "baseValue": 20, "baseWear": 7, "sizes": ["small", "medium"],
+      "story": "Made at the forge, which surprises people: the rod is a stick and the line is string, and what you are actually buying is the hooks. A dozen of them in a horn box, and the whole kit rolls up small enough to go inside a pack rather than on it. It is the only way to eat in this game that needs nothing built first.",
+      "enables": ["angle-fish"]
+    },
+    {
       "id": "spinning-wheel", "name": "Spinning Wheel", "family": "textile",
       "summary": "Fibre into yarn.",
       "madeAt": "carpenter",

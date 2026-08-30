@@ -15,9 +15,9 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 81/81 · maps 1/1 · building tiles 44/54**
+**cards 81/83 · maps 1/1 · building tiles 44/54**
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 81 of 81 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 81 of 83 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
@@ -28,15 +28,20 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**81 of 81 minted.** 0 waiting on a brief, 0 waiting on art, 0 waiting on frame.
+**81 of 83 minted.** 0 waiting on a brief, 2 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist
+### 2 · DRAW — the artist — 2 cards
 
-Nothing waiting.
+The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
+
+| Code | Card | Deck | Plate | brief | plate | frame |
+| --- | --- | --- | --- | :-: | :-: | :-: |
+| `ITM-09` | Quiver of Arrows | Items | `item-quiver` | ✓ | · | · |
+| `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
 ### 3 · FRAME — whoever accepts the plate
 
@@ -57,6 +62,7 @@ Declared, numbered, backed — and simply not being illustrated this round. Set 
 | Spells | 14 | square |
 | Events | 51 | landscape scene |
 | Quests | 8 | landscape scene |
+| Buildings | 49 | the tile's own, derived from its footprint |
 
 ---
 

@@ -33,8 +33,8 @@ ever — it is what an object study can be built from where a face cannot.
 
 **A card with no `plate` block is drawn by hand.** The tool has nothing to draw
 it from, so it can never overwrite what arrives, and `node tools/mint-queue.mjs`
-carries the card to DRAW. Half of the twenty below are in that state today — the
-eight ITEMS cards, and the dagger and the staff — and their prompts are what the
+carries the card to DRAW. Half of the twenty-one below are in that state today — the
+nine ITEMS cards, and the dagger and the staff — and their prompts are what the
 artist is handed.
 
 **To move a generated one across, delete its `plate` block.** That is the whole
@@ -96,7 +96,7 @@ that the list does not spell out, settled the same way elsewhere in this
 repository: **brass washes ochre**, and **glass washes cold slate blue**, with
 bare paper kept for the surface that catches the light.
 
-## Negative prompt — for all twenty
+## Negative prompt — for all twenty-one
 
 ```text
 coffee ring, cup ring, water ring, tea stain, circular stain, ring
@@ -375,6 +375,44 @@ both objective rims, both eyepiece collars, the hinged bridge and its screw,
 the leather binding and the knotted cord inside the middle 81%. Low ground
 line in the bottom third with the glasses lying on it. Clear, quiet page
 above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
+## item-quiver — Quiver of Arrows *(ITEMS deck · gear, belt, ITM-09)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-quiver.png`.
+
+```text
+[PREAMBLE]
+
+A quiver of arrows stood upright against the end of a bench, seen from a
+little above and to one side: a tapering cylinder of stiffened hide about two
+hands deep, narrower at the base than the mouth, its one seam closed up the
+side with a coarse cross-stitch of waxed thread. The mouth is finished with a
+rolled rim of the same hide and the base is capped with a hardwood disc let
+in flush and pegged. A narrow belt strap rises from two riveted lugs set high
+on one side. Standing in it is a loose sheaf of eight or nine arrows, plainly
+not a full quiver: straight pale shafts, each fletched with three low trimmed
+feathers bound at both ends with fine thread, the nocks cut square, and the
+sheaf leaning a little apart at the top rather than standing as one bundle.
+Two broadheads show among the fletchings above the rim and one of them is
+bent out of line. The hide is scuffed and worn pale down the face that rides
+against the hip, and rubbed dark and smooth around the mouth where a hand
+reaches in without looking. Wash: rust red on the hide, the strap and the
+binding thread, warm ochre on the shafts and the base cap, cold slate blue on
+the two visible heads, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole body of the
+quiver from rim to base cap, the stitched seam, both riveted lugs and the
+strap, and the full standing sheaf of arrows to the tips of the fletchings
+inside the middle 81%. Low ground line in the bottom third with the base of
+the quiver on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters

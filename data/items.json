@@ -69,9 +69,6 @@
       "inputs": [{ "commodity": "lumber", "qty": 1 }, { "commodity": "rope", "qty": 1 }], "effortHours": 3, "baseValue": 65, "massKg": 0.5,
       "story": "One stave, one string, and ten years learning to draw it. The bow sells for the price of a goat; the arm is not for sale.",
       "effects": ["+2 to your battle total.", "At reach: if you win the roll, nothing you are wearing takes wear this round.", "+1 output on Hunt Game.", "Needs a quiver to fight.", "Wears 1 per round of battle."], "battle": 2, "wear": 6 },
-    { "id": "quiver", "name": "Quiver of Arrows", "class": "gear", "slot": "belt", "madeAt": "carpenter",
-      "inputs": [{ "commodity": "lumber", "qty": 1 }, { "commodity": "leather", "qty": 1 }], "effortHours": 2, "baseValue": 30, "massKg": 1,
-      "effects": ["Holds 3 uses. Each battle with a bow or a crossbow spends 1.", "The uses ARE the wear: an empty quiver is a spent quiver."], "uses": 3, "wear": 3 },
     { "id": "sling", "name": "Sling", "class": "weapon", "slot": "hand", "madeAt": "weaver",
       "inputs": [{ "commodity": "cloth", "qty": 1 }], "effortHours": 1, "baseValue": 12, "massKg": 0.25,
       "effects": ["+1 to your battle total for halflings only. Everyone else may as well throw the stone.", "Wears 1 per round of battle."], "battle": 1, "wear": 3 },
@@ -128,6 +125,10 @@
       
       "story": "Two ground lenses in a brass tube, bound in leather against the weather it will certainly get. The guild that grinds them will not say how, and charges accordingly.",
       "effects": ["Look before you walk: reveal the terrain of any one hex up to three away, without entering it.", "+1 on survey rolls.", "Re-roll one discovery roll per round, and keep the second.", "Wears 1 per use. Ground glass in a leather tube does not care for a road."] },
+    { "id": "quiver", "name": "Quiver of Arrows", "class": "gear", "cardCode": "ITM-09", "slot": "belt", "madeAt": "carpenter",
+      "inputs": [{ "commodity": "lumber", "qty": 1 }, { "commodity": "leather", "qty": 1 }], "effortHours": 2, "baseValue": 30, "massKg": 1,
+      "story": "Stiffened hide over a light wooden former, worn on the belt where the hand falls without looking. The arrows are the cheap part and always were: any village can fletch them, and every archer still counts them twice before a fight and once after it.",
+      "effects": ["Holds 3 uses. Each battle with a bow or a crossbow spends 1.", "The uses ARE the wear: an empty quiver is a spent quiver."], "uses": 3, "wear": 3 },
 
     { "id": "potion-vigour", "name": "Draught of Vigour", "class": "potion", "madeAt": "alchemist",
       "inputs": [{ "commodity": "arcane-herb", "qty": 2 }, { "commodity": "honey", "qty": 1 }], "effortHours": 3, "baseValue": 70, "massKg": 0.25,

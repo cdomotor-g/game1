@@ -1,6 +1,6 @@
-# The tools — object studies (tool-axe … tool-scythe)
+# The tools — object studies (tool-axe … tool-fishing-line)
 
-Five single-object studies, one per card in the TOOLS deck (`data/tools.json`),
+Six single-object studies, one per card in the TOOLS deck (`data/tools.json`),
 in deck order.
 
 A tool is not a weapon and must not be drawn as one. The deck rests on one rule:
@@ -80,7 +80,7 @@ shading, no lens effects. No text, no letters, no dimension figures, no
 border rule.
 ```
 
-## Negative prompt — for all five
+## Negative prompt — for all six
 
 ```text
 coffee ring, cup ring, water ring, tea stain, circular stain, ring
@@ -250,6 +250,44 @@ and bands, warm ochre on the snaith and nibs, flat.
 FRAMING. Square plate, whole page drawn edge to edge. The whole blade from
 tang to point, the collar, both nibs and the full snaith to the butt inside
 the middle 99%. Low ground line in the bottom third with the butt on it.
+Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
+## tool-fishing-line — Fishing Line *(fishing, TOL-06)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tool-fishing-line.png`.
+
+```text
+[PREAMBLE]
+
+A fishing rod and its tackle laid at an angle across a bench. The rod is a
+slender thing tapering butt to tip, made in three spliced lengths, each join
+bound round with waxed thread and the binding varnished darker than the wood
+either side of it; four small wire line guides are whipped along it at
+widening intervals, and the butt is a plain grip of banded cork worn into
+shallow finger hollows. The rod does not lie quite straight - it has taken a
+gentle permanent set from being stored strung, the way a rod that has been
+used always has. Beside it lies a flat wooden winder wound with brown
+horsehair line, a span of the line run out loose across the bench and ending
+in one small barbed hook. A shallow horn box sits open beyond it holding a
+dozen more hooks, a coil of spare line and two split lead shot. One hook is
+parked in the cork grip where its owner pressed it. The whipping at the
+middle join is frayed and furred, and one guide has plainly been rebound in a
+paler thread than the other three. Wash: warm ochre on the rod, the cork and
+the winder, cold slate blue on the hooks and the shot, rust red on the line
+and the horn box, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole rod butt to
+tip, all four line guides, the three whipped joins, the winder with its line,
+the hook at the line's end and the open horn box inside the middle 99%. Low
+ground line in the bottom third with the rod and the tackle lying along it.
 Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width

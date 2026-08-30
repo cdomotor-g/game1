@@ -89,13 +89,34 @@ const LIT = {
   5: 'afgcd', 6: 'afgedc', 7: 'abc', 8: 'abcdefg', 9: 'abcfgd',
 };
 
+/*
+ * STROKE AND FILL ARE TWO DIFFERENT SUBSTANCES HERE, and drawing them at one
+ * opacity is how this sheet used to lie.
+ *
+ * The stroke is PRINTED INK: the hollow guide the press lays down, and it is
+ * deliberately close to invisible - components.json ledger.digit.outlineOpacity,
+ * the same number tools/build-ledger.mjs strokes the real sheet with. It was
+ * hardcoded here at 0.9 against the sheet's own 0.85, so the one tool whose
+ * whole job is to show the artefact honestly was showing it darker than it
+ * prints. Both read the declaration now.
+ *
+ * The fill is a PLAYER'S PENCIL: graphite, put there afterwards, and it does not
+ * fade when the printed guide does. Fading them together would show a sheet
+ * nobody will ever look at - the guide is faint precisely SO the pencil can be
+ * loud, and a proof that dims both hides the whole point of the change.
+ */
+const PENCIL_OPACITY = 0.9;
+
 function digit(x, y, h, lit, stroke) {
   const S = segments(x, y, h);
   const on = new Set((lit ?? '').split(''));
   const paths = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
     .map((k) => `<path d="${S[k]}" fill="${on.has(k) ? SOOT : 'none'}"/>`)
     .join('');
-  return `<g stroke="${SOOT}" stroke-width="${num(stroke)}" opacity="0.9">${paths}</g>`;
+  return (
+    `<g stroke="${SOOT}" stroke-width="${num(stroke)}" stroke-opacity="${L.digit.outlineOpacity}" ` +
+    `fill-opacity="${PENCIL_OPACITY}">${paths}</g>`
+  );
 }
 
 const scaleArg = process.argv.indexOf('--scale');
@@ -110,7 +131,7 @@ const label = (x, y, t, size = mm(3), fill = SOOT) =>
 /* 1. TRUE SIZE, against a ruler. This is the only part of the sheet that matters. */
 let y = mm(14);
 out.push(label(mm(10), mm(9), `TRUE SIZE — one figure is ${num(DIGIT_W / U)} × ${num(DIGIT_H / U)} mm`));
-out.push(label(mm(10), mm(12.4), `thickness ${num(SEG_T / U)} mm · outline ${L.digit.outlineStrokeMm} mm · colourable core ${num(SEG_T / U - L.digit.outlineStrokeMm)} mm`, mm(2.4), T70));
+out.push(label(mm(10), mm(12.4), `thickness ${num(SEG_T / U)} mm · outline ${L.digit.outlineStrokeMm} mm at ${Math.round(L.digit.outlineOpacity * 100)}% · colourable core ${num(SEG_T / U - L.digit.outlineStrokeMm)} mm`, mm(2.4), T70));
 for (let d = 0; d <= 9; d++) {
   const x = mm(10) + d * (DIGIT_W + DIGIT_GAP) * 1.6;
   out.push(digit(x, y, DIGIT_H, '', mm(L.digit.outlineStrokeMm)));

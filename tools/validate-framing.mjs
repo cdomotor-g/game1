@@ -201,14 +201,29 @@ for (const id of plates) {
   const bad = pngProblem(join(RENDERS, `${id}.png`));
   if (bad) { errors.push(`${id}: the plate ${bad}`); continue; }
   const plate = pngSize(join(RENDERS, `${id}.png`));
+  /*
+   * EVERY WINDOW THAT ACTUALLY SHOWS THIS PLATE, which since the BUILDINGS deck
+   * arrived can be more than one kind at once.
+   *
+   * A tile plate used to be seen through its own footprint and nowhere else, so
+   * the three cases were exclusive and an `else if` was the whole truth. It is
+   * not any more: the BUILDINGS deck borrows `tile-{id}` and shows the same
+   * drawn page through a card window (components.json decks BLD, plateKind
+   * borrowed). Left as an else-if, the card window - the WIDER of the two, and
+   * the entire reason that deck exists - would have been the one window nobody
+   * ever checked.
+   *
+   * So the tile and the card are asked independently. The THUMBNAIL is not, and
+   * still keys off the tile: the explorer draws a building as a link row rather
+   * than as a deck card (docs/js/views.js), so a tile plate is not thumbnailed
+   * anywhere no matter which decks claim it, and adding one here would report a
+   * trim nobody will ever see. That is the original reasoning, unchanged - it was
+   * only ever the CARD window that this was wrong about.
+   */
   const windows = [];
   const tile = tileWindows.get(id);
-  if (tile) {
-    /* A tile and nothing else. It is not in the explorer, so there is no
-       thumbnail to satisfy - and inventing one would report a trim nobody will
-       ever see. */
-    windows.push({ name: `tile (${tile.shape})`, aspect: tile.aspect, where: tile.where });
-  } else if (claim?.window) {
+  if (tile) windows.push({ name: `tile (${tile.shape})`, aspect: tile.aspect, where: tile.where });
+  if (claim?.window) {
     windows.push({ name: 'card', aspect: claim.window.aspect, where: claim.card.cardCode });
     if (!decksSeen.has(claim.deck.prefix)) {
       decksSeen.set(claim.deck.prefix, { ...claim.window, budget: budget(plate, claim.window.aspect) });

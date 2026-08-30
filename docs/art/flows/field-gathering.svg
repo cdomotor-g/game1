@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 360" font-family="Georgia, 'Times New Roman', serif">
 <defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
-<rect width="780" height="300" fill="#EDE4D1"/>
+<rect width="780" height="360" fill="#EDE4D1"/>
 <text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714">In the open country</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Work that needs no building — only the right ground and the hours.</text>
 <g><rect x="16" y="71" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="83.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
 <g class="f-token" data-kind="recipes" data-id="gather-deadwood"><rect x="300" y="56" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="70" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Gather Deadwood</text><text x="410" y="82" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text><text x="410" y="93" text-anchor="middle" font-size="8" fill="#3D3630">on Forest, Grassland, Hills or Marsh</text></g>
@@ -18,9 +18,14 @@
 <g class="f-token" data-kind="commodities" data-id="peat"><rect x="552" y="191" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="203.5" font-size="9" fill="#1A1714">2 × Peat</text></g>
 <line x1="16" y1="230" x2="764" y2="230" stroke="#C0B7A9" stroke-width="0.6"/>
 <g><rect x="16" y="251" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="263.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
-<g class="f-token" data-kind="recipes" data-id="hunt-game"><rect x="300" y="236" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="250" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Hunt Game</text><text x="410" y="262" text-anchor="middle" font-size="8" fill="#3D3630">3h effort · needs Knife</text><text x="410" y="273" text-anchor="middle" font-size="8" fill="#3D3630">on Forest, Hills, Tundra or Mountain</text></g>
-<line x1="524" y1="260" x2="548" y2="248.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="commodities" data-id="meat"><rect x="552" y="239.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="252" font-size="9" fill="#1A1714">1 × Meat</text></g>
-<line x1="524" y1="260" x2="548" y2="271.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="commodities" data-id="hide"><rect x="552" y="262.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="275" font-size="9" fill="#1A1714">1 × Hide</text></g>
+<g class="f-token" data-kind="recipes" data-id="angle-fish"><rect x="300" y="236" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="250" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Angle for Fish</text><text x="410" y="262" text-anchor="middle" font-size="8" fill="#3D3630">2h effort · needs Fishing Line</text><text x="410" y="273" text-anchor="middle" font-size="8" fill="#3D3630">at any waterside</text></g>
+<line x1="524" y1="260" x2="548" y2="260" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="fish"><rect x="552" y="251" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="263.5" font-size="9" fill="#1A1714">1 × Fish</text></g>
+<line x1="16" y1="290" x2="764" y2="290" stroke="#C0B7A9" stroke-width="0.6"/>
+<g><rect x="16" y="311" width="116.06" height="18" rx="4" fill="none" stroke="#C0B7A9" stroke-width="1"/><text x="23" y="323.5" font-size="9" fill="#1A1714">nothing but the hours</text></g>
+<g class="f-token" data-kind="recipes" data-id="hunt-game"><rect x="300" y="296" width="220" height="48" rx="5" fill="#e2cbb7" stroke="#A33B26" stroke-width="1.3"/><text x="410" y="310" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Hunt Game</text><text x="410" y="322" text-anchor="middle" font-size="8" fill="#3D3630">3h effort · needs Knife</text><text x="410" y="333" text-anchor="middle" font-size="8" fill="#3D3630">on Forest, Hills, Tundra or Mountain</text></g>
+<line x1="524" y1="320" x2="548" y2="308.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="meat"><rect x="552" y="299.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="312" font-size="9" fill="#1A1714">1 × Meat</text></g>
+<line x1="524" y1="320" x2="548" y2="331.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="hide"><rect x="552" y="322.5" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="559" y="335" font-size="9" fill="#1A1714">1 × Hide</text></g>
 </svg>

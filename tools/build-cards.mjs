@@ -54,6 +54,7 @@ import { pngSize, pngProblem } from './lib/png.mjs';
 import { crop, readFraming, WHOLE_PLATE } from './lib/framing.mjs';
 import { plateIdFor } from './lib/plates.mjs';
 import { cardsOfDeck } from './lib/decks.mjs';
+import { tileSubjects } from './lib/tiles.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -416,6 +417,32 @@ function deckGeometry(deck, deckDef) {
     };
   }
 
+  /* A deck with NO story at all (components.json storyPanel false) gives the
+     band across the bottom back to the picture. It is not a third layout, it is
+     the panel layout with the panel's height set to nothing: the rules text
+     still hangs off the foot of the window, and the window simply grows down to
+     the card's own foot instead of stopping at a panel.
+
+     What earns it is a deck where the flavour would be missing rather than
+     short. The BUILDINGS deck is the first: five of its forty-nine subjects carry
+     `notes` and the other forty-four would deal with an empty band ruled across
+     the bottom of them, which reads as a card with a hole in it. `storyOf` would
+     also have logged all forty-four to `noStory`, burying the warning's real
+     job - a deck that MEANT to have a story and lost one - under a deck that
+     never had one. */
+  if (deckDef?.storyPanel === false) {
+    const factMax = Math.max(...deck.map((s) => factLines(s, PORTRAIT.w).length));
+    const room = (FOOT - top) - GAP - (factMax - 1) * FACT.lead;
+    const wanted = PORTRAIT.w / (plate.width / plate.height);
+    const height = Math.round(Math.min(room, Math.max(wanted, PORTRAIT.w / FLATTEST)));
+    const y = Math.round(top + (room - height) / 2);
+    return {
+      window: { x: PORTRAIT.x, y, w: PORTRAIT.w, h: height },
+      factY: y + height + GAP,
+      wrap: PORTRAIT.w,
+    };
+  }
+
   const factMax = Math.max(...deck.map((s) => factLines(s, PORTRAIT.w).length));
   const storyMax = Math.max(...deck.map((s) => storyLines(s, charsIn(PORTRAIT.w, STORY.size)).length));
 
@@ -481,6 +508,11 @@ const storyOf = (spec) => {
  * lands one column further to the right.
  */
 function storyRail(spec, geom) {
+  /* Neither a rail nor a panel: the deck said storyPanel false and deckGeometry
+     gave the band to the picture, so there is no `panelTop` to rule one against.
+     Returning empty is the whole of it - the card's other parts do not know the
+     difference. */
+  if (!geom.rail && geom.panelTop === undefined) return { wash: '', ink: '' };
   if (!geom.rail) {
     const lines = storyLines(spec, charsIn(PORTRAIT.w, STORY.size));
     return {
@@ -703,6 +735,43 @@ const modClassName = new Map(modData.classes.map((c) => [c.id, c.name.toLowerCas
 const commodityName = new Map(read('commodities.json').commodities.map((c) => [c.id, c.name.toLowerCase()]));
 const rules = read('rules.json');
 const boardTracks = read('playerboard.json').tracks;
+
+/* The BUILDINGS deck. Everything it prints is read off something that already
+   exists: the building itself, the recipes that name it as their site, the
+   terrain it may stand on, and its own tile's footprint - which is worked out
+   through the ground model in data/buildingtiles.json rather than written on
+   the building, exactly as tools/build-tiles.mjs works it out. */
+const buildingData = read('buildings.json');
+/* Through the deck's own filter, not a hand-rolled one: the BUILDINGS deck
+   declares `sourceFilter { not: "perTile" }` and docs/js/decks.js is the single
+   place that reads it, exactly as the four item decks are resolved. */
+const buildings = cardsOfDeck(deckByPrefix('BLD'), buildingData.buildings).filter((b) => b.cardCode);
+const buildingCategory = new Map(buildingData.categories.map((c) => [c.id, c.name.toLowerCase()]));
+const buildingName = new Map(buildingData.buildings.map((b) => [b.id, b.name]));
+const terrainName = new Map(read('terrain.json').terrains.map((t) => [t.id, t.name.toLowerCase()]));
+const depositName = new Map(read('deposits.json').deposits.map((d) => [d.id, d.name.toLowerCase()]));
+const allRecipes = read('recipes.json').recipes;
+
+/* Which jobs may be run here. `orBuilding` counts: a job that will take this
+   building OR another one is still a job somebody may allocate to this one, and
+   a reference card that left it off would send a player to the rulebook. */
+const jobsAt = new Map();
+for (const r of allRecipes) {
+  for (const site of [r.site?.building, r.site?.orBuilding]) {
+    if (!site) continue;
+    if (!jobsAt.has(site)) jobsAt.set(site, []);
+    if (!jobsAt.get(site).includes(r.name)) jobsAt.get(site).push(r.name);
+  }
+}
+
+/* The footprint, from the one place that counts it. A tile's shape is derived,
+   so reading it here rather than restating it means a building that grows a
+   worker slot and jumps a rung says so on its card by itself. */
+const CELL_WORD = { 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six' };
+const tileOf = new Map();
+for (const row of tileSubjects(ROOT)) {
+  if (row.kind === 'building') tileOf.set(row.id, row);
+}
 
 /* The card and the board have to call a number by the same name. The board's
    letters are the ones a player says out loud, so where a stat has a track the
@@ -957,6 +1026,103 @@ for (const t of toolkit) {
       recipeLine(t.madeAt, t.specialist, t.craft?.inputs, t.craft?.effortHours),
     ].filter(Boolean),
     story: t.story,
+  });
+}
+
+/* A BUILDING is the first card in the game that does not replace a piece.
+ *
+ * Everything else in this box is either a card or a token; a building is both,
+ * and each half does what the other cannot. The TILE on the board says where the
+ * building stands - which is the only thing a card in somebody's hand can never
+ * say - and it pays for that by being 17 mm across, cut to a clump of hexagons,
+ * and carrying no numbers at all (data/buildingtiles.json). The CARD says
+ * everything the tile had to drop, and shows the page the die cut away.
+ *
+ * So it prints the plate the tile prints, through a window several times its
+ * area: components.json gives this deck plateId `tile-{id}` and plateKind
+ * `borrowed`, and no plate is commissioned for it.
+ *
+ * NOTHING HERE IS AUTHORED. The cost is the building's cost, the jobs are the
+ * recipes that name it as their site, the ground is its terrain list and the
+ * footprint is the one tools/build-tiles.mjs cuts. A reference card that
+ * restated any of it in its own words would be a second copy of the rules, and
+ * a second copy is a copy that goes stale.
+ */
+for (const b of buildings) {
+  const render = plateIdFor(deckByPrefix('BLD'), b);
+  if (!hasRender(render)) { skipped.push(b.cardCode); continue; }
+
+  const tile = tileOf.get(b.id);
+  const lodging = (b.housing || 0) + (b.specialistHousing || 0);
+
+  /* Only the numbers this building actually has. B and R are on all fifty-two -
+     the effort to raise it and the rounds it cannot be rushed inside - and the
+     rest appear where they are non-zero, which is why the widest card in the
+     deck is the manor at four boxes and none comes near the six-cell ceiling. */
+  const stats = [
+    cell('build', b.buildPoints, 'slate'),
+    cell('rounds', b.minRounds, 'soot-tint-12'),
+    lodging ? cell('lodging', lodging, 'ochre') : null,
+    b.workerSlots ? cell('jobs', b.workerSlots, 'verdigris') : null,
+    b.storage ? cell('goods', b.storage, 'oxide') : null,
+    b.victoryPoints ? cell('victory', b.victoryPoints, 'bruise') : null,
+  ].filter(Boolean);
+
+  const bill = (b.cost || []).map((c) => `${c.qty} ${commodityName.get(c.commodity) || c.commodity}`).join(', ');
+
+  /* WHERE IT MAY STAND, in one sentence built out of the three things that can
+     constrain it: the ground, the water beside it, and whatever has to be there
+     already. A building with no terrain list stands anywhere, and says so -
+     silence would read as an omission. */
+  const ground = (b.terrain || []).map((t) => terrainName.get(t) || t);
+  const where = [];
+  if (ground.length) where.push(`Stands on ${ground.join(', ')}`);
+  else where.push('Stands on any ground');
+  if (b.orWaterside) where.push(`or on any tile with ${b.orWaterside === 'any' ? '' : `${b.orWaterside} `}water beside it`);
+  if (b.waterside) where.push(`and needs ${b.waterside === 'any' ? '' : `${b.waterside} `}water beside it`);
+  if (b.requiresBuilding) where.push(`with a ${(buildingName.get(b.requiresBuilding) || b.requiresBuilding).toLowerCase()} already there`);
+  if (b.requiresDeposit) where.push(`on a ${depositName.get(b.requiresDeposit) || b.requiresDeposit} deposit`);
+  if (b.requiresDepositAny?.length) {
+    where.push(`on a deposit of ${b.requiresDepositAny.map((d) => depositName.get(d) || d).join(' or ')}`);
+  }
+
+  /* What it holds that has no box on the strip. Three fields, one building each
+     - the pasture's animals, the barracks' garrison, the farm's fields - so a
+     letter apiece would have spent half the strip on three cards. */
+  const holds = [
+    b.livestockSlots ? `${b.livestockSlots} animals` : null,
+    b.garrison ? `${b.garrison} soldiers` : null,
+    b.fieldSlots ? `${b.fieldSlots} fields beside it` : null,
+  ].filter(Boolean);
+
+  const jobs = jobsAt.get(b.id) || [];
+
+  specs.push({
+    code: b.cardCode, name: b.name, portrait: render,
+    kicker: `${buildingCategory.get(b.category) || b.category} · tier ${b.tier}`,
+    desc: `Building card: ${b.name}, ${b.category}, tier ${b.tier}. ${b.summary} ` +
+      `${b.buildPoints} build points over at least ${b.minRounds} round${b.minRounds === 1 ? '' : 's'}` +
+      `${tile ? `, on a ${tile.shape} tile of ${CELL_WORD[tile.cells.length] ?? tile.cells.length} cells` : ''}. ` +
+      `The board keeps the tile; this card is the reference for it.`,
+    stats,
+    facts: [
+      b.summary,
+      bill ? `Raise it from ${bill}.` : null,
+      `${where.join(' ')}.`,
+      holds.length ? `Holds ${holds.join(' and ')}.` : null,
+      b.specialist ? `Wants a ${b.specialist} to run.` : null,
+      jobs.length ? `Work here: ${jobs.join(', ')}.` : null,
+      tile ? `Its tile is a ${tile.shape} — ${CELL_WORD[tile.cells.length] ?? tile.cells.length} cell${tile.cells.length === 1 ? '' : 's'}.` : null,
+      /* `notes` is NOT on this list, and that is a decision rather than an
+         oversight. It is the designer's margin, not the player's: of the five
+         buildings that carry one, the granary's says which word in the original
+         brief it came from, the hut's and the market's argue for their own price,
+         and only the mine's is a rule anybody would look up at a table. Printing
+         it cost the whole deck its picture - one twelve-line note on the inn set
+         `factMax`, and the window is sized for the wordiest card in the deck, so
+         forty-nine cards were letterboxed to carry one card's development
+         history. Rules live in the rulebook and reference lives here. */
+    ].filter(Boolean),
   });
 }
 

@@ -362,6 +362,7 @@ export function cardsOfDeck(root, deck) {
     weapons: () => file.items,
     armour: () => file.items,
     talismans: () => file.items,
+    buildings: () => file.buildings,
   }[deck.id];
   if (!collection) throw new Error(`the mint does not know which collection the ${deck.id} deck deals`);
   return (collection() || [])

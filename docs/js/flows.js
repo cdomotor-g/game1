@@ -65,7 +65,17 @@
         s.building ? s.building :
         s.orBuilding ? s.orBuilding :
         s.figure ? 'field-prospecting' :
-        (s.terrain && s.terrain.length) || (s.orTerrain && s.orTerrain.length) ? (FIELD_OF[r.category] || 'field-gathering') :
+        /* A WATERSIDE is a siting relationship exactly as a terrain list is, and
+           lands in the same place for the same reason: it is work that needs no
+           building, only the right ground and the hours. terrain.json siting
+           puts it plainly - a shore is a relationship, not a kind of ground, and
+           there is no coast to put in a terrain list - so a recipe sited on the
+           bank has an empty `terrain` and used to fall through this chain to
+           null. Angling for fish was the first recipe to do it and the coverage
+           guard caught it, which is the guard working: the book would otherwise
+           have quietly not shown a job. */
+        (s.terrain && s.terrain.length) || (s.orTerrain && s.orTerrain.length) ||
+        s.waterside || s.orWaterside ? (FIELD_OF[r.category] || 'field-gathering') :
         s.constructionSite ? 'field-works' : null);
     }
 
@@ -113,6 +123,7 @@
       if (s.figure) site.push(`with the ${nameOf('figure', s.figure)}`);
       if (s.terrain && s.terrain.length) site.push(`${s.building || s.orBuilding ? 'or out ' : ''}on ${listNames('terrain', s.terrain)}`);
       if (s.orTerrain && s.orTerrain.length) site.push(`or on ${listNames('terrain', s.orTerrain)}`);
+      if (s.waterside) site.push(`at ${s.waterside === 'any' ? 'any' : s.waterside} waterside`);
       if (s.orWaterside) site.push(`or at ${s.orWaterside} waterside`);
       if (s.constructionSite) site.push('at any construction site');
       if (s.fieldSlot) site.push('takes a field slot');

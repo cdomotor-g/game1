@@ -2536,6 +2536,41 @@ window.GAME_DATA = {
         ]
       },
       {
+        "id": "fishing-line",
+        "name": "Fishing Line",
+        "cardCode": "TOL-06",
+        "family": "fishing",
+        "summary": "Rod, line and tackle. Fished off any bank, with no dock and no boat.",
+        "madeAt": "blacksmith",
+        "craft": {
+          "inputs": [
+            {
+              "commodity": "lumber",
+              "qty": 1
+            },
+            {
+              "commodity": "rope",
+              "qty": 1
+            },
+            {
+              "commodity": "ironware",
+              "qty": 1
+            }
+          ],
+          "effortHours": 2
+        },
+        "baseValue": 20,
+        "baseWear": 7,
+        "sizes": [
+          "small",
+          "medium"
+        ],
+        "story": "Made at the forge, which surprises people: the rod is a stick and the line is string, and what you are actually buying is the hooks. A dozen of them in a horn box, and the whole kit rolls up small enough to go inside a pack rather than on it. It is the only way to eat in this game that needs nothing built first.",
+        "enables": [
+          "angle-fish"
+        ]
+      },
+      {
         "id": "spinning-wheel",
         "name": "Spinning Wheel",
         "family": "textile",
@@ -2738,6 +2773,7 @@ window.GAME_DATA = {
       {
         "id": "hut",
         "name": "Hut",
+        "cardCode": "BLD-01",
         "category": "housing",
         "tier": 1,
         "summary": "Four walls and a roof. Houses one worker.",
@@ -2765,6 +2801,7 @@ window.GAME_DATA = {
         "id": "timber-house",
         "name": "Timber House",
         "shortName": "Cottage",
+        "cardCode": "BLD-02",
         "category": "housing",
         "tier": 2,
         "summary": "A proper house of sawn lumber. Houses two workers.",
@@ -2794,6 +2831,7 @@ window.GAME_DATA = {
         "id": "brick-house",
         "name": "Brick House",
         "shortName": "Terrace",
+        "cardCode": "BLD-03",
         "category": "housing",
         "tier": 3,
         "summary": "Houses three workers, and they are warm: brick-housed workers ignore Cold Snap events.",
@@ -2826,6 +2864,7 @@ window.GAME_DATA = {
       {
         "id": "manor",
         "name": "Manor",
+        "cardCode": "BLD-04",
         "category": "housing",
         "tier": 4,
         "summary": "Houses four workers and one specialist, and scores at game end.",
@@ -2863,6 +2902,7 @@ window.GAME_DATA = {
         "id": "lumber-camp",
         "name": "Lumber Camp",
         "shortName": "Camp",
+        "cardCode": "BLD-05",
         "category": "extraction",
         "tier": 1,
         "summary": "Lets you fell trees on any forest tile within 1 tile, and stores logs on site.",
@@ -2884,6 +2924,7 @@ window.GAME_DATA = {
       {
         "id": "quarry",
         "name": "Quarry",
+        "cardCode": "BLD-06",
         "category": "extraction",
         "tier": 1,
         "summary": "Cuts stone out of hills and mountains.",
@@ -2905,6 +2946,7 @@ window.GAME_DATA = {
       {
         "id": "clay-pit",
         "name": "Clay Pit",
+        "cardCode": "BLD-07",
         "category": "extraction",
         "tier": 1,
         "summary": "Digs clay from marshes, river banks and wet ground.",
@@ -2927,6 +2969,7 @@ window.GAME_DATA = {
       {
         "id": "sand-pit",
         "name": "Sand Pit",
+        "cardCode": "BLD-08",
         "category": "extraction",
         "tier": 1,
         "summary": "Sand for glass.",
@@ -2949,6 +2992,7 @@ window.GAME_DATA = {
       {
         "id": "mine",
         "name": "Mine",
+        "cardCode": "BLD-09",
         "category": "extraction",
         "tier": 2,
         "summary": "Built directly on top of a revealed mineral deposit. What it produces depends on the deposit under it.",
@@ -2987,6 +3031,7 @@ window.GAME_DATA = {
         "id": "oil-derrick",
         "name": "Oil Derrick",
         "shortName": "Derrick",
+        "cardCode": "BLD-10",
         "category": "extraction",
         "tier": 4,
         "summary": "Late-game. Pumps crude oil out of an oil field.",
@@ -3013,6 +3058,7 @@ window.GAME_DATA = {
       {
         "id": "well",
         "name": "Well",
+        "cardCode": "BLD-11",
         "category": "extraction",
         "tier": 1,
         "summary": "A town without a well or adjacent water cannot draw water at all.",
@@ -3038,6 +3084,7 @@ window.GAME_DATA = {
       {
         "id": "farm",
         "name": "Farm",
+        "cardCode": "BLD-12",
         "category": "extraction",
         "tier": 1,
         "summary": "Four field slots. Each slot holds one sown crop through its growth track.",
@@ -3059,6 +3106,7 @@ window.GAME_DATA = {
       {
         "id": "pasture",
         "name": "Pasture",
+        "cardCode": "BLD-13",
         "category": "extraction",
         "tier": 1,
         "summary": "Holds livestock. Animals breed here and can be sheared, milked or butchered.",
@@ -3086,6 +3134,7 @@ window.GAME_DATA = {
       {
         "id": "orchard",
         "name": "Orchard",
+        "cardCode": "BLD-14",
         "category": "extraction",
         "tier": 2,
         "summary": "Takes three rounds to establish, then yields every round without re-sowing.",
@@ -3111,6 +3160,7 @@ window.GAME_DATA = {
       {
         "id": "vineyard",
         "name": "Vineyard",
+        "cardCode": "BLD-15",
         "category": "extraction",
         "tier": 2,
         "summary": "Grapes only, and only on sun-facing ground.",
@@ -3136,6 +3186,7 @@ window.GAME_DATA = {
       {
         "id": "apiary",
         "name": "Apiary",
+        "cardCode": "BLD-16",
         "category": "extraction",
         "tier": 1,
         "summary": "Bees. Honey for mead, and an orchard next door yields +1.",
@@ -3158,6 +3209,7 @@ window.GAME_DATA = {
       {
         "id": "dock",
         "name": "Dock",
+        "cardCode": "BLD-17",
         "category": "extraction",
         "tier": 1,
         "summary": "Fishing, and the cheap end of water transport. Goes on any land the water reaches - a sea shore, a lake rim or a river bank all do.",
@@ -3180,6 +3232,7 @@ window.GAME_DATA = {
       {
         "id": "sawmill",
         "name": "Sawmill",
+        "cardCode": "BLD-18",
         "category": "production",
         "tier": 1,
         "summary": "Logs into lumber. Doubles its rate on a waterside tile - water drives the saw.",
@@ -3207,6 +3260,7 @@ window.GAME_DATA = {
         "id": "charcoal-kiln",
         "name": "Charcoal Kiln",
         "shortName": "Hearth",
+        "cardCode": "BLD-19",
         "category": "production",
         "tier": 1,
         "summary": "Logs into charcoal, for smelting where there is no coal.",
@@ -3233,6 +3287,7 @@ window.GAME_DATA = {
       {
         "id": "smelter",
         "name": "Smelter",
+        "cardCode": "BLD-20",
         "category": "production",
         "tier": 2,
         "summary": "Ore plus fuel into metal.",
@@ -3264,6 +3319,7 @@ window.GAME_DATA = {
         "id": "steelworks",
         "name": "Steelworks",
         "shortName": "Foundry",
+        "cardCode": "BLD-21",
         "category": "production",
         "tier": 3,
         "summary": "The refinery. Pig iron plus coal into steel - and it only really works on coal.",
@@ -3295,6 +3351,7 @@ window.GAME_DATA = {
         "id": "brickworks",
         "name": "Brickworks",
         "shortName": "Kiln",
+        "cardCode": "BLD-22",
         "category": "production",
         "tier": 2,
         "summary": "Clay plus fuel into brick.",
@@ -3326,6 +3383,7 @@ window.GAME_DATA = {
         "id": "glassworks",
         "name": "Glassworks",
         "shortName": "Glazier",
+        "cardCode": "BLD-23",
         "category": "production",
         "tier": 3,
         "summary": "Sand plus heavy fuel into glass. Hot, hungry and profitable.",
@@ -3357,6 +3415,7 @@ window.GAME_DATA = {
         "id": "blacksmith",
         "name": "Blacksmith",
         "shortName": "Smithy",
+        "cardCode": "BLD-24",
         "category": "production",
         "tier": 2,
         "summary": "Where every tool in the game is made and repaired.",
@@ -3392,6 +3451,7 @@ window.GAME_DATA = {
         "id": "carpenter",
         "name": "Carpenter's Shop",
         "shortName": "Joinery",
+        "cardCode": "BLD-25",
         "category": "production",
         "tier": 2,
         "summary": "Wooden equipment: ploughs, looms, wheels, barrels, crates.",
@@ -3420,6 +3480,7 @@ window.GAME_DATA = {
         "id": "weaver",
         "name": "Weaver's Shed",
         "shortName": "Weaver",
+        "cardCode": "BLD-26",
         "category": "production",
         "tier": 2,
         "summary": "Houses spinning wheels and looms. Fibre in, cloth out.",
@@ -3447,6 +3508,7 @@ window.GAME_DATA = {
       {
         "id": "tannery",
         "name": "Tannery",
+        "cardCode": "BLD-27",
         "category": "production",
         "tier": 2,
         "summary": "Hide plus water into leather. Nobody wants it upwind of the town.",
@@ -3472,6 +3534,7 @@ window.GAME_DATA = {
       {
         "id": "tailor",
         "name": "Tailor",
+        "cardCode": "BLD-28",
         "category": "production",
         "tier": 3,
         "summary": "Cloth and leather into clothing and light armour.",
@@ -3495,6 +3558,7 @@ window.GAME_DATA = {
       {
         "id": "mill",
         "name": "Mill",
+        "cardCode": "BLD-29",
         "category": "production",
         "tier": 1,
         "summary": "Grain into flour. Free extra output on a hills tile or a waterside one (wind and water).",
@@ -3520,6 +3584,7 @@ window.GAME_DATA = {
       {
         "id": "bakery",
         "name": "Bakery",
+        "cardCode": "BLD-30",
         "category": "production",
         "tier": 2,
         "summary": "Flour, water and fuel into bread - the most efficient food in the game.",
@@ -3541,6 +3606,7 @@ window.GAME_DATA = {
       {
         "id": "butcher",
         "name": "Butcher",
+        "cardCode": "BLD-31",
         "category": "production",
         "tier": 1,
         "summary": "Livestock into meat and hide. Salt on hand turns meat into salted meat.",
@@ -3562,6 +3628,7 @@ window.GAME_DATA = {
       {
         "id": "dairy",
         "name": "Dairy",
+        "cardCode": "BLD-32",
         "category": "production",
         "tier": 2,
         "summary": "Milk into cheese, which unlike milk keeps.",
@@ -3583,6 +3650,7 @@ window.GAME_DATA = {
       {
         "id": "brewery",
         "name": "Brewery",
+        "cardCode": "BLD-33",
         "category": "production",
         "tier": 2,
         "summary": "Grain or honey, water and a barrel into ale or mead.",
@@ -3609,6 +3677,7 @@ window.GAME_DATA = {
       {
         "id": "winery",
         "name": "Winery",
+        "cardCode": "BLD-34",
         "category": "production",
         "tier": 3,
         "summary": "Grapes, water and a barrel into wine. Must be built on or beside a vineyard.",
@@ -3636,6 +3705,7 @@ window.GAME_DATA = {
         "id": "warehouse",
         "name": "Warehouse",
         "shortName": "Stores",
+        "cardCode": "BLD-35",
         "category": "storage",
         "tier": 2,
         "summary": "Twelve storage slots for anything. A prime target for thieves.",
@@ -3659,6 +3729,7 @@ window.GAME_DATA = {
       {
         "id": "granary",
         "name": "Granary",
+        "cardCode": "BLD-36",
         "category": "storage",
         "tier": 1,
         "summary": "Ten slots for food and drink only - and food inside it does not perish.",
@@ -3687,6 +3758,7 @@ window.GAME_DATA = {
       {
         "id": "market",
         "name": "Market",
+        "cardCode": "BLD-37",
         "category": "civic",
         "tier": 1,
         "summary": "Lets a town buy from and sell to the board at the current price band.",
@@ -3706,6 +3778,7 @@ window.GAME_DATA = {
         "id": "trading-house",
         "name": "Trading House",
         "shortName": "Trader",
+        "cardCode": "BLD-38",
         "category": "civic",
         "tier": 3,
         "summary": "Removes the market spread for its owner in that town, and lets them trade with any player who has a merchant or trading house connected by a route.",
@@ -3735,6 +3808,7 @@ window.GAME_DATA = {
         "id": "town-hall",
         "name": "Town Hall",
         "shortName": "Town",
+        "cardCode": "BLD-39",
         "category": "civic",
         "tier": 2,
         "summary": "Founds a town on a tile and marks its stockpile. One per town, always the first thing placed.",
@@ -3759,6 +3833,7 @@ window.GAME_DATA = {
         "id": "guildhall",
         "name": "Guildhall",
         "shortName": "Guild",
+        "cardCode": "BLD-40",
         "category": "civic",
         "tier": 3,
         "summary": "Train a worker into a specialist here. One training per round.",
@@ -3784,6 +3859,7 @@ window.GAME_DATA = {
       {
         "id": "inn",
         "name": "Inn",
+        "cardCode": "BLD-41",
         "category": "civic",
         "tier": 2,
         "summary": "Rest, rumour and hired muscle. Serve drink to clear unrest; travellers rest here to heal; escorts are hired here; quests are heard here. The one building in the game that may stand outside a town.",
@@ -3848,6 +3924,7 @@ window.GAME_DATA = {
         "id": "infirmary",
         "name": "Infirmary",
         "shortName": "Hospice",
+        "cardCode": "BLD-42",
         "category": "civic",
         "tier": 2,
         "summary": "Where the sick are tended and healers are trained. A town with a fed healer weathers illness cards that empty other towns.",
@@ -3874,6 +3951,7 @@ window.GAME_DATA = {
       {
         "id": "barracks",
         "name": "Barracks",
+        "cardCode": "BLD-43",
         "category": "military",
         "tier": 2,
         "summary": "Turns fed workers into soldiers, and holds them without them costing you effort.",
@@ -3897,6 +3975,7 @@ window.GAME_DATA = {
         "id": "watchtower",
         "name": "Watchtower",
         "shortName": "Tower",
+        "cardCode": "BLD-44",
         "category": "military",
         "tier": 2,
         "summary": "Cancels one theft or raid event per game against the town it stands in, and reveals adjacent face-down tiles.",
@@ -3918,6 +3997,7 @@ window.GAME_DATA = {
       {
         "id": "palisade",
         "name": "Palisade",
+        "cardCode": "BLD-45",
         "category": "military",
         "tier": 1,
         "summary": "Defenders in this town roll one extra combat die.",
@@ -3936,6 +4016,7 @@ window.GAME_DATA = {
         "id": "alchemist",
         "name": "Alchemist",
         "shortName": "Alchemy",
+        "cardCode": "BLD-46",
         "category": "arcane",
         "tier": 3,
         "summary": "Brews potions from foraged ingredients and mana crystals. Needs an alembic.",
@@ -3962,6 +4043,7 @@ window.GAME_DATA = {
       {
         "id": "shrine",
         "name": "Shrine",
+        "cardCode": "BLD-47",
         "category": "arcane",
         "tier": 2,
         "summary": "Once per round, re-roll one effort die in this town.",
@@ -4051,6 +4133,7 @@ window.GAME_DATA = {
       {
         "id": "harbour",
         "name": "Harbour",
+        "cardCode": "BLD-48",
         "category": "infrastructure",
         "tier": 3,
         "summary": "Lets ships load and unload. Sea routes are slow to set up and very cheap to run.",
@@ -4080,6 +4163,7 @@ window.GAME_DATA = {
         "id": "rail-depot",
         "name": "Rail Depot",
         "shortName": "Depot",
+        "cardCode": "BLD-49",
         "category": "infrastructure",
         "tier": 3,
         "summary": "The point where a town joins the rail network. Trains can only load here.",
@@ -4605,6 +4689,24 @@ window.GAME_DATA = {
             "qty": 2
           }
         ]
+      },
+      {
+        "id": "angle-fish",
+        "name": "Angle for Fish",
+        "category": "extraction",
+        "site": {
+          "waterside": "any"
+        },
+        "tool": "fishing-line",
+        "effortHours": 2,
+        "inputs": [],
+        "outputs": [
+          {
+            "commodity": "fish",
+            "qty": 1
+          }
+        ],
+        "notes": "Half a net's catch for the same two hours, and it is the ONLY food in the game that needs nothing built first - no dock, no boat, no field, no herd. That is the whole trade: a net feeds a town and a line feeds whoever is holding it. The first recipe in the game sited on `waterside` alone (terrain.json siting.waterside), which is to say you stand on the land and the fish are in the water beside you - the same relationship the sand pit and the well already use, and it needs no new ground and no map redrawn to be true somewhere."
       },
       {
         "id": "hunt-game",
@@ -6623,7 +6725,7 @@ window.GAME_DATA = {
       {
         "id": "fish",
         "name": "Fishing Ground",
-        "summary": "A dock built on an adjacent land tile may net fish here."
+        "summary": "A dock built on an adjacent land tile may net fish here. A figure standing on any land tile beside it may angle for fish with a rod and line instead, at half the rate and with nothing built at all - see tools.json fishing-line."
       },
       {
         "id": "game",
@@ -6687,6 +6789,7 @@ window.GAME_DATA = {
         "grants": [
           "fresh water without a well, beside a river or a lake",
           "a dock, and the fishing on the water tile it reaches (features fish)",
+          "a line fished straight off the bank, with no dock and no boat - the only food in the game that needs nothing built (recipes.json angle-fish)",
           "a harbour, beside the sea, and the shipping that comes with it",
           "water power: a mill or a sawmill on a waterside tile takes the bonus its own line names"
         ],
@@ -9578,32 +9681,6 @@ window.GAME_DATA = {
         "wear": 6
       },
       {
-        "id": "quiver",
-        "name": "Quiver of Arrows",
-        "class": "gear",
-        "slot": "belt",
-        "madeAt": "carpenter",
-        "inputs": [
-          {
-            "commodity": "lumber",
-            "qty": 1
-          },
-          {
-            "commodity": "leather",
-            "qty": 1
-          }
-        ],
-        "effortHours": 2,
-        "baseValue": 30,
-        "massKg": 1,
-        "effects": [
-          "Holds 3 uses. Each battle with a bow or a crossbow spends 1.",
-          "The uses ARE the wear: an empty quiver is a spent quiver."
-        ],
-        "uses": 3,
-        "wear": 3
-      },
-      {
         "id": "sling",
         "name": "Sling",
         "class": "weapon",
@@ -9990,6 +10067,34 @@ window.GAME_DATA = {
           "Re-roll one discovery roll per round, and keep the second.",
           "Wears 1 per use. Ground glass in a leather tube does not care for a road."
         ]
+      },
+      {
+        "id": "quiver",
+        "name": "Quiver of Arrows",
+        "class": "gear",
+        "cardCode": "ITM-09",
+        "slot": "belt",
+        "madeAt": "carpenter",
+        "inputs": [
+          {
+            "commodity": "lumber",
+            "qty": 1
+          },
+          {
+            "commodity": "leather",
+            "qty": 1
+          }
+        ],
+        "effortHours": 2,
+        "baseValue": 30,
+        "massKg": 1,
+        "story": "Stiffened hide over a light wooden former, worn on the belt where the hand falls without looking. The arrows are the cheap part and always were: any village can fletch them, and every archer still counts them twice before a fight and once after it.",
+        "effects": [
+          "Holds 3 uses. Each battle with a bow or a crossbow spends 1.",
+          "The uses ARE the wear: an empty quiver is a spent quiver."
+        ],
+        "uses": 3,
+        "wear": 3
       },
       {
         "id": "potion-vigour",
@@ -12950,7 +13055,14 @@ window.GAME_DATA = {
         "$wearNote": "How much work is left in a thing before it is finished - items.json wear, tools.json baseWear. This note used to say the opposite of what it says now: that W was the one printed maximum in the game with no track under it and never would get one, because wear ran past twenty and the board stops at fourteen. There are four tracks under it now, one against each kit slot (data/playerboard.json), and wear runs to fourteen. The number came down to meet the board, which is how this game has always settled that argument - it is what the kilogram did when a hero could not stand their own load on the ladder.",
         "$armourNote": "What a figure adds to its side of the battle roll besides its own strength, and it is CARD-ONLY: no token walks it, because it does not move. A monster prints it. A character does not - a character's armour is the gear in the kit slots and changes every time they put something down - so it is the one number on a monster card with no track under it, and the ceiling sweep leaves it alone for exactly that reason (playerboard.json ceiling.$notWalked).",
         "$defenceNote": "There is no D any more. Defence was a rating that shifted a to-hit roll, and there is no to-hit roll: a battle is one opposed total (rules.json conflict.battle), in which a number that makes you harder to hit and a number that soaks the hit are the same number. It is called armour and it is above.",
-        "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so."
+        "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so.",
+        "build": "B",
+        "rounds": "R",
+        "jobs": "J",
+        "lodging": "L",
+        "goods": "G",
+        "victory": "V",
+        "$buildingNote": "The six a BUILDINGS card prints, and every one of them is card-only: a building does not walk anything. That is not the exception the armour note describes, it is the same rule read the other way - a token walks a number that CHANGES, and none of these does. A hut houses one worker on the round it is raised and on the last round of the game.\n\nB and R are on all fifty-two and are the pair a player actually spends: the effort to raise it, and the rounds it cannot be finished in however much effort is thrown at it. J, L, G and V are printed only where the building has them, which is why no card comes near the six-cell ceiling - the manor is the widest at four.\n\nThe letters were chosen against the board rather than for the word. Housing is L for lodging because H is the health track; storage is G for goods because S is strength. A card that printed H for housing would have a player looking for a health track to walk a building up, which is exactly the confusion statStrip.letters exists to prevent - and the check below fails the build on it rather than trusting this note."
       }
     },
     "storyRail": {
@@ -13400,6 +13512,30 @@ window.GAME_DATA = {
           "motif": "socket",
           "ink": "verdigris"
         }
+      },
+      {
+        "$comment": "A REFERENCE deck, and the first one in the game. Every other deck here is a thing you hold INSTEAD of a piece; this one is a thing you hold AS WELL AS one. The building on the board is the tile - that is the piece, and it says where the building stands in relation to everything else, which is the one thing a card in a hand cannot say. What the tile cannot do is be read: it is 17 mm across, the picture is cut to a clump of hexagons, and the numbers were deliberately kept off it (buildingtiles.json - no tile carries a number, same rule and same reason as the cards). So the card carries what the tile had to drop, and the tile keeps the position. Neither replaces the other and the pair is the point.\n\nIt is dealt from data/buildings.json, which is why nothing here says what a building is.",
+        "prefix": "BLD",
+        "plateId": "tile-{id}",
+        "plateKind": "borrowed",
+        "$plateKindNote": "BORROWED, which is a third kind and needed to be. A drawn plate has an artist and a brief; a generated one has a tool and a data block; a borrowed one has NEITHER, because the picture it wants has already been commissioned by another line and is sitting on disk. tile-{id} is the building tile's own plate, and this deck shows the same page through a bigger window.\n\nThat is the whole reason a player wants the card. A tile is cut to one to four hexagons, so a good third of the drawn page is thrown away by the die and more of it disappears under the name band - the artist is told as much, in the WINDOW and LABEL BAND blocks build-prompts writes into every tile brief. The card is where the rest of that page finally gets looked at.\n\nSo `minting` is false, and that is a statement rather than a shrug: these plates ARE being chased, by the buildingtiles line, and a subject chased down two lines at once is a subject two people draw. The queue counts each page once, where it was commissioned.",
+        "plateFormat": "the tile's own, derived from its footprint",
+        "$plateFormatNote": "Not one page for the deck, and it is the only deck of which that is true. Every other deck draws on one shape because it commissions its own plates; this one takes whatever page the footprint asked for, which is square for a single hex and landscape for a pair. The card window does not care - a crop is a crop, and docs/art/framing.json aims each plate individually - but nothing may assume a deck aspect here, which is why the format is a sentence rather than one of the values draw.sizeByFormat is keyed by.",
+        "storyPanel": false,
+        "$storyPanelNote": "No flavour panel, and the picture takes the room it was using. Two reasons, and the second is the one that decided it. Five of the fifty-two buildings carry `notes` and the other forty-seven would have dealt with an empty band across the bottom - and a deck that prints a panel it cannot fill has a hole in it, not a feature. Then the deck's whole purpose is the artwork the tile had to cut, so height spent on flavour is height spent against the one thing the card is for. The five that do have notes print them as the last line of the rules text, where they are read rather than admired.",
+        "minting": false,
+        "id": "buildings",
+        "name": "Buildings",
+        "source": "buildings.json",
+        "sourceFilter": {
+          "not": "perTile"
+        },
+        "filter": "every building except the per-tile works - road, rail and bridge. Those are laid ALONG a route rather than placed on a cell and are already a piece of their own (tokens.route), which is why data/buildingtiles.json subjects.excludes cuts no tile for them; a deck that borrows tile plates has nothing to deal them from, and says so with the same word rather than by three buildings quietly going uncoded.",
+        "back": {
+          "word": "BUILDINGS",
+          "motif": "bond",
+          "ink": "oxide"
+        }
       }
     ],
     "back": {
@@ -13427,7 +13563,9 @@ window.GAME_DATA = {
         "$mailNote": "ARMOUR. Five rings of a hauberk interlocked on the cross - one at the centre and one at each quarter, set just close enough to overlap. It is the only motif in the set built out of REPEATS rather than out of one figure, which is precisely the point: mail is a thing made of twenty thousand identical small pieces, and at roundel size that is what it should look like. Symmetric top to bottom by construction, like everything else here.",
         "mail": "M12 9.1a2.9 2.9 0 1 0 .001 0zM12 3.9a2.9 2.9 0 1 0 .001 0zM12 14.3a2.9 2.9 0 1 0 .001 0zM6.8 9.1a2.9 2.9 0 1 0 .001 0zM17.2 9.1a2.9 2.9 0 1 0 .001 0z",
         "$compassNote": "The compass is the one motif drawn to the edge of the grid. The rose keeps the 2.4 margin the others stop at; the bezel sits outside it, so the cardinal points meet the rim rather than stopping short of it.",
-        "compass": "M12 0.6a11.4 11.4 0 1 0 .001 0zM21.6 12 14.96 13.22 16.17 16.17 13.22 14.96 12 21.6 10.78 14.96 7.83 16.17 9.04 13.22 2.4 12 9.04 10.78 7.83 7.83 10.78 9.04 12 2.4 13.22 9.04 16.17 7.83 14.96 10.78Z"
+        "compass": "M12 0.6a11.4 11.4 0 1 0 .001 0zM21.6 12 14.96 13.22 16.17 16.17 13.22 14.96 12 21.6 10.78 14.96 7.83 16.17 9.04 13.22 2.4 12 9.04 10.78 7.83 7.83 10.78 9.04 12 2.4 13.22 9.04 16.17 7.83 14.96 10.78Z",
+        "$bondNote": "BUILDINGS. Four courses of masonry in stretcher bond, the perpends of one course falling on the middle of the stretchers above and below it. Built out of REPEATS rather than out of one figure, like the mail, and for the same reason: a wall is a thing made of many identical small pieces, and at roundel size that is what it should look like. It is symmetric about BOTH axes by construction - the courses mirror top to bottom about the centre line, which is what the back needs, and the perpends mirror left to right, which costs nothing and makes the bond read as bond rather than as a stagger that ran out.",
+        "bond": "M2.8 3.6H21.2M2.8 9.2H21.2M2.8 14.8H21.2M2.8 20.4H21.2M8.4 3.6V9.2M15.6 3.6V9.2M5.2 9.2V14.8M12 9.2V14.8M18.8 9.2V14.8M8.4 14.8V20.4M15.6 14.8V20.4"
       }
     },
     "tokens": {
@@ -13694,8 +13832,10 @@ window.GAME_DATA = {
         "gapPerHeight": 0.055,
         "$gapNote": "Mitre clearance, so two segments never quite touch at a corner. Without it a filled 8 is a solid block - and at 0.05 of the height it very nearly still is. The thickness came down from 0.17 for the same reason: proofed at true size (node tools/ledger-proof.mjs) a 0.17 bar in a 4.9 mm figure is almost square, and ten of them in a row read as a line of rosettes rather than as numbers. The enlargement looked fine throughout, which is exactly why the proof prints a millimetre ruler.",
         "digitGapPerHeight": 0.16,
-        "outlineStrokeMm": 0.24,
-        "$outlineNote": "Hairline, and above the 0.15 mm print floor in palette.json rules.printSafety. It has to be light enough that a filled segment reads as filled rather than as outlined."
+        "outlineStrokeMm": 0.15,
+        "$outlineNote": "Hairline, and it is now EXACTLY the 0.15 mm print floor in palette.json rules.printSafety - the lightest line this sheet is allowed to print and still have it survive an uncoated press. It came down from 0.24 because a figure on this sheet is not a number, it is the GUIDE for a number somebody else is about to put there: what the player writes has to be the loudest thing in the cell, and an outline that competes with the graphite is an outline drawn too dark. It cannot go lower - below the floor the line drops out in patches and a broken guide is worse than a heavy one - so the rest of the reduction is carried by outlineOpacity below.",
+        "outlineOpacity": 0.25,
+        "$outlineOpacityNote": "How much ink the guide actually lays down, and it is DECLARED because it was hardcoded twice and had already drifted: tools/build-ledger.mjs drew the sheet at 0.85 and tools/ledger-proof.mjs drew the proof at 0.9, so the one tool whose entire job is to show the artefact at true size was showing it darker than it prints. Two copies of a number is a promise they will disagree.\n\n0.25 against the 12% minimum tint in palette.json rules.printSafety, so it is twice the floor and in no danger of dropping out. Stroke and tint together take the guide from 0.204 mm of ink per unit length to 0.037 - about a fifth of what it was - which is the difference between a figure that reads as printed and one that reads as ruled feint, the way the blue line on ledger paper does.\n\nIt is the OUTLINE's opacity and nothing else's. On the proof sheet the filled segments stand for a player's pencil, and graphite is not printed ink: the proof strokes at this number and fills at its own, or it would show the sheet and the pencil fading together, which is the one thing that never happens in use."
       },
       "row": {
         "padMm": 0.8,

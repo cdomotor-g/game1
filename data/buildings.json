@@ -13,223 +13,223 @@
   ],
   "buildings": [
     {
-      "id": "hut", "name": "Hut", "category": "housing", "tier": 1,
+      "id": "hut", "name": "Hut", "cardCode": "BLD-01", "category": "housing", "tier": 1,
       "summary": "Four walls and a roof. Houses one worker.",
       "cost": [{ "commodity": "logs", "qty": 2 }], "buildPoints": 4, "minRounds": 1, "yard": "walls",
       "housing": 1, "workerSlots": 0, "terrain": ["grassland", "forest", "hills", "marsh", "tundra"],
       "notes": "The cheapest way to add a worker, and the first thing every player builds."
     },
     {
-      "id": "timber-house", "name": "Timber House", "shortName": "Cottage", "category": "housing", "tier": 2,
+      "id": "timber-house", "name": "Timber House", "shortName": "Cottage", "cardCode": "BLD-02", "category": "housing", "tier": 2,
       "summary": "A proper house of sawn lumber. Houses two workers.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 10, "minRounds": 2, "yard": "walls",
       "housing": 2, "workerSlots": 0, "terrain": ["grassland", "forest", "hills", "tundra"]
     },
     {
-      "id": "brick-house", "name": "Brick House", "shortName": "Terrace", "category": "housing", "tier": 3,
+      "id": "brick-house", "name": "Brick House", "shortName": "Terrace", "cardCode": "BLD-03", "category": "housing", "tier": 3,
       "summary": "Houses three workers, and they are warm: brick-housed workers ignore Cold Snap events.",
       "cost": [{ "commodity": "brick", "qty": 6 }, { "commodity": "lumber", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "buildPoints": 18, "minRounds": 3, "yard": "walls",
       "housing": 3, "workerSlots": 0, "terrain": ["grassland", "hills", "tundra", "desert"]
     },
     {
-      "id": "manor", "name": "Manor", "category": "housing", "tier": 4,
+      "id": "manor", "name": "Manor", "cardCode": "BLD-04", "category": "housing", "tier": 4,
       "summary": "Houses four workers and one specialist, and scores at game end.",
       "cost": [{ "commodity": "brick", "qty": 8 }, { "commodity": "stone", "qty": 4 }, { "commodity": "glass", "qty": 2 }, { "commodity": "fine-cloth", "qty": 1 }], "buildPoints": 30, "minRounds": 4, "yard": "yard",
       "housing": 4, "specialistHousing": 1, "workerSlots": 0, "terrain": ["grassland", "hills"], "victoryPoints": 4
     },
 
     {
-      "id": "lumber-camp", "name": "Lumber Camp", "shortName": "Camp", "category": "extraction", "tier": 1,
+      "id": "lumber-camp", "name": "Lumber Camp", "shortName": "Camp", "cardCode": "BLD-05", "category": "extraction", "tier": 1,
       "summary": "Lets you fell trees on any forest tile within 1 tile, and stores logs on site.",
       "cost": [{ "commodity": "logs", "qty": 3 }], "buildPoints": 6, "minRounds": 1, "yard": "works",
       "workerSlots": 3, "storage": 4, "terrain": ["forest"]
     },
     {
-      "id": "quarry", "name": "Quarry", "category": "extraction", "tier": 1,
+      "id": "quarry", "name": "Quarry", "cardCode": "BLD-06", "category": "extraction", "tier": 1,
       "summary": "Cuts stone out of hills and mountains.",
       "cost": [{ "commodity": "logs", "qty": 3 }], "buildPoints": 8, "minRounds": 2, "yard": "works",
       "workerSlots": 4, "terrain": ["hills", "mountain"]
     },
     {
-      "id": "clay-pit", "name": "Clay Pit", "category": "extraction", "tier": 1,
+      "id": "clay-pit", "name": "Clay Pit", "cardCode": "BLD-07", "category": "extraction", "tier": 1,
       "summary": "Digs clay from marshes, river banks and wet ground.",
       "cost": [{ "commodity": "logs", "qty": 2 }], "buildPoints": 5, "minRounds": 1, "yard": "works",
       "workerSlots": 3, "terrain": ["marsh", "grassland"], "requiresDeposit": "clay-bed"
     },
     {
-      "id": "sand-pit", "name": "Sand Pit", "category": "extraction", "tier": 1,
+      "id": "sand-pit", "name": "Sand Pit", "cardCode": "BLD-08", "category": "extraction", "tier": 1,
       "summary": "Sand for glass.",
       "cost": [{ "commodity": "logs", "qty": 2 }], "buildPoints": 5, "minRounds": 1, "yard": "works",
       "workerSlots": 3, "terrain": ["desert"], "orWaterside": "any",
       "$watersideNote": "Desert sand, OR the sand any water leaves on its bank - a sea shore, a lake rim, a river bar. `orWaterside` is an alternative to the terrain list, the way recipes.json site.orWaterside is; `waterside` on its own (the dock, the harbour) is a requirement on top of it. This is the pair of keys the coast terrain used to hide: coast was in the list and meant both things at once."
     },
     {
-      "id": "mine", "name": "Mine", "category": "extraction", "tier": 2,
+      "id": "mine", "name": "Mine", "cardCode": "BLD-09", "category": "extraction", "tier": 2,
       "summary": "Built directly on top of a revealed mineral deposit. What it produces depends on the deposit under it.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "ironware", "qty": 1 }], "buildPoints": 14, "minRounds": 3, "yard": "yard",
       "workerSlots": 4, "terrain": ["hills", "mountain", "tundra", "desert", "grassland"], "requiresDepositAny": ["coal-seam", "iron-deposit", "copper-deposit", "gold-deposit", "gem-vein", "salt-dome"],
       "notes": "One mine per deposit. A deposit is exhausted after its yield total is drawn; flip the deposit token."
     },
     {
-      "id": "oil-derrick", "name": "Oil Derrick", "shortName": "Derrick", "category": "extraction", "tier": 4,
+      "id": "oil-derrick", "name": "Oil Derrick", "shortName": "Derrick", "cardCode": "BLD-10", "category": "extraction", "tier": 4,
       "summary": "Late-game. Pumps crude oil out of an oil field.",
       "cost": [{ "commodity": "steel", "qty": 4 }, { "commodity": "lumber", "qty": 4 }, { "commodity": "ironware", "qty": 2 }], "buildPoints": 26, "minRounds": 4, "yard": "works",
       "workerSlots": 3, "requiresDeposit": "oil-field"
     },
     {
-      "id": "well", "name": "Well", "category": "extraction", "tier": 1,
+      "id": "well", "name": "Well", "cardCode": "BLD-11", "category": "extraction", "tier": 1,
       "summary": "A town without a well or adjacent water cannot draw water at all.",
       "cost": [{ "commodity": "stone", "qty": 3 }], "buildPoints": 6, "minRounds": 1, "yard": "walls",
       "workerSlots": 1, "terrain": ["grassland", "forest", "hills", "desert", "tundra", "marsh"]
     },
     {
-      "id": "farm", "name": "Farm", "category": "extraction", "tier": 1,
+      "id": "farm", "name": "Farm", "cardCode": "BLD-12", "category": "extraction", "tier": 1,
       "summary": "Four field slots. Each slot holds one sown crop through its growth track.",
       "cost": [{ "commodity": "logs", "qty": 3 }], "buildPoints": 8, "minRounds": 2, "yard": "yard",
       "workerSlots": 4, "fieldSlots": 4, "terrain": ["grassland"]
     },
     {
-      "id": "pasture", "name": "Pasture", "category": "extraction", "tier": 1,
+      "id": "pasture", "name": "Pasture", "cardCode": "BLD-13", "category": "extraction", "tier": 1,
       "summary": "Holds livestock. Animals breed here and can be sheared, milked or butchered.",
       "cost": [{ "commodity": "logs", "qty": 3 }, { "commodity": "rope", "qty": 1 }], "buildPoints": 7, "minRounds": 1, "yard": "works",
       "workerSlots": 3, "livestockSlots": 6, "terrain": ["grassland", "hills", "tundra"]
     },
     {
-      "id": "orchard", "name": "Orchard", "category": "extraction", "tier": 2,
+      "id": "orchard", "name": "Orchard", "cardCode": "BLD-14", "category": "extraction", "tier": 2,
       "summary": "Takes three rounds to establish, then yields every round without re-sowing.",
       "cost": [{ "commodity": "logs", "qty": 2 }, { "commodity": "water", "qty": 2 }], "buildPoints": 10, "minRounds": 3, "yard": "works",
       "workerSlots": 2, "terrain": ["grassland", "hills"]
     },
     {
-      "id": "vineyard", "name": "Vineyard", "category": "extraction", "tier": 2,
+      "id": "vineyard", "name": "Vineyard", "cardCode": "BLD-15", "category": "extraction", "tier": 2,
       "summary": "Grapes only, and only on sun-facing ground.",
       "cost": [{ "commodity": "logs", "qty": 3 }, { "commodity": "water", "qty": 2 }], "buildPoints": 12, "minRounds": 3, "yard": "works",
       "workerSlots": 3, "terrain": ["hills", "grassland"]
     },
     {
-      "id": "apiary", "name": "Apiary", "category": "extraction", "tier": 1,
+      "id": "apiary", "name": "Apiary", "cardCode": "BLD-16", "category": "extraction", "tier": 1,
       "summary": "Bees. Honey for mead, and an orchard next door yields +1.",
       "cost": [{ "commodity": "lumber", "qty": 2 }], "buildPoints": 5, "minRounds": 1, "yard": "walls",
       "workerSlots": 1, "terrain": ["grassland", "forest", "hills"]
     },
     {
-      "id": "dock", "name": "Dock", "category": "extraction", "tier": 1,
+      "id": "dock", "name": "Dock", "cardCode": "BLD-17", "category": "extraction", "tier": 1,
       "summary": "Fishing, and the cheap end of water transport. Goes on any land the water reaches - a sea shore, a lake rim or a river bank all do.",
       "cost": [{ "commodity": "logs", "qty": 4 }, { "commodity": "rope", "qty": 1 }], "buildPoints": 8, "minRounds": 2, "yard": "walls",
       "workerSlots": 3, "waterside": "any"
     },
 
     {
-      "id": "sawmill", "name": "Sawmill", "category": "production", "tier": 1,
+      "id": "sawmill", "name": "Sawmill", "cardCode": "BLD-18", "category": "production", "tier": 1,
       "summary": "Logs into lumber. Doubles its rate on a waterside tile - water drives the saw.",
       "cost": [{ "commodity": "logs", "qty": 4 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 10, "minRounds": 2, "yard": "works",
       "workerSlots": 3, "terrain": ["forest", "grassland", "hills"]
     },
     {
-      "id": "charcoal-kiln", "name": "Charcoal Kiln", "shortName": "Hearth", "category": "production", "tier": 1,
+      "id": "charcoal-kiln", "name": "Charcoal Kiln", "shortName": "Hearth", "cardCode": "BLD-19", "category": "production", "tier": 1,
       "summary": "Logs into charcoal, for smelting where there is no coal.",
       "cost": [{ "commodity": "clay", "qty": 3 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 8, "minRounds": 2, "yard": "yard",
       "workerSlots": 2, "terrain": ["forest", "grassland", "hills"]
     },
     {
-      "id": "smelter", "name": "Smelter", "category": "production", "tier": 2,
+      "id": "smelter", "name": "Smelter", "cardCode": "BLD-20", "category": "production", "tier": 2,
       "summary": "Ore plus fuel into metal.",
       "cost": [{ "commodity": "stone", "qty": 6 }, { "commodity": "clay", "qty": 2 }, { "commodity": "lumber", "qty": 2 }], "buildPoints": 16, "minRounds": 3, "yard": "works",
       "workerSlots": 3, "terrain": ["hills", "grassland", "mountain"]
     },
     {
-      "id": "steelworks", "name": "Steelworks", "shortName": "Foundry", "category": "production", "tier": 3,
+      "id": "steelworks", "name": "Steelworks", "shortName": "Foundry", "cardCode": "BLD-21", "category": "production", "tier": 3,
       "summary": "The refinery. Pig iron plus coal into steel - and it only really works on coal.",
       "cost": [{ "commodity": "brick", "qty": 8 }, { "commodity": "stone", "qty": 4 }, { "commodity": "ironware", "qty": 2 }], "buildPoints": 26, "minRounds": 4, "yard": "works",
       "workerSlots": 4, "requiresBuilding": "smelter", "terrain": ["hills", "grassland"]
     },
     {
-      "id": "brickworks", "name": "Brickworks", "shortName": "Kiln", "category": "production", "tier": 2,
+      "id": "brickworks", "name": "Brickworks", "shortName": "Kiln", "cardCode": "BLD-22", "category": "production", "tier": 2,
       "summary": "Clay plus fuel into brick.",
       "cost": [{ "commodity": "stone", "qty": 4 }, { "commodity": "clay", "qty": 4 }, { "commodity": "lumber", "qty": 2 }], "buildPoints": 14, "minRounds": 3, "yard": "works",
       "workerSlots": 3, "terrain": ["grassland", "hills", "marsh"]
     },
     {
-      "id": "glassworks", "name": "Glassworks", "shortName": "Glazier", "category": "production", "tier": 3,
+      "id": "glassworks", "name": "Glassworks", "shortName": "Glazier", "cardCode": "BLD-23", "category": "production", "tier": 3,
       "summary": "Sand plus heavy fuel into glass. Hot, hungry and profitable.",
       "cost": [{ "commodity": "brick", "qty": 6 }, { "commodity": "stone", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "buildPoints": 22, "minRounds": 3, "yard": "works",
       "workerSlots": 3, "terrain": ["grassland", "hills", "desert"]
     },
     {
-      "id": "blacksmith", "name": "Blacksmith", "shortName": "Smithy", "category": "production", "tier": 2,
+      "id": "blacksmith", "name": "Blacksmith", "shortName": "Smithy", "cardCode": "BLD-24", "category": "production", "tier": 2,
       "summary": "Where every tool in the game is made and repaired.",
       "cost": [{ "commodity": "stone", "qty": 4 }, { "commodity": "lumber", "qty": 3 }, { "commodity": "clay", "qty": 1 }], "buildPoints": 14, "minRounds": 2, "yard": "yard",
       "workerSlots": 2, "specialist": "smith", "terrain": ["grassland", "forest", "hills", "tundra", "desert", "marsh"]
     },
     {
-      "id": "carpenter", "name": "Carpenter's Shop", "shortName": "Joinery", "category": "production", "tier": 2,
+      "id": "carpenter", "name": "Carpenter's Shop", "shortName": "Joinery", "cardCode": "BLD-25", "category": "production", "tier": 2,
       "summary": "Wooden equipment: ploughs, looms, wheels, barrels, crates.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 12, "minRounds": 2, "yard": "walls",
       "workerSlots": 2, "specialist": "carpenter", "terrain": ["grassland", "forest", "hills"]
     },
     {
-      "id": "weaver", "name": "Weaver's Shed", "shortName": "Weaver", "category": "production", "tier": 2,
+      "id": "weaver", "name": "Weaver's Shed", "shortName": "Weaver", "cardCode": "BLD-26", "category": "production", "tier": 2,
       "summary": "Houses spinning wheels and looms. Fibre in, cloth out.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 12, "minRounds": 2, "yard": "walls",
       "workerSlots": 3, "specialist": "weaver", "terrain": ["grassland", "forest", "hills"]
     },
     {
-      "id": "tannery", "name": "Tannery", "category": "production", "tier": 2,
+      "id": "tannery", "name": "Tannery", "cardCode": "BLD-27", "category": "production", "tier": 2,
       "summary": "Hide plus water into leather. Nobody wants it upwind of the town.",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 11, "minRounds": 2, "yard": "works",
       "workerSlots": 2, "terrain": ["grassland", "marsh"]
     },
     {
-      "id": "tailor", "name": "Tailor", "category": "production", "tier": 3,
+      "id": "tailor", "name": "Tailor", "cardCode": "BLD-28", "category": "production", "tier": 3,
       "summary": "Cloth and leather into clothing and light armour.",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "brick", "qty": 2 }], "buildPoints": 14, "minRounds": 2, "yard": "walls",
       "workerSlots": 2, "specialist": "tailor", "requiresBuilding": "weaver"
     },
     {
-      "id": "mill", "name": "Mill", "category": "production", "tier": 1,
+      "id": "mill", "name": "Mill", "cardCode": "BLD-29", "category": "production", "tier": 1,
       "summary": "Grain into flour. Free extra output on a hills tile or a waterside one (wind and water).",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 3 }], "buildPoints": 10, "minRounds": 2, "yard": "yard",
       "workerSlots": 2, "terrain": ["grassland", "hills"]
     },
     {
-      "id": "bakery", "name": "Bakery", "category": "production", "tier": 2,
+      "id": "bakery", "name": "Bakery", "cardCode": "BLD-30", "category": "production", "tier": 2,
       "summary": "Flour, water and fuel into bread - the most efficient food in the game.",
       "cost": [{ "commodity": "brick", "qty": 4 }, { "commodity": "lumber", "qty": 1 }], "buildPoints": 12, "minRounds": 2, "yard": "walls",
       "workerSlots": 2
     },
     {
-      "id": "butcher", "name": "Butcher", "category": "production", "tier": 1,
+      "id": "butcher", "name": "Butcher", "cardCode": "BLD-31", "category": "production", "tier": 1,
       "summary": "Livestock into meat and hide. Salt on hand turns meat into salted meat.",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 9, "minRounds": 2, "yard": "walls",
       "workerSlots": 2
     },
     {
-      "id": "dairy", "name": "Dairy", "category": "production", "tier": 2,
+      "id": "dairy", "name": "Dairy", "cardCode": "BLD-32", "category": "production", "tier": 2,
       "summary": "Milk into cheese, which unlike milk keeps.",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 11, "minRounds": 2, "yard": "walls",
       "workerSlots": 2
     },
     {
-      "id": "brewery", "name": "Brewery", "category": "production", "tier": 2,
+      "id": "brewery", "name": "Brewery", "cardCode": "BLD-33", "category": "production", "tier": 2,
       "summary": "Grain or honey, water and a barrel into ale or mead.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 2 }, { "commodity": "ironware", "qty": 1 }], "buildPoints": 15, "minRounds": 3, "yard": "yard",
       "workerSlots": 3, "specialist": "brewer"
     },
     {
-      "id": "winery", "name": "Winery", "category": "production", "tier": 3,
+      "id": "winery", "name": "Winery", "cardCode": "BLD-34", "category": "production", "tier": 3,
       "summary": "Grapes, water and a barrel into wine. Must be built on or beside a vineyard.",
       "cost": [{ "commodity": "stone", "qty": 4 }, { "commodity": "lumber", "qty": 3 }, { "commodity": "brick", "qty": 2 }], "buildPoints": 18, "minRounds": 3, "yard": "yard",
       "workerSlots": 3, "requiresBuilding": "vineyard"
     },
 
     {
-      "id": "warehouse", "name": "Warehouse", "shortName": "Stores", "category": "storage", "tier": 2,
+      "id": "warehouse", "name": "Warehouse", "shortName": "Stores", "cardCode": "BLD-35", "category": "storage", "tier": 2,
       "summary": "Twelve storage slots for anything. A prime target for thieves.",
       "cost": [{ "commodity": "lumber", "qty": 5 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 12, "minRounds": 2, "yard": "yard",
       "workerSlots": 1, "storage": 12, "theftTarget": true
     },
     {
-      "id": "granary", "name": "Granary", "category": "storage", "tier": 1,
+      "id": "granary", "name": "Granary", "cardCode": "BLD-36", "category": "storage", "tier": 1,
       "summary": "Ten slots for food and drink only - and food inside it does not perish.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 1 }], "buildPoints": 10, "minRounds": 2, "yard": "yard",
       "workerSlots": 1, "storage": 10, "storageFilter": ["food", "drink"], "theftTarget": true,
@@ -237,32 +237,32 @@
     },
 
     {
-      "id": "market", "name": "Market", "category": "civic", "tier": 1,
+      "id": "market", "name": "Market", "cardCode": "BLD-37", "category": "civic", "tier": 1,
       "summary": "Lets a town buy from and sell to the board at the current price band.",
       "cost": [{ "commodity": "logs", "qty": 4 }], "buildPoints": 8, "minRounds": 2, "yard": "yard",
       "workerSlots": 2,
       "notes": "Cheap on purpose. The market is the safety net: any player who has lost their tools can gather deadwood by hand, put up a stall, and buy a replacement."
     },
     {
-      "id": "trading-house", "name": "Trading House", "shortName": "Trader", "category": "civic", "tier": 3,
+      "id": "trading-house", "name": "Trading House", "shortName": "Trader", "cardCode": "BLD-38", "category": "civic", "tier": 3,
       "summary": "Removes the market spread for its owner in that town, and lets them trade with any player who has a merchant or trading house connected by a route.",
       "cost": [{ "commodity": "brick", "qty": 5 }, { "commodity": "lumber", "qty": 3 }, { "commodity": "parchment", "qty": 2 }], "buildPoints": 20, "minRounds": 3, "yard": "walls",
       "workerSlots": 2, "specialist": "merchant", "requiresBuilding": "market", "victoryPoints": 2
     },
     {
-      "id": "town-hall", "name": "Town Hall", "shortName": "Town", "category": "civic", "tier": 2,
+      "id": "town-hall", "name": "Town Hall", "shortName": "Town", "cardCode": "BLD-39", "category": "civic", "tier": 2,
       "summary": "Founds a town on a tile and marks its stockpile. One per town, always the first thing placed.",
       "cost": [{ "commodity": "logs", "qty": 4 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 10, "minRounds": 2, "yard": "walls",
       "workerSlots": 1, "storage": 6, "unique": "per-town"
     },
     {
-      "id": "guildhall", "name": "Guildhall", "shortName": "Guild", "category": "civic", "tier": 3,
+      "id": "guildhall", "name": "Guildhall", "shortName": "Guild", "cardCode": "BLD-40", "category": "civic", "tier": 3,
       "summary": "Train a worker into a specialist here. One training per round.",
       "cost": [{ "commodity": "brick", "qty": 4 }, { "commodity": "lumber", "qty": 4 }, { "commodity": "parchment", "qty": 1 }], "buildPoints": 18, "minRounds": 3, "yard": "walls",
       "workerSlots": 1
     },
     {
-      "id": "inn", "name": "Inn", "category": "civic", "tier": 2,
+      "id": "inn", "name": "Inn", "cardCode": "BLD-41", "category": "civic", "tier": 2,
       "summary": "Rest, rumour and hired muscle. Serve drink to clear unrest; travellers rest here to heal; escorts are hired here; quests are heard here. The one building in the game that may stand outside a town.",
       "cost": [{ "commodity": "lumber", "qty": 4 }, { "commodity": "stone", "qty": 2 }], "buildPoints": 12, "minRounds": 2, "yard": "yard",
       "workerSlots": 2,
@@ -292,39 +292,39 @@
     "notes": "Resting, hireling costs and rumours are in rules.json under rest and hirelings. Every settlement printed on a map is assumed to contain an inn of its rank - those are the board's, not any player's."
     },
     {
-      "id": "infirmary", "name": "Infirmary", "shortName": "Hospice", "category": "civic", "tier": 2,
+      "id": "infirmary", "name": "Infirmary", "shortName": "Hospice", "cardCode": "BLD-42", "category": "civic", "tier": 2,
       "summary": "Where the sick are tended and healers are trained. A town with a fed healer weathers illness cards that empty other towns.",
       "cost": [{ "commodity": "lumber", "qty": 3 }, { "commodity": "stone", "qty": 2 }, { "commodity": "parchment", "qty": 1 }], "buildPoints": 12, "minRounds": 2, "yard": "yard",
       "workerSlots": 1, "specialist": "healer"
     },
 
     {
-      "id": "barracks", "name": "Barracks", "category": "military", "tier": 2,
+      "id": "barracks", "name": "Barracks", "cardCode": "BLD-43", "category": "military", "tier": 2,
       "summary": "Turns fed workers into soldiers, and holds them without them costing you effort.",
       "cost": [{ "commodity": "lumber", "qty": 5 }, { "commodity": "stone", "qty": 3 }], "buildPoints": 16, "minRounds": 3, "yard": "yard",
       "workerSlots": 2, "garrison": 4
     },
     {
-      "id": "watchtower", "name": "Watchtower", "shortName": "Tower", "category": "military", "tier": 2,
+      "id": "watchtower", "name": "Watchtower", "shortName": "Tower", "cardCode": "BLD-44", "category": "military", "tier": 2,
       "summary": "Cancels one theft or raid event per game against the town it stands in, and reveals adjacent face-down tiles.",
       "cost": [{ "commodity": "stone", "qty": 5 }, { "commodity": "lumber", "qty": 2 }], "buildPoints": 14, "minRounds": 2, "yard": "walls",
       "workerSlots": 1
     },
     {
-      "id": "palisade", "name": "Palisade", "category": "military", "tier": 1,
+      "id": "palisade", "name": "Palisade", "cardCode": "BLD-45", "category": "military", "tier": 1,
       "summary": "Defenders in this town roll one extra combat die.",
       "cost": [{ "commodity": "logs", "qty": 6 }], "buildPoints": 10, "minRounds": 2, "yard": "walls",
       "workerSlots": 0
     },
 
     {
-      "id": "alchemist", "name": "Alchemist", "shortName": "Alchemy", "category": "arcane", "tier": 3,
+      "id": "alchemist", "name": "Alchemist", "shortName": "Alchemy", "cardCode": "BLD-46", "category": "arcane", "tier": 3,
       "summary": "Brews potions from foraged ingredients and mana crystals. Needs an alembic.",
       "cost": [{ "commodity": "brick", "qty": 3 }, { "commodity": "glass", "qty": 2 }, { "commodity": "parchment", "qty": 2 }], "buildPoints": 18, "minRounds": 3, "yard": "walls",
       "workerSlots": 2, "specialist": "alchemist"
     },
     {
-      "id": "shrine", "name": "Shrine", "category": "arcane", "tier": 2,
+      "id": "shrine", "name": "Shrine", "cardCode": "BLD-47", "category": "arcane", "tier": 2,
       "summary": "Once per round, re-roll one effort die in this town.",
       "cost": [{ "commodity": "stone", "qty": 4 }, { "commodity": "lumber", "qty": 1 }], "buildPoints": 10, "minRounds": 2, "yard": "walls",
       "workerSlots": 0, "victoryPoints": 1
@@ -349,13 +349,13 @@
       "terrain": ["shallow-water"]
     },
     {
-      "id": "harbour", "name": "Harbour", "category": "infrastructure", "tier": 3,
+      "id": "harbour", "name": "Harbour", "cardCode": "BLD-48", "category": "infrastructure", "tier": 3,
       "summary": "Lets ships load and unload. Sea routes are slow to set up and very cheap to run.",
       "cost": [{ "commodity": "stone", "qty": 6 }, { "commodity": "lumber", "qty": 6 }, { "commodity": "rope", "qty": 2 }], "buildPoints": 22, "minRounds": 3, "yard": "works",
       "workerSlots": 2, "waterside": "sea", "requiresBuilding": "dock", "victoryPoints": 2
     },
     {
-      "id": "rail-depot", "name": "Rail Depot", "shortName": "Depot", "category": "infrastructure", "tier": 3,
+      "id": "rail-depot", "name": "Rail Depot", "shortName": "Depot", "cardCode": "BLD-49", "category": "infrastructure", "tier": 3,
       "summary": "The point where a town joins the rail network. Trains can only load here.",
       "cost": [{ "commodity": "brick", "qty": 4 }, { "commodity": "steel", "qty": 2 }, { "commodity": "lumber", "qty": 2 }], "buildPoints": 18, "minRounds": 3, "yard": "works",
       "workerSlots": 2, "requiresBuilding": "rail"

@@ -157,6 +157,59 @@ for (const file of files) {
   console.log(`${name}: ${used.size} colours, all declared${offPalette.length ? ' (SEE ERRORS)' : ''}`);
 }
 
+/* ------------------------------------------------- the printable-ink floors
+ *
+ * THE FAINTEST THING THE GAME PRINTS, checked against the two floors that say
+ * how faint is too faint. palette.json rules.printSafety names both - a
+ * 0.15 mm line and a 12% tint - and until now they were prose in a style guide
+ * that nothing read.
+ *
+ * The ledger's seven-segment figures are what pushes on them. They are GUIDES:
+ * a hollow figure a player fills in with a pencil, deliberately drawn as light
+ * as a press can hold so that the graphite is the loudest thing in the cell.
+ * "As light as a press can hold" is a real edge, and the whole way to find it
+ * is to walk towards it - so the next person who wants the guides fainter still
+ * gets told where the wall is instead of shipping a sheet that prints in
+ * patches. A guide that drops out is worse than a guide that is too dark: a
+ * player can write over a heavy figure, and cannot write inside a missing one.
+ *
+ * Both floors, because the two are independent and either one alone lets a line
+ * disappear: a 0.15 mm rule at 4% tint is as absent as a 0.02 mm rule at full
+ * strength.
+ */
+const floorMm = Number((palette.rules?.printSafety?.minLineWeight ?? '').match(/([\d.]+)\s*mm/)?.[1]);
+const floorTint = Number((palette.rules?.printSafety?.minTint ?? '').match(/([\d.]+)\s*%/)?.[1]);
+const ledgerDigit = JSON.parse(readFileSync(join(ROOT, 'data/components.json'), 'utf8')).ledger?.digit;
+
+if (!Number.isFinite(floorMm) || !Number.isFinite(floorTint)) {
+  errors.push(
+    'palette.json rules.printSafety: could not read a millimetre out of minLineWeight or a ' +
+    'percentage out of minTint - the print floors are what the ledger guides are checked against, ' +
+    'so a floor nothing can parse is a check that silently passes'
+  );
+} else if (ledgerDigit) {
+  const stroke = ledgerDigit.outlineStrokeMm;
+  const tint = ledgerDigit.outlineOpacity * 100;
+  if (stroke < floorMm) {
+    errors.push(
+      `components.json ledger.digit.outlineStrokeMm is ${stroke}mm against the ${floorMm}mm floor in ` +
+      'palette.json rules.printSafety - the guide would break up on an uncoated press, and a figure ' +
+      'with a hole in it is not a figure anybody can fill in. Take the rest out of outlineOpacity instead'
+    );
+  }
+  if (tint < floorTint) {
+    errors.push(
+      `components.json ledger.digit.outlineOpacity is ${tint}% against the ${floorTint}% floor in ` +
+      'palette.json rules.printSafety - anything lighter drops out on uncoated stock, and the players ' +
+      'would be filling in figures that are not there'
+    );
+  }
+  console.log(
+    `ledger guides: ${stroke}mm at ${tint}% - floors are ${floorMm}mm and ${floorTint}%` +
+    `${stroke < floorMm || tint < floorTint ? ' (SEE ERRORS)' : ''}`
+  );
+}
+
 for (const w of warnings) console.warn(`warning  ${w}`);
 for (const e of errors) console.error(`error    ${e}`);
 console.log(`\n${errors.length} error(s), ${warnings.length} warning(s)`);

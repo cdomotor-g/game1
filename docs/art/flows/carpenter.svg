@@ -85,22 +85,22 @@
 <line x1="524" y1="651.5" x2="548" y2="651.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
 <g class="f-token" data-kind="items" data-id="bow"><rect x="552" y="642.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="655" font-size="9" fill="#1A1714">Bow</text></g>
 <line x1="16" y1="688" x2="764" y2="688" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="694" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="706.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
-<text x="23" y="720" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
-<line x1="80.6" y1="703" x2="296" y2="724.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="727" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="739.5" font-size="9" fill="#1A1714">1 × Leather</text></g>
-<text x="23" y="753" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
-<line x1="85.46" y1="736" x2="296" y2="724.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="quiver"><rect x="300" y="706" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="720" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Quiver of Arrows</text><text x="410" y="732" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
-<line x1="524" y1="724.5" x2="548" y2="724.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="quiver"><rect x="552" y="715.5" width="91.76" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="728" font-size="9" fill="#1A1714">Quiver of Arrows</text></g>
-<line x1="16" y1="761" x2="764" y2="761" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="771.5" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="784" font-size="9" fill="#1A1714">1 × Lumber</text></g>
-<text x="23" y="797.5" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
-<line x1="80.6" y1="780.5" x2="296" y2="785.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="staff"><rect x="300" y="767" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="781" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Staff</text><text x="410" y="793" text-anchor="middle" font-size="8" fill="#3D3630">1h effort</text></g>
-<line x1="524" y1="785.5" x2="548" y2="785.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="staff"><rect x="552" y="776.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="789" font-size="9" fill="#1A1714">Staff</text></g>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="698.5" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="711" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="724.5" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="707.5" x2="296" y2="712.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="staff"><rect x="300" y="694" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="708" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Staff</text><text x="410" y="720" text-anchor="middle" font-size="8" fill="#3D3630">1h effort</text></g>
+<line x1="524" y1="712.5" x2="548" y2="712.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="staff"><rect x="552" y="703.5" width="40" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="716" font-size="9" fill="#1A1714">Staff</text></g>
+<line x1="16" y1="737" x2="764" y2="737" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="743" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="755.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
+<text x="23" y="769" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="752" x2="296" y2="773.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="leather"><rect x="16" y="776" width="67.46" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="788.5" font-size="9" fill="#1A1714">1 × Leather</text></g>
+<text x="23" y="802" font-size="7" fill="#5F564C" font-style="italic">from the Tannery</text>
+<line x1="85.46" y1="785" x2="296" y2="773.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="quiver"><rect x="300" y="755" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="769" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Quiver of Arrows</text><text x="410" y="781" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="773.5" x2="548" y2="773.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="quiver"><rect x="552" y="764.5" width="91.76" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="777" font-size="9" fill="#1A1714">Quiver of Arrows</text></g>
 <line x1="16" y1="810" x2="764" y2="810" stroke="#C0B7A9" stroke-width="0.6"/>
 <g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="816" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="828.5" font-size="9" fill="#1A1714">1 × Lumber</text></g>
 <text x="23" y="842" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>

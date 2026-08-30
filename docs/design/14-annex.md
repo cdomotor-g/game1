@@ -672,6 +672,7 @@ the W track beside its own kit slot. One point per **job**, never per hour: a wo
 | Scythe | blacksmith | 1 pig-iron + 1 lumber | 3 | 30 | 9 (optional) |
 | Plough | carpenter | 2 lumber + 1 ironware | 4 | 55 | 12 (optional) |
 | Fishing Net | weaver | 2 rope | 3 | 26 | 8 |
+| Fishing Line | blacksmith | 1 lumber + 1 rope + 1 ironware | 2 | 20 | 7 |
 | Spinning Wheel | carpenter | 2 lumber + 1 ironware | 4 | 48 | 12 |
 | Loom | carpenter | 3 lumber + 1 rope + 1 ironware | 6 | 70 | 14 |
 | Trowel | blacksmith | 1 pig-iron | 2 | 20 | 10 |
@@ -866,12 +867,12 @@ Kit that is not for fighting, wearing or drinking: rope, a hook, a bag, a glass.
 
 | Item | Made at | Inputs | Hours | Value | Mass | W | Effects |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Quiver of Arrows | carpenter | 1 lumber + 1 leather | 2 | 30 | 1 kg | 3 | Holds 3 uses. Each battle with a bow or a crossbow spends 1. The uses ARE the wear: an empty quiver is a spent quiver. |
 | Coil of Rope (ITM-01) | weaver | 2 rope | 2 | 18 | 2 kg | 6 | Hills and mountain cost the whole party 1 less to cross, minimum 1. A grappling hook is useless without one. Wears 1 for every leg it is used on, and 1 more for any fall it stops. |
 | Grappling Hook (ITM-04) | blacksmith | 1 ironware + 1 rope | 2 | 45 | 1.5 kg | 5 | With a coil of rope: cross one cliff, ravine or wall as though it were open ground, once per leg. Board a ship at sea, or get over a town wall without troubling the gate. Wears 1 per use, and 1 more on a d6 roll of 1 - a hook that skates does not come back the same shape. |
 | Bag (ITM-05) | tailor | 1 cloth | 1 | 12 | 0.3 kg | 4 | +2 kg to what the figure can shoulder (rules.json carrying) - which is eighty coin, and that is what it is for. Wears 1 for every leg it is carried full. |
 | Satchel (ITM-06) | tailor | 1 leather + 1 cloth | 2 | 40 | 0.6 kg | 5 | +4 kg to what the figure can shoulder. Name one item inside it when it is packed: that item is not lost when the figure falls at 0 health. Wears 1 for every leg it is carried full. |
 | Binoculars (ITM-08) | glassworks | 1 glass + 1 ironware + 1 leather | 4 | 130 | 0.75 kg | 3 | Look before you walk: reveal the terrain of any one hex up to three away, without entering it. +1 on survey rolls. Re-roll one discovery roll per round, and keep the second. Wears 1 per use. Ground glass in a leather tube does not care for a road. |
+| Quiver of Arrows (ITM-09) | carpenter | 1 lumber + 1 leather | 2 | 30 | 1 kg | 3 | Holds 3 uses. Each battle with a bow or a crossbow spends 1. The uses ARE the wear: an empty quiver is a spent quiver. |
 
 ### Potion
 

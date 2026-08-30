@@ -285,7 +285,10 @@ function digit(x, y) {
     vert(xL, yA, yG), vert(xR, yA, yG),
     vert(xL, yG, yD), vert(xR, yG, yD),
   ].map((d) => `<path d="${d}"/>`).join('');
-  return `<g fill="none" stroke="${SOOT}" stroke-width="${num(mm(L.digit.outlineStrokeMm))}" opacity="0.85">${paths}</g>`;
+  return (
+    `<g fill="none" stroke="${SOOT}" stroke-width="${num(mm(L.digit.outlineStrokeMm))}" ` +
+    `opacity="${L.digit.outlineOpacity}">${paths}</g>`
+  );
 }
 
 /* ------------------------------------------------------------- sheet pieces */

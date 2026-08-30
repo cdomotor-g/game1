@@ -65,7 +65,7 @@
     { "id": "trees-sparse", "name": "Scattered Trees", "summary": "2 tree tokens." },
     { "id": "stone", "name": "Exposed Stone", "summary": "A quarry may be built here." },
     { "id": "fresh-water", "name": "Fresh Water", "summary": "Draw water without a well." },
-    { "id": "fish", "name": "Fishing Ground", "summary": "A dock built on an adjacent land tile may net fish here." },
+    { "id": "fish", "name": "Fishing Ground", "summary": "A dock built on an adjacent land tile may net fish here. A figure standing on any land tile beside it may angle for fish with a rod and line instead, at half the rate and with nothing built at all - see tools.json fishing-line." },
     { "id": "game", "name": "Game", "summary": "Hunting is allowed on this tile." },
     { "id": "herbs", "name": "Herbs", "summary": "Arcane herbs may be harvested here." },
     { "id": "reeds", "name": "Reeds", "summary": "Counts as flax for rope-making, at 1 per 2 hours." },
@@ -89,6 +89,7 @@
       "grants": [
         "fresh water without a well, beside a river or a lake",
         "a dock, and the fishing on the water tile it reaches (features fish)",
+    "a line fished straight off the bank, with no dock and no boat - the only food in the game that needs nothing built (recipes.json angle-fish)",
         "a harbour, beside the sea, and the shipping that comes with it",
         "water power: a mill or a sawmill on a waterside tile takes the bonus its own line names"
       ],
