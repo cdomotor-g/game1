@@ -782,6 +782,58 @@
         0.1
       ],
       "note": "Blade tip to collar, both nibs, and the snaith to its butt. A tall narrow subject on a square page, so the crop brings paper either side. Focal on the collar where the tang is bolted. Drawn plate - measured off the picture."
+    },
+    "tile-quarry": {
+      "subject": [
+        0.01,
+        0.01,
+        0.98,
+        0.98
+      ],
+      "focal": [
+        0.64,
+        0.45
+      ],
+      "note": "The whole page. A triad window is 0.99 against a square plate, so the crop spends nothing and the tile keeps the ink edge to edge - the same answer the warehouse, granary and barracks got, and for the same reason. The DIE is the only thing that cuts: a triad keeps a wide band across the top and only the middle column below about 45%, so the spoil run in the lower left goes. That is the ground the brief already named as the band s to cover, so it costs nothing. The windlass at the derrick s foot is clipped where the right lobe falls away; the derrick, the slung block, the drilled face with its wedges and the barrow of chippings are all whole."
+    },
+    "tile-sand-pit": {
+      "subject": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "focal": [
+        0.22,
+        0.28
+      ],
+      "note": "The riddle with its screened heap and the leaning shovel, the barrow at the head of the plank run, and the pit between them. A pair window is 1.73 against a 3:2 page, so the full WIDTH is kept and 13.4% of the height goes. It is spent off the BOTTOM, not evenly: the focal sits on the riddle, which pulls the window to the top of the page, and that is the right answer here because the bottom of this plate is loose pit floor and the top carries both pieces of furniture that say sand pit rather than hole. Measured rather than guessed - off the bottom keeps 71.1% of the page ink against 70.3% even and 68.2% off the top, and holds the riddle at 100% and the barrow at 87% where a true even spend leaves the barrow at 38%. The band falls on the pit slope, which is sand and nothing else."
+    },
+    "tile-clay-pit": {
+      "subject": [
+        0,
+        0.12,
+        1,
+        0.8
+      ],
+      "focal": [
+        0.52,
+        0.52
+      ],
+      "note": "The pit and the standing water in it, with the clay drying on boards up to the left and the barrow on the ramp to the right. Deliberately NOT the even spend the sand pit gets. Wetness is the whole of what tells this tile from the sand pit at 37 mm, and on the even spend the die left the pool as a sliver in the bottom notch - the two pieces read the same. Dropped the window to a centre of 0.52: the water goes 69% to 78% of its area, and it is paid for out of the drying stack (74% to 66%) and the barrow (59% to 50%). The barrow is the right thing to spend, because a barrow on a plank run is exactly what the sand pit ALSO has - it carries no identifying weight here. The reeds survive whole at every setting, so the second wetness cue costs nothing."
+    },
+    "tile-lumber-camp": {
+      "subject": [
+        0.01,
+        0.01,
+        0.98,
+        0.98
+      ],
+      "focal": [
+        0.52,
+        0.32
+      ],
+      "note": "The whole page, for the quarry s reason - a triad window is 0.99 against a square plate and the crop spends nothing. The stacks, the shear legs with the chain and hook, and the lean-to with the crosscut saw all sit in the wide upper band the die keeps; the skid track runs down into the lower lobe under the name band, which is the ground the brief set aside for it. The axe standing in its stump is on the left edge and loses its haft to the cut - it is the one thing here drawn outside the safe box, and it survives as a recognisable axe head."
     }
   }
 }

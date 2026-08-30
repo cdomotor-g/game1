@@ -18031,6 +18031,21 @@ window.GAME_DATA = {
           0.645
         ]
       },
+      "tile-clay-pit": {
+        "file": "art/renders/tile-clay-pit.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0.12,
+          1,
+          0.8
+        ],
+        "focal": [
+          0.52,
+          0.52
+        ]
+      },
       "tile-granary": {
         "file": "art/renders/tile-granary.png",
         "width": 1328,
@@ -18061,6 +18076,21 @@ window.GAME_DATA = {
           0.43
         ]
       },
+      "tile-lumber-camp": {
+        "file": "art/renders/tile-lumber-camp.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.52,
+          0.32
+        ]
+      },
       "tile-manor": {
         "file": "art/renders/tile-manor.png",
         "width": 1536,
@@ -18074,6 +18104,36 @@ window.GAME_DATA = {
         "focal": [
           0.4425,
           0.45
+        ]
+      },
+      "tile-quarry": {
+        "file": "art/renders/tile-quarry.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.01,
+          0.01,
+          0.98,
+          0.98
+        ],
+        "focal": [
+          0.64,
+          0.45
+        ]
+      },
+      "tile-sand-pit": {
+        "file": "art/renders/tile-sand-pit.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focal": [
+          0.22,
+          0.28
         ]
       },
       "tile-timber-house": {
