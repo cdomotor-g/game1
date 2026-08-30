@@ -15,7 +15,7 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 61/81 · maps 1/1 · building tiles 5/54**
+**cards 61/81 · maps 1/1 · building tiles 6/54**
 
 > **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 61 of 81 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
@@ -119,19 +119,18 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**5 of 54 minted.** 0 waiting on a brief, 49 waiting on art, 0 waiting on frame.
+**6 of 54 minted.** 0 waiting on a brief, 48 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 49 tiles
+### 2 · DRAW — the artist — 48 tiles
 
-The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
+The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 797 px on the long side (a 67.5 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1594 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Tile | Category | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `brick-house` | Brick House | Housing | `tile-brick-house` | ✓ | · | · |
 | `manor` | Manor | Housing | `tile-manor` | ✓ | · | · |
 | `lumber-camp` | Lumber Camp | Extraction | `tile-lumber-camp` | ✓ | · | · |
 | `quarry` | Quarry | Extraction | `tile-quarry` | ✓ | · | · |
@@ -187,7 +186,7 @@ Nothing waiting.
 
 ### Minted
 
-5 tiles complete: `hut`, `timber-house`, `warehouse`, `granary`, `barracks`.
+6 tiles complete: `hut`, `timber-house`, `brick-house`, `warehouse`, `granary`, `barracks`.
 
 Every minted tile is fully aimed: a `subject` box, a `focal` point and a one-line `note`.
 

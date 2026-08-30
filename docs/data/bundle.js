@@ -18016,6 +18016,21 @@ window.GAME_DATA = {
           0.56
         ]
       },
+      "tile-brick-house": {
+        "file": "art/renders/tile-brick-house.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.146,
+          0.023,
+          0.831,
+          0.787
+        ],
+        "focal": [
+          0.342,
+          0.645
+        ]
+      },
       "tile-granary": {
         "file": "art/renders/tile-granary.png",
         "width": 1328,
