@@ -137,7 +137,7 @@ the bottom third, and the item sitting on it. Clear, quiet page above.
 
 ## item-coil-of-rope — Coil of Rope *(ITEMS deck · gear, carried, ITM-01)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-coil-of-rope.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-coil-of-rope.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -228,7 +228,7 @@ not a rule of thumb.)
 
 ## item-grappling-hook — Grappling Hook *(ITEMS deck · gear, carried, ITM-04)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-grappling-hook.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-grappling-hook.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -258,7 +258,7 @@ not a rule of thumb.)
 
 ## item-bag — Bag *(ITEMS deck · gear, belt, ITM-05)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-bag.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-bag.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -289,7 +289,7 @@ not a rule of thumb.)
 
 ## item-satchel — Satchel *(ITEMS deck · gear, back, ITM-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-satchel.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-satchel.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -320,7 +320,7 @@ not a rule of thumb.)
 
 ## item-travelling-cloak — Travelling Cloak *(ITEMS deck · clothing, back, ITM-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-travelling-cloak.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-travelling-cloak.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]

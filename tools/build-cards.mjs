@@ -248,15 +248,8 @@ function dieMarks() {
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const num = (n) => Number(n.toFixed(2));
 
-/** Greedy wrap by estimated glyph width — close enough for a serif at card size.
- *
- * Nothing wraps to no lines, and that is load-bearing rather than defensive:
- * `story` is optional across items.json - the potions, the talismans and the two
- * lights have never had one - and `String(undefined)` is the six-letter word
- * "undefined", which wraps, measures and typesets exactly like prose. The lantern
- * shipped with it set up its own story rail before anybody read the card. */
+/** Greedy wrap by estimated glyph width — close enough for a serif at card size. */
 function wrap(text, maxChars) {
-  if (text == null || text === '') return [];
   const words = String(text).split(/\s+/);
   const out = [];
   let line = '';
@@ -397,7 +390,7 @@ function deckGeometry(deck, deckDef) {
   if (deckDef?.storyRail) {
     const railH = FOOT - top;
     const chars = charsIn(railH, STORY.size);
-    const wrapped = deck.map((s) => wrap(s.story, chars).slice(0, RAIL.maxLines));
+    const wrapped = deck.map((s) => wrap(storyOf(s), chars).slice(0, RAIL.maxLines));
     const lines = Math.max(...wrapped.map((w) => w.length));
     const railW = lines * STORY.lead + RAIL.pad;
     const colW = PORTRAIT.w - railW - RAIL.gap;
@@ -457,7 +450,18 @@ function portraitCrop(spec, window) {
 /* --------------------------------------------------------------- the card */
 
 const factLines = (spec, colW) => (spec.facts || []).flatMap((f) => wrap(f, charsIn(colW, FACT.size)));
-const storyLines = (spec, chars) => wrap(spec.story, chars).slice(0, STORY.max);
+const storyLines = (spec, chars) => wrap(storyOf(spec), chars).slice(0, STORY.max);
+
+/* A card with no story gets an empty rail and a warning by name, never the word
+   `undefined` set in italics up its own edge. `wrap` stringifies whatever it is
+   handed, so a missing story used to typeset perfectly and read as a defect only
+   in the proof - which is where ITM-07 was caught, one look before it shipped. */
+const noStory = [];
+const storyOf = (spec) => {
+  if (typeof spec.story === 'string' && spec.story.trim()) return spec.story;
+  if (spec.code && !noStory.includes(spec.code)) noStory.push(spec.code);
+  return '';
+};
 
 /**
  * The story: a panel across the bottom, or a rail up the right-hand edge.
@@ -490,7 +494,7 @@ function storyRail(spec, geom) {
   }
 
   const R = geom.rail;
-  const lines = wrap(spec.story, R.chars).slice(0, R.lines);
+  const lines = wrap(storyOf(spec), R.chars).slice(0, R.lines);
   const tx = R.x + RAIL.pad + STORY.lead * 0.78;   // the first line's baseline
   return {
     wash: `<rect x="${num(R.x)}" y="${num(R.top)}" width="${num(TRIM.x + TRIM.w - R.x + 2)}" height="${num(TRIM.y + TRIM.h - R.top + 2)}" fill="${T12}" opacity="0.5"/>`,
@@ -1413,6 +1417,11 @@ wanted.set('print.html', print);
 if (unframed.length) {
   console.warn(`warning  no entry in docs/art/framing.json for ${[...new Set(unframed)].join(', ')} ` +
     '- those cards are framed on the middle of the plate, which is what framing.json exists to stop.');
+}
+
+if (noStory.length) {
+  console.warn(`warning  no story on ${noStory.join(', ')} - those cards print a blank rail. ` +
+    'The story belongs in that card\'s own data file, beside its name.');
 }
 
 if (checkOnly) {

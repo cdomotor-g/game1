@@ -51,7 +51,7 @@
     <text x="50" y="702" font-size="18" >1 leather · 4 h.</text>
   </g>
   <path d="M 433.5,168.8 V 702" stroke="#1A1714" stroke-width="1.2"/>
-  <g transform="translate(460.71 695.67) rotate(-90)" font-style="italic" fill="#3D3630">
+  <g transform="translate(460.71 702) rotate(-90)" font-style="italic" fill="#3D3630">
     <text x="0" y="0" font-size="16.5" >Two ground lenses in a brass tube, bound in leather against the</text>
     <text x="0" y="19.5" font-size="16.5" >weather it will certainly get. The guild that grinds them will not</text>
     <text x="0" y="39" font-size="16.5" >say how, and charges accordingly.</text>

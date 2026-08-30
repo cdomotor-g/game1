@@ -15,46 +15,28 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 66/81 · maps 1/1 · building tiles 24/54**
+**cards 81/81 · maps 1/1 · building tiles 34/54**
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 66 of 81 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 81 of 81 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
-> **Note.** buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 10 of 54 are under the 1289 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
+> **Note.** buildingtiles: every plate clears the 368 px floor (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 12 of 54 are under the 736 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
 
 
 ## Cards
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**66 of 81 minted.** 0 waiting on a brief, 15 waiting on art, 0 waiting on frame.
+**81 of 81 minted.** 0 waiting on a brief, 0 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 15 cards
+### 2 · DRAW — the artist
 
-The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
-
-| Code | Card | Deck | Plate | brief | plate | frame |
-| --- | --- | --- | --- | :-: | :-: | :-: |
-| `MOD-02` | Sweep Rig | Modifications | `modification-sweep-rig` | ✓ | · | · |
-| `MOD-03` | Copper Sheathing | Modifications | `modification-copper-sheathing` | ✓ | · | · |
-| `MOD-04` | Iron Ram | Modifications | `modification-iron-ram` | ✓ | · | · |
-| `MOD-05` | Storm Shutters | Modifications | `modification-storm-shutters` | ✓ | · | · |
-| `MOD-06` | Ice Runners | Modifications | `modification-ice-runners` | ✓ | · | · |
-| `MOD-07` | Compound Boiler | Modifications | `modification-compound-boiler` | ✓ | · | · |
-| `MOD-08` | Keelbound | Modifications | `modification-keelbound` | ✓ | · | · |
-| `MOD-09` | Fleetfoot Binding | Modifications | `modification-fleetfoot-binding` | ✓ | · | · |
-| `MOD-10` | Warded Hold | Modifications | `modification-warded-hold` | ✓ | · | · |
-| `MOD-11` | Salamander Grate | Modifications | `modification-salamander-grate` | ✓ | · | · |
-| `ITM-07` | Travelling Cloak | Items | `item-travelling-cloak` | ✓ | · | · |
-| `ITM-01` | Coil of Rope | Items | `item-coil-of-rope` | ✓ | · | · |
-| `ITM-04` | Grappling Hook | Items | `item-grappling-hook` | ✓ | · | · |
-| `ITM-05` | Bag | Items | `item-bag` | ✓ | · | · |
-| `ITM-06` | Satchel | Items | `item-satchel` | ✓ | · | · |
+Nothing waiting.
 
 ### 3 · FRAME — whoever accepts the plate
 
@@ -62,7 +44,7 @@ Nothing waiting.
 
 ### Minted
 
-66 cards complete: `CHR-01`, `CHR-02`, `CHR-03`, `CHR-04`, `CHR-05`, `CHR-06`, `CHR-07`, `CHR-08`, `VEH-01`, `VEH-02`, `VEH-03`, `VEH-04`, `VEH-05`, `VEH-06`, `VEH-07`, `VEH-08`, `VEH-09`, `VEH-10`, `VEH-11`, `VEH-12`, `VEH-13`, `VEH-14`, `VEH-15`, `VEH-16`, `VEH-17`, `MON-01`, `MON-02`, `MON-03`, `MON-04`, `MON-05`, `MON-06`, `MON-07`, `MON-08`, `MON-09`, `MON-10`, `MON-11`, `MON-12`, `MON-13`, `MON-14`, `TAL-01`, `TAL-02`, `TAL-03`, `TAL-04`, `TAL-05`, `TAL-06`, `MOD-01`, `ITM-08`, `ITM-03`, `ITM-02`, `WPN-01`, `WPN-02`, `WPN-04`, `WPN-03`, `WPN-05`, `WPN-06`, `WPN-07`, `ARM-01`, `ARM-04`, `ARM-05`, `ARM-02`, `ARM-03`, `TOL-01`, `TOL-02`, `TOL-03`, `TOL-04`, `TOL-05`.
+81 cards complete: `CHR-01`, `CHR-02`, `CHR-03`, `CHR-04`, `CHR-05`, `CHR-06`, `CHR-07`, `CHR-08`, `VEH-01`, `VEH-02`, `VEH-03`, `VEH-04`, `VEH-05`, `VEH-06`, `VEH-07`, `VEH-08`, `VEH-09`, `VEH-10`, `VEH-11`, `VEH-12`, `VEH-13`, `VEH-14`, `VEH-15`, `VEH-16`, `VEH-17`, `MON-01`, `MON-02`, `MON-03`, `MON-04`, `MON-05`, `MON-06`, `MON-07`, `MON-08`, `MON-09`, `MON-10`, `MON-11`, `MON-12`, `MON-13`, `MON-14`, `TAL-01`, `TAL-02`, `TAL-03`, `TAL-04`, `TAL-05`, `TAL-06`, `MOD-01`, `MOD-02`, `MOD-03`, `MOD-04`, `MOD-05`, `MOD-06`, `MOD-07`, `MOD-08`, `MOD-09`, `MOD-10`, `MOD-11`, `ITM-07`, `ITM-01`, `ITM-04`, `ITM-05`, `ITM-06`, `ITM-08`, `ITM-03`, `ITM-02`, `WPN-01`, `WPN-02`, `WPN-04`, `WPN-03`, `WPN-05`, `WPN-06`, `WPN-07`, `ARM-01`, `ARM-04`, `ARM-05`, `ARM-02`, `ARM-03`, `TOL-01`, `TOL-02`, `TOL-03`, `TOL-04`, `TOL-05`.
 
 38 of them are framed but have no `focal` point — they predate it and are not broken, they are just aimed at the middle of their subject box. Adding one is a two-number improvement: `character-chr-01`, `character-chr-02`, `character-chr-03`, `character-chr-04`, `character-chr-05`, `character-chr-06`, `character-chr-07`, `character-chr-08`, `vehicle-veh-01`, `vehicle-veh-02`, `vehicle-veh-03`, `vehicle-veh-04`, `vehicle-veh-05`, `vehicle-veh-06`, `vehicle-veh-07`, `vehicle-veh-08`, `vehicle-veh-09`, `vehicle-veh-10`, `vehicle-veh-11`, `vehicle-veh-12`, `vehicle-veh-13`, `vehicle-veh-14`, `vehicle-veh-15`, `vehicle-veh-16`, `vehicle-veh-17`, `monster-gravel-wyrm`, `monster-mire-strangler`, `monster-reef-serpent`, `monster-deepwater-maw`, `monster-rime-harpy`, `monster-dust-devil`, `monster-storm-roc`, `talisman-tal-01`, `talisman-tal-02`, `talisman-tal-03`, `talisman-tal-04`, `talisman-tal-05`, `talisman-tal-06`.
 
@@ -116,13 +98,13 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in [`docs/art/prompts/buildingtiles.md`](../prompts/buildingtiles.md), plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**24 of 54 minted.** 0 waiting on a brief, 30 waiting on art, 0 waiting on frame.
+**34 of 54 minted.** 0 waiting on a brief, 20 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 30 tiles
+### 2 · DRAW — the artist — 20 tiles
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 644 px on the long side (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1289 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -148,16 +130,6 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `inn` | Inn | Civic | `tile-inn` | ✓ | · | · |
 | `infirmary` | Infirmary | Civic | `tile-infirmary` | ✓ | · | · |
 | `watchtower` | Watchtower | Military | `tile-watchtower` | ✓ | · | · |
-| `palisade` | Palisade | Military | `tile-palisade` | ✓ | · | · |
-| `alchemist` | Alchemist | Arcane | `tile-alchemist` | ✓ | · | · |
-| `shrine` | Shrine | Arcane | `tile-shrine` | ✓ | · | · |
-| `harbour` | Harbour | Infrastructure | `tile-harbour` | ✓ | · | · |
-| `rail-depot` | Rail Depot | Infrastructure | `tile-rail-depot` | ✓ | · | · |
-| `crop-grain` | Grain Field | Fields | `tile-crop-grain` | ✓ | · | · |
-| `crop-vegetables` | Vegetables Field | Fields | `tile-crop-vegetables` | ✓ | · | · |
-| `crop-flax` | Flax Field | Fields | `tile-crop-flax` | ✓ | · | · |
-| `crop-cotton` | Cotton Field | Fields | `tile-crop-cotton` | ✓ | · | · |
-| `crop-hops` | Hops Field | Fields | `tile-crop-hops` | ✓ | · | · |
 
 ### 3 · FRAME — whoever accepts the plate
 
@@ -165,7 +137,7 @@ Nothing waiting.
 
 ### Minted
 
-24 tiles complete: `hut`, `timber-house`, `brick-house`, `manor`, `lumber-camp`, `quarry`, `clay-pit`, `sand-pit`, `mine`, `oil-derrick`, `well`, `farm`, `pasture`, `orchard`, `vineyard`, `apiary`, `dock`, `sawmill`, `charcoal-kiln`, `smelter`, `steelworks`, `warehouse`, `granary`, `barracks`.
+34 tiles complete: `hut`, `timber-house`, `brick-house`, `manor`, `lumber-camp`, `quarry`, `clay-pit`, `sand-pit`, `mine`, `oil-derrick`, `well`, `farm`, `pasture`, `orchard`, `vineyard`, `apiary`, `dock`, `sawmill`, `charcoal-kiln`, `smelter`, `steelworks`, `warehouse`, `granary`, `barracks`, `palisade`, `alchemist`, `shrine`, `harbour`, `rail-depot`, `crop-grain`, `crop-vegetables`, `crop-flax`, `crop-cotton`, `crop-hops`.
 
 Every minted tile is fully aimed: a `subject` box, a `focal` point and a one-line `note`.
 
