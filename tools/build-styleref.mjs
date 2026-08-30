@@ -20,6 +20,7 @@
  *   node tools/build-styleref.mjs --check   fail if it is missing or stale
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdtempSync, statSync, rmSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -38,6 +39,16 @@ const HEIGHT = PAD_TOP + HEAD + PLATE_BOX + 9 + CAPTION + GAP + BANNER + PAD_BOT
 const style = JSON.parse(readFileSync(join(ROOT, 'data/artstyle.json'), 'utf8'));
 const ex = style.exemplars;
 const OUT = join(ROOT, ex.sheet);
+/* What the sheet was drawn from, beside it - the repository's own frozenWording
+   convention. The sheet depends on the EXEMPLARS and the plates, not on the rest
+   of artstyle.json: checking the whole file's mtime made every edit to a negative
+   prompt report the sheet as stale, which trains people to ignore the check. */
+const SIG = OUT.replace(/\.png$/, '.txt');
+const signature = () => createHash('sha256')
+  .update(JSON.stringify(ex))
+  .update(ex.plates.map((p) => statSync(join(ROOT, 'docs/art/renders', `${p.plate}.png`)).size).join(','))
+  .digest('hex')
+  .slice(0, 16);
 
 /* Same search order as tools/card-proof.mjs, and the same reason: any
    Chromium-family browser that understands --headless --screenshot will do. */
@@ -68,11 +79,9 @@ if (CHECK) {
     console.error(`build-styleref --check: ${ex.sheet} is missing. Run: node tools/build-styleref.mjs`);
     process.exit(1);
   }
-  const sheet = statSync(OUT).mtimeMs;
-  const stale = ex.plates.filter((p) => statSync(join(ROOT, 'docs/art/renders', `${p.plate}.png`)).mtimeMs > sheet)
-    .concat(statSync(join(ROOT, 'data/artstyle.json')).mtimeMs > sheet ? [{ plate: 'data/artstyle.json' }] : []);
-  if (stale.length) {
-    console.error(`build-styleref --check: ${ex.sheet} is older than ${stale.map((s) => s.plate).join(', ')}. Run: node tools/build-styleref.mjs`);
+  const was = existsSync(SIG) ? readFileSync(SIG, 'utf8').trim() : '';
+  if (was !== signature()) {
+    console.error(`build-styleref --check: ${ex.sheet} was drawn from different exemplars. Run: node tools/build-styleref.mjs`);
     process.exit(1);
   }
   console.log(`build-styleref --check: ${ex.sheet} is current (${ex.plates.length} plates)`);
@@ -141,5 +150,6 @@ try {
   rmSync(scratch, { recursive: true, force: true });
 }
 
+writeFileSync(SIG, `${signature()}\n`);
 const kb = (statSync(OUT).size / 1024).toFixed(0);
 console.log(`build-styleref: wrote ${ex.sheet} (${kb} kB) — ${ex.plates.map((p) => p.plate).join(', ')}`);
