@@ -18061,6 +18061,21 @@ window.GAME_DATA = {
           0.43
         ]
       },
+      "tile-manor": {
+        "file": "art/renders/tile-manor.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.05,
+          0.01,
+          0.785,
+          0.96
+        ],
+        "focal": [
+          0.4425,
+          0.45
+        ]
+      },
       "tile-timber-house": {
         "file": "art/renders/tile-timber-house.png",
         "width": 1054,
