@@ -87,6 +87,16 @@
       ],
       "note": "Old Mother Keswick shelling into the bowl. The cat comes along below if there is room."
     },
+    "modification-storm-shutters": {
+      "subject": [0.04, 0.154, 0.93, 0.786],
+      "focal": [0.5, 0.42],
+      "note": "The three propped shutters, the open one showing its hide lining, its tacks and the tarred rope round the rebate, with the mallet and the keg. One per cent off the bottom takes the foot of the mallet head; the lining, which is the thing this card is actually selling, stays whole."
+    },
+    "modification-sweep-rig": {
+      "subject": [0.03, 0.1535, 0.95, 0.7765],
+      "focal": [0.55, 0.46],
+      "note": "The gooseneck pivot with its drawn pin, both spars end to end, the laced sail and all four crew handles. Nothing is spent: at 78% of the page height the rig clears the flat window's 80% ceiling, so the card and the thumbnail both keep it whole. The quiet deck above the upper spar is what bought that."
+    },
     "modification-warded-hold": {
       "subject": [0.03, 0.18, 0.94, 0.72],
       "focal": [0.5, 0.43],
@@ -458,10 +468,25 @@
       "focal": [0.42, 0.33],
       "note": "Both cylinders and the plainly different diameters that make it a compound, the receiver pipe and its lagging band between them, the crankshaft with its cranks, and the flywheel. A square plate against a near-square card window keeps the page, and the 5:4 thumbnail is the one that has to be paid: it holds 80% of the height and the ink wants 82%. The 2% is spent off the BOTTOM - the bedplate's lower lip and the shadow under it - rather than off the top, because the top is the two domed cylinder tops with their standpipes, and the difference between those two diameters is the whole of what the card says. The oil can and the long-spouted feeder on the bedplate survive at both windows."
     },
+    "modification-copper-sheathing": {
+      "subject": [0.05, 0.115, 0.92, 0.8335],
+      "focal": [0.42, 0.5],
+      "note": "The sheet stood on end at full height, the fanned stack behind it, the spilled keg and the shipwright's hammer. The standing sheet is the product and its height is the whole point of the picture, so the 6% the flat window cannot hold comes off the bottom: it spends the tin snips in the corner, which are a scale prop the card does not name. The ghosted hull may run to the margins."
+    },
     "modification-fleetfoot-binding": {
       "subject": [0.06, 0.1235, 0.87, 0.7765],
       "focal": [0.65, 0.22],
       "note": "Her face and both hands on the open hub, the knotted cord wound three times round the axle stock, and the crystal tied into the last knot. The leaning wheel is inside the box on purpose and not as scenery: the stock is drawn heavy, and the wheel off its hub with the trestles and the spanner is what makes this a wheelwright's yard rather than a gun on a carriage. Nothing has to be spent - 87% by 79% against the thumbnail's 80% of the height - so the straw, the grease pot and the spanner all survive the card window and only the last of them grazes the thumbnail's bottom edge."
+    },
+    "modification-ice-runners": {
+      "subject": [0.05, 0.14, 0.91, 0.74],
+      "focal": [0.46, 0.4],
+      "note": "Both runners with their cast brackets and U-bolts, and the displaced wheel that says what they come off. Nothing is spent: at 74% of the height it clears the flat window's ceiling with room over. The spanner, the screw box and the tallow rag along the foot are scenery the crop may have."
+    },
+    "modification-iron-ram": {
+      "subject": [0.1, 0.114, 0.85, 0.786],
+      "focal": [0.45, 0.42],
+      "note": "The ram on its cradle, the row of scarf bolts laid out beside it, and the sledgehammer leaning there for scale. One per cent off the bottom, which is the far end of the washer row; the ram itself is whole in both windows."
     },
     "modification-keelbound": {
       "subject": [0.08, 0.16, 0.87, 0.76],

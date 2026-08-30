@@ -135,7 +135,7 @@ not a rule of thumb.)
 
 ## modification-sweep-rig — Sweep Rig *(rigging, MOD-02)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-sweep-rig.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-sweep-rig.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -171,7 +171,7 @@ not a rule of thumb.)
 
 ## modification-copper-sheathing — Copper Sheathing *(hull, MOD-03)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-copper-sheathing.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-copper-sheathing.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -198,7 +198,7 @@ not a rule of thumb.)
 
 ## modification-iron-ram — Iron Ram *(hull, MOD-04)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-iron-ram.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-iron-ram.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -224,7 +224,7 @@ not a rule of thumb.)
 
 ## modification-storm-shutters — Storm Shutters *(hull, MOD-05)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-storm-shutters.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-storm-shutters.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -249,7 +249,7 @@ not a rule of thumb.)
 
 ## modification-ice-runners — Ice Runners *(running gear, MOD-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-ice-runners.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-ice-runners.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]

@@ -17785,6 +17785,21 @@ window.GAME_DATA = {
           0.33
         ]
       },
+      "modification-copper-sheathing": {
+        "file": "art/renders/modification-copper-sheathing.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.05,
+          0.115,
+          0.92,
+          0.8335
+        ],
+        "focal": [
+          0.42,
+          0.5
+        ]
+      },
       "modification-fleetfoot-binding": {
         "file": "art/renders/modification-fleetfoot-binding.png",
         "width": 1254,
@@ -17798,6 +17813,36 @@ window.GAME_DATA = {
         "focal": [
           0.65,
           0.22
+        ]
+      },
+      "modification-ice-runners": {
+        "file": "art/renders/modification-ice-runners.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.05,
+          0.14,
+          0.91,
+          0.74
+        ],
+        "focal": [
+          0.46,
+          0.4
+        ]
+      },
+      "modification-iron-ram": {
+        "file": "art/renders/modification-iron-ram.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.1,
+          0.114,
+          0.85,
+          0.786
+        ],
+        "focal": [
+          0.45,
+          0.42
         ]
       },
       "modification-keelbound": {
@@ -17843,6 +17888,36 @@ window.GAME_DATA = {
         "focal": [
           0.56,
           0.32
+        ]
+      },
+      "modification-storm-shutters": {
+        "file": "art/renders/modification-storm-shutters.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.04,
+          0.154,
+          0.93,
+          0.786
+        ],
+        "focal": [
+          0.5,
+          0.42
+        ]
+      },
+      "modification-sweep-rig": {
+        "file": "art/renders/modification-sweep-rig.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.03,
+          0.1535,
+          0.95,
+          0.7765
+        ],
+        "focal": [
+          0.55,
+          0.46
         ]
       },
       "modification-warded-hold": {
