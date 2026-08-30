@@ -561,36 +561,104 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h1 id="the-mint-queue">The mint queue</h1>
 <p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
 <p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
-<p><strong>cards 81/81 · maps 1/1 · building tiles 44/54</strong></p>
-<blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 81 of 81 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
+<p><strong>cards 81/154 · maps 1/1 · building tiles 44/54</strong></p>
+<blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 81 of 154 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
 <blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 368 px floor (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 12 of 54 are under the 736 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
-<p><strong>81 of 81 minted.</strong> 0 waiting on a brief, 0 waiting on art, 0 waiting on frame.</p>
+<p><strong>81 of 154 minted.</strong> 0 waiting on a brief, 73 waiting on art, 0 waiting on frame.</p>
 <h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
-<h3 id="2-draw-the-artist">2 · DRAW — the artist</h3>
-<p>Nothing waiting.</p>
+<h3 id="2-draw-the-artist-73-cards">2 · DRAW — the artist — 73 cards</h3>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
+<tbody><tr><td><code>SPL-01</code></td><td>Kindle</td><td>Spells</td><td><code>spell-kindle</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-02</code></td><td>Ember Lash</td><td>Spells</td><td><code>spell-ember-lash</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-03</code></td><td>Mend Stone</td><td>Spells</td><td><code>spell-mend-stone</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-04</code></td><td>Bulwark</td><td>Spells</td><td><code>spell-bulwark</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-05</code></td><td>Cleanse</td><td>Spells</td><td><code>spell-cleanse</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-06</code></td><td>Mist Veil</td><td>Spells</td><td><code>spell-mist-veil</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-07</code></td><td>Fair Wind</td><td>Spells</td><td><code>spell-fair-wind</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-08</code></td><td>Stormcall</td><td>Spells</td><td><code>spell-stormcall</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-09</code></td><td>Wayfire</td><td>Spells</td><td><code>spell-wayfire</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-10</code></td><td>Seam-Sense</td><td>Spells</td><td><code>spell-seam-sense</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-11</code></td><td>Root-Snare</td><td>Spells</td><td><code>spell-root-snare</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-12</code></td><td>Deep Draught</td><td>Spells</td><td><code>spell-deep-draught</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-13</code></td><td>Farspeak</td><td>Spells</td><td><code>spell-farspeak</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>SPL-14</code></td><td>Loft</td><td>Spells</td><td><code>spell-loft</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-01</code></td><td>Hard Frost</td><td>Events</td><td><code>event-hard-frost</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-02</code></td><td>Drought</td><td>Events</td><td><code>event-drought</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-03</code></td><td>Long Summer</td><td>Events</td><td><code>event-long-summer</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-04</code></td><td>Storms at Sea</td><td>Events</td><td><code>event-storms</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-05</code></td><td>Flood</td><td>Events</td><td><code>event-flood</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-06</code></td><td>Earthquake</td><td>Events</td><td><code>event-earthquake</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-07</code></td><td>Wildfire</td><td>Events</td><td><code>event-wildfire</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-08</code></td><td>Mine Collapse</td><td>Events</td><td><code>event-mine-collapse</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-09</code></td><td>Warehouse Heist</td><td>Events</td><td><code>event-warehouse-heist</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-10</code></td><td>Caravan Robbery</td><td>Events</td><td><code>event-caravan-robbery</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-11</code></td><td>Train Heist</td><td>Events</td><td><code>event-train-heist</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-12</code></td><td>Piracy</td><td>Events</td><td><code>event-piracy</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-13</code></td><td>Smuggling Ring</td><td>Events</td><td><code>event-smuggling-ring</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-14</code></td><td>Wolf Pack</td><td>Events</td><td><code>event-wolf-pack</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-15</code></td><td>Boar in the Fields</td><td>Events</td><td><code>event-boar-in-the-fields</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-16</code></td><td>Dragon Sighting</td><td>Events</td><td><code>event-dragon-sighting</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-17</code></td><td>Raiders</td><td>Events</td><td><code>event-raiders</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-18</code></td><td>Border Dispute</td><td>Events</td><td><code>event-border-dispute</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-19</code></td><td>Mercenaries for Hire</td><td>Events</td><td><code>event-mercenaries-for-hire</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-20</code></td><td>Plague</td><td>Events</td><td><code>event-plague</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-21</code></td><td>Migrants</td><td>Events</td><td><code>event-migrants</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-22</code></td><td>Strike</td><td>Events</td><td><code>event-strike</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-23</code></td><td>Festival</td><td>Events</td><td><code>event-festival</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-24</code></td><td>Travelling Master</td><td>Events</td><td><code>event-master-craftsman</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-25</code></td><td>Iron Shortage</td><td>Events</td><td><code>event-iron-shortage</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-26</code></td><td>Glut</td><td>Events</td><td><code>event-glut</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-27</code></td><td>Foreign Demand</td><td>Events</td><td><code>event-foreign-demand</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-28</code></td><td>Tax Levy</td><td>Events</td><td><code>event-tax-levy</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-29</code></td><td>Ley Surge</td><td>Events</td><td><code>event-ley-surge</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-30</code></td><td>Curdled Brew</td><td>Events</td><td><code>event-curdled-brew</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-31</code></td><td>Wandering Wizard</td><td>Events</td><td><code>event-wandering-wizard</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-32</code></td><td>Camp Fever</td><td>Events</td><td><code>event-camp-fever</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-33</code></td><td>Marsh Ague</td><td>Events</td><td><code>event-marsh-ague</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-34</code></td><td>The Grey Pox</td><td>Events</td><td><code>event-grey-pox</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-35</code></td><td>Impure Smelt</td><td>Events</td><td><code>event-impure-smelt</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-36</code></td><td>Blood Moon</td><td>Events</td><td><code>event-blood-moon</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-37</code></td><td>The Quiet Season</td><td>Events</td><td><code>event-quiet-season</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-38</code></td><td>Black Sails on the Horizon</td><td>Events</td><td><code>event-black-sails</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-39</code></td><td>Letter of Marque</td><td>Events</td><td><code>event-letter-of-marque</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-40</code></td><td>Press Gang</td><td>Events</td><td><code>event-press-gang</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-41</code></td><td>The Dragon's Tithe</td><td>Events</td><td><code>event-dragons-tithe</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-42</code></td><td>The Aerial Post</td><td>Events</td><td><code>event-aerial-post</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-43</code></td><td>Gale</td><td>Events</td><td><code>event-gale</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-44</code></td><td>Early Thaw</td><td>Events</td><td><code>event-early-thaw</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-45</code></td><td>Clipped Coin</td><td>Events</td><td><code>event-clipped-coin</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-46</code></td><td>Guild Embargo</td><td>Events</td><td><code>event-guild-embargo</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-47</code></td><td>New Tolls</td><td>Events</td><td><code>event-new-tolls</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-48</code></td><td>The Sign of the Green Man</td><td>Events</td><td><code>event-green-man</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-49</code></td><td>The Mead Run</td><td>Events</td><td><code>event-mead-run</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-50</code></td><td>Ley Drought</td><td>Events</td><td><code>event-ley-drought</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>EVT-51</code></td><td>Boom Town</td><td>Events</td><td><code>event-boom-town</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>QST-01</code></td><td>The Miller's Debt</td><td>Quests</td><td><code>quest-millers-debt</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>QST-02</code></td><td>Lanterns for Coldwater</td><td>Quests</td><td><code>quest-lanterns-for-coldwater</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>QST-03</code></td><td>The Boar of Bramblehold</td><td>Quests</td><td><code>quest-boar-of-bramblehold</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>QST-04</code></td><td>Word to Dry Wells</td><td>Quests</td><td><code>quest-word-to-dry-wells</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>QST-05</code></td><td>The Strangler in the Mire</td><td>Quests</td><td><code>quest-strangler-in-the-mire</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>QST-06</code></td><td>A Draught for Fen's End</td><td>Quests</td><td><code>quest-draught-for-fens-end</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>QST-07</code></td><td>The Ironspine Road</td><td>Quests</td><td><code>quest-ironspine-road</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>QST-08</code></td><td>The Drowned Bell of Taleowick</td><td>Quests</td><td><code>quest-drowned-bell</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
 <h3 id="3-frame-whoever-accepts-the-plate">3 · FRAME — whoever accepts the plate</h3>
 <p>Nothing waiting.</p>
 <h3 id="minted">Minted</h3>
 <p>81 cards complete: <code>CHR-01</code>, <code>CHR-02</code>, <code>CHR-03</code>, <code>CHR-04</code>, <code>CHR-05</code>, <code>CHR-06</code>, <code>CHR-07</code>, <code>CHR-08</code>, <code>VEH-01</code>, <code>VEH-02</code>, <code>VEH-03</code>, <code>VEH-04</code>, <code>VEH-05</code>, <code>VEH-06</code>, <code>VEH-07</code>, <code>VEH-08</code>, <code>VEH-09</code>, <code>VEH-10</code>, <code>VEH-11</code>, <code>VEH-12</code>, <code>VEH-13</code>, <code>VEH-14</code>, <code>VEH-15</code>, <code>VEH-16</code>, <code>VEH-17</code>, <code>MON-01</code>, <code>MON-02</code>, <code>MON-03</code>, <code>MON-04</code>, <code>MON-05</code>, <code>MON-06</code>, <code>MON-07</code>, <code>MON-08</code>, <code>MON-09</code>, <code>MON-10</code>, <code>MON-11</code>, <code>MON-12</code>, <code>MON-13</code>, <code>MON-14</code>, <code>TAL-01</code>, <code>TAL-02</code>, <code>TAL-03</code>, <code>TAL-04</code>, <code>TAL-05</code>, <code>TAL-06</code>, <code>MOD-01</code>, <code>MOD-02</code>, <code>MOD-03</code>, <code>MOD-04</code>, <code>MOD-05</code>, <code>MOD-06</code>, <code>MOD-07</code>, <code>MOD-08</code>, <code>MOD-09</code>, <code>MOD-10</code>, <code>MOD-11</code>, <code>ITM-07</code>, <code>ITM-01</code>, <code>ITM-04</code>, <code>ITM-05</code>, <code>ITM-06</code>, <code>ITM-08</code>, <code>ITM-03</code>, <code>ITM-02</code>, <code>WPN-01</code>, <code>WPN-02</code>, <code>WPN-04</code>, <code>WPN-03</code>, <code>WPN-05</code>, <code>WPN-06</code>, <code>WPN-07</code>, <code>ARM-01</code>, <code>ARM-04</code>, <code>ARM-05</code>, <code>ARM-02</code>, <code>ARM-03</code>, <code>TOL-01</code>, <code>TOL-02</code>, <code>TOL-03</code>, <code>TOL-04</code>, <code>TOL-05</code>.</p>
 <p>38 of them are framed but have no <code>focal</code> point — they predate it and are not broken, they are just aimed at the middle of their subject box. Adding one is a two-number improvement: <code>character-chr-01</code>, <code>character-chr-02</code>, <code>character-chr-03</code>, <code>character-chr-04</code>, <code>character-chr-05</code>, <code>character-chr-06</code>, <code>character-chr-07</code>, <code>character-chr-08</code>, <code>vehicle-veh-01</code>, <code>vehicle-veh-02</code>, <code>vehicle-veh-03</code>, <code>vehicle-veh-04</code>, <code>vehicle-veh-05</code>, <code>vehicle-veh-06</code>, <code>vehicle-veh-07</code>, <code>vehicle-veh-08</code>, <code>vehicle-veh-09</code>, <code>vehicle-veh-10</code>, <code>vehicle-veh-11</code>, <code>vehicle-veh-12</code>, <code>vehicle-veh-13</code>, <code>vehicle-veh-14</code>, <code>vehicle-veh-15</code>, <code>vehicle-veh-16</code>, <code>vehicle-veh-17</code>, <code>monster-gravel-wyrm</code>, <code>monster-mire-strangler</code>, <code>monster-reef-serpent</code>, <code>monster-deepwater-maw</code>, <code>monster-rime-harpy</code>, <code>monster-dust-devil</code>, <code>monster-storm-roc</code>, <code>talisman-tal-01</code>, <code>talisman-tal-02</code>, <code>talisman-tal-03</code>, <code>talisman-tal-04</code>, <code>talisman-tal-05</code>, <code>talisman-tal-06</code>.</p>
-<h3 id="not-being-minted-yet">Not being minted yet</h3>
-<p>Declared, numbered, backed — and simply not being illustrated this round. Set <code>minting: true</code> on one to bring it into the queue above.</p>
-<div class="table-wrap"><table>
-<thead><tr><th>Deck</th><th>Cards in the data</th><th>Plate format</th></tr></thead>
-<tbody><tr><td>Spells</td><td>14</td><td>square</td></tr>
-<tr><td>Events</td><td>51</td><td>landscape scene</td></tr>
-<tr><td>Quests</td><td>8</td><td>landscape scene</td></tr></tbody></table></div>
 <hr>
 <h2 id="maps">Maps</h2>
 <p>One drawn map plate, and the hex board read off it. Briefs in <a href="../art/prompts/maps.md"><code>docs/art/prompts/maps.md</code></a>, plates in <code>docs/map/</code>, aimed by <strong>TRACE</strong> in <code>data/maps/{id}.json</code>.</p>
 <p><strong>1 of 1 minted.</strong> 0 waiting on a brief, 0 waiting on art, 0 waiting on trace.</p>
 <h3 id="1-write-the-designer-1">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
-<h3 id="2-draw-the-artist-1">2 · DRAW — the artist</h3>
+<h3 id="2-draw-the-artist">2 · DRAW — the artist</h3>
 <p>Nothing waiting.</p>
 <h3 id="3-trace-designer">3 · TRACE — designer</h3>
 <p>Nothing waiting.</p>
