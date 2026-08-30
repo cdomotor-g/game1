@@ -18016,6 +18016,21 @@ window.GAME_DATA = {
           0.42
         ]
       },
+      "tile-bakery": {
+        "file": "art/renders/tile-bakery.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.102,
+          0.04,
+          0.848,
+          0.9
+        ],
+        "focal": [
+          0.74,
+          0.52
+        ]
+      },
       "tile-barracks": {
         "file": "art/renders/tile-barracks.png",
         "width": 1328,
@@ -18046,6 +18061,21 @@ window.GAME_DATA = {
           0.645
         ]
       },
+      "tile-butcher": {
+        "file": "art/renders/tile-butcher.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0705,
+          0.08,
+          0.8495,
+          0.84
+        ],
+        "focal": [
+          0.47,
+          0.52
+        ]
+      },
       "tile-charcoal-kiln": {
         "file": "art/renders/tile-charcoal-kiln.png",
         "width": 1536,
@@ -18074,6 +18104,21 @@ window.GAME_DATA = {
         "focal": [
           0.52,
           0.52
+        ]
+      },
+      "tile-dairy": {
+        "file": "art/renders/tile-dairy.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.1225,
+          0.02,
+          0.8475,
+          0.91
+        ],
+        "focal": [
+          0.66,
+          0.6
         ]
       },
       "tile-dock": {
@@ -18164,6 +18209,21 @@ window.GAME_DATA = {
         "focal": [
           0.4425,
           0.45
+        ]
+      },
+      "tile-mill": {
+        "file": "art/renders/tile-mill.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0.03,
+          0,
+          0.97,
+          0.85
+        ],
+        "focal": [
+          0.44,
+          0.55
         ]
       },
       "tile-mine": {
@@ -18299,6 +18359,21 @@ window.GAME_DATA = {
         "focal": [
           0.66,
           0.45
+        ]
+      },
+      "tile-tailor": {
+        "file": "art/renders/tile-tailor.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.0385,
+          0.03,
+          0.8175,
+          0.89
+        ],
+        "focal": [
+          0.46,
+          0.34
         ]
       },
       "tile-timber-house": {
