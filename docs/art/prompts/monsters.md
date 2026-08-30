@@ -99,10 +99,17 @@ crook abandoned on the ground line. Wash: rust red inside the ribcage and on
 the burnt trail, flat, no glow.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
-Head, ribcage and the shepherd's crook inside the middle 70% of the page
+Head, ribcage and the shepherd's crook inside the middle 48% of the page
 height; the full width survives the crop. The burnt trail and the smoke off
 the spine may run to the margins. Head low, turned three-quarters toward the
 centre of the page.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-ash-drake — Ash Drake *(fire, MON-02)*
@@ -120,10 +127,17 @@ from each nostril. Scale object: a miner's abandoned pick bent double.
 Wash: rust red in the hide cracks, grey-ochre on the scree, flat.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
-Head, the bow-wave at the chest and the bent pick inside the middle 70% of the
+Head, the bow-wave at the chest and the bent pick inside the middle 48% of the
 page height; the full width survives the crop. The tail and the outer scree
 may run to the margins. Head at the near end, low and turned toward the
 centre.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-forge-wight — Forge Wight *(fire, MON-03)*
@@ -142,9 +156,16 @@ tools, laid out like offerings. Wash: rust red on the seams and the mended
 iron, cold slate on the tunnel stone, flat.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
-The hood, both hands and the mended cart rail inside the middle 70% of the
+The hood, both hands and the mended cart rail inside the middle 48% of the
 page height; the full width survives the crop. The tunnel roof and the outer
 rows of tools may run to the margins. Hood turned down to the work.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-barrow-troll — Barrow Troll *(earth, MON-04)*
@@ -164,9 +185,16 @@ and hide, ochre on the bared earth, flat.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
 Face, both shoulders, the grave-goods at the chest and the toppled standing
-stone inside the middle 70% of the page height; the full width survives the
+stone inside the middle 48% of the page height; the full width survives the
 crop. The mound and the shed slabs may run to the margins. Face level and
 turned toward the reader.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-stone-boar — Stone Boar *(earth, MON-05)*
@@ -184,10 +212,17 @@ mushrooms beside the furrow. Wash: dusty grey-green moss over grey hide,
 ochre in the turned earth, flat.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
-Head, tusks, the turned furrow and the spilled basket inside the middle 70% of
+Head, tusks, the turned furrow and the spilled basket inside the middle 48% of
 the page height; the full width survives the crop. The oak's crown and the far
 end of the furrow may run to the margins. Head down to the ground, the eye
 still visible.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-gravel-wyrm — Gravel Wyrm *(earth, MON-06)*
@@ -203,6 +238,13 @@ no eyes at all, mouth a ring of grinding stones mid-crush around a boulder.
 Its castings - neat cairns of crushed, sorted ore - trail down the slope
 behind it. Scale object: a surveyor's tripod, flattened. Wash: cold slate on
 the plates, ochre on the castings, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-mire-strangler — Mire Strangler *(water, MON-07)*
@@ -218,6 +260,13 @@ converging on it, one breaking the surface in a slow arch of many joints. At
 the path's end, hung neatly on a dead willow branch: a traveller's hat and
 satchel it has no use for. Wash: cold slate on the water, dull grey-green on
 the reeds, the limbs bare paper, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-reef-serpent — Reef Serpent *(water, MON-08)*
@@ -232,6 +281,13 @@ level with a moored fishing boat's gunwale, accepting a fish laid on the
 transom - the fisherman's arm just entering frame, offering it. Scales drawn
 as overlapping engraved crescents, barnacles on the older coils. The sea is
 ruled wave lines. Wash: cold slate blue on the sea and the deep coils, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-deepwater-maw — The Deepwater Maw *(water, MON-09, unique)*
@@ -247,6 +303,13 @@ a mouth wider than the ship is long, ringed with baleen-like teeth drawn as
 ranked portcullises, old anchors and a church bell tangled in the gum line.
 Only the mouth and one vast eye are shown; the rest is hatched depth.
 Wash: cold slate blue graded by hatch density only, never by tone, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-rime-harpy — Rime Harpy *(air, MON-10)*
@@ -262,6 +325,13 @@ She is examining a stolen brass compass in one clawed foot with the intensity
 of a magpie. Around the nest below: a hoard of buckles, coins, a spyglass, a
 locket, all drawn small and precise. Wash: pale slate on the ice and
 feathers, one ochre note on the hoard's brass, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-dust-devil — Dust Devil *(air, MON-11)*
@@ -277,6 +347,13 @@ from ground to head height, leaning with intent. In the spiral's core, faint
 and easy to miss, the suggestion of a face in profile. It crosses a desert
 track past a laden, buckling handcart. Wash: warm ochre in the carried dust
 only; the wind itself is bare paper and line, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-storm-roc — Storm Roc *(air, MON-12)*
@@ -293,6 +370,13 @@ In one talon, held gently, a full-grown ram, looking resigned rather than
 harmed. Far below at the cliff base, a tiny climber on a rope, mid-ascent,
 lunch in a shoulder bag. Wash: cold slate on the storm and wing shadow,
 flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-vhalrik-the-cinder-crowned — Vhalrik, the Cinder-Crowned *(fire, MON-13, unique)*
@@ -315,9 +399,16 @@ his claws. Wash: rust red between the chest plates and along the hoard, ochre
 on the coin, flat, no glow.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
-Head, crown, both forelimbs and the wagon wheel inside the middle 70% of the
+Head, crown, both forelimbs and the wagon wheel inside the middle 48% of the
 page height; the full width survives the crop. The tail and the far wing may
 run to the margins. Head turned three-quarters toward the centre of the page.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## monster-hoarwyrm — The Hoarwyrm *(air, MON-14)*
@@ -341,9 +432,16 @@ takes no wash at all.
 
 FRAMING. A4 portrait plate, whole page drawn edge to edge.
 The card window this plate will be cut down to is WIDE AND SHORT: it keeps the
-full width of the page but only the middle 64% of its height. So the head, the
+full width of the page but only the middle 48% of its height. So the head, the
 neck ruff and the first undulation of the body must ALL sit between 20% and
 80% down the page - outside that band nothing can be relied on. Head in the
 upper half of that band, low and forward. The far coils, the reindeer and the
 sky may run to the margins. Horizon about three-quarters down the page.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```

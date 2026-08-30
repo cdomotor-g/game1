@@ -162,11 +162,9 @@ function markSections(text, steps) {
  * block already names its band.
  */
 function cutNoteFor(plate) {
-  const line = tileLine;
-  if (!line) return null;
-  const row = tileRows.get(plate);
-  if (!row) return null;
-  const note = windowNote(ROOT, line, row);
+  const hit = subjects.get(plate);
+  if (!hit) return null;
+  const note = windowNote(ROOT, hit.line, hit.row);
   return note ? note.trim() : null;
 }
 
@@ -174,8 +172,34 @@ function cutNoteFor(plate) {
    made of META paragraphs - WINDOW. and LABEL BAND. - which is the same shape
    FRAMING. already has inside a brief, and is what renderPrompt lifts back out. */
 function withCutNote(body, note) {
+  /* Nothing to put back means leave what is there. A card's note is measured off
+     the BUILT card in docs/cards/, so a tree with none would otherwise strip every
+     WINDOW block and --check would pass or fail by run order. */
+  if (!note) return body;
   const kept = body.split(/\n\s*\n/).filter((p) => !/^(WINDOW|LABEL BAND)\./.test(p.trim()));
-  return note ? [...kept, note].join('\n\n') : kept.join('\n\n');
+  return [...kept, note].join('\n\n');
+}
+
+/**
+ * The band a card brief promises, set to the band the crop actually keeps.
+ *
+ * A card window is derived - it is the shape of the wordiest card in its deck -
+ * so it MOVES: a card landing with a long rule re-crops every plate in that deck.
+ * The figure was typed, so it did not move with it. Seven monster briefs promised
+ * the middle 70% of the page against a window that keeps 48%, which is what spent
+ * the tips of Vhalrik's horns.
+ *
+ * Only the height. A card crop keeps the full width of the page on every deck, so
+ * a sentence about width is a composition choice rather than a constraint, and is
+ * left alone.
+ */
+function withBand(body, note) {
+  const real = note && note.match(/middle (\d+)% of its height/);
+  if (!real) return body;
+  /* No `m` flag: with it, `$` is end-of-LINE and the lazy match stops on the
+     first line of the block, which is the line that never carries the figure. */
+  return body.replace(/FRAMING\.[\s\S]*?(?=\n\n|$)/, (block) =>
+    block.replace(/middle (\d+)%(?!\s*of\s+(?:the\s+page\s+|its\s+)?width)/g, `middle ${real[1]}%`));
 }
 
 /* How a tile's own page is said, in the two places a brief says it. Both are
@@ -202,16 +226,17 @@ function withPage(body, row) {
 }
 
 function markCuts(text, file) {
-  if (file !== 'docs/art/prompts/buildingtiles.md') return text;
   const lines = text.split('\n');
   const out = [];
   for (let i = 0; i < lines.length; i++) {
     out.push(lines[i]);
     if (!lines[i].startsWith('## ')) continue;
     const plate = lines[i].slice(3).trim().split(' ')[0];
-    const row = tileRows.get(plate);
-    if (!row) continue;
-    out[out.length - 1] = headingFor(row);
+    const hit = subjects.get(plate);
+    if (!hit) continue;
+    /* A tile's heading IS its footprint and page, both derived. A card's heading
+       is its name and code, which are the card's own and are checked elsewhere. */
+    if (hit.line.id === 'buildingtiles') out[out.length - 1] = headingFor(hit.row);
     const note = cutNoteFor(plate);
     if (!note) continue;
     /* Walk to this section's fence and rewrite what is inside it. */
@@ -224,7 +249,8 @@ function markCuts(text, file) {
     for (let j = open + 1; j < lines.length; j++) if (lines[j].startsWith('```')) { close = j; break; }
     if (close < 0) continue;
     out.push(...lines.slice(i + 1, open + 1));
-    out.push(...withPage(withCutNote(lines.slice(open + 1, close).join('\n'), note), row).split('\n'));
+    const inner = withCutNote(lines.slice(open + 1, close).join('\n'), note);
+    out.push(...(hit.line.id === 'buildingtiles' ? withPage(inner, hit.row) : withBand(inner, note)).split('\n'));
     out.push(lines[close]);
     i = close;
   }
@@ -284,10 +310,17 @@ function vehicleClashes(root) {
 
 const steps = stepsByPlate();
 
-/* The tiles line and its rows, for the cut note above. */
-const tileEntry = survey(ROOT).lines.find((e) => e.line.id === 'buildingtiles' && !e.shelved);
-const tileLine = tileEntry?.line ?? null;
-const tileRows = new Map((tileEntry?.rows ?? []).map((r) => [r.plate, r]));
+/* Every mint subject on every active line, by plate id - cards and tiles both,
+   because both now carry a derived cut note in their brief. */
+const subjects = new Map();
+const tileRows = new Map();
+for (const e of survey(ROOT).lines) {
+  if (e.shelved) continue;
+  for (const row of e.rows) {
+    subjects.set(row.plate, { line: e.line, row });
+    if (e.line.id === 'buildingtiles') tileRows.set(row.plate, row);
+  }
+}
 
 /* The heading and the FRAMING page are generated above, so they cannot drift.
    This catches the other direction: a hand-written composition that names a page
@@ -310,11 +343,28 @@ function pageClashes() {
   return out;
 }
 
-const clashes = [...pageClashes(), ...vehicleClashes(ROOT)];
-if (clashes.length) {
-  console.error('build-prompts: a brief contradicts its own data —');
-  console.error(clashes.join('\n'));
-  process.exit(1);
+/* The band is generated into every brief whose deck has a built card to measure.
+   This catches the deck that has none yet - the figure there is the house default
+   and can only be a guess - and any brief the generator could not reach. */
+function bandClashes() {
+  const out = [];
+  for (const [plate, hit] of subjects) {
+    if (hit.line.id !== 'cards') continue;
+    const note = windowNote(ROOT, hit.line, hit.row);
+    const real = note && note.match(/middle (\d+)% of its height/);
+    if (!real) continue;
+    const file = hit.row.briefFile ?? hit.line.brief.file;
+    const md = readFileSync(join(ROOT, 'docs/art/prompts', file), 'utf8');
+    const m = md.match(new RegExp(`^## ${plate}[^\\n]*\\n[\\s\\S]*?\`\`\`text\\n([\\s\\S]*?)\\n\`\`\``, 'm'));
+    if (!m) continue;
+    const fram = (m[1].match(/FRAMING\.[\s\S]*?(?=\n\n|$)/) || [''])[0];
+    for (const hitPct of fram.matchAll(/middle (\d+)%(?!\s*of\s+(?:the\s+page\s+|its\s+)?width)/g)) {
+      if (Number(hitPct[1]) > Number(real[1])) {
+        out.push(`  ${plate}: FRAMING promises the middle ${hitPct[1]}% but this deck's window keeps ${real[1]}%`);
+      }
+    }
+  }
+  return out;
 }
 
 let changed = 0;
@@ -329,6 +379,19 @@ for (const t of targets) {
   changed++;
   if (CHECK) console.error(`  ${t.path} — the generated blocks have drifted from data/artstyle.json`);
   else writeFileSync(path, after);
+}
+
+/* AFTER the rewrite, never before. The generated parts heal themselves on every
+   run, so checking first meant the one tool that fixes drift refused to start
+   whenever there was any. What is left here is only what generating cannot
+   reach: prose naming a page its tile is not drawn on, a brief promising more
+   height than a deck whose window is measurable, a modification naming a vehicle
+   its data denies. */
+const clashes = [...pageClashes(), ...bandClashes(), ...vehicleClashes(ROOT)];
+if (clashes.length) {
+  console.error('build-prompts: a brief contradicts its own data —');
+  console.error(clashes.join('\n'));
+  process.exit(1);
 }
 
 if (CHECK) {

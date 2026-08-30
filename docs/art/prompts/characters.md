@@ -96,6 +96,13 @@ Letter-satchel worn cross-body, stuffed and buckled twice; a walking staff
 notched with tally marks leans in the crook of an arm. The face is friendly
 the way an innkeeper's is: professionally. Wash: dusty grey-green on the
 cloak, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## character-chr-02 — Berga Understone, dwarf prospector
@@ -110,6 +117,13 @@ pan with the frown of an expert, heavy boots planted, a surveyor's hammer
 through her belt beside sample bags numbered with knots. Braided hair pinned
 with a copper spike; a hand lamp hooked to her shoulder strap. Wash: cold
 slate blue on her coat, ochre in the stream gravel, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## character-chr-03 — Sylvae of the Duskmere, elf herbalist
@@ -124,6 +138,13 @@ thick, swollen field-book bound with three straps, a knife held between two
 fingers of the same hand. Botanist's satchel of little drawers at the hip,
 open, one drawer glinting with three faceted shards. Practical field clothes,
 hem mud-stained and neatly darned. Wash: dusty grey-green throughout, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## character-chr-04 — Tilly Goodbarrel, halfling provisioner
@@ -138,6 +159,13 @@ board of a supply wagon, chalk in one hand, a wheel of cheese under the other
 arm. Apron pockets bulge with apples, a spice tin, a folding knife and a
 spoon of office worn like a badge. The expression says the count is wrong and
 she knows whose fault it is. Wash: warm ochre on apron and provisions, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## character-chr-05 — Ruk of the Red Road, orc caravan guard
@@ -152,6 +180,13 @@ mid-way through re-wrapping its handle with fresh cord - the working hands of
 a professional at maintenance. Old scars laid over older scars; a caravan
 company's brass token on a thong at the throat. One ear cocked to the road.
 Wash: rust red on the harness and axe wrap, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## character-chr-06 — Doctor Elspeth Marrow, human physician
@@ -167,6 +202,13 @@ bandages and bright instruments, holding one bottle up to the light to read
 the sediment. Spectacles pushed up into grey-streaked hair; a ledger under
 one knee to keep it off the mud. Wash: cold slate blue on the coat, one rust
 red note on the bag's cross, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## character-chr-07 — Havik Coalbrand, dwarf engineer
@@ -182,6 +224,13 @@ physician listens to a chest. Oil-black to the elbows, cap turned backwards,
 a ring of gauge keys and a shut lantern on his belt. A long-spouted oil can
 stands on the footplate like a patient dog. Wash: rust red on the engine
 plates, ochre lamplight tone on the cab wood, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## character-chr-08 — Old Mother Keswick, human hedge-witch
@@ -198,4 +247,11 @@ millimetre past the black line like a misprint - the only violet on the page
 and the only thing the press could not hold still. Herbs dry in bunches from
 the eave; a cat declines to be drawn well. Wash: dusty grey-green on shawl
 and herbs; the charm's violet slip #6B4C7D, offset, no glow.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
 ```

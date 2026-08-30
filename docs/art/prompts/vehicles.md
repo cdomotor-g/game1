@@ -90,6 +90,13 @@ coaches, drawn at speed with hatched motion in the smoke laid flat along the
 boiler. Mail sacks visible through a coach door; a long-necked oil can
 holstered on the footplate. Slim driving wheels taller than a man.
 Wash: rust red frames, ochre brass, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-02 — Steppe Hauler *(train)*
@@ -103,6 +110,13 @@ A massive freight locomotive with twelve laden trucks curving away to the
 page edge, standing at a water tower taking on water, steam feathering from
 the safety valve. Coal piled high and boarded; chains and load-binders on
 every truck. Wash: cold slate boiler, ochre on the timber loads, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-03 — Old Smoke *(train)*
@@ -118,6 +132,13 @@ collar, one buffer replaced in timber. Steam leaks drawn as small honest
 wisps at three joints. She pulls two trucks and does her best. A young
 engineer leans out, fond and resigned. Wash: rust red patches over grey,
 flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-04 — Gullwing *(ship)*
@@ -131,6 +152,13 @@ A slim two-masted courier sloop heeled into a drawn wave-line sea, every sail
 set and straining, spray hatched off the bow. A storm lantern rigged
 prominently at the masthead. Deck cargo lashed low and neat; a narrow hull
 built for nothing but speed. Wash: cold slate sea, ochre deck, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-05 — Saltreach Pride *(ship)*
@@ -144,6 +172,13 @@ A broad three-masted trading ship riding calm water at anchor, hull ribbed
 with heavy wales, cargo swinging aboard on a yard tackle. Scars of old
 repairs in the planking, each one neat. Boats alongside; gulls drawn as
 quick pen loops. Wash: cold slate sea, rust red hull wales, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-06 — Ember Coast Trader *(ship)*
@@ -157,6 +192,13 @@ A fat, friendly coasting vessel with a patched lateen sail, deck stacked with
 barrels, crates and one tethered goat, running close along a drawn dune
 shoreline with palms. Fenders of woven rope all down the hull; washing dries
 on a stay. Wash: warm ochre sail and dunes, cold slate sea, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-07 — The Dunhaven Column *(caravan)*
@@ -170,6 +212,13 @@ A desert caravan of four high-wheeled wagons in file, water butts strapped
 three deep on every side, canvas tilts bleached pale, the lead wagon flying a
 faded pennant. Draught teams in fringed sun-harness; heat shimmer drawn as
 sparse wavy hatching above the sand. Wash: warm ochre throughout, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-08 — The Fenway Wagons *(caravan)*
@@ -183,6 +232,13 @@ Three low wagons with absurdly wide barrel-stave wheels crossing a plank
 causeway over drawn reed marsh, mud to the axles and no further - the wheels
 are winning. Poles, plank bundles and coiled rope lashed to every side for
 the next bad crossing. Wash: dusty grey-green marsh, ochre timber, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-09 — The Varl Wagonrow *(caravan)*
@@ -202,6 +258,13 @@ The lead ox-team, the last wagon's screw brake and the crewman riding it
 inside the middle 84% of the page width; the full height survives the crop.
 The upper switchbacks may run to the margins. Low horizon in the bottom
 third.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-10 — Bay Courser *(horse)*
@@ -215,6 +278,13 @@ A tall bay riding horse at a flying trot across open grass, tack light and
 racing-spare, mane braided against the wind, saddlebags small and tight. The
 gait drawn with engraved motion lines at the hooves. Proud, slightly
 unreasonable eye. Wash: warm ochre coat, grey-green grass, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-11 — Steppe Pony *(horse)*
@@ -229,6 +299,13 @@ with neat panniers, mail satchel and a rolled tent, digging through the snow
 crust with one hoof for grass and finding it. Frost in the fetlocks; an
 expression of complete self-sufficiency. Wash: pale slate snow, ochre
 panniers, flat.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-12 — Black Malchior *(horse)*
@@ -243,6 +320,13 @@ asleep in the saddle, reins slack. The night is drawn as dense cross-hatch
 sky and bare-paper road; the horse's ears are forward, reading the dark. A
 shuttered lantern hangs UNLIT from the saddle - he does not need it.
 Wash: cold slate blue on the night, flat; the horse nearly all ink.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-13 — Nine and the Drum *(sled)*
@@ -276,6 +360,13 @@ bottom half, the lead dog sits no lower than the middle of the page, and no
 more than the top quarter is empty sky. A page that is half blank paper is a
 rejected page: the card window is 1.34 and takes the whole height, so empty
 sky here is empty sky on the card.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-14 — The Red Lantern *(steam junk, ship)*
@@ -307,6 +398,13 @@ it as sky. Sea worked right down to the bottom edge. No more than the top
 eighth of the page is empty air. A page that is half blank paper is a rejected
 page: the card window is 1.39 and takes the whole height, so empty sky here is
 empty sky on the card.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-15 — The Carrion Queen *(pirate steamer, ship)*
@@ -348,6 +446,13 @@ carries to the top quarter. Sea worked right down to the bottom edge, and no
 more than the top eighth of the page is empty air. A page that is half blank
 paper is a rejected page: the card window takes the whole height, so empty sky
 here is empty sky on the card.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-16 — The Pilgrim's Patience *(airship)*
@@ -376,6 +481,13 @@ gondola hangs well below, so between them they occupy the height. The ground
 is a hatched cloud bank and a horizon drawn tiny in the BOTTOM EIGHTH - she is
 in the air and the page has to say so - and no more than the top eighth is
 bare paper. A page that is half blank paper is a rejected page.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## vehicle-veh-17 — The Sweep of Vossgard *(sweep-rigged airship)*
@@ -407,4 +519,11 @@ She FILLS THE PAGE: envelope and gondola together occupy the height, the
 envelope running nearly the full width. Horizon tiny in the bottom eighth, and
 no more than the top eighth bare paper. A page that is half blank paper is a
 rejected page.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 94% of its height - everything that matters
+must sit between 3% and 97% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 285, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```

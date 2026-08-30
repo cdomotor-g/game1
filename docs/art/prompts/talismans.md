@@ -90,6 +90,13 @@ objects, jewellery product photo
 A grandmother's charm: three carved knucklebones and a worn wooden bead
 strung on a hide thong, the carving simple and sure - spirals and tally
 nicks. The violet slip sits offset across the bones only.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 371, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## talisman-tal-02 — Weaver's Knot
@@ -103,6 +110,13 @@ A palm-sized knot of tightly woven cord with no visible beginning or end,
 the weave drawn strand by strand, ends vanishing impossibly into the
 pattern. A simple loop for the neck. The violet slip is offset across the
 knot's heart.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 371, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## talisman-tal-03 — Copper Amulet
@@ -116,6 +130,13 @@ A hammered copper disc on a copper chain, planished marks catching the light
 as bare paper, a spiral chased into the face, the rim green with old
 verdigris that the owner polishes and the years replace. The violet slip is
 offset across the spiral.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 371, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## talisman-tal-04 — Gold Locket
@@ -129,6 +150,13 @@ A hinged gold locket, ajar: one side holds a tiny engraved portrait of
 someone loved, the other side is empty and hatched strangely deep for so
 shallow a case. Fine chain pooled beneath it. The violet slip is offset
 across the empty half only.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 371, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## talisman-tal-05 — Gemfire Pendant
@@ -142,6 +170,13 @@ A faceted cut stone held in a four-clawed copper mount on a braided cord,
 the facets drawn as hard-edged planes of bare paper and hatch - and in the
 centre facet, a small still shape like a held breath. The violet slip is
 offset across the stone, bleeding past the claws.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 371, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## talisman-tal-06 — Crystal Phylactery
@@ -156,4 +191,11 @@ cage of gold wire with a wax-sealed stopper, hung from a fine chain. Three
 generations of careful solder repairs on the cage. The violet slip is offset
 across the crystal and bleeds through the drawn glass wall - the one place
 in the game the misprint escapes its object.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 371, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```

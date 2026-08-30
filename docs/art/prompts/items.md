@@ -344,9 +344,16 @@ nicks near the tip, left. Wash: cold slate blue on the blade and fittings,
 rust red on the grip wrap, both flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Point, fuller, both
-quillons, the whole grip and the pommel inside the middle 84%. Low ground
+quillons, the whole grip and the pommel inside the middle 81%. Low ground
 line in the bottom third with the pommel resting on it. Clear, quiet page
 above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-war-axe — War Axe *(WEAPONS deck · weapon, hand, WPN-02)*
@@ -366,8 +373,15 @@ warm ochre on the haft, rust red on the binding, all flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The whole head - poll,
 neck, bit and beard - the binding and the full haft to the knob inside the
-middle 84%. Low ground line in the bottom third with the knob resting on it.
+middle 81%. Low ground line in the bottom third with the knob resting on it.
 Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-war-hammer — War Hammer *(WEAPONS deck · weapon, two-hand, WPN-03)*
@@ -386,9 +400,16 @@ leather at the butt for the lower hand. Wash: cold slate blue on the head and
 langets, warm ochre on the haft, rust red on the wrap, all flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Face, fluke, both
-langets and the full haft to the wrapped butt inside the middle 84%. Low
+langets and the full haft to the wrapped butt inside the middle 81%. Low
 ground line in the bottom third with the butt resting on it. Clear, quiet
 page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-bow — Bow *(WEAPONS deck · weapon, two-hand, WPN-04)*
@@ -410,6 +431,13 @@ FRAMING. Square plate, whole page drawn edge to edge. Both nocks, the full
 sweep of the stave, the whole string and the corded grip inside the middle
 84%. Low ground line in the bottom third with the lower tip on it. Clear,
 quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-crossbow — Crossbow *(WEAPONS deck · weapon, two-hand, WPN-05)*
@@ -430,7 +458,14 @@ cold slate blue on the prod and trigger, rust red on the lashings, all flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Butt, the whole tiller,
 both prod tips, both lashings, the string, the nut and the trigger inside the
-middle 84%. Low ground line in the bottom third. Clear, quiet page above.
+middle 81%. Low ground line in the bottom third. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-dagger — Dagger *(WEAPONS deck · weapon, hand, WPN-06)*
@@ -454,8 +489,15 @@ on the wooden scales, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Point, edge, fuller,
 both arms of the cross, all three rivets, the whole grip and the pommel
-inside the middle 84%. Low ground line in the bottom third with the pommel
+inside the middle 81%. Low ground line in the bottom third with the pommel
 resting on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-staff — Staff *(WEAPONS deck · weapon, two-hand, WPN-07)*
@@ -480,8 +522,15 @@ rust red on the cord, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The full length of the
 stave from the shoe to the bound top, both shoe rivets, both worn grip bands
-and the planed knot inside the middle 84%. Low ground line in the bottom
+and the planed knot inside the middle 81%. Low ground line in the bottom
 third with the shoe standing on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## item-leather-jerkin — Leather Jerkin *(ARMOUR deck · armour, body, ARM-01)*
@@ -502,6 +551,11 @@ buckle.
 FRAMING. Square plate, whole page drawn edge to edge. The whole jerkin -
 shoulders, lacing, belt, buckle and hem - inside the middle 84%. Low ground
 line in the bottom third. Clear, quiet page above.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## item-helm — Helm *(ARMOUR deck · armour, head, ARM-02)*
@@ -521,6 +575,11 @@ rim. Wash: cold slate blue on the iron, flat, rust red on the strap.
 FRAMING. Square plate, whole page drawn edge to edge. Crown, brow band, every
 rivet and the full length of the nasal inside the middle 84%. Low ground line
 in the bottom third. Clear, quiet page above.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## item-shield — Shield *(ARMOUR deck · armour, off-hand, ARM-03)*
@@ -541,6 +600,11 @@ rim and boss, both flat.
 FRAMING. Square plate, whole page drawn edge to edge. The whole disc - rim,
 every board joint and the boss - inside the middle 84%. Low ground line in
 the bottom third. Clear, quiet page above.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## item-chain-mail — Chain Mail *(ARMOUR deck · armour, body, ARM-04)*
@@ -562,6 +626,11 @@ red on the collar and belt.
 FRAMING. Square plate, whole page drawn edge to edge. Collar, both sleeves,
 belt and the split hem inside the middle 84%. Low ground line in the bottom
 third. Clear, quiet page above.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## item-plate-harness — Plate Harness *(ARMOUR deck · armour, body, ARM-05)*
@@ -582,4 +651,9 @@ steel, flat, rust red on the straps.
 FRAMING. Square plate, whole page drawn edge to edge. Both pauldrons, the
 full breastplate, every fauld lame and the hanging straps inside the middle
 84%. Low ground line in the bottom third. Clear, quiet page above.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```

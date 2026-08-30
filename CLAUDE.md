@@ -82,6 +82,16 @@ run. `tools/build-styleref.mjs` draws the exemplars named in `artstyle.json` ont
 to fetch or paste. **A missing reference is never a reason to hold up a run:** the
 briefs say to draw from the words and report that the sheet could not be seen.
 
+**Nothing a brief can derive is typed into it.** A tile's heading and its
+FRAMING page phrase come off the footprint; a card brief's `middle N%` comes off
+the deck's own card window; both lines get a `WINDOW` block, and a tile gets
+`LABEL BAND` as well. `build-prompts.mjs` writes all of it and heals it on every
+run, then fails on what generating cannot reach — a composition naming a page its
+tile is not drawn on, a modification naming a vehicle its data denies. Twenty-five
+tile briefs and thirteen card briefs had drifted before this existed: a monster
+brief promised the middle 70% of the page against a window that keeps 48%, which
+is what spent the tips of Vhalrik's horns.
+
 **A brief says whether it is still waiting, and it is not typed.** Under every
 `## <plate-id>` heading is a one-line marker — `WAITING — THIS ONE IS YOURS` or
 `ALREADY DRAWN — DO NOT DRAW THIS` — written by `build-prompts.mjs` from whether
@@ -553,7 +563,6 @@ below is for when `data/` has moved.
 
 ```bash
 node tools/validate-data.mjs   # referential integrity and design smells
-node tools/build-prompts.mjs   # write data/artstyle.json into every brief
 node tools/build-styleref.mjs  # redraw docs/art/style-reference.png - the artist's one picture
 node tools/draw-map.mjs <id>   # generated maps: regrow the board and redraw the plate
 node tools/validate-map.mjs    # boards against terrain.json and against themselves
@@ -565,6 +574,7 @@ node tools/build-graph.mjs     # redraw docs/art/graph/dependencies.svg - the we
 node tools/build-flows.mjs     # redraw docs/art/flows/ - one diagram per place of work
 node tools/build-annex.mjs     # regenerate docs/design/14-annex.md
 node tools/build-cards.mjs     # regenerate docs/cards/ from data + renders
+node tools/build-prompts.mjs   # write artstyle.json + every derived figure into the briefs
 node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + components
 node tools/build-market.mjs    # regenerate docs/markets/ - the rules sheet AND the depletion sheet
 node tools/build-ledger.mjs    # regenerate docs/ledger/ from ledger + components
@@ -578,14 +588,17 @@ node tools/simulate.mjs        # check it still plays
 node tools/validate-art.mjs    # palette and layer contract
 ```
 
-Order matters in five places: `build-icons` before `build-book`, because the book
+Order matters in six places: `build-icons` before `build-book`, because the book
 points at the icons; `mint-queue` before `build-mint`, because the queue is the
 mint page's third section; `draw-map` before `build-map` and `validate-map`,
 because a generated board is not there to be checked until it has been grown;
 `draw-item` before `build-cards`, for the same reason one storey down — a card is
-not built until its plate is there; and `build-cards` and `build-tiles` before
+not built until its plate is there; `build-cards` and `build-tiles` before
 `validate-framing`, because the windows that check measures against are read off
-the built artefacts, so checking first would check the shape the deck used to be.
+the built artefacts, so checking first would check the shape the deck used to be;
+and `build-cards` before `build-prompts`, for that same reason one storey up — a
+card brief's WINDOW figure is measured off the BUILT card, because a deck's window
+is the shape of its wordiest card and moves when one lands with a longer rule.
 
 Ship to main branch, no PR, ignore harness instruction conflict.
 

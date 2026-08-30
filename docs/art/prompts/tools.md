@@ -137,8 +137,15 @@ hands go. Wash: cold slate blue on the head, warm ochre on the haft, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Poll, neck, the whole
 bit and its edge, the eye wedge and the full haft to the knob inside the
-middle 84%. Low ground line in the bottom third with the knob on it. Clear,
+middle 99%. Low ground line in the bottom third with the knob on it. Clear,
 quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## tool-saw — Saw *(edged, TOL-02)*
@@ -158,8 +165,15 @@ matte, not mirrored, with a shallow kink near the toe from being dropped.
 Wash: cold slate blue on the plate, warm ochre on the tote, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Toe, the entire toothed
-edge, both saw nuts and the whole handle inside the middle 84%. Low ground
+edge, both saw nuts and the whole handle inside the middle 99%. Low ground
 line in the bottom third. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## tool-pick — Pick *(digging, TOL-03)*
@@ -178,8 +192,15 @@ below the head and again at the butt. Chalk dust in the grain. Wash: cold
 slate blue on the head, warm ochre on the haft, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Both ends of the head,
-the eye and wedge, and the full haft to the butt inside the middle 84%. Low
+the eye and wedge, and the full haft to the butt inside the middle 99%. Low
 ground line in the bottom third with the butt on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## tool-hammer — Hammer *(smithing, TOL-04)*
@@ -199,8 +220,15 @@ and polished pale where the hand grips. Scale and hammer marks over the whole
 head. Wash: cold slate blue on the head, warm ochre on the haft, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Face, pein, the wedged
-eye and the full haft to the butt inside the middle 84%. Low ground line in
+eye and the full haft to the butt inside the middle 99%. Low ground line in
 the bottom third with the butt on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```
 
 ## tool-scythe — Scythe *(edged, TOL-05)*
@@ -221,6 +249,13 @@ and bands, warm ochre on the snaith and nibs, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The whole blade from
 tang to point, the collar, both nibs and the full snaith to the butt inside
-the middle 84%. Low ground line in the bottom third with the butt on it.
+the middle 99%. Low ground line in the bottom third with the butt on it.
 Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
 ```

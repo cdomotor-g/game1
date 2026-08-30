@@ -124,6 +124,11 @@ broad flat panels, ochre on the spar, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The heap of cloth, the
 stretched clew, the spar and both sheet coils inside the middle 84%.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-sweep-rig — Sweep Rig *(rigging, MOD-02)*
@@ -153,6 +158,11 @@ spars, rust red on the ironwork.
 FRAMING. Square plate, whole page drawn edge to edge. The gooseneck pivot, the
 drawn pin, both spars end to end, the laced sail and every crew handle inside
 the middle 84%.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-copper-sheathing — Copper Sheathing *(hull, MOD-03)*
@@ -173,6 +183,11 @@ Wash: rust red on the copper, cold slate on the dock stone, flat.
 FRAMING. Square plate, whole page drawn edge to edge. The stack, the standing
 sheet, the keg and the tools inside the middle 84%; the ghosted hull may run
 to the margins.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-iron-ram — Iron Ram *(hull, MOD-04)*
@@ -192,6 +207,11 @@ ochre on the cradle timber, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The ram, the cradle, the
 bolt row and the sledgehammer inside the middle 84%.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-storm-shutters — Storm Shutters *(hull, MOD-05)*
@@ -210,6 +230,11 @@ Wash: ochre on the boards, cold slate on the ironwork, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The propped row, the open
 shutter, the mallet and the keg inside the middle 84%.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-ice-runners — Ice Runners *(running gear, MOD-06)*
@@ -228,6 +253,11 @@ on a rag. Wash: cold slate on the steel, ochre on the timber, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Both runners, both
 brackets and the displaced wheel inside the middle 84%.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-compound-boiler — Compound Boiler *(powerplant, MOD-07)*
@@ -249,6 +279,11 @@ on the brass bands, rust red on the bedplate, flat.
 FRAMING. Square plate, whole page drawn edge to edge. Both cylinders, the
 receiver pipe between them, the crankshaft and the flywheel inside the middle
 84% - the two different diameters are the card, and they must both be in frame.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-keelbound — Keelbound *(enchantment, water, MOD-08)*
@@ -271,6 +306,11 @@ standing water, ochre on the timber, flat.
 FRAMING. Square plate, whole page drawn edge to edge. The scarf, the chalk
 marks, the alchemist's hands and the crystal inside the middle 84%; the ends of
 the keel may run to the margins.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-fleetfoot-binding — Fleetfoot Binding *(enchantment, air, MOD-09)*
@@ -291,6 +331,11 @@ timber, cold slate on the ironwork, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Her hands, the hub, the
 knotted cord and the crystal inside the middle 84%.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-warded-hold — Warded Hold *(enchantment, earth, MOD-10)*
@@ -312,6 +357,11 @@ flat.
 FRAMING. Square plate, whole page drawn edge to edge. The proud lid, the bent
 crowbar and the nearest two marks inside the middle 84%; the row of crates may
 run to the margins.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## modification-salamander-grate — Salamander Grate *(enchantment, fire, MOD-11)*
@@ -334,4 +384,9 @@ and flat colour only.
 
 FRAMING. Square plate, whole page drawn edge to edge. The grate, the bound
 shape in its cradle and the fireman's slice bar inside the middle 84%.
+
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
