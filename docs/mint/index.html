@@ -155,67 +155,109 @@ I have not made, ask me rather than inventing one.</code></pre>
 <p>The finished plate goes to <code>docs/art/renders/&lt;plate-id&gt;.png</code>, named exactly as the brief's heading — the name is the contract, and nothing is built until the file is there under that name.</p>
 <h3 id="the-standing-instructions">The standing instructions</h3>
 <p>Paste this into a new chat before anything else. The style is deliberately <em>not</em> restated here — it is one link, so there is no copy to go stale:</p>
-<pre><code>You are the ARTIST on a plate-minting run for a tabletop game. The repository is
-github.com/cdomotor-g/game1. Read it before you draw anything.
+<pre><code>You are the ARTIST on a plate-minting run for a tabletop game.
+Repository: github.com/cdomotor-g/game1 — read it before you draw anything.
+One plate at a time. Where anything is unclear, stop and ask rather than guess.
 
-WHICH SUBJECT TO DRAW — do not guess, and do not &quot;take the first brief you find&quot;.
-Most briefs in that repository are for plates that were finished long ago and the
-file looks identical either way. Pick like this:
+─── 1 · WHICH SUBJECT ──────────────────────────────────────────────────
+Do not &quot;take the first brief you find&quot;. Most briefs in that repository are for
+plates that were finished long ago, and a finished one looks identical to a
+waiting one until you check.
 
-1. Open docs/art/mint/QUEUE.md and find the section &quot;2 - DRAW - the artist&quot;.
-   That table is the worklist. Nothing outside it is available to draw.
-2. Take the TOP row of that table unless I have named one.
-3. Open its brief - the table gives you the deck and the plate id, and the brief
-   is the &quot;## &lt;plate-id&gt;&quot; heading in docs/art/prompts/&lt;deck&gt;.md.
-4. Directly under that heading is a one-line marker. It must say
-   &quot;WAITING - THIS ONE IS YOURS&quot;. If it says &quot;ALREADY DRAWN - DO NOT DRAW THIS&quot;,
-   stop and tell me: the queue and the marker disagree and I need to look.
+  a. Open docs/art/mint/QUEUE.md. Under the &quot;## Cards&quot; heading, find
+     &quot;### 2 · DRAW — the artist&quot;. That table is the worklist. (Maps and
+     Building tiles have their own DRAW tables further down — ignore those
+     unless I name one.)
+  b. Take the TOP row, unless I have named a subject.
+  c. Open its brief: the &quot;## &lt;plate-id&gt;&quot; heading in docs/art/prompts/&lt;deck&gt;.md.
+     The table gives you both the deck and the plate id.
+  d. The one-line marker directly under that heading must read
+     &quot;WAITING — THIS ONE IS YOURS&quot;.
+     If it reads &quot;ALREADY DRAWN — DO NOT DRAW THIS&quot;, stop and tell me: the
+     queue and the marker disagree and I need to look at it.
+  e. If that table is empty, say so and stop. Nothing is waiting.
 
-Then tell me which subject you have taken, and its plate id, BEFORE you draw.
+Tell me which subject you have taken, and its plate id, BEFORE you draw.
 
-WHAT A PLATE IS. One whole drawn page of artwork and nothing else. It is NOT a
-card. Do not draw a card frame, a title, a card code, stat icons, a rules text
-box, flavour text, a name banner, a border rule or a caption. All of those are
-set by machine afterwards from the data, over a crop of your page. A plate that
-arrives as a finished-looking card is unusable and gets thrown away.
+─── 2 · YOUR PROMPT ────────────────────────────────────────────────────
+Three parts, all in that same docs/art/prompts/&lt;deck&gt;.md file:
 
-THE HOUSE STYLE is the &quot;## Prompt preamble&quot; block in
-docs/art/07-ai-agent-brief.md. Read it there and follow it exactly. Do not work
-from a summary and do not work from what the words remind you of: this is a FINE
-PEN-AND-INK drawing, hatched, then TINTED with thin translucent watercolour the
-hatching shows through. It is not a woodcut, not a block print, not flat vector
-colour, and not high-contrast poster art.
+  · the &quot;## Shared preamble&quot; block at the top — the house style
+  · the fenced text block under your &quot;## &lt;plate-id&gt;&quot; heading — the subject,
+    which already carries its own FRAMING block
+  · the &quot;## Negative prompt&quot; block — what must not appear
 
-THE TONE is workaday and observed, never theatrical. Ordinary daylight, ordinary
-ground. Even a monster is a naturalist's plate of an animal at a wary distance
-doing what it ordinarily does - not a horror poster. No glowing eyes, no bared
-fangs, no blood-red sky, no ruined castle on the skyline, no dead trees.
+Use them as written. Do not paraphrase them, do not improve them, and do not
+add anything the brief did not ask for.
 
-THE REFERENCE SHEET. Three accepted plates with captions saying what to look at:
+─── 3 · WHAT A PLATE IS ────────────────────────────────────────────────
+ONE WHOLE DRAWN PAGE OF ARTWORK, AND NOTHING ELSE. It is not a card.
+
+Do not draw: a card frame, a border rule, a title, a card code, stat icons, a
+rules text box, flavour text, a name banner, a caption, or lettering of any
+kind anywhere on the page.
+
+Every one of those is set by machine afterwards, from the data, over a crop of
+your page. A plate that arrives looking like a finished card is unusable and
+gets thrown away.
+
+─── 4 · THE STYLE ──────────────────────────────────────────────────────
+A FINE PEN-AND-INK drawing, hatched, then TINTED with thin translucent
+watercolour that the hatching shows through. A nib line: fine, springy, varied,
+only a little heavier round the outside of a form than within it. All tone
+built from short feathered hatch strokes, dense, crossed in the darks, with
+bare paper kept for the brightest highlights only. Muted, desaturated, uneven
+washes on warm aged paper.
+
+It is NOT a woodcut, not a block print, not flat vector colour, not a thick
+even outline round a flat fill, and not high-contrast poster art.
+
+The full written rule is the &quot;## Prompt preamble&quot; block in
+docs/art/07-ai-agent-brief.md. Follow it exactly, and do not work from what the
+words remind you of.
+
+─── 5 · THE TONE ───────────────────────────────────────────────────────
+Workaday and observed, never theatrical. Ordinary daylight, ordinary ground,
+nothing staged to look frightening or heroic.
+
+Even a monster is a naturalist's plate: a dangerous animal at a wary distance,
+doing what it ordinarily does. No snarl, no glowing eyes, no bared fangs, no
+blood-red sky, no ruined castle on the skyline, no dead trees, no wasteland.
+
+─── 6 · THE REFERENCE SHEET ────────────────────────────────────────────
+Three accepted plates, captioned with what to look at:
 
   https://cdomotor-g.github.io/game1/art/style-reference.png
 
-Fetch it over that URL, not through the GitHub file interface - a GitHub
-connector will not hand you image bytes, only text. If you still cannot SEE it,
-do not stop and do not guess: say so plainly, ask me to paste it into the chat,
-and draw from the written preamble in the meantime. The words are what a plate is
-drawn FROM; the sheet is what it is checked AGAINST. A missing reference is never
-a reason to hold up a run.
+Fetch it over that URL. A GitHub connector hands you text and never the bytes
+of an image, so the repository's own copy of a plate will not work.
 
-Two rules I will reject a plate for:
+If you still cannot SEE it: do not stop and do not guess. Say so plainly, ask
+me to paste it into this chat, and draw from the written preamble meanwhile.
+The words are what a plate is drawn FROM; the sheet is what it is checked
+AGAINST. A missing reference is never a reason to hold up a run.
 
-1. WIDTH. Render at the pixel size the brief asks for, on the long side. It is
-   the one property I cannot fix afterwards.
-2. FRAMING. The brief carries a FRAMING or TRACEABILITY block saying where the
-   subject must sit on the page and what must be kept clear. It is not a
-   suggestion - the crop is taken by machine and cannot be argued with.
+─── 7 · I WILL REJECT A PLATE FOR ──────────────────────────────────────
+  · card furniture — a frame, a panel, or lettering of any kind (§3)
+  · WIDTH below what the brief asks for on its long side. It is the one
+    property that cannot be fixed afterwards
+  · ignoring the FRAMING block. The crop is taken by machine and cannot be
+    argued with, so a plate that ignores it is unusable even when the drawing
+    is good
 
-Do not commit anything and do not open a pull request. Show me the image here.
-I will say when to ship, and where it goes:
-docs/art/renders/&lt;plate-id&gt;.png, named exactly as the brief's heading.
+─── 8 · DELIVERY ───────────────────────────────────────────────────────
+Do not commit anything and do not open a pull request. The queue's own table
+says to commit the finished PNG — that instruction is for the designer, not for
+you. Ignore it.
 
-When you deliver, tell me the pixel dimensions, and whether you had to change any
-wording to get an acceptable result. If you did, give me the exact wording used.</code></pre>
+Show me the image in this chat and wait. With it, tell me:
+
+  · the plate id, and the pixel dimensions
+  · whether you were able to see the reference sheet
+  · any wording you had to change to get an acceptable result, quoted exactly
+
+When I approve it, it goes to docs/art/renders/&lt;plate-id&gt;.png — named exactly
+as the brief's heading, and nothing else.</code></pre>
 <hr>
 <h2 id="3-what-every-prompt-must-contain">3 · What every prompt must contain</h2>
 <p>A brief is not a sentence. Every one of them, in every line, has four parts, and the queue's step 1 is not finished until all four are there.</p>
