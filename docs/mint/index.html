@@ -564,6 +564,9 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <p><strong>cards 61/81 · maps 1/1 · building tiles 4/54</strong></p>
 <blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 61 of 81 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
+<h2 id="contract-problems-1-thing-to-fix">Contract problems — 1 thing to fix</h2>
+<p>These are not missing work, they are broken contracts: something the mint requires before a subject can be handed over, that is not there. <code>data/mint.json</code> says what each line requires and <code>tools/lib/mint.mjs</code> checks it.</p>
+<ul><li>buildingtiles/timber-house: the plate at docs/art/renders/tile-timber-house.png is not an image at all - the bytes carry no PNG, JPEG, WebP, GIF or SVG header, which is what a file mangled in upload looks like. Ask for it to be sent again</li></ul>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
 <p><strong>61 of 81 minted.</strong> 0 waiting on a brief, 20 waiting on art, 0 waiting on frame.</p>
@@ -633,7 +636,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 638 px on the long side (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1276 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
-<tbody><tr><td><code>timber-house</code></td><td>Timber House</td><td>Housing</td><td><code>tile-timber-house</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tbody><tr><td><code>timber-house</code></td><td>Timber House</td><td>Housing</td><td><code>tile-timber-house</code></td><td>✓</td><td>✓</td><td>·</td></tr>
 <tr><td><code>brick-house</code></td><td>Brick House</td><td>Housing</td><td><code>tile-brick-house</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>manor</code></td><td>Manor</td><td>Housing</td><td><code>tile-manor</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>lumber-camp</code></td><td>Lumber Camp</td><td>Extraction</td><td><code>tile-lumber-camp</code></td><td>✓</td><td>·</td><td>·</td></tr>

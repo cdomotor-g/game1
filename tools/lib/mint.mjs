@@ -21,7 +21,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { matchesFilter } from './decks.mjs';
 import { plateIdFor } from './plates.mjs';
-import { pngSize } from './png.mjs';
+import { pngSize, pngProblem } from './png.mjs';
 import { tileSubjects, plateIdOf, platesOf, formatFor, boxOf, bandOf, largestHexMm } from './tiles.mjs';
 
 const HERE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -673,13 +673,22 @@ export function survey(root = HERE) {
         const aim = aimOf(root, line, row);
 
         let longSide = 0;
+        let unreadable = null;
         if (hasPlate) {
-          bound = minLongSideFor(root, line, row);
-          if (bound.min) {
-            const { width, height } = pngSize(file);
-            longSide = Math.max(width, height);
-            if (longSide < bound.min) undersized.push({ code: row.code, longSide });
-            else if (bound.want && longSide < bound.want) belowWant.push({ code: row.code, longSide });
+          /* A plate somebody else supplied may not be readable at all. That is
+             this one plate's problem and must not take the queue down with it -
+             the queue is the tool you run to find out what is wrong. */
+          unreadable = pngProblem(file);
+          if (unreadable) {
+            out.problems.push(`${line.id}/${row.code}: the plate at ${platePath(line, row)} ${unreadable}`);
+          } else {
+            bound = minLongSideFor(root, line, row);
+            if (bound.min) {
+              const { width, height } = pngSize(file);
+              longSide = Math.max(width, height);
+              if (longSide < bound.min) undersized.push({ code: row.code, longSide });
+              else if (bound.want && longSide < bound.want) belowWant.push({ code: row.code, longSide });
+            }
           }
         }
 
@@ -690,7 +699,10 @@ export function survey(root = HERE) {
           longSide,
           hasAim: aim.done,
           aimExtra: aim.extra,
-          step: !hasBrief && !hasPlate ? 'write' : !hasPlate ? 'draw' : !aim.done ? 'aim' : 'minted',
+          unreadable,
+          /* An unreadable plate has not arrived. Leaving the subject at DRAW is
+             what puts it back on the artist's worklist, which is where it goes. */
+          step: !hasBrief && !hasPlate ? 'write' : (!hasPlate || unreadable) ? 'draw' : !aim.done ? 'aim' : 'minted',
         });
       }
 

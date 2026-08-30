@@ -32,7 +32,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { crop, readFraming } from './lib/framing.mjs';
-import { pngSize } from './lib/png.mjs';
+import { pngSize, pngProblem } from './lib/png.mjs';
 import { plateIdFor } from './lib/plates.mjs';
 import { cardsOfDeck } from './lib/mint.mjs';
 import { tileSubjects, plateIdOf, boxOf } from './lib/tiles.mjs';
@@ -198,6 +198,8 @@ for (const id of plates) {
     }
   }
 
+  const bad = pngProblem(join(RENDERS, `${id}.png`));
+  if (bad) { errors.push(`${id}: the plate ${bad}`); continue; }
   const plate = pngSize(join(RENDERS, `${id}.png`));
   const windows = [];
   const tile = tileWindows.get(id);

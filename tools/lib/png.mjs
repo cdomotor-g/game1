@@ -12,7 +12,7 @@
  * type 3) are expanded from PLTE. Interlaced (Adam7) images are rejected loudly
  * rather than decoded wrongly.
  */
-import { readFileSync, writeFileSync, openSync, readSync, closeSync } from 'node:fs';
+import { readFileSync, writeFileSync, openSync, readSync, closeSync, existsSync, statSync } from 'node:fs';
 import { inflateSync, deflateSync } from 'node:zlib';
 
 const SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
@@ -169,6 +169,49 @@ export function pngSize(path) {
   if (!head.subarray(0, 8).equals(SIGNATURE)) throw new Error(`${path} is not a PNG`);
   if (head.toString('ascii', 12, 16) !== 'IHDR') throw new Error(`${path}: no IHDR`);
   return { width: head.readUInt32BE(16), height: head.readUInt32BE(20) };
+}
+
+/**
+ * Why this file cannot be read as a PNG, in one plain clause, or null if it can.
+ *
+ * A plate arrives by an artist committing it, so a mangled upload is a real and
+ * recurring event rather than a theoretical one: `tile-timber-house` landed as
+ * 600 kB of high-entropy bytes with no PNG container anywhere in them. Every
+ * tool that sweeps `docs/art/renders/` died on it with a stack trace out of
+ * `pngSize`, which is the wrong report from the wrong place - one bad upload
+ * should cost that one plate, not the build, and the message should name the
+ * file and say what to do about it.
+ *
+ * `pngSize` stays strict. This is for the callers that walk a directory of
+ * files somebody else supplied.
+ */
+export function pngProblem(path) {
+  if (!existsSync(path)) return 'is missing';
+  const size = statSync(path).size;
+  if (size < 24) return `is ${size} bytes - too small to be an image`;
+  const head = Buffer.alloc(24);
+  const fd = openSync(path, 'r');
+  try { readSync(fd, head, 0, 24, 0); } finally { closeSync(fd); }
+  if (!head.subarray(0, 8).equals(SIGNATURE)) {
+    /* Name what it IS where that is knowable, because "not a PNG" and "a JPEG
+       with the wrong extension" want different fixes from different people. */
+    const b = head;
+    const kind =
+      b[0] === 0xff && b[1] === 0xd8 ? 'a JPEG'
+      : b.toString('ascii', 0, 4) === 'RIFF' && b.toString('ascii', 8, 12) === 'WEBP' ? 'a WebP'
+      : b.toString('ascii', 0, 3) === 'GIF' ? 'a GIF'
+      : b.toString('ascii', 0, 2) === 'BM' ? 'a BMP'
+      : b.toString('ascii', 0, 5) === '%PDF-' ? 'a PDF'
+      : b.toString('ascii', 0, 5) === '<?xml' || b.toString('ascii', 0, 4) === '<svg' ? 'an SVG'
+      : b.toString('ascii', 0, 7) === 'version' ? 'a git-lfs pointer'
+      : null;
+    return kind
+      ? `is ${kind}, not a PNG - it needs converting, or renaming to its real extension`
+      : 'is not an image at all - the bytes carry no PNG, JPEG, WebP, GIF or SVG header, '
+        + 'which is what a file mangled in upload looks like. Ask for it to be sent again';
+  }
+  if (head.toString('ascii', 12, 16) !== 'IHDR') return 'has a PNG signature but no IHDR - it is truncated or corrupt';
+  return null;
 }
 
 /** Colour at a pixel, clamped to the image bounds. */

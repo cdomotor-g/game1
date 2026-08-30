@@ -12,7 +12,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pngSize } from './lib/png.mjs';
+import { pngSize, pngProblem } from './lib/png.mjs';
 import { readFraming, WHOLE_PLATE } from './lib/framing.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -60,6 +60,8 @@ if (existsSync(abs('art/renders'))) {
   for (const f of readdirSync(abs('art/renders')).sort()) {
     if (!f.endsWith('.png')) continue;
     const id = f.slice(0, -4);
+    const bad = pngProblem(join(abs('art/renders'), f));
+    if (bad) { console.warn(`  ! art/renders/${f} ${bad}`); continue; }
     const { width, height } = pngSize(join(abs('art/renders'), f));
     const entry = framing.plates[id];
     if (!entry) unframed.push(id);

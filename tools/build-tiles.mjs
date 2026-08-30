@@ -55,7 +55,7 @@ import { fileURLToPath } from 'node:url';
 
 import { readTiles, tileSubjects, plateIdOf, worldHexMm, boxOf, outlineOf, cellPaths, bandOf } from './lib/tiles.mjs';
 import { crop, readFraming } from './lib/framing.mjs';
-import { pngSize } from './lib/png.mjs';
+import { pngSize, pngProblem } from './lib/png.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
@@ -160,9 +160,16 @@ function geometryOf(row) {
  * is. Where there is no plate the window is bare paper — see the header: a tile
  * without its picture is a blank counter, not a broken tile.
  */
+/* A Set, not a list: picture() runs once per SIDE, and one bad plate is one
+   report rather than two. */
+const unreadable = new Set();
 function picture(plate, g) {
   const file = join(RENDERS, `${plate}.png`);
   if (!existsSync(file)) return { art: '', waiting: true };
+  /* A tile builds without its plate - a blank counter is what a prototype tile
+     is - so an unreadable one is the waiting case, not a build failure. */
+  const bad = pngProblem(file);
+  if (bad) { unreadable.add(`${plate}.png ${bad}`); return { art: '', waiting: true }; }
 
   const size = pngSize(file);
   const entry = framing.plates[plate];
@@ -1057,4 +1064,8 @@ if (checkOnly) {
     (waiting.length ? `; ${waiting.length} still waiting on a plate and printing as blanks` : '') +
     (stale.length ? `; removed ${stale.length} file(s) no longer built` : '')
   );
+  /* A plate that arrived and cannot be read is NOT the same as one that has not
+     arrived, and the tile prints as a blank either way - so the difference has
+     to be said out loud or it is invisible. */
+  for (const line of unreadable) console.warn(`  ! ${line}`);
 }

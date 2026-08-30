@@ -21,6 +21,13 @@ catches that in CI.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
+## Contract problems — 1 thing to fix
+
+These are not missing work, they are broken contracts: something the mint requires
+before a subject can be handed over, that is not there. `data/mint.json` says what
+each line requires and `tools/lib/mint.mjs` checks it.
+
+- buildingtiles/timber-house: the plate at docs/art/renders/tile-timber-house.png is not an image at all - the bytes carry no PNG, JPEG, WebP, GIF or SVG header, which is what a file mangled in upload looks like. Ask for it to be sent again
 
 ## Cards
 
@@ -131,7 +138,7 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 
 | Code | Tile | Category | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `timber-house` | Timber House | Housing | `tile-timber-house` | ✓ | · | · |
+| `timber-house` | Timber House | Housing | `tile-timber-house` | ✓ | ✓ | · |
 | `brick-house` | Brick House | Housing | `tile-brick-house` | ✓ | · | · |
 | `manor` | Manor | Housing | `tile-manor` | ✓ | · | · |
 | `lumber-camp` | Lumber Camp | Extraction | `tile-lumber-camp` | ✓ | · | · |

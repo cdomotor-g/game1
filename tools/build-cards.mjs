@@ -50,7 +50,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pngSize } from './lib/png.mjs';
+import { pngSize, pngProblem } from './lib/png.mjs';
 import { crop, readFraming, WHOLE_PLATE } from './lib/framing.mjs';
 import { plateIdFor } from './lib/plates.mjs';
 import { cardsOfDeck } from './lib/decks.mjs';
@@ -346,7 +346,12 @@ function statStrip(cells) {
 /** The plate's pixel size, cached — one IHDR read per file, not one decode. */
 const plateSizes = new Map();
 function plateSize(id) {
-  if (!plateSizes.has(id)) plateSizes.set(id, pngSize(join(RENDERS, `${id}.png`)));
+  if (!plateSizes.has(id)) {
+    const file = join(RENDERS, `${id}.png`);
+    /* null, not a throw: a card whose plate cannot be read is skipped exactly
+       like one whose plate has not arrived, because it has not. */
+    plateSizes.set(id, pngProblem(file) ? null : pngSize(file));
+  }
   return plateSizes.get(id);
 }
 
