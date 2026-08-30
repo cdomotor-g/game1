@@ -63,11 +63,15 @@ shaded, sparkles, signature, text, letters, logo, UI, frame border,
 woodcut, linocut, block print, flat vector, vector illustration, flat
 colour fill, solid colour block, thick uniform outline, heavy black
 outline, bold outline, infographic, diagram, icon, minimalist, clip art,
-screen print, poster art, comic, cartoon, colouring book, hillshading,
-terrain relief shading, satellite imagery, contour lines, depth
-soundings, grid lines, hex grid, square grid, latitude longitude lines,
-modern typography, sans-serif labels, national borders, political
-colouring, minimap, game UI, frame border with figures
+screen print, poster art, comic, cartoon, colouring book, menacing,
+sinister, ominous, horror, gothic, demonic, hellish, glowing eyes,
+burning eyes, snarling, bared fangs, blood-red sky, ruined castle, dead
+trees, wasteland, hellscape, brimstone, epic, dramatic lighting, high
+contrast, movie poster, book cover, hillshading, terrain relief shading,
+satellite imagery, contour lines, depth soundings, grid lines, hex grid,
+square grid, latitude longitude lines, modern typography, sans-serif
+labels, national borders, political colouring, minimap, game UI, frame
+border with figures
 ```
 
 `hex grid` is in there deliberately. **Never ask for a grid on the plate.** The
@@ -172,6 +176,8 @@ going. A plate is not finished when the picture looks right; it is finished when
 ---
 
 ## korvane-reach — The Korvane Reach *(minted)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/korvane-reach.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 Kept for reference: this is the brief the current plate was drawn to, and it is
 the plate every rule on this page was learned from. Its commission block was

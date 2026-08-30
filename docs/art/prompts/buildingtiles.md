@@ -110,6 +110,13 @@ would be a number that stops being true the day a map grows a print preset.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
+This is a PLATE: one whole drawn page of artwork, and nothing else. It
+is NOT a card. The card frame, the title, the card code, the stat icons,
+the rules text and the flavour text are all set by machine afterwards,
+from the data, over a crop of this page. Draw the picture alone, edge to
+edge - no panel, no banner, no border rule, no box, and no lettering of
+any kind anywhere on the page.
+
 Fine pen-and-ink drawing on aged paper, finished by hand with thin
 watercolour washes: a plate from an illustrated surveyor's notebook of
 buildings. Drawn with a nib - a fine, springy, varied line, only a
@@ -130,6 +137,12 @@ Muted and desaturated throughout, warm ochre for thatch and timber, rust
 red for tile and brick, dusty grey-green for grass and crop, cold slate
 blue for stone, iron and water. Paper is warm aged oatmeal, never white.
 Ink is warm near-black, never pure black.
+
+The mood is workaday and observed, never theatrical. This is a world of
+trade, weather and repair: ordinary daylight, ordinary ground, and
+nothing staged to look frightening or heroic. A dangerous animal is
+drawn the way a naturalist draws one - at a wary distance, doing what it
+ordinarily does - rather than the way a poster sells a fight.
 
 ONE small building or one worked patch of ground, drawn from about
 thirty degrees above and thirty degrees to the left, standing on its own
@@ -176,15 +189,22 @@ shaded, sparkles, signature, text, letters, logo, UI, frame border,
 woodcut, linocut, block print, flat vector, vector illustration, flat
 colour fill, solid colour block, thick uniform outline, heavy black
 outline, bold outline, infographic, diagram, icon, minimalist, clip art,
-screen print, poster art, comic, cartoon, colouring book, chibi, cute,
-isometric video game asset, magic particles, numerals, signage,
-vignette, hex grid, square grid, ruled lines, horizon, sky, clouds,
-background scenery, distant mountains, people, figures, crowd, heroic,
-grimdark, ruined, apocalyptic, overgrown, abandoned, cutaway, floor
-plan, blueprint, elevation drawing, floating island, diorama, plinth,
-base slab, cut-out, isolated object on a plain background, white margin,
-empty border, caption, handwriting, manuscript text, book page, page
-border, plate number, framed illustration, mounted plate
+screen print, poster art, comic, cartoon, colouring book, menacing,
+sinister, ominous, horror, gothic, demonic, hellish, glowing eyes,
+burning eyes, snarling, bared fangs, blood-red sky, ruined castle, dead
+trees, wasteland, hellscape, brimstone, epic, dramatic lighting, high
+contrast, movie poster, book cover, card frame, card border, card
+layout, trading card, game card, title bar, name banner, title banner,
+stat block, stat icons, rules text box, flavour text, caption box,
+panel, plate number, rounded corners, inset picture, picture window,
+matte, mount, chibi, cute, isometric video game asset, magic particles,
+numerals, signage, vignette, hex grid, square grid, ruled lines,
+horizon, sky, clouds, background scenery, distant mountains, people,
+figures, crowd, heroic, grimdark, ruined, apocalyptic, overgrown,
+abandoned, cutaway, floor plan, blueprint, elevation drawing, floating
+island, diorama, plinth, base slab, cut-out, isolated object on a plain
+background, white margin, empty border, caption, handwriting, manuscript
+text, book page, page border, framed illustration, mounted plate
 ```
 
 ## The back — and why it has no brief
@@ -216,6 +236,8 @@ band sits there on both sides.
 
 ## tile-hut — one cell, square
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-hut.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -231,6 +253,8 @@ in any corner.
 ```
 
 ## tile-timber-house — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-timber-house.png`.
 
 ```text
 [PREAMBLE]
@@ -249,6 +273,8 @@ Ridge line kept in the upper third.
 
 ## tile-brick-house — three cells, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-brick-house.png`.
+
 ```text
 [PREAMBLE]
 
@@ -265,6 +291,8 @@ Chimney well inside the top margin; nothing in any corner.
 ```
 
 ## tile-manor — four cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-manor.png`.
 
 ```text
 [PREAMBLE]
@@ -287,6 +315,8 @@ estate rather than a large cottage. Chimneys well inside the top margin.
 
 ## tile-lumber-camp — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-lumber-camp.png`.
+
 ```text
 [PREAMBLE]
 
@@ -306,6 +336,8 @@ trees taller than the shear legs - this is cleared ground, not forest.
 ```
 
 ## tile-quarry — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-quarry.png`.
 
 ```text
 [PREAMBLE]
@@ -327,6 +359,8 @@ which is ground the band may cover.
 
 ## tile-clay-pit — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-clay-pit.png`.
+
 ```text
 [PREAMBLE]
 
@@ -346,6 +380,8 @@ tells this from the sand pit.
 
 ## tile-sand-pit — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-sand-pit.png`.
+
 ```text
 [PREAMBLE]
 
@@ -364,6 +400,8 @@ at seventeen millimetres.
 ```
 
 ## tile-mine — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-mine.png`.
 
 ```text
 [PREAMBLE]
@@ -385,6 +423,8 @@ cover. Nothing above the gin posts.
 ```
 
 ## tile-oil-derrick — three cells, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-oil-derrick.png`.
 
 ```text
 [PREAMBLE]
@@ -409,6 +449,8 @@ which is ground the band may cover.
 
 ## tile-well — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-well.png`.
+
 ```text
 [PREAMBLE]
 
@@ -429,6 +471,8 @@ scenery to make it look busier.
 ```
 
 ## tile-dock — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-dock.png`.
 
 ```text
 [PREAMBLE]
@@ -455,6 +499,8 @@ the stone one, and this must not be mistaken for it.
 
 ## tile-farm — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-farm.png`.
+
 ```text
 [PREAMBLE]
 
@@ -471,6 +517,8 @@ separate tiles and must NOT appear here.
 ```
 
 ## tile-pasture — four cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-pasture.png`.
 
 ```text
 [PREAMBLE]
@@ -490,6 +538,8 @@ across the middle band. Nothing important in any corner.
 
 ## tile-orchard — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-orchard.png`.
+
 ```text
 [PREAMBLE]
 
@@ -508,6 +558,8 @@ horizon, no sky, no fence, no building.
 ```
 
 ## tile-vineyard — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-vineyard.png`.
 
 ```text
 [PREAMBLE]
@@ -529,6 +581,8 @@ millimetres. No building.
 
 ## tile-apiary — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-apiary.png`.
+
 ```text
 [PREAMBLE]
 
@@ -548,6 +602,8 @@ is ground the band may cover. No hollow log hives, no boxes - skeps.
 
 ## tile-crop-grain — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-crop-grain.png`.
+
 ```text
 [PREAMBLE]
 
@@ -562,6 +618,8 @@ the pattern survives the hexagonal cut. No horizon, no sky, no building.
 ```
 
 ## tile-crop-vegetables — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-crop-vegetables.png`.
 
 ```text
 [PREAMBLE]
@@ -578,6 +636,8 @@ No horizon, no sky, no building.
 
 ## tile-crop-flax — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-crop-flax.png`.
+
 ```text
 [PREAMBLE]
 
@@ -592,6 +652,8 @@ horizon, no sky, no building.
 ```
 
 ## tile-crop-cotton — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-crop-cotton.png`.
 
 ```text
 [PREAMBLE]
@@ -608,6 +670,8 @@ horizon, no sky, no building.
 ```
 
 ## tile-crop-hops — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-crop-hops.png`.
 
 ```text
 [PREAMBLE]
@@ -629,6 +693,8 @@ they are meant to be cut by it. Rows corner to corner.
 
 ## tile-sawmill — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-sawmill.png`.
+
 ```text
 [PREAMBLE]
 
@@ -645,6 +711,8 @@ piece must read across.
 ```
 
 ## tile-charcoal-kiln — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-charcoal-kiln.png`.
 
 ```text
 [PREAMBLE]
@@ -668,6 +736,8 @@ the other four heat tiles.
 
 ## tile-smelter — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-smelter.png`.
+
 ```text
 [PREAMBLE]
 
@@ -689,6 +759,8 @@ may cover.
 ```
 
 ## tile-steelworks — three cells, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-steelworks.png`.
 
 ```text
 [PREAMBLE]
@@ -712,6 +784,8 @@ straight-lined - that is what separates it from the smelter.
 
 ## tile-brickworks — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-brickworks.png`.
+
 ```text
 [PREAMBLE]
 
@@ -733,6 +807,8 @@ bricks at seventeen millimetres - that is the whole tile.
 ```
 
 ## tile-glassworks — three cells, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-glassworks.png`.
 
 ```text
 [PREAMBLE]
@@ -757,6 +833,8 @@ may be drawn taller than the cone.
 
 ## tile-blacksmith — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-blacksmith.png`.
+
 ```text
 [PREAMBLE]
 
@@ -780,6 +858,8 @@ the band may cover.
 
 ## tile-carpenter — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-carpenter.png`.
+
 ```text
 [PREAMBLE]
 
@@ -801,6 +881,8 @@ is the sawmill, and these two must not be confused.
 ```
 
 ## tile-weaver — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-weaver.png`.
 
 ```text
 [PREAMBLE]
@@ -824,6 +906,8 @@ the band may cover.
 
 ## tile-tannery — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-tannery.png`.
+
 ```text
 [PREAMBLE]
 
@@ -844,6 +928,8 @@ read as pits in the ground and not as tubs standing on it.
 ```
 
 ## tile-tailor — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-tailor.png`.
 
 ```text
 [PREAMBLE]
@@ -868,6 +954,8 @@ cover. No dummy, no figure, no hanging garments over the street.
 
 ## tile-mill — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-mill.png`.
+
 ```text
 [PREAMBLE]
 
@@ -889,6 +977,8 @@ sawmill has the wheel and this must not borrow it.
 ```
 
 ## tile-bakery — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-bakery.png`.
 
 ```text
 [PREAMBLE]
@@ -912,6 +1002,8 @@ third.
 
 ## tile-butcher — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-butcher.png`.
+
 ```text
 [PREAMBLE]
 
@@ -932,6 +1024,8 @@ ground the band may cover.
 ```
 
 ## tile-dairy — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-dairy.png`.
 
 ```text
 [PREAMBLE]
@@ -955,6 +1049,8 @@ and shut in - the opposite of the bakery, and it should read that way.
 
 ## tile-brewery — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-brewery.png`.
+
 ```text
 [PREAMBLE]
 
@@ -975,6 +1071,8 @@ and hop sack at the lower left, which is ground the band may cover.
 ```
 
 ## tile-winery — three cells, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-winery.png`.
 
 ```text
 [PREAMBLE]
@@ -1003,6 +1101,8 @@ is its own tile and must not appear here.
 
 ## tile-warehouse — three cells, square
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-warehouse.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -1019,6 +1119,8 @@ edge. Hoist beam well inside the top margin.
 ```
 
 ## tile-granary — three cells, square
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-granary.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1045,6 +1147,8 @@ under the building, not out to the sides. Ground, not detail, in the lower-left.
 
 ## tile-market — one cell, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-market.png`.
+
 ```text
 [PREAMBLE]
 
@@ -1066,6 +1170,8 @@ moment it has a wall it stops being a market.
 ```
 
 ## tile-trading-house — three cells, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-trading-house.png`.
 
 ```text
 [PREAMBLE]
@@ -1090,6 +1196,8 @@ the warehouse's and this must not borrow them.
 
 ## tile-town-hall — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-town-hall.png`.
+
 ```text
 [PREAMBLE]
 
@@ -1110,6 +1218,8 @@ ground the band may cover.
 ```
 
 ## tile-guildhall — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-guildhall.png`.
 
 ```text
 [PREAMBLE]
@@ -1133,6 +1243,8 @@ left, which is ground the band may cover. Gable inside the upper margin.
 
 ## tile-inn — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-inn.png`.
+
 ```text
 [PREAMBLE]
 
@@ -1155,6 +1267,8 @@ kind.
 ```
 
 ## tile-infirmary — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-infirmary.png`.
 
 ```text
 [PREAMBLE]
@@ -1181,6 +1295,8 @@ shrine furniture.
 # Defence
 
 ## tile-barracks — three cells, square
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tile-barracks.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1234,6 +1350,8 @@ prompt.
 
 ## tile-watchtower — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-watchtower.png`.
+
 ```text
 [PREAMBLE]
 
@@ -1255,6 +1373,8 @@ wood run left and out of the lower left, which is ground the band may cover.
 ```
 
 ## tile-palisade — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-palisade.png`.
 
 ```text
 [PREAMBLE]
@@ -1282,6 +1402,8 @@ No towers, no wall walk roofed over - a fence, seriously made.
 
 ## tile-alchemist — two cells, 3:2 landscape
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-alchemist.png`.
+
 ```text
 [PREAMBLE]
 
@@ -1305,6 +1427,8 @@ the band may cover. No stars, no sigils, no glow of any kind.
 ```
 
 ## tile-shrine — one cell, square
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-shrine.png`.
 
 ```text
 [PREAMBLE]
@@ -1332,6 +1456,8 @@ no carving, no symbol on the stone.
 
 ## tile-harbour — three cells, square
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-harbour.png`.
+
 ```text
 [PREAMBLE]
 
@@ -1356,6 +1482,8 @@ which is ground the band may cover.
 ```
 
 ## tile-rail-depot — two cells, 3:2 landscape
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tile-rail-depot.png`.
 
 ```text
 [PREAMBLE]

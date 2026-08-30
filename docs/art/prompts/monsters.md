@@ -15,6 +15,13 @@ Render at A4 portrait proportion, 4000 px on the long side or better.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
+This is a PLATE: one whole drawn page of artwork, and nothing else. It
+is NOT a card. The card frame, the title, the card code, the stat icons,
+the rules text and the flavour text are all set by machine afterwards,
+from the data, over a crop of this page. Draw the picture alone, edge to
+edge - no panel, no banner, no border rule, no box, and no lettering of
+any kind anywhere on the page.
+
 Fine pen-and-ink drawing on aged paper, finished by hand with thin
 watercolour washes: a plate from an illustrated bestiary. Drawn with a
 nib - a fine, springy, varied line, only a little heavier round the
@@ -34,6 +41,12 @@ against an edge, stopping short of the line as often as they cross it.
 Muted and desaturated throughout, warm ochre, rust red, dusty
 grey-green, cold slate blue. Paper is warm aged oatmeal, never white.
 Ink is warm near-black, never pure black.
+
+The mood is workaday and observed, never theatrical. This is a world of
+trade, weather and repair: ordinary daylight, ordinary ground, and
+nothing staged to look frightening or heroic. A dangerous animal is
+drawn the way a naturalist draws one - at a wary distance, doing what it
+ordinarily does - rather than the way a poster sells a fight.
 
 A full-page bestiary plate: one creature filling the page, full length,
 drawn from observation at a wary distance, standing in a strip of its
@@ -59,12 +72,21 @@ shaded, sparkles, signature, text, letters, logo, UI, frame border,
 woodcut, linocut, block print, flat vector, vector illustration, flat
 colour fill, solid colour block, thick uniform outline, heavy black
 outline, bold outline, infographic, diagram, icon, minimalist, clip art,
-screen print, poster art, comic, cartoon, colouring book, chibi, cute,
-magic particles, glowing eyes, glowing runes, fire glow, light rays,
-battle scene, multiple creatures, human figures
+screen print, poster art, comic, cartoon, colouring book, menacing,
+sinister, ominous, horror, gothic, demonic, hellish, glowing eyes,
+burning eyes, snarling, bared fangs, blood-red sky, ruined castle, dead
+trees, wasteland, hellscape, brimstone, epic, dramatic lighting, high
+contrast, movie poster, book cover, card frame, card border, card
+layout, trading card, game card, title bar, name banner, title banner,
+stat block, stat icons, rules text box, flavour text, caption box,
+panel, plate number, rounded corners, inset picture, picture window,
+matte, mount, chibi, cute, magic particles, glowing runes, fire glow,
+light rays, battle scene, multiple creatures, human figures
 ```
 
 ## monster-cinder-wolf — Cinder Wolf *(fire, MON-01)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-cinder-wolf.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -85,6 +107,8 @@ centre of the page.
 
 ## monster-ash-drake — Ash Drake *(fire, MON-02)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-ash-drake.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -104,6 +128,8 @@ centre.
 
 ## monster-forge-wight — Forge Wight *(fire, MON-03)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-forge-wight.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -122,6 +148,8 @@ rows of tools may run to the margins. Hood turned down to the work.
 ```
 
 ## monster-barrow-troll — Barrow Troll *(earth, MON-04)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-barrow-troll.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -143,6 +171,8 @@ turned toward the reader.
 
 ## monster-stone-boar — Stone Boar *(earth, MON-05)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-stone-boar.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -162,6 +192,8 @@ still visible.
 
 ## monster-gravel-wyrm — Gravel Wyrm *(earth, MON-06)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-gravel-wyrm.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -174,6 +206,8 @@ the plates, ochre on the castings, flat.
 ```
 
 ## monster-mire-strangler — Mire Strangler *(water, MON-07)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-mire-strangler.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -188,6 +222,8 @@ the reeds, the limbs bare paper, flat.
 
 ## monster-reef-serpent — Reef Serpent *(water, MON-08)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-reef-serpent.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -199,6 +235,8 @@ ruled wave lines. Wash: cold slate blue on the sea and the deep coils, flat.
 ```
 
 ## monster-deepwater-maw — The Deepwater Maw *(water, MON-09, unique)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-deepwater-maw.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -213,6 +251,8 @@ Wash: cold slate blue graded by hatch density only, never by tone, flat.
 
 ## monster-rime-harpy — Rime Harpy *(air, MON-10)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-rime-harpy.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -225,6 +265,8 @@ feathers, one ochre note on the hoard's brass, flat.
 ```
 
 ## monster-dust-devil — Dust Devil *(air, MON-11)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-dust-devil.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -239,6 +281,8 @@ only; the wind itself is bare paper and line, flat.
 
 ## monster-storm-roc — Storm Roc *(air, MON-12)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-storm-roc.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -252,6 +296,8 @@ flat.
 ```
 
 ## monster-vhalrik-the-cinder-crowned — Vhalrik, the Cinder-Crowned *(fire, MON-13, unique)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-vhalrik-the-cinder-crowned.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -275,6 +321,8 @@ run to the margins. Head turned three-quarters toward the centre of the page.
 ```
 
 ## monster-hoarwyrm — The Hoarwyrm *(air, MON-14)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/monster-hoarwyrm.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]

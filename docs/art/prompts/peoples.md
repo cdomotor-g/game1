@@ -11,6 +11,13 @@ is set later — never generated.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
+This is a PLATE: one whole drawn page of artwork, and nothing else. It
+is NOT a card. The card frame, the title, the card code, the stat icons,
+the rules text and the flavour text are all set by machine afterwards,
+from the data, over a crop of this page. Draw the picture alone, edge to
+edge - no panel, no banner, no border rule, no box, and no lettering of
+any kind anywhere on the page.
+
 Fine pen-and-ink drawing on aged paper, finished by hand with thin
 watercolour washes: a figure plate from an illustrated folio of peoples.
 Drawn with a nib - a fine, springy, varied line, only a little heavier
@@ -30,6 +37,12 @@ against an edge, stopping short of the line as often as they cross it.
 Muted and desaturated throughout, warm ochre, rust red, dusty
 grey-green, cold slate blue. Paper is warm aged oatmeal, never white.
 Ink is warm near-black, never pure black.
+
+The mood is workaday and observed, never theatrical. This is a world of
+trade, weather and repair: ordinary daylight, ordinary ground, and
+nothing staged to look frightening or heroic. A dangerous animal is
+drawn the way a naturalist draws one - at a wary distance, doing what it
+ordinarily does - rather than the way a poster sells a fight.
 
 A full-page folio plate: one full-length figure study filling the page,
 drawn from life at middle distance, standing on a short ground line with
@@ -55,8 +68,16 @@ shaded, sparkles, signature, text, letters, logo, UI, frame border,
 woodcut, linocut, block print, flat vector, vector illustration, flat
 colour fill, solid colour block, thick uniform outline, heavy black
 outline, bold outline, infographic, diagram, icon, minimalist, clip art,
-screen print, poster art, comic, cartoon, colouring book, chibi, cute,
-magic particles, glowing runes, grimdark, ruined, apocalyptic
+screen print, poster art, comic, cartoon, colouring book, menacing,
+sinister, ominous, horror, gothic, demonic, hellish, glowing eyes,
+burning eyes, snarling, bared fangs, blood-red sky, ruined castle, dead
+trees, wasteland, hellscape, brimstone, epic, dramatic lighting, high
+contrast, movie poster, book cover, card frame, card border, card
+layout, trading card, game card, title bar, name banner, title banner,
+stat block, stat icons, rules text box, flavour text, caption box,
+panel, plate number, rounded corners, inset picture, picture window,
+matte, mount, chibi, cute, magic particles, glowing runes, grimdark,
+ruined, apocalyptic
 ```
 
 ## people-human — Humans

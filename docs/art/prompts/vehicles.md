@@ -10,6 +10,13 @@ Render at 4000 px on the long side or better.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
+This is a PLATE: one whole drawn page of artwork, and nothing else. It
+is NOT a card. The card frame, the title, the card code, the stat icons,
+the rules text and the flavour text are all set by machine afterwards,
+from the data, over a crop of this page. Draw the picture alone, edge to
+edge - no panel, no banner, no border rule, no box, and no lettering of
+any kind anywhere on the page.
+
 Fine pen-and-ink drawing on aged paper, finished by hand with thin
 watercolour washes: a plate from an illustrated book of conveyances.
 Drawn with a nib - a fine, springy, varied line, only a little heavier
@@ -29,6 +36,12 @@ against an edge, stopping short of the line as often as they cross it.
 Muted and desaturated throughout, warm ochre, rust red, dusty
 grey-green, cold slate blue. Paper is warm aged oatmeal, never white.
 Ink is warm near-black, never pure black.
+
+The mood is workaday and observed, never theatrical. This is a world of
+trade, weather and repair: ordinary daylight, ordinary ground, and
+nothing staged to look frightening or heroic. A dangerous animal is
+drawn the way a naturalist draws one - at a wary distance, doing what it
+ordinarily does - rather than the way a poster sells a fight.
 
 One vehicle in full working profile, filling the width of the page, on a
 short strip of its own ground - rail, water, or road. Every strap,
@@ -53,12 +66,21 @@ shaded, sparkles, signature, text, letters, logo, UI, frame border,
 woodcut, linocut, block print, flat vector, vector illustration, flat
 colour fill, solid colour block, thick uniform outline, heavy black
 outline, bold outline, infographic, diagram, icon, minimalist, clip art,
-screen print, poster art, comic, cartoon, colouring book, numbers,
-grimdark, ruined, wrecked, apocalyptic, modern vehicle, diesel, car,
-truck
+screen print, poster art, comic, cartoon, colouring book, menacing,
+sinister, ominous, horror, gothic, demonic, hellish, glowing eyes,
+burning eyes, snarling, bared fangs, blood-red sky, ruined castle, dead
+trees, wasteland, hellscape, brimstone, epic, dramatic lighting, high
+contrast, movie poster, book cover, card frame, card border, card
+layout, trading card, game card, title bar, name banner, title banner,
+stat block, stat icons, rules text box, flavour text, caption box,
+panel, plate number, rounded corners, inset picture, picture window,
+matte, mount, numbers, grimdark, ruined, wrecked, apocalyptic, modern
+vehicle, diesel, car, truck
 ```
 
 ## vehicle-veh-01 — The Reach Flyer *(train)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-01.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -72,6 +94,8 @@ Wash: rust red frames, ochre brass, flat.
 
 ## vehicle-veh-02 — Steppe Hauler *(train)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-02.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -82,6 +106,8 @@ every truck. Wash: cold slate boiler, ochre on the timber loads, flat.
 ```
 
 ## vehicle-veh-03 — Old Smoke *(train)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-03.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -96,6 +122,8 @@ flat.
 
 ## vehicle-veh-04 — Gullwing *(ship)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-04.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -106,6 +134,8 @@ built for nothing but speed. Wash: cold slate sea, ochre deck, flat.
 ```
 
 ## vehicle-veh-05 — Saltreach Pride *(ship)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-05.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -118,6 +148,8 @@ quick pen loops. Wash: cold slate sea, rust red hull wales, flat.
 
 ## vehicle-veh-06 — Ember Coast Trader *(ship)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-06.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -128,6 +160,8 @@ on a stay. Wash: warm ochre sail and dunes, cold slate sea, flat.
 ```
 
 ## vehicle-veh-07 — The Dunhaven Column *(caravan)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-07.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -140,6 +174,8 @@ sparse wavy hatching above the sand. Wash: warm ochre throughout, flat.
 
 ## vehicle-veh-08 — The Fenway Wagons *(caravan)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-08.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -150,6 +186,8 @@ the next bad crossing. Wash: dusty grey-green marsh, ochre timber, flat.
 ```
 
 ## vehicle-veh-09 — The Varl Wagonrow *(caravan)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-09.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -168,6 +206,8 @@ third.
 
 ## vehicle-veh-10 — Bay Courser *(horse)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-10.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -178,6 +218,8 @@ unreasonable eye. Wash: warm ochre coat, grey-green grass, flat.
 ```
 
 ## vehicle-veh-11 — Steppe Pony *(horse)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-11.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -191,6 +233,8 @@ panniers, flat.
 
 ## vehicle-veh-12 — Black Malchior *(horse)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-12.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -202,6 +246,8 @@ Wash: cold slate blue on the night, flat; the horse nearly all ink.
 ```
 
 ## vehicle-veh-13 — Nine and the Drum *(sled)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-13.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -234,6 +280,8 @@ sky here is empty sky on the card.
 
 ## vehicle-veh-14 — The Red Lantern *(steam junk, ship)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-14.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -262,6 +310,8 @@ empty sky on the card.
 ```
 
 ## vehicle-veh-15 — The Carrion Queen *(pirate steamer, ship)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-15.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 **This plate overrides the shared negative prompt**: drop `ruined` and
 `wrecked` from it. They would otherwise fight the one thing the card is about.
@@ -302,6 +352,8 @@ here is empty sky on the card.
 
 ## vehicle-veh-16 — The Pilgrim's Patience *(airship)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-16.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -327,6 +379,8 @@ bare paper. A page that is half blank paper is a rejected page.
 ```
 
 ## vehicle-veh-17 — The Sweep of Vossgard *(sweep-rigged airship)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/vehicle-veh-17.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]

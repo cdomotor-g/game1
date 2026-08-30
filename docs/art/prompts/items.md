@@ -44,6 +44,13 @@ in a deck of generated ones.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
+This is a PLATE: one whole drawn page of artwork, and nothing else. It
+is NOT a card. The card frame, the title, the card code, the stat icons,
+the rules text and the flavour text are all set by machine afterwards,
+from the data, over a crop of this page. Draw the picture alone, edge to
+edge - no panel, no banner, no border rule, no box, and no lettering of
+any kind anywhere on the page.
+
 Fine pen-and-ink drawing on aged paper, finished by hand with thin
 watercolour washes: a plate from an illustrated catalogue of arms and
 equipment. Drawn with a nib - a fine, springy, varied line, only a
@@ -64,6 +71,12 @@ Muted and desaturated throughout, warm ochre for timber and horn, rust
 red for leather and cord, cold slate blue for iron and steel. Paper is
 warm aged oatmeal, never white. Ink is warm near-black, never pure
 black.
+
+The mood is workaday and observed, never theatrical. This is a world of
+trade, weather and repair: ordinary daylight, ordinary ground, and
+nothing staged to look frightening or heroic. A dangerous animal is
+drawn the way a naturalist draws one - at a wary distance, doing what it
+ordinarily does - rather than the way a poster sells a fight.
 
 A single item, centred, three-quarter view, laid on a bench or stood
 against it with a short ground line, drawn at the scale of a
@@ -95,12 +108,19 @@ shaded, sparkles, signature, text, letters, logo, UI, frame border,
 woodcut, linocut, block print, flat vector, vector illustration, flat
 colour fill, solid colour block, thick uniform outline, heavy black
 outline, bold outline, infographic, diagram, icon, minimalist, clip art,
-screen print, poster art, comic, cartoon, colouring book, magic, runes,
-numbers, blueprint, technical drawing, exploded diagram, callout lines,
-product photograph, lit flame, burning wick, firelight, light rays,
-sparks, embers, hands, arms, figure, wielder, mannequin, armour stand,
-coat hanger, clothes rail, battle, blood, grimdark, ruined, rusted
-through, shattered
+screen print, poster art, comic, cartoon, colouring book, menacing,
+sinister, ominous, horror, gothic, demonic, hellish, glowing eyes,
+burning eyes, snarling, bared fangs, blood-red sky, ruined castle, dead
+trees, wasteland, hellscape, brimstone, epic, dramatic lighting, high
+contrast, movie poster, book cover, card frame, card border, card
+layout, trading card, game card, title bar, name banner, title banner,
+stat block, stat icons, rules text box, flavour text, caption box,
+panel, plate number, rounded corners, inset picture, picture window,
+matte, mount, magic, runes, numbers, blueprint, technical drawing,
+exploded diagram, callout lines, product photograph, lit flame, burning
+wick, firelight, light rays, sparks, embers, hands, arms, figure,
+wielder, mannequin, armour stand, coat hanger, clothes rail, battle,
+blood, grimdark, ruined, rusted through, shattered
 ```
 
 ## The framing block
@@ -116,6 +136,8 @@ the bottom third, and the item sitting on it. Clear, quiet page above.
 ```
 
 ## item-coil-of-rope — Coil of Rope *(ITEMS deck · gear, carried, ITM-01)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-coil-of-rope.png`.
 
 ```text
 [PREAMBLE]
@@ -138,6 +160,8 @@ quiet page above.
 
 ## item-lantern — Lantern *(ITEMS deck · light, ITM-02)*
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-lantern.png`.
+
 ```text
 [PREAMBLE]
 
@@ -158,6 +182,8 @@ with the lantern standing on it. Clear, quiet page above.
 ```
 
 ## item-torch — Torch *(ITEMS deck · light, ITM-03)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-torch.png`.
 
 ```text
 [PREAMBLE]
@@ -181,6 +207,8 @@ standing on it. Clear, quiet page above.
 
 ## item-grappling-hook — Grappling Hook *(ITEMS deck · gear, carried, ITM-04)*
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-grappling-hook.png`.
+
 ```text
 [PREAMBLE]
 
@@ -201,6 +229,8 @@ lying on it. Clear, quiet page above.
 ```
 
 ## item-bag — Bag *(ITEMS deck · gear, belt, ITM-05)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-bag.png`.
 
 ```text
 [PREAMBLE]
@@ -224,6 +254,8 @@ bag sitting on it. Clear, quiet page above.
 
 ## item-satchel — Satchel *(ITEMS deck · gear, back, ITM-06)*
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-satchel.png`.
+
 ```text
 [PREAMBLE]
 
@@ -245,6 +277,8 @@ satchel standing on it. Clear, quiet page above.
 ```
 
 ## item-travelling-cloak — Travelling Cloak *(ITEMS deck · clothing, back, ITM-07)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-travelling-cloak.png`.
 
 ```text
 [PREAMBLE]
@@ -268,6 +302,8 @@ hanging above it. Clear, quiet page above.
 ```
 
 ## item-binoculars — Binoculars *(ITEMS deck · gear, belt, ITM-08)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-binoculars.png`.
 
 ```text
 [PREAMBLE]
@@ -294,6 +330,8 @@ above.
 
 ## item-sword — Sword *(WEAPONS deck · weapon, hand, WPN-01)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-sword.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -312,6 +350,8 @@ above.
 ```
 
 ## item-war-axe — War Axe *(WEAPONS deck · weapon, hand, WPN-02)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-war-axe.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -332,6 +372,8 @@ Clear, quiet page above.
 
 ## item-war-hammer — War Hammer *(WEAPONS deck · weapon, two-hand, WPN-03)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-war-hammer.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -350,6 +392,8 @@ page above.
 ```
 
 ## item-bow — Bow *(WEAPONS deck · weapon, two-hand, WPN-04)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-bow.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -370,6 +414,8 @@ quiet page above.
 
 ## item-crossbow — Crossbow *(WEAPONS deck · weapon, two-hand, WPN-05)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-crossbow.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -388,6 +434,8 @@ middle 84%. Low ground line in the bottom third. Clear, quiet page above.
 ```
 
 ## item-dagger — Dagger *(WEAPONS deck · weapon, hand, WPN-06)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-dagger.png`.
 
 ```text
 [PREAMBLE]
@@ -411,6 +459,8 @@ resting on it. Clear, quiet page above.
 ```
 
 ## item-staff — Staff *(WEAPONS deck · weapon, two-hand, WPN-07)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-staff.png`.
 
 ```text
 [PREAMBLE]
@@ -436,6 +486,8 @@ third with the shoe standing on it. Clear, quiet page above.
 
 ## item-leather-jerkin — Leather Jerkin *(ARMOUR deck · armour, body, ARM-01)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-leather-jerkin.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -454,6 +506,8 @@ line in the bottom third. Clear, quiet page above.
 
 ## item-helm — Helm *(ARMOUR deck · armour, head, ARM-02)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-helm.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -470,6 +524,8 @@ in the bottom third. Clear, quiet page above.
 ```
 
 ## item-shield — Shield *(ARMOUR deck · armour, off-hand, ARM-03)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-shield.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -489,6 +545,8 @@ the bottom third. Clear, quiet page above.
 
 ## item-chain-mail — Chain Mail *(ARMOUR deck · armour, body, ARM-04)*
 
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-chain-mail.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
+
 ```text
 [PREAMBLE]
 
@@ -507,6 +565,8 @@ third. Clear, quiet page above.
 ```
 
 ## item-plate-harness — Plate Harness *(ARMOUR deck · armour, body, ARM-05)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-plate-harness.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]

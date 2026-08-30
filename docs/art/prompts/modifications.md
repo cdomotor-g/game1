@@ -24,6 +24,13 @@ Render at 2000 px square or better, single subject, centred.
 ## Shared preamble — paste ahead of every prompt below
 
 ```text
+This is a PLATE: one whole drawn page of artwork, and nothing else. It
+is NOT a card. The card frame, the title, the card code, the stat icons,
+the rules text and the flavour text are all set by machine afterwards,
+from the data, over a crop of this page. Draw the picture alone, edge to
+edge - no panel, no banner, no border rule, no box, and no lettering of
+any kind anywhere on the page.
+
 Fine pen-and-ink drawing on aged paper, finished by hand with thin
 watercolour washes: a plate from an illustrated shipwright's catalogue
 of fittings. Drawn with a nib - a fine, springy, varied line, only a
@@ -43,6 +50,12 @@ against an edge, stopping short of the line as often as they cross it.
 Muted and desaturated throughout, warm ochre, rust red, dusty
 grey-green, cold slate blue. Paper is warm aged oatmeal, never white.
 Ink is warm near-black, never pure black.
+
+The mood is workaday and observed, never theatrical. This is a world of
+trade, weather and repair: ordinary daylight, ordinary ground, and
+nothing staged to look frightening or heroic. A dangerous animal is
+drawn the way a naturalist draws one - at a wary distance, doing what it
+ordinarily does - rather than the way a poster sells a fight.
 
 A single fitting, centred, three-quarter view, laid out on a workshop
 floor or bench with a short ground line, drawn at the scale of a
@@ -69,9 +82,16 @@ shaded, sparkles, signature, text, letters, logo, UI, frame border,
 woodcut, linocut, block print, flat vector, vector illustration, flat
 colour fill, solid colour block, thick uniform outline, heavy black
 outline, bold outline, infographic, diagram, icon, minimalist, clip art,
-screen print, poster art, comic, cartoon, colouring book, numbers,
-blueprint, technical drawing, exploded diagram, callout lines, grimdark,
-ruined, wrecked
+screen print, poster art, comic, cartoon, colouring book, menacing,
+sinister, ominous, horror, gothic, demonic, hellish, glowing eyes,
+burning eyes, snarling, bared fangs, blood-red sky, ruined castle, dead
+trees, wasteland, hellscape, brimstone, epic, dramatic lighting, high
+contrast, movie poster, book cover, card frame, card border, card
+layout, trading card, game card, title bar, name banner, title banner,
+stat block, stat icons, rules text box, flavour text, caption box,
+panel, plate number, rounded corners, inset picture, picture window,
+matte, mount, numbers, blueprint, technical drawing, exploded diagram,
+callout lines, grimdark, ruined, wrecked
 ```
 
 ## The framing block
@@ -87,6 +107,8 @@ the bottom third. Clear, quiet page above.
 ```
 
 ## modification-spinnaker — Spinnaker *(rigging, MOD-01)*
+
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/modification-spinnaker.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -104,6 +126,8 @@ stretched clew, the spar and both sheet coils inside the middle 84%.
 
 ## modification-sweep-rig — Sweep Rig *(rigging, MOD-02)*
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-sweep-rig.png`.
+
 ```text
 [PREAMBLE]
 
@@ -120,6 +144,8 @@ pin, both spars and the laced sail inside the middle 84%.
 ```
 
 ## modification-copper-sheathing — Copper Sheathing *(hull, MOD-03)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-copper-sheathing.png`.
 
 ```text
 [PREAMBLE]
@@ -139,6 +165,8 @@ to the margins.
 
 ## modification-iron-ram — Iron Ram *(hull, MOD-04)*
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-iron-ram.png`.
+
 ```text
 [PREAMBLE]
 
@@ -156,6 +184,8 @@ bolt row and the sledgehammer inside the middle 84%.
 
 ## modification-storm-shutters — Storm Shutters *(hull, MOD-05)*
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-storm-shutters.png`.
+
 ```text
 [PREAMBLE]
 
@@ -172,6 +202,8 @@ shutter, the mallet and the keg inside the middle 84%.
 
 ## modification-ice-runners — Ice Runners *(running gear, MOD-06)*
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-ice-runners.png`.
+
 ```text
 [PREAMBLE]
 
@@ -187,6 +219,8 @@ brackets and the displaced wheel inside the middle 84%.
 ```
 
 ## modification-compound-boiler — Compound Boiler *(powerplant, MOD-07)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-compound-boiler.png`.
 
 ```text
 [PREAMBLE]
@@ -206,6 +240,8 @@ receiver pipe between them, the crankshaft and the flywheel inside the middle
 ```
 
 ## modification-keelbound — Keelbound *(enchantment, water, MOD-08)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-keelbound.png`.
 
 ```text
 [PREAMBLE]  [ARCANE RULES APPLY - see the talisman brief]
@@ -227,6 +263,8 @@ the keel may run to the margins.
 
 ## modification-fleetfoot-binding — Fleetfoot Binding *(enchantment, air, MOD-09)*
 
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-fleetfoot-binding.png`.
+
 ```text
 [PREAMBLE]  [ARCANE RULES APPLY - see the talisman brief]
 
@@ -244,6 +282,8 @@ knotted cord and the crystal inside the middle 84%.
 ```
 
 ## modification-warded-hold — Warded Hold *(enchantment, earth, MOD-10)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-warded-hold.png`.
 
 ```text
 [PREAMBLE]  [ARCANE RULES APPLY - see the talisman brief]
@@ -263,6 +303,8 @@ run to the margins.
 ```
 
 ## modification-salamander-grate — Salamander Grate *(enchantment, fire, MOD-11)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/modification-salamander-grate.png`.
 
 ```text
 [PREAMBLE]  [ARCANE RULES APPLY - see the talisman brief]

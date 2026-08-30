@@ -74,6 +74,21 @@ and both prompt blocks in `docs/art/07-ai-agent-brief.md`, are written from it b
 `node tools/build-prompts.mjs`, and `--check` fails when a copy has drifted.
 Never hand-edit one of those blocks; change `artstyle.json` and run the tool.
 
+**A brief says whether it is still waiting, and it is not typed.** Under every
+`## <plate-id>` heading is a one-line marker — `WAITING — THIS ONE IS YOURS` or
+`ALREADY DRAWN — DO NOT DRAW THIS` — written by `build-prompts.mjs` from whether
+the plate is on disk, the same way the queue works it out. That slot belongs to
+the tool: never hand-write a blockquote between a brief's heading and its fence.
+It exists because an artist pointed at this repository drew `monster-cinder-wolf`,
+which had been accepted weeks earlier — the section looked exactly like an
+unfinished one.
+
+**The preamble opens by saying a plate is NOT a card**, before it says anything
+about style, because the same artist drew the frame, the title, the card code, the
+stat icons and the rules text — all of which `build-cards.mjs` sets from the data.
+"No text" was in the negative prompt and nowhere in the positive, which is a filter
+for an image model and nothing at all for one that reads.
+
 **A plate is a fine pen-and-ink drawing, hatched, then tinted with thin
 translucent watercolour the hatching shows through.** It is naturalistically
 proportioned. It is *not* a woodcut, not a block print, not flat spot colour and

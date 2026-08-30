@@ -6,10 +6,13 @@
       "Fine pen-and-ink drawing on aged paper, finished by hand with thin watercolour washes: {plate}. Drawn with a nib - a fine, springy, varied line, only a little heavier round the outside of a form than within it, thinning and breaking where the light catches an edge. Never a thick uniform outline.",
       "All tone is hatching: short feathered strokes laid along the form and crossed over one another in the darks, fine and dense enough to read as continuous shadow at arm's length and still be separate strokes close up. Nearly every surface carries some. Bare paper is kept for the brightest highlights only."
     ],
-    "colour": "Thin translucent watercolour is washed OVER the finished ink, so the hatching reads through the colour everywhere: it tints the drawing, it never fills it. The washes are uneven - a little darker where they pool against an edge, stopping short of the line as often as they cross it. Muted and desaturated throughout, {palette}. Paper is warm aged oatmeal, never white. Ink is warm near-black, never pure black."
+    "colour": "Thin translucent watercolour is washed OVER the finished ink, so the hatching reads through the colour everywhere: it tints the drawing, it never fills it. The washes are uneven - a little darker where they pool against an edge, stopping short of the line as often as they cross it. Muted and desaturated throughout, {palette}. Paper is warm aged oatmeal, never white. Ink is warm near-black, never pure black.",
+    "notACard": "This is a PLATE: one whole drawn page of artwork, and nothing else. It is NOT a card. The card frame, the title, the card code, the stat icons, the rules text and the flavour text are all set by machine afterwards, from the data, over a crop of this page. Draw the picture alone, edge to edge - no panel, no banner, no border rule, no box, and no lettering of any kind anywhere on the page.",
+    "tone": "The mood is workaday and observed, never theatrical. This is a world of trade, weather and repair: ordinary daylight, ordinary ground, and nothing staged to look frightening or heroic. A dangerous animal is drawn the way a naturalist draws one - at a wary distance, doing what it ordinarily does - rather than the way a poster sells a fight.",
+    "$order": "notACard, then line, then colour, then tone, then the register's own composition, then its closing. notACard is first because it is the one an artist has actually got wrong."
   },
   "negative": {
-    "$comment": "Shared terms first, then whatever one register needs on top. A term is added in one place and every brief gets it - which is what the ring-stain ban needed and did not have.",
+    "$comment": "`shared` goes on every register. `plates` goes on every register that uses the house style - so not maps, whose own `house` block marks it a different medium and which legitimately wants a cartouche, a legend panel, a border rule and hand-lettered names. A term is added in one place and every brief that should have it gets it.",
     "shared": [
       "coffee ring",
       "cup ring",
@@ -67,7 +70,51 @@
       "poster art",
       "comic",
       "cartoon",
-      "colouring book"
+      "colouring book",
+      "menacing",
+      "sinister",
+      "ominous",
+      "horror",
+      "gothic",
+      "demonic",
+      "hellish",
+      "glowing eyes",
+      "burning eyes",
+      "snarling",
+      "bared fangs",
+      "blood-red sky",
+      "ruined castle",
+      "dead trees",
+      "wasteland",
+      "hellscape",
+      "brimstone",
+      "epic",
+      "dramatic lighting",
+      "high contrast",
+      "movie poster",
+      "book cover"
+    ],
+    "plates": [
+      "card frame",
+      "card border",
+      "card layout",
+      "trading card",
+      "game card",
+      "title bar",
+      "name banner",
+      "title banner",
+      "stat block",
+      "stat icons",
+      "rules text box",
+      "flavour text",
+      "caption box",
+      "panel",
+      "plate number",
+      "rounded corners",
+      "inset picture",
+      "picture window",
+      "matte",
+      "mount"
     ]
   },
   "registers": [

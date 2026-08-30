@@ -19,6 +19,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { survey } from './lib/mint.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK = process.argv.includes('--check');
@@ -42,6 +43,10 @@ const wrap = (text, width = WIDTH) => {
 export function preambleFor(register) {
   const house = register.house ?? style.house;
   const paras = [];
+  /* First, because it is the one an artist has actually got wrong: handed a brief
+     for a card, it drew the card. A register with its own house block is a
+     different medium and states its own rules. */
+  if (!register.house && style.house.notACard) paras.push(style.house.notACard);
   for (const p of house.line) paras.push(p.replace('{plate}', register.plate ?? ''));
   /* A register with no palette states its own colour rule in its composition -
      the talisman's one violet - so the house colour paragraph is skipped rather
@@ -49,6 +54,7 @@ export function preambleFor(register) {
   if (house.colour && (register.house || register.palette)) {
     paras.push(house.colour.replace('{palette}', register.palette ?? ''));
   }
+  if (!register.house && style.house.tone) paras.push(style.house.tone);
   paras.push(...register.composition, register.closing);
   return paras.map((p) => wrap(p)).join('\n\n');
 }
@@ -56,7 +62,8 @@ export function preambleFor(register) {
 /** The negative prompt for one register: the shared list, then its own. */
 export function negativeFor(register) {
   const seen = new Set();
-  const terms = [...style.negative.shared, ...register.negative].filter((t) => {
+  const plateTerms = register.house ? [] : (style.negative.plates ?? []);
+  const terms = [...style.negative.shared, ...plateTerms, ...register.negative].filter((t) => {
     const k = t.toLowerCase();
     if (seen.has(k)) return false;
     seen.add(k);
@@ -84,6 +91,61 @@ function replaceBlock(text, headingTest, body, where) {
   return [...lines.slice(0, open + 1), ...body.split('\n'), ...lines.slice(close)].join('\n');
 }
 
+/**
+ * What every plate on the cards, tiles and maps lines has got to, worked out from
+ * the repository the way tools/mint-queue.mjs does it. Nothing is stored: commit a
+ * PNG and the marker under that brief flips by itself on the next run.
+ */
+function stepsByPlate() {
+  const steps = new Map();
+  for (const entry of survey(ROOT).lines) {
+    if (entry.shelved) continue;
+    const generated = new Set(entry.generated ?? []);
+    for (const row of entry.rows) steps.set(row.plate, { step: row.step, generated: generated.has(row.code) });
+  }
+  return steps;
+}
+
+/* One line, in the artist's line of sight - directly under the heading it is about,
+   which is where the decision to draw gets made. An artist pointed at this
+   repository picked up `monster-cinder-wolf`, drew it, and it had been accepted
+   weeks earlier: the section looked exactly like an unfinished one. */
+function markerFor(plate, state) {
+  const path = `docs/art/renders/${plate}.png`;
+  if (!state) return null;
+  if (state.step === 'write') return null;
+  if (state.step === 'draw') {
+    return state.generated
+      ? `> 🛠 **NOT FOR AN ARTIST.** This plate is drawn by \`tools/draw-item.mjs\` from the card's own parts. Do not draw it by hand.`
+      : `> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as \`${path}\`.`;
+  }
+  return `> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** \`${path}\` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.`;
+}
+
+/**
+ * Write the marker under every `## <plate-id>` heading in one file, replacing
+ * whatever marker was there. The slot is owned by this tool: a blockquote between
+ * a brief's heading and its fence is always generated, never hand-written.
+ */
+function markSections(text, steps) {
+  const lines = text.split('\n');
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    out.push(lines[i]);
+    if (!lines[i].startsWith('## ')) continue;
+    const plate = lines[i].slice(3).trim().split(' ')[0];
+    if (!steps.has(plate)) continue;
+    /* Skip past the old marker and its blank lines, then lay down the new one. */
+    let j = i + 1;
+    while (j < lines.length && (lines[j].trim() === '' || lines[j].trim().startsWith('>'))) j++;
+    const marker = markerFor(plate, steps.get(plate));
+    if (marker) out.push('', marker);
+    out.push('');
+    i = j - 1;
+  }
+  return out.join('\n');
+}
+
 const targets = style.registers.map((r) => ({
   path: `docs/art/prompts/${r.id}.md`,
   preamble: /^shared preamble/i,
@@ -103,12 +165,15 @@ targets.push({
   register: { ...generic, plate: 'a plate from an illustrated book', composition: [], negative: [] },
 });
 
+const steps = stepsByPlate();
+
 let changed = 0;
 for (const t of targets) {
   const path = join(ROOT, t.path);
   const before = readFileSync(path, 'utf8');
   let after = replaceBlock(before, t.preamble, preambleFor(t.register), t.path);
   after = replaceBlock(after, t.negative, negativeFor(t.register), t.path);
+  if (t.register.id) after = markSections(after, steps);
   if (after === before) continue;
   changed++;
   if (CHECK) console.error(`  ${t.path} — the generated blocks have drifted from data/artstyle.json`);
