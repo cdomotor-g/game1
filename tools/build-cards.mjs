@@ -456,39 +456,6 @@ function deckGeometry(deck, deckDef) {
     };
   }
 
-  /* A deck with NO story at all (components.json storyPanel false) gives the
-     band across the bottom back to the picture. It is not a third layout, it is
-     the panel layout with the panel's height set to nothing: the rules text
-     still hangs off the foot of the window, and the window simply grows down to
-     the card's own foot instead of stopping at a panel.
-
-     What earns it is a deck where the flavour would be missing rather than
-     short. The BUILDINGS deck is the first: five of its forty-nine subjects carry
-     `notes` and the other forty-four would deal with an empty band ruled across
-     the bottom of them, which reads as a card with a hole in it. `storyOf` would
-     also have logged all forty-four to `noStory`, burying the warning's real
-     job - a deck that MEANT to have a story and lost one - under a deck that
-     never had one. */
-  if (deckDef?.storyPanel === false) {
-    const factMax = Math.max(...deck.map((s) => factLines(s, PORTRAIT.w).length));
-    const room = (FOOT - top) - GAP - (factMax - 1) * FACT.lead;
-    const wanted = PORTRAIT.w / (plate.width / plate.height);
-    const height = Math.round(Math.min(room, Math.max(wanted, PORTRAIT.w / FLATTEST)));
-    /* The same floor the other two branches take, and this branch needs it MORE
-       than either. Giving the flavour band back to the picture buys height, so a
-       no-panel deck starts further from the floor and its words have further to
-       eat before anybody notices - which is exactly the condition under which a
-       letterbox slips through. A third way of arriving at a window is not a third
-       set of rules about how flat one may be. */
-    windowFloor(deck, deckDef, height, PORTRAIT.w);
-    const y = Math.round(top + (room - height) / 2);
-    return {
-      window: { x: PORTRAIT.x, y, w: PORTRAIT.w, h: height },
-      factY: y + height + GAP,
-      wrap: PORTRAIT.w,
-    };
-  }
-
   const factMax = Math.max(...deck.map((s) => factLines(s, PORTRAIT.w).length));
   const storyMax = Math.max(...deck.map((s) => storyLines(s, charsIn(PORTRAIT.w, STORY.size)).length));
 
@@ -555,11 +522,6 @@ const storyOf = (spec) => {
  * lands one column further to the right.
  */
 function storyRail(spec, geom) {
-  /* Neither a rail nor a panel: the deck said storyPanel false and deckGeometry
-     gave the band to the picture, so there is no `panelTop` to rule one against.
-     Returning empty is the whole of it - the card's other parts do not know the
-     difference. */
-  if (!geom.rail && geom.panelTop === undefined) return { wash: '', ink: '' };
   if (!geom.rail) {
     const lines = storyLines(spec, charsIn(PORTRAIT.w, STORY.size));
     return {
@@ -1037,6 +999,12 @@ for (const m of modifications) {
    A MONSTER does print its armour, and that is not an inconsistency: a monster's
    armour is its hide and is the same number in every fight it is ever in, where a
    character's is whatever they are wearing this round. */
+/* A, B or C - not "A, B, C". A card is read aloud at a table and a list with no
+   conjunction is read as an unfinished one; it also costs nothing, where a line
+   that wraps costs the whole deck a line of picture (components.json window). */
+const orList = (xs) => (xs.length < 2 ? (xs[0] ?? '') : `${xs.slice(0, -1).join(', ')} or ${xs[xs.length - 1]}`);
+const aOrAn = (name) => `${/^[aeiou]/i.test(name) ? 'an' : 'a'} ${name}`;
+
 const recipeLine = (madeAt, specialist, inputs, hours) => {
   const bill = (inputs || []).map((i) => `${i.qty} ${commodityName.get(i.commodity) || i.commodity}`).join(', ');
   return `Made at the ${madeAt}${specialist && specialist !== madeAt ? ` by a${/^[aeiou]/i.test(specialist) ? 'n' : ''} ${specialist}` : ''}: ${bill} · ${hours} h.`;
@@ -1139,15 +1107,26 @@ for (const b of buildings) {
      silence would read as an omission. */
   const ground = (b.terrain || []).map((t) => terrainName.get(t) || t);
   const where = [];
-  if (ground.length) where.push(`Stands on ${ground.join(', ')}`);
+  if (ground.length) where.push(`Stands on ${orList(ground)}`);
   else where.push('Stands on any ground');
   if (b.orWaterside) where.push(`or on any tile with ${b.orWaterside === 'any' ? '' : `${b.orWaterside} `}water beside it`);
   if (b.waterside) where.push(`and needs ${b.waterside === 'any' ? '' : `${b.waterside} `}water beside it`);
   if (b.requiresBuilding) where.push(`with a ${(buildingName.get(b.requiresBuilding) || b.requiresBuilding).toLowerCase()} already there`);
-  if (b.requiresDeposit) where.push(`on a ${depositName.get(b.requiresDeposit) || b.requiresDeposit} deposit`);
+  /* OVER, not "on a deposit of". A deposit's name already carries its own noun -
+     a coal SEAM, an iron DEPOSIT, a gem VEIN, a salt DOME (deposits.json) - so
+     the older phrasing printed "on a deposit of coal seam or iron deposit or
+     copper deposit", which says deposit three times in nine words and is the
+     kind of sentence a reference card is read twice because of. */
+  /* The deposit clause is held apart and joined with a COMMA, because it
+     qualifies the whole of the ground that came before it: "stands on hills,
+     mountain or grassland, over a coal seam" - without the comma the last
+     terrain and the first deposit run together into one noun phrase. */
+  const over = [];
+  if (b.requiresDeposit) over.push(aOrAn(depositName.get(b.requiresDeposit) || b.requiresDeposit));
   if (b.requiresDepositAny?.length) {
-    where.push(`on a deposit of ${b.requiresDepositAny.map((d) => depositName.get(d) || d).join(' or ')}`);
+    over.push(...b.requiresDepositAny.map((d) => aOrAn(depositName.get(d) || d)));
   }
+  const site = `${where.join(' ')}${over.length ? `, over ${orList(over)}` : ''}.`;
 
   /* What it holds that has no box on the strip. Three fields, one building each
      - the pasture's animals, the barracks' garrison, the farm's fields - so a
@@ -1171,21 +1150,30 @@ for (const b of buildings) {
     facts: [
       b.summary,
       bill ? `Raise it from ${bill}.` : null,
-      `${where.join(' ')}.`,
+      site,
       holds.length ? `Holds ${holds.join(' and ')}.` : null,
       b.specialist ? `Wants a ${b.specialist} to run.` : null,
       jobs.length ? `Work here: ${jobs.join(', ')}.` : null,
       tile ? `Its tile is a ${tile.shape} — ${CELL_WORD[tile.cells.length] ?? tile.cells.length} cell${tile.cells.length === 1 ? '' : 's'}.` : null,
-      /* `notes` is NOT on this list, and that is a decision rather than an
-         oversight. It is the designer's margin, not the player's: of the five
-         buildings that carry one, the granary's says which word in the original
-         brief it came from, the hut's and the market's argue for their own price,
-         and only the mine's is a rule anybody would look up at a table. Printing
-         it cost the whole deck its picture - one twelve-line note on the inn set
-         `factMax`, and the window is sized for the wordiest card in the deck, so
-         forty-nine cards were letterboxed to carry one card's development
-         history. Rules live in the rulebook and reference lives here. */
+      /* `notes` is NOT on this list, and it is not the flavour either - the two
+         are different fields doing different jobs, and conflating them is what
+         went wrong here the first time.
+
+         `story` is the player's, and it is on every card in the deck: the rail
+         up the right-hand edge, the same as the characters and the monsters.
+         `notes` is the DESIGNER'S margin. Five buildings carry one, and of those
+         the granary's records which word in the original brief it came from and
+         the hut's and the market's argue for their own price - which is a note
+         to whoever balances the game next, not something to print at 63 mm.
+
+         It was tried as the last fact line and it cost the whole deck its
+         picture: one twelve-line note on the inn set `factMax`, and a window is
+         sized for the wordiest card in its deck, so forty-nine pictures paid for
+         one card's development history. Rules live in the rulebook, reference
+         lives in these lines, flavour lives on the rail, and the designer's
+         margin stays in the data. */
     ].filter(Boolean),
+    story: b.story,
   });
 }
 

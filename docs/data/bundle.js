@@ -2777,6 +2777,7 @@ window.GAME_DATA = {
         "category": "housing",
         "tier": 1,
         "summary": "Four walls and a roof. Houses one worker.",
+        "story": "One room, a smoke hole and a door that does not fit. Everybody means to replace it inside the year; half of them are still in it a decade on, roof patched, door still not fitting.",
         "cost": [
           {
             "commodity": "logs",
@@ -2805,6 +2806,7 @@ window.GAME_DATA = {
         "category": "housing",
         "tier": 2,
         "summary": "A proper house of sawn lumber. Houses two workers.",
+        "story": "Sawn boards, a plank floor and a chimney that draws properly. The difference between this and the hut beside it is one winter, and anybody who has spent that winter can tell you which is which.",
         "cost": [
           {
             "commodity": "lumber",
@@ -2835,6 +2837,7 @@ window.GAME_DATA = {
         "category": "housing",
         "tier": 3,
         "summary": "Houses three workers, and they are warm: brick-housed workers ignore Cold Snap events.",
+        "story": "Brick takes the day's heat in and gives it back at night, which is the whole argument for what it costs. The people inside sleep through the frost that has the hut next door awake and stamping.",
         "cost": [
           {
             "commodity": "brick",
@@ -2868,6 +2871,7 @@ window.GAME_DATA = {
         "category": "housing",
         "tier": 4,
         "summary": "Houses four workers and one specialist, and scores at game end.",
+        "story": "Glass in every window, a name cut over the door and a kitchen garden walled against the wind. Nobody needs one. The point of a manor is that everyone can see you did not need one.",
         "cost": [
           {
             "commodity": "brick",
@@ -2906,6 +2910,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "Lets you fell trees on any forest tile within 1 tile, and stores logs on site.",
+        "story": "A saw pit, a bunkhouse and a road of churned mud running back to town. It moves every few seasons, always deeper in, and the stumps behind it map every year it has worked.",
         "cost": [
           {
             "commodity": "logs",
@@ -2928,6 +2933,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "Cuts stone out of hills and mountains.",
+        "story": "A step cut into the hill and taken down a course at a time, so the hole ends up the exact shape of every wall in town. Nobody who has worked one is ever surprised by how much stone a house eats.",
         "cost": [
           {
             "commodity": "logs",
@@ -2950,6 +2956,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "Digs clay from marshes, river banks and wet ground.",
+        "story": "Wet ground opened up and left to weather. The clay comes out grey and comes back red, and the pit fills with water every spring whether anybody wants it to or not.",
         "cost": [
           {
             "commodity": "logs",
@@ -2973,6 +2980,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "Sand for glass.",
+        "story": "A bank scraped back to clean sand and screened by hand. It looks the least of the diggings and it is the one thing the glassworks cannot do without.",
         "cost": [
           {
             "commodity": "logs",
@@ -2996,6 +3004,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 2,
         "summary": "Built directly on top of a revealed mineral deposit. What it produces depends on the deposit under it.",
+        "story": "A head-frame, a windlass and a hole going down after whatever the survey promised. The seam decides what comes up. The miners only decide how fast, and for how long.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3035,6 +3044,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 4,
         "summary": "Late-game. Pumps crude oil out of an oil field.",
+        "story": "A timber tower over a hole nobody can see the bottom of. It makes a noise the whole valley can hear and a smell the whole valley can place, and it pays for both.",
         "cost": [
           {
             "commodity": "steel",
@@ -3062,6 +3072,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "A town without a well or adjacent water cannot draw water at all.",
+        "story": "A shaft, a windlass and a stone kerb worn into a saddle by two generations of buckets. The cheapest thing in the book, and the first thing anybody asks about a new site.",
         "cost": [
           {
             "commodity": "stone",
@@ -3088,6 +3099,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "Four field slots. Each slot holds one sown crop through its growth track.",
+        "story": "A long house, a cart shed and fields worked in turn. The steading is the small part of it; what a farm actually is lies outside the fence and changes colour four times a year.",
         "cost": [
           {
             "commodity": "logs",
@@ -3110,6 +3122,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "Holds livestock. Animals breed here and can be sheared, milked or butchered.",
+        "story": "A run of fence, a water trough and as much grass as the animals can keep down. It costs almost nothing to put up and takes more ground than the manor does.",
         "cost": [
           {
             "commodity": "logs",
@@ -3138,6 +3151,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 2,
         "summary": "Takes three rounds to establish, then yields every round without re-sowing.",
+        "story": "Three years of doing nothing but weeding, and then fruit every autumn for a lifetime. The people who plant orchards are rarely the people who get the best of them.",
         "cost": [
           {
             "commodity": "logs",
@@ -3164,6 +3178,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 2,
         "summary": "Grapes only, and only on sun-facing ground.",
+        "story": "Rows running with the slope, on the side of the hill that gets the afternoon. Vines want poor ground and good light, which is why a vineyard sits where nothing else would pay.",
         "cost": [
           {
             "commodity": "logs",
@@ -3190,6 +3205,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "Bees. Honey for mead, and an orchard next door yields +1.",
+        "story": "A row of skeps under a hedge and a keeper who has stopped flinching. The honey is the trade; the reason the orchard next door crops heavier is on nobody's ledger.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3213,6 +3229,7 @@ window.GAME_DATA = {
         "category": "extraction",
         "tier": 1,
         "summary": "Fishing, and the cheap end of water transport. Goes on any land the water reaches - a sea shore, a lake rim or a river bank all do.",
+        "story": "Planks on piles, a bollard, and a boat that leaks slowly enough. It is the cheapest way there is to touch water, and half the towns on the map began as one.",
         "cost": [
           {
             "commodity": "logs",
@@ -3236,6 +3253,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 1,
         "summary": "Logs into lumber. Doubles its rate on a waterside tile - water drives the saw.",
+        "story": "A frame saw, a race and a wheel, turning out lengths no one could cut straight by hand in a day. Beside running water it does the work twice over and asks for nothing extra.",
         "cost": [
           {
             "commodity": "logs",
@@ -3264,6 +3282,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 1,
         "summary": "Logs into charcoal, for smelting where there is no coal.",
+        "story": "A covered stack burned slow for a week and watched day and night so it smoulders and never catches. The colliers sleep in shifts beside it and go home the colour of it.",
         "cost": [
           {
             "commodity": "clay",
@@ -3291,6 +3310,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Ore plus fuel into metal.",
+        "story": "Ore, fuel and air, and the hill's iron running out of the bottom. The slag heap by the door grows faster than the metal does, which surprises everybody exactly once.",
         "cost": [
           {
             "commodity": "stone",
@@ -3323,6 +3343,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 3,
         "summary": "The refinery. Pig iron plus coal into steel - and it only really works on coal.",
+        "story": "Coal, not charcoal - hand it charcoal and it sulks. What comes out holds an edge through a whole season of felling, and every smith within a week's cart ride knows its name.",
         "cost": [
           {
             "commodity": "brick",
@@ -3355,6 +3376,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Clay plus fuel into brick.",
+        "story": "Clay moulded, dried in the open and burned in a kiln that runs for days. A brickworks is mostly stacks: green ones waiting, fired ones cooling, and one being carted away.",
         "cost": [
           {
             "commodity": "stone",
@@ -3387,6 +3409,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 3,
         "summary": "Sand plus heavy fuel into glass. Hot, hungry and profitable.",
+        "story": "A furnace that is never allowed to go out, and men working in front of it in leather aprons in high summer. Hot, hungry and profitable, in that order and by some distance.",
         "cost": [
           {
             "commodity": "brick",
@@ -3419,6 +3442,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Where every tool in the game is made and repaired.",
+        "story": "An anvil, a hearth and a floor of beaten scale. Every tool in the game came out of a door like this one, and comes back through it a little thinner every few seasons.",
         "cost": [
           {
             "commodity": "stone",
@@ -3455,6 +3479,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Wooden equipment: ploughs, looms, wheels, barrels, crates.",
+        "story": "Shavings to the ankle and every wall hung with patterns. Wheelwright, cooper and joiner are three trades and one bench - and in a small town, one person as well.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3484,6 +3509,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Houses spinning wheels and looms. Fibre in, cloth out.",
+        "story": "Looms in a long room with the best light in the building, because the work stops when the light does. The clack of it carries three streets, and the neighbours stop hearing it inside a week.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3512,6 +3538,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Hide plus water into leather. Nobody wants it upwind of the town.",
+        "story": "Pits, bark stacks and racks of hide drying in the wind. Every town puts it downwind and downstream, and every town would notice inside a month if it were gone.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3538,6 +3565,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 3,
         "summary": "Cloth and leather into clothing and light armour.",
+        "story": "Cloth, shears and a table long enough to lay a bolt out flat. Half the work is the good coat somebody will be buried in. The other half is patching the one they have on.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3562,6 +3590,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 1,
         "summary": "Grain into flour. Free extra output on a hills tile or a waterside one (wind and water).",
+        "story": "Stones the width of a cart, dressed by hand every few months, turning on whatever the site will give - a hill's wind or a river's fall. The miller takes a share and is never entirely trusted.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3588,6 +3617,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Flour, water and fuel into bread - the most efficient food in the game.",
+        "story": "An oven fired once and used all day as it cools, hottest bread first. It turns less grain into more food than anything else in the book, and the whole street knows when it is lit.",
         "cost": [
           {
             "commodity": "brick",
@@ -3610,6 +3640,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 1,
         "summary": "Livestock into meat and hide. Salt on hand turns meat into salted meat.",
+        "story": "A hook, a block, and nothing wasted. Salt on hand is the difference between meat for this week and meat for the winter, and the butcher will tell you so before you ask.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3632,6 +3663,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Milk into cheese, which unlike milk keeps.",
+        "story": "Cool, dark and scrubbed back to the grain. Milk is a day from spoiling and cheese is a year from it, and the whole building exists to move one into the other.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3654,6 +3686,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 2,
         "summary": "Grain or honey, water and a barrel into ale or mead.",
+        "story": "Mash, barrel, and a cellar at an even temperature. Ale is grain the town will actually drink; mead is the apiary's honey come back as something worth arguing about.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3681,6 +3714,7 @@ window.GAME_DATA = {
         "category": "production",
         "tier": 3,
         "summary": "Grapes, water and a barrel into wine. Must be built on or beside a vineyard.",
+        "story": "A press, a cellar, and a great deal of waiting. It stands on the vines because grapes will not travel: a day on a cart and what you are making is vinegar.",
         "cost": [
           {
             "commodity": "stone",
@@ -3709,6 +3743,7 @@ window.GAME_DATA = {
         "category": "storage",
         "tier": 2,
         "summary": "Twelve storage slots for anything. A prime target for thieves.",
+        "story": "Twelve bays, a strong door and a ledger nailed by the entrance. It will hold anything at all, which is exactly why it is the first place a thief asks after.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3733,6 +3768,7 @@ window.GAME_DATA = {
         "category": "storage",
         "tier": 1,
         "summary": "Ten slots for food and drink only - and food inside it does not perish.",
+        "story": "Raised on staddle stones, floor swept, dry and dark and shut against the weather. What goes in comes out the same the following spring, and that is the whole trick of it.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3762,6 +3798,7 @@ window.GAME_DATA = {
         "category": "civic",
         "tier": 1,
         "summary": "Lets a town buy from and sell to the board at the current price band.",
+        "story": "Trestles, an awning and a bell rung at noon. A town puts one up before it can afford anything else, because a stall and an armful of gathered wood is how somebody with nothing starts again.",
         "cost": [
           {
             "commodity": "logs",
@@ -3782,6 +3819,7 @@ window.GAME_DATA = {
         "category": "civic",
         "tier": 3,
         "summary": "Removes the market spread for its owner in that town, and lets them trade with any player who has a merchant or trading house connected by a route.",
+        "story": "A counting room, a strong box, and a clerk who knows the price in four towns without looking it up. What it deals in is not goods but the spread - and to its owner it sells that at nothing.",
         "cost": [
           {
             "commodity": "brick",
@@ -3812,6 +3850,7 @@ window.GAME_DATA = {
         "category": "civic",
         "tier": 2,
         "summary": "Founds a town on a tile and marks its stockpile. One per town, always the first thing placed.",
+        "story": "A room, a table and a locked chest, and the first thing anybody sets down. Everything else on the tile is measured from its door, including how much the town thinks of itself.",
         "cost": [
           {
             "commodity": "logs",
@@ -3837,6 +3876,7 @@ window.GAME_DATA = {
         "category": "civic",
         "tier": 3,
         "summary": "Train a worker into a specialist here. One training per round.",
+        "story": "A hall, a master, and a set of standards nobody is allowed to write down. A worker goes in able and comes out qualified, which is a different thing and is charged for as one.",
         "cost": [
           {
             "commodity": "brick",
@@ -3863,6 +3903,7 @@ window.GAME_DATA = {
         "category": "civic",
         "tier": 2,
         "summary": "Rest, rumour and hired muscle. Serve drink to clear unrest; travellers rest here to heal; escorts are hired here; quests are heard here. The one building in the game that may stand outside a town.",
+        "story": "A fire, a bench, and beds upstairs that are not quite long enough. Rumour, hired muscle and a night that mends a person - and the one building here that will stand alone on an empty road.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3928,6 +3969,7 @@ window.GAME_DATA = {
         "category": "civic",
         "tier": 2,
         "summary": "Where the sick are tended and healers are trained. A town with a fed healer weathers illness cards that empty other towns.",
+        "story": "Clean linen, a still, and a healer asleep in the next room. In a good year it looks like money thrown away. In a plague year it is why the town is still on the map.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3955,6 +3997,7 @@ window.GAME_DATA = {
         "category": "military",
         "tier": 2,
         "summary": "Turns fed workers into soldiers, and holds them without them costing you effort.",
+        "story": "Bunks, a rack and a yard to drill in. Fed workers go in and soldiers come out, and the yard is a good deal more of the building than the roof is.",
         "cost": [
           {
             "commodity": "lumber",
@@ -3979,6 +4022,7 @@ window.GAME_DATA = {
         "category": "military",
         "tier": 2,
         "summary": "Cancels one theft or raid event per game against the town it stands in, and reveals adjacent face-down tiles.",
+        "story": "One room at the top, a bell, and somebody bored in it. It earns its whole cost on the single night that is not boring, and nobody can tell you in advance which night that will be.",
         "cost": [
           {
             "commodity": "stone",
@@ -4001,6 +4045,7 @@ window.GAME_DATA = {
         "category": "military",
         "tier": 1,
         "summary": "Defenders in this town roll one extra combat die.",
+        "story": "Split trunks set in a ditch, sharpened, and leaning very slightly outward. It will not stop an army. It was never meant to: it is there to make one slow down inside bowshot.",
         "cost": [
           {
             "commodity": "logs",
@@ -4020,6 +4065,7 @@ window.GAME_DATA = {
         "category": "arcane",
         "tier": 3,
         "summary": "Brews potions from foraged ingredients and mana crystals. Needs an alembic.",
+        "story": "Glass, charcoal, and a shelf of jars labelled in a hand only their owner can read. The alembic is the whole trade - without one the room is a kitchen with an expensive smell.",
         "cost": [
           {
             "commodity": "brick",
@@ -4047,6 +4093,7 @@ window.GAME_DATA = {
         "category": "arcane",
         "tier": 2,
         "summary": "Once per round, re-roll one effort die in this town.",
+        "story": "Four posts, a lintel, and a stone somebody stood upright a very long time ago. Nobody agrees what it is for. Everyone touches it on the way past, and the work goes better.",
         "cost": [
           {
             "commodity": "stone",
@@ -4137,6 +4184,7 @@ window.GAME_DATA = {
         "category": "infrastructure",
         "tier": 3,
         "summary": "Lets ships load and unload. Sea routes are slow to set up and very cheap to run.",
+        "story": "An arm of stone thrown out into the water, and behind it flat calm on the roughest day. The most expensive thing a coast town ever builds, and the reason there is a coast town at all.",
         "cost": [
           {
             "commodity": "stone",
@@ -4167,6 +4215,7 @@ window.GAME_DATA = {
         "category": "infrastructure",
         "tier": 3,
         "summary": "The point where a town joins the rail network. Trains can only load here.",
+        "story": "A siding, a platform, and a crane it takes two people to swing. Trains will pass a town all day long; this is the thing that makes one stop.",
         "cost": [
           {
             "commodity": "brick",
@@ -13592,13 +13641,13 @@ window.GAME_DATA = {
       {
         "$comment": "A REFERENCE deck, and the first one in the game. Every other deck here is a thing you hold INSTEAD of a piece; this one is a thing you hold AS WELL AS one. The building on the board is the tile - that is the piece, and it says where the building stands in relation to everything else, which is the one thing a card in a hand cannot say. What the tile cannot do is be read: it is 17 mm across, the picture is cut to a clump of hexagons, and the numbers were deliberately kept off it (buildingtiles.json - no tile carries a number, same rule and same reason as the cards). So the card carries what the tile had to drop, and the tile keeps the position. Neither replaces the other and the pair is the point.\n\nIt is dealt from data/buildings.json, which is why nothing here says what a building is.",
         "prefix": "BLD",
+        "storyRail": true,
+        "$storyRailNote": "The story runs up the right-hand edge, and it was MEASURED rather than chosen. This deck first shipped with no flavour at all, on the argument that five of its forty-nine subjects carried a `notes` line and the rest would deal with an empty band; that was the wrong read of what the band is for, because the deck reads thin beside the characters and the monsters without one. Given a story on every card, the panel across the bottom does not fit: it comes out 456 x 195, an aspect of 2.34, and window.floorAspect refuses it - the mine sets it at ten lines of rules text and about two would have had to come off every card in the deck to buy the band.\n\nThe rail fits because it is paid for in WIDTH, and width is the one thing this deck has spare. A tile plate is square or 3:2 landscape, never portrait, so a narrower window costs it nothing: 379.5 x 265 keeps the full height of every plate in the deck, where the panel kept 90%. The deck that was given no flavour to protect its picture ends up with both.",
         "plateId": "tile-{id}",
         "plateKind": "borrowed",
         "$plateKindNote": "BORROWED, which is a third kind and needed to be. A drawn plate has an artist and a brief; a generated one has a tool and a data block; a borrowed one has NEITHER, because the picture it wants has already been commissioned by another line and is sitting on disk. tile-{id} is the building tile's own plate, and this deck shows the same page through a bigger window.\n\nThat is the whole reason a player wants the card. A tile is cut to one to four hexagons, so a good third of the drawn page is thrown away by the die and more of it disappears under the name band - the artist is told as much, in the WINDOW and LABEL BAND blocks build-prompts writes into every tile brief. The card is where the rest of that page finally gets looked at.\n\nSo `minting` is false, and that is a statement rather than a shrug: these plates ARE being chased, by the buildingtiles line, and a subject chased down two lines at once is a subject two people draw. The queue counts each page once, where it was commissioned.",
         "plateFormat": "the tile's own, derived from its footprint",
         "$plateFormatNote": "Not one page for the deck, and it is the only deck of which that is true. Every other deck draws on one shape because it commissions its own plates; this one takes whatever page the footprint asked for, which is square for a single hex and landscape for a pair. The card window does not care - a crop is a crop, and docs/art/framing.json aims each plate individually - but nothing may assume a deck aspect here, which is why the format is a sentence rather than one of the values draw.sizeByFormat is keyed by.",
-        "storyPanel": false,
-        "$storyPanelNote": "No flavour panel, and the picture takes the room it was using. Two reasons, and the second is the one that decided it. Five of the forty-nine buildings this deck deals carry `notes` and the other forty-four would have dealt with an empty band across the bottom - and a deck that prints a panel it cannot fill has a hole in it, not a feature. Then the deck's whole purpose is the artwork the tile had to cut, so height spent on flavour is height spent against the one thing the card is for. The five that do have notes do not print them anywhere: `notes` is the designer's margin rather than the player's - one of the five records which word in the original brief the building came from - and the one twelve-line note among them was setting `factMax` for the whole deck, which letterboxed forty-nine pictures to carry one card's development history.",
         "minting": false,
         "id": "buildings",
         "name": "Buildings",
