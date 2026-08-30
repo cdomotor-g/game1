@@ -87,6 +87,11 @@
       ],
       "note": "Old Mother Keswick shelling into the bowl. The cat comes along below if there is room."
     },
+    "modification-warded-hold": {
+      "subject": [0.03, 0.18, 0.94, 0.72],
+      "focal": [0.5, 0.43],
+      "note": "The crate lid standing proud, the crowbar bent under it and plainly not moving, and the nearest two marks in the end grain. The box is 94% by 72% and the ink fits whole at both windows with room over. What the crop spends is the deckhead arch above and the run of floor planking below, both of which are there to say small cargo hold and neither of which the card names; the row of crates carrying the rest of the marks runs off the right margin as the brief allows."
+    },
     "monster-ash-drake": {
       "subject": [
         0.088,
@@ -447,6 +452,26 @@
         0.84
       ],
       "note": "Stopper to base of the flask, with the crystal caged inside it."
+    },
+    "modification-compound-boiler": {
+      "subject": [0.06, 0.104, 0.9, 0.796],
+      "focal": [0.42, 0.33],
+      "note": "Both cylinders and the plainly different diameters that make it a compound, the receiver pipe and its lagging band between them, the crankshaft with its cranks, and the flywheel. A square plate against a near-square card window keeps the page, and the 5:4 thumbnail is the one that has to be paid: it holds 80% of the height and the ink wants 82%. The 2% is spent off the BOTTOM - the bedplate's lower lip and the shadow under it - rather than off the top, because the top is the two domed cylinder tops with their standpipes, and the difference between those two diameters is the whole of what the card says. The oil can and the long-spouted feeder on the bedplate survive at both windows."
+    },
+    "modification-fleetfoot-binding": {
+      "subject": [0.06, 0.1235, 0.87, 0.7765],
+      "focal": [0.65, 0.22],
+      "note": "Her face and both hands on the open hub, the knotted cord wound three times round the axle stock, and the crystal tied into the last knot. The leaning wheel is inside the box on purpose and not as scenery: the stock is drawn heavy, and the wheel off its hub with the trestles and the spanner is what makes this a wheelwright's yard rather than a gun on a carriage. Nothing has to be spent - 87% by 79% against the thumbnail's 80% of the height - so the straw, the grease pot and the spanner all survive the card window and only the last of them grazes the thumbnail's bottom edge."
+    },
+    "modification-keelbound": {
+      "subject": [0.08, 0.16, 0.87, 0.76],
+      "focal": [0.53, 0.29],
+      "note": "The midships scarf with the run of out-of-register marks along the grain, the alchemist's chalk hand and the bowl in the other, and the mana crystal in its wooden cradle at the lower right. Nothing has to be spent at either window: the box is 87% by 76% and the 5:4 thumbnail holds 80% of the height, so the ink fits whole and the pad gives up the difference. The ends of the keel run off both margins, which is what the brief set them aside for, and the standing water and the slip timbering behind are the scenery that lets them."
+    },
+    "modification-salamander-grate": {
+      "subject": [0.05, 0.074, 0.93, 0.8],
+      "focal": [0.44, 0.55],
+      "note": "The grate stood on end with the heat flat between its bars, the bound shape strapped into its cradle underneath, and the fireman standing well back with his slice bar. The box is 93% by 80%, which is exactly the 5:4 thumbnail's budget, so the card window keeps the page and the thumbnail trims 2.4% off the BOTTOM. That is the tongs on the foundry floor, and they are the right thing to spend: the brief puts the tongs and the cooling trough beside the work and names only the grate, the bound shape and the slice bar as what may not be cut. The trough is at the right and survives both."
     },
     "modification-spinnaker": {
       "subject": [

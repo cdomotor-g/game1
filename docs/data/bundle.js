@@ -17770,6 +17770,66 @@ window.GAME_DATA = {
           0.17
         ]
       },
+      "modification-compound-boiler": {
+        "file": "art/renders/modification-compound-boiler.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.06,
+          0.104,
+          0.9,
+          0.796
+        ],
+        "focal": [
+          0.42,
+          0.33
+        ]
+      },
+      "modification-fleetfoot-binding": {
+        "file": "art/renders/modification-fleetfoot-binding.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.06,
+          0.1235,
+          0.87,
+          0.7765
+        ],
+        "focal": [
+          0.65,
+          0.22
+        ]
+      },
+      "modification-keelbound": {
+        "file": "art/renders/modification-keelbound.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.08,
+          0.16,
+          0.87,
+          0.76
+        ],
+        "focal": [
+          0.53,
+          0.29
+        ]
+      },
+      "modification-salamander-grate": {
+        "file": "art/renders/modification-salamander-grate.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.05,
+          0.074,
+          0.93,
+          0.8
+        ],
+        "focal": [
+          0.44,
+          0.55
+        ]
+      },
       "modification-spinnaker": {
         "file": "art/renders/modification-spinnaker.png",
         "width": 1254,
@@ -17783,6 +17843,21 @@ window.GAME_DATA = {
         "focal": [
           0.56,
           0.32
+        ]
+      },
+      "modification-warded-hold": {
+        "file": "art/renders/modification-warded-hold.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0.03,
+          0.18,
+          0.94,
+          0.72
+        ],
+        "focal": [
+          0.5,
+          0.43
         ]
       },
       "monster-ash-drake": {
