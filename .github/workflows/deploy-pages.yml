@@ -40,6 +40,12 @@ jobs:
         with:
           node-version: 20
 
+      # A valid signature and dimensions do not prove that the compressed image
+      # body arrived intact. Fully decode every committed PNG before any builder
+      # or Pages deployment is allowed to consume it.
+      - name: Verify every committed PNG
+        run: node tools/verify-plate.mjs --all
+
       - name: Validate data
         run: node tools/validate-data.mjs
 

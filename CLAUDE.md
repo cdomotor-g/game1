@@ -68,6 +68,15 @@ the pip that covers it cannot hide.
 
 ## A drawn plate's style is declared once, in `data/artstyle.json`
 
+**A plate is not shipped merely because a commit succeeded.** The generated
+image must first exist as a complete local file or genuine attachment; never
+reconstruct it from connector text, a preview or a base64 payload carried
+through chat. Read `docs/art/AGENTS.md` and use
+`node tools/ship-art.mjs <plate-id> <source.png>` when landing drawn artwork.
+That command fully validates the PNG, pushes it, reads the committed blob back
+from the target branch and requires a matching SHA-256 before it says shipped.
+`node tools/verify-plate.mjs --all` applies the same complete-file check in CI.
+
 The line, the hatching, the wash and one **register** per brief. Every
 `## Shared preamble` and `## Negative prompt` block under `docs/art/prompts/`,
 and both prompt blocks in `docs/art/07-ai-agent-brief.md`, are written from it by

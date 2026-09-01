@@ -7,7 +7,8 @@
   "scripts": {
     "build": "node tools/build-data.mjs",
     "validate": "node tools/validate-data.mjs",
-    "check": "node tools/validate-data.mjs && node tools/build-data.mjs"
+    "check": "node tools/validate-data.mjs && node tools/verify-plate.mjs --all && node tools/build-data.mjs",
+    "verify:plates": "node tools/verify-plate.mjs --all"
   },
   "engines": { "node": ">=18" }
 }

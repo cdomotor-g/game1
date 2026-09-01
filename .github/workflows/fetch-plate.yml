@@ -67,20 +67,14 @@ jobs:
             ${HF_TOKEN:+--header "Authorization: Bearer ${HF_TOKEN}"} \
             --output "docs/art/renders/${PLATE}.png" "$url"
 
-      # A truncated download is still a file. This reads the IHDR the same way
-      # the build tools do, so a plate that arrives half-written fails here
-      # instead of being committed and cropped to nothing.
+      # A truncated download can retain a perfect signature and IHDR. Validate
+      # every chunk, CRC, IEND and the complete inflated pixel payload before
+      # anything is built or committed.
       - name: Check it is a plate
         env:
           PLATE: ${{ inputs.plate }}
         run: |
-          node --input-type=module -e '
-            import { pngSize } from "./tools/lib/png.mjs";
-            const p = `docs/art/renders/${process.env.PLATE}.png`;
-            const { width, height } = pngSize(p);
-            if (!width || !height) throw new Error(`${p} is not a readable PNG`);
-            console.log(`${p} — ${width} x ${height}`);
-          '
+          node tools/verify-plate.mjs "docs/art/renders/${PLATE}.png"
 
       # The wording a plate was actually drawn from, when it differs from the
       # brief. docs/MINT.md asks for it to be committed beside the plate, and the
@@ -131,3 +125,22 @@ jobs:
           fi
           git commit -m "The ${PLATE} plate lands" -m "Fetched from the drawn-plate dataset by .github/workflows/fetch-plate.yml and committed with whatever it feeds rebuilt. The plate is the artist's output and is never edited here; everything else in this commit is generated from it."
           git push
+
+      # A successful push is not proof that the repository contains the source
+      # bytes. Fetch main, read the committed blob back through Git, then compare
+      # its hash with the file this job validated before the commit.
+      - name: Verify the committed bytes
+        env:
+          PLATE: ${{ inputs.plate }}
+        run: |
+          set -euo pipefail
+          source_hash="$(sha256sum "docs/art/renders/${PLATE}.png" | cut -d' ' -f1)"
+          git fetch --quiet origin main
+          git show "origin/main:docs/art/renders/${PLATE}.png" > "$RUNNER_TEMP/${PLATE}.png"
+          committed_hash="$(sha256sum "$RUNNER_TEMP/${PLATE}.png" | cut -d' ' -f1)"
+          [ "$source_hash" = "$committed_hash" ] || {
+            echo "::error::plate hash mismatch after push: source ${source_hash}, repository ${committed_hash}"
+            exit 1
+          }
+          node tools/verify-plate.mjs "$RUNNER_TEMP/${PLATE}.png"
+          echo "verified committed SHA-256 ${committed_hash}"
