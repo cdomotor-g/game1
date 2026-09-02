@@ -17917,6 +17917,17 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "event-caravan-robbery": {
+        "file": "art/renders/event-caravan-robbery.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-drought": {
         "file": "art/renders/event-drought.png",
         "width": 1536,
