@@ -17917,6 +17917,17 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "event-drought": {
+        "file": "art/renders/event-drought.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-hard-frost": {
         "file": "art/renders/event-hard-frost.png",
         "width": 1536,
