@@ -18022,6 +18022,17 @@ window.GAME_DATA = {
           0.33
         ]
       },
+      "event-piracy": {
+        "file": "art/renders/event-piracy.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-storms": {
         "file": "art/renders/event-storms.png",
         "width": 1536,
