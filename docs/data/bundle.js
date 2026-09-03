@@ -17943,6 +17943,17 @@ window.GAME_DATA = {
           0.4
         ]
       },
+      "event-dragon-sighting": {
+        "file": "art/renders/event-dragon-sighting.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-drought": {
         "file": "art/renders/event-drought.png",
         "width": 1536,
