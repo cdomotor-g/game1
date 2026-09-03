@@ -18033,6 +18033,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "event-smuggling-ring": {
+        "file": "art/renders/event-smuggling-ring.png",
+        "width": 1537,
+        "height": 1023,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-storms": {
         "file": "art/renders/event-storms.png",
         "width": 1536,
