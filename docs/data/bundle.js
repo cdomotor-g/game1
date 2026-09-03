@@ -18055,6 +18055,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "event-raiders": {
+        "file": "art/renders/event-raiders.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-smuggling-ring": {
         "file": "art/renders/event-smuggling-ring.png",
         "width": 1537,
