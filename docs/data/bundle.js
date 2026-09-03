@@ -18100,6 +18100,17 @@ window.GAME_DATA = {
           0.59
         ]
       },
+      "event-wolf-pack": {
+        "file": "art/renders/event-wolf-pack.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "item-bag": {
         "file": "art/renders/item-bag.png",
         "width": 1254,
