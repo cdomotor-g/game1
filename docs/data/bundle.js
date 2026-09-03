@@ -17928,6 +17928,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "event-border-dispute": {
+        "file": "art/renders/event-border-dispute.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-caravan-robbery": {
         "file": "art/renders/event-caravan-robbery.png",
         "width": 1536,
