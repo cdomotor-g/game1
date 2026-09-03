@@ -17922,10 +17922,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.049,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.3,
+          0.4
         ]
       },
       "event-drought": {
@@ -17933,10 +17937,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.104,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.475,
+          0.79
         ]
       },
       "event-earthquake": {
@@ -17944,10 +17952,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.119,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.52,
+          0.47
         ]
       },
       "event-flood": {
@@ -17955,10 +17967,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.139,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.73,
+          0.62
         ]
       },
       "event-hard-frost": {
@@ -17966,10 +17982,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.109,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.79,
+          0.61
         ]
       },
       "event-long-summer": {
@@ -17977,10 +17997,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.102,
+          0.035,
+          0.815,
+          0.95
+        ],
+        "focal": [
+          0.34,
+          0.34
         ]
       },
       "event-mine-collapse": {
@@ -17988,10 +18012,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.134,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.42,
+          0.33
         ]
       },
       "event-storms": {
@@ -17999,10 +18027,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.119,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.72,
+          0.85
         ]
       },
       "event-warehouse-heist": {
@@ -18010,10 +18042,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.094,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.195,
+          0.34
         ]
       },
       "event-wildfire": {
@@ -18021,10 +18057,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.124,
+          0.035,
+          0.816,
+          0.95
+        ],
+        "focal": [
+          0.7,
+          0.59
         ]
       },
       "item-bag": {

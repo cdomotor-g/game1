@@ -757,6 +757,136 @@
       ],
       "note": "Wedge and poll down to the knob, taking the beard and the binding. Focal on the eye where the bit meets the haft. Drawn plate - measured off the picture."
     },
+    "event-caravan-robbery": {
+      "subject": [
+        0.049,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.3,
+        0.4
+      ],
+      "note": "The wagon down on one side with its wheel off, the harness cut at the traces, and the prised crates trailing straw. Wagon and crates together run 94% of the page, so the thumbnail is held hard to the left and spends the two outermost crates and the small pot. A scatter can lose a member; an object cannot lose a limb, and the leaning wheel is the wagon's. Focal is the wagon body at the cut traces."
+    },
+    "event-drought": {
+      "subject": [
+        0.104,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.475,
+        0.79
+      ],
+      "note": "The well head and the shaft drawn open to the bucket lying on cracked mud at the bottom. Centred, because the well is: the thumbnail spends the sluice gate posts on the left and the far end of the stone trough on the right, and the brief had already called both spendable. Focal is the bucket, not the winch - the card is about how far down the water went."
+    },
+    "event-earthquake": {
+      "subject": [
+        0.119,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.52,
+        0.47
+      ],
+      "note": "The thrown-down wall running away down the slope, the step in the road and the new spring cutting its first channel. The thumbnail spends the cottage's left gable; the chimney stack gone through its own roof survives, which is the half of the cottage that is doing the work. Focal is the spilled line of stones, the longest statement on the page that the ground moved."
+    },
+    "event-flood": {
+      "subject": [
+        0.139,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.73,
+        0.62
+      ],
+      "note": "The half-drowned five-bar gate with rubbish stacked against it, the cart in to its axles, and the silt marks on the barn wall. The silt marks are the measure the card is for, so the crop is held to the right and the thumbnail spends the outlying gate post at the far left. Focal is the cart with its load lifted onto the rail."
+    },
+    "event-hard-frost": {
+      "subject": [
+        0.109,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.79,
+        0.61
+      ],
+      "note": "The plough in the iron furrow and the burst butt with its ice plug. Both are named and together they span 92% of the page, so the thumbnail cannot hold both whole: it spends the far-left handle grips and the outer tip of the sprung hoop. The share bitten into the furrow, the dropped traces and the whole tub survive. Focal is the ice plug, which is the one thing on the page that says frost rather than winter."
+    },
+    "event-long-summer": {
+      "subject": [
+        0.102,
+        0.035,
+        0.815,
+        0.95
+      ],
+      "focal": [
+        0.34,
+        0.34
+      ],
+      "note": "The loaded wagon and the overfull barn, with the near stooks running out to both margins. The stooks are a field and can lose a member, so the thumbnail spends the far-left green of the second crop and the outermost apple tree. Focal is the wagon roped down twice above its own sides."
+    },
+    "event-mine-collapse": {
+      "subject": [
+        0.134,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.42,
+        0.33
+      ],
+      "note": "The burst timbering, the buckled rails and the row of lamps set out and counted. The lamps are held whole because nobody is in the picture and they are the only thing that says so; the thumbnail spends the lower-left tail of the rails instead, which stay plainly buckled from where the crop starts. Focal is the adit mouth."
+    },
+    "event-storms": {
+      "subject": [
+        0.119,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.72,
+        0.85
+      ],
+      "note": "The empty bollard in the near corner, the double-moored boats and the sea wall taking green water. The thumbnail spends the crates and sacks stacked back off the net at the left, which the brief did not name. Focal is the bollard with no line on it - the berth of the ship that has not come in, and the only thing here that is about a loss rather than about weather."
+    },
+    "event-warehouse-heist": {
+      "subject": [
+        0.094,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.195,
+        0.34
+      ],
+      "note": "The cut hasp with its staple hanging, the door standing wide, and the clean rectangles in the dust where the stacks stood. All three sit inside the left two-thirds, so the thumbnail spends the ship's bow at the quay end and nothing that was named. Focal is the hasp: the door is the picture, the hasp is the crime."
+    },
+    "event-wildfire": {
+      "subject": [
+        0.124,
+        0.035,
+        0.816,
+        0.95
+      ],
+      "focal": [
+        0.7,
+        0.59
+      ],
+      "note": "The stack of boards burnt through at one end and sound at the other, the fire line stopped dead along the stream, and the near trunks. The thumbnail spends the outermost trunks on both edges - trunks are a stand and can lose a member. Focal is the stack, where the whole card is written in one object."
+    },
     "item-bag": {
       "subject": [
         0.1,
