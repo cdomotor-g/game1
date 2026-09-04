@@ -15,9 +15,9 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 91/156 · maps 1/1 · building tiles 44/54**
+**cards 91/157 · maps 1/1 · building tiles 44/54**
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 99 of 156 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 99 of 157 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
@@ -28,13 +28,13 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**91 of 156 minted.** 0 waiting on a brief, 57 waiting on art, 8 waiting on frame.
+**91 of 157 minted.** 0 waiting on a brief, 58 waiting on art, 8 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 57 cards
+### 2 · DRAW — the artist — 58 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -87,6 +87,7 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `EVT-49` | The Mead Run | Events | `event-mead-run` | ✓ | · | · |
 | `EVT-50` | Ley Drought | Events | `event-ley-drought` | ✓ | · | · |
 | `EVT-51` | Boom Town | Events | `event-boom-town` | ✓ | · | · |
+| `EVT-52` | The Frame-Breakers | Events | `event-frame-breakers` | ✓ | · | · |
 | `QST-01` | The Miller's Debt | Quests | `quest-millers-debt` | ✓ | · | · |
 | `QST-02` | Lanterns for Coldwater | Quests | `quest-lanterns-for-coldwater` | ✓ | · | · |
 | `QST-03` | The Boar of Bramblehold | Quests | `quest-boar-of-bramblehold` | ✓ | · | · |

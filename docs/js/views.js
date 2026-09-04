@@ -1145,6 +1145,11 @@
         el('ul', { style: 'padding-left:18px;font-size:13.5px' }, (c.effects || []).map((fx) => el('li', describeEffect(fx)))),
       ]),
       c.mitigations ? el('section', [el('h4', 'Mitigations'), el('ul', { style: 'padding-left:18px;font-size:13.5px;color:var(--ink-soft)' }, c.mitigations.map((m) => el('li', m)))]) : null,
+      /* Optional, and read the way a pricing model's `history` is read one storey
+         up: prose, split on the blank line. It is here rather than on the card
+         because it is not a rule - it is why the rule is that shape. */
+      c.history ? el('section', [el('h4', 'Where it comes from'),
+        ...c.history.split('\n\n').map((para) => el('p.prose', { style: 'font-size:13.5px' }, para))]) : null,
       el('section', [el('h4', 'Deck'), el('p.prose', `${c.copies || 1} cop${(c.copies || 1) === 1 ? 'y' : 'ies'} in the deck.`)]),
     ];
   };

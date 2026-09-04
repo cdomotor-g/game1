@@ -1056,6 +1056,28 @@ table(
   events.cards.filter((c) => c.mitigations?.length).map((c) => [c.cardCode, c.name, c.mitigations.join(' ')])
 );
 
+/* Where a card came from, for the ones that came from somewhere. `history` is
+   the same field the pricing models carry and it is read the same way - prose,
+   split on the blank line - because it does the same job: it says why the rule
+   is shaped like that, in the place a reader can check it against the rule. It
+   is optional, and most cards will never have one. A card gets one when the
+   thing it is a model OF is a thing that happened, and the card would otherwise
+   be read as saying something that is not true about it. */
+const sourced = events.cards.filter((c) => c.history?.trim());
+if (sourced.length) {
+  say('### Where some of them come from');
+  say();
+  say('Not every card has one of these and most never will. A card gets a note here when it');
+  say('models something that actually happened and the play of it would otherwise teach the');
+  say('wrong thing about it.');
+  say();
+  for (const c of sourced) {
+    say(`**${c.cardCode} ${c.name}**`);
+    say();
+    for (const para of c.history.split('\n\n')) { say(para); say(); }
+  }
+}
+
 const out = lines.join('\n');
 if (checkOnly) {
   let current = '';

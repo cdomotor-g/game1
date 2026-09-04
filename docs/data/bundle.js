@@ -9330,10 +9330,62 @@ window.GAME_DATA = {
           "A town with a granary holding 4+ food ignores the price jump and gains the workers anyway - which is the whole argument for granaries.",
           "The player who owns the nearest farm may sell into that region at the boom price. Demand is only a disaster if you have nothing to sell."
         ]
+      },
+      {
+        "id": "frame-breakers",
+        "cardCode": "EVT-52",
+        "name": "The Frame-Breakers",
+        "category": "industry",
+        "scope": "global",
+        "copies": 2,
+        "text": "They broke the frames of the master who cut the rate, not his neighbour's. The letter was signed General Ludd.",
+        "effects": [
+          {
+            "type": "tool",
+            "op": "break",
+            "value": 1,
+            "target": "unrest-towns",
+            "condition": "any town holding 1+ unrest",
+            "text": "Every town holding 1+ unrest loses its best tool: broken, not worn. A town with none is walked past."
+          },
+          {
+            "type": "choice",
+            "branches": [
+              {
+                "label": "Settle the rate",
+                "effects": [
+                  {
+                    "type": "unrest",
+                    "op": "remove",
+                    "value": 1,
+                    "text": "Pay 10 coin per unrest in that town. The unrest clears and the tool is spared."
+                  }
+                ]
+              },
+              {
+                "label": "Send for soldiers",
+                "effects": [
+                  {
+                    "type": "unrest",
+                    "op": "add",
+                    "value": 1,
+                    "text": "20 coin to quarter them, the tool goes anyway, and the town gains 1 more unrest."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "mitigations": [
+          "A town holding no unrest is not visited at all. That is the whole card: the frames of a master who paid the rate were left standing in the same workshop as the ones that were broken.",
+          "An inn serving ale, or a granary holding 4+ food, clears 1 unrest in that town before the card resolves - a grievance settled at a table is not a grievance.",
+          "A player may make an example of the ringleaders: 40 coin and 1 unrest in every town they own, and this card is taken out of the deck for the rest of the game. It works, and it is meant to sit badly."
+        ],
+        "history": "The Luddites were not against machines. Between 1811 and 1816 the framework-knitters of Nottinghamshire, the croppers of the West Riding and the weavers of Lancashire broke a great deal of machinery, and what they broke belonged to the masters who had cut the piece rate or put out shoddy work made by unapprenticed hands. Frames belonging to masters who paid the going rate were left standing, sometimes in the same room. The aim was the wage, not the engine.\n\nThey had asked first. The framework-knitters petitioned Parliament for their old rates and their apprenticeship customs, which had had statutory backing since 1563, and were refused; the apprenticeship clauses were repealed outright in 1814. Combinations of workmen were illegal under the Acts of 1799 and 1800, so a trade that could not lawfully bargain broke its employers' capital instead. Eric Hobsbawm called it collective bargaining by riot.\n\nThe answer was the Frame Breaking Act of 1812, which made breaking a stocking frame a hanging offence. Byron spoke against it in his maiden speech in the Lords on 27 February 1812 and asked whether there was not blood enough upon the penal code; the bill passed. Some twelve thousand troops went into the disturbed districts, more than Wellington had taken to the Peninsula four years earlier. At York in January 1813 seventeen men were hanged and others transported, and it stopped.\n\nThe name is a folk one: Ned Ludd, an apprentice supposed to have smashed two frames at Anstey around 1779, who probably never existed. The letters came signed General Ludd and dated from Sherwood Forest, which is a joke with a point on it. The modern sense of the word - somebody against new technology on principle - is very nearly the reverse of what the men who wore the name said they wanted, and that reversal is why this card is aimed by unrest and not by how mechanised anybody is."
       }
     ],
     "deck": {
-      "totalCards": 94,
+      "totalCards": 96,
       "$totalNote": "Sum of every card's copies, and it is generated rather than remembered: the figure has drifted twice already, which is exactly why the annex is built from this file.",
       "drawPerPlayerPerRound": 1,
       "drawnBy": "each-player",

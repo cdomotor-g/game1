@@ -1,6 +1,6 @@
-# The events — the year's weather (event-hard-frost … event-boom-town)
+# The events — the year's weather (event-hard-frost … event-frame-breakers)
 
-Fifty-one plates, one per event card (`data/events.json`), in deck order. This
+Fifty-two plates, one per event card (`data/events.json`), in deck order. This
 is the biggest deck in the game and the one most easily got wrong, so the rule
 is short and it is absolute:
 
@@ -31,10 +31,12 @@ by what it left on the ground.
 A4 landscape, 3:2 — the card crops a wide band from the middle. Render at 4000
 px on the long side or better.
 
-The FRAMING band below is the house figure and not yet a measurement — this deck
-has no built card to read a window off, so `tools/build-prompts.mjs` cannot heal
-it. The first accepted plate builds the first card, and the run after that writes
-the real WINDOW block into every section here.
+The FRAMING band and the WINDOW block below are both measurements now, written by
+`tools/build-prompts.mjs` off the deck's own built card window. That was the plan
+and this is the run it happened on: nineteen plates had landed and nobody had put
+the tool over the file since, so every section here still carried the house figure
+of 90%. The real one is 99%, because an event card's window is very nearly the
+whole page. Never hand-edit either line — change the card and run the tool.
 
 ## Shared preamble — paste ahead of every prompt below
 
@@ -119,7 +121,7 @@ vignettes, split scene
 
 ## event-hard-frost — Hard Frost *(weather, EVT-01)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-hard-frost.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-hard-frost.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -134,14 +136,21 @@ Wash: cold slate blue over everything, one thin note of rust red on the plough
 irons, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The plough, the frozen furrow and the burst butt inside the middle 90% of the
+The plough, the frozen furrow and the burst butt inside the middle 99% of the
 page height; the full width survives the crop. The hedge and the far fields may
 run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-drought — Drought *(weather, EVT-02)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-drought.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-drought.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -156,14 +165,21 @@ Wash: warm ochre and bleached straw throughout, one cold slate note on the
 chain, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The well head, the dry shaft and the cracked ground inside the middle 90% of
+The well head, the dry shaft and the cracked ground inside the middle 99% of
 the page height; the full width survives the crop. The pasture and the sluice
 may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-long-summer — Long Summer *(weather, EVT-03)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-long-summer.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-long-summer.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -179,14 +195,21 @@ Wash: warm ochre on the stubble and stooks, dusty grey-green on the second
 crop, rust red on the wagon, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The near stooks, the loaded wagon and the overfull barn inside the middle 90%
+The near stooks, the loaded wagon and the overfull barn inside the middle 99%
 of the page height; the full width survives the crop. The orchard and the far
 fields may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-storms — Storms at Sea *(weather, EVT-04)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-storms.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-storms.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -202,14 +225,21 @@ Wash: cold slate blue on sea and sky, rust red on the hulls, warm ochre on the
 quay stone, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The empty bollard, the moored boats and the sea wall inside the middle 90% of
+The empty bollard, the moored boats and the sea wall inside the middle 99% of
 the page height; the full width survives the crop. The breaking water and the
 outer harbour may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-flood — Flood *(disaster, EVT-05)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-flood.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-flood.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -228,11 +258,18 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The gate, the stranded cart and the silt marks on the barn inside the middle
 90% of the page height; the full width survives the crop. The flooded ground
 and the hedge line may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-earthquake — Earthquake *(disaster, EVT-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-earthquake.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-earthquake.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -248,14 +285,21 @@ Wash: dusty grey-green on the turf, cold slate on the stone, rust red on the
 roof tiles, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The fallen wall, the step in the road and the new spring inside the middle 90%
+The fallen wall, the step in the road and the new spring inside the middle 99%
 of the page height; the full width survives the crop. The hillside and the
 cottage may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-wildfire — Wildfire *(disaster, EVT-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-wildfire.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-wildfire.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -272,13 +316,20 @@ the far bank, rust red in the stump holes, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The burnt stack, the fire line at the stream and the near trunks inside the
-middle 90% of the page height; the full width survives the crop. The standing
+middle 99% of the page height; the full width survives the crop. The standing
 trunks and the far bank may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-mine-collapse — Mine Collapse *(disaster, EVT-08)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-mine-collapse.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-mine-collapse.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -296,11 +347,18 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The burst timbering, the buckled rails and the row of lamps inside the middle
 90% of the page height; the full width survives the crop. The spoil bank and
 the hillside may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-warehouse-heist — Warehouse Heist *(crime, EVT-09)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-warehouse-heist.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-warehouse-heist.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -318,11 +376,18 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The cut hasp, the open door and the pallet marks in the dust inside the middle
 90% of the page height; the full width survives the crop. The quay and the
 tracks may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-caravan-robbery — Caravan Robbery *(crime, EVT-10)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-caravan-robbery.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-caravan-robbery.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -337,14 +402,21 @@ Wash: warm ochre on the road and straw, rust red on the wagon, dusty grey-green
 on the scrub, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The broken crates, the cut harness and the leaning wagon inside the middle 90%
+The broken crates, the cut harness and the leaning wagon inside the middle 99%
 of the page height; the full width survives the crop. The straw tail and the
 scrub may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-train-heist — Train Heist *(crime, EVT-11)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-train-heist.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-train-heist.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -363,11 +435,18 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The open van door, the empty interior and the leaning ladder inside the middle
 90% of the page height; the full width survives the crop. The locomotive, the
 cutting and the track may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-piracy — Piracy *(crime, EVT-12)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-piracy.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-piracy.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -385,11 +464,18 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The grounded hull, the floating bales and the distant sail inside the middle
 90% of the page height; the full width survives the crop. The sea and the shore
 may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-smuggling-ring — Smuggling Ring *(crime, EVT-13)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-smuggling-ring.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-smuggling-ring.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -407,11 +493,18 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The stacked kegs, the keel marks and the shuttered lantern inside the middle
 90% of the page height; the full width survives the crop. The lane, the banks
 and the sea may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-wolf-pack — Wolf Pack *(wildlife, EVT-14)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-wolf-pack.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-wolf-pack.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -430,11 +523,18 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The broken hurdle, the caught fleece and the line of prints inside the middle
 90% of the page height; the full width survives the crop. The snow field and
 the crook may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-boar-in-the-fields — Boar in the Fields *(wildlife, EVT-15)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-boar-in-the-fields.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-boar-in-the-fields.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -451,13 +551,20 @@ on the hedge, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The troughs through the crop, the broken hurdle and the cloven slots inside the
-middle 90% of the page height; the full width survives the crop. The standing
+middle 99% of the page height; the full width survives the crop. The standing
 barley and the hedge may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-dragon-sighting — Dragon Sighting *(wildlife, EVT-16)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-dragon-sighting.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-dragon-sighting.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -474,14 +581,21 @@ Wash: warm ochre on the road, cold slate blue in the shadow band and the rock,
 flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The abandoned cart, the barred inn and the shadow band inside the middle 90% of
+The abandoned cart, the barred inn and the shadow band inside the middle 99% of
 the page height; the full width survives the crop. The mountains and the road
 may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-raiders — Raiders *(conflict, EVT-17)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-raiders.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-raiders.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -497,13 +611,20 @@ ironwork, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The flattened gate, the half-built barricade and the standing spear inside the
-middle 90% of the page height; the full width survives the crop. The steading
+middle 99% of the page height; the full width survives the crop. The steading
 and the pens may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-border-dispute — Border Dispute *(conflict, EVT-18)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-border-dispute.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-border-dispute.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -519,8 +640,15 @@ stone and the iron, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 Both boundary marks, the trampled path and the two sets of ruts inside the
-middle 90% of the page height; the full width survives the crop. The meadow and
+middle 99% of the page height; the full width survives the crop. The meadow and
 the old hedge may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-mercenaries-for-hire — Mercenaries for Hire *(conflict, EVT-19)*
@@ -541,9 +669,16 @@ Wash: warm ochre on the canvas, rust red on the leather and blankets, cold
 slate on the spear heads, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The stacked spears, the laid-out kit and the billet lines inside the middle 90%
+The stacked spears, the laid-out kit and the billet lines inside the middle 99%
 of the page height; the full width survives the crop. The horse line and the
 town wall may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-plague — Plague *(social, EVT-20)*
@@ -564,9 +699,16 @@ Wash: warm ochre on the straw and stone, rust red on the painted cross, cold
 slate in the shadow, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The strawed road, the shut gate and the abandoned barrow inside the middle 90%
+The strawed road, the shut gate and the abandoned barrow inside the middle 99%
 of the page height; the full width survives the crop. The square and the roofs
 may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-migrants — Migrants *(social, EVT-21)*
@@ -590,6 +732,13 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The near carts, the loaded bundles and the run of the column inside the middle
 90% of the page height; the full width survives the crop. The road and the
 country may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-strike — Strike *(social, EVT-22)*
@@ -611,8 +760,15 @@ the cold furnace brick, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The line of laid-down tools, the gateway and the cold furnace mouth inside the
-middle 90% of the page height; the full width survives the crop. The yard, the
+middle 99% of the page height; the full width survives the crop. The yard, the
 barrows and the roofs may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-festival — Festival *(social, EVT-23)*
@@ -633,9 +789,16 @@ Wash: warm ochre on the lanterns and timber, rust red on the bunting and awning
 stripes, dusty grey-green on the far trees, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The near trestles, the spit and the strung lanterns inside the middle 90% of
+The near trestles, the spit and the strung lanterns inside the middle 99% of
 the page height; the full width survives the crop. The crowd, the bunting and
 the roofs may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-master-craftsman — Travelling Master *(social, EVT-24)*
@@ -659,6 +822,13 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The let-down bench, the full tool rack and the empty stool inside the middle
 90% of the page height; the full width survives the crop. The wagon, the tilt
 and the market may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-iron-shortage — Iron Shortage *(market, EVT-25)*
@@ -680,8 +850,15 @@ red at the forge mouth, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The empty stock rack, the picked-over scrap heap and the lit forge inside the
-middle 90% of the page height; the full width survives the crop. The yard and
+middle 99% of the page height; the full width survives the crop. The yard and
 the roof may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-glut — Glut *(market, EVT-26)*
@@ -704,6 +881,13 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The near stacks, the packed shed door and the unloading barge inside the middle
 90% of the page height; the full width survives the crop. The quay, the water
 and the tarpaulins may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-foreign-demand — Foreign Demand *(market, EVT-27)*
@@ -725,8 +909,15 @@ and baskets, rust red on the local boats, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The swept and roped space, the empty baskets and the strange hull inside the
-middle 90% of the page height; the full width survives the crop. The quay, the
+middle 99% of the page height; the full width survives the crop. The quay, the
 rigging and the far boats may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-tax-levy — Tax Levy *(market, EVT-28)*
@@ -747,9 +938,16 @@ Wash: warm ochre on the road and table, cold slate on the ironwork and locks,
 rust red on the waiting carts, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The table, the strongbox and the roped-off gate inside the middle 90% of the
+The table, the strongbox and the roped-off gate inside the middle 99% of the
 page height; the full width survives the crop. The queue of carts and the
 verges may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-ley-surge — Ley Surge *(arcane, EVT-29)*
@@ -774,6 +972,13 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The standing harrow, the upright chain and the drawn nails inside the middle
 90% of the page height; the full width survives the crop. The moor and the sky
 may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-curdled-brew — Curdled Brew *(arcane, EVT-30)*
@@ -796,8 +1001,15 @@ the bench timber, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The cracked alembic, the set tongue of spillage and the scorched slate inside
-the middle 90% of the page height; the full width survives the crop. The bench,
+the middle 99% of the page height; the full width survives the crop. The bench,
 the glassware and the shutter may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-wandering-wizard — Wandering Wizard *(arcane, EVT-31)*
@@ -822,6 +1034,13 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The laid-out cloth, the row of objects and the empty stool inside the middle
 90% of the page height; the full width survives the crop. The hedge, the fire
 and the road may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-camp-fever — Camp Fever *(social, EVT-32)*
@@ -843,8 +1062,15 @@ cold slate on the water, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The upset pot, the open bedrolls and the water skin at the stream inside the
-middle 90% of the page height; the full width survives the crop. The stream,
+middle 99% of the page height; the full width survives the crop. The stream,
 the bank and the cattle ground may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-marsh-ague — Marsh Ague *(social, EVT-33)*
@@ -868,6 +1094,13 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The bell rope, the shuttered fronts and the abandoned barrows inside the middle
 90% of the page height; the full width survives the crop. The mist, the fen and
 the roofs may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-grey-pox — The Grey Pox *(social, EVT-34)*
@@ -889,8 +1122,15 @@ rust red note on the cart, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The abandoned cart, the stacked trestles and the running conduit inside the
-middle 90% of the page height; the full width survives the crop. The square,
+middle 99% of the page height; the full width survives the crop. The square,
 the shuttered fronts and the roofs may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-impure-smelt — Impure Smelt *(industry, EVT-35)*
@@ -912,8 +1152,15 @@ sand, rust red on the furnace brick, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The snapped castings, the fracture faces and the split flux stone inside the
-middle 90% of the page height; the full width survives the crop. The moulds,
+middle 99% of the page height; the full width survives the crop. The moulds,
 the bar stack and the furnace may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-blood-moon — Blood Moon *(arcane, EVT-36)*
@@ -935,9 +1182,16 @@ Wash: cold slate blue over the whole night, one rust red note low in the sky,
 warm ochre on the byre timber, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The barred byre, the staked gate and the crossing tracks inside the middle 90%
+The barred byre, the staked gate and the crossing tracks inside the middle 99%
 of the page height; the full width survives the crop. The moon, the hillside
 and the walls may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-quiet-season — The Quiet Season *(wildlife, EVT-37)*
@@ -959,8 +1213,15 @@ grey-green on the trees, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The empty racks, the slack stretching frame and the single line of tracks
-inside the middle 90% of the page height; the full width survives the crop. The
+inside the middle 99% of the page height; the full width survives the crop. The
 snow, the camp and the treeline may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-black-sails — Black Sails on the Horizon *(crime, EVT-38)*
@@ -981,8 +1242,15 @@ ochre on the boom spars, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The chained boom, the anchored merchantmen and the three distant hulls inside
-the middle 90% of the page height; the full width survives the crop. The
+the middle 99% of the page height; the full width survives the crop. The
 shores, the capstans and the open sea may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-letter-of-marque — Letter of Marque *(crime, EVT-39)*
@@ -1004,8 +1272,15 @@ on the fresh-cut timber, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The newly cut gun ports, the gun in its sling and the table with the seal press
-inside the middle 90% of the page height; the full width survives the crop. The
+inside the middle 99% of the page height; the full width survives the crop. The
 quay, the rigging and the barrels may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-press-gang — Press Gang *(crime, EVT-40)*
@@ -1027,8 +1302,15 @@ rust red on the spilled wine, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The broken door, the furniture in the street and the dropped shoe inside the
-middle 90% of the page height; the full width survives the crop. The lane, the
+middle 99% of the page height; the full width survives the crop. The lane, the
 harbour and the boat may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-dragons-tithe — The Dragon's Tithe *(conflict, EVT-41)*
@@ -1050,8 +1332,15 @@ red on the bales, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The short-stacked platform, the empty two thirds and the clawed print inside
-the middle 90% of the page height; the full width survives the crop. The high
+the middle 99% of the page height; the full width survives the crop. The high
 ground and the road may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-aerial-post — The Aerial Post *(industry, EVT-42)*
@@ -1072,9 +1361,16 @@ Wash: warm ochre on the timber tower, cold slate blue on the ironwork and sky,
 rust red on the mail chests, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The mooring cone, the mast head and the waiting mail cart inside the middle 90%
+The mooring cone, the mast head and the waiting mail cart inside the middle 99%
 of the page height; the full width survives the crop. The guy wires, the hill
 and the sky may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-gale — Gale *(weather, EVT-43)*
@@ -1096,8 +1392,15 @@ on the sky, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The opened roof, the streaming thatch and the overturned wagon inside the
-middle 90% of the page height; the full width survives the crop. The shelter
+middle 99% of the page height; the full width survives the crop. The shelter
 belt, the ditch and the sky may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-early-thaw — Early Thaw *(weather, EVT-44)*
@@ -1119,8 +1422,15 @@ on the sledge, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The ice jam at the pier, the runner marks ending at the water and the stranded
-sledge inside the middle 90% of the page height; the full width survives the
+sledge inside the middle 99% of the page height; the full width survives the
 crop. The river, the bridge and the banks may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-clipped-coin — Clipped Coin *(market, EVT-45)*
@@ -1141,9 +1451,16 @@ Wash: warm ochre on the coin, cold slate blue on the shears and scales, rust
 red on the table cloth, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
-The clipped coin, the scales and the shears in the box inside the middle 90% of
+The clipped coin, the scales and the shears in the box inside the middle 99% of
 the page height; the full width survives the crop. The table, the box and the
 market may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-guild-embargo — Guild Embargo *(market, EVT-46)*
@@ -1167,6 +1484,13 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The battened door, the branded mark and the refused delivery inside the middle
 90% of the page height; the full width survives the crop. The shopfront, the
 window and the street may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-new-tolls — New Tolls *(social, EVT-47)*
@@ -1189,6 +1513,13 @@ FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The new posts, the rope across the road and the ledger shelf inside the middle
 90% of the page height; the full width survives the crop. The road, the
 milestone and the halted carts may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-green-man — The Sign of the Green Man *(social, EVT-48)*
@@ -1211,8 +1542,15 @@ rust red on the barrels, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The empty sign bracket, the sagging thatch and the grassed-over yard inside the
-middle 90% of the page height; the full width survives the crop. The inn, the
+middle 99% of the page height; the full width survives the crop. The inn, the
 road and the barrels may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-mead-run — The Mead Run *(market, EVT-49)*
@@ -1234,8 +1572,15 @@ on the dray, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The upended barrels, the open cellar hatch and the empty dray bed inside the
-middle 90% of the page height; the full width survives the crop. The inn yard
+middle 99% of the page height; the full width survives the crop. The inn yard
 and the waiting carts may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-ley-drought — Ley Drought *(arcane, EVT-50)*
@@ -1258,8 +1603,15 @@ ground, warm ochre on the tripod, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The hanging lodestone, the compass bowl and the flat scatter of filings inside
-the middle 90% of the page height; the full width survives the crop. The marked
+the middle 99% of the page height; the full width survives the crop. The marked
 stone, the path and the open ground may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## event-boom-town — Boom Town *(market, EVT-51)*
@@ -1282,6 +1634,48 @@ grey-green on what is left of the fields, flat.
 
 FRAMING. Landscape 3:2, whole page drawn edge to edge.
 The new-built lines, the cut road and the old village in the middle of them
-inside the middle 90% of the page height; the full width survives the crop. The
+inside the middle 99% of the page height; the full width survives the crop. The
 hillside, the timber stacks and the carts may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
+```
+
+## event-frame-breakers — The Frame-Breakers *(industry, EVT-52)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-frame-breakers.png`.
+
+```text
+[PREAMBLE]
+
+A workshop the morning after, with two machines in it and only one of them
+broken. In the foreground a heavy knitting frame is wrecked - the iron bar
+across its bed snapped through, its needles bent flat in a comb, its wooden
+uprights split where the head of a hammer went in - and its unfinished work
+still on it, half a stocking hanging loose off the broken bed. Two paces behind
+it, on the same floor, an identical frame stands whole, threaded, oiled and
+completely untouched: nothing about it is damaged and the difference between
+the two is the subject of the picture. A sledge and a smith's hammer are left
+lying on the flags where they were dropped. On the plank door at the back, one
+sheet of paper is nailed flat through its middle with a horseshoe nail, edges
+lifting. Grey morning light through a small high window; sawdust, snapped
+needles and a scatter of glass on the floor. Low horizon in the bottom third.
+Wash: cold slate blue on the ironwork of both frames, warm ochre on the timber
+and the floor, one thin rust red on the nailed paper, flat.
+
+FRAMING. Landscape 3:2, whole page drawn edge to edge.
+The broken frame and the whole frame standing behind it inside the middle 99%
+of the page height; the full width survives the crop. The door, the nailed
+paper and the dropped hammers may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 99% of its height - everything that matters
+must sit between 1% and 99% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 456 x 300, on the 1536 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```

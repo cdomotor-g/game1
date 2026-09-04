@@ -1203,8 +1203,9 @@ the build if an effect ever loses its sentence.
 | EVT-49 | The Mead Run | market | offer | 2 | Sell any quantity of mead or ale this round at double the current band, to the board, from any town connected to a route - no market building needed. Afterwards the cellars are full and the price falls a band. |
 | EVT-50 | Ley Drought | arcane | global | 2 | Every town loses 1 mana crystal. Every spell costs 1 extra mana for 2 rounds, and mana veins yield nothing. |
 | EVT-51 | Boom Town | market | local | 2 | The largest town in the region gains 2 workers. Food and drink in that region jump two bands. Everyone has to eat and nobody planted anything. Every town in the region gains 1 unrest. |
+| EVT-52 | The Frame-Breakers | industry | global | 2 | Every town holding 1+ unrest loses its best tool: broken, not worn. A town with none is walked past. **Settle the rate:** Pay 10 coin per unrest in that town. The unrest clears and the tool is spared. **Send for soldiers:** 20 coin to quarter them, the tool goes anyway, and the town gains 1 more unrest. |
 
-94 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.
+96 cards. In the Events phase, each player in turn order reveals one card and resolves it before the Labour Roll.
 
 ### What could have prevented it
 
@@ -1246,3 +1247,20 @@ disaster has at least one of these that a player could have bought in advance.
 | EVT-49 | The Mead Run | Passing costs nothing. A player with an apiary and a brewery can usually take this twice a game, which is exactly the industry this card exists to make worth building. |
 | EVT-50 | Ley Drought | Mana already stored in a talisman is untouched - which is what talismans are for. An elf holds their innate mana as normal. A shrine in a town cancels the extra spell cost for characters standing in it. |
 | EVT-51 | Boom Town | A town with a granary holding 4+ food ignores the price jump and gains the workers anyway - which is the whole argument for granaries. The player who owns the nearest farm may sell into that region at the boom price. Demand is only a disaster if you have nothing to sell. |
+| EVT-52 | The Frame-Breakers | A town holding no unrest is not visited at all. That is the whole card: the frames of a master who paid the rate were left standing in the same workshop as the ones that were broken. An inn serving ale, or a granary holding 4+ food, clears 1 unrest in that town before the card resolves - a grievance settled at a table is not a grievance. A player may make an example of the ringleaders: 40 coin and 1 unrest in every town they own, and this card is taken out of the deck for the rest of the game. It works, and it is meant to sit badly. |
+
+### Where some of them come from
+
+Not every card has one of these and most never will. A card gets a note here when it
+models something that actually happened and the play of it would otherwise teach the
+wrong thing about it.
+
+**EVT-52 The Frame-Breakers**
+
+The Luddites were not against machines. Between 1811 and 1816 the framework-knitters of Nottinghamshire, the croppers of the West Riding and the weavers of Lancashire broke a great deal of machinery, and what they broke belonged to the masters who had cut the piece rate or put out shoddy work made by unapprenticed hands. Frames belonging to masters who paid the going rate were left standing, sometimes in the same room. The aim was the wage, not the engine.
+
+They had asked first. The framework-knitters petitioned Parliament for their old rates and their apprenticeship customs, which had had statutory backing since 1563, and were refused; the apprenticeship clauses were repealed outright in 1814. Combinations of workmen were illegal under the Acts of 1799 and 1800, so a trade that could not lawfully bargain broke its employers' capital instead. Eric Hobsbawm called it collective bargaining by riot.
+
+The answer was the Frame Breaking Act of 1812, which made breaking a stocking frame a hanging offence. Byron spoke against it in his maiden speech in the Lords on 27 February 1812 and asked whether there was not blood enough upon the penal code; the bill passed. Some twelve thousand troops went into the disturbed districts, more than Wellington had taken to the Peninsula four years earlier. At York in January 1813 seventeen men were hanged and others transported, and it stopped.
+
+The name is a folk one: Ned Ludd, an apprentice supposed to have smashed two frames at Anstey around 1779, who probably never existed. The letters came signed General Ludd and dated from Sherwood Forest, which is a joke with a point on it. The modern sense of the word - somebody against new technology on principle - is very nearly the reverse of what the men who wore the name said they wanted, and that reversal is why this card is aimed by unrest and not by how mechanised anybody is.
