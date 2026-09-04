@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 2435" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 2508" font-family="Georgia, 'Times New Roman', serif">
 <defs><marker id="f-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5F564C"/></marker></defs>
-<rect width="780" height="2435" fill="#EDE4D1"/>
+<rect width="780" height="2508" fill="#EDE4D1"/>
 <text x="16" y="24" font-size="15" font-weight="bold" fill="#1A1714" class="f-token" data-kind="buildings" data-id="blacksmith">Blacksmith</text><text x="16" y="40" font-size="8.5" fill="#3D3630">Build it from 4 Stone + 3 Lumber + 1 Clay — 14 build points</text><text x="16" y="52" font-size="8.5" fill="#3D3630">stands on Grassland, Forest, Hills, Tundra, Desert or Marsh · run by a Smith</text>
 <g class="f-token" data-kind="commodities" data-id="pig-iron"><rect x="16" y="68" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="80.5" font-size="9" fill="#1A1714">2 × Pig Iron</text></g>
 <text x="23" y="94" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
@@ -274,47 +274,57 @@
 <line x1="524" y1="2060.5" x2="548" y2="2060.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
 <g class="f-token" data-kind="items" data-id="grappling-hook"><rect x="552" y="2051.5" width="82.04" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2064" font-size="9" fill="#1A1714">Grappling Hook</text></g>
 <line x1="16" y1="2097" x2="764" y2="2097" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="ironware"><rect x="16" y="2103" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2115.5" font-size="9" fill="#1A1714">1 × Ironware</text></g>
-<text x="23" y="2129" font-size="7" fill="#5F564C" font-style="italic">made here</text>
-<line x1="90.32" y1="2112" x2="296" y2="2133.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="copper"><rect x="16" y="2103" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2115.5" font-size="9" fill="#1A1714">1 × Copper</text></g>
+<text x="23" y="2129" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="80.6" y1="2112" x2="296" y2="2133.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
 <g class="f-token" data-kind="commodities" data-id="glass"><rect x="16" y="2136" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2148.5" font-size="9" fill="#1A1714">1 × Glass</text></g>
 <text x="23" y="2162" font-size="7" fill="#5F564C" font-style="italic">from the Glassworks</text>
 <line x1="75.74" y1="2145" x2="296" y2="2133.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="lantern"><rect x="300" y="2115" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2129" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Lantern</text><text x="410" y="2141" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<g class="f-token" data-kind="items" data-id="compass"><rect x="300" y="2109.5" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2123.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Compass</text><text x="410" y="2135.5" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text><text x="410" y="2146.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
 <line x1="524" y1="2133.5" x2="548" y2="2133.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="lantern"><rect x="552" y="2124.5" width="48.02" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2137" font-size="9" fill="#1A1714">Lantern</text></g>
+<g class="f-token" data-kind="items" data-id="compass"><rect x="552" y="2124.5" width="48.02" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2137" font-size="9" fill="#1A1714">Compass</text></g>
 <line x1="16" y1="2170" x2="764" y2="2170" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="copper"><rect x="16" y="2180.5" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2193" font-size="9" fill="#1A1714">1 × Copper</text></g>
-<text x="23" y="2206.5" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
-<line x1="80.6" y1="2189.5" x2="296" y2="2194.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="talisman-copper-amulet"><rect x="300" y="2176" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2190" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Copper Amulet</text><text x="410" y="2202" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
-<line x1="524" y1="2194.5" x2="548" y2="2194.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="talisman-copper-amulet"><rect x="552" y="2185.5" width="77.18" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2198" font-size="9" fill="#1A1714">Copper Amulet</text></g>
-<line x1="16" y1="2219" x2="764" y2="2219" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="gold"><rect x="16" y="2235" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2247.5" font-size="9" fill="#1A1714">1 × Gold</text></g>
-<text x="23" y="2261" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
-<line x1="70.88" y1="2244" x2="296" y2="2249" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="talisman-gold-locket"><rect x="300" y="2225" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2239" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Gold Locket</text><text x="410" y="2251" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text><text x="410" y="2262" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
-<line x1="524" y1="2249" x2="548" y2="2249" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="talisman-gold-locket"><rect x="552" y="2240" width="67.46" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2252.5" font-size="9" fill="#1A1714">Gold Locket</text></g>
-<line x1="16" y1="2279" x2="764" y2="2279" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="gems"><rect x="16" y="2285" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2297.5" font-size="9" fill="#1A1714">1 × Gems</text></g>
-<text x="23" y="2311" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
-<line x1="70.88" y1="2294" x2="296" y2="2315.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="commodities" data-id="copper"><rect x="16" y="2318" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2330.5" font-size="9" fill="#1A1714">1 × Copper</text></g>
-<text x="23" y="2344" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
-<line x1="80.6" y1="2327" x2="296" y2="2315.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="talisman-gemfire-pendant"><rect x="300" y="2291.5" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2305.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Gemfire Pendant</text><text x="410" y="2317.5" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="2328.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
-<line x1="524" y1="2315.5" x2="548" y2="2315.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="items" data-id="talisman-gemfire-pendant"><rect x="552" y="2306.5" width="86.9" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2319" font-size="9" fill="#1A1714">Gemfire Pendant</text></g>
+<g class="f-token" data-kind="commodities" data-id="ironware"><rect x="16" y="2176" width="72.32" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2188.5" font-size="9" fill="#1A1714">1 × Ironware</text></g>
+<text x="23" y="2202" font-size="7" fill="#5F564C" font-style="italic">made here</text>
+<line x1="90.32" y1="2185" x2="296" y2="2206.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="glass"><rect x="16" y="2209" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2221.5" font-size="9" fill="#1A1714">1 × Glass</text></g>
+<text x="23" y="2235" font-size="7" fill="#5F564C" font-style="italic">from the Glassworks</text>
+<line x1="75.74" y1="2218" x2="296" y2="2206.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="lantern"><rect x="300" y="2188" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2202" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Lantern</text><text x="410" y="2214" text-anchor="middle" font-size="8" fill="#3D3630">2h effort</text></g>
+<line x1="524" y1="2206.5" x2="548" y2="2206.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="lantern"><rect x="552" y="2197.5" width="48.02" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2210" font-size="9" fill="#1A1714">Lantern</text></g>
+<line x1="16" y1="2243" x2="764" y2="2243" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="copper"><rect x="16" y="2253.5" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2266" font-size="9" fill="#1A1714">1 × Copper</text></g>
+<text x="23" y="2279.5" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="80.6" y1="2262.5" x2="296" y2="2267.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-copper-amulet"><rect x="300" y="2249" width="220" height="37" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2263" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Copper Amulet</text><text x="410" y="2275" text-anchor="middle" font-size="8" fill="#3D3630">3h effort</text></g>
+<line x1="524" y1="2267.5" x2="548" y2="2267.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-copper-amulet"><rect x="552" y="2258.5" width="77.18" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2271" font-size="9" fill="#1A1714">Copper Amulet</text></g>
+<line x1="16" y1="2292" x2="764" y2="2292" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="gold"><rect x="16" y="2308" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2320.5" font-size="9" fill="#1A1714">1 × Gold</text></g>
+<text x="23" y="2334" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
+<line x1="70.88" y1="2317" x2="296" y2="2322" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-gold-locket"><rect x="300" y="2298" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2312" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Gold Locket</text><text x="410" y="2324" text-anchor="middle" font-size="8" fill="#3D3630">4h effort</text><text x="410" y="2335" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
+<line x1="524" y1="2322" x2="548" y2="2322" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="items" data-id="talisman-gold-locket"><rect x="552" y="2313" width="67.46" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2325.5" font-size="9" fill="#1A1714">Gold Locket</text></g>
 <line x1="16" y1="2352" x2="764" y2="2352" stroke="#C0B7A9" stroke-width="0.6"/>
-<g class="f-token" data-kind="commodities" data-id="steel"><rect x="16" y="2358" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2370.5" font-size="9" fill="#1A1714">2 × Steel</text></g>
-<text x="23" y="2384" font-size="7" fill="#5F564C" font-style="italic">from the Steelworks</text>
-<line x1="75.74" y1="2367" x2="296" y2="2388.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="2391" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2403.5" font-size="9" fill="#1A1714">2 × Lumber</text></g>
-<text x="23" y="2417" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<g class="f-token" data-kind="commodities" data-id="gems"><rect x="16" y="2358" width="52.88" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2370.5" font-size="9" fill="#1A1714">1 × Gems</text></g>
+<text x="23" y="2384" font-size="7" fill="#5F564C" font-style="italic">from the Mine</text>
+<line x1="70.88" y1="2367" x2="296" y2="2388.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="copper"><rect x="16" y="2391" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2403.5" font-size="9" fill="#1A1714">1 × Copper</text></g>
+<text x="23" y="2417" font-size="7" fill="#5F564C" font-style="italic">from the Smelter</text>
 <line x1="80.6" y1="2400" x2="296" y2="2388.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="modifications" data-id="ice-runners"><rect x="300" y="2359" width="220" height="59" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="2373" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Ice Runners</text><text x="410" y="2385" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="2396" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text><text x="410" y="2407" text-anchor="middle" font-size="8" fill="#3D3630">fits: cart, caravan, sled</text></g>
+<g class="f-token" data-kind="items" data-id="talisman-gemfire-pendant"><rect x="300" y="2364.5" width="220" height="48" rx="5" fill="#e7d5c2" stroke="#c2826e" stroke-width="1.3"/><text x="410" y="2378.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Gemfire Pendant</text><text x="410" y="2390.5" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="2401.5" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text></g>
 <line x1="524" y1="2388.5" x2="548" y2="2388.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
-<g class="f-token" data-kind="modifications" data-id="ice-runners"><rect x="552" y="2379.5" width="67.46" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="2392" font-size="9" fill="#1A1714">Ice Runners</text></g>
+<g class="f-token" data-kind="items" data-id="talisman-gemfire-pendant"><rect x="552" y="2379.5" width="86.9" height="18" rx="4" fill="#e7d5c2" stroke="#c2826e" stroke-width="1"/><text x="559" y="2392" font-size="9" fill="#1A1714">Gemfire Pendant</text></g>
+<line x1="16" y1="2425" x2="764" y2="2425" stroke="#C0B7A9" stroke-width="0.6"/>
+<g class="f-token" data-kind="commodities" data-id="steel"><rect x="16" y="2431" width="57.74" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2443.5" font-size="9" fill="#1A1714">2 × Steel</text></g>
+<text x="23" y="2457" font-size="7" fill="#5F564C" font-style="italic">from the Steelworks</text>
+<line x1="75.74" y1="2440" x2="296" y2="2461.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="commodities" data-id="lumber"><rect x="16" y="2464" width="62.6" height="18" rx="4" fill="#e7d6b8" stroke="#C4882B" stroke-width="1"/><text x="23" y="2476.5" font-size="9" fill="#1A1714">2 × Lumber</text></g>
+<text x="23" y="2490" font-size="7" fill="#5F564C" font-style="italic">from the Lumber Camp</text>
+<line x1="80.6" y1="2473" x2="296" y2="2461.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="ice-runners"><rect x="300" y="2432" width="220" height="59" rx="5" fill="#d5cabe" stroke="#4c3855" stroke-width="1.3"/><text x="410" y="2446" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#1A1714">Make: Ice Runners</text><text x="410" y="2458" text-anchor="middle" font-size="8" fill="#3D3630">5h effort</text><text x="410" y="2469" text-anchor="middle" font-size="8" fill="#3D3630">by a Smith</text><text x="410" y="2480" text-anchor="middle" font-size="8" fill="#3D3630">fits: cart, caravan, sled</text></g>
+<line x1="524" y1="2461.5" x2="548" y2="2461.5" stroke="#5F564C" stroke-width="0.8" marker-end="url(#f-arrow)"/>
+<g class="f-token" data-kind="modifications" data-id="ice-runners"><rect x="552" y="2452.5" width="67.46" height="18" rx="4" fill="#d5cabe" stroke="#4c3855" stroke-width="1"/><text x="559" y="2465" font-size="9" fill="#1A1714">Ice Runners</text></g>
 </svg>

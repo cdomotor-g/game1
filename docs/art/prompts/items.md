@@ -1,7 +1,7 @@
 # The items — object studies (item-coil-of-rope … item-plate-harness)
 
-Twenty single-object studies, one per card in the three decks that carry a made
-thing: **ITEMS**, **WEAPONS** and **ARMOUR**. All three read from
+Twenty-six single-object studies, one per card in the three decks that carry a
+made thing: **ITEMS**, **WEAPONS** and **ARMOUR**. All three read from
 `data/items.json` and all three name their plates `item-<id>`, which is why one
 brief file serves them — they are one subject drawn by one hand, and only the
 card back behind them differs. The sections below run in deck order and each
@@ -33,9 +33,9 @@ ever — it is what an object study can be built from where a face cannot.
 
 **A card with no `plate` block is drawn by hand.** The tool has nothing to draw
 it from, so it can never overwrite what arrives, and `node tools/mint-queue.mjs`
-carries the card to DRAW. Half of the twenty-one below are in that state today — the
-nine ITEMS cards, and the dagger and the staff — and their prompts are what the
-artist is handed.
+carries the card to DRAW. Every one of the twenty-six below is in that state
+today — `node tools/draw-item.mjs` says so out loud and generates nothing — and
+these prompts are what the artist is handed.
 
 **To move a generated one across, delete its `plate` block.** That is the whole
 switch, and it is per card rather than per deck, so one hand-drawn sword can sit
@@ -96,7 +96,7 @@ that the list does not spell out, settled the same way elsewhere in this
 repository: **brass washes ochre**, and **glass washes cold slate blue**, with
 bare paper kept for the surface that catches the light.
 
-## Negative prompt — for all twenty-one
+## Negative prompt — for all twenty-six
 
 ```text
 coffee ring, cup ring, water ring, tea stain, circular stain, ring
@@ -413,6 +413,186 @@ quiver from rim to base cap, the stitched seam, both riveted lugs and the
 strap, and the full standing sheaf of arrows to the tips of the fletchings
 inside the middle 81%. Low ground line in the bottom third with the base of
 the quiver on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
+## item-waterskin — Waterskin *(ITEMS deck · gear, belt, ITM-10)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-waterskin.png`.
+
+```text
+[PREAMBLE]
+
+A leather waterskin stood against the end of a bench, leaning on its own
+belly because it is half full: a bottle made from a whole small hide turned
+inside out, about two hands high, its three seams closed with a coarse waxed
+cross-stitch and sealed along the line with pitch. The neck is bound down
+over a short turned wooden collar with wet-laid cord, and a bung of the same
+wood, cut with a shallow finger groove, hangs beside it on a leather thong. A
+narrow shoulder strap runs between two stitched tabs, one at the neck and one
+low on the belly, and has been shortened once by a knot rather than by
+unpicking. The hide is dark and glazed down the face that rides against a
+hip, dry and pale along the upper seam, and the pitch has been re-run for a
+hand's length near the neck in a fresher, glossier black than the rest. Wash:
+rust red across the hide, warm ochre on the turned collar and the bung, flat,
+the waxed stitching left as bare paper.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole body of the
+skin from neck to base, all three seams, the bound neck and its collar, the
+bung on its thong, both stitched tabs and the full length of the strap inside
+the middle 81%. Low ground line in the bottom third with the skin standing on
+it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
+## item-map — Map *(ITEMS deck · gear, belt, ITM-11)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-map.png`.
+
+```text
+[PREAMBLE]
+
+A folding map stood half open on a bench like a concertina screen, standing
+on the lower edges of its own panels: four rectangular sheets of parchment
+backed onto linen and hinged by the linen alone, the two nearest ones open
+and facing the viewer, the two behind them still folded shut. What is drawn
+on the open panels is line work and nothing else - an engraved coastline with
+fine parallel shading run out to sea from it, a river working inland to a
+lake, hills laid in as rows of small hachured humps, a road drawn as a pair
+of thin lines running between two small ringed circles, and a stand of forest
+given as a dozen tiny conifers. No place names, no lettering, no numerals, no
+cartouche and no compass rose: the panels that would have carried writing are
+the folded ones. The limp leather case it travels in lies open at the foot of
+it, a flap and a horn button, its inner face rubbed pale. The parchment is
+cockled along every fold, worn through to a small hole where two folds cross,
+and darkened in a hand-sized patch at the corner most often held. Wash: warm
+ochre across the parchment and the case, cold slate blue in the sea shading
+and the river, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. All four panels and the
+linen hinges between them, the drawn coastline, river and hill work, the worn
+hole at the crossing of the folds, and the whole of the open leather case at
+the foot inside the middle 81%. Low ground line in the bottom third with the
+standing panels and the case on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
+## item-compass — Compass *(ITEMS deck · gear, belt, ITM-12)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-compass.png`.
+
+```text
+[PREAMBLE]
+
+A pocket compass stood open on a bench and tilted towards the viewer on the
+hinge of its own lid: a shallow cylindrical case turned from copper, about
+the width of a palm, the lid thrown right back so the inside of it shows.
+Under a slightly domed glass a flat card is graduated with fine engraved rays
+to the eight winds, the north ray longer than the rest and marked at its head
+with a small pierced star; a steel needle rests across it on a centre pin,
+its north end blued and its south end left bright. No numerals and no letters
+anywhere on the card or the case. The rim carries a knurled band and a small
+hinged bail for a thong, and the lid shuts on a spring catch whose lip is
+worn bright by a thumbnail. The copper is dark and mottled with age, green in
+the seam where the two halves meet, and rubbed to a pink shine across the top
+of the lid. Wash: cold slate blue on the needle and the glass, warm ochre
+with a little verdigris on the copper, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole case with the
+lid thrown back, the glass, the graduated card and its pierced north star,
+the needle on its pin, the knurled rim, the bail and the spring catch inside
+the middle 81%. Low ground line in the bottom third with the compass standing
+on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
+## item-rations-3-day — Three-Day Rations *(ITEMS deck · provision, carried, ITM-13)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-rations-3-day.png`.
+
+```text
+[PREAMBLE]
+
+A small ration sack stood upright on a bench, packed hard enough to stand
+square on its own: coarse undyed sacking about two hands high, the weave
+drawn openly enough that it reads as cloth and never as paper, its neck
+rolled down twice and lashed with a laid cord. Set out on the bench in front
+of it, the three days it holds: two flat rounds of hard biscuit the size of a
+palm, one of them broken across so the dense close crumb shows in the
+fracture, a short length of dark salt beef in a twist of oiled paper folded
+back off one end, and a small twist of coarse salt closed with thread. A
+chalked tally mark - one plain stroke, not a letter and not a figure - is
+drawn on the shoulder of the sack where a quartermaster counted it. The
+sacking is grubby round the base, darned at one bottom corner with a patch of
+a different weave, and the cord has been knotted and re-knotted. Wash: warm
+ochre on the sacking, the biscuit and the oiled paper, rust red on the salt
+beef, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole sack from
+base to lashed neck, the rolled collar and its cord, the chalked stroke, the
+darned corner, and both biscuit rounds, the salt beef and the salt twist set
+out in front of it inside the middle 81%. Low ground line in the bottom third
+with the sack and the food standing on it. Clear, quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
+## item-rations-10-day — Ten-Day Rations *(ITEMS deck · provision, carried, ITM-14)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-rations-10-day.png`.
+
+```text
+[PREAMBLE]
+
+A heavy ration sack stood on a bench and plainly a load: the same coarse
+sacking as a small one but half as high again as it is wide, its side seams
+doubled and re-stitched in a heavier thread that stands out as a raised welt
+down the full length of both. It is packed to the top and sags outward at the
+belly, so the shape reads as weight rather than as bulk. The neck is gathered
+and lashed down over a short wooden toggle with a laid cord, and the same
+cord is carried twice round the body as a rough sling and knotted off at the
+shoulder to be lifted by. One long round of hard biscuit and a wrapped block
+of dark salt beef lean against the foot of it, both of them small against the
+sack, to say what is inside without it being opened. The sacking is rubbed
+pale and furred along both bottom edges where it has been set down and
+dragged, and an old repair crosses the belly as a rectangle of heavier canvas
+stitched all the way round. Wash: warm ochre on the sacking and the biscuit,
+rust red on the salt beef and the cord, flat.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole sack from
+base to lashed neck, both doubled side seams, the toggle, the full run of the
+carrying sling and its knot, the canvas repair, and the biscuit and salt beef
+at its foot inside the middle 81%. Low ground line in the bottom third with
+the sack standing on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters

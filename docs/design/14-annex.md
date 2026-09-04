@@ -88,6 +88,8 @@ every box clickable.
 
 ![Winery — what goes in and what comes out](../art/flows/winery.svg)
 
+![Granary — what goes in and what comes out](../art/flows/granary.svg)
+
 ![Market — what goes in and what comes out](../art/flows/market.svg)
 
 ![Trading House — what goes in and what comes out](../art/flows/trading-house.svg)
@@ -873,6 +875,18 @@ Kit that is not for fighting, wearing or drinking: rope, a hook, a bag, a glass.
 | Satchel (ITM-06) | tailor | 1 leather + 1 cloth | 2 | 40 | 0.6 kg | 5 | +4 kg to what the figure can shoulder. Name one item inside it when it is packed: that item is not lost when the figure falls at 0 health. Wears 1 for every leg it is carried full. |
 | Binoculars (ITM-08) | glassworks | 1 glass + 1 ironware + 1 leather | 4 | 130 | 0.75 kg | 3 | Look before you walk: reveal the terrain of any one hex up to three away, without entering it. +1 on survey rolls. Re-roll one discovery roll per round, and keep the second. Wears 1 per use. Ground glass in a leather tube does not care for a road. |
 | Quiver of Arrows (ITM-09) | carpenter | 1 lumber + 1 leather | 2 | 30 | 1 kg | 3 | Holds 3 uses. Each battle with a bow or a crossbow spends 1. The uses ARE the wear: an empty quiver is a spent quiver. |
+| Waterskin (ITM-10) | tailor | 1 leather | 1 | 20 | 1 kg | 6 | Holds 3 draughts. Filled in an hour at a well, a marsh or fresh water, with no barrel (recipes.json draw-water). Spend a draught to Forage on desert or tundra, which recipes.json forage otherwise forbids. Wears 1 each time it is drunk dry. |
+| Map (ITM-11) | trading-house | 1 parchment | 3 | 70 | 0.25 kg | 6 | +1 hex on a day leg between two settlements printed on it (travel.json legs.day). Once a round, learn the price band of one commodity family in any settlement it covers, without going there. Wears 1 for every round it is unfolded. |
+| Compass (ITM-12) | blacksmith | 1 copper + 1 glass | 4 | 95 | 0.25 kg | 8 | A night leg under a lantern runs at full day speed rather than half (travel.json night.lantern). Its extra discovery roll is made at the ordinary monster band (rules.json movement.legs.nightRisk). Wears 1 for every night leg it steers. |
+
+### Provision
+
+Food carried for the road. Its W track is the days left in it: knock a rung down for every figure it feeds at the end of a round - see rules.json upkeep.food. At 0 the pack is empty and the card is discarded.
+
+| Item | Made at | Inputs | Hours | Value | Mass | W | Effects |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Three-Day Rations (ITM-13) | granary | 1 bread + 1 salted-meat + 1 sack | 2 | 48 | 2.5 kg | 3 | Three days' food. Feed one figure at the end of a round and knock the W track down a rung (rules.json upkeep.food). The uses ARE the wear: an empty sack is a spent sack. Dried and salted, so it does not perish. |
+| Ten-Day Rations (ITM-14) | granary | 3 bread + 3 salted-meat + 1 sack | 4 | 150 | 8 kg | 10 | Ten days' food: one rung of the W track for every figure fed at the end of a round (rules.json upkeep.food). The uses ARE the wear: an empty sack is a spent sack. Eight kilograms - most of what strength 3 can shoulder (rules.json carrying). |
 
 ### Potion
 

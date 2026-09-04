@@ -561,16 +561,16 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h1 id="the-mint-queue">The mint queue</h1>
 <p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
 <p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
-<p><strong>cards 91/157 · maps 1/1 · building tiles 44/54</strong></p>
-<blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 99 of 157 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
+<p><strong>cards 91/162 · maps 1/1 · building tiles 44/54</strong></p>
+<blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 99 of 162 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
 <blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 368 px floor (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 12 of 54 are under the 736 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
-<p><strong>91 of 157 minted.</strong> 0 waiting on a brief, 58 waiting on art, 8 waiting on frame.</p>
+<p><strong>91 of 162 minted.</strong> 0 waiting on a brief, 63 waiting on art, 8 waiting on frame.</p>
 <h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
-<h3 id="2-draw-the-artist-58-cards">2 · DRAW — the artist — 58 cards</h3>
+<h3 id="2-draw-the-artist-63-cards">2 · DRAW — the artist — 63 cards</h3>
 <p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
@@ -631,6 +631,11 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>QST-07</code></td><td>The Ironspine Road</td><td>Quests</td><td><code>quest-ironspine-road</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>QST-08</code></td><td>The Drowned Bell of Taleowick</td><td>Quests</td><td><code>quest-drowned-bell</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>ITM-09</code></td><td>Quiver of Arrows</td><td>Items</td><td><code>item-quiver</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-10</code></td><td>Waterskin</td><td>Items</td><td><code>item-waterskin</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-11</code></td><td>Map</td><td>Items</td><td><code>item-map</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-12</code></td><td>Compass</td><td>Items</td><td><code>item-compass</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-13</code></td><td>Three-Day Rations</td><td>Items</td><td><code>item-rations-3-day</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>ITM-14</code></td><td>Ten-Day Rations</td><td>Items</td><td><code>item-rations-10-day</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>TOL-06</code></td><td>Fishing Line</td><td>Tools</td><td><code>tool-fishing-line</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
 <h3 id="3-frame-whoever-accepts-the-plate-8-cards">3 · FRAME — whoever accepts the plate — 8 cards</h3>
 <p>The plate is committed and <code>docs/art/framing.json</code> says nothing about it yet. A <code>subject</code> box, a <code>focal</code> point and a one-line <code>note</code> — the contract is <a href="../art/09-framing-and-composition.md"><code>docs/art/09-framing-and-composition.md</code></a>.</p>

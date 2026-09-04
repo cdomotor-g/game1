@@ -1211,6 +1211,7 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <p><img src="../art/flows/dairy.svg" alt="Dairy — what goes in and what comes out" loading="lazy"></p>
 <p><img src="../art/flows/brewery.svg" alt="Brewery — what goes in and what comes out" loading="lazy"></p>
 <p><img src="../art/flows/winery.svg" alt="Winery — what goes in and what comes out" loading="lazy"></p>
+<p><img src="../art/flows/granary.svg" alt="Granary — what goes in and what comes out" loading="lazy"></p>
 <p><img src="../art/flows/market.svg" alt="Market — what goes in and what comes out" loading="lazy"></p>
 <p><img src="../art/flows/trading-house.svg" alt="Trading House — what goes in and what comes out" loading="lazy"></p>
 <p><img src="../art/flows/town-hall.svg" alt="Town Hall — what goes in and what comes out" loading="lazy"></p>
@@ -1736,7 +1737,16 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 <tr><td>Bag (ITM-05)</td><td>tailor</td><td>1 cloth</td><td>1</td><td>12</td><td>0.3 kg</td><td>4</td><td>+2 kg to what the figure can shoulder (rules.json carrying) - which is eighty coin, and that is what it is for. Wears 1 for every leg it is carried full.</td></tr>
 <tr><td>Satchel (ITM-06)</td><td>tailor</td><td>1 leather + 1 cloth</td><td>2</td><td>40</td><td>0.6 kg</td><td>5</td><td>+4 kg to what the figure can shoulder. Name one item inside it when it is packed: that item is not lost when the figure falls at 0 health. Wears 1 for every leg it is carried full.</td></tr>
 <tr><td>Binoculars (ITM-08)</td><td>glassworks</td><td>1 glass + 1 ironware + 1 leather</td><td>4</td><td>130</td><td>0.75 kg</td><td>3</td><td>Look before you walk: reveal the terrain of any one hex up to three away, without entering it. +1 on survey rolls. Re-roll one discovery roll per round, and keep the second. Wears 1 per use. Ground glass in a leather tube does not care for a road.</td></tr>
-<tr><td>Quiver of Arrows (ITM-09)</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>1 kg</td><td>3</td><td>Holds 3 uses. Each battle with a bow or a crossbow spends 1. The uses ARE the wear: an empty quiver is a spent quiver.</td></tr></tbody></table></div>
+<tr><td>Quiver of Arrows (ITM-09)</td><td>carpenter</td><td>1 lumber + 1 leather</td><td>2</td><td>30</td><td>1 kg</td><td>3</td><td>Holds 3 uses. Each battle with a bow or a crossbow spends 1. The uses ARE the wear: an empty quiver is a spent quiver.</td></tr>
+<tr><td>Waterskin (ITM-10)</td><td>tailor</td><td>1 leather</td><td>1</td><td>20</td><td>1 kg</td><td>6</td><td>Holds 3 draughts. Filled in an hour at a well, a marsh or fresh water, with no barrel (recipes.json draw-water). Spend a draught to Forage on desert or tundra, which recipes.json forage otherwise forbids. Wears 1 each time it is drunk dry.</td></tr>
+<tr><td>Map (ITM-11)</td><td>trading-house</td><td>1 parchment</td><td>3</td><td>70</td><td>0.25 kg</td><td>6</td><td>+1 hex on a day leg between two settlements printed on it (travel.json legs.day). Once a round, learn the price band of one commodity family in any settlement it covers, without going there. Wears 1 for every round it is unfolded.</td></tr>
+<tr><td>Compass (ITM-12)</td><td>blacksmith</td><td>1 copper + 1 glass</td><td>4</td><td>95</td><td>0.25 kg</td><td>8</td><td>A night leg under a lantern runs at full day speed rather than half (travel.json night.lantern). Its extra discovery roll is made at the ordinary monster band (rules.json movement.legs.nightRisk). Wears 1 for every night leg it steers.</td></tr></tbody></table></div>
+<h3 id="provision">Provision</h3>
+<p>Food carried for the road. Its W track is the days left in it: knock a rung down for every figure it feeds at the end of a round - see rules.json upkeep.food. At 0 the pack is empty and the card is discarded.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Made at</th><th>Inputs</th><th>Hours</th><th>Value</th><th>Mass</th><th>W</th><th>Effects</th></tr></thead>
+<tbody><tr><td>Three-Day Rations (ITM-13)</td><td>granary</td><td>1 bread + 1 salted-meat + 1 sack</td><td>2</td><td>48</td><td>2.5 kg</td><td>3</td><td>Three days' food. Feed one figure at the end of a round and knock the W track down a rung (rules.json upkeep.food). The uses ARE the wear: an empty sack is a spent sack. Dried and salted, so it does not perish.</td></tr>
+<tr><td>Ten-Day Rations (ITM-14)</td><td>granary</td><td>3 bread + 3 salted-meat + 1 sack</td><td>4</td><td>150</td><td>8 kg</td><td>10</td><td>Ten days' food: one rung of the W track for every figure fed at the end of a round (rules.json upkeep.food). The uses ARE the wear: an empty sack is a spent sack. Eight kilograms - most of what strength 3 can shoulder (rules.json carrying).</td></tr></tbody></table></div>
 <h3 id="potion">Potion</h3>
 <p>One-shot consumable, usually spent during the Labour Roll or a battle.</p>
 <div class="table-wrap"><table>
