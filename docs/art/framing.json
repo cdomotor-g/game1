@@ -1613,6 +1613,61 @@
         0.32
       ],
       "note": "The adit with its cap piece and the tub on the rails in the left lobe, the winding gin over its collared shaft in the right, and the picking table of sorted ore below it. The piece reads ACROSS, which is what the brief asked a pair for and what the plate was drawn to. A pair window is 1.73 against a 3:2 page: full width, 13.4% of the height spent, pulled off the bottom by the focal on the adit mouth so the grass above the rise and the adit timbering both keep their clearance. The spoil tip runs out of the lower left under the name band, which is where the brief put it."
+    },
+    "spell-kindle": {
+      "subject": [0, 0.1, 1, 0.73],
+      "focal": [0.5, 0.53],
+      "note": "The hearth mouth, the violet flame standing on bare firebrick and the unlit torch on the hearthstone. Full width survives; the crop spends the top of the chimney breast and the bottom hearth step, both of which the brief calls margin. Focal is the flame itself - the only thing on the page that is not cold."
+    },
+    "spell-ember-lash": {
+      "subject": [0.1, 0.1, 0.9, 0.75],
+      "focal": [0.34, 0.58],
+      "note": "Both white-hot edges, the anvil face and the cold ash hafts running off to the top right. The crop spends the quench tub at the far left and the base of the stump; the raked-out fire bed stays in, because a dead forge is half of what this card is saying. Focal is the billhook's glowing curve, the strongest violet on the page."
+    },
+    "spell-mend-stone": {
+      "subject": [0.05, 0.155, 0.9, 0.75],
+      "focal": [0.52, 0.42],
+      "note": "The full run of the closing crack from hairline to sill end, the whole lintel, and the trowel set down clean on the sill. The crop spends the top course of the wall and the bottom step - the brief says the coursing may run to the margins. Focal is the middle of the crack rather than either end, because the card is about it closing, not about where it started."
+    },
+    "event-train-heist": {
+      "subject": [0.2, 0.035, 0.8, 0.95],
+      "focal": [0.68, 0.42],
+      "note": "The van with its door run right back, the empty interior and the leaning ladder, with the locomotive kept whole at the left of the box - a half-drawn engine reads as an accident where a missing one does not. The thumbnail spends the cutting bank and the branch track, which the brief already calls margin. Focal is the open doorway."
+    },
+    "event-piracy": {
+      "subject": [0.0855, 0.035, 0.8145, 0.95],
+      "focal": [0.4, 0.4],
+      "note": "The grounded hull with its mastheads, the trail of bales coming ashore, and the one small sail going away on the horizon at 87% across - which is what sets the right edge, because a piracy card without the ship that did it is a shipwreck card. The thumbnail spends the last of the open sea at either end. Focal is the hull."
+    },
+    "event-smuggling-ring": {
+      "subject": [0.17, 0.035, 0.8, 0.95],
+      "focal": [0.3, 0.58],
+      "note": "The stacked kegs and bales, the boat dragged up the shingle and the shuttered lantern out on its rock at 87-95% across. Held right, so the thumbnail spends the outermost barrels rather than the lantern: the stack is a scatter and can lose a member, and the lantern is the only light in the picture and the only thing saying somebody is still here."
+    },
+    "event-wolf-pack": {
+      "subject": [0.17, 0.035, 0.81, 0.95],
+      "focal": [0.65, 0.6],
+      "note": "The broken-through hurdle, the fleece caught in the split hazel, the single file of prints going away, and the crook with its lantern still burning at the right. Held right: the thumbnail takes a quarter off the far end of the hurdle lying flat, which still reads as a woven panel, rather than clipping the lantern. Focal is the gap in the fold."
+    },
+    "event-boar-in-the-fields": {
+      "subject": [0.164, 0.035, 0.836, 0.95],
+      "focal": [0.62, 0.6],
+      "note": "The troughs ploughed through the standing barley, the hurdle smashed out of its posts and the cloven slots printed in the churned drinking place. The thumbnail spends the bramble at the far left and 2.2% off the outer edge of the wallow - the slots are well inside that. The scarecrow with its snapped crossbar survives whole. Focal is where the troughs meet the mud."
+    },
+    "event-dragon-sighting": {
+      "subject": [0.1795, 0.035, 0.8205, 0.95],
+      "focal": [0.6, 0.5],
+      "note": "The abandoned hand cart with its load still roped on, the inn barred and benched, and the shadow band running edge to edge. The thumbnail spends the rock outcrop and half the stock crowded in the cleft - a herd is a scatter - and 0.6% off the far corner of the inn wall. Focal sits between the dropped shaft and the barred door, which are the two halves of the same sentence."
+    },
+    "event-raiders": {
+      "subject": [0.0395, 0.035, 0.8205, 0.95],
+      "focal": [0.35, 0.62],
+      "note": "The spear driven in by the gatepost, the yard gate off both hinges and lying flat, and the timber stack pulled half across the entrance. Held LEFT, which is the opposite of most of this deck, because the spear is at 4% across and is the one object on the page that says armed band. The thumbnail spends the right end of the timber - a stack is a scatter - and grazes the jamb of the open door."
+    },
+    "event-border-dispute": {
+      "subject": [0.1, 0.035, 0.8, 0.95],
+      "focal": [0.5, 0.52],
+      "note": "Both boundary marks, and nothing else could have set this box: the old stone is at 12% across and the new post at 88%, so the pair spans 77% of the page against a thumbnail that keeps 83%. One mark alone is a picture of a boundary; two is a picture of a dispute. Focal is the trodden ground between them where the two sets of ruts stop short of each other."
     }
-  }
+}
 }

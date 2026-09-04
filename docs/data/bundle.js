@@ -18124,10 +18124,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.164,
+          0.035,
+          0.836,
+          0.95
+        ],
+        "focal": [
+          0.62,
+          0.6
         ]
       },
       "event-border-dispute": {
@@ -18135,10 +18139,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.1,
+          0.035,
+          0.8,
+          0.95
+        ],
+        "focal": [
+          0.5,
+          0.52
         ]
       },
       "event-caravan-robbery": {
@@ -18161,10 +18169,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.1795,
+          0.035,
+          0.8205,
+          0.95
+        ],
+        "focal": [
+          0.6,
+          0.5
         ]
       },
       "event-drought": {
@@ -18262,10 +18274,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.0855,
+          0.035,
+          0.8145,
+          0.95
+        ],
+        "focal": [
+          0.4,
+          0.4
         ]
       },
       "event-raiders": {
@@ -18273,10 +18289,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.0395,
+          0.035,
+          0.8205,
+          0.95
+        ],
+        "focal": [
+          0.35,
+          0.62
         ]
       },
       "event-smuggling-ring": {
@@ -18284,10 +18304,14 @@ window.GAME_DATA = {
         "width": 1537,
         "height": 1023,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.17,
+          0.035,
+          0.8,
+          0.95
+        ],
+        "focal": [
+          0.3,
+          0.58
         ]
       },
       "event-storms": {
@@ -18310,10 +18334,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.2,
+          0.035,
+          0.8,
+          0.95
+        ],
+        "focal": [
+          0.68,
+          0.42
         ]
       },
       "event-warehouse-heist": {
@@ -18351,10 +18379,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.17,
+          0.035,
+          0.81,
+          0.95
+        ],
+        "focal": [
+          0.65,
+          0.6
         ]
       },
       "item-bag": {
@@ -19053,10 +19085,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.1,
+          0.1,
+          0.9,
+          0.75
+        ],
+        "focal": [
+          0.34,
+          0.58
         ]
       },
       "spell-kindle": {
@@ -19065,9 +19101,13 @@ window.GAME_DATA = {
         "height": 1254,
         "subject": [
           0,
-          0,
+          0.1,
           1,
-          1
+          0.73
+        ],
+        "focal": [
+          0.5,
+          0.53
         ]
       },
       "spell-mend-stone": {
@@ -19075,10 +19115,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.05,
+          0.155,
+          0.9,
+          0.75
+        ],
+        "focal": [
+          0.52,
+          0.42
         ]
       },
       "talisman-tal-01": {
