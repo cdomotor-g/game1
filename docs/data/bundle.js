@@ -19070,6 +19070,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "spell-mend-stone": {
+        "file": "art/renders/spell-mend-stone.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "talisman-tal-01": {
         "file": "art/renders/talisman-tal-01.png",
         "width": 1254,
