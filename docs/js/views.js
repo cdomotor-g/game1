@@ -604,12 +604,39 @@
 
   /* -------------------------------------------------------------- campaign */
 
-  /** A one-line pill saying which storyline a card came from, or nothing. */
-  const campaignPill = (entity) => (entity.campaign ? pill(D.name('campaign', entity.campaign), 'accent') : null);
+  /* The campaign's own mark, inline, from the path the cards print beside their
+     code - so the explorer and the printed card say 'this one is the Odyssey's'
+     the same way. Same construction as the element mark above. */
+  const campaignMark = (id) => {
+    const camp = D.byId.campaign && D.byId.campaign.get(id);
+    if (!camp || !camp.mark || !camp.mark.path) return null;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('class', 'elmark');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', camp.mark.path);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'currentColor');
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(path);
+    return svg;
+  };
+
+  /** A pill that leads with the campaign's mark and says which storyline a card came from, or nothing. */
+  const campaignPill = (entity) => {
+    if (!entity.campaign) return null;
+    const p = pill(D.name('campaign', entity.campaign), 'accent');
+    const mark = campaignMark(entity.campaign);
+    if (mark) p.insertBefore(mark, p.firstChild);
+    return p;
+  };
 
   const chapterCard = (c) =>
     el('button.card', { type: 'button', onclick: () => open('chapter', c.id) }, [
-      el('div.card-head', [el('span.card-title', `${c.chapter}. ${c.name}`), el('span.card-code', c.cardCode)]),
+      el('div.card-head', [el('span.card-title', `${c.chapter}. ${c.name}`), el('span.card-code', [c.cardCode, ' ', campaignMark(c.campaign)])]),
       el('div.card-sub', c.play),
       el('div.card-meta', [
         pill(`book ${c.books}`),
@@ -644,7 +671,8 @@
       const roleOf = (id) => (heroes.has(id) ? 'hero' : (camp.cast.hosts || []).includes(id) ? 'host' : (camp.cast.adversaries || []).includes(id) ? 'adversary' : 'cast');
       return el('div', [
         el('div.panel', [
-          el('h3', [camp.name, el('span.count', `${cards.length} cards`)]),
+          el('h3', [campaignMark(camp.id), ' ', camp.name, el('span.count', `${cards.length} cards`)]),
+          el('p.prose', [el('strong', 'The mark. '), `${camp.mark ? camp.mark.note : ''} Printed beside the card code of every card that belongs to this campaign - its own, and every character and monster it brings - so they can be pulled out of the free-play decks by the corner alone.`]),
           el('p.prose', el('em', camp.subtitle)),
           el('p.prose', camp.summary),
           el('div.deflist', [

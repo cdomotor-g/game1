@@ -548,6 +548,30 @@ function storyRail(spec, geom) {
 }
 
 /**
+ * The card code, and beside it the mark of the campaign the card belongs to, if
+ * it belongs to one. The mark takes the corner and the code steps left of it by
+ * the declared gap, so on every other card the code is exactly where it was:
+ * the mark is an addition to the card id, never a change to it. Drawn on the
+ * ink plate like every mark in the game, so it survives the black-and-white
+ * edition - which is the edition a player sorting a deck by the corner is
+ * effectively reading.
+ */
+function codeAndMark(spec) {
+  const right = TRIM.x + TRIM.w - 24;
+  if (!spec.campaignMark) {
+    return `<text x="${right}" y="${CODE_Y}" font-size="15" text-anchor="end" letter-spacing="2" font-family="${SANS}">${esc(spec.code)}</text>`;
+  }
+  const mark = components.marks.campaign;
+  const size = mark.onCard.size;
+  const k = size / 24;
+  /* The code's baseline is CODE_Y and its capitals stand about 0.72 of the font
+     size above it; the mark is centred on that capital height. */
+  const y = CODE_Y - 15 * 0.72 / 2 - size / 2;
+  return `<text x="${num(right - size - mark.onCard.gap)}" y="${CODE_Y}" font-size="15" text-anchor="end" letter-spacing="2" font-family="${SANS}">${esc(spec.code)}</text>
+  <g transform="translate(${num(right - size)} ${num(y)}) scale(${num(k)})" fill="${mark.fill}" stroke="${SOOT}" stroke-width="${mark.strokeWidth}" stroke-linecap="${mark.strokeLinecap}" stroke-linejoin="${mark.strokeLinejoin}"><path d="${spec.campaignMark}"/></g>`;
+}
+
+/**
  * One card front. spec:
  *   code, name, kicker (small line under the name), element (optional),
  *   portrait (render id), left  {total, label} harm bar,
@@ -587,7 +611,7 @@ function card(spec, geom) {
 
   <!-- name and card code, maker's-mark small -->
   <text x="${PORTRAIT.x}" y="${NAME_Y}" font-size="31" font-weight="bold">${esc(spec.name)}</text>
-  <text x="${TRIM.x + TRIM.w - 24}" y="${CODE_Y}" font-size="15" text-anchor="end" letter-spacing="2" font-family="${SANS}">${esc(spec.code)}</text>
+  ${codeAndMark(spec)}
   <text x="${PORTRAIT.x}" y="${KICKER_Y}" font-size="15.5" font-style="italic" fill="${T85}">${esc(spec.kicker)}</text>
 
   <!-- the summary strip: every number this card has, and none of them moves -->
@@ -761,6 +785,11 @@ const itemName = new Map(read('items.json').items.map((i) => [i.id, i.name]));
 const campaignData = read('campaigns.json');
 const campaignCards = campaignData.cards.filter((c) => c.cardCode);
 const campaignName = new Map(campaignData.campaigns.map((c) => [c.id, c]));
+/* The campaign's MARK, printed beside the code of every card the campaign
+   brings - its own, and every character and monster tagged with it - so a table
+   can pull them out of the free-play decks by the corner alone. The path is data
+   on the campaign; how to draw it is components.json marks.campaign. */
+const campaignMarkOf = (id) => (id && campaignName.get(id)?.mark?.path) || null;
 
 const modData = read('modifications.json');
 const modifications = modData.modifications;
@@ -828,7 +857,7 @@ for (const c of characters) {
   if (!hasRender(render)) { skipped.push(c.cardCode); continue; }
   const kg = carryKg(c.strength);
   specs.push({
-    code: c.cardCode, name: c.name, portrait: render,
+    code: c.cardCode, name: c.name, portrait: render, campaignMark: campaignMarkOf(c.campaign),
     kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling}`,
     desc: `Character card: ${c.name}, ${c.calling}. Health ${c.health}, strength ${c.strength}, ${kg}kg carried, ${c.startingGold} coin to start.`,
     /* FIVE boxes now, and it was six. DEFENCE went with the to-hit roll it
@@ -879,7 +908,7 @@ for (const m of monsters) {
        size and was the only word on any card in the game doing rules work in the
        title. Whether there is one of a thing is a deck rule (monsters.json
        unique), and the deck is where it stays. */
-    code: m.cardCode, name: m.name, portrait: render,
+    code: m.cardCode, name: m.name, portrait: render, campaignMark: campaignMarkOf(m.campaign),
     kicker: `${m.element} · ${m.terrains.join(', ')}`,
     desc: `Monster card: ${m.name}, ${m.element}. Health ${m.health}, strength ${m.strength}, armour ${m.armour}, pace ${m.pace}, yields at most ${m.manaYield} mana.`,
     /* SIX boxes, which is components.json statStrip.cells.max exactly, and the
@@ -1336,7 +1365,7 @@ for (const c of campaignCards) {
   const camp = campaignName.get(c.campaign);
   const total = campaignData.cards.filter((x) => x.campaign === c.campaign).length;
   specs.push({
-    code: c.cardCode, name: c.name, portrait: render,
+    code: c.cardCode, name: c.name, portrait: render, campaignMark: campaignMarkOf(c.campaign),
     kicker: `${camp?.source?.work ?? camp?.name ?? c.campaign} · book ${c.books} · chapter ${c.chapter} of ${total}`,
     desc: `Campaign card: ${c.name}, chapter ${c.chapter} of ${camp?.name ?? c.campaign}, from book ${c.books}.`,
     stats: [],

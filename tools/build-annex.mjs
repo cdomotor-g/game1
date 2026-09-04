@@ -990,6 +990,8 @@ for (const camp of campaigns.campaigns) {
   say();
   say(`*${camp.subtitle}.* ${camp.summary}`);
   say();
+  say(`![${camp.name} mark](../art/icons/campaign-${camp.id}.svg) **The mark.** ${camp.mark?.note ?? ''} It is printed beside the card code, top right, of every card that belongs to the campaign - its own, and every character and monster it brings - so a table can pull them out of the free-play decks by the corner alone.`);
+  say();
   let mapName = camp.map;
   try { mapName = JSON.parse(readFileSync(join(DATA, 'maps', `${camp.map}.json`), 'utf8')).name; } catch { /* the validator names a missing board */ }
   say(`Played on **${mapName}** (\`data/maps/${camp.map}.json\`), ${camp.players.min}-${camp.players.max} players, ${camp.length.rounds} rounds. ${camp.victory}`);

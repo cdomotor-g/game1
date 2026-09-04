@@ -31,6 +31,16 @@ belong to it. Nothing about free play was touched to make room for this:
 Odysseus has a summary strip, Polyphemus has a P box, and the Wine-Dark Sea
 has settlements with harbours.
 
+**Every card a campaign brings carries the campaign's mark** beside its card
+code, in the top right corner — the Odyssey's is a black ship under a square
+sail. It is there so a table setting the campaign out can pull the cast and the
+monsters out of the free-play decks by the corner alone, and so a free-play
+table can see at a glance which cards a story brought. The mark is data on the
+campaign (`campaigns[].mark`, a path on the same 24-grid as the element marks),
+how to draw it is `components.json marks.campaign`, and `tools/build-icons.mjs`
+draws it into `docs/art/icons/`. The code itself does not change: `CHR-09` is
+still `CHR-09`, and the mark is an addition to it rather than a replacement.
+
 Three of the Odyssey's cast are gods or nymphs. They are not a *people* —
 there is no immortal worker type, no immortal town — so their `people` field
 says `immortal`, a value the reference check allows the way `mounted` is

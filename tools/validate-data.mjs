@@ -1234,6 +1234,16 @@ console.log(`\n${counts}`);
     for (const id of camp.monsters ?? []) if (!mtagged.has(id)) errors.push(`campaigns: "${camp.id}" lists monster "${id}", which is not tagged campaign "${camp.id}" in monsters.json`);
     for (const id of mtagged) if (!(camp.monsters ?? []).includes(id)) warnings.push(`campaigns: monster "${id}" is tagged campaign "${camp.id}" but the campaign never lists it`);
   }
+  /* Every card a campaign brings is found by its mark, in the corner beside the
+     code (components.json marks.campaign). No mark, no way to pull the cast out
+     of the free-play decks; two campaigns on one mark, no way to tell whose. */
+  const seenMarks = new Map();
+  for (const camp of camps) {
+    if (!camp.mark?.path) { errors.push(`campaigns: "${camp.id}" has no mark - components.json marks.campaign has nothing to print beside its cards' codes`); continue; }
+    if (!camp.mark.id) errors.push(`campaigns: "${camp.id}" has a mark with no id`);
+    else if (seenMarks.has(camp.mark.id)) errors.push(`campaigns: "${camp.id}" and "${seenMarks.get(camp.mark.id)}" both draw the "${camp.mark.id}" mark - one story, one symbol`);
+    else seenMarks.set(camp.mark.id, camp.id);
+  }
   const seenCodes = new Set();
   for (const c of cards) {
     if (!c.cardCode) { errors.push(`campaigns: card "${c.id}" has no cardCode`); continue; }

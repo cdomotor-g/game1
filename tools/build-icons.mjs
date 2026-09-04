@@ -32,6 +32,7 @@ const checkOnly = process.argv.includes('--check');
 
 const arcana = JSON.parse(readFileSync(join(ROOT, 'data/arcana.json'), 'utf8'));
 const pricing = JSON.parse(readFileSync(join(ROOT, 'data/pricing.json'), 'utf8'));
+const campaigns = JSON.parse(readFileSync(join(ROOT, 'data/campaigns.json'), 'utf8'));
 const components = JSON.parse(readFileSync(join(ROOT, 'data/components.json'), 'utf8'));
 const palette = readPalette(ROOT);
 
@@ -88,6 +89,22 @@ function pricingMark(model, x, y, size) {
       `<g transform="translate(${num(x)} ${num(y)}) scale(${num(k)})" fill="${spec.fill}" stroke="${SOOT}" ` +
       `stroke-width="${spec.strokeWidth}" stroke-linecap="${spec.strokeLinecap}" ` +
       `stroke-linejoin="${spec.strokeLinejoin}"><path d="${model.mark.path}"/></g>`,
+  };
+}
+
+/**
+ * One campaign mark. Line and nothing else, like a pricing mark: it is printed
+ * beside a card code in soot, and the corner of a card has no wash to give it.
+ */
+function campaignMark(camp, x, y, size) {
+  const spec = components.marks.campaign;
+  const k = size / 24;
+  return {
+    wash: '',
+    ink:
+      `<g transform="translate(${num(x)} ${num(y)}) scale(${num(k)})" fill="${spec.fill}" stroke="${SOOT}" ` +
+      `stroke-width="${spec.strokeWidth}" stroke-linecap="${spec.strokeLinecap}" ` +
+      `stroke-linejoin="${spec.strokeLinejoin}"><path d="${camp.mark.path}"/></g>`,
   };
 }
 
@@ -194,13 +211,29 @@ wanted.set(
   })
 );
 
+/* ---------------------------------------------------- one per campaign */
+
+for (const c of campaigns.campaigns) {
+  const g = campaignMark(c, PAD, PAD, SIZE - 2 * PAD);
+  wanted.set(
+    `campaign-${c.id}.svg`,
+    plates({
+      w: SIZE, h: SIZE,
+      title: `${c.name} — the campaign mark`,
+      desc: `${c.mark.note} Printed beside the card code of every card that belongs to the campaign.`,
+      from: 'data/campaigns.json',
+      wash: g.wash, ink: g.ink,
+    })
+  );
+}
+
 wanted.set(
   'README.md',
   `# Generated icons
 
 Do not edit anything in this folder. Every file here is written by
-\`tools/build-icons.mjs\` from \`data/arcana.json\` and \`data/pricing.json\` (the
-mark paths) and \`data/components.json\` (how to draw one). Change a mark there
+\`tools/build-icons.mjs\` from \`data/arcana.json\`, \`data/pricing.json\` and
+\`data/campaigns.json\` (the mark paths) and \`data/components.json\` (how to draw one). Change a mark there
 and re-run:
 
 \`\`\`bash
@@ -213,6 +246,7 @@ ${arcana.elements.map((e) => `| [\`element-${e.id}.svg\`](element-${e.id}.svg) |
 | [\`elements.svg\`](elements.svg) | All four together, for the art docs and the rulebook |
 ${pricing.models.map((m) => `| [\`pricing-${m.id}.svg\`](pricing-${m.id}.svg) | ${m.name} — ${m.line.toLowerCase().replace(/\.$/, '')} |`).join('\n')}
 | [\`pricing.svg\`](pricing.svg) | All three together — the key to the corner of every commodity token |
+${campaigns.campaigns.map((c) => `| [\`campaign-${c.id}.svg\`](campaign-${c.id}.svg) | ${c.name} — ${c.mark.note.split('.')[0].toLowerCase()}; printed beside the code of every card the campaign brings |`).join('\n')}
 
 The **element** marks are stroked, never filled, on a 24-unit grid, and each one
 is built on the same construction: a ground line, and what the element does to
@@ -244,13 +278,13 @@ if (checkOnly) {
     }
   }
   if (stale) { console.error('Run: node tools/build-icons.mjs'); process.exit(1); }
-  console.log(`docs/art/icons/ is up to date (${arcana.elements.length} element marks, ${pricing.models.length} pricing marks)`);
+  console.log(`docs/art/icons/ is up to date (${arcana.elements.length} element marks, ${pricing.models.length} pricing marks, ${campaigns.campaigns.length} campaign marks)`);
 } else {
   mkdirSync(OUT_DIR, { recursive: true });
   for (const f of readdirSync(OUT_DIR)) if (!wanted.has(f)) unlinkSync(join(OUT_DIR, f));
   for (const [name, content] of wanted) writeFileSync(join(OUT_DIR, name), content, 'utf8');
   console.log(
     `wrote ${wanted.size} files to docs/art/icons/ — ${arcana.elements.map((e) => e.id).join(', ')}` +
-    ` and ${pricing.models.map((m) => m.id).join(', ')}`
+    ` and ${pricing.models.map((m) => m.id).join(', ')}, and ${campaigns.campaigns.map((c) => c.id).join(', ')}`
   );
 }

@@ -1,8 +1,8 @@
 # Generated icons
 
 Do not edit anything in this folder. Every file here is written by
-`tools/build-icons.mjs` from `data/arcana.json` and `data/pricing.json` (the
-mark paths) and `data/components.json` (how to draw one). Change a mark there
+`tools/build-icons.mjs` from `data/arcana.json`, `data/pricing.json` and
+`data/campaigns.json` (the mark paths) and `data/components.json` (how to draw one). Change a mark there
 and re-run:
 
 ```bash
@@ -21,6 +21,7 @@ node tools/build-icons.mjs
 | [`pricing-deplete.svg`](pricing-deplete.svg) | Finite — the easy ore came out first |
 | [`pricing-hype.svg`](pricing-hype.svg) | Sought — it is bought because it is going up |
 | [`pricing.svg`](pricing.svg) | All three together — the key to the corner of every commodity token |
+| [`campaign-homers-odyssey.svg`](campaign-homers-odyssey.svg) | Homer's Odyssey — a black ship under a square sail - the one thing every chapter of the poem has in it; printed beside the code of every card the campaign brings |
 
 The **element** marks are stroked, never filled, on a 24-unit grid, and each one
 is built on the same construction: a ground line, and what the element does to

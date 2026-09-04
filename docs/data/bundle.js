@@ -13967,6 +13967,21 @@ window.GAME_DATA = {
           "$opacityNote": "Quieter than the grid ruled over it (minimap.grid) and far quieter than a figure standing on it. The pattern says what the ground IS at a glance; the moment it competes with the pieces it has failed, and that is what the flat-colour sheet was protecting against."
         }
       },
+      "campaign": {
+        "$comment": "The mark that says which STORY a card belongs to. A campaign brings characters and monsters with it, and they deal in the free-play decks like any other card - so a table setting the campaign out has to find them, and a free-play table wants to know which cards a story brought. The mark is the answer, and it is printed where a player already looks for the card's identity: beside the card code, in the top right corner of the head, on the ink plate. Same bargain as every mark here - the PATH is data on the campaign (data/campaigns.json campaigns[].mark) and this says how to draw it. Nothing else on the face changes, and the card is otherwise exactly the card it would have been.",
+        "pathsFrom": "campaigns.campaigns[].mark.path",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "strokeWidth": 1.9,
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round",
+        "onCard": {
+          "$comment": "Beside the code. The mark takes the corner and the code steps left of it by `gap`, so the code stays where it is on every other card and the mark is the one new thing in the head - an addition to the card id, not a replacement for it.",
+          "size": 26,
+          "gap": 10,
+          "$sizeNote": "Card units, 8 to the millimetre: 3.25 mm, the height of a capital in the code beside it plus a little, because a three-stroke glyph needs a little more room than a letter to read as a ship."
+        }
+      },
       "pricing": {
         "$comment": "The four marks that say what KIND OF GOOD a commodity is: a level balance, a picked-clean fish, a running glass, a rising run. Same bargain as the element and terrain marks one storey up - the PATH is data on the model (data/pricing.json models[].mark) and this says how to draw it - and for the same reason. The mark is engraved in a corner of every commodity token and printed on the market board, which is a sheet about nothing else now, so the piece in your hand and the sheet you are reading say `this one rots` the same way.\n\nTHERE ARE FOUR, AND THERE WERE THREE. The fourth is STAPLE, and it is not a new rule - it is the absence of one, given a face. More than half the commodities in the game run under it - thirty-four of sixty-six - and they used to be filed as gluts, which quietly claimed that stone and rope could be drowned in a market the way fish can. They cannot. A mark that says `nothing special happens here` is worth engraving, because the alternative is a blank corner that could equally mean somebody forgot.\n\nThey are held apart by SHAPE rather than by detail: a symmetrical beam, a horizontal spine with ribs, an hourglass pinched in the middle, a line climbing to a point. At token size the detail is gone and the silhouette is all that is left, which is the test every mark in this game is drawn to - and the balance is the only symmetrical one in the set, on purpose, because the other three all lean.",
         "pathsFrom": "pricing.models[].mark.path",
@@ -16372,6 +16387,12 @@ window.GAME_DATA = {
           "Why every companion dies and Odysseus does not: Homer names the cattle of the Sun, in his first ten lines, as the crime that cost the crew their homecoming.",
           "The recognitions of the second half - the son, the dog, the nurse, the wife, the father - each by its own token, and that Penelope tests her husband with a trick as he tested everyone else."
         ],
+        "mark": {
+          "id": "black-ship",
+          "path": "M2 13C4 19 8 21 12 21S20 19 22 13ZM12 21V3M12 4H20V12H12",
+          "note": "A black ship under a square sail - the one thing every chapter of the poem has in it. Stroked on the 24-grid like the element marks, and built to survive at the size of a card code: a hull, a mast and a sail, three strokes, nothing finer."
+        },
+        "$markNote": "The campaign's MARK. It is printed beside the card code, in the top right corner, of every card that belongs to this campaign - its own cards, and every character and monster tagged with it - so a table setting the campaign out can pull its cast and its monsters out of the free-play decks by the corner alone, and a free-play table can see at a glance which cards a story brought. The path is data on the campaign, the way an element's mark is data on the element; how to draw it is components.json marks.campaign; tools/build-icons.mjs draws it into docs/art/icons/.",
         "map": "wine-dark-sea",
         "players": {
           "min": 1,
