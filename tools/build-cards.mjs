@@ -753,6 +753,14 @@ const eventCategory = new Map(eventData.categories.map((c) => [c.id, c.name.toLo
 const eventScope = new Map(eventData.scopes.map((s) => [s.id, s]));
 const quests = read('quests.json').quests.filter((q) => q.cardCode);
 const itemName = new Map(read('items.json').items.map((i) => [i.id, i.name]));
+/* The CAMPAIGN deck: a storyline read in order. The card prints the chapter's
+   rule and its cost, and carries the story as its source tells it across the
+   panel; `books` says where in the poem the chapter is, and goes in the kicker,
+   because the deck is there to teach the story as much as to play it. All of it
+   is read off data/campaigns.json - nothing is composed here. */
+const campaignData = read('campaigns.json');
+const campaignCards = campaignData.cards.filter((c) => c.cardCode);
+const campaignName = new Map(campaignData.campaigns.map((c) => [c.id, c]));
 
 const modData = read('modifications.json');
 const modifications = modData.modifications;
@@ -895,6 +903,7 @@ for (const m of monsters) {
     facts: [
       `Options: ${opts.join(' · ')}. Run only if your pace beats ${m.pace}.`,
       `Slain, it yields the lesser of ${m.manaYield} and the purple die.`,
+      ...(m.special ? [m.special] : []),
       ...(m.gift ? [`Gift to befriend: ${m.gift}.`] : []),
       ...(m.befriended ? [`Befriended: ${m.befriended}`] : []),
       ...(m.enslaved ? [`Enslaved: ${m.enslaved}`] : []),
@@ -1318,6 +1327,25 @@ for (const q of quests) {
         q.notes,
       ]).filter(Boolean),
     story: q.hook,
+  });
+}
+
+for (const c of campaignCards) {
+  const render = plateIdFor(deckByPrefix('CAM'), c);
+  if (!hasRender(render)) { skipped.push(c.cardCode); continue; }
+  const camp = campaignName.get(c.campaign);
+  const total = campaignData.cards.filter((x) => x.campaign === c.campaign).length;
+  specs.push({
+    code: c.cardCode, name: c.name, portrait: render,
+    kicker: `${camp?.source?.work ?? camp?.name ?? c.campaign} · book ${c.books} · chapter ${c.chapter} of ${total}`,
+    desc: `Campaign card: ${c.name}, chapter ${c.chapter} of ${camp?.name ?? c.campaign}, from book ${c.books}.`,
+    stats: [],
+    /* The rule and the price, and nothing else on the face: the story is the
+       panel, and the lesson is in the rulebook and the explorer, exactly as a
+       quest's stage tasks are - a deck shares one window and the wordiest card
+       sets it for all the rest. */
+    facts: [c.play, c.cost ? `Cost: ${c.cost}` : null].filter(Boolean),
+    story: c.told,
   });
 }
 

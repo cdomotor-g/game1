@@ -89,6 +89,7 @@ printed — see [12-what-simulation-found.md](12-what-simulation-found.md).
 | [12-what-simulation-found.md](12-what-simulation-found.md) | Findings from the simulator |
 | [13-adventure.md](13-adventure.md) | Travel, discovery, monsters, mana, quests — the open world |
 | [14-annex.md](14-annex.md) | Every reference table, generated from the data |
+| [15-campaign.md](15-campaign.md) | Campaign mode — a storyline over the same game — and Homer's Odyssey |
 | [../GLOSSARY.md](../GLOSSARY.md) | Commodity vs effort vs deposit, and the rest |
 | [../art/README.md](../art/README.md) | What all of it looks like, in both editions |
 

@@ -1,7 +1,11 @@
-# The characters — A4 plates (character-chr-01 … character-chr-08)
+# The characters — A4 plates (character-chr-01 … character-chr-22)
 
-Eight portrait plates, one per character card (`data/characters.json`), in deck
-order. Drawn like the campaign map itself: hand-made, a little grimy, tattered
+Twenty-two portrait plates, one per character card (`data/characters.json`), in deck
+order. CHR-09 onward are the cast of Homer's Odyssey (`data/campaigns.json`): Bronze
+Age Greeks drawn in the same register as everyone else - a tunic, a sword on a baldric,
+a black ship with one square sail - and never a marble statue, a toga or a vase painting.
+The three immortals are drawn as the poem draws them, as people, and the only thing that
+gives them away is what the brief says does. Drawn like the campaign map itself: hand-made, a little grimy, tattered
 from time in the field — **a page that has travelled with the person it shows.**
 Three-quarter figure, caught mid-habit rather than posed, with the belongings
 their card names visible and true.
@@ -59,7 +63,7 @@ shading, no lens effects, no magic particles. No text, no letters, no
 border rule.
 ```
 
-## Negative prompt — for all eight
+## Negative prompt — for all twenty-two
 
 ```text
 coffee ring, cup ring, water ring, tea stain, circular stain, ring
@@ -247,6 +251,385 @@ millimetre past the black line like a misprint - the only violet on the page
 and the only thing the press could not hold still. Herbs dry in bunches from
 the eave; a cat declines to be drawn well. Wash: dusty grey-green on shawl
 and herbs; the charm's violet slip #6B4C7D, offset, no glow.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-09 — Odysseus, king of Ithaca
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-09.png`.
+
+```text
+[PREAMBLE]
+
+A weathered man of middle years, broad in the shoulder and not tall, squatting
+on a beach beside the black hull of a ship with a coil of rope across one knee,
+mending it with a marlinspike: quick hands, a short grey-shot beard, a look of
+listening to something behind him. A plain tunic and a sheathed sword on a
+baldric, both worn from ten years of use; bare feet in the sand. Beside him a
+clay wine jar with a wax seal and a scatter of oarblades. Wash: cold slate on
+the hull and the sea behind, warm ochre on the sand, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-10 — Eurylochus, second in command
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-10.png`.
+
+```text
+[PREAMBLE]
+
+A big, wary man standing just outside a doorway he will not go through - a
+plain plank door in a stone wall, ajar - leaning back against the wall with his
+arms folded and his sword still sheathed, looking at the door and not at us.
+Sun-cracked skin, a heavy jaw, a tunic belted with rope. At his feet a dropped
+bronze cup. Wash: dusty grey-green on the wall and the shadow, rust on the belt,
+flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-11 — Polites, dearest of the companions
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-11.png`.
+
+```text
+[PREAMBLE]
+
+A young, open-faced man with his hand raised to knock, half-turned back to grin
+at someone behind him, on the flagged threshold of a house in a clearing. A
+sheathed sword, a short cloak, sandals. Beside the step a great lion lies with
+its head on its paws like a dog, drawn calmly and without menace. Wash: warm
+ochre on the cloak and the flags, grey-green on the trees, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-12 — Perimedes, companion
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-12.png`.
+
+```text
+[PREAMBLE]
+
+A stocky, patient man kneeling on a ship's deck with both hands full of rope,
+hauling a lashing tight around the foot of a mast with his teeth set, the rope
+going off the top of the page. A knife in his belt and rope burn on his palms.
+Beside him on the deck a wax comb and a ram's fleece. Wash: cold slate on the
+planking, ochre on the rope, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-13 — Elpenor, youngest of the crew
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-13.png`.
+
+```text
+[PREAMBLE]
+
+A thin youth of eighteen sitting on the ridge of a flat house-roof in the early
+morning with his legs hanging over the edge, rubbing sleep out of his eyes, an
+empty wine cup beside him and a ladder leaning against the eave a little too
+far to his left. No sword. A tunic too big for him. Below, at the edge of the
+page, the tops of trees and a glimpse of a beached ship. Wash: pale ochre on
+the roof, grey-green on the trees, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-14 — Antiphus, companion
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-14.png`.
+
+```text
+[PREAMBLE]
+
+A strong, square-built man on the shingle with a long spear grounded beside
+him, sorting through a basket of cheeses and a lamb's fleece with the
+unhurried interest of a farmer's son, an oar-blade under one arm. A short beard,
+a tunic pinned at one shoulder. Behind him, small, the dark mouth of a cave in
+a hillside with a great flat stone leaning beside it. Wash: warm ochre on the
+basket and the shingle, grey-green on the hill, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-15 — Telemachus, prince of Ithaca
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-15.png`.
+
+```text
+[PREAMBLE]
+
+A young man of twenty, too thin for his height, standing on a quay at dawn with
+a travelling bag over his shoulder and a sword he has not worn before, checking
+the strap of it. Behind him, small, a ship being readied and an older man in a
+cloak waiting by the gangplank, face turned away. A doorway in a stone wall with
+a lamp still burning in it. Wash: cold slate on the harbour, ochre on the bag,
+flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-16 — Penelope, queen of Ithaca
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-16.png`.
+
+```text
+[PREAMBLE]
+
+A composed woman of forty at a tall upright loom in a high room, lit from a
+window at the left, unpicking a length of fine cloth thread by thread with a
+small bronze pin; the finished part of the shroud hangs in a fold behind her.
+A plain long dress, hair bound up, a shawl over the shoulders. On a stool
+beside her a lamp, a basket of wool and a cup. Wash: pale ochre on the cloth,
+grey-green on the wall, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-17 — Eumaeus, swineherd
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-17.png`.
+
+```text
+[PREAMBLE]
+
+A grey, weather-beaten man in a goatskin cloak sitting on a stone at the gate of
+a yard of wattle sties, cutting his own sandals from a piece of oxhide with a
+knife, four sows and their piglets about his feet. A boar-spear leaning on the
+gatepost; behind him, small, a thatched hut and a hillside of oak. Wash: ochre
+on the hide and the thatch, grey-green on the oak, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-18 — Nausicaa, princess of the Phaeacians
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-18.png`.
+
+```text
+[PREAMBLE]
+
+A tall girl of sixteen at a river mouth, bare-armed, sleeves tied up, wringing
+a length of linen with both hands while more of it dries spread on the shingle
+behind her; a mule cart with its tailboard down stands at the edge of the page.
+A leather ball lies at her feet. She is looking, calmly, at something off the
+left edge of the page under an olive bush. Wash: cold slate on the river, pale
+ochre on the linen, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-19 — Circe, enchantress of Aeaea
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-19.png`.
+
+```text
+[PREAMBLE]
+
+A tall, still woman with her hair down, standing at a great upright loom in a
+stone hall with a slender wooden wand laid across the beam beside her, holding
+out a broad two-handled cup in both hands towards the viewer's left. A long
+dress with a woven border; a wolf lies across the threshold behind her with the
+patience of a dog. On a table, a bowl of barley and cheese and a jar of honey.
+No glow, no smoke, no sparks. Wash: ochre on the cloth on the loom, grey-green
+on the wolf and the stone, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-20 — Calypso, nymph of Ogygia
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-20.png`.
+
+```text
+[PREAMBLE]
+
+A woman with long unbound hair sitting in the mouth of a cave hung with vines,
+turning a bronze axe-head over in her hands to test the edge, an adze and an
+augur laid on the rock beside her. Alders and cypresses frame the opening;
+four small springs run out across the page in channels. Beyond her, far and
+small, a man sitting alone on a headland with his back to the cave, looking at
+the sea. Wash: grey-green on the vines and the trees, cold slate on the sea,
+flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-21 — Athena, as Mentor
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-21.png`.
+
+```text
+[PREAMBLE]
+
+An old man in a plain cloak with a staff, leaning in a doorway with one foot
+crossed over the other, watching a young man on a quay below with a look of
+private amusement - and drawn so that from the neck down the figure is entirely
+an old Ithacan, while the eyes, and only the eyes, are grey, young, and
+unmistakably not his. A swallow perched on the lintel above. No armour, no
+helmet, no owl, no light. Wash: dusty grey-green on the cloak, ochre on the
+door, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 78% of its height - everything that matters
+must sit between 11% and 89% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## character-chr-22 — Antinous, chief of the suitors
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-22.png`.
+
+```text
+[PREAMBLE]
+
+A handsome, well-fed young man of thirty sprawled in a carved chair at the head
+of a long table in a hall, a two-handled gold cup lifted halfway to his mouth,
+a footstool already in his other hand, not yet thrown. A fine tunic, oiled
+hair, a sword on the chair-back. The table is heaped with the remains of a
+feast: bones, bread, spilled wine. Nobody else is in the picture. Wash: rust
+red on the wine and the cloth, ochre on the cup, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+Head, both hands and the named gear inside the middle 78% of the page height;
+the full width survives the crop. The ground line and anything at the feet may
+run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 78% of its height - everything that matters

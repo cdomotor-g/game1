@@ -61,7 +61,8 @@
     if (!query) return true;
     const q = query.toLowerCase();
     const hay = [entry.id, entry.name, entry.summary, entry.notes, entry.category, entry.family, entry.text,
-      entry.story, entry.quirk, entry.calling, entry.element, entry.people, entry.mode, entry.cardCode]
+      entry.story, entry.quirk, entry.calling, entry.element, entry.people, entry.mode, entry.cardCode,
+      entry.told, entry.play, entry.books, entry.subtitle, entry.campaign]
       .filter(Boolean).join(' ').toLowerCase();
     return hay.includes(q);
   }

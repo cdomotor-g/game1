@@ -357,6 +357,7 @@ export function cardsOfDeck(root, deck) {
     spells: () => file.spells,
     events: () => file.cards,
     quests: () => file.quests,
+    campaign: () => file.cards,
     tools: () => file.tools,
     items: () => file.items,
     weapons: () => file.items,

@@ -561,20 +561,38 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h1 id="the-mint-queue">The mint queue</h1>
 <p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
 <p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
-<p><strong>cards 102/162 · maps 1/1 · building tiles 44/54</strong></p>
-<blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 102 of 162 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
+<p><strong>cards 102/203 · maps 1/1 · building tiles 44/54</strong></p>
+<blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 103 of 203 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
 <blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 368 px floor (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 12 of 54 are under the 736 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
-<p><strong>102 of 162 minted.</strong> 0 waiting on a brief, 60 waiting on art, 0 waiting on frame.</p>
+<p><strong>102 of 203 minted.</strong> 0 waiting on a brief, 100 waiting on art, 1 waiting on frame.</p>
 <h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
-<h3 id="2-draw-the-artist-60-cards">2 · DRAW — the artist — 60 cards</h3>
+<h3 id="2-draw-the-artist-100-cards">2 · DRAW — the artist — 100 cards</h3>
 <p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
-<tbody><tr><td><code>SPL-04</code></td><td>Bulwark</td><td>Spells</td><td><code>spell-bulwark</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tbody><tr><td><code>CHR-09</code></td><td>Odysseus</td><td>Characters</td><td><code>character-chr-09</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-10</code></td><td>Eurylochus</td><td>Characters</td><td><code>character-chr-10</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-11</code></td><td>Polites</td><td>Characters</td><td><code>character-chr-11</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-12</code></td><td>Perimedes</td><td>Characters</td><td><code>character-chr-12</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-13</code></td><td>Elpenor</td><td>Characters</td><td><code>character-chr-13</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-14</code></td><td>Antiphus</td><td>Characters</td><td><code>character-chr-14</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-15</code></td><td>Telemachus</td><td>Characters</td><td><code>character-chr-15</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-16</code></td><td>Penelope</td><td>Characters</td><td><code>character-chr-16</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-17</code></td><td>Eumaeus</td><td>Characters</td><td><code>character-chr-17</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-18</code></td><td>Nausicaa</td><td>Characters</td><td><code>character-chr-18</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-19</code></td><td>Circe</td><td>Characters</td><td><code>character-chr-19</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-20</code></td><td>Calypso</td><td>Characters</td><td><code>character-chr-20</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-21</code></td><td>Athena</td><td>Characters</td><td><code>character-chr-21</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CHR-22</code></td><td>Antinous</td><td>Characters</td><td><code>character-chr-22</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-15</code></td><td>Polyphemus the Cyclops</td><td>Monsters</td><td><code>monster-polyphemus</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-16</code></td><td>Laestrygonian</td><td>Monsters</td><td><code>monster-laestrygonian</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-17</code></td><td>Scylla</td><td>Monsters</td><td><code>monster-scylla</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-18</code></td><td>Charybdis</td><td>Monsters</td><td><code>monster-charybdis</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>MON-19</code></td><td>The Sirens</td><td>Monsters</td><td><code>monster-sirens</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>SPL-05</code></td><td>Cleanse</td><td>Spells</td><td><code>spell-cleanse</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>SPL-06</code></td><td>Mist Veil</td><td>Spells</td><td><code>spell-mist-veil</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>SPL-07</code></td><td>Fair Wind</td><td>Spells</td><td><code>spell-fair-wind</code></td><td>✓</td><td>·</td><td>·</td></tr>
@@ -627,6 +645,28 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>QST-06</code></td><td>A Draught for Fen's End</td><td>Quests</td><td><code>quest-draught-for-fens-end</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>QST-07</code></td><td>The Ironspine Road</td><td>Quests</td><td><code>quest-ironspine-road</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>QST-08</code></td><td>The Drowned Bell of Taleowick</td><td>Quests</td><td><code>quest-drowned-bell</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-01</code></td><td>Twelve Ships from Troy</td><td>Campaign</td><td><code>campaign-odyssey-twelve-ships</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-02</code></td><td>The Cicones at Ismarus</td><td>Campaign</td><td><code>campaign-odyssey-cicones</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-03</code></td><td>The Storm off Malea</td><td>Campaign</td><td><code>campaign-odyssey-storm-off-malea</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-04</code></td><td>The Lotus-Eaters</td><td>Campaign</td><td><code>campaign-odyssey-lotus-eaters</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-05</code></td><td>The Cave of the Cyclops</td><td>Campaign</td><td><code>campaign-odyssey-cyclops</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-06</code></td><td>Aeolus and the Bag of Winds</td><td>Campaign</td><td><code>campaign-odyssey-bag-of-winds</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-07</code></td><td>The Laestrygonians</td><td>Campaign</td><td><code>campaign-odyssey-laestrygonians</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-08</code></td><td>Circe of Aeaea</td><td>Campaign</td><td><code>campaign-odyssey-circe</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-09</code></td><td>The Land of the Dead</td><td>Campaign</td><td><code>campaign-odyssey-land-of-the-dead</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-10</code></td><td>The Sirens</td><td>Campaign</td><td><code>campaign-odyssey-sirens</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-11</code></td><td>Scylla and Charybdis</td><td>Campaign</td><td><code>campaign-odyssey-scylla-and-charybdis</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-12</code></td><td>The Cattle of the Sun</td><td>Campaign</td><td><code>campaign-odyssey-cattle-of-the-sun</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-13</code></td><td>Calypso's Island</td><td>Campaign</td><td><code>campaign-odyssey-calypso</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-14</code></td><td>The Telemachy</td><td>Campaign</td><td><code>campaign-odyssey-telemachy</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-15</code></td><td>The Raft and Poseidon's Storm</td><td>Campaign</td><td><code>campaign-odyssey-raft</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-16</code></td><td>Nausicaa and the Phaeacians</td><td>Campaign</td><td><code>campaign-odyssey-phaeacians</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-17</code></td><td>The Swineherd's Hut</td><td>Campaign</td><td><code>campaign-odyssey-swineherd</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-18</code></td><td>A Beggar in his own Hall</td><td>Campaign</td><td><code>campaign-odyssey-beggar-in-the-hall</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-19</code></td><td>The Bow and the Axes</td><td>Campaign</td><td><code>campaign-odyssey-the-bow</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-20</code></td><td>The Slaughter of the Suitors</td><td>Campaign</td><td><code>campaign-odyssey-slaughter</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-21</code></td><td>The Bed of Olive-wood</td><td>Campaign</td><td><code>campaign-odyssey-the-bed</code></td><td>✓</td><td>·</td><td>·</td></tr>
+<tr><td><code>CAM-22</code></td><td>Laertes' Orchard and the Peace</td><td>Campaign</td><td><code>campaign-odyssey-laertes</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>ITM-09</code></td><td>Quiver of Arrows</td><td>Items</td><td><code>item-quiver</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>ITM-10</code></td><td>Waterskin</td><td>Items</td><td><code>item-waterskin</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>ITM-11</code></td><td>Map</td><td>Items</td><td><code>item-map</code></td><td>✓</td><td>·</td><td>·</td></tr>
@@ -634,8 +674,11 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>ITM-13</code></td><td>Three-Day Rations</td><td>Items</td><td><code>item-rations-3-day</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>ITM-14</code></td><td>Ten-Day Rations</td><td>Items</td><td><code>item-rations-10-day</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>TOL-06</code></td><td>Fishing Line</td><td>Tools</td><td><code>tool-fishing-line</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
-<h3 id="3-frame-whoever-accepts-the-plate">3 · FRAME — whoever accepts the plate</h3>
-<p>Nothing waiting.</p>
+<h3 id="3-frame-whoever-accepts-the-plate-1-card">3 · FRAME — whoever accepts the plate — 1 card</h3>
+<p>The plate is committed and <code>docs/art/framing.json</code> says nothing about it yet. A <code>subject</code> box, a <code>focal</code> point and a one-line <code>note</code> — the contract is <a href="../art/09-framing-and-composition.md"><code>docs/art/09-framing-and-composition.md</code></a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
+<tbody><tr><td><code>SPL-04</code></td><td>Bulwark</td><td>Spells</td><td><code>spell-bulwark</code></td><td>✓</td><td>✓</td><td>·</td></tr></tbody></table></div>
 <h3 id="minted">Minted</h3>
 <p>102 cards complete: <code>CHR-01</code>, <code>CHR-02</code>, <code>CHR-03</code>, <code>CHR-04</code>, <code>CHR-05</code>, <code>CHR-06</code>, <code>CHR-07</code>, <code>CHR-08</code>, <code>VEH-01</code>, <code>VEH-02</code>, <code>VEH-03</code>, <code>VEH-04</code>, <code>VEH-05</code>, <code>VEH-06</code>, <code>VEH-07</code>, <code>VEH-08</code>, <code>VEH-09</code>, <code>VEH-10</code>, <code>VEH-11</code>, <code>VEH-12</code>, <code>VEH-13</code>, <code>VEH-14</code>, <code>VEH-15</code>, <code>VEH-16</code>, <code>VEH-17</code>, <code>MON-01</code>, <code>MON-02</code>, <code>MON-03</code>, <code>MON-04</code>, <code>MON-05</code>, <code>MON-06</code>, <code>MON-07</code>, <code>MON-08</code>, <code>MON-09</code>, <code>MON-10</code>, <code>MON-11</code>, <code>MON-12</code>, <code>MON-13</code>, <code>MON-14</code>, <code>TAL-01</code>, <code>TAL-02</code>, <code>TAL-03</code>, <code>TAL-04</code>, <code>TAL-05</code>, <code>TAL-06</code>, <code>MOD-01</code>, <code>MOD-02</code>, <code>MOD-03</code>, <code>MOD-04</code>, <code>MOD-05</code>, <code>MOD-06</code>, <code>MOD-07</code>, <code>MOD-08</code>, <code>MOD-09</code>, <code>MOD-10</code>, <code>MOD-11</code>, <code>SPL-01</code>, <code>SPL-02</code>, <code>SPL-03</code>, <code>EVT-01</code>, <code>EVT-02</code>, <code>EVT-03</code>, <code>EVT-04</code>, <code>EVT-05</code>, <code>EVT-06</code>, <code>EVT-07</code>, <code>EVT-08</code>, <code>EVT-09</code>, <code>EVT-10</code>, <code>EVT-11</code>, <code>EVT-12</code>, <code>EVT-13</code>, <code>EVT-14</code>, <code>EVT-15</code>, <code>EVT-16</code>, <code>EVT-17</code>, <code>EVT-18</code>, <code>ITM-07</code>, <code>ITM-01</code>, <code>ITM-04</code>, <code>ITM-05</code>, <code>ITM-06</code>, <code>ITM-08</code>, <code>ITM-03</code>, <code>ITM-02</code>, <code>WPN-01</code>, <code>WPN-02</code>, <code>WPN-04</code>, <code>WPN-03</code>, <code>WPN-05</code>, <code>WPN-06</code>, <code>WPN-07</code>, <code>ARM-01</code>, <code>ARM-04</code>, <code>ARM-05</code>, <code>ARM-02</code>, <code>ARM-03</code>, <code>TOL-01</code>, <code>TOL-02</code>, <code>TOL-03</code>, <code>TOL-04</code>, <code>TOL-05</code>.</p>
 <p>38 of them are framed but have no <code>focal</code> point — they predate it and are not broken, they are just aimed at the middle of their subject box. Adding one is a two-number improvement: <code>character-chr-01</code>, <code>character-chr-02</code>, <code>character-chr-03</code>, <code>character-chr-04</code>, <code>character-chr-05</code>, <code>character-chr-06</code>, <code>character-chr-07</code>, <code>character-chr-08</code>, <code>vehicle-veh-01</code>, <code>vehicle-veh-02</code>, <code>vehicle-veh-03</code>, <code>vehicle-veh-04</code>, <code>vehicle-veh-05</code>, <code>vehicle-veh-06</code>, <code>vehicle-veh-07</code>, <code>vehicle-veh-08</code>, <code>vehicle-veh-09</code>, <code>vehicle-veh-10</code>, <code>vehicle-veh-11</code>, <code>vehicle-veh-12</code>, <code>vehicle-veh-13</code>, <code>vehicle-veh-14</code>, <code>vehicle-veh-15</code>, <code>vehicle-veh-16</code>, <code>vehicle-veh-17</code>, <code>monster-gravel-wyrm</code>, <code>monster-mire-strangler</code>, <code>monster-reef-serpent</code>, <code>monster-deepwater-maw</code>, <code>monster-rime-harpy</code>, <code>monster-dust-devil</code>, <code>monster-storm-roc</code>, <code>talisman-tal-01</code>, <code>talisman-tal-02</code>, <code>talisman-tal-03</code>, <code>talisman-tal-04</code>, <code>talisman-tal-05</code>, <code>talisman-tal-06</code>.</p>
@@ -661,7 +704,8 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <p>Drawn by a tool from its own data, so there is no handover to track and no step anybody is waiting on. It is reported here every run rather than disappearing, the same way a shelved line is: a decision with a reason attached is not an absence. Run <code>node tools/draw-map.mjs &lt;id&gt;</code> to regrow one, and set <code>plate.kind</code> back to <code>&quot;drawn&quot;</code> to put it back in the worklist above.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Map</th><th>Grid</th><th>Plate</th></tr></thead>
-<tbody><tr><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles.svg</code></td></tr></tbody></table></div>
+<tbody><tr><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles.svg</code></td></tr>
+<tr><td>The Wine-Dark Sea</td><td>32 × 24</td><td><code>wine-dark-sea.svg</code></td></tr></tbody></table></div>
 <hr>
 <h2 id="building-tiles">Building tiles</h2>
 <p>One printed building tile - the face of a building or a sown field, cut to the footprint its own numbers earned it. Briefs in <a href="../art/prompts/buildingtiles.md"><code>docs/art/prompts/buildingtiles.md</code></a>, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
@@ -682,7 +726,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <tr><td><code>inn</code></td><td>Inn</td><td>Civic</td><td><code>tile-inn</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>infirmary</code></td><td>Infirmary</td><td>Civic</td><td><code>tile-infirmary</code></td><td>✓</td><td>·</td><td>·</td></tr>
 <tr><td><code>watchtower</code></td><td>Watchtower</td><td>Military</td><td><code>tile-watchtower</code></td><td>✓</td><td>·</td><td>·</td></tr></tbody></table></div>
-<h3 id="3-frame-whoever-accepts-the-plate-1">3 · FRAME — whoever accepts the plate</h3>
+<h3 id="3-frame-whoever-accepts-the-plate">3 · FRAME — whoever accepts the plate</h3>
 <p>Nothing waiting.</p>
 <h3 id="minted-2">Minted</h3>
 <p>44 tiles complete: <code>hut</code>, <code>timber-house</code>, <code>brick-house</code>, <code>manor</code>, <code>lumber-camp</code>, <code>quarry</code>, <code>clay-pit</code>, <code>sand-pit</code>, <code>mine</code>, <code>oil-derrick</code>, <code>well</code>, <code>farm</code>, <code>pasture</code>, <code>orchard</code>, <code>vineyard</code>, <code>apiary</code>, <code>dock</code>, <code>sawmill</code>, <code>charcoal-kiln</code>, <code>smelter</code>, <code>steelworks</code>, <code>tailor</code>, <code>mill</code>, <code>bakery</code>, <code>butcher</code>, <code>dairy</code>, <code>brewery</code>, <code>winery</code>, <code>warehouse</code>, <code>granary</code>, <code>market</code>, <code>trading-house</code>, <code>town-hall</code>, <code>barracks</code>, <code>palisade</code>, <code>alchemist</code>, <code>shrine</code>, <code>harbour</code>, <code>rail-depot</code>, <code>crop-grain</code>, <code>crop-vegetables</code>, <code>crop-flax</code>, <code>crop-cotton</code>, <code>crop-hops</code>.</p>

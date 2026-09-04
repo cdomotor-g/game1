@@ -15,9 +15,9 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 102/162 · maps 1/1 · building tiles 44/54**
+**cards 102/203 · maps 1/1 · building tiles 44/54**
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 102 of 162 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 103 of 203 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
@@ -28,19 +28,37 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**102 of 162 minted.** 0 waiting on a brief, 60 waiting on art, 0 waiting on frame.
+**102 of 203 minted.** 0 waiting on a brief, 100 waiting on art, 1 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 60 cards
+### 2 · DRAW — the artist — 100 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `SPL-04` | Bulwark | Spells | `spell-bulwark` | ✓ | · | · |
+| `CHR-09` | Odysseus | Characters | `character-chr-09` | ✓ | · | · |
+| `CHR-10` | Eurylochus | Characters | `character-chr-10` | ✓ | · | · |
+| `CHR-11` | Polites | Characters | `character-chr-11` | ✓ | · | · |
+| `CHR-12` | Perimedes | Characters | `character-chr-12` | ✓ | · | · |
+| `CHR-13` | Elpenor | Characters | `character-chr-13` | ✓ | · | · |
+| `CHR-14` | Antiphus | Characters | `character-chr-14` | ✓ | · | · |
+| `CHR-15` | Telemachus | Characters | `character-chr-15` | ✓ | · | · |
+| `CHR-16` | Penelope | Characters | `character-chr-16` | ✓ | · | · |
+| `CHR-17` | Eumaeus | Characters | `character-chr-17` | ✓ | · | · |
+| `CHR-18` | Nausicaa | Characters | `character-chr-18` | ✓ | · | · |
+| `CHR-19` | Circe | Characters | `character-chr-19` | ✓ | · | · |
+| `CHR-20` | Calypso | Characters | `character-chr-20` | ✓ | · | · |
+| `CHR-21` | Athena | Characters | `character-chr-21` | ✓ | · | · |
+| `CHR-22` | Antinous | Characters | `character-chr-22` | ✓ | · | · |
+| `MON-15` | Polyphemus the Cyclops | Monsters | `monster-polyphemus` | ✓ | · | · |
+| `MON-16` | Laestrygonian | Monsters | `monster-laestrygonian` | ✓ | · | · |
+| `MON-17` | Scylla | Monsters | `monster-scylla` | ✓ | · | · |
+| `MON-18` | Charybdis | Monsters | `monster-charybdis` | ✓ | · | · |
+| `MON-19` | The Sirens | Monsters | `monster-sirens` | ✓ | · | · |
 | `SPL-05` | Cleanse | Spells | `spell-cleanse` | ✓ | · | · |
 | `SPL-06` | Mist Veil | Spells | `spell-mist-veil` | ✓ | · | · |
 | `SPL-07` | Fair Wind | Spells | `spell-fair-wind` | ✓ | · | · |
@@ -93,6 +111,28 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `QST-06` | A Draught for Fen's End | Quests | `quest-draught-for-fens-end` | ✓ | · | · |
 | `QST-07` | The Ironspine Road | Quests | `quest-ironspine-road` | ✓ | · | · |
 | `QST-08` | The Drowned Bell of Taleowick | Quests | `quest-drowned-bell` | ✓ | · | · |
+| `CAM-01` | Twelve Ships from Troy | Campaign | `campaign-odyssey-twelve-ships` | ✓ | · | · |
+| `CAM-02` | The Cicones at Ismarus | Campaign | `campaign-odyssey-cicones` | ✓ | · | · |
+| `CAM-03` | The Storm off Malea | Campaign | `campaign-odyssey-storm-off-malea` | ✓ | · | · |
+| `CAM-04` | The Lotus-Eaters | Campaign | `campaign-odyssey-lotus-eaters` | ✓ | · | · |
+| `CAM-05` | The Cave of the Cyclops | Campaign | `campaign-odyssey-cyclops` | ✓ | · | · |
+| `CAM-06` | Aeolus and the Bag of Winds | Campaign | `campaign-odyssey-bag-of-winds` | ✓ | · | · |
+| `CAM-07` | The Laestrygonians | Campaign | `campaign-odyssey-laestrygonians` | ✓ | · | · |
+| `CAM-08` | Circe of Aeaea | Campaign | `campaign-odyssey-circe` | ✓ | · | · |
+| `CAM-09` | The Land of the Dead | Campaign | `campaign-odyssey-land-of-the-dead` | ✓ | · | · |
+| `CAM-10` | The Sirens | Campaign | `campaign-odyssey-sirens` | ✓ | · | · |
+| `CAM-11` | Scylla and Charybdis | Campaign | `campaign-odyssey-scylla-and-charybdis` | ✓ | · | · |
+| `CAM-12` | The Cattle of the Sun | Campaign | `campaign-odyssey-cattle-of-the-sun` | ✓ | · | · |
+| `CAM-13` | Calypso's Island | Campaign | `campaign-odyssey-calypso` | ✓ | · | · |
+| `CAM-14` | The Telemachy | Campaign | `campaign-odyssey-telemachy` | ✓ | · | · |
+| `CAM-15` | The Raft and Poseidon's Storm | Campaign | `campaign-odyssey-raft` | ✓ | · | · |
+| `CAM-16` | Nausicaa and the Phaeacians | Campaign | `campaign-odyssey-phaeacians` | ✓ | · | · |
+| `CAM-17` | The Swineherd's Hut | Campaign | `campaign-odyssey-swineherd` | ✓ | · | · |
+| `CAM-18` | A Beggar in his own Hall | Campaign | `campaign-odyssey-beggar-in-the-hall` | ✓ | · | · |
+| `CAM-19` | The Bow and the Axes | Campaign | `campaign-odyssey-the-bow` | ✓ | · | · |
+| `CAM-20` | The Slaughter of the Suitors | Campaign | `campaign-odyssey-slaughter` | ✓ | · | · |
+| `CAM-21` | The Bed of Olive-wood | Campaign | `campaign-odyssey-the-bed` | ✓ | · | · |
+| `CAM-22` | Laertes' Orchard and the Peace | Campaign | `campaign-odyssey-laertes` | ✓ | · | · |
 | `ITM-09` | Quiver of Arrows | Items | `item-quiver` | ✓ | · | · |
 | `ITM-10` | Waterskin | Items | `item-waterskin` | ✓ | · | · |
 | `ITM-11` | Map | Items | `item-map` | ✓ | · | · |
@@ -101,9 +141,13 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `ITM-14` | Ten-Day Rations | Items | `item-rations-10-day` | ✓ | · | · |
 | `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate
+### 3 · FRAME — whoever accepts the plate — 1 card
 
-Nothing waiting.
+The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
+
+| Code | Card | Deck | Plate | brief | plate | frame |
+| --- | --- | --- | --- | :-: | :-: | :-: |
+| `SPL-04` | Bulwark | Spells | `spell-bulwark` | ✓ | ✓ | · |
 
 ### Minted
 
@@ -152,6 +196,7 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 | Map | Grid | Plate |
 | --- | --- | --- |
 | The Sundering Isles | 30 × 24 | `sundering-isles.svg` |
+| The Wine-Dark Sea | 32 × 24 | `wine-dark-sea.svg` |
 
 ---
 

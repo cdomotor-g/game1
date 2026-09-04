@@ -541,6 +541,7 @@
       boardPanel(),
       ...section('Characters', 'Each player’s hero figure takes one at setup. Strength is both halves of what an arm does: what they swing with, and what they can shoulder.', q(D.characters).map((c) =>
         deckCard('character', c, `${D.name('people', c.people)} · ${c.calling}`, [
+          campaignPill(c),
           pill(`health ${c.health}`, 'bad'),
           pill(`strength ${c.strength}`),
           pill(`carries ${carryKg(c.strength)} kg`),
@@ -557,6 +558,7 @@
       )),
       ...section('Monsters', 'Drawn when a discovery roll says monster and the card’s terrain list includes the hex. Deal the card onto the spare player board and run it like a player who is not a person.', q(D.monsters).map((m) =>
         deckCard('monster', m, m.story, [
+          campaignPill(m),
           elementPill(m.element),
           pill(`str ${m.strength}`),
           pill(`armour ${m.armour}`),
@@ -597,6 +599,96 @@
           el('div.card-meta', [pill(qc.type), pill(`complexity ${qc.complexity}`)]),
         ])
       )),
+    ]);
+  };
+
+  /* -------------------------------------------------------------- campaign */
+
+  /** A one-line pill saying which storyline a card came from, or nothing. */
+  const campaignPill = (entity) => (entity.campaign ? pill(D.name('campaign', entity.campaign), 'accent') : null);
+
+  const chapterCard = (c) =>
+    el('button.card', { type: 'button', onclick: () => open('chapter', c.id) }, [
+      el('div.card-head', [el('span.card-title', `${c.chapter}. ${c.name}`), el('span.card-code', c.cardCode)]),
+      el('div.card-sub', c.play),
+      el('div.card-meta', [
+        pill(`book ${c.books}`),
+        c.site ? pill([c.site.place ? D.name('place', c.site.place) : null, c.site.region].filter(Boolean).join(' · ') || c.site.region) : null,
+        c.xenia && typeof c.xenia === 'object' ? pill(c.xenia.kept ? 'guest-friendship kept' : 'guest-friendship broken', c.xenia.kept ? 'good' : 'bad') : null,
+      ].filter(Boolean)),
+    ]);
+
+  views.campaign = function (query) {
+    const q = (list) => list.filter((x) => UI.matches(x, query));
+    const section = (title, blurb, nodes) => (nodes.length ? [
+      el('div.page-head.section-head', [el('h3', title), blurb ? el('p', blurb) : null]),
+      el('div.grid.deck-grid', nodes),
+    ] : []);
+
+    const modePanel = (m) => el('div.panel', [
+      el('h3', m.name),
+      el('p.prose', m.summary),
+      el('div.deflist', [
+        el('dt', 'Setup'), el('dd', m.setup),
+        el('dt', 'Victory'), el('dd', m.victory),
+        ...(m.reading ? [el('dt', 'Reading a card'), el('dd', m.reading)] : []),
+        ...(m.replay ? [el('dt', 'A chapter lost'), el('dd', m.replay)] : []),
+      ]),
+    ]);
+
+    const campaignPanel = (camp) => {
+      const cards = q(D.chapters.filter((c) => c.campaign === camp.id));
+      const cast = D.characters.filter((c) => c.campaign === camp.id);
+      const beasts = D.monsters.filter((m) => m.campaign === camp.id);
+      const heroes = new Set(Object.values((camp.cast && camp.cast.heroes) || {}).flat());
+      const roleOf = (id) => (heroes.has(id) ? 'hero' : (camp.cast.hosts || []).includes(id) ? 'host' : (camp.cast.adversaries || []).includes(id) ? 'adversary' : 'cast');
+      return el('div', [
+        el('div.panel', [
+          el('h3', [camp.name, el('span.count', `${cards.length} cards`)]),
+          el('p.prose', el('em', camp.subtitle)),
+          el('p.prose', camp.summary),
+          el('div.deflist', [
+            el('dt', 'Source'), el('dd', `${camp.source.work}, ${camp.source.author} - ${camp.source.composed}, ${camp.source.books} books. ${camp.source.note}`),
+            el('dt', 'Board'), el('dd', el('a', { href: '#maps' }, D.name('map', camp.map))),
+            el('dt', 'Players'), el('dd', `${camp.players.min}-${camp.players.max}. ${camp.players.note}`),
+            el('dt', 'Length'), el('dd', `${camp.length.rounds} rounds. ${camp.length.note}`),
+            el('dt', 'Victory'), el('dd', camp.victory),
+            el('dt', 'Defeat'), el('dd', camp.defeat),
+            el('dt', 'The fleet'), el('dd', camp.fleet ? `${camp.fleet.tracks.health.counts} on the health track from ${camp.fleet.tracks.health.from}; ${camp.fleet.tracks.pace.counts} on the pace track from ${camp.fleet.tracks.pace.from}. ${camp.fleet.loss}` : '—'),
+            el('dt', "The poem's order"), el('dd', camp.order.homer),
+            el('dt', "The deck's order"), el('dd', camp.order.deck),
+            el('dt', 'In free play'), el('dd', camp.freePlay),
+          ]),
+          el('h4', 'What it teaches'),
+          el('ul', { style: 'padding-left:18px;font-size:13.5px' }, (camp.teaches || []).map((t) => el('li', t))),
+          el('h4', 'Setup'),
+          el('ol', { style: 'padding-left:18px;font-size:13.5px' }, (camp.setup || []).map((t) => el('li', t))),
+          el('div.flow', { style: 'margin-top:12px' }, [
+            el('button.btn', { type: 'button', onclick: () => open('campaign', camp.id) }, 'The whole campaign, chapter by chapter'),
+            el('a.btn.small', { href: 'cards/index.html' }, 'The card fronts'),
+          ]),
+        ]),
+        ...(camp.acts || []).flatMap((act) => section(act.name, `Books ${act.books}, chapters ${act.chapters[0]}-${act.chapters[1]}. ${act.summary}`,
+          cards.filter((c) => c.act === act.id).map(chapterCard))),
+        ...section('The cast', `${camp.cast.companions} ${camp.cast.handover}`, q(cast).map((c) =>
+          deckCard('character', c, `${roleOf(c.id)} · ${D.name('people', c.people)} · ${c.calling}`, [
+            pill(`health ${c.health}`, 'bad'),
+            pill(`strength ${c.strength}`),
+            c.manaCapacity ? pill(`mana ${c.manaCapacity}`, 'accent') : null,
+            c.fate ? pill('has a fate', 'bad') : null,
+          ]))),
+        ...section('The monsters', 'Each is a card in the monster deck and a discovery roll can turn it up in free play on any hex its home ground names.', q(beasts).map((m) =>
+          deckCard('monster', m, m.special || m.story, [
+            elementPill(m.element),
+            pill(`str ${m.strength}`), pill(`armour ${m.armour}`), pill(`pace ${m.pace}`), pill(`health ${m.health}`, 'bad'),
+          ]))),
+      ]);
+    };
+
+    return el('div', [
+      pageHead('Campaign', 'Two ways to sit down at the table. Free play is the game as the rules describe it; a campaign lays a storyline over the same game - its cards are read in order rather than shuffled, it names its board and deals its cast, and the table plays it together. Everything a campaign brings is a full card in its own deck and plays in free play exactly as printed.'),
+      el('div.grid.wide', D.playModes.map(modePanel)),
+      ...D.campaigns.map(campaignPanel),
     ]);
   };
 
@@ -1208,6 +1300,7 @@
       el('section', [
         el('h4', 'Options'),
         el('div.card-meta', opts.map(([label, ok]) => pill(label, ok ? 'good' : 'bad'))),
+        m.special ? el('p.prose', m.special) : null,
         m.gift ? el('p.prose', `Gift to befriend: ${m.gift}.`) : null,
         m.befriended ? el('p.prose', `Befriended: ${m.befriended}`) : null,
         m.enslaved ? el('p.prose', `Enslaved: ${m.enslaved}`) : null,
@@ -1253,6 +1346,8 @@
         ]),
       ]),
       el('section', [el('h4', 'Traits'), el('ul', { style: 'padding-left:18px;font-size:13.5px' }, c.traits.map((t) => el('li', t)))]),
+      c.fate ? el('section', [el('h4', 'Fate'), el('p.prose', c.fate)]) : null,
+      c.campaign ? el('section', [el('h4', 'Campaign'), el('p.prose', [el('button.btn.small', { type: 'button', onclick: () => open('campaign', c.campaign) }, D.name('campaign', c.campaign)), ' - and a free-play card like any other.'])]) : null,
       c.startsWith && c.startsWith.length
         ? linkSection('Starts with', c.startsWith.map((id) => ['item', id, D.name('item', id), '']))
         : null,
@@ -1277,6 +1372,44 @@
       ]) : null,
       q.reward ? el('section', [el('h4', 'Reward'), el('p.prose', reward(q.reward))]) : null,
       q.notes ? el('section', [el('h4', 'Notes'), el('p.prose', q.notes)]) : null,
+    ];
+  };
+
+  detail.campaign = function (camp) {
+    const cards = D.chapters.filter((c) => c.campaign === camp.id);
+    return [
+      el('span.kicker', `campaign · ${camp.source.work}`),
+      el('h2', camp.name),
+      el('p.prose', el('em', camp.subtitle)),
+      el('p.prose', camp.summary),
+      el('section', [el('h4', 'Chapters'), el('ol', { style: 'padding-left:18px;font-size:13.5px' }, cards.map((c) =>
+        el('li', [el('button.linkrow', { type: 'button', onclick: () => open('chapter', c.id) }, [el('strong', c.name), el('div.lr-sub', `Book ${c.books} · ${c.play}`)])])))]),
+      el('section', [el('h4', 'What it teaches'), el('ul', { style: 'padding-left:18px;font-size:13.5px' }, (camp.teaches || []).map((t) => el('li', t)))]),
+      linkSection('Cast', D.characters.filter((c) => c.campaign === camp.id).map((c) => ['character', c.id, c.name, c.calling])),
+      linkSection('Monsters', D.monsters.filter((m) => m.campaign === camp.id).map((m) => ['monster', m.id, m.name, m.element])),
+    ];
+  };
+
+  detail.chapter = function (c) {
+    const camp = D.byId.campaign.get(c.campaign);
+    const total = D.chapters.filter((x) => x.campaign === c.campaign).length;
+    return [
+      el('span.kicker', `${camp ? camp.name : c.campaign} · book ${c.books} · chapter ${c.chapter} of ${total}`),
+      el('h2', [c.name, ' ', el('span.card-code', c.cardCode)]),
+      plateFull(D.art('chapter', c), c.name),
+      el('section', [el('h4', 'As the poem tells it'), el('p.prose', c.told)]),
+      el('section', [el('h4', 'At the table'), el('p.prose', c.play), c.cost ? el('p.prose', [el('strong', 'Cost: '), c.cost]) : null]),
+      c.site ? el('section', [el('h4', 'Where'), el('p.prose', [c.site.place ? `${D.name('place', c.site.place)}, ` : '', `the region ${c.site.region} on `, el('a', { href: '#maps' }, camp ? D.name('map', camp.map) : 'the board')])]) : null,
+      (c.meets && (c.meets.characters.length || c.meets.monsters.length))
+        ? linkSection('Met here', [
+          ...c.meets.characters.map((id) => ['character', id, D.name('character', id), 'character']),
+          ...c.meets.monsters.map((id) => ['monster', id, D.name('monster', id), 'monster']),
+        ]) : null,
+      c.xenia && typeof c.xenia === 'object' ? el('section', [el('h4', `Guest-friendship ${c.xenia.kept ? 'kept' : 'broken'}`), el('p.prose', c.xenia.note)]) : null,
+      c.lesson ? el('section', [el('h4', 'To take away'), el('p.prose', c.lesson)]) : null,
+      el('div.flow', [
+        el('button.btn.small', { type: 'button', onclick: () => open('campaign', c.campaign) }, 'The whole campaign'),
+      ]),
     ];
   };
 

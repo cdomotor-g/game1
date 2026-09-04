@@ -101,7 +101,7 @@ fireball, spell effect, vfx, particle effect
 
 ## spell-kindle — Kindle *(fire, SPL-01)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-kindle.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-kindle.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -116,11 +116,18 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The hearth mouth, the flame and the torch all well inside the middle 80% of the
 page height, centred left to right. The fireback and the hearthstone may run to
 the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-ember-lash — Ember Lash *(fire, SPL-02)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-ember-lash.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-ember-lash.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -134,11 +141,18 @@ slip is offset across the two hot edges only.
 FRAMING. Square plate, whole page drawn edge to edge.
 Both edges and the anvil face inside the middle 80% of the page height, centred
 left to right. The dead forge behind may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-mend-stone — Mend Stone *(earth, SPL-03)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-mend-stone.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-mend-stone.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -153,11 +167,18 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The full run of the crack, the lintel and the trowel inside the middle 80% of
 the page height, centred left to right. The wall coursing may run to the
 margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-bulwark — Bulwark *(earth, SPL-04)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-bulwark.png`.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-bulwark.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -172,6 +193,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The wall face and the broken shafts inside the middle 80% of the page height,
 centred left to right. The wall's run and the spilled load may go to the
 margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-cleanse — Cleanse *(water, SPL-05)*
@@ -191,6 +219,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The bowl, the water and the folded sheet inside the middle 80% of the page
 height, centred left to right. The washstand legs and the wall may run to the
 margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-mist-veil — Mist Veil *(water, SPL-06)*
@@ -210,6 +245,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The cut edge of the mist, the road and the tracks inside the middle 80% of the
 page height, centred left to right. The hedge and the fen may run to the
 margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-fair-wind — Fair Wind *(air, SPL-07)*
@@ -229,6 +271,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The full sail, the mast and the mooring lines inside the middle 80% of the page
 height, centred left to right. The wharf and the far bank may run to the
 margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-stormcall — Stormcall *(air, SPL-08)*
@@ -248,6 +297,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The wagon, the wet ground and both edges of the dry road inside the middle 80%
 of the page height, centred left to right. The rain above and the road ahead
 may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-wayfire — Wayfire *(fire, SPL-09)*
@@ -268,6 +324,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The burnt corridor, its two scorched edges and the untouched bracken inside the
 middle 80% of the page height, centred left to right. The canopy may run to the
 margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-seam-sense — Seam-Sense *(earth, SPL-10)*
@@ -287,6 +350,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The lifted turf, the cut section and the ore band inside the middle 80% of the
 page height, centred left to right. The hillside above and below may run to the
 margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-root-snare — Root-Snare *(earth, SPL-11)*
@@ -306,6 +376,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The wheel, the roots and the lifted road stones inside the middle 80% of the
 page height, centred left to right. The road and the verge may run to the
 margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-deep-draught — Deep Draught *(water, SPL-12)*
@@ -326,6 +403,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The near barrel's brimming mouth, the row behind it and the dry bucket inside
 the middle 80% of the page height, centred left to right. The well-house wall
 may run to the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-farspeak — Farspeak *(air, SPL-13)*
@@ -346,6 +430,13 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The inkwell, the ridge on the ink and the open ledger inside the middle 80% of
 the page height, centred left to right. The wagon tail and the slope may run to
 the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## spell-loft — Loft *(air, SPL-14)*
@@ -366,4 +457,11 @@ FRAMING. Square plate, whole page drawn edge to edge.
 The wagon, the wheels and both lips of the ravine inside the middle 80% of the
 page height, centred left to right. The ravine walls and the load may run to
 the margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 80% of its height - everything that matters
+must sit between 10% and 90% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```

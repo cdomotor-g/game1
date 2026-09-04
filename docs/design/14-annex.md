@@ -999,6 +999,11 @@ S = slay (always allowed), E = enslave, B = befriend, D = domesticate.
 | MON-12 | Storm Roc | 9 | 4 | 1 | 8 | 3 | ![](../art/icons/element-air.svg) air | mountain, hills | S D |
 | MON-13 | Vhalrik, the Cinder-Crowned *(unique)* | 14 | 7 | 3 | 5 | 6 | ![](../art/icons/element-fire.svg) fire | mountain, hills, desert | S B |
 | MON-14 | The Hoarwyrm | 13 | 5 | 3 | 4 | 4 | ![](../art/icons/element-air.svg) air | tundra, mountain, lake | S D |
+| MON-15 | Polyphemus the Cyclops *(unique)* | 14 | 7 | 2 | 3 | 5 | ![](../art/icons/element-earth.svg) earth | hills, mountain, grassland | S |
+| MON-16 | Laestrygonian | 12 | 6 | 1 | 4 | 3 | ![](../art/icons/element-earth.svg) earth | hills, mountain | S |
+| MON-17 | Scylla *(unique)* | 14 | 6 | 3 | 5 | 4 | ![](../art/icons/element-water.svg) water | deep-water, shallow-water, mountain | S |
+| MON-18 | Charybdis *(unique)* | 14 | 7 | 3 | 1 | 4 | ![](../art/icons/element-water.svg) water | deep-water, shallow-water | S |
+| MON-19 | The Sirens *(unique)* | 4 | 2 | 0 | 1 | 3 | ![](../art/icons/element-air.svg) air | grassland, shallow-water | S |
 
 
 **In a fight:** Both sides total strength, gear and dice. The lower total loses health equal to the difference.
@@ -1058,6 +1063,20 @@ strength × 3, and the purse counts against them like everything else.
 | CHR-06 | Doctor Elspeth Marrow | human | Physician | 9 | 2 | — | 65 | 6 | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
 | CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 4 | — | 60 | 12 | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands. |
 | CHR-08 | Old Mother Keswick | human | Hedge-Witch | 7 | 2 | — | 35 | 6 | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
+| CHR-09 | Odysseus | human | King of Ithaca | 12 | 4 | — | 40 | 12 | Man of many turns: once per round, re-roll one of his blue dice and keep the second roll. Nobody: once per game, after a battle, he gives a false name - the monster does not pursue, whatever its pace. (Book IX.) |
+| CHR-10 | Eurylochus | human | Second in command | 11 | 4 | — | 25 | 12 | Will not go in: he never enters a hall, cave or wood the party has not seen someone come out of, and so is never the first to take a wound. Mutineer: when the crew is asked, his voice counts double. He talked them into the cattle of the Sun. |
+| CHR-11 | Polites | human | Dearest of the companions | 10 | 3 | — | 20 | 9 | First through the door: +1 on any roll to befriend. Steady at the oar: the fleet's pace never falls below 3 while he lives. |
+| CHR-12 | Perimedes | human | Companion | 10 | 3 | — | 20 | 9 | Steady hands: he ties the knots, and a bound figure cannot free itself while Perimedes holds the rope. Holds the victims: at any sacrifice, the party's offering counts as one more. |
+| CHR-13 | Elpenor | human | Youngest of the crew | 8 | 2 | — | 10 | 6 | Not the bravest in a fight nor the steadiest of head - Homer's words: -1 on his blue total, but nobody looks at him twice, and a monster that has a choice never picks him. Asked for a burial: his oar planted on his grave, and the party goes back for it. |
+| CHR-14 | Antiphus | human | Companion | 10 | 4 | — | 15 | 12 | Spearman: +1 on his blue total against anything of strength 5 or more. Egyptius's son: an old man in Ithaca is waiting for him, and he knows it - he never abandons a companion. |
+| CHR-15 | Telemachus | human | Prince of Ithaca | 10 | 3 | — | 60 | 9 | Athena's charge: +1 on any roll while a character with the Mentor trait stands in his hex. Coming of age: the first time he wounds an enemy, add 1 strength for the rest of the game - the board has the room. |
+| CHR-16 | Penelope | human | Queen of Ithaca | 9 | 2 | — | 90 | 6 | The loom: once per round, undo one thing made this round - a die, a market roll, a suitor's demand - and nobody may object. Three years the shroud was woven by day and unpicked by night. The house is hers: resting in Ithaca costs nothing and mends 1 health while she holds it. |
+| CHR-17 | Eumaeus | human | Swineherd | 11 | 3 | — | 15 | 9 | Guest-friendship: any character resting at his steading mends 2 health, free, and is not asked their name. Keeps the pigs: starts with 4 pig in the sty, and sows and herds count as his workers. |
+| CHR-18 | Nausicaa | human | Princess of the Phaeacians | 9 | 2 | — | 70 | 6 | Hospitality: a stranger she brings to a settlement is fed, clothed and given a bed at no cost. The washing: cloth and clothing in her party never take wear. |
+| CHR-19 | Circe | immortal | Enchantress of Aeaea | 12 | 3 | 6 | 30 | 9 | Wand and drug: once per round, spend 2 mana to turn one figure in her hex into a pig until the round ends - it cannot fight, carry or speak. A figure holding moly is proof against it. Knows the way: a party she counsels ignores one discovery roll on its next leg. |
+| CHR-20 | Calypso | immortal | Nymph of Ogygia | 12 | 2 | 5 | 20 | 6 | The cave on Ogygia: a character resting there mends 2 health a round - and may not leave the island while she wishes it, unless a god says otherwise. Raft-wright: she gives axe, adze and augur, and a character builds a raft - run as a barge, hull 4 - in one round. |
+| CHR-21 | Athena | immortal | Goddess, as Mentor | 14 | 4 | 8 | 10 | 12 | Mentor: one character in her hex adds 1 to every roll. Disguise: once per round she may make one character a beggar, a shepherd or a stranger - nobody can name them until she chooses. |
+| CHR-22 | Antinous | human | Chief of the suitors | 11 | 4 | — | 80 | 12 | The hall behind him: in Ithaca's hall he rolls a third red die and keeps the best two. There are a hundred and eight of them. Throws a stool: in the first exchange of any battle he is in, the other side counts no armour. |
 
 There is no D box. What a character brings to a battle besides strength is the gear in
 their four kit slots, and that is a thing they can change.
@@ -1091,6 +1110,213 @@ thing pays. The tasks are here. Stages are taken in order.
 
 **The Ironspine Road.** Stages in order. Abandoning this campaign discards it for every player - the pass stays shut.
 **The Drowned Bell of Taleowick.** Stages in order. If the Maw is slain by anyone else first, stage 3 completes at the Maw's hex with the clapper aboard - the bell falls silent either way.
+
+## Campaign deck
+
+A campaign is a storyline read in order, never shuffled, laid over the same game -
+the second of the two ways to sit down at the table (`data/campaigns.json` modes).
+Every character, monster and board a campaign brings is a full card in its own deck
+and plays in free play exactly as printed; only the order is the campaign's. The
+card prints the rule and the cost; the story and the lesson are here, because the
+deck exists to teach them.
+
+### Homer's Odyssey
+
+*the ten years' voyage of Odysseus from Troy to Ithaca, in twenty-two cards.* Troy has fallen and Odysseus, king of Ithaca, sails for home with twelve ships. It takes him ten years: the Cicones, the Lotus-Eaters, the Cyclops, Aeolus's winds, the Laestrygonians, Circe, the dead, the Sirens, Scylla and Charybdis, the cattle of the Sun, seven years with Calypso, the Phaeacians - and then Ithaca, where a hundred and eight suitors are eating his house and his wife has held them off for three years with a loom. The deck is the poem in the order it happened; the poem itself starts in the middle.
+
+Played on **The Wine-Dark Sea** (`data/maps/wine-dark-sea.json`), 1-5 players, 24 rounds. Chapter 22 is turned and finished: Odysseus stands in Ithaca, the suitors are dead, Penelope has known him by the bed, and Athena has made the peace - within rules.json victory.gameLengthRounds rounds. The table wins together.
+
+**Cast:** Odysseus (CHR-09), Eurylochus (CHR-10), Polites (CHR-11), Perimedes (CHR-12), Elpenor (CHR-13), Antiphus (CHR-14), Telemachus (CHR-15), Penelope (CHR-16), Eumaeus (CHR-17), Nausicaa (CHR-18), Circe (CHR-19), Calypso (CHR-20), Athena (CHR-21), Antinous (CHR-22). **Monsters:** Polyphemus the Cyclops (MON-15), Laestrygonian (MON-16), Scylla (MON-17), Charybdis (MON-18), The Sirens (MON-19).
+
+**Act I - The Wanderings** (books IX-XII, chapters 1-12). Troy to the wreck off Thrinacia. The players are Odysseus and his named companions; the fleet is twelve ships and then one; every companion the poem loses is put away on the card that loses him, and the player takes up the next.
+
+**Act II - The Household** (books I-VIII, XIII-XXIV, chapters 13-22). Ogygia to the peace. Odysseus is alone until Scheria; the other players are the household - Telemachus, Penelope, Athena as Mentor, and then Eumaeus - and play the Telemachy beside his years with Calypso, the way the poem runs the two stories side by side.
+
+| Code | # | Chapter | Book | Where | Play | Cost |
+| --- | --- | --- | --- | --- | --- | --- |
+| CAM-01 | 1 | Twelve Ships from Troy | IX | troy · troad | Setup. Deal Odysseus and a companion to each player. Stand the party at Troy. On a spare board set the FLEET: H 12 for the ships, P 6 for the rowers. Sail north for Ismarus. | None yet. |
+| CAM-02 | 2 | The Cicones at Ismarus | IX | ismarus · thrace | Fight the Cicones on the beach: strength 4, armour 1, and a third red die kept best two - they came in numbers. Win or lose, the fleet loses six men a ship: FLEET P -1. Take 2 wine aboard, Maron's gift, and keep it - the Cyclops card wants it. | Fleet P -1. Whatever the battle takes. |
+| CAM-03 | 3 | The Storm off Malea | IX | malea · hellas | No landing at Malea. Roll the green die and add 4: the fleet is blown that many hexes south-west from the cape in one leg, with no discovery roll, and ends where it lands. Ithaca is two days off, and you will not see it again for nine years. | The way home. |
+| CAM-04 | 4 | The Lotus-Eaters | IX | lotus-shore · lotus-land | Three companions go ashore, Odysseus last. Each rolls one blue die: on 1-3 he has eaten and does nothing this round or next until bound and carried aboard. The market here will give lotus for nothing and take anything for it. None may be carried away: Odysseus throws it over the side. | A round, and three men's wits. |
+| CAM-05 | 5 | The Cave of the Cyclops | IX | goat-island · cyclops-isle | Deal Polyphemus onto the encounter board. He eats before the fight: Antiphus is put away, and one other companion of the Cyclops's choosing - Homer counts six. The wine puts him to sleep; then one blue roll of 8 or more by Odysseus blinds him. He is not slain, and the party leaves at any pace under the rams. Then Odysseus shouts his name from the ship - the poem allows no other reading - and Poseidon hears: the storms of Act II are his. | Antiphus and five men: FLEET P -1. Poseidon's curse. |
+| CAM-06 | 6 | Aeolus and the Bag of Winds | X | aeolia · aeolia | Rest a full round at Aeolus's table, free, all strength back. Then the bag: the fleet moves nine hexes towards Ithaca in one leg and stops in sight of it. Odysseus sleeps; the crew opens the bag; the winds carry the fleet back to this hex. Aeolus will not host you twice: leave next round, unrested. | Two rounds, and the sight of home. |
+| CAM-07 | 7 | The Laestrygonians | X | telepylus · laestrygonia | The fleet moors in the basin; Odysseus's ship outside. Deal a Laestrygonian onto the encounter board: the first exchange is thrown stones, and nobody's gear counts. Then FLEET H falls to 1 - eleven ships are lost in the harbour with every companion aboard them. From here the campaign is one ship: set FLEET P to 4. | Eleven ships. Fleet H 1, P 4. |
+| CAM-08 | 8 | Circe of Aeaea | X | aeaea · aeaea | Eurylochus's half of the party is turned to pigs: those companions cannot act until Odysseus, holding moly (this card gives it), beats Circe's red total. Deal Circe onto the encounter board. Won, she hosts the crew a year: rest two rounds, all health back, free, and take 2 sheep for the dead. Leaving, Elpenor is put away, fallen from the roof, and Circe tells you the next card. | Two rounds. Elpenor. |
+| CAM-09 | 9 | The Land of the Dead | XI | grove-of-persephone · cimmeria | One leg west from Aeaea with no discovery roll: Circe's wind. At the grove, sacrifice the 2 sheep. Tiresias speaks: read the Cattle of the Sun card aloud now, before its turn. Nobody mends here. Next leg the ship returns to Aeaea to bury Elpenor, oar and all. | Two legs and the sheep. |
+| CAM-10 | 10 | The Sirens | XII | sirens-meadow | Deal the Sirens. Spend 1 honey for the wax: every companion but Odysseus is deaf and rows on, fleet pace unchanged. Odysseus is bound and hears everything, and does nothing this round. A companion with no wax and no rope goes over the side to them and is put away. Nobody fights the Sirens; passing them is the win. | 1 honey. A round of Odysseus. |
+| CAM-11 | 11 | Scylla and Charybdis | XII | scylla-rock | Deal Scylla and Charybdis both. Choose a side of the strait. Scylla's side: she takes six men - FLEET P -1 - with no roll offered, and the ship passes. Charybdis's side: roll two red dice; 7 or more and the ship is lost with all hands, and the chapter is replayed from Scylla's side. Homer's Odysseus rowed under Scylla. | Six men: Fleet P -1. |
+| CAM-12 | 12 | The Cattle of the Sun | XII | thrinacia | The ship lands at Thrinacia: Eurylochus's voice is double, and it always lands. A month's storm - the party eats 4 food a round for three rounds or the cattle are killed; Homer's crew killed them on the third. The bolt: every companion is put away and FLEET H 0. Odysseus alone rolls two blue dice: 8 or more clings to the fig tree over Charybdis; less, and he rolls again next round at 1 health. He drifts to Ogygia. End of Act I. | The last ship, and every companion. |
+| CAM-13 | 13 | Calypso's Island | V, VII | calypsos-cave · ogygia | Odysseus alone, dealt Calypso as host. Seven years pass in three rounds: he rests and may not leave. In the same three rounds the other players are in Ithaca - turn the Telemachy card and play it beside this one. On the fourth round Calypso gives the tools: Odysseus builds a raft, run as a barge with hull 4, in one round, and sails. | Three rounds. |
+| CAM-14 | 14 | The Telemachy | I-IV | ithaca · ithaca | Deal Telemachus, Penelope and Athena to the players not at Ogygia. Each round the suitors sit, Ithaca's stores lose 2 cattle, 2 pig and 1 wine. Telemachus and Mentor sail to Pylos, to Sparta and back - three legs; Antinous's ambush waits in the strait home, and a night leg avoids it. Penelope's loom undoes one thing a round. When Odysseus's raft sails, this card is done. | The herds. |
+| CAM-15 | 15 | The Raft and Poseidon's Storm | V | scheria | Five legs towards Scheria on the raft, no discovery rolls. Then Poseidon: the raft is wrecked. Odysseus swims three rounds, losing 1 health each; Ino's veil keeps him from drowning whatever he rolls. He lands on Scheria's shore with what health is left and nothing else. He arrives naked. | The raft. 3 health. |
+| CAM-16 | 16 | Nausicaa and the Phaeacians | VI-VIII, XIII | phaeacia · scheria | Deal Nausicaa: she brings Odysseus to Phaeacia, where he is fed, clothed and rested free - full health. He tells the tale: every player names one card of Act I aloud, in order. The Phaeacians give 100 coin in gifts and a ship: Odysseus lands on Ithaca next leg, asleep, with no discovery roll. | None. This is what a host is for. |
+| CAM-17 | 17 | The Swineherd's Hut | XIII-XVI | eumaeus-steading · ithaca | Odysseus is disguised: until the Bow card nobody but Athena may name him, and he takes no gift. Eumaeus hosts him: mend 2 health a round, free. Telemachus arrives - the Telemachy players join here, and Eumaeus is dealt to whoever has no card. The plan: Telemachus empties the hall's kit slots of every weapon, and the party goes down to the town. | None. |
+| CAM-18 | 18 | A Beggar in his own Hall | XVII-XX | ithaca · ithaca | Deal Antinous onto the encounter board: the hall is his, and he rolls a third red die. Odysseus takes 1 wound from the stool and may not strike back. Fight Irus - strength 2, armour 0 - for the suitors: win, and Antinous cannot have the beggar thrown out. Eurycleia knows him and nobody says so. Penelope sets the contest: turn the Bow card. | 1 health. |
+| CAM-19 | 19 | The Bow and the Axes | XXI | ithaca · ithaca | Each suitor fails in turn, with no roll. Telemachus may try: one blue die, and a 6 strings it - Homer's Telemachus stopped himself. Odysseus strings the bow with no roll and shoots the axes: he takes up the bow (weapon, battle 2) and drops the disguise. Eumaeus bars the doors. Turn the Slaughter. | None. |
+| CAM-20 | 20 | The Slaughter of the Suitors | XXII | ithaca · ithaca | Antinous dies to the first arrow: put him away. The hall is then one monster - strength 5, armour 1, health 14 - rolling a third red die until Melanthius is caught by a blue roll of 7 or more from any character. Odysseus, Telemachus, Eumaeus and Mentor fight in turn; Mentor may once turn one red die to a 1. At 0 health the suitors are dead. | Whatever the hall takes. |
+| CAM-21 | 21 | The Bed of Olive-wood | XXIII | ithaca · ithaca | Penelope's test: her player says what the secret of the bed is, and Odysseus's answers it. No roll. The house is whole: every character in Ithaca is at full health, and Penelope's loom is put away. One card remains. | None. |
+| CAM-22 | 22 | Laertes' Orchard and the Peace | XXIV | laertes-farm · ithaca | One leg to Laertes' farm, no discovery. Odysseus names the trees - 13 pear, 10 apple, 40 fig, 50 vines - and Laertes knows him. The fathers come: one battle exchange against strength 4, armour 1, and then Athena ends it whoever was winning. Odysseus is home. The campaign is won. | None. It is over. |
+
+#### The story, chapter by chapter
+
+What the source tells at each chapter, and the one thing to take from it. Read the
+`told` aloud when the card is turned.
+
+**1. Twelve Ships from Troy** *(The Odyssey, book IX)*
+
+Troy has fallen after ten years of siege, and Odysseus sails for Ithaca with twelve ships and the men of the islands. It is the first year of a voyage that will take ten. Homer does not begin here: the poem opens on Ithaca in the tenth year, and everything from Troy to Calypso is told by Odysseus himself, in one night, at the court of the Phaeacians - Books IX to XII.
+
+*To take away:* The Odyssey is a nostos - a homecoming poem - and its first word is 'man': the poem is about the man before it is about the voyage.
+
+**2. The Cicones at Ismarus** *(The Odyssey, book IX)*
+
+The fleet's first landfall is Ismarus in Thrace, city of the Cicones, allies of Troy. Odysseus sacks it and shares out the spoil; the crews will not leave when he tells them to, and feast on the beach while the Cicones fetch their inland kin, who come at dawn 'thick as leaves and flowers in spring'. The Greeks are driven to the ships and lose six men from every ship. One thing is saved from Ismarus: Maron, priest of Apollo, whom Odysseus spared, gives him twelve jars of a red wine so strong it takes twenty parts of water to one.
+
+*Guest-friendship kept.* Maron's wine is a guest-gift for a life spared - the first of the poem's exchanges, and the one that saves Odysseus in the cave.
+*To take away:* Homer counts losses exactly: six men from each of twelve ships. The crew's refusal to leave when told is the first of many.
+
+**3. The Storm off Malea** *(The Odyssey, book IX)*
+
+Rounding Cape Malea at the southern tip of the Peloponnese - the last corner before home - the fleet is caught by a north wind that splits the sails to rags. For nine days it is driven south across the open sea, and on the tenth it makes a coast that is on no Greek chart. This is the moment the voyage stops being a journey and becomes the Wanderings.
+
+*To take away:* Malea is a real cape and a real terror to sailors; everything after it is nowhere a map can show. The poem crosses from geography into story here.
+
+**4. The Lotus-Eaters** *(The Odyssey, book IX)*
+
+Odysseus sends three men inland to learn who lives here. The Lotus-Eaters mean no harm: they give the scouts the honey-sweet fruit of the lotus, and whoever eats it forgets his home and wants only to stay and feed on lotus. Odysseus drags the three back to the ships weeping, ties them under the rowing benches, and orders everyone else aboard at once before another man tastes it.
+
+*Guest-friendship kept.* The gentlest hosts in the poem, and dangerous for it: a hospitality that makes you forget home is the opposite of a homecoming.
+*To take away:* The danger of the lotus is not death but forgetting. The poem's whole subject is remembering where you belong.
+
+**5. The Cave of the Cyclops** *(The Odyssey, book IX)*
+
+From the goat island where the fleet waits, Odysseus crosses with twelve men and a skin of Maron's wine to the cave of Polyphemus, son of Poseidon, to see whether the giant keeps guest-friendship. The Cyclops rolls a boulder across the door and eats two men at supper, two at breakfast and two more the next night. Odysseus gives him the wine, names himself 'Nobody', and when the giant sleeps drives a heated olive stake into his one eye. Polyphemus roars for the other Cyclopes, who ask who is hurting him - 'Nobody!' - and go away. At dawn the men escape slung under the bellies of his rams. Sailing off, Odysseus cannot resist shouting his true name, and Polyphemus prays to his father Poseidon that Odysseus come home late, alone, on a stranger's ship, to find trouble in his house. Every word of it is granted.
+
+*Guest-friendship broken.* The host eats his guests; the guest blinds his host and steals his sheep. The poem's clearest picture of what happens when the rule is broken on both sides.
+*To take away:* 'Nobody' - Outis - is the most famous trick in the poem, and the shout of the true name afterwards is the pride that costs ten years.
+
+**6. Aeolus and the Bag of Winds** *(The Odyssey, book X)*
+
+Aeolus, keeper of the winds, hosts the fleet a month on his floating island walled in bronze, and sends Odysseus off with an oxhide bag holding every wind but the west, which blows the fleet nine days to within sight of Ithaca - close enough to see the fires on the shore. Odysseus, who has held the sheet the whole way, sleeps. The crew, sure the bag is gold and silver, open it; the winds burst out and blow the fleet all the way back to Aeolia, where Aeolus refuses to help a man the gods so plainly hate.
+
+*Guest-friendship kept.* Kept a month, and then withdrawn: a host may refuse a man the gods have refused.
+*To take away:* The crew undo Odysseus while he sleeps - here, and again at Thrinacia. Homer makes the same mistake happen twice so that the second time is a judgement.
+
+**7. The Laestrygonians** *(The Odyssey, book X)*
+
+Six days' rowing brings the fleet to Telepylus, the Laestrygonians' city, where the harbour is a cliff-walled basin with a narrow mouth. Eleven captains moor inside; Odysseus alone ties up outside on the rocks. The scouts meet the king's daughter at a spring and are taken to the king, Antiphates, who snatches one of them up and eats him. The Laestrygonians - giants, not men - line the cliffs and smash the ships in the basin with boulders, spearing the crews like fish. Odysseus cuts his cable with his sword and rows for it. Of twelve ships, one is left.
+
+*Guest-friendship broken.* The king eats the herald. The poem pairs this with the Cyclops on purpose: two broken hosts, one blinded and one fled.
+*To take away:* Homer says a man who needed no sleep could earn two wages here, the nights are so short - a northern summer, perhaps, remembered from some sailor's tale.
+
+**8. Circe of Aeaea** *(The Odyssey, book X)*
+
+On Aeaea, Eurylochus leads half the crew to a house in a clearing where wolves and lions fawn like dogs. Circe, daughter of Helios, gives them a drink of cheese, barley, honey and wine, strikes them with her wand, and turns them into pigs. Eurylochus, who waited outside, runs back. Odysseus goes alone; on the way Hermes gives him the herb moly - black root, milk-white flower - so her drug cannot take him. He makes Circe swear an oath, she restores the men younger and handsomer than before, and the crew stays a year in her hall. When at last they ask to go, she says the way home runs through the house of Hades. That night Elpenor, drunk on the roof, falls and breaks his neck, and nobody notices he is gone.
+
+*Guest-friendship broken.* Broken - a hostess who turns guests to pigs - and then kept better than anywhere in the poem: a year at her table and the directions home.
+*To take away:* Eurylochus refuses to go back into the house: the first of his refusals, and the pattern of him. Moly is the only drug in the poem named as a god's gift.
+
+**9. The Land of the Dead** *(The Odyssey, book XI)*
+
+Circe's north wind carries the ship in a single day to the edge of Ocean and the land of the Cimmerians, on whom the sun never shines. At the place she named, Odysseus digs a pit, pours libations, and cuts the throats of a ram and a black ewe; the dead crowd to the blood and he holds them off with his sword until the prophet Tiresias has drunk and spoken: you may come home, if you leave the cattle of the Sun untouched - and if you do not, late, alone, on a stranger's ship, to trouble in your house. Then Elpenor asks for burial and his oar on the grave; Odysseus's mother Anticleia, dead of grief, tells him of Penelope's waiting and Laertes' misery; Agamemnon warns him against wives; Achilles would rather be a living farmhand than king of the dead; Ajax will not speak to him at all.
+
+*To take away:* Homer's dead are at the edge of the world, not under it, and they need blood to speak. Tiresias's prophecy is the plot of the rest of the poem, told in advance.
+
+**10. The Sirens** *(The Odyssey, book XII)*
+
+Circe warns of the Sirens, who sit in a meadow among the bones of the men their song has held, and whose song promises each man all that has happened on the earth. Odysseus stops the crew's ears with beeswax and has himself bound to the mast, ordering that if he begs to be freed they bind him tighter. The Sirens sing to him by name; he strains at the ropes; Perimedes and Eurylochus add more. The ship passes, and the wind drops as if nothing had happened.
+
+*To take away:* Odysseus is the only man who heard the Sirens and lived: the poem's picture of knowledge taken under restraint. Homer gives them two voices, not a chorus.
+
+**11. Scylla and Charybdis** *(The Odyssey, book XII)*
+
+Circe offered the choice: the Wandering Rocks, which no ship but the Argo has passed, or the strait between Scylla - six heads on six long necks in a cave high in the cliff, each with three rows of teeth - and Charybdis, who three times a day sucks down the sea and spews it back. Her counsel: hug Scylla's rock and lose six men rather than the whole ship to Charybdis. Odysseus arms himself anyway, against her advice, and while every eye is on the whirlpool Scylla takes six of his best men off the deck, still calling his name.
+
+*To take away:* 'Between Scylla and Charybdis' - the choice with no clean side - comes from these lines. Circe's advice is to accept the smaller loss, and Odysseus cannot bear to.
+
+**12. The Cattle of the Sun** *(The Odyssey, book XII)*
+
+Odysseus wants to row past Thrinacia, where the cattle of Helios graze, and the crew, led by Eurylochus, refuse: they are exhausted and it is night. They swear not to touch the herds. A south wind then pins them for a month; the provisions run out; and while Odysseus sleeps, Eurylochus persuades the men to kill the best of the cattle - the hides crawl and the meat lows on the spits. Helios demands satisfaction from Zeus. Seven days out the ship is struck by a thunderbolt and every man is drowned but Odysseus, who lashes the mast to the keel and is carried back to Charybdis; he clings to the fig tree over her while she swallows the wreck, and drops onto it when she spews it up. Nine days later he is washed ashore on Ogygia.
+
+*Guest-friendship broken.* Broken by the guests: the cattle were the host's, and the host was a god.
+*To take away:* Homer names this, in the first ten lines of the poem, as the crime that cost the crew their homecoming: 'they ate the cattle of the Sun, and he took from them the day of their return.'
+
+**13. Calypso's Island** *(The Odyssey, book V, VII)*
+
+Calypso, nymph daughter of Atlas, keeps Odysseus on Ogygia for seven years and offers him immortality if he will stay. He spends his days on the shore weeping for home. In the tenth year Athena moves Zeus, and Hermes is sent with the order to let him go. Calypso gives him an axe, an adze and an augur; in four days he builds a raft, and on the fifth she sends him off with a fair wind, provisioned and clothed.
+
+*Guest-friendship kept.* Kept too well: a host who will not let the guest leave is the poem's other way of breaking the rule.
+*To take away:* Odysseus refuses immortality for a mortal wife and a rocky island. Book V is where the poem first shows him, and it shows him weeping.
+
+**14. The Telemachy** *(The Odyssey, book I-IV)*
+
+This is where the poem begins. Athena, as the stranger Mentes and then as Mentor, finds Telemachus among a hundred and eight suitors who have camped three years in his father's hall, eating the herds and courting Penelope. She has held them off by weaving a shroud for old Laertes by day and unpicking it by night, until a maid betrayed her. Athena sends Telemachus to Pylos, to old Nestor, and to Sparta, to Menelaus and Helen, for news; Menelaus tells him Odysseus lives, held by Calypso. The suitors set an ambush for his ship on the way home. He comes home by another way.
+
+*Guest-friendship broken.* Guests who never leave and eat the house: the suitors break the rule from the guest's side, and the poem never forgives it.
+*To take away:* Homer opens in the middle - in medias res - in the tenth year. The first four books belong to the son; the father does not appear until Book V.
+
+**15. The Raft and Poseidon's Storm** *(The Odyssey, book V)*
+
+Seventeen days Odysseus steers by the Bear, keeping it on his left as Calypso taught him, and on the eighteenth he sees the hills of Scheria. Poseidon, coming back from the Ethiopians, sees him too, and raises every wind at once. The raft is broken. The sea-nymph Ino gives him her veil to tie about his chest; two days and two nights he swims; Athena calms a river mouth for him and he crawls ashore, throws the veil back into the sea as he promised, and sleeps under two olive bushes in a bed of leaves.
+
+*To take away:* Poseidon's grudge is the Cyclops's prayer being answered, card by card. Odysseus's navigation by the Bear is the oldest sailing direction in Greek.
+
+**16. Nausicaa and the Phaeacians** *(The Odyssey, book VI-VIII, XIII)*
+
+Athena sends Nausicaa, the king's daughter, to wash clothes at the river mouth; the girls' ball wakes the sleeper, and Odysseus, naked and holding a branch, speaks to her so carefully that she gives him clothes and shows him the road to the palace of Alcinous and Arete. The Phaeacians are the poem's perfect hosts: a feast, the games, the bard Demodocus, who sings of Troy until Odysseus weeps and is asked his name - and then, in Books IX to XII, he tells them everything on the cards before this one. They load him with gifts and carry him to Ithaca in a night, asleep on the deck. Poseidon turns their ship to stone in sight of its own harbour.
+
+*Guest-friendship kept.* The poem's model of guest-friendship: fed before he is asked his name, given gifts, carried home.
+*To take away:* Everything from card 1 to card 12 is told here, by Odysseus, in a single night. This is the frame the poem hangs on, and why the wanderings are in his voice.
+
+**17. The Swineherd's Hut** *(The Odyssey, book XIII-XVI)*
+
+Odysseus wakes on a shore he does not know. Athena, disguised as a shepherd, tells him it is Ithaca, hides his treasure in a cave, and turns him into an old beggar. She sends him to Eumaeus, the swineherd, loyal for twenty years, who feeds him without asking his name. Telemachus comes to the hut on his way home from Sparta; Athena restores Odysseus's looks for a moment, and father and son, alone, weep and plan: he will go to the hall as a beggar, and Telemachus must hide the weapons.
+
+*Guest-friendship kept.* Kept by the poorest man in the poem, who feeds a beggar before asking who he is.
+*To take away:* The second half runs on recognitions - the son, the dog, the nurse, the wife, the father - each by its own token. Athena makes them possible and never makes them for him.
+
+**18. A Beggar in his own Hall** *(The Odyssey, book XVII-XX)*
+
+At the gate the old dog Argos, bred by Odysseus twenty years before and left on a dungheap, knows him, wags his tail, and dies. In the hall the suitors mock the beggar; Antinous throws a footstool. Odysseus boxes the beggar Irus for the suitors' sport and wins. That night Penelope questions the stranger, who says he has seen her husband; the old nurse Eurycleia, washing his feet, finds the boar's scar on his thigh and knows him, and he silences her. Penelope announces the contest of the bow.
+
+*Guest-friendship broken.* A beggar at the door is under the protection of Zeus, and the suitors throw furniture at him.
+*To take away:* Argos is the poem's smallest recognition and the one most readers remember. The scar is the token that will name Odysseus twice more.
+
+**19. The Bow and the Axes** *(The Odyssey, book XXI)*
+
+Penelope brings out the great bow of Odysseus, the gift of Iphitus, which he left at home when he sailed for Troy, and twelve axes: she will marry the man who can string the bow and shoot through the twelve axe-heads in a row. Telemachus nearly strings it and stops at his father's glance. Suitor after suitor fails, even warming the bow with fat. The beggar asks his turn; the suitors are outraged; Penelope insists; Telemachus sends her upstairs. Odysseus strings it as easily as a bard strings a lyre, plucks it so that it sings like a swallow, and sends the arrow through all twelve.
+
+*To take away:* The bow is a token like the scar and the bed: only the man it belongs to can use it, which is the whole of the test.
+
+**20. The Slaughter of the Suitors** *(The Odyssey, book XXII)*
+
+Odysseus's first arrow takes Antinous through the throat as he lifts his cup. He names himself. Eurymachus offers restitution and is refused; the suitors fight with tables for shields. The goatherd Melanthius arms them from the storeroom and is caught; Athena, as Mentor, rallies Odysseus and then, from the rafters in the shape of a swallow, turns the suitors' spears aside. When the arrows run out the four - Odysseus, Telemachus, Eumaeus and the cowherd Philoetius - fight with spears until every suitor is dead. Only the bard and the herald are spared. The twelve faithless maids are hanged, and Melanthius is mutilated.
+
+*Guest-friendship broken.* The answer to three years of broken guest-right. The poem does not soften it, and neither does this card.
+*To take away:* Homer's justice here is absolute and unsettling - the maids and Melanthius as much as the suitors. Readers have argued about Book XXII for two and a half thousand years.
+
+**21. The Bed of Olive-wood** *(The Odyssey, book XXIII)*
+
+Eurycleia wakes Penelope, who will not believe her. Odysseus, bathed and made handsome by Athena, waits; Penelope tests him: she orders the nurse to move the great bed out of the bedroom for him. Odysseus flares up - that bed cannot be moved; he built it himself around a living olive tree rooted in the floor, and only the two of them and one maid know it. Penelope's knees give way: she has her proof. Athena holds back the dawn so that they can talk the whole night through.
+
+*Guest-friendship kept.* A home received: the guest is the host at last.
+*To take away:* Homer makes Penelope the equal of Odysseus in cunning. She tests him with a trick, as he tested everyone else, and the poem names them both 'of many turns'.
+
+**22. Laertes' Orchard and the Peace** *(The Odyssey, book XXIV)*
+
+Hermes leads the suitors' souls down to the asphodel meadow, where Agamemnon hears from them how Odysseus came home. Odysseus goes out to the farm where old Laertes digs among his trees in rags, and tests his father too - then proves himself by the scar and by naming the trees Laertes gave him as a boy: thirteen pear, ten apple, forty fig, fifty rows of vines. The suitors' fathers, led by Antinous's, arm and come against them; Laertes kills the first; and Zeus and Athena stop the fight before it becomes a war. Athena makes peace between them, and the poem ends.
+
+*Guest-friendship kept.* The poem closes on a peace sworn between hosts and guests of one island.
+*To take away:* The Odyssey ends not with the slaughter but with a peace: its last lines are Athena's, and the last word of the poem is hers.
+
+#### What the campaign teaches
+
+- The order of the voyage, place by place, with the book of the poem each belongs to.
+- That Homer tells it out of order: the poem opens on Ithaca in the tenth year (Books I-IV, the Telemachy), and the wanderings from Troy to Calypso are Odysseus's own tale, told in one night at the Phaeacian court (Books IX-XII).
+- Xenia - guest-friendship, the duty of host to stranger and stranger to host - is the moral measure of every place: Maron and Aeolus and the Phaeacians keep it, the Cyclops and the Laestrygonians and the suitors break it, and the poem judges each of them by it.
+- Odysseus wins by wit before strength - 'Nobody', the wax, the disguise, the bed - and loses by pride: the shout from the ship is what buys Poseidon's grudge and the ten years.
+- Why every companion dies and Odysseus does not: Homer names the cattle of the Sun, in his first ten lines, as the crime that cost the crew their homecoming.
+- The recognitions of the second half - the son, the dog, the nurse, the wife, the father - each by its own token, and that Penelope tests her husband with a trick as he tested everyone else.
 
 ## The elements
 

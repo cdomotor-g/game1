@@ -357,6 +357,12 @@
       "back": { "word": "QUESTS", "motif": "compass", "ink": "ochre" }
     },
     {
+      "$comment": "The CAMPAIGN deck: a storyline read in ORDER, never shuffled, one card per chapter. It is dealt from data/campaigns.json `cards`, and every card there names the campaign it belongs to; the first campaign is Homer's Odyssey. The card prints the chapter's rule and its cost, with the story as its source tells it across the panel, and the book of the poem in the kicker - because the deck is there to teach the story as much as to play it. A campaign card is neither accepted nor declined, which is what makes it not a quest; and it is drawn on the same wide page the quests and the events are, because a chapter is a PLACE seen from the road - the approach to Circe's house, the cliff over the harbour of the Laestrygonians - and the player is the one arriving.",
+      "id": "campaign", "name": "Campaign", "prefix": "CAM", "source": "campaigns.json",
+      "plateId": "campaign-{id}", "promptFile": "campaigns.md", "plateFormat": "A4 landscape, 3:2", "minting": true,
+      "back": { "word": "CAMPAIGN", "motif": "rayed", "ink": "verdigris" }
+    },
+    {
       "prefix": "ITM",
       "storyRail": true,
       "plateId": "item-{id}",

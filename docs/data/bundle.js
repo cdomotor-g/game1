@@ -201,6 +201,13 @@ window.GAME_DATA = {
         "summary": "Building tiles: hex pieces cut so one cell is a mini-map cell, which is a world-map hex. How many cells a building takes is worked out from its own numbers through the ground model and the ladder here - it is never written on the building. The shapes it is drawn into are components.json buildingTile."
       },
       {
+        "key": "campaigns",
+        "file": "campaigns.json",
+        "collection": "campaigns",
+        "idField": "id",
+        "summary": "The two ways to sit down at the table - free play and campaign - the campaigns themselves, and the CAMPAIGN deck: a storyline read in order rather than shuffled. The first is Homer's Odyssey. A campaign brings characters, monsters and a map with it, each a full citizen of its own deck and usable in free play; only the order is the campaign's."
+      },
+      {
         "key": "graph",
         "file": "graph.json",
         "collection": "nodes",
@@ -479,7 +486,21 @@ window.GAME_DATA = {
         {
           "from": "characters",
           "path": "characters[].people",
-          "to": "peoples"
+          "to": "peoples",
+          "allow": [
+            "immortal"
+          ],
+          "$allowNote": "An immortal is not a people: no worker type, no profession, no town. Circe, Calypso and Athena are characters and nothing else, so the word is allowed here the way `mounted` is allowed as a vehicle mode - a value the check knows and no file owns."
+        },
+        {
+          "from": "characters",
+          "path": "characters[].campaign",
+          "to": "campaigns"
+        },
+        {
+          "from": "monsters",
+          "path": "monsters[].campaign",
+          "to": "campaigns"
         },
         {
           "from": "characters",
@@ -529,6 +550,51 @@ window.GAME_DATA = {
             "mounted",
             "any"
           ]
+        },
+        {
+          "from": "campaigns",
+          "path": "cards[].campaign",
+          "to": "campaigns"
+        },
+        {
+          "from": "campaigns",
+          "path": "cards[].meets.characters[]",
+          "to": "characters"
+        },
+        {
+          "from": "campaigns",
+          "path": "cards[].meets.monsters[]",
+          "to": "monsters"
+        },
+        {
+          "from": "campaigns",
+          "path": "campaigns[].monsters[]",
+          "to": "monsters"
+        },
+        {
+          "from": "campaigns",
+          "path": "campaigns[].cast.odysseus",
+          "to": "characters"
+        },
+        {
+          "from": "campaigns",
+          "path": "campaigns[].cast.heroes.wanderings[]",
+          "to": "characters"
+        },
+        {
+          "from": "campaigns",
+          "path": "campaigns[].cast.heroes.household[]",
+          "to": "characters"
+        },
+        {
+          "from": "campaigns",
+          "path": "campaigns[].cast.hosts[]",
+          "to": "characters"
+        },
+        {
+          "from": "campaigns",
+          "path": "campaigns[].cast.adversaries[]",
+          "to": "characters"
         }
       ]
     }
@@ -12448,6 +12514,127 @@ window.GAME_DATA = {
         },
         "domesticated": "Two full winters at a pasture on tundra, fed 4 meat a round the whole time. Then it flies cargo: 12 bulk, 6 hexes a leg, over any terrain and any weather, and no wind roll. It will not fight, and it will not go south of the frost line.",
         "story": "White-scaled, wingless at rest and forty feet of it, riding the cold air off the ice the way a gull rides a cliff. It does not hoard gold - it hoards weather, or the herders think so, because where it winters the frost comes early and stays. Two families in the north have raised one from the shell. Neither will tell you how, and both are very rich."
+      },
+      {
+        "id": "polyphemus",
+        "cardCode": "MON-15",
+        "name": "Polyphemus the Cyclops",
+        "element": "earth",
+        "campaign": "homers-odyssey",
+        "strength": 7,
+        "armour": 2,
+        "pace": 3,
+        "health": 14,
+        "manaYield": 5,
+        "unique": true,
+        "terrains": [
+          "hills",
+          "mountain",
+          "grassland"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "special": "One eye. Put to sleep - on wine, or by a spell - he is blinded by a blue roll of 8 or more from any figure in his hex, and a blinded Cyclops is not slain: he keeps his hex and his sheep, and a party may leave him at any pace.",
+        "story": "A shepherd the size of a hill, son of Poseidon, who milks his ewes and sets his cheeses in racks and does not hold with the gods or with guests. Homer's Odysseus put out his eye with an olive stake and told him his name was Nobody. He is still on the island; ask any goat."
+      },
+      {
+        "id": "laestrygonian",
+        "cardCode": "MON-16",
+        "name": "Laestrygonian",
+        "element": "earth",
+        "campaign": "homers-odyssey",
+        "strength": 6,
+        "armour": 1,
+        "pace": 4,
+        "health": 12,
+        "manaYield": 3,
+        "terrains": [
+          "hills",
+          "mountain"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "special": "Stones from the cliff: the first exchange of any battle is at range, and nobody's gear counts on either side. A vehicle in the same hex takes the difference too.",
+        "story": "Not giants of the story-book kind - they have a king, a city, a spring where the daughters draw water - and every one of them can lift a rock that a crane could not. Eleven of Odysseus's twelve ships went down in their harbour under a rain of them, and the crews were speared like fish."
+      },
+      {
+        "id": "scylla",
+        "cardCode": "MON-17",
+        "name": "Scylla",
+        "element": "water",
+        "campaign": "homers-odyssey",
+        "strength": 6,
+        "armour": 3,
+        "pace": 5,
+        "health": 14,
+        "manaYield": 4,
+        "unique": true,
+        "terrains": [
+          "deep-water",
+          "shallow-water",
+          "mountain"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "special": "Six heads. She is never fought to a finish from a deck: a hull passing her rock loses six crew - a vehicle takes 2 hull, a fleet 1 pace - with no roll offered, and fleeing past her is always allowed at that price.",
+        "story": "Twelve feet, six necks, six heads each with three rows of teeth, in a cave halfway up a cliff too smooth to climb, yelping like a new-born puppy. Circe's advice was to accept her: six men to Scylla, or the whole ship to Charybdis across the strait. Homer's Odysseus armed himself anyway, and lost six."
+      },
+      {
+        "id": "charybdis",
+        "cardCode": "MON-18",
+        "name": "Charybdis",
+        "element": "water",
+        "campaign": "homers-odyssey",
+        "strength": 7,
+        "armour": 3,
+        "pace": 1,
+        "health": 14,
+        "manaYield": 4,
+        "unique": true,
+        "terrains": [
+          "deep-water",
+          "shallow-water"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "special": "Not a thing to fight. Three times a day she swallows the strait and spews it back: a hull in her hex rolls two red dice, and on 7 or more it is lost with all hands. A character clings to the fig tree over her on a blue roll of 8 or more, and drops onto the wreckage when it comes up.",
+        "story": "A whirlpool with an appetite, under a fig tree in full leaf on the rock above her. Nothing swims it. Odysseus passed her twice: once by choosing Scylla instead, and once alone on a mast and a keel, hanging from the fig tree like a bat until she gave the timbers back."
+      },
+      {
+        "id": "sirens",
+        "cardCode": "MON-19",
+        "name": "The Sirens",
+        "element": "air",
+        "campaign": "homers-odyssey",
+        "strength": 2,
+        "armour": 0,
+        "pace": 1,
+        "health": 4,
+        "manaYield": 3,
+        "unique": true,
+        "terrains": [
+          "grassland",
+          "shallow-water"
+        ],
+        "options": {
+          "enslave": false,
+          "befriend": false,
+          "domesticate": false
+        },
+        "special": "The song. Any figure within a hex that can hear them goes to them and is lost. Wax in the ears - 1 honey, spent - or being bound to a mast by another figure is the only proof. A party that passes deaf has beaten them; nobody has ever fought them.",
+        "story": "Two of them, in a meadow of flowers heaped with the bones and the shrivelled skin of the men who listened. They do not chase and they do not fly. They sing that they know everything that ever happened on the wide earth, and they sing it to you by name. Odysseus is the only man who heard it and lived, tied to the mast and begging to be untied."
       }
     ]
   },
@@ -12794,6 +12981,289 @@ window.GAME_DATA = {
           "talisman-bone-charm"
         ],
         "story": "Every fen village has a Mother Keswick and this is the one the others were named after. She trades in warts cursed, weather guessed and truths nobody thanked her for, and her bone charm was old when the Reach was young."
+      },
+      {
+        "id": "odysseus",
+        "cardCode": "CHR-09",
+        "name": "Odysseus",
+        "people": "human",
+        "calling": "King of Ithaca",
+        "campaign": "homers-odyssey",
+        "strength": 4,
+        "health": 12,
+        "startingGold": 40,
+        "manaCapacity": 0,
+        "traits": [
+          "Man of many turns: once per round, re-roll one of his blue dice and keep the second roll.",
+          "Nobody: once per game, after a battle, he gives a false name - the monster does not pursue, whatever its pace. (Book IX.)"
+        ],
+        "startsWith": [
+          "sword"
+        ],
+        "story": "Sacker of cities, son of Laertes, husband of Penelope, and the only man who came home from Troy the long way. Homer's word for him is polytropos - of many turns - and every turn is on the cards that follow."
+      },
+      {
+        "id": "eurylochus",
+        "cardCode": "CHR-10",
+        "name": "Eurylochus",
+        "people": "human",
+        "calling": "Second in command",
+        "campaign": "homers-odyssey",
+        "strength": 4,
+        "health": 11,
+        "startingGold": 25,
+        "manaCapacity": 0,
+        "traits": [
+          "Will not go in: he never enters a hall, cave or wood the party has not seen someone come out of, and so is never the first to take a wound.",
+          "Mutineer: when the crew is asked, his voice counts double. He talked them into the cattle of the Sun."
+        ],
+        "startsWith": [
+          "sword"
+        ],
+        "fate": "Drowned with the last ship off Thrinacia, Book XII.",
+        "story": "Odysseus's kinsman and his loudest doubter. He waits outside Circe's door, refuses to go back for the men she turned, and on Thrinacia argues the crew into the one thing they swore not to do."
+      },
+      {
+        "id": "polites",
+        "cardCode": "CHR-11",
+        "name": "Polites",
+        "people": "human",
+        "calling": "Dearest of the companions",
+        "campaign": "homers-odyssey",
+        "strength": 3,
+        "health": 10,
+        "startingGold": 20,
+        "manaCapacity": 0,
+        "traits": [
+          "First through the door: +1 on any roll to befriend.",
+          "Steady at the oar: the fleet's pace never falls below 3 while he lives."
+        ],
+        "startsWith": [],
+        "fate": "Drowned with the last ship off Thrinacia, Book XII.",
+        "story": "The man Odysseus calls the dearest and most trusted of his companions - and the one who, hearing Circe singing at her loom, says they should call out to her. He goes in first, and comes out a pig, and is a man again by nightfall."
+      },
+      {
+        "id": "perimedes",
+        "cardCode": "CHR-12",
+        "name": "Perimedes",
+        "people": "human",
+        "calling": "Companion",
+        "campaign": "homers-odyssey",
+        "strength": 3,
+        "health": 10,
+        "startingGold": 20,
+        "manaCapacity": 0,
+        "traits": [
+          "Steady hands: he ties the knots, and a bound figure cannot free itself while Perimedes holds the rope.",
+          "Holds the victims: at any sacrifice, the party's offering counts as one more."
+        ],
+        "startsWith": [
+          "coil-of-rope"
+        ],
+        "fate": "Drowned with the last ship off Thrinacia, Book XII.",
+        "story": "Named twice by Homer and both times with his hands full: he holds the sheep at the pit in the land of the dead, and with Eurylochus he adds rope to Odysseus at the mast when the Sirens sing."
+      },
+      {
+        "id": "elpenor",
+        "cardCode": "CHR-13",
+        "name": "Elpenor",
+        "people": "human",
+        "calling": "Youngest of the crew",
+        "campaign": "homers-odyssey",
+        "strength": 2,
+        "health": 8,
+        "startingGold": 10,
+        "manaCapacity": 0,
+        "traits": [
+          "Not the bravest in a fight nor the steadiest of head - Homer's words: -1 on his blue total, but nobody looks at him twice, and a monster that has a choice never picks him.",
+          "Asked for a burial: his oar planted on his grave, and the party goes back for it."
+        ],
+        "startsWith": [],
+        "fate": "Fell from Circe's roof the night before the ship sailed for the dead, Book X. Buried, Book XII.",
+        "story": "He climbed onto Circe's roof to sleep off the wine and, woken by the noise of leaving, walked off it. Nobody missed him. He is the first shade Odysseus meets at the edge of the world, unburied and asking to be."
+      },
+      {
+        "id": "antiphus",
+        "cardCode": "CHR-14",
+        "name": "Antiphus",
+        "people": "human",
+        "calling": "Companion",
+        "campaign": "homers-odyssey",
+        "strength": 4,
+        "health": 10,
+        "startingGold": 15,
+        "manaCapacity": 0,
+        "traits": [
+          "Spearman: +1 on his blue total against anything of strength 5 or more.",
+          "Egyptius's son: an old man in Ithaca is waiting for him, and he knows it - he never abandons a companion."
+        ],
+        "startsWith": [
+          "pike"
+        ],
+        "fate": "Eaten by the Cyclops in his cave, Book IX; named in Book II by the father who waits for him.",
+        "story": "Homer names him in Ithaca before he names him in the cave: the son of old Egyptius, who stands up in the assembly and does not know his boy was the Cyclops's last supper. The poem is full of people waiting for someone on these cards."
+      },
+      {
+        "id": "telemachus",
+        "cardCode": "CHR-15",
+        "name": "Telemachus",
+        "people": "human",
+        "calling": "Prince of Ithaca",
+        "campaign": "homers-odyssey",
+        "strength": 3,
+        "health": 10,
+        "startingGold": 60,
+        "manaCapacity": 0,
+        "traits": [
+          "Athena's charge: +1 on any roll while a character with the Mentor trait stands in his hex.",
+          "Coming of age: the first time he wounds an enemy, add 1 strength for the rest of the game - the board has the room."
+        ],
+        "startsWith": [
+          "sword"
+        ],
+        "story": "A boy when his father sailed and a young man of twenty when the poem opens, in a hall full of men eating his inheritance. The first four books are his: Athena sends him to Pylos and Sparta to find out whether he has a father, and he comes back with a spine."
+      },
+      {
+        "id": "penelope",
+        "cardCode": "CHR-16",
+        "name": "Penelope",
+        "people": "human",
+        "calling": "Queen of Ithaca",
+        "campaign": "homers-odyssey",
+        "strength": 2,
+        "health": 9,
+        "startingGold": 90,
+        "manaCapacity": 0,
+        "traits": [
+          "The loom: once per round, undo one thing made this round - a die, a market roll, a suitor's demand - and nobody may object. Three years the shroud was woven by day and unpicked by night.",
+          "The house is hers: resting in Ithaca costs nothing and mends 1 health while she holds it."
+        ],
+        "startsWith": [
+          "fine-robes"
+        ],
+        "story": "Twenty years she kept a house against a hundred and eight men who wanted it, with a shroud, a promise and a test with a bow. Homer calls her periphron - circumspect - and gives her the last trick in the poem: the bed."
+      },
+      {
+        "id": "eumaeus",
+        "cardCode": "CHR-17",
+        "name": "Eumaeus",
+        "people": "human",
+        "calling": "Swineherd",
+        "campaign": "homers-odyssey",
+        "strength": 3,
+        "health": 11,
+        "startingGold": 15,
+        "manaCapacity": 0,
+        "traits": [
+          "Guest-friendship: any character resting at his steading mends 2 health, free, and is not asked their name.",
+          "Keeps the pigs: starts with 4 pig in the sty, and sows and herds count as his workers."
+        ],
+        "startsWith": [
+          "boar-spear"
+        ],
+        "story": "A king's son stolen as a child and sold to Laertes, who has kept Odysseus's swine for twenty years and speaks of his lost master as a brother. The poet talks to him directly - 'you, swineherd Eumaeus' - and to nobody else in the poem."
+      },
+      {
+        "id": "nausicaa",
+        "cardCode": "CHR-18",
+        "name": "Nausicaa",
+        "people": "human",
+        "calling": "Princess of the Phaeacians",
+        "campaign": "homers-odyssey",
+        "strength": 2,
+        "health": 9,
+        "startingGold": 70,
+        "manaCapacity": 0,
+        "traits": [
+          "Hospitality: a stranger she brings to a settlement is fed, clothed and given a bed at no cost.",
+          "The washing: cloth and clothing in her party never take wear."
+        ],
+        "startsWith": [
+          "fine-robes"
+        ],
+        "story": "She went to the river mouth to wash the household linen because a goddess told her to in a dream, and found a naked man asleep under an olive bush. She did not run. Odysseus's speech to her is the most careful thing he says in the poem."
+      },
+      {
+        "id": "circe",
+        "cardCode": "CHR-19",
+        "name": "Circe",
+        "people": "immortal",
+        "calling": "Enchantress of Aeaea",
+        "campaign": "homers-odyssey",
+        "strength": 3,
+        "health": 12,
+        "startingGold": 30,
+        "manaCapacity": 6,
+        "manaNote": "Innate. A daughter of Helios holds her own.",
+        "traits": [
+          "Wand and drug: once per round, spend 2 mana to turn one figure in her hex into a pig until the round ends - it cannot fight, carry or speak. A figure holding moly is proof against it.",
+          "Knows the way: a party she counsels ignores one discovery roll on its next leg."
+        ],
+        "startsWith": [
+          "staff"
+        ],
+        "story": "Daughter of the Sun, singing at a great loom in a house in a clearing, with wolves and lions at the door that were men once. She keeps Odysseus's crew a year at her table, and then tells him, exactly, the way home and what it will cost."
+      },
+      {
+        "id": "calypso",
+        "cardCode": "CHR-20",
+        "name": "Calypso",
+        "people": "immortal",
+        "calling": "Nymph of Ogygia",
+        "campaign": "homers-odyssey",
+        "strength": 2,
+        "health": 12,
+        "startingGold": 20,
+        "manaCapacity": 5,
+        "manaNote": "Innate. The daughter of Atlas needs no talisman.",
+        "traits": [
+          "The cave on Ogygia: a character resting there mends 2 health a round - and may not leave the island while she wishes it, unless a god says otherwise.",
+          "Raft-wright: she gives axe, adze and augur, and a character builds a raft - run as a barge, hull 4 - in one round."
+        ],
+        "startsWith": [],
+        "story": "Her name means the hider. Seven years she kept Odysseus in a cave among alders and cypresses where the sea-birds nest, and offered him immortality to stay. He sat on the shore and wept. When Hermes brought the order she obeyed it, and sent him off provisioned and clothed."
+      },
+      {
+        "id": "athena",
+        "cardCode": "CHR-21",
+        "name": "Athena",
+        "people": "immortal",
+        "calling": "Goddess, as Mentor",
+        "campaign": "homers-odyssey",
+        "strength": 4,
+        "health": 14,
+        "startingGold": 10,
+        "manaCapacity": 8,
+        "manaNote": "Innate. A goddess is her own vessel.",
+        "traits": [
+          "Mentor: one character in her hex adds 1 to every roll.",
+          "Disguise: once per round she may make one character a beggar, a shepherd or a stranger - nobody can name them until she chooses."
+        ],
+        "startsWith": [
+          "staff"
+        ],
+        "story": "Grey-eyed, and on Odysseus's side from the first council of the gods to the last line of the poem. She comes as the sea-captain Mentes, as old Mentor, as a girl with a water jar, as a shepherd boy, as a swallow in the rafters - and only Odysseus ever sees through her, which is why she likes him."
+      },
+      {
+        "id": "antinous",
+        "cardCode": "CHR-22",
+        "name": "Antinous",
+        "people": "human",
+        "calling": "Chief of the suitors",
+        "campaign": "homers-odyssey",
+        "strength": 4,
+        "health": 11,
+        "startingGold": 80,
+        "manaCapacity": 0,
+        "traits": [
+          "The hall behind him: in Ithaca's hall he rolls a third red die and keeps the best two. There are a hundred and eight of them.",
+          "Throws a stool: in the first exchange of any battle he is in, the other side counts no armour."
+        ],
+        "startsWith": [
+          "sword"
+        ],
+        "fate": "Shot through the throat as he lifted his cup, Book XXII: the first suitor to die.",
+        "story": "The worst of the suitors and the loudest: he plans the ambush for Telemachus, throws the footstool at the beggar, and refuses even to let the beggar try the bow. His father Eupeithes leads the suitors' kin against Odysseus in the last book, and dies of it."
       }
     ]
   },
@@ -13750,6 +14220,22 @@ window.GAME_DATA = {
           "word": "QUESTS",
           "motif": "compass",
           "ink": "ochre"
+        }
+      },
+      {
+        "$comment": "The CAMPAIGN deck: a storyline read in ORDER, never shuffled, one card per chapter. It is dealt from data/campaigns.json `cards`, and every card there names the campaign it belongs to; the first campaign is Homer's Odyssey. The card prints the chapter's rule and its cost, with the story as its source tells it across the panel, and the book of the poem in the kicker - because the deck is there to teach the story as much as to play it. A campaign card is neither accepted nor declined, which is what makes it not a quest; and it is drawn on the same wide page the quests and the events are, because a chapter is a PLACE seen from the road - the approach to Circe's house, the cliff over the harbour of the Laestrygonians - and the player is the one arriving.",
+        "id": "campaign",
+        "name": "Campaign",
+        "prefix": "CAM",
+        "source": "campaigns.json",
+        "plateId": "campaign-{id}",
+        "promptFile": "campaigns.md",
+        "plateFormat": "A4 landscape, 3:2",
+        "minting": true,
+        "back": {
+          "word": "CAMPAIGN",
+          "motif": "rayed",
+          "ink": "verdigris"
         }
       },
       {
@@ -14979,6 +15465,52 @@ window.GAME_DATA = {
         ]
       },
       {
+        "id": "campaigns",
+        "name": "Campaign",
+        "plate": "a plate from an illustrated edition of a voyage",
+        "palette": "warm ochre, rust red, dusty grey-green, cold slate blue - and the sea a deeper wine-dark slate than anywhere else in the box",
+        "composition": [
+          "A wide landscape plate of ONE place at the moment BEFORE the chapter happens, seen from the sea or from the road at middle distance - the approach, never the event: the cave mouth with the boulder beside it and the goats on the slope, the cliff-walled harbour with a narrow mouth, the house in the clearing with the lions lying at the door, the hall with the axes set in a row. A low horizon in the bottom third and the ground or the water running out to both edges of the page. One plain object that belongs to the chapter is drawn precisely and set where the eye lands - an oxhide bag tied with a silver cord, a jar of wine, an oar planted in a mound, a great bow on a peg - and the rest is the ordinary place it sits in, in ordinary Aegean daylight.",
+          "A black ship with a single square sail and a row of oars is allowed, small, arriving or beached; people are allowed small, distant, at their own work, never the subject and never looking out of the page. No god is drawn and no monster is drawn - the monsters have plates of their own in the bestiary. Bronze Age Greek things where a thing is shown: an olive tree, a rock-cut cistern, a thatched steading, an amphora, a wooden threshold, a stone hearth; never a marble temple, a column or a statue. The tone is a traveller's plate in a printed edition of the poem - here is the place - never a poster and never a vase painting."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no signage, no map lettering, no border rule.",
+        "negative": [
+          "close-up portrait",
+          "face",
+          "facing the viewer",
+          "hero",
+          "heroic pose",
+          "silhouetted hero",
+          "god",
+          "goddess",
+          "monster",
+          "giant",
+          "battle scene",
+          "sunset",
+          "sunburst",
+          "god rays",
+          "epic vista",
+          "greek vase painting",
+          "black-figure",
+          "red-figure",
+          "marble temple",
+          "column",
+          "statue",
+          "toga",
+          "laurel wreath",
+          "map",
+          "cartouche",
+          "compass rose",
+          "signage",
+          "scroll",
+          "wax seal",
+          "magic particles",
+          "storyboard panels",
+          "multiple vignettes",
+          "split scene"
+        ]
+      },
+      {
         "id": "buildingtiles",
         "name": "Building tiles",
         "plate": "a plate from an illustrated surveyor's notebook of buildings",
@@ -15798,6 +16330,731 @@ window.GAME_DATA = {
       "guide": "Three or four of the cheap tier-1 tiles per player, one or two of everything above tier 2, and one of anything marked unique."
     }
   },
+  "campaigns": {
+    "$comment": "The CAMPAIGN system: a storyline laid over the game, and the deck that carries it.\n\nThere are two ways to sit down at this table and this file names both. FREE PLAY is the game as rules.json describes it - any board, every deck shuffled, victory by rules.json victory.conditions. A CAMPAIGN is one story chosen at setup: it names its map, deals its cast, and its cards are read IN ORDER rather than shuffled. Nothing about the economy, the market, travel or battle changes between the two modes; a campaign says where the party is and what happens there, and the same rules resolve it.\n\nA campaign brings things with it - characters, monsters, a map - and every one of them is a full citizen of its own deck. Odysseus is a character card in characters.json with a summary strip like anyone else's, Polyphemus is a monster card in monsters.json with a P box, and the Wine-Dark Sea is a board in data/maps/. Each is tagged `campaign` so the explorer and the annex can say where it came from, and the tag changes nothing about how it plays: a free-play table may draw Scylla on a deep-water hex, or take Circe at setup. The campaign is the only place the ORDER lives.\n\nWHY THE DECK IS ITS OWN. A quest card is accepted or declined; a campaign card is neither, it is read when the story reaches it. The QUESTS deck's staged cards are called 'campaign quests' in quests.json, from before this file existed; they are a quest with stages, taken or left, and they stay what they are. This deck is prefixed CAM.\n\nWHAT A CARD HOLDS. `told` is the story as its source tells it, in a few sentences, and it is the reason the campaign exists - a table that finishes the Odyssey deck should be able to say what happens in the poem, in order, with the book numbers. `play` is what the table DOES, in the vocabulary the rest of the game already has: a leg, a discovery roll, the encounter board, the blue and the red dice. `cost` is what it takes from the party and is printed beside `play`. `lesson` is one thing to take away and is in the rulebook and the explorer. `xenia` names whether guest-friendship - the poem's moral spine - was kept or broken at this place, because a game about trade and hospitality has a rule for it already: an inn, a bed, a gift.\n\nSTAYING TRUE. A card never offers the table a fork the poem did not take. Where Odysseus chose, the card says what he chose and the table does the same; what the dice decide is the price - men lost, health lost, rounds spent - never the outcome. A chapter that goes wrong at the table is replayed from its first line with the losses kept, because the poem has one ending and the table is learning it, not writing it.",
+    "version": "0.1.0",
+    "modes": [
+      {
+        "id": "free-play",
+        "name": "Free play",
+        "summary": "The game as rules.json describes it: any board, every deck shuffled, victory by the three conditions in rules.json victory. Everything a campaign brings - its characters, its monsters, its map - is in the free-play decks too and is exactly what its card says it is.",
+        "setup": "Choose a board. Each player deals or picks a character. Shuffle every deck. Play rules.json victory.gameLengthRounds rounds and score.",
+        "victory": "rules.json victory.conditions - prosperity, industry, network."
+      },
+      {
+        "id": "campaign",
+        "name": "Campaign",
+        "summary": "A storyline laid over the same game. One campaign is chosen at setup; it names its board, deals its cast, and its cards are read in order rather than shuffled. The economy, the market, travel and battle run exactly as in free play; the campaign says where the party is and what happens there. It is played TOGETHER: the table brings the story home or it does not, and nobody scores against anybody.",
+        "setup": "Choose a campaign from `campaigns` below and set out the board it names. Deal its cast as its `cast` says. Sort its cards by `chapter` and stack them face down; the top card is chapter 1. Everything else is a free-play setup.",
+        "victory": "The campaign's own `victory`. rules.json victory.conditions are not scored.",
+        "reading": "A card is turned when the story reaches it - the card before it says when. Read `told` aloud first, then `play`. When the chapter is done, turn the next.",
+        "replay": "A chapter the table fails - Odysseus at 0 health with the story unfinished, a ship lost that the poem does not lose - is replayed from its first line, keeping whatever the fleet and the party have already lost. The story has one ending."
+      }
+    ],
+    "campaigns": [
+      {
+        "id": "homers-odyssey",
+        "name": "Homer's Odyssey",
+        "subtitle": "the ten years' voyage of Odysseus from Troy to Ithaca, in twenty-two cards",
+        "source": {
+          "work": "The Odyssey",
+          "author": "Homer",
+          "composed": "Greek, about the eighth century BC",
+          "books": 24,
+          "note": "Twenty-four books. Any complete translation serves - Lattimore, Fitzgerald, Fagles, Wilson, Lombardo; the card's `books` says where in the poem each chapter is. Numbers on the cards - six men a ship, twelve ships, seven years, a hundred and eight suitors, forty fig trees - are Homer's own."
+        },
+        "summary": "Troy has fallen and Odysseus, king of Ithaca, sails for home with twelve ships. It takes him ten years: the Cicones, the Lotus-Eaters, the Cyclops, Aeolus's winds, the Laestrygonians, Circe, the dead, the Sirens, Scylla and Charybdis, the cattle of the Sun, seven years with Calypso, the Phaeacians - and then Ithaca, where a hundred and eight suitors are eating his house and his wife has held them off for three years with a loom. The deck is the poem in the order it happened; the poem itself starts in the middle.",
+        "teaches": [
+          "The order of the voyage, place by place, with the book of the poem each belongs to.",
+          "That Homer tells it out of order: the poem opens on Ithaca in the tenth year (Books I-IV, the Telemachy), and the wanderings from Troy to Calypso are Odysseus's own tale, told in one night at the Phaeacian court (Books IX-XII).",
+          "Xenia - guest-friendship, the duty of host to stranger and stranger to host - is the moral measure of every place: Maron and Aeolus and the Phaeacians keep it, the Cyclops and the Laestrygonians and the suitors break it, and the poem judges each of them by it.",
+          "Odysseus wins by wit before strength - 'Nobody', the wax, the disguise, the bed - and loses by pride: the shout from the ship is what buys Poseidon's grudge and the ten years.",
+          "Why every companion dies and Odysseus does not: Homer names the cattle of the Sun, in his first ten lines, as the crime that cost the crew their homecoming.",
+          "The recognitions of the second half - the son, the dog, the nurse, the wife, the father - each by its own token, and that Penelope tests her husband with a trick as he tested everyone else."
+        ],
+        "map": "wine-dark-sea",
+        "players": {
+          "min": 1,
+          "max": 5,
+          "note": "One player is always Odysseus. With one player, the companions are run as the poem runs them - by the one voice at the table."
+        },
+        "length": {
+          "rounds": 24,
+          "note": "Homer's ten years in the game's twenty-four rounds. Act I is meant to take about fourteen of them and Act II the rest; the seven years on Ogygia are three rounds, by design."
+        },
+        "acts": [
+          {
+            "id": "wanderings",
+            "name": "Act I - The Wanderings",
+            "books": "IX-XII",
+            "chapters": [
+              1,
+              12
+            ],
+            "summary": "Troy to the wreck off Thrinacia. The players are Odysseus and his named companions; the fleet is twelve ships and then one; every companion the poem loses is put away on the card that loses him, and the player takes up the next."
+          },
+          {
+            "id": "household",
+            "name": "Act II - The Household",
+            "books": "I-VIII, XIII-XXIV",
+            "chapters": [
+              13,
+              22
+            ],
+            "summary": "Ogygia to the peace. Odysseus is alone until Scheria; the other players are the household - Telemachus, Penelope, Athena as Mentor, and then Eumaeus - and play the Telemachy beside his years with Calypso, the way the poem runs the two stories side by side."
+          }
+        ],
+        "cast": {
+          "$comment": "Who is dealt, and when. Every id is a card in characters.json; the campaign is the only place the roles live. A `hero` is a player's card. A `host` is dealt onto the encounter board when its card says so and is run by whoever is to the left of Odysseus's player, exactly as a stranger on the road is (rules.json exploration.discovery.encounter). An `adversary` is the same, and does not mean to help.",
+          "odysseus": "odysseus",
+          "heroes": {
+            "wanderings": [
+              "odysseus",
+              "eurylochus",
+              "polites",
+              "perimedes",
+              "elpenor",
+              "antiphus"
+            ],
+            "household": [
+              "odysseus",
+              "telemachus",
+              "penelope",
+              "athena",
+              "eumaeus"
+            ]
+          },
+          "hosts": [
+            "circe",
+            "calypso",
+            "nausicaa"
+          ],
+          "adversaries": [
+            "antinous"
+          ],
+          "companions": "Deal Odysseus to one player and one companion to each of the others, in deck order - Eurylochus first, because the poem gives him the most to do. A player whose companion is put away takes up the next companion not yet dealt; when none is left, that player plays on as 'a man of the crew' at the human base numbers (peoples.json human) until the act ends. The poem does not name every one of the six hundred, and neither does this.",
+          "handover": "At the Cattle of the Sun every companion is put away and Act II deals the household. Odysseus's player keeps Odysseus throughout."
+        },
+        "monsters": [
+          "polyphemus",
+          "laestrygonian",
+          "scylla",
+          "charybdis",
+          "sirens"
+        ],
+        "fleet": {
+          "$comment": "The one piece of furniture this campaign adds, and it is a piece the table already owns. A spare player board is the FLEET BOARD: its health track counts SHIPS, from twelve, one rung each, because Homer counts the fleet by hull; its pace track is the ROWERS, and it is the party's pace on every sea leg, so a monster met at sea is fled or not by the number on this board. Six men lost from a ship is one rung off the rowers - the poem's losses are exact and the table feels every one of them as a slower ship.",
+          "board": "a spare player board, dealt no card",
+          "tracks": {
+            "health": {
+              "counts": "ships afloat",
+              "from": 12
+            },
+            "pace": {
+              "counts": "the rowers - the party's pace at sea",
+              "from": 6
+            }
+          },
+          "loss": "Six men lost is P -1. A ship lost is H -1 and every companion aboard her. The last ship lost is the end of Act I.",
+          "atSea": "The party moves as one figure on the fleet's pace, by ship over any water hex (travel.json ship). It may not land on a hex the current card does not name unless the card says the sea is open."
+        },
+        "setup": [
+          "Set out the Wine-Dark Sea board (data/maps/wine-dark-sea.json). The party's figure stands at Troy.",
+          "Deal the Act I cast as `cast.companions` says. Set each player board from the card's strip.",
+          "Set the fleet board: H 12, P 6.",
+          "Sort the campaign cards by chapter, face down, chapter 1 on top. Every other deck is shuffled as in free play; the event deck is drawn only when a card says so.",
+          "Ithaca's household stores at setup: 8 cattle, 8 pig, 6 sheep, 6 wine - the herds the suitors will eat. Write them on the ledger under Ithaca."
+        ],
+        "victory": "Chapter 22 is turned and finished: Odysseus stands in Ithaca, the suitors are dead, Penelope has known him by the bed, and Athena has made the peace - within rules.json victory.gameLengthRounds rounds. The table wins together.",
+        "defeat": "The rounds run out with a card unturned. Odysseus does not die in the poem and cannot in the campaign: at 0 health the chapter is replayed (modes.campaign.replay).",
+        "order": {
+          "homer": "I-IV Telemachus and the suitors at Ithaca, Pylos, Sparta · V Calypso, the raft, the storm · VI-VIII Nausicaa and the Phaeacians · IX-XII Odysseus tells the wanderings: Cicones, Lotus-Eaters, Cyclops, Aeolus, Laestrygonians, Circe, the dead, Sirens, Scylla and Charybdis, the cattle of the Sun · XIII-XXIV Ithaca: Eumaeus, the beggar in the hall, the bow, the slaughter, the bed, Laertes and the peace",
+          "deck": "The deck plays the story as it happened, Troy first. Card 16 is the night Odysseus tells cards 1 to 12 to the Phaeacians, and card 14 is where the poem opens - the deck marks both, so the table learns the poem's shape as well as its events."
+        },
+        "freePlay": "Every character and monster here is in its own deck for free play: the Wine-Dark Sea is a board like any other, Circe and Calypso and Athena are characters a player may take at setup, and Scylla is a water monster a discovery roll can turn up on any deep-water hex. Only the order is the campaign's."
+      }
+    ],
+    "cards": [
+      {
+        "id": "odyssey-twelve-ships",
+        "cardCode": "CAM-01",
+        "campaign": "homers-odyssey",
+        "chapter": 1,
+        "act": "wanderings",
+        "name": "Twelve Ships from Troy",
+        "books": "IX",
+        "site": {
+          "region": "troad",
+          "place": "troy"
+        },
+        "told": "Troy has fallen after ten years of siege, and Odysseus sails for Ithaca with twelve ships and the men of the islands. It is the first year of a voyage that will take ten. Homer does not begin here: the poem opens on Ithaca in the tenth year, and everything from Troy to Calypso is told by Odysseus himself, in one night, at the court of the Phaeacians - Books IX to XII.",
+        "play": "Setup. Deal Odysseus and a companion to each player. Stand the party at Troy. On a spare board set the FLEET: H 12 for the ships, P 6 for the rowers. Sail north for Ismarus.",
+        "cost": "None yet.",
+        "meets": {
+          "characters": [],
+          "monsters": []
+        },
+        "xenia": null,
+        "lesson": "The Odyssey is a nostos - a homecoming poem - and its first word is 'man': the poem is about the man before it is about the voyage."
+      },
+      {
+        "id": "odyssey-cicones",
+        "cardCode": "CAM-02",
+        "campaign": "homers-odyssey",
+        "chapter": 2,
+        "act": "wanderings",
+        "name": "The Cicones at Ismarus",
+        "books": "IX",
+        "site": {
+          "region": "thrace",
+          "place": "ismarus"
+        },
+        "told": "The fleet's first landfall is Ismarus in Thrace, city of the Cicones, allies of Troy. Odysseus sacks it and shares out the spoil; the crews will not leave when he tells them to, and feast on the beach while the Cicones fetch their inland kin, who come at dawn 'thick as leaves and flowers in spring'. The Greeks are driven to the ships and lose six men from every ship. One thing is saved from Ismarus: Maron, priest of Apollo, whom Odysseus spared, gives him twelve jars of a red wine so strong it takes twenty parts of water to one.",
+        "play": "Fight the Cicones on the beach: strength 4, armour 1, and a third red die kept best two - they came in numbers. Win or lose, the fleet loses six men a ship: FLEET P -1. Take 2 wine aboard, Maron's gift, and keep it - the Cyclops card wants it.",
+        "cost": "Fleet P -1. Whatever the battle takes.",
+        "meets": {
+          "characters": [],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": true,
+          "note": "Maron's wine is a guest-gift for a life spared - the first of the poem's exchanges, and the one that saves Odysseus in the cave."
+        },
+        "lesson": "Homer counts losses exactly: six men from each of twelve ships. The crew's refusal to leave when told is the first of many."
+      },
+      {
+        "id": "odyssey-storm-off-malea",
+        "cardCode": "CAM-03",
+        "campaign": "homers-odyssey",
+        "chapter": 3,
+        "act": "wanderings",
+        "name": "The Storm off Malea",
+        "books": "IX",
+        "site": {
+          "region": "hellas",
+          "place": "malea"
+        },
+        "told": "Rounding Cape Malea at the southern tip of the Peloponnese - the last corner before home - the fleet is caught by a north wind that splits the sails to rags. For nine days it is driven south across the open sea, and on the tenth it makes a coast that is on no Greek chart. This is the moment the voyage stops being a journey and becomes the Wanderings.",
+        "play": "No landing at Malea. Roll the green die and add 4: the fleet is blown that many hexes south-west from the cape in one leg, with no discovery roll, and ends where it lands. Ithaca is two days off, and you will not see it again for nine years.",
+        "cost": "The way home.",
+        "meets": {
+          "characters": [],
+          "monsters": []
+        },
+        "xenia": null,
+        "lesson": "Malea is a real cape and a real terror to sailors; everything after it is nowhere a map can show. The poem crosses from geography into story here."
+      },
+      {
+        "id": "odyssey-lotus-eaters",
+        "cardCode": "CAM-04",
+        "campaign": "homers-odyssey",
+        "chapter": 4,
+        "act": "wanderings",
+        "name": "The Lotus-Eaters",
+        "books": "IX",
+        "site": {
+          "region": "lotus-land",
+          "place": "lotus-shore"
+        },
+        "told": "Odysseus sends three men inland to learn who lives here. The Lotus-Eaters mean no harm: they give the scouts the honey-sweet fruit of the lotus, and whoever eats it forgets his home and wants only to stay and feed on lotus. Odysseus drags the three back to the ships weeping, ties them under the rowing benches, and orders everyone else aboard at once before another man tastes it.",
+        "play": "Three companions go ashore, Odysseus last. Each rolls one blue die: on 1-3 he has eaten and does nothing this round or next until bound and carried aboard. The market here will give lotus for nothing and take anything for it. None may be carried away: Odysseus throws it over the side.",
+        "cost": "A round, and three men's wits.",
+        "meets": {
+          "characters": [],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": true,
+          "note": "The gentlest hosts in the poem, and dangerous for it: a hospitality that makes you forget home is the opposite of a homecoming."
+        },
+        "lesson": "The danger of the lotus is not death but forgetting. The poem's whole subject is remembering where you belong."
+      },
+      {
+        "id": "odyssey-cyclops",
+        "cardCode": "CAM-05",
+        "campaign": "homers-odyssey",
+        "chapter": 5,
+        "act": "wanderings",
+        "name": "The Cave of the Cyclops",
+        "books": "IX",
+        "site": {
+          "region": "cyclops-isle",
+          "place": "goat-island"
+        },
+        "told": "From the goat island where the fleet waits, Odysseus crosses with twelve men and a skin of Maron's wine to the cave of Polyphemus, son of Poseidon, to see whether the giant keeps guest-friendship. The Cyclops rolls a boulder across the door and eats two men at supper, two at breakfast and two more the next night. Odysseus gives him the wine, names himself 'Nobody', and when the giant sleeps drives a heated olive stake into his one eye. Polyphemus roars for the other Cyclopes, who ask who is hurting him - 'Nobody!' - and go away. At dawn the men escape slung under the bellies of his rams. Sailing off, Odysseus cannot resist shouting his true name, and Polyphemus prays to his father Poseidon that Odysseus come home late, alone, on a stranger's ship, to find trouble in his house. Every word of it is granted.",
+        "play": "Deal Polyphemus onto the encounter board. He eats before the fight: Antiphus is put away, and one other companion of the Cyclops's choosing - Homer counts six. The wine puts him to sleep; then one blue roll of 8 or more by Odysseus blinds him. He is not slain, and the party leaves at any pace under the rams. Then Odysseus shouts his name from the ship - the poem allows no other reading - and Poseidon hears: the storms of Act II are his.",
+        "cost": "Antiphus and five men: FLEET P -1. Poseidon's curse.",
+        "meets": {
+          "characters": [
+            "antiphus"
+          ],
+          "monsters": [
+            "polyphemus"
+          ]
+        },
+        "xenia": {
+          "kept": false,
+          "note": "The host eats his guests; the guest blinds his host and steals his sheep. The poem's clearest picture of what happens when the rule is broken on both sides."
+        },
+        "lesson": "'Nobody' - Outis - is the most famous trick in the poem, and the shout of the true name afterwards is the pride that costs ten years."
+      },
+      {
+        "id": "odyssey-bag-of-winds",
+        "cardCode": "CAM-06",
+        "campaign": "homers-odyssey",
+        "chapter": 6,
+        "act": "wanderings",
+        "name": "Aeolus and the Bag of Winds",
+        "books": "X",
+        "site": {
+          "region": "aeolia",
+          "place": "aeolia"
+        },
+        "told": "Aeolus, keeper of the winds, hosts the fleet a month on his floating island walled in bronze, and sends Odysseus off with an oxhide bag holding every wind but the west, which blows the fleet nine days to within sight of Ithaca - close enough to see the fires on the shore. Odysseus, who has held the sheet the whole way, sleeps. The crew, sure the bag is gold and silver, open it; the winds burst out and blow the fleet all the way back to Aeolia, where Aeolus refuses to help a man the gods so plainly hate.",
+        "play": "Rest a full round at Aeolus's table, free, all strength back. Then the bag: the fleet moves nine hexes towards Ithaca in one leg and stops in sight of it. Odysseus sleeps; the crew opens the bag; the winds carry the fleet back to this hex. Aeolus will not host you twice: leave next round, unrested.",
+        "cost": "Two rounds, and the sight of home.",
+        "meets": {
+          "characters": [],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": true,
+          "note": "Kept a month, and then withdrawn: a host may refuse a man the gods have refused."
+        },
+        "lesson": "The crew undo Odysseus while he sleeps - here, and again at Thrinacia. Homer makes the same mistake happen twice so that the second time is a judgement."
+      },
+      {
+        "id": "odyssey-laestrygonians",
+        "cardCode": "CAM-07",
+        "campaign": "homers-odyssey",
+        "chapter": 7,
+        "act": "wanderings",
+        "name": "The Laestrygonians",
+        "books": "X",
+        "site": {
+          "region": "laestrygonia",
+          "place": "telepylus"
+        },
+        "told": "Six days' rowing brings the fleet to Telepylus, the Laestrygonians' city, where the harbour is a cliff-walled basin with a narrow mouth. Eleven captains moor inside; Odysseus alone ties up outside on the rocks. The scouts meet the king's daughter at a spring and are taken to the king, Antiphates, who snatches one of them up and eats him. The Laestrygonians - giants, not men - line the cliffs and smash the ships in the basin with boulders, spearing the crews like fish. Odysseus cuts his cable with his sword and rows for it. Of twelve ships, one is left.",
+        "play": "The fleet moors in the basin; Odysseus's ship outside. Deal a Laestrygonian onto the encounter board: the first exchange is thrown stones, and nobody's gear counts. Then FLEET H falls to 1 - eleven ships are lost in the harbour with every companion aboard them. From here the campaign is one ship: set FLEET P to 4.",
+        "cost": "Eleven ships. Fleet H 1, P 4.",
+        "meets": {
+          "characters": [],
+          "monsters": [
+            "laestrygonian"
+          ]
+        },
+        "xenia": {
+          "kept": false,
+          "note": "The king eats the herald. The poem pairs this with the Cyclops on purpose: two broken hosts, one blinded and one fled."
+        },
+        "lesson": "Homer says a man who needed no sleep could earn two wages here, the nights are so short - a northern summer, perhaps, remembered from some sailor's tale."
+      },
+      {
+        "id": "odyssey-circe",
+        "cardCode": "CAM-08",
+        "campaign": "homers-odyssey",
+        "chapter": 8,
+        "act": "wanderings",
+        "name": "Circe of Aeaea",
+        "books": "X",
+        "site": {
+          "region": "aeaea",
+          "place": "aeaea"
+        },
+        "told": "On Aeaea, Eurylochus leads half the crew to a house in a clearing where wolves and lions fawn like dogs. Circe, daughter of Helios, gives them a drink of cheese, barley, honey and wine, strikes them with her wand, and turns them into pigs. Eurylochus, who waited outside, runs back. Odysseus goes alone; on the way Hermes gives him the herb moly - black root, milk-white flower - so her drug cannot take him. He makes Circe swear an oath, she restores the men younger and handsomer than before, and the crew stays a year in her hall. When at last they ask to go, she says the way home runs through the house of Hades. That night Elpenor, drunk on the roof, falls and breaks his neck, and nobody notices he is gone.",
+        "play": "Eurylochus's half of the party is turned to pigs: those companions cannot act until Odysseus, holding moly (this card gives it), beats Circe's red total. Deal Circe onto the encounter board. Won, she hosts the crew a year: rest two rounds, all health back, free, and take 2 sheep for the dead. Leaving, Elpenor is put away, fallen from the roof, and Circe tells you the next card.",
+        "cost": "Two rounds. Elpenor.",
+        "meets": {
+          "characters": [
+            "circe",
+            "eurylochus",
+            "elpenor"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": false,
+          "note": "Broken - a hostess who turns guests to pigs - and then kept better than anywhere in the poem: a year at her table and the directions home."
+        },
+        "lesson": "Eurylochus refuses to go back into the house: the first of his refusals, and the pattern of him. Moly is the only drug in the poem named as a god's gift."
+      },
+      {
+        "id": "odyssey-land-of-the-dead",
+        "cardCode": "CAM-09",
+        "campaign": "homers-odyssey",
+        "chapter": 9,
+        "act": "wanderings",
+        "name": "The Land of the Dead",
+        "books": "XI",
+        "site": {
+          "region": "cimmeria",
+          "place": "grove-of-persephone"
+        },
+        "told": "Circe's north wind carries the ship in a single day to the edge of Ocean and the land of the Cimmerians, on whom the sun never shines. At the place she named, Odysseus digs a pit, pours libations, and cuts the throats of a ram and a black ewe; the dead crowd to the blood and he holds them off with his sword until the prophet Tiresias has drunk and spoken: you may come home, if you leave the cattle of the Sun untouched - and if you do not, late, alone, on a stranger's ship, to trouble in your house. Then Elpenor asks for burial and his oar on the grave; Odysseus's mother Anticleia, dead of grief, tells him of Penelope's waiting and Laertes' misery; Agamemnon warns him against wives; Achilles would rather be a living farmhand than king of the dead; Ajax will not speak to him at all.",
+        "play": "One leg west from Aeaea with no discovery roll: Circe's wind. At the grove, sacrifice the 2 sheep. Tiresias speaks: read the Cattle of the Sun card aloud now, before its turn. Nobody mends here. Next leg the ship returns to Aeaea to bury Elpenor, oar and all.",
+        "cost": "Two legs and the sheep.",
+        "meets": {
+          "characters": [
+            "elpenor"
+          ],
+          "monsters": []
+        },
+        "xenia": null,
+        "lesson": "Homer's dead are at the edge of the world, not under it, and they need blood to speak. Tiresias's prophecy is the plot of the rest of the poem, told in advance."
+      },
+      {
+        "id": "odyssey-sirens",
+        "cardCode": "CAM-10",
+        "campaign": "homers-odyssey",
+        "chapter": 10,
+        "act": "wanderings",
+        "name": "The Sirens",
+        "books": "XII",
+        "site": {
+          "region": "sirens-meadow"
+        },
+        "told": "Circe warns of the Sirens, who sit in a meadow among the bones of the men their song has held, and whose song promises each man all that has happened on the earth. Odysseus stops the crew's ears with beeswax and has himself bound to the mast, ordering that if he begs to be freed they bind him tighter. The Sirens sing to him by name; he strains at the ropes; Perimedes and Eurylochus add more. The ship passes, and the wind drops as if nothing had happened.",
+        "play": "Deal the Sirens. Spend 1 honey for the wax: every companion but Odysseus is deaf and rows on, fleet pace unchanged. Odysseus is bound and hears everything, and does nothing this round. A companion with no wax and no rope goes over the side to them and is put away. Nobody fights the Sirens; passing them is the win.",
+        "cost": "1 honey. A round of Odysseus.",
+        "meets": {
+          "characters": [
+            "perimedes",
+            "eurylochus"
+          ],
+          "monsters": [
+            "sirens"
+          ]
+        },
+        "xenia": null,
+        "lesson": "Odysseus is the only man who heard the Sirens and lived: the poem's picture of knowledge taken under restraint. Homer gives them two voices, not a chorus."
+      },
+      {
+        "id": "odyssey-scylla-and-charybdis",
+        "cardCode": "CAM-11",
+        "campaign": "homers-odyssey",
+        "chapter": 11,
+        "act": "wanderings",
+        "name": "Scylla and Charybdis",
+        "books": "XII",
+        "site": {
+          "region": "scylla-rock"
+        },
+        "told": "Circe offered the choice: the Wandering Rocks, which no ship but the Argo has passed, or the strait between Scylla - six heads on six long necks in a cave high in the cliff, each with three rows of teeth - and Charybdis, who three times a day sucks down the sea and spews it back. Her counsel: hug Scylla's rock and lose six men rather than the whole ship to Charybdis. Odysseus arms himself anyway, against her advice, and while every eye is on the whirlpool Scylla takes six of his best men off the deck, still calling his name.",
+        "play": "Deal Scylla and Charybdis both. Choose a side of the strait. Scylla's side: she takes six men - FLEET P -1 - with no roll offered, and the ship passes. Charybdis's side: roll two red dice; 7 or more and the ship is lost with all hands, and the chapter is replayed from Scylla's side. Homer's Odysseus rowed under Scylla.",
+        "cost": "Six men: Fleet P -1.",
+        "meets": {
+          "characters": [],
+          "monsters": [
+            "scylla",
+            "charybdis"
+          ]
+        },
+        "xenia": null,
+        "lesson": "'Between Scylla and Charybdis' - the choice with no clean side - comes from these lines. Circe's advice is to accept the smaller loss, and Odysseus cannot bear to."
+      },
+      {
+        "id": "odyssey-cattle-of-the-sun",
+        "cardCode": "CAM-12",
+        "campaign": "homers-odyssey",
+        "chapter": 12,
+        "act": "wanderings",
+        "name": "The Cattle of the Sun",
+        "books": "XII",
+        "site": {
+          "region": "thrinacia"
+        },
+        "told": "Odysseus wants to row past Thrinacia, where the cattle of Helios graze, and the crew, led by Eurylochus, refuse: they are exhausted and it is night. They swear not to touch the herds. A south wind then pins them for a month; the provisions run out; and while Odysseus sleeps, Eurylochus persuades the men to kill the best of the cattle - the hides crawl and the meat lows on the spits. Helios demands satisfaction from Zeus. Seven days out the ship is struck by a thunderbolt and every man is drowned but Odysseus, who lashes the mast to the keel and is carried back to Charybdis; he clings to the fig tree over her while she swallows the wreck, and drops onto it when she spews it up. Nine days later he is washed ashore on Ogygia.",
+        "play": "The ship lands at Thrinacia: Eurylochus's voice is double, and it always lands. A month's storm - the party eats 4 food a round for three rounds or the cattle are killed; Homer's crew killed them on the third. The bolt: every companion is put away and FLEET H 0. Odysseus alone rolls two blue dice: 8 or more clings to the fig tree over Charybdis; less, and he rolls again next round at 1 health. He drifts to Ogygia. End of Act I.",
+        "cost": "The last ship, and every companion.",
+        "meets": {
+          "characters": [
+            "eurylochus"
+          ],
+          "monsters": [
+            "charybdis"
+          ]
+        },
+        "xenia": {
+          "kept": false,
+          "note": "Broken by the guests: the cattle were the host's, and the host was a god."
+        },
+        "lesson": "Homer names this, in the first ten lines of the poem, as the crime that cost the crew their homecoming: 'they ate the cattle of the Sun, and he took from them the day of their return.'"
+      },
+      {
+        "id": "odyssey-calypso",
+        "cardCode": "CAM-13",
+        "campaign": "homers-odyssey",
+        "chapter": 13,
+        "act": "household",
+        "name": "Calypso's Island",
+        "books": "V, VII",
+        "site": {
+          "region": "ogygia",
+          "place": "calypsos-cave"
+        },
+        "told": "Calypso, nymph daughter of Atlas, keeps Odysseus on Ogygia for seven years and offers him immortality if he will stay. He spends his days on the shore weeping for home. In the tenth year Athena moves Zeus, and Hermes is sent with the order to let him go. Calypso gives him an axe, an adze and an augur; in four days he builds a raft, and on the fifth she sends him off with a fair wind, provisioned and clothed.",
+        "play": "Odysseus alone, dealt Calypso as host. Seven years pass in three rounds: he rests and may not leave. In the same three rounds the other players are in Ithaca - turn the Telemachy card and play it beside this one. On the fourth round Calypso gives the tools: Odysseus builds a raft, run as a barge with hull 4, in one round, and sails.",
+        "cost": "Three rounds.",
+        "meets": {
+          "characters": [
+            "calypso"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": true,
+          "note": "Kept too well: a host who will not let the guest leave is the poem's other way of breaking the rule."
+        },
+        "lesson": "Odysseus refuses immortality for a mortal wife and a rocky island. Book V is where the poem first shows him, and it shows him weeping."
+      },
+      {
+        "id": "odyssey-telemachy",
+        "cardCode": "CAM-14",
+        "campaign": "homers-odyssey",
+        "chapter": 14,
+        "act": "household",
+        "name": "The Telemachy",
+        "books": "I-IV",
+        "site": {
+          "region": "ithaca",
+          "place": "ithaca"
+        },
+        "told": "This is where the poem begins. Athena, as the stranger Mentes and then as Mentor, finds Telemachus among a hundred and eight suitors who have camped three years in his father's hall, eating the herds and courting Penelope. She has held them off by weaving a shroud for old Laertes by day and unpicking it by night, until a maid betrayed her. Athena sends Telemachus to Pylos, to old Nestor, and to Sparta, to Menelaus and Helen, for news; Menelaus tells him Odysseus lives, held by Calypso. The suitors set an ambush for his ship on the way home. He comes home by another way.",
+        "play": "Deal Telemachus, Penelope and Athena to the players not at Ogygia. Each round the suitors sit, Ithaca's stores lose 2 cattle, 2 pig and 1 wine. Telemachus and Mentor sail to Pylos, to Sparta and back - three legs; Antinous's ambush waits in the strait home, and a night leg avoids it. Penelope's loom undoes one thing a round. When Odysseus's raft sails, this card is done.",
+        "cost": "The herds.",
+        "meets": {
+          "characters": [
+            "telemachus",
+            "penelope",
+            "athena",
+            "antinous"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": false,
+          "note": "Guests who never leave and eat the house: the suitors break the rule from the guest's side, and the poem never forgives it."
+        },
+        "lesson": "Homer opens in the middle - in medias res - in the tenth year. The first four books belong to the son; the father does not appear until Book V."
+      },
+      {
+        "id": "odyssey-raft",
+        "cardCode": "CAM-15",
+        "campaign": "homers-odyssey",
+        "chapter": 15,
+        "act": "household",
+        "name": "The Raft and Poseidon's Storm",
+        "books": "V",
+        "site": {
+          "region": "scheria"
+        },
+        "told": "Seventeen days Odysseus steers by the Bear, keeping it on his left as Calypso taught him, and on the eighteenth he sees the hills of Scheria. Poseidon, coming back from the Ethiopians, sees him too, and raises every wind at once. The raft is broken. The sea-nymph Ino gives him her veil to tie about his chest; two days and two nights he swims; Athena calms a river mouth for him and he crawls ashore, throws the veil back into the sea as he promised, and sleeps under two olive bushes in a bed of leaves.",
+        "play": "Five legs towards Scheria on the raft, no discovery rolls. Then Poseidon: the raft is wrecked. Odysseus swims three rounds, losing 1 health each; Ino's veil keeps him from drowning whatever he rolls. He lands on Scheria's shore with what health is left and nothing else. He arrives naked.",
+        "cost": "The raft. 3 health.",
+        "meets": {
+          "characters": [],
+          "monsters": []
+        },
+        "xenia": null,
+        "lesson": "Poseidon's grudge is the Cyclops's prayer being answered, card by card. Odysseus's navigation by the Bear is the oldest sailing direction in Greek."
+      },
+      {
+        "id": "odyssey-phaeacians",
+        "cardCode": "CAM-16",
+        "campaign": "homers-odyssey",
+        "chapter": 16,
+        "act": "household",
+        "name": "Nausicaa and the Phaeacians",
+        "books": "VI-VIII, XIII",
+        "site": {
+          "region": "scheria",
+          "place": "phaeacia"
+        },
+        "told": "Athena sends Nausicaa, the king's daughter, to wash clothes at the river mouth; the girls' ball wakes the sleeper, and Odysseus, naked and holding a branch, speaks to her so carefully that she gives him clothes and shows him the road to the palace of Alcinous and Arete. The Phaeacians are the poem's perfect hosts: a feast, the games, the bard Demodocus, who sings of Troy until Odysseus weeps and is asked his name - and then, in Books IX to XII, he tells them everything on the cards before this one. They load him with gifts and carry him to Ithaca in a night, asleep on the deck. Poseidon turns their ship to stone in sight of its own harbour.",
+        "play": "Deal Nausicaa: she brings Odysseus to Phaeacia, where he is fed, clothed and rested free - full health. He tells the tale: every player names one card of Act I aloud, in order. The Phaeacians give 100 coin in gifts and a ship: Odysseus lands on Ithaca next leg, asleep, with no discovery roll.",
+        "cost": "None. This is what a host is for.",
+        "meets": {
+          "characters": [
+            "nausicaa"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": true,
+          "note": "The poem's model of guest-friendship: fed before he is asked his name, given gifts, carried home."
+        },
+        "lesson": "Everything from card 1 to card 12 is told here, by Odysseus, in a single night. This is the frame the poem hangs on, and why the wanderings are in his voice."
+      },
+      {
+        "id": "odyssey-swineherd",
+        "cardCode": "CAM-17",
+        "campaign": "homers-odyssey",
+        "chapter": 17,
+        "act": "household",
+        "name": "The Swineherd's Hut",
+        "books": "XIII-XVI",
+        "site": {
+          "region": "ithaca",
+          "place": "eumaeus-steading"
+        },
+        "told": "Odysseus wakes on a shore he does not know. Athena, disguised as a shepherd, tells him it is Ithaca, hides his treasure in a cave, and turns him into an old beggar. She sends him to Eumaeus, the swineherd, loyal for twenty years, who feeds him without asking his name. Telemachus comes to the hut on his way home from Sparta; Athena restores Odysseus's looks for a moment, and father and son, alone, weep and plan: he will go to the hall as a beggar, and Telemachus must hide the weapons.",
+        "play": "Odysseus is disguised: until the Bow card nobody but Athena may name him, and he takes no gift. Eumaeus hosts him: mend 2 health a round, free. Telemachus arrives - the Telemachy players join here, and Eumaeus is dealt to whoever has no card. The plan: Telemachus empties the hall's kit slots of every weapon, and the party goes down to the town.",
+        "cost": "None.",
+        "meets": {
+          "characters": [
+            "eumaeus",
+            "telemachus",
+            "athena"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": true,
+          "note": "Kept by the poorest man in the poem, who feeds a beggar before asking who he is."
+        },
+        "lesson": "The second half runs on recognitions - the son, the dog, the nurse, the wife, the father - each by its own token. Athena makes them possible and never makes them for him."
+      },
+      {
+        "id": "odyssey-beggar-in-the-hall",
+        "cardCode": "CAM-18",
+        "campaign": "homers-odyssey",
+        "chapter": 18,
+        "act": "household",
+        "name": "A Beggar in his own Hall",
+        "books": "XVII-XX",
+        "site": {
+          "region": "ithaca",
+          "place": "ithaca"
+        },
+        "told": "At the gate the old dog Argos, bred by Odysseus twenty years before and left on a dungheap, knows him, wags his tail, and dies. In the hall the suitors mock the beggar; Antinous throws a footstool. Odysseus boxes the beggar Irus for the suitors' sport and wins. That night Penelope questions the stranger, who says he has seen her husband; the old nurse Eurycleia, washing his feet, finds the boar's scar on his thigh and knows him, and he silences her. Penelope announces the contest of the bow.",
+        "play": "Deal Antinous onto the encounter board: the hall is his, and he rolls a third red die. Odysseus takes 1 wound from the stool and may not strike back. Fight Irus - strength 2, armour 0 - for the suitors: win, and Antinous cannot have the beggar thrown out. Eurycleia knows him and nobody says so. Penelope sets the contest: turn the Bow card.",
+        "cost": "1 health.",
+        "meets": {
+          "characters": [
+            "antinous",
+            "penelope"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": false,
+          "note": "A beggar at the door is under the protection of Zeus, and the suitors throw furniture at him."
+        },
+        "lesson": "Argos is the poem's smallest recognition and the one most readers remember. The scar is the token that will name Odysseus twice more."
+      },
+      {
+        "id": "odyssey-the-bow",
+        "cardCode": "CAM-19",
+        "campaign": "homers-odyssey",
+        "chapter": 19,
+        "act": "household",
+        "name": "The Bow and the Axes",
+        "books": "XXI",
+        "site": {
+          "region": "ithaca",
+          "place": "ithaca"
+        },
+        "told": "Penelope brings out the great bow of Odysseus, the gift of Iphitus, which he left at home when he sailed for Troy, and twelve axes: she will marry the man who can string the bow and shoot through the twelve axe-heads in a row. Telemachus nearly strings it and stops at his father's glance. Suitor after suitor fails, even warming the bow with fat. The beggar asks his turn; the suitors are outraged; Penelope insists; Telemachus sends her upstairs. Odysseus strings it as easily as a bard strings a lyre, plucks it so that it sings like a swallow, and sends the arrow through all twelve.",
+        "play": "Each suitor fails in turn, with no roll. Telemachus may try: one blue die, and a 6 strings it - Homer's Telemachus stopped himself. Odysseus strings the bow with no roll and shoots the axes: he takes up the bow (weapon, battle 2) and drops the disguise. Eumaeus bars the doors. Turn the Slaughter.",
+        "cost": "None.",
+        "meets": {
+          "characters": [
+            "telemachus",
+            "penelope",
+            "eumaeus"
+          ],
+          "monsters": []
+        },
+        "xenia": null,
+        "lesson": "The bow is a token like the scar and the bed: only the man it belongs to can use it, which is the whole of the test."
+      },
+      {
+        "id": "odyssey-slaughter",
+        "cardCode": "CAM-20",
+        "campaign": "homers-odyssey",
+        "chapter": 20,
+        "act": "household",
+        "name": "The Slaughter of the Suitors",
+        "books": "XXII",
+        "site": {
+          "region": "ithaca",
+          "place": "ithaca"
+        },
+        "told": "Odysseus's first arrow takes Antinous through the throat as he lifts his cup. He names himself. Eurymachus offers restitution and is refused; the suitors fight with tables for shields. The goatherd Melanthius arms them from the storeroom and is caught; Athena, as Mentor, rallies Odysseus and then, from the rafters in the shape of a swallow, turns the suitors' spears aside. When the arrows run out the four - Odysseus, Telemachus, Eumaeus and the cowherd Philoetius - fight with spears until every suitor is dead. Only the bard and the herald are spared. The twelve faithless maids are hanged, and Melanthius is mutilated.",
+        "play": "Antinous dies to the first arrow: put him away. The hall is then one monster - strength 5, armour 1, health 14 - rolling a third red die until Melanthius is caught by a blue roll of 7 or more from any character. Odysseus, Telemachus, Eumaeus and Mentor fight in turn; Mentor may once turn one red die to a 1. At 0 health the suitors are dead.",
+        "cost": "Whatever the hall takes.",
+        "meets": {
+          "characters": [
+            "antinous",
+            "telemachus",
+            "eumaeus",
+            "athena"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": false,
+          "note": "The answer to three years of broken guest-right. The poem does not soften it, and neither does this card."
+        },
+        "lesson": "Homer's justice here is absolute and unsettling - the maids and Melanthius as much as the suitors. Readers have argued about Book XXII for two and a half thousand years."
+      },
+      {
+        "id": "odyssey-the-bed",
+        "cardCode": "CAM-21",
+        "campaign": "homers-odyssey",
+        "chapter": 21,
+        "act": "household",
+        "name": "The Bed of Olive-wood",
+        "books": "XXIII",
+        "site": {
+          "region": "ithaca",
+          "place": "ithaca"
+        },
+        "told": "Eurycleia wakes Penelope, who will not believe her. Odysseus, bathed and made handsome by Athena, waits; Penelope tests him: she orders the nurse to move the great bed out of the bedroom for him. Odysseus flares up - that bed cannot be moved; he built it himself around a living olive tree rooted in the floor, and only the two of them and one maid know it. Penelope's knees give way: she has her proof. Athena holds back the dawn so that they can talk the whole night through.",
+        "play": "Penelope's test: her player says what the secret of the bed is, and Odysseus's answers it. No roll. The house is whole: every character in Ithaca is at full health, and Penelope's loom is put away. One card remains.",
+        "cost": "None.",
+        "meets": {
+          "characters": [
+            "penelope"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": true,
+          "note": "A home received: the guest is the host at last."
+        },
+        "lesson": "Homer makes Penelope the equal of Odysseus in cunning. She tests him with a trick, as he tested everyone else, and the poem names them both 'of many turns'."
+      },
+      {
+        "id": "odyssey-laertes",
+        "cardCode": "CAM-22",
+        "campaign": "homers-odyssey",
+        "chapter": 22,
+        "act": "household",
+        "name": "Laertes' Orchard and the Peace",
+        "books": "XXIV",
+        "site": {
+          "region": "ithaca",
+          "place": "laertes-farm"
+        },
+        "told": "Hermes leads the suitors' souls down to the asphodel meadow, where Agamemnon hears from them how Odysseus came home. Odysseus goes out to the farm where old Laertes digs among his trees in rags, and tests his father too - then proves himself by the scar and by naming the trees Laertes gave him as a boy: thirteen pear, ten apple, forty fig, fifty rows of vines. The suitors' fathers, led by Antinous's, arm and come against them; Laertes kills the first; and Zeus and Athena stop the fight before it becomes a war. Athena makes peace between them, and the poem ends.",
+        "play": "One leg to Laertes' farm, no discovery. Odysseus names the trees - 13 pear, 10 apple, 40 fig, 50 vines - and Laertes knows him. The fathers come: one battle exchange against strength 4, armour 1, and then Athena ends it whoever was winning. Odysseus is home. The campaign is won.",
+        "cost": "None. It is over.",
+        "meets": {
+          "characters": [
+            "athena"
+          ],
+          "monsters": []
+        },
+        "xenia": {
+          "kept": true,
+          "note": "The poem closes on a peace sworn between hosts and guests of one island."
+        },
+        "lesson": "The Odyssey ends not with the slaughter but with a peace: its last lines are Athena's, and the last word of the poem is hers."
+      }
+    ]
+  },
   "graph": {
     "$comment": "The dependency graph: which collections are THINGS in the web of the game, as opposed to vocabularies that classify their own file. This file declares the NODES only. The arrows are never declared anywhere - docs/js/graph.js computes them from manifest.json references.checks, the same declarations tools/validate-data.mjs enforces, so the graph cannot drift from what the validator guarantees and redraws itself the moment the data moves. A node's id is the collection spec exactly as the checks name it: a dataset key, or dataset.subcollection for a collection that lives inside another file. 'name' is the legend label, singular, because it captions one dot. 'wash' is one of the five chromatic inks in docs/art/palette.json - the graph has no colours of its own - and kinds sharing an ink are a family on purpose: the land is verdigris, goods and folk are ochre, work and danger are oxide, structure and movement are slate, the arcane and the adventure are bruise. Within a family, docs/js/graph.js steps the ink toward soot or paper by declaration order, so the order of this list is meaningful. Drawn by the explorer's Graph tab live from the bundle, and by tools/build-graph.mjs into docs/art/graph/dependencies.svg for the printed rulebook.",
     "version": "0.1.0",
@@ -15890,6 +17147,16 @@ window.GAME_DATA = {
       {
         "id": "characters",
         "name": "Character",
+        "wash": "bruise"
+      },
+      {
+        "id": "campaigns",
+        "name": "Campaign",
+        "wash": "bruise"
+      },
+      {
+        "id": "campaigns.cards",
+        "name": "Campaign card",
         "wash": "bruise"
       }
     ]
@@ -18026,6 +19293,1917 @@ window.GAME_DATA = {
           }
         ]
       }
+    },
+    {
+      "$comment": "A GENERATED board, like the Sundering Isles: the `commission` is the only thing anybody writes by hand and `rows`, `settlements`, `regions`, `routes` and the `plate` block are grown from it by `node tools/draw-map.mjs wine-dark-sea`. Do not hand-edit them - change the commission and run the tool.\n\nThis is the board of the Odyssey campaign (data/campaigns.json homers-odyssey), and it is a board like any other: free play may be set out on it, and a discovery roll on its deep water may turn up Scylla. Its country is Homer's, not a chart's. Troy is real and so are Ithaca, Pylos, Sparta and Cape Malea, and they are placed where they are; everything west of Malea is where the poem puts it, which is nowhere a sailor could find - so the islands of the wanderings are laid out in the ORDER the ship reaches them, sweeping south and west and back, so that a fleet following the cards traces the voyage across the table. The Cimmerians, where the sun never shines, are at the western edge of the world, which on this board is the western edge of the paper.",
+      "version": "0.1.0",
+      "id": "wine-dark-sea",
+      "name": "The Wine-Dark Sea",
+      "subtitle": "the isles of the wanderings, from Troy to Ithaca, as the poem has them",
+      "summary": "The board of Homer's Odyssey: the Aegean and the sea west of Greece, with the real coast on the east and the poem's islands scattered west of it in the order Odysseus reached them. Everything moves by hull. Commissioned as the third board and the first for a campaign; in free play it is a sea board with a mainland along one side, which neither of the other two is.",
+      "commission": {
+        "$comment": "The input contract: everything decided before the tool runs. docs/art/prompts/maps.md § wine-dark-sea is written from this block; if the two disagree, this file is right.",
+        "why": "A campaign wants a board its cards can point at - a region for every chapter, a place for every hall - and the game wanted a third board that is neither the Reach's continent nor the Isles' scatter: a coast with a sea beside it. The mainland gives a free-play table a rail-and-road half; the islands give it the shipping half; and the campaign gives it a reason to cross from one to the other.",
+        "landmass": "One mainland, Hellas, filling the north-east quarter and running south to a cape, with the Troad as a separate coast off its eastern edge across a narrow strait and Thrace along the top edge. Ithaca is a small island close under the mainland's west coast, and Scheria a larger one north-west of it. Everything else is small and scattered west and south across open sea: the Lotus shore far to the south-east, the Cyclops's island south, Aeolia and the Laestrygonians' harbour in the west, Aeaea and the Sirens' meadow, the strait of Scylla under Thrinacia, Ogygia alone in the south-west, and the Cimmerian shore against the western edge of the paper, where the world ends. Open deep water on the south edge; the west edge is a shelf of mist.",
+        "terrainBudget": [
+          {
+            "terrain": "deep-water",
+            "share": 0.3
+          },
+          {
+            "terrain": "shallow-water",
+            "share": 0.16
+          },
+          {
+            "terrain": "lake",
+            "share": 0.01
+          },
+          {
+            "terrain": "grassland",
+            "share": 0.2
+          },
+          {
+            "terrain": "forest",
+            "share": 0.1
+          },
+          {
+            "terrain": "hills",
+            "share": 0.13
+          },
+          {
+            "terrain": "mountain",
+            "share": 0.06
+          },
+          {
+            "terrain": "marsh",
+            "share": 0.02
+          },
+          {
+            "terrain": "desert",
+            "share": 0.02
+          }
+        ],
+        "$terrainBudgetNote": "Shares of the whole grid, water included. Just over half the board is land, most of it the mainland, and the mainland is hilly on purpose: Greece is. The mountain share is the largest on any board here and there is no volcanic island, so the generator puts the peaks where the land is deepest, which is the middle of Hellas - Taygetus above Sparta, the mountains behind Pylos. The desert is the Lotus shore (Libya, by the oldest reading) and whatever else the generator hands it; the marsh is meant for the Cimmerian shore and lands where it lands. Tundra is absent: this is a warm sea.",
+        "settlements": {
+          "count": 16,
+          "seat": 1,
+          "city": 3,
+          "town": 4,
+          "village": 8,
+          "harbours": 13
+        },
+        "$settlementNote": "Ithaca is the seat, because the campaign is the story of getting back to it. Three cities: Troy, which has just fallen; Telepylus of the Laestrygonians, which Homer calls a city and gives a king; and Phaeacia, the poem's perfect town. Sparta is the one inland town, as it really is, and the two Ithacan farms are inland because a swineherd's steading and an old man's orchard are not on the quay.",
+        "routes": {
+          "rail": false,
+          "shipping": true,
+          "road": true
+        },
+        "$routeNote": "No rail: the poem is Bronze Age and the campaign moves by ship. Free play on this board may lay rail on the mainland as on any other; the commission does not draw any. Roads join the places that share an island, so Pylos, Sparta and Malea are walkable and the three Ithacan places are.",
+        "mustHave": [
+          "a mainland along the north-east with a cape running south, and a separate coast east of it across a strait for Troy",
+          "Ithaca as a small island close under the mainland's west coast, and Scheria a larger island north-west of it",
+          "the islands of the wanderings scattered west and south in the order the cards visit them, none touching",
+          "a strait between a small rock and a larger island for Scylla and Charybdis",
+          "a shelf of shallows along the whole western edge - the mist of Ocean - with the Cimmerian shore against it"
+        ],
+        "mustNotHave": [
+          "a hex grid, a square grid, or any ruled lines over the field",
+          "hillshading, relief shading, contour lines or depth soundings",
+          "a temple, a column, a statue or any Classical furniture drawn on the land - the poem is older than all of it",
+          "map furniture over land: cartouche, legend and compass sit over open water",
+          "modern Greek place names - the names are the poem's"
+        ],
+        "landform": {
+          "$comment": "The only positional thing anybody types: an anchor per island and a weight. Columns run 0-31 west to east, rows 0-23 north to south. Hellas is anchored inland of its own centre so it grows a cape southward; Troy's coast is a separate island so the strait stays water; Scylla's rock is the smallest anchor on the board and is meant to come out as a hex or two beside the water it names.",
+          "seed": 20260904,
+          "shareIsRelative": true,
+          "edges": {
+            "west": "shelf"
+          },
+          "shelfWidth": 1,
+          "islands": [
+            {
+              "id": "hellas",
+              "name": "Hellas",
+              "chain": "mainland",
+              "at": [
+                22,
+                7
+              ],
+              "share": 0.3
+            },
+            {
+              "id": "troad",
+              "name": "The Troad",
+              "chain": "mainland",
+              "at": [
+                30,
+                4
+              ],
+              "share": 0.05
+            },
+            {
+              "id": "thrace",
+              "name": "Thrace",
+              "chain": "mainland",
+              "at": [
+                26,
+                1
+              ],
+              "share": 0.05
+            },
+            {
+              "id": "ithaca",
+              "name": "Ithaca",
+              "chain": "home",
+              "at": [
+                15,
+                9
+              ],
+              "share": 0.05
+            },
+            {
+              "id": "scheria",
+              "name": "Scheria",
+              "chain": "home",
+              "at": [
+                12,
+                4
+              ],
+              "share": 0.06
+            },
+            {
+              "id": "lotus-land",
+              "name": "The Lotus Shore",
+              "chain": "wanderings",
+              "at": [
+                25,
+                21
+              ],
+              "share": 0.05
+            },
+            {
+              "id": "cyclops-isle",
+              "name": "The Cyclops's Island",
+              "chain": "wanderings",
+              "at": [
+                17,
+                19
+              ],
+              "share": 0.05
+            },
+            {
+              "id": "aeolia",
+              "name": "Aeolia",
+              "chain": "wanderings",
+              "at": [
+                7,
+                18
+              ],
+              "share": 0.02
+            },
+            {
+              "id": "laestrygonia",
+              "name": "Laestrygonia",
+              "chain": "wanderings",
+              "at": [
+                3,
+                3
+              ],
+              "share": 0.06
+            },
+            {
+              "id": "aeaea",
+              "name": "Aeaea",
+              "chain": "wanderings",
+              "at": [
+                4,
+                11
+              ],
+              "share": 0.04
+            },
+            {
+              "id": "cimmeria",
+              "name": "The Cimmerian Shore",
+              "chain": "wanderings",
+              "at": [
+                1,
+                16
+              ],
+              "share": 0.03
+            },
+            {
+              "id": "sirens-meadow",
+              "name": "The Sirens' Meadow",
+              "chain": "wanderings",
+              "at": [
+                12,
+                14
+              ],
+              "share": 0.01
+            },
+            {
+              "id": "scylla-rock",
+              "name": "Scylla's Rock",
+              "chain": "wanderings",
+              "at": [
+                9,
+                8
+              ],
+              "share": 0.008
+            },
+            {
+              "id": "thrinacia",
+              "name": "Thrinacia",
+              "chain": "wanderings",
+              "at": [
+                9,
+                12
+              ],
+              "share": 0.05
+            },
+            {
+              "id": "ogygia",
+              "name": "Ogygia",
+              "chain": "wanderings",
+              "at": [
+                5,
+                22
+              ],
+              "share": 0.03
+            }
+          ],
+          "$islandNote": "Shares are weights normalised onto the land total the budget asks for. Hellas is the only large one; the Troad and Thrace are its coasts made separate so the straits between them stay water. `chain` is a label the regions carry and nothing else reads.",
+          "links": []
+        },
+        "places": [
+          {
+            "id": "ithaca",
+            "name": "Ithaca",
+            "rank": "seat",
+            "harbour": true,
+            "island": "ithaca",
+            "note": "The hall of Odysseus, above the harbour. The whole poem is the road here."
+          },
+          {
+            "id": "eumaeus-steading",
+            "name": "Eumaeus's Steading",
+            "rank": "village",
+            "harbour": false,
+            "island": "ithaca",
+            "note": "The swineherd's yard on the hill: twelve sties and six hundred pigs, and the one door in Ithaca that opens to a beggar."
+          },
+          {
+            "id": "laertes-farm",
+            "name": "Laertes' Orchard",
+            "rank": "village",
+            "harbour": false,
+            "island": "ithaca",
+            "note": "The old king's farm, where the last book ends: thirteen pear trees, ten apple, forty fig, fifty rows of vines."
+          },
+          {
+            "id": "troy",
+            "name": "Troy",
+            "rank": "city",
+            "harbour": true,
+            "island": "troad",
+            "note": "Just fallen. The fleet sails from its beach with the spoil of ten years."
+          },
+          {
+            "id": "ismarus",
+            "name": "Ismarus",
+            "rank": "town",
+            "harbour": true,
+            "island": "thrace",
+            "note": "City of the Cicones, allies of Troy, and the first landfall. Maron's wine comes from here."
+          },
+          {
+            "id": "malea",
+            "name": "Cape Malea",
+            "rank": "village",
+            "harbour": true,
+            "island": "hellas",
+            "note": "The last corner before home, and the wind that takes it away."
+          },
+          {
+            "id": "pylos",
+            "name": "Pylos",
+            "rank": "town",
+            "harbour": true,
+            "island": "hellas",
+            "note": "Sandy Pylos, old Nestor's town, where Telemachus first asks after his father."
+          },
+          {
+            "id": "sparta",
+            "name": "Sparta",
+            "rank": "town",
+            "harbour": false,
+            "island": "hellas",
+            "note": "Menelaus and Helen, in the hollow of the mountains, who tell Telemachus his father is alive."
+          },
+          {
+            "id": "phaeacia",
+            "name": "Phaeacia",
+            "rank": "city",
+            "harbour": true,
+            "island": "scheria",
+            "note": "Alcinous's city, the poem's perfect host. Its ship was turned to stone in sight of this harbour."
+          },
+          {
+            "id": "lotus-shore",
+            "name": "The Lotus Shore",
+            "rank": "village",
+            "harbour": true,
+            "island": "lotus-land",
+            "note": "Where three men ate the fruit and forgot the way home."
+          },
+          {
+            "id": "goat-island",
+            "name": "Goat Island",
+            "rank": "village",
+            "harbour": true,
+            "island": "cyclops-isle",
+            "note": "The wooded islet where the fleet waits while Odysseus crosses to the Cyclops's cave."
+          },
+          {
+            "id": "aeolia",
+            "name": "Aeolia",
+            "rank": "town",
+            "harbour": true,
+            "island": "aeolia",
+            "note": "The floating island walled in bronze, where Aeolus keeps the winds in a bag."
+          },
+          {
+            "id": "telepylus",
+            "name": "Telepylus",
+            "rank": "city",
+            "harbour": true,
+            "island": "laestrygonia",
+            "note": "The Laestrygonians' city on its cliff-walled harbour: eleven ships went in and none came out."
+          },
+          {
+            "id": "aeaea",
+            "name": "Aeaea",
+            "rank": "village",
+            "harbour": true,
+            "island": "aeaea",
+            "note": "Circe's house in the clearing, with the wolves and lions at the door."
+          },
+          {
+            "id": "grove-of-persephone",
+            "name": "The Grove of Persephone",
+            "rank": "village",
+            "harbour": true,
+            "island": "cimmeria",
+            "note": "Poplars and willows at the edge of Ocean, where the rivers of the dead meet and the pit is dug."
+          },
+          {
+            "id": "calypsos-cave",
+            "name": "Calypso's Cave",
+            "rank": "village",
+            "harbour": true,
+            "island": "ogygia",
+            "note": "Alders, poplars and cypresses, four springs, and seven years."
+          }
+        ],
+        "$placesNote": "Names and ranks are content and are decided here; where each stands is computed by tools/draw-map.mjs. Thrinacia, the Sirens' meadow and Scylla's rock have no settlement on purpose: the poem puts nobody there but cattle, bones and a monster, and a campaign card points at the REGION.",
+        "plate": {
+          "minWidthPx": 4000,
+          "wantWidthPx": 7000,
+          "aspect": "root-two landscape",
+          "$note": "Kept for the contract the mint checks. A generated plate is vector and has no long side; the figures say what a drawn replacement would owe."
+        }
+      },
+      "plate": {
+        "kind": "generated",
+        "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
+        "file": "wine-dark-sea.svg",
+        "width": 4000,
+        "height": 2657,
+        "field": {
+          "x": 34,
+          "y": 34,
+          "width": 3932,
+          "height": 2589
+        },
+        "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line."
+      },
+      "grid": {
+        "shape": "hex",
+        "orientation": "pointy",
+        "offset": "odd-r",
+        "cols": 32,
+        "rows": 24,
+        "fit": "field-width",
+        "$fitNote": "The Reach's 32 columns on a root-two landscape field, which puts the rows at 24: the mainland wants the room the Isles did not, and a one-hex island is still a place."
+      },
+      "print": {
+        "$comment": "Sheet layouts in the same three sizes as every other board. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived and written in by tools/build-map.mjs.",
+        "default": "four-sheet",
+        "presets": [
+          {
+            "id": "four-sheet",
+            "name": "Four sheets, A2",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 2,
+            "sheetRows": 2,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "Two by two, printed landscape. The working size for a table.",
+            "mapWidthMm": 562,
+            "mapHeightMm": 373.3,
+            "hexAcrossFlatsMm": 17.3
+          },
+          {
+            "id": "nine-sheet",
+            "name": "Nine sheets, A1",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 3,
+            "sheetRows": 3,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "Three by three. A vector plate prints at this size without asking.",
+            "mapWidthMm": 843,
+            "mapHeightMm": 560,
+            "hexAcrossFlatsMm": 25.9
+          },
+          {
+            "id": "one-sheet",
+            "name": "One sheet, reference",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 1,
+            "sheetRows": 1,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "The whole board on one page, for reading rather than playing.",
+            "mapWidthMm": 281,
+            "mapHeightMm": 186.7,
+            "hexAcrossFlatsMm": 8.6
+          }
+        ]
+      },
+      "legend": {
+        "$comment": "Character to terrain id, identical to the other two boards so a board from any map reads the same in a text editor.",
+        "~": "deep-water",
+        "-": "shallow-water",
+        "r": "river",
+        "l": "lake",
+        ".": "grassland",
+        "f": "forest",
+        "h": "hills",
+        "^": "mountain",
+        "m": "marsh",
+        "t": "tundra",
+        "d": "desert"
+      },
+      "rows": [
+        "-~-.-.-~~~-----~--....-.ff..m.--",
+        "--.f.-~~~-.-m.--f.hhhf-dhhhhf-md",
+        "-m.hhm--~~-.f.---.f^^hf-.hh.f-ff",
+        "-fhhhfd---.hh..-.h^^hf-dfh.--.h.",
+        "-.hhh.---..h^h.m-.h^^hd--df-f.h.",
+        "-d.h.m-~-m.hh.--..hhhhff---dhhh.",
+        "---.m--~---mh.----fhhhhh...-.hh.",
+        "-~---~--..-..-f..-f.hh^hhhf-dm..",
+        "-~~----f-..---.hhm--.h^^^^hf----",
+        "-~-.-.-.----.fh^hf.-dh^^^^h..f.-",
+        "-~-...f-ffff--.hhf--.h^^^^^hh.--",
+        "--fhhh.-.h..-m...-ffh^^^^^^f.m-~",
+        "--..hh.-.h.-----d.-.h^^^^^^f.--~",
+        "---.f.-.h.-.-~~---.h^^^^^^hff-~~",
+        "-f.----.ff-..-~~~-.ff^^^^hf..-~~",
+        ".hf-~-.--d-..-~~~--.hffffh.--~~~",
+        ".hhf----f-.---~~--m-.ff..ff-~~~~",
+        "...--...-..-~~~-..f---------~~~~",
+        "f-f-~-.h.---~~~-.hh.--~----d-~~~",
+        "------..-~~~~~-.h^hf.--.ff.-~~~~",
+        "-~~-..---~~~~~-ffhhd---.hhh.-~~~",
+        "-~-.h.f-~~~~~~--.ff.-~-.h^hf-~~~",
+        "-~-.hh.-~~~~~~~~-.---~~-fhhf.-~~",
+        "-~-f...-~~~~~~~~--~~~~-d.ff--~~~"
+      ],
+      "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+      "regions": [
+        {
+          "id": "hellas",
+          "name": "Hellas",
+          "terrain": "mountain",
+          "labelAt": [
+            22,
+            7
+          ],
+          "summary": "142 hexes of the mainland chain, mostly mountain. Cape Malea, Pylos, Sparta."
+        },
+        {
+          "id": "troad",
+          "name": "The Troad",
+          "terrain": "grassland",
+          "labelAt": [
+            30,
+            4
+          ],
+          "summary": "24 hexes of the mainland chain, mostly grassland. Troy."
+        },
+        {
+          "id": "thrace",
+          "name": "Thrace",
+          "terrain": "hills",
+          "labelAt": [
+            26,
+            1
+          ],
+          "summary": "24 hexes of the mainland chain, mostly hills. Ismarus."
+        },
+        {
+          "id": "ithaca",
+          "name": "Ithaca",
+          "terrain": "grassland",
+          "labelAt": [
+            15,
+            9
+          ],
+          "summary": "24 hexes of the home chain, mostly grassland. Ithaca, Eumaeus's Steading, Laertes' Orchard."
+        },
+        {
+          "id": "scheria",
+          "name": "Scheria",
+          "terrain": "grassland",
+          "labelAt": [
+            12,
+            4
+          ],
+          "summary": "28 hexes of the home chain, mostly grassland. Phaeacia."
+        },
+        {
+          "id": "lotus-land",
+          "name": "The Lotus Shore",
+          "terrain": "hills",
+          "labelAt": [
+            25,
+            21
+          ],
+          "summary": "24 hexes of the wanderings chain, mostly hills. The Lotus Shore."
+        },
+        {
+          "id": "cyclops-isle",
+          "name": "The Cyclops's Island",
+          "terrain": "grassland",
+          "labelAt": [
+            17,
+            19
+          ],
+          "summary": "24 hexes of the wanderings chain, mostly grassland. Goat Island."
+        },
+        {
+          "id": "aeolia",
+          "name": "Aeolia",
+          "terrain": "grassland",
+          "labelAt": [
+            7,
+            18
+          ],
+          "summary": "9 hexes of the wanderings chain, mostly grassland. Aeolia."
+        },
+        {
+          "id": "laestrygonia",
+          "name": "Laestrygonia",
+          "terrain": "grassland",
+          "labelAt": [
+            3,
+            3
+          ],
+          "summary": "28 hexes of the wanderings chain, mostly grassland. Telepylus."
+        },
+        {
+          "id": "aeaea",
+          "name": "Aeaea",
+          "terrain": "grassland",
+          "labelAt": [
+            4,
+            11
+          ],
+          "summary": "19 hexes of the wanderings chain, mostly grassland. Aeaea."
+        },
+        {
+          "id": "cimmeria",
+          "name": "The Cimmerian Shore",
+          "terrain": "grassland",
+          "labelAt": [
+            1,
+            16
+          ],
+          "summary": "14 hexes of the wanderings chain, mostly grassland. The Grove of Persephone."
+        },
+        {
+          "id": "sirens-meadow",
+          "name": "The Sirens' Meadow",
+          "terrain": "grassland",
+          "labelAt": [
+            12,
+            14
+          ],
+          "summary": "5 hexes of the wanderings chain, mostly grassland. Nobody lives here."
+        },
+        {
+          "id": "scylla-rock",
+          "name": "Scylla's Rock",
+          "terrain": "grassland",
+          "labelAt": [
+            9,
+            8
+          ],
+          "summary": "4 hexes of the wanderings chain, mostly grassland. Nobody lives here."
+        },
+        {
+          "id": "thrinacia",
+          "name": "Thrinacia",
+          "terrain": "grassland",
+          "labelAt": [
+            9,
+            12
+          ],
+          "summary": "24 hexes of the wanderings chain, mostly grassland. Nobody lives here."
+        },
+        {
+          "id": "ogygia",
+          "name": "Ogygia",
+          "terrain": "grassland",
+          "labelAt": [
+            5,
+            22
+          ],
+          "summary": "14 hexes of the wanderings chain, mostly grassland. Calypso's Cave."
+        }
+      ],
+      "settlements": [
+        {
+          "id": "ithaca",
+          "name": "Ithaca",
+          "col": 14,
+          "row": 10,
+          "rank": "seat",
+          "harbour": true,
+          "note": "The hall of Odysseus, above the harbour. The whole poem is the road here."
+        },
+        {
+          "id": "eumaeus-steading",
+          "name": "Eumaeus's Steading",
+          "col": 16,
+          "row": 9,
+          "rank": "village",
+          "note": "The swineherd's yard on the hill: twelve sties and six hundred pigs, and the one door in Ithaca that opens to a beggar."
+        },
+        {
+          "id": "laertes-farm",
+          "name": "Laertes' Orchard",
+          "col": 15,
+          "row": 8,
+          "rank": "village",
+          "note": "The old king's farm, where the last book ends: thirteen pear trees, ten apple, forty fig, fifty rows of vines."
+        },
+        {
+          "id": "troy",
+          "name": "Troy",
+          "col": 31,
+          "row": 1,
+          "rank": "city",
+          "harbour": true,
+          "note": "Just fallen. The fleet sails from its beach with the spoil of ten years."
+        },
+        {
+          "id": "ismarus",
+          "name": "Ismarus",
+          "col": 23,
+          "row": 0,
+          "rank": "town",
+          "harbour": true,
+          "note": "City of the Cicones, allies of Troy, and the first landfall. Maron's wine comes from here."
+        },
+        {
+          "id": "malea",
+          "name": "Cape Malea",
+          "col": 26,
+          "row": 16,
+          "rank": "village",
+          "harbour": true,
+          "note": "The last corner before home, and the wind that takes it away."
+        },
+        {
+          "id": "pylos",
+          "name": "Pylos",
+          "col": 30,
+          "row": 9,
+          "rank": "town",
+          "harbour": true,
+          "note": "Sandy Pylos, old Nestor's town, where Telemachus first asks after his father."
+        },
+        {
+          "id": "sparta",
+          "name": "Sparta",
+          "col": 21,
+          "row": 7,
+          "rank": "town",
+          "note": "Menelaus and Helen, in the hollow of the mountains, who tell Telemachus his father is alive."
+        },
+        {
+          "id": "phaeacia",
+          "name": "Phaeacia",
+          "col": 10,
+          "row": 1,
+          "rank": "city",
+          "harbour": true,
+          "note": "Alcinous's city, the poem's perfect host. Its ship was turned to stone in sight of this harbour."
+        },
+        {
+          "id": "lotus-shore",
+          "name": "The Lotus Shore",
+          "col": 26,
+          "row": 23,
+          "rank": "village",
+          "harbour": true,
+          "note": "Where three men ate the fruit and forgot the way home."
+        },
+        {
+          "id": "goat-island",
+          "name": "Goat Island",
+          "col": 16,
+          "row": 21,
+          "rank": "village",
+          "harbour": true,
+          "note": "The wooded islet where the fleet waits while Odysseus crosses to the Cyclops's cave."
+        },
+        {
+          "id": "aeolia",
+          "name": "Aeolia",
+          "col": 6,
+          "row": 18,
+          "rank": "town",
+          "harbour": true,
+          "note": "The floating island walled in bronze, where Aeolus keeps the winds in a bag."
+        },
+        {
+          "id": "telepylus",
+          "name": "Telepylus",
+          "col": 1,
+          "row": 5,
+          "rank": "city",
+          "harbour": true,
+          "note": "The Laestrygonians' city on its cliff-walled harbour: eleven ships went in and none came out."
+        },
+        {
+          "id": "aeaea",
+          "name": "Aeaea",
+          "col": 6,
+          "row": 10,
+          "rank": "village",
+          "harbour": true,
+          "note": "Circe's house in the clearing, with the wolves and lions at the door."
+        },
+        {
+          "id": "grove-of-persephone",
+          "name": "The Grove of Persephone",
+          "col": 1,
+          "row": 14,
+          "rank": "village",
+          "harbour": true,
+          "note": "Poplars and willows at the edge of Ocean, where the rivers of the dead meet and the pit is dug."
+        },
+        {
+          "id": "calypsos-cave",
+          "name": "Calypso's Cave",
+          "col": 6,
+          "row": 23,
+          "rank": "village",
+          "harbour": true,
+          "note": "Alders, poplars and cypresses, four springs, and seven years."
+        }
+      ],
+      "routes": {
+        "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.",
+        "shipping": [
+          {
+            "id": "ithaca-troy",
+            "name": "Ithaca to Troy",
+            "hexes": [
+              [
+                13,
+                10
+              ],
+              [
+                12,
+                11
+              ],
+              [
+                13,
+                12
+              ],
+              [
+                14,
+                12
+              ],
+              [
+                15,
+                12
+              ],
+              [
+                15,
+                13
+              ],
+              [
+                16,
+                13
+              ],
+              [
+                17,
+                14
+              ],
+              [
+                17,
+                15
+              ],
+              [
+                18,
+                15
+              ],
+              [
+                19,
+                16
+              ],
+              [
+                19,
+                17
+              ],
+              [
+                20,
+                17
+              ],
+              [
+                21,
+                17
+              ],
+              [
+                22,
+                17
+              ],
+              [
+                23,
+                17
+              ],
+              [
+                24,
+                17
+              ],
+              [
+                25,
+                17
+              ],
+              [
+                26,
+                17
+              ],
+              [
+                27,
+                17
+              ],
+              [
+                28,
+                16
+              ],
+              [
+                28,
+                15
+              ],
+              [
+                29,
+                14
+              ],
+              [
+                29,
+                13
+              ],
+              [
+                30,
+                12
+              ],
+              [
+                30,
+                11
+              ],
+              [
+                31,
+                10
+              ],
+              [
+                31,
+                9
+              ],
+              [
+                31,
+                8
+              ],
+              [
+                30,
+                8
+              ],
+              [
+                29,
+                8
+              ],
+              [
+                28,
+                8
+              ],
+              [
+                27,
+                7
+              ],
+              [
+                27,
+                6
+              ],
+              [
+                26,
+                5
+              ],
+              [
+                27,
+                4
+              ],
+              [
+                27,
+                3
+              ],
+              [
+                28,
+                3
+              ],
+              [
+                29,
+                2
+              ],
+              [
+                29,
+                1
+              ],
+              [
+                30,
+                0
+              ],
+              [
+                31,
+                0
+              ]
+            ]
+          },
+          {
+            "id": "troy-ismarus",
+            "name": "Troy to Ismarus",
+            "hexes": [
+              [
+                31,
+                0
+              ],
+              [
+                30,
+                0
+              ],
+              [
+                29,
+                1
+              ],
+              [
+                29,
+                2
+              ],
+              [
+                28,
+                3
+              ],
+              [
+                27,
+                3
+              ],
+              [
+                27,
+                4
+              ],
+              [
+                26,
+                5
+              ],
+              [
+                25,
+                5
+              ],
+              [
+                24,
+                5
+              ],
+              [
+                24,
+                4
+              ],
+              [
+                23,
+                4
+              ],
+              [
+                22,
+                3
+              ],
+              [
+                23,
+                2
+              ],
+              [
+                22,
+                1
+              ],
+              [
+                22,
+                0
+              ]
+            ]
+          },
+          {
+            "id": "ismarus-malea",
+            "name": "Ismarus to Cape Malea",
+            "hexes": [
+              [
+                22,
+                0
+              ],
+              [
+                22,
+                1
+              ],
+              [
+                23,
+                2
+              ],
+              [
+                22,
+                3
+              ],
+              [
+                23,
+                4
+              ],
+              [
+                24,
+                4
+              ],
+              [
+                24,
+                5
+              ],
+              [
+                25,
+                5
+              ],
+              [
+                26,
+                5
+              ],
+              [
+                27,
+                6
+              ],
+              [
+                27,
+                7
+              ],
+              [
+                28,
+                8
+              ],
+              [
+                29,
+                8
+              ],
+              [
+                30,
+                8
+              ],
+              [
+                31,
+                8
+              ],
+              [
+                31,
+                9
+              ],
+              [
+                31,
+                10
+              ],
+              [
+                30,
+                11
+              ],
+              [
+                30,
+                12
+              ],
+              [
+                29,
+                13
+              ],
+              [
+                29,
+                14
+              ],
+              [
+                28,
+                15
+              ],
+              [
+                27,
+                15
+              ],
+              [
+                27,
+                16
+              ]
+            ]
+          },
+          {
+            "id": "malea-pylos",
+            "name": "Cape Malea to Pylos",
+            "hexes": [
+              [
+                27,
+                16
+              ],
+              [
+                28,
+                16
+              ],
+              [
+                28,
+                15
+              ],
+              [
+                29,
+                14
+              ],
+              [
+                29,
+                13
+              ],
+              [
+                30,
+                12
+              ],
+              [
+                30,
+                11
+              ],
+              [
+                31,
+                10
+              ],
+              [
+                31,
+                9
+              ]
+            ]
+          },
+          {
+            "id": "pylos-phaeacia",
+            "name": "Pylos to Phaeacia",
+            "hexes": [
+              [
+                31,
+                9
+              ],
+              [
+                31,
+                10
+              ],
+              [
+                30,
+                11
+              ],
+              [
+                30,
+                12
+              ],
+              [
+                29,
+                13
+              ],
+              [
+                29,
+                14
+              ],
+              [
+                28,
+                15
+              ],
+              [
+                27,
+                15
+              ],
+              [
+                27,
+                16
+              ],
+              [
+                26,
+                17
+              ],
+              [
+                25,
+                17
+              ],
+              [
+                24,
+                17
+              ],
+              [
+                23,
+                17
+              ],
+              [
+                22,
+                17
+              ],
+              [
+                21,
+                17
+              ],
+              [
+                20,
+                17
+              ],
+              [
+                19,
+                17
+              ],
+              [
+                19,
+                16
+              ],
+              [
+                18,
+                15
+              ],
+              [
+                17,
+                15
+              ],
+              [
+                17,
+                14
+              ],
+              [
+                17,
+                13
+              ],
+              [
+                18,
+                12
+              ],
+              [
+                17,
+                11
+              ],
+              [
+                18,
+                10
+              ],
+              [
+                19,
+                10
+              ],
+              [
+                19,
+                9
+              ],
+              [
+                19,
+                8
+              ],
+              [
+                18,
+                8
+              ],
+              [
+                17,
+                7
+              ],
+              [
+                17,
+                6
+              ],
+              [
+                16,
+                6
+              ],
+              [
+                15,
+                5
+              ],
+              [
+                16,
+                4
+              ],
+              [
+                15,
+                3
+              ],
+              [
+                15,
+                2
+              ],
+              [
+                14,
+                1
+              ],
+              [
+                14,
+                0
+              ],
+              [
+                13,
+                0
+              ],
+              [
+                12,
+                0
+              ],
+              [
+                11,
+                1
+              ]
+            ]
+          },
+          {
+            "id": "phaeacia-lotus-shore",
+            "name": "Phaeacia to The Lotus Shore",
+            "hexes": [
+              [
+                11,
+                1
+              ],
+              [
+                12,
+                0
+              ],
+              [
+                13,
+                0
+              ],
+              [
+                14,
+                0
+              ],
+              [
+                14,
+                1
+              ],
+              [
+                15,
+                2
+              ],
+              [
+                15,
+                3
+              ],
+              [
+                16,
+                4
+              ],
+              [
+                15,
+                5
+              ],
+              [
+                16,
+                6
+              ],
+              [
+                17,
+                6
+              ],
+              [
+                17,
+                7
+              ],
+              [
+                18,
+                8
+              ],
+              [
+                19,
+                8
+              ],
+              [
+                19,
+                9
+              ],
+              [
+                19,
+                10
+              ],
+              [
+                18,
+                10
+              ],
+              [
+                17,
+                11
+              ],
+              [
+                18,
+                12
+              ],
+              [
+                17,
+                13
+              ],
+              [
+                17,
+                14
+              ],
+              [
+                17,
+                15
+              ],
+              [
+                18,
+                15
+              ],
+              [
+                19,
+                16
+              ],
+              [
+                19,
+                17
+              ],
+              [
+                20,
+                17
+              ],
+              [
+                21,
+                17
+              ],
+              [
+                22,
+                17
+              ],
+              [
+                23,
+                17
+              ],
+              [
+                24,
+                17
+              ],
+              [
+                25,
+                17
+              ],
+              [
+                26,
+                17
+              ],
+              [
+                27,
+                17
+              ],
+              [
+                28,
+                18
+              ],
+              [
+                27,
+                19
+              ],
+              [
+                28,
+                20
+              ],
+              [
+                28,
+                21
+              ],
+              [
+                29,
+                22
+              ],
+              [
+                28,
+                23
+              ],
+              [
+                27,
+                23
+              ]
+            ]
+          },
+          {
+            "id": "lotus-shore-goat-island",
+            "name": "The Lotus Shore to Goat Island",
+            "hexes": [
+              [
+                27,
+                23
+              ],
+              [
+                28,
+                23
+              ],
+              [
+                29,
+                22
+              ],
+              [
+                29,
+                21
+              ],
+              [
+                29,
+                20
+              ],
+              [
+                28,
+                19
+              ],
+              [
+                28,
+                18
+              ],
+              [
+                27,
+                17
+              ],
+              [
+                26,
+                17
+              ],
+              [
+                25,
+                17
+              ],
+              [
+                24,
+                17
+              ],
+              [
+                23,
+                17
+              ],
+              [
+                22,
+                17
+              ],
+              [
+                22,
+                18
+              ],
+              [
+                21,
+                19
+              ],
+              [
+                21,
+                20
+              ],
+              [
+                20,
+                21
+              ],
+              [
+                20,
+                22
+              ],
+              [
+                19,
+                22
+              ],
+              [
+                18,
+                22
+              ],
+              [
+                17,
+                23
+              ],
+              [
+                16,
+                23
+              ],
+              [
+                16,
+                22
+              ],
+              [
+                15,
+                21
+              ]
+            ]
+          },
+          {
+            "id": "goat-island-aeolia",
+            "name": "Goat Island to Aeolia",
+            "hexes": [
+              [
+                15,
+                21
+              ],
+              [
+                14,
+                21
+              ],
+              [
+                14,
+                20
+              ],
+              [
+                13,
+                20
+              ],
+              [
+                12,
+                20
+              ],
+              [
+                11,
+                20
+              ],
+              [
+                10,
+                20
+              ],
+              [
+                9,
+                20
+              ],
+              [
+                8,
+                20
+              ],
+              [
+                7,
+                20
+              ],
+              [
+                6,
+                20
+              ],
+              [
+                5,
+                19
+              ],
+              [
+                5,
+                18
+              ]
+            ]
+          },
+          {
+            "id": "aeolia-telepylus",
+            "name": "Aeolia to Telepylus",
+            "hexes": [
+              [
+                5,
+                18
+              ],
+              [
+                4,
+                17
+              ],
+              [
+                4,
+                16
+              ],
+              [
+                3,
+                15
+              ],
+              [
+                3,
+                14
+              ],
+              [
+                2,
+                13
+              ],
+              [
+                1,
+                13
+              ],
+              [
+                1,
+                12
+              ],
+              [
+                1,
+                11
+              ],
+              [
+                2,
+                10
+              ],
+              [
+                2,
+                9
+              ],
+              [
+                2,
+                8
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                0,
+                5
+              ]
+            ]
+          },
+          {
+            "id": "telepylus-aeaea",
+            "name": "Telepylus to Aeaea",
+            "hexes": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                3,
+                7
+              ],
+              [
+                4,
+                7
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                6,
+                8
+              ],
+              [
+                6,
+                9
+              ],
+              [
+                7,
+                10
+              ]
+            ]
+          },
+          {
+            "id": "aeaea-grove-of-persephone",
+            "name": "Aeaea to The Grove of Persephone",
+            "hexes": [
+              [
+                7,
+                10
+              ],
+              [
+                7,
+                11
+              ],
+              [
+                7,
+                12
+              ],
+              [
+                6,
+                13
+              ],
+              [
+                6,
+                14
+              ],
+              [
+                5,
+                14
+              ],
+              [
+                4,
+                14
+              ],
+              [
+                3,
+                14
+              ],
+              [
+                2,
+                13
+              ],
+              [
+                1,
+                13
+              ]
+            ]
+          },
+          {
+            "id": "grove-of-persephone-calypsos-cave",
+            "name": "The Grove of Persephone to Calypso's Cave",
+            "hexes": [
+              [
+                1,
+                13
+              ],
+              [
+                2,
+                13
+              ],
+              [
+                3,
+                14
+              ],
+              [
+                3,
+                15
+              ],
+              [
+                4,
+                16
+              ],
+              [
+                4,
+                17
+              ],
+              [
+                5,
+                18
+              ],
+              [
+                5,
+                19
+              ],
+              [
+                6,
+                20
+              ],
+              [
+                7,
+                20
+              ],
+              [
+                7,
+                21
+              ],
+              [
+                7,
+                22
+              ],
+              [
+                7,
+                23
+              ]
+            ]
+          }
+        ],
+        "road": [
+          {
+            "from": "ithaca",
+            "to": "eumaeus-steading"
+          },
+          {
+            "from": "eumaeus-steading",
+            "to": "laertes-farm"
+          },
+          {
+            "from": "malea",
+            "to": "pylos"
+          },
+          {
+            "from": "pylos",
+            "to": "sparta"
+          }
+        ]
+      }
     }
   ],
   "art": {
@@ -19078,6 +22256,17 @@ window.GAME_DATA = {
           0.1,
           0.74,
           0.62
+        ]
+      },
+      "spell-bulwark": {
+        "file": "art/renders/spell-bulwark.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
         ]
       },
       "spell-ember-lash": {

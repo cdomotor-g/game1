@@ -30,14 +30,15 @@ in `data/maps/` and it appears there the moment the tool is run — see
 | File | Subjects | Format |
 | --- | --- | --- |
 | [`peoples.md`](peoples.md) | The 5 playable peoples | A4 portrait plate, full-length study |
-| [`monsters.md`](monsters.md) | The 14 monsters | A4 portrait plate, full-length study |
-| [`characters.md`](characters.md) | The 8 character cards | A4 portrait plate, three-quarter figure |
+| [`monsters.md`](monsters.md) | The 19 monsters | A4 portrait plate, full-length study |
+| [`characters.md`](characters.md) | The 22 character cards | A4 portrait plate, three-quarter figure |
 | [`vehicles.md`](vehicles.md) | The 17 vehicle cards | A4 landscape plate, full profile |
 | [`talismans.md`](talismans.md) | The 6 talisman cards | Single object study |
 | [`modifications.md`](modifications.md) | The 11 modification cards | Single object study |
 | [`spells.md`](spells.md) | The 14 spell cards | Square plate, one ordinary thing mid-working |
 | [`events.md`](events.md) | The 51 event cards | A4 landscape plate, the aftermath |
 | [`quests.md`](quests.md) | The 8 quest cards | A4 landscape plate, the threshold |
+| [`campaigns.md`](campaigns.md) | The 22 campaign cards — the Odyssey, place by place | A4 landscape plate, the approach |
 | [`items.md`](items.md) | The 10 item cards — the armour and the weapons | Single object study |
 | [`tools.md`](tools.md) | The 5 tool cards | Single object study |
 | [`maps.md`](maps.md) | Every board in `data/maps/` | Whole map plate, landscape root-two |

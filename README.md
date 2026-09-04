@@ -86,6 +86,8 @@ data/          the rules as data — the single source of truth, one file per sy
   vehicles.json      the vehicle deck — named trains, ships, caravans, horses
   characters.json    the character deck — health, strength, mana, gold
   quests.json        the quest deck — mini-quests and campaigns
+  campaigns.json     the two modes - free play and campaign - the campaigns, and the
+                     campaign deck: a storyline read in order. First: Homer's Odyssey
   pricing.json       how a price is arrived at: the blue, red, green and ochre dice, the
                      swing ruler, and the four kinds of good a commodity can be. All
                      addition — nothing multiplies and nothing is halved

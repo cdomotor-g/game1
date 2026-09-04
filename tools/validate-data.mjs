@@ -1187,5 +1187,75 @@ const counts = manifest.datasets
   .join(', ');
 
 console.log(`\n${counts}`);
+/* --- campaigns ------------------------------------------------------------ */
+// A campaign is a storyline read in order, and the order is the one thing only
+// this file holds. So the chapters have to be a run - 1, 2, 3 - with no hole and
+// no repeat, every card has to carry the story it teaches and the rule it plays,
+// and every place a card points at has to be on the board the campaign names.
+{
+  const camps = datasets.campaigns?.campaigns ?? [];
+  const cards = datasets.campaigns?.cards ?? [];
+  const mapsDir = join(DATA, manifest.maps?.dir ?? 'maps');
+  const mapOf = new Map();
+  for (const camp of camps) {
+    if (!camp.map) { errors.push(`campaigns: "${camp.id}" names no map - a campaign is played somewhere`); continue; }
+    const file = join(mapsDir, `${camp.map}.json`);
+    let map = null;
+    try { map = JSON.parse(readFileSync(file, 'utf8')); } catch { errors.push(`campaigns: "${camp.id}" is played on map "${camp.map}", and there is no data/maps/${camp.map}.json`); }
+    if (map) mapOf.set(camp.id, map);
+    if (!camp.victory?.trim()) errors.push(`campaigns: "${camp.id}" has no victory - a campaign that cannot be won is a book`);
+    if (!camp.summary?.trim()) errors.push(`campaigns: "${camp.id}" has no summary`);
+    const ids = new Set(camps.map((c) => c.id));
+    for (const act of camp.acts ?? []) {
+      const [from, to] = act.chapters ?? [];
+      if (!(from >= 1 && to >= from)) errors.push(`campaigns: "${camp.id}" act "${act.id}" has no chapter range`);
+    }
+    const chapters = cards.filter((c) => c.campaign === camp.id).map((c) => c.chapter).sort((a, b) => a - b);
+    if (!chapters.length) errors.push(`campaigns: "${camp.id}" has no cards - nothing to read`);
+    chapters.forEach((ch, i) => {
+      if (ch !== i + 1) errors.push(`campaigns: "${camp.id}" chapters run ${chapters.join(', ')} - they have to be 1, 2, 3 with no hole and no repeat, because the deck is read in order`);
+    });
+    const actOf = new Map((camp.acts ?? []).map((a) => [a.id, a]));
+    for (const c of cards.filter((x) => x.campaign === camp.id)) {
+      const act = actOf.get(c.act);
+      if (!act) errors.push(`campaigns: ${c.cardCode} is in act "${c.act}", which "${camp.id}" does not have`);
+      else if (c.chapter < act.chapters[0] || c.chapter > act.chapters[1]) {
+        errors.push(`campaigns: ${c.cardCode} is chapter ${c.chapter} but act "${act.id}" runs ${act.chapters[0]}-${act.chapters[1]}`);
+      }
+    }
+    /* The cast is dealt from the character deck, and a character the campaign
+       deals had better say it belongs to the campaign - that tag is what the
+       explorer and the annex read to say where a card came from. */
+    const tagged = new Set((datasets.characters?.characters ?? []).filter((x) => x.campaign === camp.id).map((x) => x.id));
+    const cast = new Set([camp.cast?.odysseus, ...Object.values(camp.cast?.heroes ?? {}).flat(), ...(camp.cast?.hosts ?? []), ...(camp.cast?.adversaries ?? [])].filter(Boolean));
+    for (const id of cast) if (!tagged.has(id)) errors.push(`campaigns: "${camp.id}" deals "${id}", who is not tagged campaign "${camp.id}" in characters.json`);
+    for (const id of tagged) if (!cast.has(id)) warnings.push(`campaigns: "${id}" is tagged campaign "${camp.id}" but the campaign never deals them`);
+    const mtagged = new Set((datasets.monsters?.monsters ?? []).filter((x) => x.campaign === camp.id).map((x) => x.id));
+    for (const id of camp.monsters ?? []) if (!mtagged.has(id)) errors.push(`campaigns: "${camp.id}" lists monster "${id}", which is not tagged campaign "${camp.id}" in monsters.json`);
+    for (const id of mtagged) if (!(camp.monsters ?? []).includes(id)) warnings.push(`campaigns: monster "${id}" is tagged campaign "${camp.id}" but the campaign never lists it`);
+  }
+  const seenCodes = new Set();
+  for (const c of cards) {
+    if (!c.cardCode) { errors.push(`campaigns: card "${c.id}" has no cardCode`); continue; }
+    if (seenCodes.has(c.cardCode)) errors.push(`campaigns: duplicate card code ${c.cardCode}`);
+    seenCodes.add(c.cardCode);
+    if (!c.told?.trim()) errors.push(`campaigns: ${c.cardCode} has no "told" - the story is the reason the card exists, and it prints a blank panel without one`);
+    if (!c.play?.trim()) errors.push(`campaigns: ${c.cardCode} has no "play" - the card would print no rule`);
+    if (!c.books) errors.push(`campaigns: ${c.cardCode} names no "books" - where in the source this chapter is`);
+    if (!c.lesson?.trim()) warnings.push(`campaigns: ${c.cardCode} has no "lesson"`);
+    const map = mapOf.get(c.campaign);
+    if (!map) continue;
+    if (!c.site?.region) { errors.push(`campaigns: ${c.cardCode} names no site.region - a chapter happens somewhere on ${map.id}`); continue; }
+    const regions = new Set((map.regions ?? []).map((r) => r.id));
+    const places = new Set((map.settlements ?? []).map((p) => p.id));
+    if (regions.size && !regions.has(c.site.region)) errors.push(`campaigns: ${c.cardCode} is set in region "${c.site.region}", which is not on ${map.id}`);
+    if (c.site.place && places.size && !places.has(c.site.place)) errors.push(`campaigns: ${c.cardCode} is set at "${c.site.place}", which is not a settlement on ${map.id}`);
+    for (const id of c.meets?.characters ?? []) {
+      const ch = (datasets.characters?.characters ?? []).find((x) => x.id === id);
+      if (ch && ch.campaign !== c.campaign) warnings.push(`campaigns: ${c.cardCode} meets "${id}", who belongs to no campaign or another one`);
+    }
+  }
+}
+
 console.log(`${errors.length} error(s), ${warnings.length} warning(s)`);
 process.exit(errors.length ? 1 : 0);

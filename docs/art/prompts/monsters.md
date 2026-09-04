@@ -1,6 +1,8 @@
-# The monsters — A4 plates (monster-cinder-wolf … monster-hoarwyrm)
+# The monsters — A4 plates (monster-cinder-wolf … monster-sirens)
 
-Twelve full-page studies, one per monster card, in deck order (MON-01 … MON-12).
+Nineteen full-page studies, one per monster card, in deck order (MON-01 … MON-19).
+MON-15 onward are the monsters of Homer's Odyssey (`data/campaigns.json`) and are
+drawn exactly as the rest are: observed, at a wary distance, doing what they do.
 Drawn like plates from a **field bestiary**: the creature observed from a safe
 distance and recorded honestly, not a battle scene. One creature per plate, in
 its home ground, with one small mundane object for scale where noted.
@@ -60,7 +62,7 @@ shading, no lens effects, no magic particles. No text, no letters, no
 border rule.
 ```
 
-## Negative prompt — for all fourteen
+## Negative prompt — for all nineteen
 
 ```text
 coffee ring, cup ring, water ring, tea stain, circular stain, ring
@@ -437,6 +439,147 @@ neck ruff and the first undulation of the body must ALL sit between 20% and
 80% down the page - outside that band nothing can be relied on. Head in the
 upper half of that band, low and forward. The far coils, the reindeer and the
 sky may run to the margins. Horizon about three-quarters down the page.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## monster-polyphemus — Polyphemus the Cyclops *(earth, MON-15, unique)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-polyphemus.png`.
+
+```text
+[PREAMBLE]
+
+An enormous one-eyed shepherd, drawn as a man the size of a hillside rather
+than a beast, sitting in the mouth of his cave milking a ewe into a wooden
+pail with careful hands; racks of drying cheeses and pens of lambs and kids
+behind him in the cave's shadow, and a flat stone the size of a cart leaning
+beside the entrance. The one eye is large, mild and open, under a shaggy brow -
+not glowing, not bloodshot. Scale object: a full-grown ram beside his foot,
+no bigger than his hand. Wash: dusty grey-green on the cave rock and the
+fleece, ochre on the cheeses, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+The creature's head and the scale object inside the middle 48% of the page
+height; the full width survives the crop. Terrain and sky may run to the
+margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## monster-laestrygonian — Laestrygonian *(earth, MON-16)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-laestrygonian.png`.
+
+```text
+[PREAMBLE]
+
+A giant, twice the height of a man and proportioned like one, standing on the
+lip of a cliff above a harbour with a boulder the size of a boat raised over
+his head in both hands, looking down and to the left at something off the
+page; a plain belted tunic, thick forearms, hair tied back. The cliff drops
+away below him to a basin of water in which, small, a single black ship is
+drawn. Wash: cold slate on the harbour, warm ochre on the rock, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+The creature's head and the scale object inside the middle 48% of the page
+height; the full width survives the crop. Terrain and sky may run to the
+margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## monster-scylla — Scylla *(water, MON-17, unique)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-scylla.png`.
+
+```text
+[PREAMBLE]
+
+Six long dog-like necks reaching down out of a cave mouth halfway up a smooth
+sea-cliff, each ending in a narrow head with rows of teeth - drawn as an
+observed animal, mouths half-open like a hunting dog's, no snarl and no
+drool - the body hidden in the dark of the cave, twelve dangling feet just
+visible. Below, a strip of grey sea against the cliff foot. Scale object: a
+ship's oar, floating. Wash: cold slate on the sea and the cliff, flat, no
+glow.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+The creature's head and the scale object inside the middle 48% of the page
+height; the full width survives the crop. Terrain and sky may run to the
+margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## monster-charybdis — Charybdis *(water, MON-18, unique)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-charybdis.png`.
+
+```text
+[PREAMBLE]
+
+A whirlpool the width of the page seen from a little above, the sea drawn
+down into a funnel of hatched rings with the black sand of the seabed just
+showing at its throat, foam and broken timbers riding the rim; above it, on a
+rock at the top of the page, a fig tree in full leaf leaning out over the
+water. No face, no creature, no eyes in the water. Scale object: a ship's
+mast and keel lashed together, riding the outer ring. Wash: cold slate on
+the water, deeper toward the throat, grey-green on the fig, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+The creature's head and the scale object inside the middle 48% of the page
+height; the full width survives the crop. Terrain and sky may run to the
+margins.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 48% of its height - everything that matters
+must sit between 26% and 74% down the page. Outside that band nothing can
+be relied on, whatever else this brief says. (Worked out from this deck's
+card window, 340.5 x 243, on the 1024 x 1536 page this deck is drawn at. It
+is not a rule of thumb.)
+```
+
+## monster-sirens — The Sirens *(air, MON-19, unique)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-sirens.png`.
+
+```text
+[PREAMBLE]
+
+Two women sitting side by side in a flowering meadow at the top of a low
+shore, singing - mouths open, hands in their laps, drawn from a little
+distance and quite still, dressed plainly; the meadow around them is heaped
+with bleached human bones and shrivelled skin among the flowers, drawn as
+matter-of-factly as the flowers. Wings only if small and folded, feathered
+like a gull's, never spread. Behind them, small on the water, a ship with its
+oars raised passing by. Wash: pale ochre on the meadow, grey-green on the
+sea-grass, cold slate on the water, flat.
+
+FRAMING. A4 portrait, whole page drawn edge to edge.
+The creature's head and the scale object inside the middle 48% of the page
+height; the full width survives the crop. Terrain and sky may run to the
+margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 48% of its height - everything that matters

@@ -31,6 +31,7 @@
     { "key": "ledger", "file": "ledger.json", "collection": null, "idField": null, "summary": "The price ledger: the only place a price lives. Commodities across the top, rounds down the side, and every price three hollow seven-segment figures the players colour in and strike through. The shapes are components.json ledger." },
     { "key": "minimap", "file": "minimap.json", "collection": null, "idField": null, "summary": "The mini-map: one world hex opened out as a plain-colour hexagonal field whose cells are the size of a world-map hex. The shapes are components.json minimap." },
     { "key": "buildingtiles", "file": "buildingtiles.json", "collection": null, "idField": null, "summary": "Building tiles: hex pieces cut so one cell is a mini-map cell, which is a world-map hex. How many cells a building takes is worked out from its own numbers through the ground model and the ladder here - it is never written on the building. The shapes it is drawn into are components.json buildingTile." },
+    { "key": "campaigns", "file": "campaigns.json", "collection": "campaigns", "idField": "id", "summary": "The two ways to sit down at the table - free play and campaign - the campaigns themselves, and the CAMPAIGN deck: a storyline read in order rather than shuffled. The first is Homer's Odyssey. A campaign brings characters, monsters and a map with it, each a full citizen of its own deck and usable in free play; only the order is the campaign's." },
     { "key": "graph", "file": "graph.json", "collection": "nodes", "idField": "id", "summary": "The dependency graph: which collections are things in the web of the game, and which ink each family washes in. Nodes only - the arrows are computed from references.checks below, never declared, so the graph cannot disagree with what the validator enforces. Drawn live by the explorer's Graph tab and into docs/art/graph/dependencies.svg by tools/build-graph.mjs for the printed rulebook." }
   ],
   "maps": {
@@ -94,7 +95,9 @@
       { "from": "monsters", "path": "monsters[].element", "to": "arcana.elements" },
       { "from": "monsters", "path": "monsters[].terrains[]", "to": "terrain" },
       { "from": "vehicles", "path": "vehicles[].mode", "to": "transport", "allow": ["mounted"] },
-      { "from": "characters", "path": "characters[].people", "to": "peoples" },
+      { "from": "characters", "path": "characters[].people", "to": "peoples", "allow": ["immortal"], "$allowNote": "An immortal is not a people: no worker type, no profession, no town. Circe, Calypso and Athena are characters and nothing else, so the word is allowed here the way `mounted` is allowed as a vehicle mode - a value the check knows and no file owns." },
+      { "from": "characters", "path": "characters[].campaign", "to": "campaigns" },
+      { "from": "monsters", "path": "monsters[].campaign", "to": "campaigns" },
       { "from": "characters", "path": "characters[].startsWith[]", "to": "items" },
       { "from": "quests", "path": "quests[].reward.items[]", "to": "items" },
       { "from": "quests", "path": "quests[].stages[].reward.items[]", "to": "items" },
@@ -103,7 +106,16 @@
       { "from": "modifications", "path": "modifications[].madeAt", "to": "buildings" },
       { "from": "modifications", "path": "modifications[].specialist", "to": "peoples.professions" },
       { "from": "modifications", "path": "modifications[].element", "to": "arcana.elements" },
-      { "from": "modifications", "path": "modifications[].fits[]", "to": "transport", "allow": ["mounted", "any"] }
+      { "from": "modifications", "path": "modifications[].fits[]", "to": "transport", "allow": ["mounted", "any"] },
+      { "from": "campaigns", "path": "cards[].campaign", "to": "campaigns" },
+      { "from": "campaigns", "path": "cards[].meets.characters[]", "to": "characters" },
+      { "from": "campaigns", "path": "cards[].meets.monsters[]", "to": "monsters" },
+      { "from": "campaigns", "path": "campaigns[].monsters[]", "to": "monsters" },
+      { "from": "campaigns", "path": "campaigns[].cast.odysseus", "to": "characters" },
+      { "from": "campaigns", "path": "campaigns[].cast.heroes.wanderings[]", "to": "characters" },
+      { "from": "campaigns", "path": "campaigns[].cast.heroes.household[]", "to": "characters" },
+      { "from": "campaigns", "path": "campaigns[].cast.hosts[]", "to": "characters" },
+      { "from": "campaigns", "path": "campaigns[].cast.adversaries[]", "to": "characters" }
     ]
   }
 }

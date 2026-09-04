@@ -19,6 +19,8 @@
     { "id": "arcana.elements", "name": "Element", "wash": "bruise" },
     { "id": "modifications", "name": "Modification", "wash": "bruise" },
     { "id": "quests", "name": "Quest", "wash": "bruise" },
-    { "id": "characters", "name": "Character", "wash": "bruise" }
+    { "id": "characters", "name": "Character", "wash": "bruise" },
+    { "id": "campaigns", "name": "Campaign", "wash": "bruise" },
+    { "id": "campaigns.cards", "name": "Campaign card", "wash": "bruise" }
   ]
 }

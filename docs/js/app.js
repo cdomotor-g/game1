@@ -19,6 +19,7 @@
     ['maps', 'Maps'],
     ['transport', 'Transport'],
     ['adventure', 'Adventure'],
+    ['campaign', 'Campaign'],
     ['events', 'Events'],
     ['items', 'Equipment'],
     ['peoples', 'Peoples'],

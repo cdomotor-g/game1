@@ -29,6 +29,12 @@
   const vehicles = D.vehicles.vehicles;
   const characters = D.characters.characters;
   const quests = D.quests.quests;
+  /* The campaign system: the two modes, the campaigns, and the CAMPAIGN deck -
+     one card per chapter, read in order. `chapter` is the kind a card is
+     indexed under, because "campaign" is the storyline it belongs to. */
+  const playModes = (D.campaigns && D.campaigns.modes) || [];
+  const campaigns = (D.campaigns && D.campaigns.campaigns) || [];
+  const chapters = ((D.campaigns && D.campaigns.cards) || []).slice().sort((a, b) => a.chapter - b.chapter);
   const spells = D.arcana.spells;
   const elements = D.arcana.elements;
   const enchantments = (D.arcana.enchantments || {}).cards || [];
@@ -62,6 +68,12 @@
     vehicle: index(vehicles),
     character: index(characters),
     quest: index(quests),
+    campaign: index(campaigns),
+    chapter: index(chapters),
+    /* Boards and their settlements, so a campaign card can name where it happens
+       by id and the page can say the name. */
+    map: index(D.maps || []),
+    place: index((D.maps || []).flatMap((m) => m.settlements || [])),
     pricing: index(pricing.models),
     spell: index(spells),
   };
@@ -81,6 +93,7 @@
       kind === 'character' ? `character-${entity.cardCode.toLowerCase()}` :
       kind === 'vehicle' ? `vehicle-${entity.cardCode.toLowerCase()}` :
       kind === 'item' && entity.class === 'talisman' ? `talisman-${entity.cardCode.toLowerCase()}` :
+      kind === 'chapter' ? `campaign-${entity.id}` :
       null;
     return renderId ? artFiles.renders[renderId] || null : null;
   }
@@ -276,6 +289,8 @@
       ['vehicle', 'Vehicles', vehicles],
       ['character', 'Characters', characters],
       ['quest', 'Quests', quests],
+      ['campaign', 'Campaigns', campaigns],
+      ['chapter', 'Campaign cards', chapters],
       ['spell', 'Spells', spells],
       ['enchantment', 'Enchantments', enchantments],
       ['modification', 'Modifications', modifications],
@@ -294,6 +309,7 @@
     commodities, tools, buildings, recipes, terrains, deposits, siting,
     modes, figures, peoples, professions, cards, items,
     monsters, vehicles, characters, quests, spells, talismans,
+    playModes, campaigns, chapters,
     elements, enchantments, modifications, playerboard, pricing,
     art, artPlacement, placeSheet, groundSheet, holdingSheets,
     categories: {

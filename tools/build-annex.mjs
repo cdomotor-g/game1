@@ -37,6 +37,7 @@ const monsters = read('monsters.json');
 const vehicles = read('vehicles.json');
 const characters = read('characters.json');
 const quests = read('quests.json');
+const campaigns = read('campaigns.json');
 const arcana = read('arcana.json');
 const modifications = read('modifications.json');
 const pricing = read('pricing.json');
@@ -971,6 +972,60 @@ if (staged.length) {
   );
   for (const q of staged.filter((x) => x.notes)) say(`**${q.name}.** ${q.notes}`);
   say();
+}
+
+/* ---------------------------------------------------------------- campaigns */
+say('## Campaign deck');
+say();
+say('A campaign is a storyline read in order, never shuffled, laid over the same game -');
+say('the second of the two ways to sit down at the table (`data/campaigns.json` modes).');
+say('Every character, monster and board a campaign brings is a full card in its own deck');
+say('and plays in free play exactly as printed; only the order is the campaign\'s. The');
+say('card prints the rule and the cost; the story and the lesson are here, because the');
+say('deck exists to teach them.');
+say();
+for (const camp of campaigns.campaigns) {
+  const cards = campaigns.cards.filter((c) => c.campaign === camp.id).sort((a, b) => a.chapter - b.chapter);
+  say(`### ${camp.name}`);
+  say();
+  say(`*${camp.subtitle}.* ${camp.summary}`);
+  say();
+  let mapName = camp.map;
+  try { mapName = JSON.parse(readFileSync(join(DATA, 'maps', `${camp.map}.json`), 'utf8')).name; } catch { /* the validator names a missing board */ }
+  say(`Played on **${mapName}** (\`data/maps/${camp.map}.json\`), ${camp.players.min}-${camp.players.max} players, ${camp.length.rounds} rounds. ${camp.victory}`);
+  say();
+  const characters = read('characters.json').characters.filter((c) => c.campaign === camp.id);
+  const monsters = read('monsters.json').monsters.filter((m) => m.campaign === camp.id);
+  say(`**Cast:** ${characters.map((c) => `${c.name} (${c.cardCode})`).join(', ')}. **Monsters:** ${monsters.map((m) => `${m.name} (${m.cardCode})`).join(', ')}.`);
+  say();
+  for (const act of camp.acts ?? []) {
+    say(`**${act.name}** (books ${act.books}, chapters ${act.chapters[0]}-${act.chapters[1]}). ${act.summary}`);
+    say();
+  }
+  table(
+    ['Code', '#', 'Chapter', 'Book', 'Where', 'Play', 'Cost'],
+    cards.map((c) => [c.cardCode, c.chapter, c.name, c.books, [c.site?.place, c.site?.region].filter(Boolean).join(' · '), c.play, c.cost ?? '—'])
+  );
+  say('#### The story, chapter by chapter');
+  say();
+  say('What the source tells at each chapter, and the one thing to take from it. Read the');
+  say('`told` aloud when the card is turned.');
+  say();
+  for (const c of cards) {
+    say(`**${c.chapter}. ${c.name}** *(${camp.source?.work ?? camp.name}, book ${c.books})*`);
+    say();
+    say(c.told);
+    say();
+    if (c.xenia && typeof c.xenia === 'object') say(`*Guest-friendship ${c.xenia.kept ? 'kept' : 'broken'}.* ${c.xenia.note}`);
+    if (c.lesson) say(`*To take away:* ${c.lesson}`);
+    say();
+  }
+  if (camp.teaches?.length) {
+    say('#### What the campaign teaches');
+    say();
+    for (const t of camp.teaches) say(`- ${t}`);
+    say();
+  }
 }
 
 /* ------------------------------------------------------ elements and arcana */

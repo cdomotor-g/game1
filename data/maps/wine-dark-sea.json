@@ -1,0 +1,1911 @@
+{
+  "$comment": "A GENERATED board, like the Sundering Isles: the `commission` is the only thing anybody writes by hand and `rows`, `settlements`, `regions`, `routes` and the `plate` block are grown from it by `node tools/draw-map.mjs wine-dark-sea`. Do not hand-edit them - change the commission and run the tool.\n\nThis is the board of the Odyssey campaign (data/campaigns.json homers-odyssey), and it is a board like any other: free play may be set out on it, and a discovery roll on its deep water may turn up Scylla. Its country is Homer's, not a chart's. Troy is real and so are Ithaca, Pylos, Sparta and Cape Malea, and they are placed where they are; everything west of Malea is where the poem puts it, which is nowhere a sailor could find - so the islands of the wanderings are laid out in the ORDER the ship reaches them, sweeping south and west and back, so that a fleet following the cards traces the voyage across the table. The Cimmerians, where the sun never shines, are at the western edge of the world, which on this board is the western edge of the paper.",
+  "version": "0.1.0",
+  "id": "wine-dark-sea",
+  "name": "The Wine-Dark Sea",
+  "subtitle": "the isles of the wanderings, from Troy to Ithaca, as the poem has them",
+  "summary": "The board of Homer's Odyssey: the Aegean and the sea west of Greece, with the real coast on the east and the poem's islands scattered west of it in the order Odysseus reached them. Everything moves by hull. Commissioned as the third board and the first for a campaign; in free play it is a sea board with a mainland along one side, which neither of the other two is.",
+  "commission": {
+    "$comment": "The input contract: everything decided before the tool runs. docs/art/prompts/maps.md § wine-dark-sea is written from this block; if the two disagree, this file is right.",
+    "why": "A campaign wants a board its cards can point at - a region for every chapter, a place for every hall - and the game wanted a third board that is neither the Reach's continent nor the Isles' scatter: a coast with a sea beside it. The mainland gives a free-play table a rail-and-road half; the islands give it the shipping half; and the campaign gives it a reason to cross from one to the other.",
+    "landmass": "One mainland, Hellas, filling the north-east quarter and running south to a cape, with the Troad as a separate coast off its eastern edge across a narrow strait and Thrace along the top edge. Ithaca is a small island close under the mainland's west coast, and Scheria a larger one north-west of it. Everything else is small and scattered west and south across open sea: the Lotus shore far to the south-east, the Cyclops's island south, Aeolia and the Laestrygonians' harbour in the west, Aeaea and the Sirens' meadow, the strait of Scylla under Thrinacia, Ogygia alone in the south-west, and the Cimmerian shore against the western edge of the paper, where the world ends. Open deep water on the south edge; the west edge is a shelf of mist.",
+    "terrainBudget": [
+      {
+        "terrain": "deep-water",
+        "share": 0.3
+      },
+      {
+        "terrain": "shallow-water",
+        "share": 0.16
+      },
+      {
+        "terrain": "lake",
+        "share": 0.01
+      },
+      {
+        "terrain": "grassland",
+        "share": 0.2
+      },
+      {
+        "terrain": "forest",
+        "share": 0.1
+      },
+      {
+        "terrain": "hills",
+        "share": 0.13
+      },
+      {
+        "terrain": "mountain",
+        "share": 0.06
+      },
+      {
+        "terrain": "marsh",
+        "share": 0.02
+      },
+      {
+        "terrain": "desert",
+        "share": 0.02
+      }
+    ],
+    "$terrainBudgetNote": "Shares of the whole grid, water included. Just over half the board is land, most of it the mainland, and the mainland is hilly on purpose: Greece is. The mountain share is the largest on any board here and there is no volcanic island, so the generator puts the peaks where the land is deepest, which is the middle of Hellas - Taygetus above Sparta, the mountains behind Pylos. The desert is the Lotus shore (Libya, by the oldest reading) and whatever else the generator hands it; the marsh is meant for the Cimmerian shore and lands where it lands. Tundra is absent: this is a warm sea.",
+    "settlements": {
+      "count": 16,
+      "seat": 1,
+      "city": 3,
+      "town": 4,
+      "village": 8,
+      "harbours": 13
+    },
+    "$settlementNote": "Ithaca is the seat, because the campaign is the story of getting back to it. Three cities: Troy, which has just fallen; Telepylus of the Laestrygonians, which Homer calls a city and gives a king; and Phaeacia, the poem's perfect town. Sparta is the one inland town, as it really is, and the two Ithacan farms are inland because a swineherd's steading and an old man's orchard are not on the quay.",
+    "routes": {
+      "rail": false,
+      "shipping": true,
+      "road": true
+    },
+    "$routeNote": "No rail: the poem is Bronze Age and the campaign moves by ship. Free play on this board may lay rail on the mainland as on any other; the commission does not draw any. Roads join the places that share an island, so Pylos, Sparta and Malea are walkable and the three Ithacan places are.",
+    "mustHave": [
+      "a mainland along the north-east with a cape running south, and a separate coast east of it across a strait for Troy",
+      "Ithaca as a small island close under the mainland's west coast, and Scheria a larger island north-west of it",
+      "the islands of the wanderings scattered west and south in the order the cards visit them, none touching",
+      "a strait between a small rock and a larger island for Scylla and Charybdis",
+      "a shelf of shallows along the whole western edge - the mist of Ocean - with the Cimmerian shore against it"
+    ],
+    "mustNotHave": [
+      "a hex grid, a square grid, or any ruled lines over the field",
+      "hillshading, relief shading, contour lines or depth soundings",
+      "a temple, a column, a statue or any Classical furniture drawn on the land - the poem is older than all of it",
+      "map furniture over land: cartouche, legend and compass sit over open water",
+      "modern Greek place names - the names are the poem's"
+    ],
+    "landform": {
+      "$comment": "The only positional thing anybody types: an anchor per island and a weight. Columns run 0-31 west to east, rows 0-23 north to south. Hellas is anchored inland of its own centre so it grows a cape southward; Troy's coast is a separate island so the strait stays water; Scylla's rock is the smallest anchor on the board and is meant to come out as a hex or two beside the water it names.",
+      "seed": 20260904,
+      "shareIsRelative": true,
+      "edges": {
+        "west": "shelf"
+      },
+      "shelfWidth": 1,
+      "islands": [
+        {
+          "id": "hellas",
+          "name": "Hellas",
+          "chain": "mainland",
+          "at": [
+            22,
+            7
+          ],
+          "share": 0.3
+        },
+        {
+          "id": "troad",
+          "name": "The Troad",
+          "chain": "mainland",
+          "at": [
+            30,
+            4
+          ],
+          "share": 0.05
+        },
+        {
+          "id": "thrace",
+          "name": "Thrace",
+          "chain": "mainland",
+          "at": [
+            26,
+            1
+          ],
+          "share": 0.05
+        },
+        {
+          "id": "ithaca",
+          "name": "Ithaca",
+          "chain": "home",
+          "at": [
+            15,
+            9
+          ],
+          "share": 0.05
+        },
+        {
+          "id": "scheria",
+          "name": "Scheria",
+          "chain": "home",
+          "at": [
+            12,
+            4
+          ],
+          "share": 0.06
+        },
+        {
+          "id": "lotus-land",
+          "name": "The Lotus Shore",
+          "chain": "wanderings",
+          "at": [
+            25,
+            21
+          ],
+          "share": 0.05
+        },
+        {
+          "id": "cyclops-isle",
+          "name": "The Cyclops's Island",
+          "chain": "wanderings",
+          "at": [
+            17,
+            19
+          ],
+          "share": 0.05
+        },
+        {
+          "id": "aeolia",
+          "name": "Aeolia",
+          "chain": "wanderings",
+          "at": [
+            7,
+            18
+          ],
+          "share": 0.02
+        },
+        {
+          "id": "laestrygonia",
+          "name": "Laestrygonia",
+          "chain": "wanderings",
+          "at": [
+            3,
+            3
+          ],
+          "share": 0.06
+        },
+        {
+          "id": "aeaea",
+          "name": "Aeaea",
+          "chain": "wanderings",
+          "at": [
+            4,
+            11
+          ],
+          "share": 0.04
+        },
+        {
+          "id": "cimmeria",
+          "name": "The Cimmerian Shore",
+          "chain": "wanderings",
+          "at": [
+            1,
+            16
+          ],
+          "share": 0.03
+        },
+        {
+          "id": "sirens-meadow",
+          "name": "The Sirens' Meadow",
+          "chain": "wanderings",
+          "at": [
+            12,
+            14
+          ],
+          "share": 0.01
+        },
+        {
+          "id": "scylla-rock",
+          "name": "Scylla's Rock",
+          "chain": "wanderings",
+          "at": [
+            9,
+            8
+          ],
+          "share": 0.008
+        },
+        {
+          "id": "thrinacia",
+          "name": "Thrinacia",
+          "chain": "wanderings",
+          "at": [
+            9,
+            12
+          ],
+          "share": 0.05
+        },
+        {
+          "id": "ogygia",
+          "name": "Ogygia",
+          "chain": "wanderings",
+          "at": [
+            5,
+            22
+          ],
+          "share": 0.03
+        }
+      ],
+      "$islandNote": "Shares are weights normalised onto the land total the budget asks for. Hellas is the only large one; the Troad and Thrace are its coasts made separate so the straits between them stay water. `chain` is a label the regions carry and nothing else reads.",
+      "links": []
+    },
+    "places": [
+      {
+        "id": "ithaca",
+        "name": "Ithaca",
+        "rank": "seat",
+        "harbour": true,
+        "island": "ithaca",
+        "note": "The hall of Odysseus, above the harbour. The whole poem is the road here."
+      },
+      {
+        "id": "eumaeus-steading",
+        "name": "Eumaeus's Steading",
+        "rank": "village",
+        "harbour": false,
+        "island": "ithaca",
+        "note": "The swineherd's yard on the hill: twelve sties and six hundred pigs, and the one door in Ithaca that opens to a beggar."
+      },
+      {
+        "id": "laertes-farm",
+        "name": "Laertes' Orchard",
+        "rank": "village",
+        "harbour": false,
+        "island": "ithaca",
+        "note": "The old king's farm, where the last book ends: thirteen pear trees, ten apple, forty fig, fifty rows of vines."
+      },
+      {
+        "id": "troy",
+        "name": "Troy",
+        "rank": "city",
+        "harbour": true,
+        "island": "troad",
+        "note": "Just fallen. The fleet sails from its beach with the spoil of ten years."
+      },
+      {
+        "id": "ismarus",
+        "name": "Ismarus",
+        "rank": "town",
+        "harbour": true,
+        "island": "thrace",
+        "note": "City of the Cicones, allies of Troy, and the first landfall. Maron's wine comes from here."
+      },
+      {
+        "id": "malea",
+        "name": "Cape Malea",
+        "rank": "village",
+        "harbour": true,
+        "island": "hellas",
+        "note": "The last corner before home, and the wind that takes it away."
+      },
+      {
+        "id": "pylos",
+        "name": "Pylos",
+        "rank": "town",
+        "harbour": true,
+        "island": "hellas",
+        "note": "Sandy Pylos, old Nestor's town, where Telemachus first asks after his father."
+      },
+      {
+        "id": "sparta",
+        "name": "Sparta",
+        "rank": "town",
+        "harbour": false,
+        "island": "hellas",
+        "note": "Menelaus and Helen, in the hollow of the mountains, who tell Telemachus his father is alive."
+      },
+      {
+        "id": "phaeacia",
+        "name": "Phaeacia",
+        "rank": "city",
+        "harbour": true,
+        "island": "scheria",
+        "note": "Alcinous's city, the poem's perfect host. Its ship was turned to stone in sight of this harbour."
+      },
+      {
+        "id": "lotus-shore",
+        "name": "The Lotus Shore",
+        "rank": "village",
+        "harbour": true,
+        "island": "lotus-land",
+        "note": "Where three men ate the fruit and forgot the way home."
+      },
+      {
+        "id": "goat-island",
+        "name": "Goat Island",
+        "rank": "village",
+        "harbour": true,
+        "island": "cyclops-isle",
+        "note": "The wooded islet where the fleet waits while Odysseus crosses to the Cyclops's cave."
+      },
+      {
+        "id": "aeolia",
+        "name": "Aeolia",
+        "rank": "town",
+        "harbour": true,
+        "island": "aeolia",
+        "note": "The floating island walled in bronze, where Aeolus keeps the winds in a bag."
+      },
+      {
+        "id": "telepylus",
+        "name": "Telepylus",
+        "rank": "city",
+        "harbour": true,
+        "island": "laestrygonia",
+        "note": "The Laestrygonians' city on its cliff-walled harbour: eleven ships went in and none came out."
+      },
+      {
+        "id": "aeaea",
+        "name": "Aeaea",
+        "rank": "village",
+        "harbour": true,
+        "island": "aeaea",
+        "note": "Circe's house in the clearing, with the wolves and lions at the door."
+      },
+      {
+        "id": "grove-of-persephone",
+        "name": "The Grove of Persephone",
+        "rank": "village",
+        "harbour": true,
+        "island": "cimmeria",
+        "note": "Poplars and willows at the edge of Ocean, where the rivers of the dead meet and the pit is dug."
+      },
+      {
+        "id": "calypsos-cave",
+        "name": "Calypso's Cave",
+        "rank": "village",
+        "harbour": true,
+        "island": "ogygia",
+        "note": "Alders, poplars and cypresses, four springs, and seven years."
+      }
+    ],
+    "$placesNote": "Names and ranks are content and are decided here; where each stands is computed by tools/draw-map.mjs. Thrinacia, the Sirens' meadow and Scylla's rock have no settlement on purpose: the poem puts nobody there but cattle, bones and a monster, and a campaign card points at the REGION.",
+    "plate": {
+      "minWidthPx": 4000,
+      "wantWidthPx": 7000,
+      "aspect": "root-two landscape",
+      "$note": "Kept for the contract the mint checks. A generated plate is vector and has no long side; the figures say what a drawn replacement would owe."
+    }
+  },
+  "plate": {
+    "kind": "generated",
+    "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
+    "file": "wine-dark-sea.svg",
+    "width": 4000,
+    "height": 2657,
+    "field": {
+      "x": 34,
+      "y": 34,
+      "width": 3932,
+      "height": 2589
+    },
+    "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line."
+  },
+  "grid": {
+    "shape": "hex",
+    "orientation": "pointy",
+    "offset": "odd-r",
+    "cols": 32,
+    "rows": 24,
+    "fit": "field-width",
+    "$fitNote": "The Reach's 32 columns on a root-two landscape field, which puts the rows at 24: the mainland wants the room the Isles did not, and a one-hex island is still a place."
+  },
+  "print": {
+    "$comment": "Sheet layouts in the same three sizes as every other board. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived and written in by tools/build-map.mjs.",
+    "default": "four-sheet",
+    "presets": [
+      {
+        "id": "four-sheet",
+        "name": "Four sheets, A2",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 2,
+        "sheetRows": 2,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "note": "Two by two, printed landscape. The working size for a table.",
+        "mapWidthMm": 562,
+        "mapHeightMm": 373.3,
+        "hexAcrossFlatsMm": 17.3
+      },
+      {
+        "id": "nine-sheet",
+        "name": "Nine sheets, A1",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 3,
+        "sheetRows": 3,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "note": "Three by three. A vector plate prints at this size without asking.",
+        "mapWidthMm": 843,
+        "mapHeightMm": 560,
+        "hexAcrossFlatsMm": 25.9
+      },
+      {
+        "id": "one-sheet",
+        "name": "One sheet, reference",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 1,
+        "sheetRows": 1,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "note": "The whole board on one page, for reading rather than playing.",
+        "mapWidthMm": 281,
+        "mapHeightMm": 186.7,
+        "hexAcrossFlatsMm": 8.6
+      }
+    ]
+  },
+  "legend": {
+    "$comment": "Character to terrain id, identical to the other two boards so a board from any map reads the same in a text editor.",
+    "~": "deep-water",
+    "-": "shallow-water",
+    "r": "river",
+    "l": "lake",
+    ".": "grassland",
+    "f": "forest",
+    "h": "hills",
+    "^": "mountain",
+    "m": "marsh",
+    "t": "tundra",
+    "d": "desert"
+  },
+  "rows": [
+    "-~-.-.-~~~-----~--....-.ff..m.--",
+    "--.f.-~~~-.-m.--f.hhhf-dhhhhf-md",
+    "-m.hhm--~~-.f.---.f^^hf-.hh.f-ff",
+    "-fhhhfd---.hh..-.h^^hf-dfh.--.h.",
+    "-.hhh.---..h^h.m-.h^^hd--df-f.h.",
+    "-d.h.m-~-m.hh.--..hhhhff---dhhh.",
+    "---.m--~---mh.----fhhhhh...-.hh.",
+    "-~---~--..-..-f..-f.hh^hhhf-dm..",
+    "-~~----f-..---.hhm--.h^^^^hf----",
+    "-~-.-.-.----.fh^hf.-dh^^^^h..f.-",
+    "-~-...f-ffff--.hhf--.h^^^^^hh.--",
+    "--fhhh.-.h..-m...-ffh^^^^^^f.m-~",
+    "--..hh.-.h.-----d.-.h^^^^^^f.--~",
+    "---.f.-.h.-.-~~---.h^^^^^^hff-~~",
+    "-f.----.ff-..-~~~-.ff^^^^hf..-~~",
+    ".hf-~-.--d-..-~~~--.hffffh.--~~~",
+    ".hhf----f-.---~~--m-.ff..ff-~~~~",
+    "...--...-..-~~~-..f---------~~~~",
+    "f-f-~-.h.---~~~-.hh.--~----d-~~~",
+    "------..-~~~~~-.h^hf.--.ff.-~~~~",
+    "-~~-..---~~~~~-ffhhd---.hhh.-~~~",
+    "-~-.h.f-~~~~~~--.ff.-~-.h^hf-~~~",
+    "-~-.hh.-~~~~~~~~-.---~~-fhhf.-~~",
+    "-~-f...-~~~~~~~~--~~~~-d.ff--~~~"
+  ],
+  "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+  "regions": [
+    {
+      "id": "hellas",
+      "name": "Hellas",
+      "terrain": "mountain",
+      "labelAt": [
+        22,
+        7
+      ],
+      "summary": "142 hexes of the mainland chain, mostly mountain. Cape Malea, Pylos, Sparta."
+    },
+    {
+      "id": "troad",
+      "name": "The Troad",
+      "terrain": "grassland",
+      "labelAt": [
+        30,
+        4
+      ],
+      "summary": "24 hexes of the mainland chain, mostly grassland. Troy."
+    },
+    {
+      "id": "thrace",
+      "name": "Thrace",
+      "terrain": "hills",
+      "labelAt": [
+        26,
+        1
+      ],
+      "summary": "24 hexes of the mainland chain, mostly hills. Ismarus."
+    },
+    {
+      "id": "ithaca",
+      "name": "Ithaca",
+      "terrain": "grassland",
+      "labelAt": [
+        15,
+        9
+      ],
+      "summary": "24 hexes of the home chain, mostly grassland. Ithaca, Eumaeus's Steading, Laertes' Orchard."
+    },
+    {
+      "id": "scheria",
+      "name": "Scheria",
+      "terrain": "grassland",
+      "labelAt": [
+        12,
+        4
+      ],
+      "summary": "28 hexes of the home chain, mostly grassland. Phaeacia."
+    },
+    {
+      "id": "lotus-land",
+      "name": "The Lotus Shore",
+      "terrain": "hills",
+      "labelAt": [
+        25,
+        21
+      ],
+      "summary": "24 hexes of the wanderings chain, mostly hills. The Lotus Shore."
+    },
+    {
+      "id": "cyclops-isle",
+      "name": "The Cyclops's Island",
+      "terrain": "grassland",
+      "labelAt": [
+        17,
+        19
+      ],
+      "summary": "24 hexes of the wanderings chain, mostly grassland. Goat Island."
+    },
+    {
+      "id": "aeolia",
+      "name": "Aeolia",
+      "terrain": "grassland",
+      "labelAt": [
+        7,
+        18
+      ],
+      "summary": "9 hexes of the wanderings chain, mostly grassland. Aeolia."
+    },
+    {
+      "id": "laestrygonia",
+      "name": "Laestrygonia",
+      "terrain": "grassland",
+      "labelAt": [
+        3,
+        3
+      ],
+      "summary": "28 hexes of the wanderings chain, mostly grassland. Telepylus."
+    },
+    {
+      "id": "aeaea",
+      "name": "Aeaea",
+      "terrain": "grassland",
+      "labelAt": [
+        4,
+        11
+      ],
+      "summary": "19 hexes of the wanderings chain, mostly grassland. Aeaea."
+    },
+    {
+      "id": "cimmeria",
+      "name": "The Cimmerian Shore",
+      "terrain": "grassland",
+      "labelAt": [
+        1,
+        16
+      ],
+      "summary": "14 hexes of the wanderings chain, mostly grassland. The Grove of Persephone."
+    },
+    {
+      "id": "sirens-meadow",
+      "name": "The Sirens' Meadow",
+      "terrain": "grassland",
+      "labelAt": [
+        12,
+        14
+      ],
+      "summary": "5 hexes of the wanderings chain, mostly grassland. Nobody lives here."
+    },
+    {
+      "id": "scylla-rock",
+      "name": "Scylla's Rock",
+      "terrain": "grassland",
+      "labelAt": [
+        9,
+        8
+      ],
+      "summary": "4 hexes of the wanderings chain, mostly grassland. Nobody lives here."
+    },
+    {
+      "id": "thrinacia",
+      "name": "Thrinacia",
+      "terrain": "grassland",
+      "labelAt": [
+        9,
+        12
+      ],
+      "summary": "24 hexes of the wanderings chain, mostly grassland. Nobody lives here."
+    },
+    {
+      "id": "ogygia",
+      "name": "Ogygia",
+      "terrain": "grassland",
+      "labelAt": [
+        5,
+        22
+      ],
+      "summary": "14 hexes of the wanderings chain, mostly grassland. Calypso's Cave."
+    }
+  ],
+  "settlements": [
+    {
+      "id": "ithaca",
+      "name": "Ithaca",
+      "col": 14,
+      "row": 10,
+      "rank": "seat",
+      "harbour": true,
+      "note": "The hall of Odysseus, above the harbour. The whole poem is the road here."
+    },
+    {
+      "id": "eumaeus-steading",
+      "name": "Eumaeus's Steading",
+      "col": 16,
+      "row": 9,
+      "rank": "village",
+      "note": "The swineherd's yard on the hill: twelve sties and six hundred pigs, and the one door in Ithaca that opens to a beggar."
+    },
+    {
+      "id": "laertes-farm",
+      "name": "Laertes' Orchard",
+      "col": 15,
+      "row": 8,
+      "rank": "village",
+      "note": "The old king's farm, where the last book ends: thirteen pear trees, ten apple, forty fig, fifty rows of vines."
+    },
+    {
+      "id": "troy",
+      "name": "Troy",
+      "col": 31,
+      "row": 1,
+      "rank": "city",
+      "harbour": true,
+      "note": "Just fallen. The fleet sails from its beach with the spoil of ten years."
+    },
+    {
+      "id": "ismarus",
+      "name": "Ismarus",
+      "col": 23,
+      "row": 0,
+      "rank": "town",
+      "harbour": true,
+      "note": "City of the Cicones, allies of Troy, and the first landfall. Maron's wine comes from here."
+    },
+    {
+      "id": "malea",
+      "name": "Cape Malea",
+      "col": 26,
+      "row": 16,
+      "rank": "village",
+      "harbour": true,
+      "note": "The last corner before home, and the wind that takes it away."
+    },
+    {
+      "id": "pylos",
+      "name": "Pylos",
+      "col": 30,
+      "row": 9,
+      "rank": "town",
+      "harbour": true,
+      "note": "Sandy Pylos, old Nestor's town, where Telemachus first asks after his father."
+    },
+    {
+      "id": "sparta",
+      "name": "Sparta",
+      "col": 21,
+      "row": 7,
+      "rank": "town",
+      "note": "Menelaus and Helen, in the hollow of the mountains, who tell Telemachus his father is alive."
+    },
+    {
+      "id": "phaeacia",
+      "name": "Phaeacia",
+      "col": 10,
+      "row": 1,
+      "rank": "city",
+      "harbour": true,
+      "note": "Alcinous's city, the poem's perfect host. Its ship was turned to stone in sight of this harbour."
+    },
+    {
+      "id": "lotus-shore",
+      "name": "The Lotus Shore",
+      "col": 26,
+      "row": 23,
+      "rank": "village",
+      "harbour": true,
+      "note": "Where three men ate the fruit and forgot the way home."
+    },
+    {
+      "id": "goat-island",
+      "name": "Goat Island",
+      "col": 16,
+      "row": 21,
+      "rank": "village",
+      "harbour": true,
+      "note": "The wooded islet where the fleet waits while Odysseus crosses to the Cyclops's cave."
+    },
+    {
+      "id": "aeolia",
+      "name": "Aeolia",
+      "col": 6,
+      "row": 18,
+      "rank": "town",
+      "harbour": true,
+      "note": "The floating island walled in bronze, where Aeolus keeps the winds in a bag."
+    },
+    {
+      "id": "telepylus",
+      "name": "Telepylus",
+      "col": 1,
+      "row": 5,
+      "rank": "city",
+      "harbour": true,
+      "note": "The Laestrygonians' city on its cliff-walled harbour: eleven ships went in and none came out."
+    },
+    {
+      "id": "aeaea",
+      "name": "Aeaea",
+      "col": 6,
+      "row": 10,
+      "rank": "village",
+      "harbour": true,
+      "note": "Circe's house in the clearing, with the wolves and lions at the door."
+    },
+    {
+      "id": "grove-of-persephone",
+      "name": "The Grove of Persephone",
+      "col": 1,
+      "row": 14,
+      "rank": "village",
+      "harbour": true,
+      "note": "Poplars and willows at the edge of Ocean, where the rivers of the dead meet and the pit is dug."
+    },
+    {
+      "id": "calypsos-cave",
+      "name": "Calypso's Cave",
+      "col": 6,
+      "row": 23,
+      "rank": "village",
+      "harbour": true,
+      "note": "Alders, poplars and cypresses, four springs, and seven years."
+    }
+  ],
+  "routes": {
+    "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.",
+    "shipping": [
+      {
+        "id": "ithaca-troy",
+        "name": "Ithaca to Troy",
+        "hexes": [
+          [
+            13,
+            10
+          ],
+          [
+            12,
+            11
+          ],
+          [
+            13,
+            12
+          ],
+          [
+            14,
+            12
+          ],
+          [
+            15,
+            12
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            16,
+            13
+          ],
+          [
+            17,
+            14
+          ],
+          [
+            17,
+            15
+          ],
+          [
+            18,
+            15
+          ],
+          [
+            19,
+            16
+          ],
+          [
+            19,
+            17
+          ],
+          [
+            20,
+            17
+          ],
+          [
+            21,
+            17
+          ],
+          [
+            22,
+            17
+          ],
+          [
+            23,
+            17
+          ],
+          [
+            24,
+            17
+          ],
+          [
+            25,
+            17
+          ],
+          [
+            26,
+            17
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            29,
+            13
+          ],
+          [
+            30,
+            12
+          ],
+          [
+            30,
+            11
+          ],
+          [
+            31,
+            10
+          ],
+          [
+            31,
+            9
+          ],
+          [
+            31,
+            8
+          ],
+          [
+            30,
+            8
+          ],
+          [
+            29,
+            8
+          ],
+          [
+            28,
+            8
+          ],
+          [
+            27,
+            7
+          ],
+          [
+            27,
+            6
+          ],
+          [
+            26,
+            5
+          ],
+          [
+            27,
+            4
+          ],
+          [
+            27,
+            3
+          ],
+          [
+            28,
+            3
+          ],
+          [
+            29,
+            2
+          ],
+          [
+            29,
+            1
+          ],
+          [
+            30,
+            0
+          ],
+          [
+            31,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "troy-ismarus",
+        "name": "Troy to Ismarus",
+        "hexes": [
+          [
+            31,
+            0
+          ],
+          [
+            30,
+            0
+          ],
+          [
+            29,
+            1
+          ],
+          [
+            29,
+            2
+          ],
+          [
+            28,
+            3
+          ],
+          [
+            27,
+            3
+          ],
+          [
+            27,
+            4
+          ],
+          [
+            26,
+            5
+          ],
+          [
+            25,
+            5
+          ],
+          [
+            24,
+            5
+          ],
+          [
+            24,
+            4
+          ],
+          [
+            23,
+            4
+          ],
+          [
+            22,
+            3
+          ],
+          [
+            23,
+            2
+          ],
+          [
+            22,
+            1
+          ],
+          [
+            22,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "ismarus-malea",
+        "name": "Ismarus to Cape Malea",
+        "hexes": [
+          [
+            22,
+            0
+          ],
+          [
+            22,
+            1
+          ],
+          [
+            23,
+            2
+          ],
+          [
+            22,
+            3
+          ],
+          [
+            23,
+            4
+          ],
+          [
+            24,
+            4
+          ],
+          [
+            24,
+            5
+          ],
+          [
+            25,
+            5
+          ],
+          [
+            26,
+            5
+          ],
+          [
+            27,
+            6
+          ],
+          [
+            27,
+            7
+          ],
+          [
+            28,
+            8
+          ],
+          [
+            29,
+            8
+          ],
+          [
+            30,
+            8
+          ],
+          [
+            31,
+            8
+          ],
+          [
+            31,
+            9
+          ],
+          [
+            31,
+            10
+          ],
+          [
+            30,
+            11
+          ],
+          [
+            30,
+            12
+          ],
+          [
+            29,
+            13
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            27,
+            15
+          ],
+          [
+            27,
+            16
+          ]
+        ]
+      },
+      {
+        "id": "malea-pylos",
+        "name": "Cape Malea to Pylos",
+        "hexes": [
+          [
+            27,
+            16
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            29,
+            13
+          ],
+          [
+            30,
+            12
+          ],
+          [
+            30,
+            11
+          ],
+          [
+            31,
+            10
+          ],
+          [
+            31,
+            9
+          ]
+        ]
+      },
+      {
+        "id": "pylos-phaeacia",
+        "name": "Pylos to Phaeacia",
+        "hexes": [
+          [
+            31,
+            9
+          ],
+          [
+            31,
+            10
+          ],
+          [
+            30,
+            11
+          ],
+          [
+            30,
+            12
+          ],
+          [
+            29,
+            13
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            27,
+            15
+          ],
+          [
+            27,
+            16
+          ],
+          [
+            26,
+            17
+          ],
+          [
+            25,
+            17
+          ],
+          [
+            24,
+            17
+          ],
+          [
+            23,
+            17
+          ],
+          [
+            22,
+            17
+          ],
+          [
+            21,
+            17
+          ],
+          [
+            20,
+            17
+          ],
+          [
+            19,
+            17
+          ],
+          [
+            19,
+            16
+          ],
+          [
+            18,
+            15
+          ],
+          [
+            17,
+            15
+          ],
+          [
+            17,
+            14
+          ],
+          [
+            17,
+            13
+          ],
+          [
+            18,
+            12
+          ],
+          [
+            17,
+            11
+          ],
+          [
+            18,
+            10
+          ],
+          [
+            19,
+            10
+          ],
+          [
+            19,
+            9
+          ],
+          [
+            19,
+            8
+          ],
+          [
+            18,
+            8
+          ],
+          [
+            17,
+            7
+          ],
+          [
+            17,
+            6
+          ],
+          [
+            16,
+            6
+          ],
+          [
+            15,
+            5
+          ],
+          [
+            16,
+            4
+          ],
+          [
+            15,
+            3
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            14,
+            1
+          ],
+          [
+            14,
+            0
+          ],
+          [
+            13,
+            0
+          ],
+          [
+            12,
+            0
+          ],
+          [
+            11,
+            1
+          ]
+        ]
+      },
+      {
+        "id": "phaeacia-lotus-shore",
+        "name": "Phaeacia to The Lotus Shore",
+        "hexes": [
+          [
+            11,
+            1
+          ],
+          [
+            12,
+            0
+          ],
+          [
+            13,
+            0
+          ],
+          [
+            14,
+            0
+          ],
+          [
+            14,
+            1
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            15,
+            3
+          ],
+          [
+            16,
+            4
+          ],
+          [
+            15,
+            5
+          ],
+          [
+            16,
+            6
+          ],
+          [
+            17,
+            6
+          ],
+          [
+            17,
+            7
+          ],
+          [
+            18,
+            8
+          ],
+          [
+            19,
+            8
+          ],
+          [
+            19,
+            9
+          ],
+          [
+            19,
+            10
+          ],
+          [
+            18,
+            10
+          ],
+          [
+            17,
+            11
+          ],
+          [
+            18,
+            12
+          ],
+          [
+            17,
+            13
+          ],
+          [
+            17,
+            14
+          ],
+          [
+            17,
+            15
+          ],
+          [
+            18,
+            15
+          ],
+          [
+            19,
+            16
+          ],
+          [
+            19,
+            17
+          ],
+          [
+            20,
+            17
+          ],
+          [
+            21,
+            17
+          ],
+          [
+            22,
+            17
+          ],
+          [
+            23,
+            17
+          ],
+          [
+            24,
+            17
+          ],
+          [
+            25,
+            17
+          ],
+          [
+            26,
+            17
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            28,
+            18
+          ],
+          [
+            27,
+            19
+          ],
+          [
+            28,
+            20
+          ],
+          [
+            28,
+            21
+          ],
+          [
+            29,
+            22
+          ],
+          [
+            28,
+            23
+          ],
+          [
+            27,
+            23
+          ]
+        ]
+      },
+      {
+        "id": "lotus-shore-goat-island",
+        "name": "The Lotus Shore to Goat Island",
+        "hexes": [
+          [
+            27,
+            23
+          ],
+          [
+            28,
+            23
+          ],
+          [
+            29,
+            22
+          ],
+          [
+            29,
+            21
+          ],
+          [
+            29,
+            20
+          ],
+          [
+            28,
+            19
+          ],
+          [
+            28,
+            18
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            26,
+            17
+          ],
+          [
+            25,
+            17
+          ],
+          [
+            24,
+            17
+          ],
+          [
+            23,
+            17
+          ],
+          [
+            22,
+            17
+          ],
+          [
+            22,
+            18
+          ],
+          [
+            21,
+            19
+          ],
+          [
+            21,
+            20
+          ],
+          [
+            20,
+            21
+          ],
+          [
+            20,
+            22
+          ],
+          [
+            19,
+            22
+          ],
+          [
+            18,
+            22
+          ],
+          [
+            17,
+            23
+          ],
+          [
+            16,
+            23
+          ],
+          [
+            16,
+            22
+          ],
+          [
+            15,
+            21
+          ]
+        ]
+      },
+      {
+        "id": "goat-island-aeolia",
+        "name": "Goat Island to Aeolia",
+        "hexes": [
+          [
+            15,
+            21
+          ],
+          [
+            14,
+            21
+          ],
+          [
+            14,
+            20
+          ],
+          [
+            13,
+            20
+          ],
+          [
+            12,
+            20
+          ],
+          [
+            11,
+            20
+          ],
+          [
+            10,
+            20
+          ],
+          [
+            9,
+            20
+          ],
+          [
+            8,
+            20
+          ],
+          [
+            7,
+            20
+          ],
+          [
+            6,
+            20
+          ],
+          [
+            5,
+            19
+          ],
+          [
+            5,
+            18
+          ]
+        ]
+      },
+      {
+        "id": "aeolia-telepylus",
+        "name": "Aeolia to Telepylus",
+        "hexes": [
+          [
+            5,
+            18
+          ],
+          [
+            4,
+            17
+          ],
+          [
+            4,
+            16
+          ],
+          [
+            3,
+            15
+          ],
+          [
+            3,
+            14
+          ],
+          [
+            2,
+            13
+          ],
+          [
+            1,
+            13
+          ],
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            11
+          ],
+          [
+            2,
+            10
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            0,
+            5
+          ]
+        ]
+      },
+      {
+        "id": "telepylus-aeaea",
+        "name": "Telepylus to Aeaea",
+        "hexes": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            10
+          ]
+        ]
+      },
+      {
+        "id": "aeaea-grove-of-persephone",
+        "name": "Aeaea to The Grove of Persephone",
+        "hexes": [
+          [
+            7,
+            10
+          ],
+          [
+            7,
+            11
+          ],
+          [
+            7,
+            12
+          ],
+          [
+            6,
+            13
+          ],
+          [
+            6,
+            14
+          ],
+          [
+            5,
+            14
+          ],
+          [
+            4,
+            14
+          ],
+          [
+            3,
+            14
+          ],
+          [
+            2,
+            13
+          ],
+          [
+            1,
+            13
+          ]
+        ]
+      },
+      {
+        "id": "grove-of-persephone-calypsos-cave",
+        "name": "The Grove of Persephone to Calypso's Cave",
+        "hexes": [
+          [
+            1,
+            13
+          ],
+          [
+            2,
+            13
+          ],
+          [
+            3,
+            14
+          ],
+          [
+            3,
+            15
+          ],
+          [
+            4,
+            16
+          ],
+          [
+            4,
+            17
+          ],
+          [
+            5,
+            18
+          ],
+          [
+            5,
+            19
+          ],
+          [
+            6,
+            20
+          ],
+          [
+            7,
+            20
+          ],
+          [
+            7,
+            21
+          ],
+          [
+            7,
+            22
+          ],
+          [
+            7,
+            23
+          ]
+        ]
+      }
+    ],
+    "road": [
+      {
+        "from": "ithaca",
+        "to": "eumaeus-steading"
+      },
+      {
+        "from": "eumaeus-steading",
+        "to": "laertes-farm"
+      },
+      {
+        "from": "malea",
+        "to": "pylos"
+      },
+      {
+        "from": "pylos",
+        "to": "sparta"
+      }
+    ]
+  }
+}
