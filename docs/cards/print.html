@@ -37,6 +37,12 @@
                color: var(--ink-faint); margin: 12px 0 6px; display: flex; gap: 10px; align-items: baseline; }
   .picker h2 button { font: inherit; font-size: .72rem; text-transform: none; letter-spacing: 0;
                       background: none; border: none; color: var(--accent); cursor: pointer; padding: 0; }
+  /* The whole picker's own all/none, one storey above a deck's. The page opens
+     with every card on, so the errand worth saving is turning them OFF: picking
+     a handful used to mean none-ing every deck in turn. */
+  .picker .everything { border-bottom: 1px solid var(--line); padding-bottom: 9px; }
+  .picker .everything .count { margin-left: auto; text-transform: none; letter-spacing: 0;
+                               color: var(--ink-soft); font-variant-numeric: tabular-nums; }
   .pickrow { display: flex; flex-wrap: wrap; gap: 6px; }
   .pick { display: flex; gap: 6px; align-items: center; font-size: .78rem; cursor: pointer;
           border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px 3px 7px; background: var(--bg-raised); }
@@ -60,13 +66,17 @@
   .guide { position: absolute; inset: 0; border: 0.2mm dashed #8c8c8c; pointer-events: none;
            border-radius: 3.5mm; }
   .stamp { position: absolute; font: 600 7px/1.2 var(--mono, monospace); color: #777; letter-spacing: .05em; }
+  /* Screen only. With fronts and backs alternating down the preview, which of
+     the two you are looking at has to be readable without reading the stamp. */
+  .sheetcap { margin: 0 0 5px; text-align: center; font-size: .72rem; letter-spacing: .07em;
+              text-transform: uppercase; color: var(--ink-faint); }
   .empty { padding: 40px 18px; text-align: center; color: var(--ink-faint); font-size: .85rem; }
 
   /* Nothing that is only there to make the preview readable may survive into
      print: the promise of this page is that a card comes off the paper at the
      size it says, which a sheet printed at 86% quietly breaks. */
   @media print {
-    .printbar, .note, .picker { display: none !important; }
+    .printbar, .note, .picker, .sheetcap { display: none !important; }
     .sheets { padding: 0; overflow: visible; }
     .sheet-frame { width: auto !important; height: auto !important; margin: 0 !important;
                    break-after: page; page-break-after: always; }
@@ -93,6 +103,13 @@
     </select>
   </label>
   <label>copies <input type="number" id="copies" min="1" max="20" step="1" value="1"></label>
+  <label>backs
+    <select id="backs">
+      <option value="none">fronts only</option>
+      <option value="after">a back sheet after every front</option>
+      <option value="end">the back sheets all at the end</option>
+    </select>
+  </label>
   <label><input type="checkbox" id="opt-guides" checked> cut lines</label>
   <label>preview
     <select id="zoom">
@@ -118,9 +135,14 @@
   drawn on that radius, and each card carries a faint arc in its bleed showing where the die goes. Cut the
   straights with a blade and take the corners with a 3.5 mm punch, or trust your scissors: gluing
   a square-cut card onto a rounded one hides the difference anyway.</p>
-  <p><strong>Backs</strong> are under <em>Card backs</em> in the picker, one per deck. Print a sheet of the
-  backs you need, feed the paper through again, and print the fronts — or glue the two sheets back to back,
-  which is what most people's printers make them do.</p>
+  <p><strong>Backs.</strong> Set <em>backs</em> in the bar and every card you have chosen gets its own deck's
+  back — not alongside its front, but on its own sheet, in the same slots, with each row read backwards. That
+  reversal is the whole of it: paper is turned over left to right to take its second side, and turning it over
+  reverses every row, so the card at the left of a front row wants its back at the right of the sheet that lands
+  on it. Choose <em>after every front</em> for a printer that duplexes on its own and <em>all at the end</em> if
+  you are feeding the stack through a second time by hand; gluing the two sheets back to back works off either.
+  A card picked out of <em>Card backs</em> is already a back and gets nothing behind it — its slot is left
+  empty rather than closed up, because a back sheet is only any use if it still lands on its front.</p>
 </div>
 
 <div class="picker" id="picker"></div>
@@ -149,6 +171,30 @@
   /* ------------------------------------------------------------- the picker */
 
   var picker = document.getElementById('picker');
+
+  /* Everything, before any one deck. Every card starts chosen, which is right
+     for somebody printing the set and wrong for everybody else: the one button
+     this page was missing is the one that clears the lot. */
+  var everything = document.createElement('h2');
+  everything.className = 'everything';
+  everything.textContent = 'Every card ';
+  [['select all', true], ['deselect all', false]].forEach(function (pair) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = pair[0];
+    b.addEventListener('click', function () {
+      CARDS.forEach(function (c) { chosen[c.code] = pair[1]; });
+      syncPicker();
+      render();
+    });
+    everything.appendChild(b);
+  });
+  var tally = document.createElement('span');
+  tally.className = 'count';
+  tally.id = 'tally';
+  everything.appendChild(tally);
+  picker.appendChild(everything);
+
   DECKS.forEach(function (deck) {
     var cards = CARDS.filter(function (c) { return c.deck === deck.prefix; });
     if (!cards.length) return;
@@ -193,11 +239,14 @@
   });
 
   function syncPicker() {
+    var on = 0;
     Array.prototype.forEach.call(picker.querySelectorAll('.pick'), function (label) {
-      var on = !!chosen[label.dataset.code];
-      label.dataset.on = on ? '1' : '0';
-      label.querySelector('input').checked = on;
+      var lit = !!chosen[label.dataset.code];
+      if (lit) on++;
+      label.dataset.on = lit ? '1' : '0';
+      label.querySelector('input').checked = lit;
     });
+    tally.textContent = on + ' of ' + CARDS.length + ' chosen';
   }
 
   /* -------------------------------------------------------------- the sheets */
@@ -213,6 +262,29 @@
     };
   }
 
+  /* A deck's back is the one card behind every card in it. A card chosen out of
+     the backs group IS a back and has nothing behind it - null, and the slot is
+     left empty rather than closed up, because closing it up would slide every
+     card after it off the front it is supposed to land on. */
+  var DECK_NAME = {};
+  DECKS.forEach(function (d) { DECK_NAME[d.prefix] = d.name; });
+
+  function backOf(card) {
+    if (!card || card.deck === 'BACK') return null;
+    return { code: 'back-' + card.deck, name: (DECK_NAME[card.deck] || card.deck) + ' back' };
+  }
+
+  /* Read each row backwards. The sheet is turned over left to right to take its
+     second side - through the printer again, or face to face with the glue -
+     and turning it over reverses every row. */
+  function turnOver(slots, g) {
+    var out = [];
+    for (var row = 0; row < g.rows; row++) {
+      for (var col = 0; col < g.cols; col++) out.push(backOf(slots[row * g.cols + (g.cols - 1 - col)]));
+    }
+    return out;
+  }
+
   var current = null;
 
   function render() {
@@ -220,6 +292,7 @@
     var g = grid(document.getElementById('paper').value, gap);
     var copies = Math.max(1, Math.min(20, parseInt(document.getElementById('copies').value, 10) || 1));
     var guides = document.getElementById('opt-guides').checked;
+    var backs = document.getElementById('backs').value;
 
     /* Copies go out deck by deck, all of card one before card two: a cut stack
        then sorts itself, and a half-printed sheet is still a usable deck. */
@@ -232,11 +305,30 @@
     var perSheet = g.cols * g.rows;
     var sheets = Math.ceil(queue.length / perSheet);
 
+    /* What goes on paper, in order. A back sheet is its front sheet turned over:
+       the same cards' backs, the same slots, every row reversed. It is built
+       from that sheet's own list, so a back can only ever be the back of the
+       card it lands on. */
+    var plan = [];
+    for (var s = 0; s < sheets; s++) {
+      var slots = queue.slice(s * perSheet, (s + 1) * perSheet);
+      plan.push({ slots: slots, n: s, kind: backs === 'none' ? '' : 'FRONTS', flipped: false });
+      if (backs === 'after') plan.push({ slots: turnOver(slots, g), n: s, kind: 'BACKS', flipped: true });
+    }
+    if (backs === 'end') {
+      for (var b = 0; b < sheets; b++) {
+        plan.push({ slots: turnOver(queue.slice(b * perSheet, (b + 1) * perSheet), g),
+                    n: b, kind: 'BACKS', flipped: true });
+      }
+    }
+
     document.getElementById('summary').innerHTML = queue.length
-      ? '<strong>' + queue.length + ' card' + (queue.length === 1 ? '' : 's') + ' on ' + sheets +
-        ' sheet' + (sheets === 1 ? '' : 's') + '</strong> of ' +
+      ? '<strong>' + queue.length + ' card' + (queue.length === 1 ? '' : 's') + ' on ' + plan.length +
+        ' sheet' + (plan.length === 1 ? '' : 's') + '</strong> of ' +
         (document.getElementById('paper').value === 'A4' ? 'A4' : 'US Letter') + ', ' +
-        g.cols + ' across by ' + g.rows + ' down, ' + gap + ' mm apart.'
+        g.cols + ' across by ' + g.rows + ' down, ' + gap + ' mm apart' +
+        (backs === 'none' ? '.'
+          : ' — ' + (backs === 'after' ? 'fronts and backs alternating.' : 'the fronts, then the backs.'))
       : '<strong>Nothing chosen.</strong> Pick some cards below.';
 
     var host = document.getElementById('sheets');
@@ -256,15 +348,17 @@
       return;
     }
 
-    for (var s = 0; s < sheets; s++) {
+    plan.forEach(function (page) {
       var sheet = document.createElement('div');
       sheet.className = 'cardsheet';
       sheet.style.width = g.w + 'mm';
       sheet.style.height = g.h + 'mm';
 
       for (var i = 0; i < perSheet; i++) {
-        var card = queue[s * perSheet + i];
-        if (!card) break;
+        var card = page.slots[i];
+        /* Not break: a back sheet can have a hole in the middle of it, where a
+           card that is itself a back was chosen. */
+        if (!card) continue;
         var col = i % g.cols, row = Math.floor(i / g.cols);
 
         var slot = document.createElement('div');
@@ -296,17 +390,31 @@
 
       var stamp = document.createElement('div');
       stamp.className = 'stamp';
-      stamp.style.left = g.left + 'mm';
       stamp.style.top = (g.top + g.rows * CARD_H + (g.rows - 1) * g.gap + 2.5) + 'mm';
-      stamp.textContent = 'GAME1  ·  SHEET ' + (s + 1) + ' OF ' + sheets +
+      /* The stamp is turned over with everything else on the sheet, so on a back
+         it sits against the other edge and comes to rest under its front's. */
+      if (page.flipped) { stamp.style.right = g.left + 'mm'; stamp.style.textAlign = 'right'; }
+      else { stamp.style.left = g.left + 'mm'; }
+      stamp.textContent = 'GAME1  ·  SHEET ' + (page.n + 1) + ' OF ' + sheets +
+        (page.kind ? '  ·  ' + page.kind : '') +
         '  ·  CARDS ' + CARD_W + ' × ' + CARD_H + ' MM AT 100%';
       sheet.appendChild(stamp);
+
+      /* Screen only, and outside the frame the preview scales: the frame is
+         given the scaled sheet's exact size, and a caption inside it would be
+         measured as part of that. */
+      if (page.kind) {
+        var cap = document.createElement('p');
+        cap.className = 'sheetcap';
+        cap.textContent = 'Sheet ' + (page.n + 1) + ' of ' + sheets + ' — ' + page.kind.toLowerCase();
+        host.appendChild(cap);
+      }
 
       var frame = document.createElement('div');
       frame.className = 'sheet-frame';
       frame.appendChild(sheet);
       host.appendChild(frame);
-    }
+    });
 
     current = g;
     applyScale();
@@ -326,8 +434,8 @@
     var room = host.clientWidth - 36;
     var scale = wanted === 'fit' ? Math.min(1, room / wpx) : parseFloat(wanted) || 1;
 
-    Array.prototype.forEach.call(host.children, function (frame) {
-      var sheet = frame.firstElementChild;
+    Array.prototype.forEach.call(host.querySelectorAll('.sheet-frame'), function (frame) {
+      var sheet = frame.querySelector('.cardsheet');
       if (!sheet || scale >= 1) {
         if (sheet) sheet.style.transform = '';
         frame.style.width = '';
@@ -340,7 +448,7 @@
     });
   }
 
-  ['paper', 'spacing', 'copies', 'opt-guides'].forEach(function (id) {
+  ['paper', 'spacing', 'copies', 'backs', 'opt-guides'].forEach(function (id) {
     document.getElementById(id).addEventListener('change', render);
   });
   zoom.addEventListener('change', function () { applyScale(); });

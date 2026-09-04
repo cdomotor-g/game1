@@ -390,6 +390,14 @@ onto one. The 3 mm of bleed every card is drawn with is held outside the cut lin
 the blade never goes. Corners are cut at 3.5 mm, which is what a playing card has; each
 card carries a faint arc in its bleed showing where the die goes.
 
+Ask it for **backs** and every card you chose gets its deck's back, on a sheet of its own
+that follows its front sheet (or joins the others at the end, for a printer you feed twice)
+— the same slots, and every row read backwards, because paper is turned over left to right
+and turning it over reverses every row. A card picked out of *Card backs* is already a back
+and leaves its slot empty rather than closing the row up and sliding the rest off their
+fronts. The picker has a **deselect all** beside its select all: it opens with all of them
+on, and the page is used far more often for a handful.
+
 ### Minting a card
 
 Cards are one **line** of the mint — see [The mint](#the-mint) below. A card only

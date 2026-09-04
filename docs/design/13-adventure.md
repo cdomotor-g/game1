@@ -502,6 +502,17 @@ selection of these cards onto A4 or US Letter at a true 63 × 88 mm — nine to 
 sheet of A4 — each with a dotted line on its trim to cut along and its 3 mm of
 bleed held outside that line. A cut card is the size of a standard playing card,
 which is the point: it glues onto one and shuffles with the rest of the deck.
+The picker opens with everything on and has its own **deselect all**, because
+the page is used far more often for a handful of cards than for the whole set.
+
+**And their backs.** Ask for backs and each front sheet is followed by — or, if
+your printer wants the stack fed through in one go, joined at the end by — a
+sheet of the deck backs for exactly the cards on it, in exactly their slots,
+with **every row read backwards**. That reversal is the whole rule: paper is
+turned over left to right to take its second side, so the card at the left of a
+front row wants its back at the right of the sheet that lands on it. A back has
+nothing behind it, so a card picked out of *Card backs* leaves its slot empty
+rather than closing the row up and sliding every card after it off its front.
 
 ## Mini-maps
 
