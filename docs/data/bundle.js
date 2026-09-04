@@ -19048,6 +19048,17 @@ window.GAME_DATA = {
           0.62
         ]
       },
+      "spell-kindle": {
+        "file": "art/renders/spell-kindle.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "talisman-tal-01": {
         "file": "art/renders/talisman-tal-01.png",
         "width": 1254,
