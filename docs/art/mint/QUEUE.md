@@ -17,7 +17,7 @@ catches that in CI.
 
 **cards 91/162 · maps 1/1 · building tiles 44/54**
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 100 of 162 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 101 of 162 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
@@ -28,19 +28,18 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**91 of 162 minted.** 0 waiting on a brief, 62 waiting on art, 9 waiting on frame.
+**91 of 162 minted.** 0 waiting on a brief, 61 waiting on art, 10 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 62 cards
+### 2 · DRAW — the artist — 61 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `SPL-02` | Ember Lash | Spells | `spell-ember-lash` | ✓ | · | · |
 | `SPL-03` | Mend Stone | Spells | `spell-mend-stone` | ✓ | · | · |
 | `SPL-04` | Bulwark | Spells | `spell-bulwark` | ✓ | · | · |
 | `SPL-05` | Cleanse | Spells | `spell-cleanse` | ✓ | · | · |
@@ -103,13 +102,14 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `ITM-14` | Ten-Day Rations | Items | `item-rations-10-day` | ✓ | · | · |
 | `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate — 9 cards
+### 3 · FRAME — whoever accepts the plate — 10 cards
 
 The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
 | `SPL-01` | Kindle | Spells | `spell-kindle` | ✓ | ✓ | · |
+| `SPL-02` | Ember Lash | Spells | `spell-ember-lash` | ✓ | ✓ | · |
 | `EVT-11` | Train Heist | Events | `event-train-heist` | ✓ | ✓ | · |
 | `EVT-12` | Piracy | Events | `event-piracy` | ✓ | ✓ | · |
 | `EVT-13` | Smuggling Ring | Events | `event-smuggling-ring` | ✓ | ✓ | · |

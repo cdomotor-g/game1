@@ -19048,6 +19048,17 @@ window.GAME_DATA = {
           0.62
         ]
       },
+      "spell-ember-lash": {
+        "file": "art/renders/spell-ember-lash.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "spell-kindle": {
         "file": "art/renders/spell-kindle.png",
         "width": 1254,
