@@ -1,0 +1,20 @@
+spell-farspeak — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: square tabletop-game artwork plate, not a card
+
+Primary request: Draw a travelling writing-slope let down on the tail of a wagon. On it sit an open ledger, a short stub of pencil lying still across the page, and a small open inkwell. The black ink inside the inkwell stands up in one fine, sharp, continuous ridge straight across its own liquid surface, as though a distant voice were crossing it. Everything else is perfectly still: the pencil has not rolled, the ledger page lies flat and is not lifting, and there is no draught. A flat violet printing slip is slightly offset across the ridged ink only.
+
+Style and medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolor washes. Fine springy varied nib line, slightly heavier only around outer forms. Nearly every surface modeled with short feathered hatching and cross-hatching, dense in shadows, bare paper for highlights. Workaday, observed, restrained, ordinary daylight. Show real material detail: rough wagon boards, hinges, leather straps, ledger paper, pencil wood and graphite, glass inkwell, black liquid ink.
+
+Composition: Square whole page drawn edge to edge. Close object study, seen slightly from above so the inkwell’s open mouth and the narrow raised ridge across the ink surface are unmistakable. Keep the inkwell, the ridge, the open ledger, and pencil comfortably inside the middle 80% of page height, centered left to right. Wagon tail and writing-slope may continue toward margins. Make the inkwell large enough for the anomalous ridge to read clearly at card crop.
+
+Color: Muted, desaturated, uneven thin watercolor washes; warm oatmeal paper and warm near-black ink. Restrained timber ochre, worn leather brown, grey glass, ivory paper, graphite grey. The only unusual color is flat violet #6B4C7D printed slightly out of register across part of the raised ink ridge only, like cheap press misregistration; no light emission.
+
+Constraints: one whole artwork page only; no people, hands, animals, caster, wizard, face, speech text, sound waves, letters, card frame, title, code, icons, rules box, caption, banner, border, lettering, symbols, runes, watermark, coffee ring, or circular stain. No wind, moving pencil, lifted page, flowing ink outside the well, glowing ink, gradient, glow, bloom, sparkle, particles, rays, aura, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat color blocks, thick uniform outline, poster composition, horror, ruin, or saturated colors. The anomaly must be a physically sharp ridge in the ink surface, not a symbol, waveform graphic, flame, splash, or creature; violet must be a plain unpatterned misregistered wash localized to that ridge.
+
+TARGETED CORRECTION
+
+Edit this existing square artwork only. Remove the floating violet rectangular patch or paper above and to the right of the inkwell completely, restoring the underlying wagon and landscape naturally. Keep every other object, composition, crop, pen-and-ink hatching, translucent watercolor, and warm oatmeal paper unchanged. Preserve the fine sharp raised ridge across the black ink surface inside the open inkwell. Put a very narrow, flat violet #6B4C7D printing misregistration immediately offset along only that raised ink ridge, contained entirely within the inkwell mouth. It must look like cheap ink press slip, not an object, label, flag, ribbon, glow, rune, symbol, waveform, or splash. No text or new objects.
