@@ -22320,17 +22320,6 @@ window.GAME_DATA = {
           0.53
         ]
       },
-      "spell-loft": {
-        "file": "art/renders/spell-loft.png",
-        "width": 600,
-        "height": 600,
-        "subject": [
-          0,
-          0,
-          1,
-          1
-        ]
-      },
       "spell-mend-stone": {
         "file": "art/renders/spell-mend-stone.png",
         "width": 1254,
