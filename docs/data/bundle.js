@@ -22238,6 +22238,17 @@ window.GAME_DATA = {
           0.169
         ]
       },
+      "monster-charybdis": {
+        "file": "art/renders/monster-charybdis.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "monster-cinder-wolf": {
         "file": "art/renders/monster-cinder-wolf.png",
         "width": 1055,

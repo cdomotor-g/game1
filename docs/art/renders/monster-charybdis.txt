@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Asset type: full-page bestiary plate for a tabletop game
+Image 1 is the edit target. Image 2 is the accepted house-style reference.
+Primary request: Relocate the single ship's mast-and-keel lashed together from the bottom-right corner to the UPPER-RIGHT outer ring of the whirlpool. Its complete shape must lie between 55% and 70% of the page height. Make it somewhat smaller if required, but keep the lashing, mast and keel plainly readable. Remove it completely from the old lower-right location.
+Constraints: preserve the whirlpool, its hatched funnel rings, black-sand throat, foam, all other broken timbers, top fig tree and rock, exact A4 portrait composition, fine pen-and-ink hatching, flat cold-slate and grey-green washes, aged oatmeal paper, and restrained observational tone. Keep the complete whirlpool throat and relocated scale object between 26% and 74% of page height. No faces, eyes, mouths, creatures, intact ships, other scale objects, text, lettering, border, card elements, gradients, glow, bloom, blur, soft shading, or circular paper stains.
