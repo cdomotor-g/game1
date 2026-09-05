@@ -22371,6 +22371,17 @@ window.GAME_DATA = {
           0.62
         ]
       },
+      "monster-scylla": {
+        "file": "art/renders/monster-scylla.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "monster-stone-boar": {
         "file": "art/renders/monster-stone-boar.png",
         "width": 1054,

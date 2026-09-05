@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Asset type: full-page bestiary plate for a tabletop game
+Image 1 is the edit target. Image 2 is the accepted house-style reference.
+Primary request: Raise the sea surface and cliff-foot waterline substantially so the sea begins at 55% of page height. Place the single floating ship's oar across that raised water at 65% of page height, with the oar's entire shape between 60% and 70%. Shorten the visible cliff face between the heads and the sea to make room. Remove the oar from its old position.
+Constraints: preserve exactly six distinct long dog-like necks and six heads, exactly twelve small dangling feet just visible in the cave, the hidden body, cave mouth, smooth cliff, exact A4 portrait composition, fine pen-and-ink hatching, thin cold-slate wash, aged oatmeal paper, and observed natural-history tone. All six heads and the complete oar must lie between 26% and 74% of page height. No additional heads, necks, feet, creatures, ships, or oars. No text, lettering, border, card elements, gradients, glow, bloom, blur, soft shading, drool, snarl, or circular stains.

@@ -17,7 +17,7 @@ catches that in CI.
 
 **cards 102/203 · maps 1/1 · building tiles 44/54**
 
-> **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 38 of 38 are under the 1890 px this line would want for print — smallest is `CHR-12` at 1488 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 39 of 39 are under the 1890 px this line would want for print — smallest is `CHR-12` at 1488 px. That is an aspiration, not a fault.
 
 > **Note.** cards: every plate clears the 866 px floor (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), and 46 of 46 are under the 1299 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
@@ -32,19 +32,18 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**102 of 203 minted.** 0 waiting on a brief, 84 waiting on art, 17 waiting on frame.
+**102 of 203 minted.** 0 waiting on a brief, 83 waiting on art, 18 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 84 cards
+### 2 · DRAW — the artist — 83 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side for square or A4 landscape, 3:2 (1299 px if it can be had), and at least 1260 px on the long side for A4 portrait (1890 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `MON-17` | Scylla | Monsters | `monster-scylla` | ✓ | · | · |
 | `MON-18` | Charybdis | Monsters | `monster-charybdis` | ✓ | · | · |
 | `MON-19` | The Sirens | Monsters | `monster-sirens` | ✓ | · | · |
 | `SPL-05` | Cleanse | Spells | `spell-cleanse` | ✓ | · | · |
@@ -129,7 +128,7 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `ITM-14` | Ten-Day Rations | Items | `item-rations-10-day` | ✓ | · | · |
 | `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate — 17 cards
+### 3 · FRAME — whoever accepts the plate — 18 cards
 
 The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
 
@@ -151,6 +150,7 @@ The plate is committed and `docs/art/framing.json` says nothing about it yet. A 
 | `CHR-22` | Antinous | Characters | `character-chr-22` | ✓ | ✓ | · |
 | `MON-15` | Polyphemus the Cyclops | Monsters | `monster-polyphemus` | ✓ | ✓ | · |
 | `MON-16` | Laestrygonian | Monsters | `monster-laestrygonian` | ✓ | ✓ | · |
+| `MON-17` | Scylla | Monsters | `monster-scylla` | ✓ | ✓ | · |
 | `SPL-04` | Bulwark | Spells | `spell-bulwark` | ✓ | ✓ | · |
 
 ### Minted
