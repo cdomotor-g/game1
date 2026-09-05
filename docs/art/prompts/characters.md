@@ -10,9 +10,8 @@ from time in the field — **a page that has travelled with the person it shows.
 Three-quarter figure, caught mid-habit rather than posed, with the belongings
 their card names visible and true.
 
-Render at A4 portrait proportion, 4000 px on the long side or better. Card
-crops are taken from the plate later; keep the figure's head and hands in the
-upper two-thirds.
+A4 portrait page. Card crops are taken from the plate later; keep the figure's
+head and hands in the upper two-thirds. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 ## Shared preamble — paste ahead of every prompt below
 
@@ -262,7 +261,7 @@ is not a rule of thumb.)
 
 ## character-chr-09 — Odysseus, king of Ithaca
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-09.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-09.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -290,7 +289,7 @@ is not a rule of thumb.)
 
 ## character-chr-10 — Eurylochus, second in command
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-10.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-10.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -317,7 +316,7 @@ is not a rule of thumb.)
 
 ## character-chr-11 — Polites, dearest of the companions
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-11.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-11.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -343,7 +342,7 @@ is not a rule of thumb.)
 
 ## character-chr-12 — Perimedes, companion
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-12.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-12.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -369,7 +368,7 @@ is not a rule of thumb.)
 
 ## character-chr-13 — Elpenor, youngest of the crew
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-13.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-13.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -396,7 +395,7 @@ is not a rule of thumb.)
 
 ## character-chr-14 — Antiphus, companion
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-14.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-14.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -423,7 +422,7 @@ is not a rule of thumb.)
 
 ## character-chr-15 — Telemachus, prince of Ithaca
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-15.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-15.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -450,7 +449,7 @@ is not a rule of thumb.)
 
 ## character-chr-16 — Penelope, queen of Ithaca
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-16.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-16.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -477,7 +476,7 @@ is not a rule of thumb.)
 
 ## character-chr-17 — Eumaeus, swineherd
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-17.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-17.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -503,7 +502,7 @@ is not a rule of thumb.)
 
 ## character-chr-18 — Nausicaa, princess of the Phaeacians
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-18.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-18.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -530,7 +529,7 @@ is not a rule of thumb.)
 
 ## character-chr-19 — Circe, enchantress of Aeaea
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-19.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-19.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -558,7 +557,7 @@ is not a rule of thumb.)
 
 ## character-chr-20 — Calypso, nymph of Ogygia
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-20.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-20.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -586,7 +585,7 @@ is not a rule of thumb.)
 
 ## character-chr-21 — Athena, as Mentor
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-21.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-21.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -614,7 +613,7 @@ is not a rule of thumb.)
 
 ## character-chr-22 — Antinous, chief of the suitors
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/character-chr-22.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-22.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

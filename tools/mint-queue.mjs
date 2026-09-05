@@ -67,15 +67,40 @@ function section(entry, step, heading, blurb) {
   );
 }
 
-/* The pixel floor is derived per line and, for maps, per subject - see
-   minLongSideFor in tools/lib/mint.mjs. Asking a line for one number is only
-   meaningful where every subject on it shares one, which cards do and maps
-   do not, so the blurb reports the first row's and says where it came from. */
+/* The pixel floor is derived per SUBJECT - see minLongSideFor in
+   tools/lib/mint.mjs - and on the cards line it differs by the page a deck
+   draws on: a portrait page is asked for more than a square one. So the blurb
+   lists every distinct floor the waiting subjects have, each with the formats
+   it applies to, rather than quoting one row's figure for all of them. The
+   marker under each brief's heading carries that subject's own figure. */
 function sizeAsk(entry) {
-  const row = at(entry, 'draw')[0] ?? entry.rows[0];
-  const { min, want, from } = minLongSideFor(ROOT, entry.line, row);
-  if (!min) return 'at whatever size the line asks for';
-  return `at least ${min} px on the long side (${from})` + (want ? `, ${want} px if it can be had` : '');
+  const waiting = at(entry, 'draw');
+  const rows = waiting.length ? waiting : entry.rows;
+  const byFloor = new Map();
+  for (const row of rows) {
+    const size = row.size ?? minLongSideFor(ROOT, entry.line, row);
+    if (!size.min) continue;
+    const key = `${size.min}|${size.want}`;
+    if (!byFloor.has(key)) byFloor.set(key, { ...size, formats: new Set() });
+    byFloor.get(key).formats.add(row.format ?? entry.line.plate.format ?? 'the line’s format');
+  }
+  if (!byFloor.size) return 'at whatever size the line asks for';
+  const floors = [...byFloor.values()].sort((a, b) => a.min - b.min);
+  const tail = ' — the marker under each brief\'s heading says that subject\'s own figure, derived rather than typed';
+  if (floors.length === 1) {
+    const s = floors[0];
+    return `at least ${s.min} px on the long side (${s.from})` + (s.want ? `, ${s.want} px if it can be had` : '');
+  }
+  if (floors.length <= 2) {
+    return floors.map((s) =>
+      `at least ${s.min} px on the long side for ${[...s.formats].join(' or ')}` +
+      (s.want ? ` (${s.want} px if it can be had)` : '')
+    ).join(', and ') + tail;
+  }
+  const lo = floors[0];
+  const hi = floors[floors.length - 1];
+  return `at least ${lo.min}–${hi.min} px on the long side depending on the subject's own footprint` +
+    (hi.want ? ` (${lo.want}–${hi.want} px if it can be had)` : '') + tail;
 }
 
 const STEP_NUMBER = { write: '1', draw: '2', aim: '3' };

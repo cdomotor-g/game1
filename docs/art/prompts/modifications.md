@@ -19,7 +19,7 @@ object of its own, so it is drawn as **the moment of binding** — the alchemist
 bench, the chalked mark on the timber, the mana crystal going in — and the violet
 sits on the mark, offset, like a misprint.
 
-Render at 2000 px square or better, single subject, centred.
+Square page, single subject, centred. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 ## Shared preamble — paste ahead of every prompt below
 

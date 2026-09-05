@@ -1,0 +1,163 @@
+name: Land plate
+
+# THE INBOX. An artist that can draw but cannot run a checkout - ChatGPT with a
+# GitHub connector, or anybody with a browser - puts ONE finished PNG on a branch
+# called plate/<plate-id>, and this workflow does everything after that: it
+# validates the whole file, refuses it if it is under its floor, runs the mint
+# build, commits it to main with what it feeds rebuilt, reads the committed
+# blob back from main and compares hashes, deletes the inbox branch, and asks
+# Pages to redeploy. The artist never assembles a commit out of blobs and
+# trees, never runs the build, never expands an 800 MB checkout to verify a
+# push, and never has to touch main.
+#
+# Why a branch and not main directly: a corrupt upload - and the repository has
+# taken two - is contained on a branch nobody serves, and is refused before it
+# can reach the site. Why a push trigger and not a dispatch: a connector that
+# can create a file on a branch is far commoner than one that can dispatch a
+# workflow, and the branch name IS the plate id, so there is nothing else to
+# say.
+#
+# Every step of landing is tools/ship-art.mjs. This workflow only fetches the
+# bytes off the inbox branch and hands them over, so there is one definition of
+# "shipped" and it is not here. See docs/art/AGENTS.md and docs/MINT-SETUP.md
+# §4b.
+
+on:
+  push:
+    branches:
+      - 'plate/**'
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'The inbox branch to land, e.g. plate/spell-loft'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+
+# Two plates landing at once would race to push main. Queue them.
+concurrency:
+  group: land-plate
+  cancel-in-progress: false
+
+jobs:
+  land:
+    runs-on: ubuntu-latest
+    steps:
+      # Main, not the inbox branch: the plate is landed ON main, and ship-art
+      # pushes HEAD there. Full history is not needed; ship-art fetches the
+      # target branch itself for the read-back.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # The branch name carries the plate id. plate/<id> and nothing else.
+      - name: Work out which plate this is
+        id: which
+        env:
+          PUSHED_REF: ${{ github.ref_name }}
+          INPUT_BRANCH: ${{ inputs.branch }}
+        run: |
+          set -euo pipefail
+          branch="${INPUT_BRANCH:-$PUSHED_REF}"
+          case "$branch" in
+            plate/*) ;;
+            *) echo "::error::'$branch' is not an inbox branch. An inbox branch is plate/<plate-id>."; exit 1 ;;
+          esac
+          plate="${branch#plate/}"
+          if ! printf '%s' "$plate" | grep -Eq '^[A-Za-z0-9][A-Za-z0-9._-]*$'; then
+            echo "::error::'$plate' is not a plate id"; exit 1
+          fi
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+          echo "plate=$plate"   >> "$GITHUB_OUTPUT"
+          echo "landing $plate from $branch"
+
+      # Only the plate's own file is taken off the inbox branch - by its exact
+      # path - so a stray edit committed alongside it cannot ride into main.
+      # The optional frozen wording (.txt) beside it is taken the same way.
+      - name: Take the plate off the inbox branch
+        id: fetch
+        env:
+          BRANCH: ${{ steps.which.outputs.branch }}
+          PLATE: ${{ steps.which.outputs.plate }}
+        run: |
+          set -euo pipefail
+          git fetch --quiet origin "refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
+          png="docs/art/renders/$PLATE.png"
+          if ! git cat-file -e "origin/$BRANCH:$png" 2>/dev/null; then
+            echo "::error::origin/$BRANCH has no $png. The file must be at exactly that path, named after the brief's own heading. It has:"
+            git diff --name-only "origin/main...origin/$BRANCH" | sed 's/^/  /' || true
+            exit 1
+          fi
+          git show "origin/$BRANCH:$png" > "$RUNNER_TEMP/$PLATE.png"
+          echo "took $(wc -c < "$RUNNER_TEMP/$PLATE.png") bytes"
+          txt="docs/art/renders/$PLATE.txt"
+          if git cat-file -e "origin/$BRANCH:$txt" 2>/dev/null; then
+            git show "origin/$BRANCH:$txt" > "$RUNNER_TEMP/$PLATE.txt"
+            echo "wording=--wording=$RUNNER_TEMP/$PLATE.txt" >> "$GITHUB_OUTPUT"
+            echo "took the frozen wording too"
+          else
+            echo "wording=" >> "$GITHUB_OUTPUT"
+          fi
+
+      # The whole of landing, in one place. Validates every chunk of the PNG,
+      # refuses a plate under its derived floor, runs mint-build, commits,
+      # pushes to main, reads the blob back from origin/main and compares
+      # SHA-256. Any failure is NOT SHIPPED and says why.
+      - name: Ship it
+        env:
+          PLATE: ${{ steps.which.outputs.plate }}
+          WORDING: ${{ steps.fetch.outputs.wording }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          node tools/ship-art.mjs "$PLATE" "$RUNNER_TEMP/$PLATE.png" --branch=main --quiet $WORDING | tee "$RUNNER_TEMP/ship.log"
+          {
+            echo "## $PLATE landed"
+            echo
+            echo '```'
+            grep -E '^(source verified|floor cleared|ship-art|commit|sha256|size)' "$RUNNER_TEMP/ship.log"
+            echo '```'
+            echo
+            echo "The subject has moved off DRAW in docs/art/mint/QUEUE.md on main. Aiming it is the designer's next step."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Landed and verified, so the inbox is empty: the branch goes. A branch
+      # left behind would land the same plate again on the next push to it.
+      - name: Empty the inbox
+        env:
+          BRANCH: ${{ steps.which.outputs.branch }}
+        run: git push origin --delete "$BRANCH"
+
+      # A push made with the workflow token does not start other workflows, so
+      # the Pages deploy would not run on its own. Ask for it. The deploy
+      # workflow checks which Pages mode is on and does nothing in branch mode.
+      - name: Ask Pages to redeploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref main || echo "::warning::could not dispatch the Pages workflow; the site will catch up on the next push"
+
+      # Nothing landed. Say so where the artist can read it, and leave the inbox
+      # branch alone so the file can be replaced and pushed again.
+      - name: Say why not
+        if: failure()
+        env:
+          PLATE: ${{ steps.which.outputs.plate }}
+          BRANCH: ${{ steps.which.outputs.branch }}
+        run: |
+          {
+            echo "## $PLATE NOT SHIPPED"
+            echo
+            echo "Nothing reached main. The inbox branch \`$BRANCH\` is untouched: fix the file, push it to the same branch, and this runs again."
+            echo
+            if [ -f "$RUNNER_TEMP/ship.log" ]; then
+              echo '```'; grep -E 'NOT SHIPPED|ERROR|error' "$RUNNER_TEMP/ship.log" || tail -5 "$RUNNER_TEMP/ship.log"; echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

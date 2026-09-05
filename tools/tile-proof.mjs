@@ -70,7 +70,8 @@ if (!ids.length) {
 const chromium = findChromium();
 if (!chromium) {
   console.error(noBrowser('tile-proof', 'The tile itself is docs/tiles/<id>.svg, which any browser will open; this only turns that into a PNG you can send someone.'));
-  process.exit(1);
+  /* 3, as card-proof: no browser is a skipped proof, not a failed build. */
+  process.exit(3);
 }
 
 const WORLD = worldHexMm(ROOT);

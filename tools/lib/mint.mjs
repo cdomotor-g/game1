@@ -583,6 +583,33 @@ function aimOf(root, line, row) {
 
 const mmToPx = (mm, dpi) => Math.round((mm / 25.4) * dpi);
 
+/**
+ * The proportion of the page a subject on this line is drawn on - width over
+ * height - read off the line's own `draw.sizeByFormat` for the row's format,
+ * which is the one place a format's shape is written down. A format with no
+ * entry is taken as square, which is the shape that asks for the fewest pixels
+ * and so never over-asks.
+ */
+export function pageAspectOf(line, row) {
+  const spec = line.draw?.sizeByFormat?.[row?.format];
+  if (!spec) return 1;
+  const [w, h] = spec.split('x').map(Number);
+  return w && h ? w / h : 1;
+}
+
+/**
+ * How densely a landed plate prints through a window, in dots per inch, at a
+ * print scale. The crop keeps the largest sub-rectangle of the plate with the
+ * window's aspect, so the density is whichever axis binds - the plate's width
+ * over the window's, or its height over the window's - and never more than
+ * either. Used by tools/validate-framing.mjs to report every deck's real
+ * figure, and the reason data/mint.json's floor is only ever a floor.
+ */
+export function printDpi(plate, windowMm, scale = 1) {
+  const perMm = Math.min(plate.width / windowMm.w, plate.height / windowMm.h);
+  return Math.round((perMm * 25.4) / scale);
+}
+
 /* components.json, once per process rather than once per subject. */
 let stockCache = null;
 const cardStock = (root) => (stockCache ??= readJson(join(root, 'data', 'components.json')).stock);
@@ -612,15 +639,40 @@ export function minLongSideFor(root, line, row) {
   if (line.id === 'cards') {
     /* A plate is shown in a card's picture window, and the window can never be
        larger than the safe area - the frame, the stat strip and the story rail
-       all take theirs first. So the safe area's long side is the most pixels a
-       plate can ever be asked for, and asking for the trim size or the bleed
-       would be asking for pixels no window has room to spend. */
+       all take theirs first. So the safe area is the most pixels a plate can
+       ever be asked for, and asking for the trim size or the bleed would be
+       asking for pixels no window has room to spend.
+
+       Cut to the PAGE'S OWN SHAPE. A square plate is never shown through a
+       window taller than it is wide by more than the crop can slide, so the
+       pixels it is asked for are a square cut from the safe area, not the safe
+       area's long side: measured that way, every square plate ever accepted
+       here was 45% "short" of a figure no window could have spent.
+
+       Then scaled by the largest print anything a card feeds is ever put to:
+       the rulebook's half-page section, twice the card. data/mint.json says
+       why the numbers are what they are. */
     const { card } = cardStock(root);
-    const longMm = Math.max(card.widthMm, card.heightMm) - 2 * (card.safeMarginMm ?? 0);
+    const safe = {
+      w: Math.min(card.widthMm, card.heightMm) - 2 * (card.safeMarginMm ?? 0),
+      h: Math.max(card.widthMm, card.heightMm) - 2 * (card.safeMarginMm ?? 0),
+    };
+    const page = pageAspectOf(line, row);
+    const scale = spec.printScale ?? 1;
+    /* The largest box of the page's aspect inside the safe area, long side. */
+    const box = page >= 1
+      ? { w: safe.w, h: safe.w / page }
+      : { w: Math.min(safe.w, safe.h * page), h: Math.min(safe.h, safe.w / page) };
+    const longMm = Math.max(box.w, box.h) * scale;
+    const shape = page > 1.05 ? 'landscape' : page < 0.95 ? 'portrait' : 'square';
     return {
       min: mmToPx(longMm, spec.dpi),
       want: mmToPx(longMm, spec.wantDpi),
-      from: `a ${longMm} mm card window at ${spec.dpi} dpi`,
+      from: `a ${shape} card window of ${Number(box.w.toFixed(1))} x ${Number(box.h.toFixed(1))} mm ` +
+        `printed at ${scale} x card size, ${spec.dpi} dpi`,
+      scale,
+      dpi: spec.dpi,
+      wantDpi: spec.wantDpi,
     };
   }
 
@@ -662,9 +714,11 @@ export function survey(root = HERE) {
 
   for (const line of mint.lines) {
     const entry = { line, rows: [], deferred: [], generated: [], shelved: line.status === 'shelved' };
-    const undersized = [];
-    const belowWant = [];
-    let bound = null;
+    /* One bucket per distinct floor. A line's floor is derived per SUBJECT - a
+       portrait page is asked for more pixels than a square one - so a note that
+       quoted one figure for the whole line would quote the wrong one for half
+       of it. Keyed by the provenance string, which is what the note prints. */
+    const bounds = new Map();
     if (!entry.shelved) {
       const { rows, deferred, generated } = subjectsOf(root, line);
       entry.deferred = deferred;
@@ -684,6 +738,7 @@ export function survey(root = HERE) {
 
         let longSide = 0;
         let unreadable = null;
+        const size = minLongSideFor(root, line, row);
         if (hasPlate) {
           /* A plate somebody else supplied may not be readable at all. That is
              this one plate's problem and must not take the queue down with it -
@@ -691,14 +746,14 @@ export function survey(root = HERE) {
           unreadable = pngProblem(file);
           if (unreadable) {
             out.problems.push(`${line.id}/${row.code}: the plate at ${platePath(line, row)} ${unreadable}`);
-          } else {
-            bound = minLongSideFor(root, line, row);
-            if (bound.min) {
-              const { width, height } = pngSize(file);
-              longSide = Math.max(width, height);
-              if (longSide < bound.min) undersized.push({ code: row.code, longSide });
-              else if (bound.want && longSide < bound.want) belowWant.push({ code: row.code, longSide });
-            }
+          } else if (size.min) {
+            const { width, height } = pngSize(file);
+            longSide = Math.max(width, height);
+            if (!bounds.has(size.from)) bounds.set(size.from, { ...size, seen: 0, undersized: [], belowWant: [] });
+            const bucket = bounds.get(size.from);
+            bucket.seen += 1;
+            if (longSide < size.min) bucket.undersized.push({ code: row.code, longSide });
+            else if (size.want && longSide < size.want) bucket.belowWant.push({ code: row.code, longSide });
           }
         }
 
@@ -707,6 +762,9 @@ export function survey(root = HERE) {
           hasBrief,
           hasPlate,
           longSide,
+          /* What this subject's plate is asked to be, so a tool writing a brief
+             or a marker does not have to derive it a second time. */
+          size,
           hasAim: aim.done,
           aimExtra: aim.extra,
           unreadable,
@@ -732,24 +790,29 @@ export function survey(root = HERE) {
         );
       }
 
-      /* One line, not thirty. A plate under the declared size is a real finding
-         and it is the SAME finding every time - re-render for print, or accept
-         that these are screen plates - so it is reported once, with the count and
-         the worst of them, rather than once per subject. */
-      if (undersized.length && bound) {
-        const worst = undersized.reduce((a, b) => (a.longSide <= b.longSide ? a : b));
-        out.notes.push(
-          `${line.id}: ${undersized.length} of ${entry.rows.length} plates are under the ${bound.min} px long side ` +
-            `this line needs — ${bound.from} — smallest is \`${worst.code}\` at ${worst.longSide} px. ` +
-            `They render fine on screen and they are the limit on how large the artefact can be printed.`
-        );
-      } else if (belowWant.length && bound) {
-        const worst = belowWant.reduce((a, b) => (a.longSide <= b.longSide ? a : b));
-        out.notes.push(
-          `${line.id}: every plate clears the ${bound.min} px floor (${bound.from}), and ${belowWant.length} of ` +
-            `${entry.rows.length} are under the ${bound.want} px this line would want for print — smallest is ` +
-            `\`${worst.code}\` at ${worst.longSide} px. That is an aspiration, not a fault.`
-        );
+      /* One line per floor, not thirty per line. A plate under the declared size
+         is a real finding and it is the SAME finding every time - re-render for
+         print, or accept that these are screen plates - so it is reported once
+         per floor, with the count and the worst of them, rather than once per
+         subject. A plate under the floor is a plate the shipping gate would have
+         refused: it predates the gate, or it came in round it. */
+      for (const bucket of bounds.values()) {
+        const { seen, undersized, belowWant } = bucket;
+        if (undersized.length) {
+          const worst = undersized.reduce((a, b) => (a.longSide <= b.longSide ? a : b));
+          out.notes.push(
+            `${line.id}: ${undersized.length} of ${seen} plates are under the ${bucket.min} px long side ` +
+              `this line needs — ${bucket.from} — smallest is \`${worst.code}\` at ${worst.longSide} px. ` +
+              `They render fine on screen and they are the limit on how large the artefact can be printed.`
+          );
+        } else if (belowWant.length) {
+          const worst = belowWant.reduce((a, b) => (a.longSide <= b.longSide ? a : b));
+          out.notes.push(
+            `${line.id}: every plate clears the ${bucket.min} px floor (${bucket.from}), and ${belowWant.length} of ` +
+              `${seen} are under the ${bucket.want} px this line would want for print — smallest is ` +
+              `\`${worst.code}\` at ${worst.longSide} px. That is an aspiration, not a fault.`
+          );
+        }
       }
     }
     out.lines.push(entry);

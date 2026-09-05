@@ -17,7 +17,7 @@ across the part that was touched, and nothing else on the page is unusual at all
 Nobody is in these. No hands, no wizard, no gesture: a working with a caster in
 it becomes a picture of the caster, and the mana cost is already on the card.
 
-Square plate. Render at 2000 px square or better.
+Square page. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 The FRAMING band below is the house figure and not yet a measurement — this deck
 has no built card to read a window off, so `tools/build-prompts.mjs` cannot heal
@@ -204,7 +204,7 @@ is not a rule of thumb.)
 
 ## spell-cleanse — Cleanse *(water, SPL-05)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-cleanse.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-cleanse.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -230,7 +230,7 @@ is not a rule of thumb.)
 
 ## spell-mist-veil — Mist Veil *(water, SPL-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-mist-veil.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-mist-veil.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -256,7 +256,7 @@ is not a rule of thumb.)
 
 ## spell-fair-wind — Fair Wind *(air, SPL-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-fair-wind.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-fair-wind.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -282,7 +282,7 @@ is not a rule of thumb.)
 
 ## spell-stormcall — Stormcall *(air, SPL-08)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-stormcall.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-stormcall.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -308,7 +308,7 @@ is not a rule of thumb.)
 
 ## spell-wayfire — Wayfire *(fire, SPL-09)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-wayfire.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-wayfire.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -335,7 +335,7 @@ is not a rule of thumb.)
 
 ## spell-seam-sense — Seam-Sense *(earth, SPL-10)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-seam-sense.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-seam-sense.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -361,7 +361,7 @@ is not a rule of thumb.)
 
 ## spell-root-snare — Root-Snare *(earth, SPL-11)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-root-snare.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-root-snare.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -387,7 +387,7 @@ is not a rule of thumb.)
 
 ## spell-deep-draught — Deep Draught *(water, SPL-12)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-deep-draught.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-deep-draught.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -414,7 +414,7 @@ is not a rule of thumb.)
 
 ## spell-farspeak — Farspeak *(air, SPL-13)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-farspeak.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-farspeak.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -441,7 +441,7 @@ is not a rule of thumb.)
 
 ## spell-loft — Loft *(air, SPL-14)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/spell-loft.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-loft.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

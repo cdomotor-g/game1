@@ -138,7 +138,7 @@ The queue reports three separate things, because three different people fix them
 | --- | --- |
 | **a step** | missing work — whose turn it is |
 | **a contract problem** | something the line *requires* is not there. A commission that never said what its terrain budget is cannot be handed to an artist at all |
-| **a note** | true, and nobody's turn. "32 of 56 plates are under the 4000 px this line asks for" is one decision, not thirty findings |
+| **a note** | true, and nobody's turn. "46 of 46 square plates are under the 1299 px this line would want for print" is one decision, not forty-six findings |
 
 ## The two agents
 
@@ -190,7 +190,7 @@ comment per subject — the commission:
 **line**     cards
 **plate id** `monster-vhalrik-the-cinder-crowned`
 **save to**  `docs/art/renders/monster-vhalrik-the-cinder-crowned.png`
-**format**   A4 portrait, 4000 px on the long side or better
+**format**   A4 portrait, at least 1260 px on the long side (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if you can
 **brief**    docs/art/prompts/monsters.md § monster-vhalrik-the-cinder-crowned
 
 <the complete prompt, preamble and negative prompt included, pasted in full>
@@ -202,21 +202,30 @@ The prompt is pasted **in full**, not linked. The artist should never have to
 assemble a prompt out of three files, and a prompt that was actually used is worth
 having in the thread verbatim.
 
-**2 · The artist draws and pushes.**
+**2 · The artist draws and delivers.**
 
 Generates against the brief, checks it against the acceptance list in
 [`art/07-ai-agent-brief.md`](art/07-ai-agent-brief.md) and the line's own contract
 — [`art/09-framing-and-composition.md`](art/09-framing-and-composition.md) for
-cards, [`map/README.md`](map/README.md) for maps — commits the PNG to the branch,
-and, if the wording had to change to get an acceptable render, the frozen wording
-alongside it as `<plate>.txt`. Then replies on the same thread:
+cards, [`map/README.md`](map/README.md) for maps — and delivers the PNG **to the
+inbox**: the one file, as `docs/art/renders/<plate>.png`, on a branch named
+`plate/<plate>`, with the frozen wording beside it as `<plate>.txt` if the
+wording had to change to get an acceptable render. The landing workflow does
+the rest — validates every byte, refuses a plate under its floor, builds,
+commits to `main`, reads the blob back and compares hashes — and the artist
+never touches `main`, never runs a build and never assembles a commit by hand.
+[`art/AGENTS.md`](art/AGENTS.md) is that contract. Then replies on the thread:
 
 ```md
-PLATE READY · MON-13 · `docs/art/renders/monster-vhalrik-the-cinder-crowned.png`
+PLATE READY · MON-13 · pushed to plate/monster-vhalrik-the-cinder-crowned, 1055x1491, sha256 3f2a…
 
 Prompt changed: dropped "rearing" — it kept producing a heraldic pose.
-Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt
+Frozen wording pushed beside it as monster-vhalrik-the-cinder-crowned.txt
 ```
+
+"Shipped" is the landing run's word, not the artist's: it says `SHIPPED AND
+VERIFIED` in the run summary, the inbox branch disappears, and the next run of
+the queue shows the subject at FRAME.
 
 **3 · The designer aims, builds and merges.**
 
@@ -261,7 +270,7 @@ a surprise three weeks later.
 | **In** | a card in `data/`, with a `cardCode` and a `name` |
 | **Brief** | an `## <plate-id>` section in the deck's prompt file. The heading **is** the plate id — that is what lets the queue find it with nobody filing an index |
 | **Plate id** | the `plateId` template on the deck in `data/components.json` — `character-{cardCode\|lower}` → `character-chr-06` |
-| **Out** | `docs/art/renders/<plate>.png`, at the deck's `plateFormat`, 4000 px on the long side |
+| **Out** | `docs/art/renders/<plate>.png`, at the deck's `plateFormat`, at or above the pixel floor derived for that page shape — **a card plate must print cleanly at twice the card's size**, the rulebook's half-page section: `data/mint.json lines.cards.plate.minLongSide` declares the print scale, the floor and the want, `tools/lib/mint.mjs` derives the figure from the card's safe area cut to the page's shape, the marker under every brief prints it, and `tools/ship-art.mjs` refuses a plate under it |
 | **Aim** | an entry in `docs/art/framing.json`: `subject` (the veto — what may not be cut), `focal` (the aim — the one point the picture is of), `note` |
 | **Builds** | `docs/cards/` via `build-cards.mjs`; the explorer thumbnails via `build-data.mjs` |
 

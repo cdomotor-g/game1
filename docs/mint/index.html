@@ -106,6 +106,7 @@
 <tbody><tr><td><strong>The designer</strong></td><td>Claude Code, pointed at this repository. The web app, the desktop app or the CLI — all three work; the web app is easiest because the pull request happens where the agent already is</td></tr>
 <tr><td><strong>The artist</strong></td><td>Any image model you can hold a conversation with and get files out of. ChatGPT is the default. Midjourney and the rest work, but you become the courier: they cannot commit to a branch, so you download and push</td></tr>
 <tr><td><strong>A GitHub account</strong></td><td>with write access to this repository. Both agents work on one branch and talk in one pull request thread</td></tr>
+<tr><td><strong>The inbox</strong></td><td>already in the repository: a push of one PNG to a branch called <code>plate/&lt;plate-id&gt;</code> lands it on <code>main</code>, validated, built and verified, by <a href="../../.github/workflows/land-plate.yml"><code>.github/workflows/land-plate.yml</code></a>. What the artist's tool needs to be allowed, and the one repository setting to check, are in <strong>§4b</strong></td></tr>
 <tr><td><strong>Node</strong></td><td>only if you want to run the tools yourself. The designer runs them for you</td></tr></tbody></table></div>
 <p>You do not need an image model that can write files. If it cannot, you save the PNG and push it — the pipeline does not care who moved the bytes, only that the file has the right name and lands in the right folder.</p>
 <hr>
@@ -262,8 +263,10 @@ missing reference is never a reason to hold up a run.
     &quot;Square plate&quot;, &quot;A4 portrait&quot;, &quot;Landscape 3:2&quot;. Deliver that shape. A
     square deck given a 2:3 portrait page is cropped to a square anyway, so
     a third of what you drew is thrown away and the composition with it
-  · WIDTH below what the brief asks for on its long side. It is the one
-    property that cannot be fixed afterwards
+  · WIDTH below the floor the marker under the heading names. It is the one
+    property that cannot be fixed afterwards, and the landing step refuses
+    it anyway. Deliver the largest size your generator offers for the page
+    shape; never upscale to reach a number
   · ignoring the rest of the FRAMING block, or the WINDOW or LABEL BAND
     blocks. The crop is taken by machine and cannot be argued with, so a
     plate that ignores them is unusable even when the drawing is good
@@ -272,18 +275,29 @@ missing reference is never a reason to hold up a run.
     not mounted on a vehicle, and not in a landscape
 
 ─── 8 · DELIVERY ───────────────────────────────────────────────────────
-Do not commit anything and do not open a pull request. The queue's own table
-says to commit the finished PNG — that instruction is for the designer, not for
-you. Ignore it.
-
 Show me the image in this chat and wait. With it, tell me:
 
-  · the plate id, the pixel dimensions, and the page shape you drew
+  · the plate id, the pixel dimensions against the floor the marker named,
+    and the page shape you drew
   · whether you were able to see the reference sheet
   · any wording you had to change to get an acceptable result, quoted exactly
 
-When I approve it, it goes to docs/art/renders/&lt;plate-id&gt;.png — named exactly
-as the brief's heading, and nothing else.</code></pre>
+Do not push anything until I say &quot;ship it&quot; (or I have said at the start of
+the run that every approved plate ships without asking). Never open a pull
+request. Never push to main.
+
+When I approve it, deliver it to the INBOX and nowhere else: the one file, as
+docs/art/renders/&lt;plate-id&gt;.png — named exactly as the brief's heading — on a
+NEW branch called plate/&lt;plate-id&gt;. Nothing else goes on that branch. A
+workflow in the repository then validates it, refuses it if it is under its
+floor, builds, commits it to main and verifies the committed bytes; you do
+none of that. docs/art/AGENTS.md says how, including the three API calls it
+takes and the base64 rules; follow it exactly.
+
+Report the delivery as: pushed to plate/&lt;plate-id&gt;, the commit, the
+dimensions, and the SHA-256 of the file you read from disk. Say &quot;shipped&quot;
+only if you can see the landing run say SHIPPED AND VERIFIED. A file
+accepted by GitHub is a delivery, not a landing.</code></pre>
 <hr>
 <h2 id="3-what-every-prompt-must-contain">3 · What every prompt must contain</h2>
 <p>A brief is not a sentence. Every one of them, in every line, has four parts, and the queue's step 1 is not finished until all four are there.</p>
@@ -308,16 +322,36 @@ as the brief's heading, and nothing else.</code></pre>
 <h3 id="step-3-you-carry-the-commission-to-the-artist">Step 3 — you carry the commission to the artist</h3>
 <p>Copy one <code>MINT REQUEST</code> comment. Paste the prompt part into the artist's chat. That is the whole job. Do not summarise it, do not trim it, do not paste two at once — one subject per message keeps the style from drifting.</p>
 <h3 id="step-4-the-plate-comes-back">Step 4 — the plate comes back</h3>
-<p>Save it under the exact filename the request gave. Not <code>dragon-final-v3.png</code>. The filename is how three different tools find it.</p>
-<pre><code>git add docs/art/renders/monster-vhalrik-the-cinder-crowned.png
-git commit -m &quot;Plate: Vhalrik, the Cinder-Crowned&quot;
-git push</code></pre>
-<p>Then reply on the subject's thread with <code>PLATE READY · &lt;code&gt;</code>, and note any wording you had to change. If the wording changed, save what was actually used next to the image as <code>&lt;plate&gt;.txt</code> — a prompt that produced an accepted render is worth more than the one that was written.</p>
+<p>It lands one of two ways, and both end in the same command.</p>
+<p><strong>The artist delivers it to the inbox</strong> (§4b): the one file, as <code>docs/art/renders/&lt;plate-id&gt;.png</code>, on a branch called <code>plate/&lt;plate-id&gt;</code>. The landing workflow takes it from there. Nothing for you to do but watch the Actions tab say <code>SHIPPED AND VERIFIED</code>, or read why not.</p>
+<p><strong>Or you have the file</strong>, because the artist could only hand you a download:</p>
+<pre><code>node tools/ship-art.mjs monster-vhalrik-the-cinder-crowned ~/Downloads/vhalrik.png</code></pre>
+<p>Not <code>git add</code>, not <code>git commit</code>, not <code>git push</code> — that is what shipped a truncated PNG once. <code>ship-art</code> validates every byte, refuses a plate under the floor its brief named, runs the build, commits, pushes, and reads the committed blob back from <code>main</code> to compare hashes. If the wording changed, pass what was actually used as <code>--wording=&lt;file.txt&gt;</code> and it is committed beside the plate — a prompt that produced an accepted render is worth more than the one that was written.</p>
+<p>Then reply on the subject's thread with <code>PLATE READY · &lt;code&gt;</code>.</p>
 <h3 id="step-5-the-designer-aims-it-and-builds">Step 5 — the designer aims it and builds</h3>
 <p>Ask the designer to pull and finish. It adds the framing entry or traces the board, runs the tools, and commits the regenerated files. Then run the queue once more: the subject should say <strong>minted</strong>.</p>
 <h3 id="step-6-merge">Step 6 — merge</h3>
 <p>Merge the pull request. The site rebuilds on push and the new card or map is on it.</p>
 <hr>
+<h2 id="4b-the-inbox-how-a-plate-lands-without-anybody-running-a-build">4b · The inbox — how a plate lands without anybody running a build</h2>
+<p>The artist's whole delivery is <strong>one file on one branch</strong>:</p>
+<pre><code>branch   plate/&lt;plate-id&gt;
+file     docs/art/renders/&lt;plate-id&gt;.png</code></pre>
+<p>Pushing that starts <a href="../../.github/workflows/land-plate.yml"><code>land-plate.yml</code></a>, which takes the file off the branch by its exact path and hands it to <code>node tools/ship-art.mjs</code> — the same command §4 step 4 runs by hand, so there is one definition of &quot;landed&quot;. It validates every chunk of the PNG, refuses a plate under its derived floor, runs <code>mint-build</code>, commits to <code>main</code> with everything the plate feeds rebuilt, reads the committed blob back from <code>main</code> and compares SHA-256, deletes the inbox branch, and asks Pages to redeploy. On failure it writes why into the run summary and leaves the branch alone: push a corrected file to the same branch and it runs again.</p>
+<p>This exists because the other way was tried and it is where every failure came from. An artist with a GitHub connector and no checkout assembled commits out of blobs, trees and refs by hand, crossed a tool's 1 MB output limit encoding a 3.6 MB PNG, committed the truncated result, expanded an 800 MB checkout to find out, and spent a minute per attempt on connector round trips. Three API calls — read the SHA of <code>main</code>, create the branch, put the file — is the whole job now, and <a href="../art/AGENTS.md"><code>art/AGENTS.md</code></a> spells them out with the base64 rules that keep the bytes whole.</p>
+<h3 id="what-to-set-on-github-once">What to set on GitHub, once</h3>
+<p>The workflow runs as the repository's own token, and the artist only ever writes to a <code>plate/**</code> branch. Two things to check:</p>
+<ol><li><strong>Actions may write to the repository.</strong> <em>Settings → Actions → General → Workflow permissions → &quot;Read and write permissions&quot;.</em> Both landing workflows declare <code>contents: write</code> themselves, but an organisation or repository policy set to read-only overrides that, and the symptom is the run failing at <code>git push</code> with a 403. <code>actions: write</code> is declared too, so the run can dispatch the Pages deploy — a push made with the workflow token does not start other workflows on its own.</li>
+<li><strong>The artist's tool may create a branch and a file.</strong> Whatever ChatGPT is using to reach this repository — a connector, a Custom GPT action, a fine-grained personal access token — it needs exactly <strong>Contents: Read and write</strong> on <code>cdomotor-g/game1</code>, and nothing wider. The safest way to grant it is a fine-grained token scoped to this one repository (<em>Settings → Developer settings → Fine-grained tokens</em>, repository access: only this one, permissions: Contents read/write; Metadata is added automatically). Add <strong>Actions: Read</strong> if you want the artist to be able to read the landing run's result itself and say &quot;shipped&quot;; without it, it reports the push and you read the Actions tab. It never needs Actions write, Workflows, or push rights to <code>main</code>, and a token that has them is a token that can do what the inbox exists to prevent.</li></ol>
+<p>If <code>main</code> is protected, allow the GitHub Actions app to push to it (rulesets: bypass list, or classic protection: do not restrict pushes to named users only). The artist's token needs no such exception — it never pushes to <code>main</code>.</p>
+<h3 id="when-it-says-not-shipped">When it says NOT SHIPPED</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>The summary says</th><th>What it means</th><th>Do</th></tr></thead>
+<tbody><tr><td><code>has no docs/art/renders/&lt;id&gt;.png</code></td><td>the file is at another path, or the branch name and the filename disagree</td><td>the branch is <code>plate/&lt;id&gt;</code> and the file is <code>docs/art/renders/&lt;id&gt;.png</code>, exactly; push again</td></tr>
+<tr><td><code>truncated chunk</code> / <code>CRC mismatch</code> / <code>inflate</code></td><td>the bytes did not survive the upload</td><td>re-read the file whole, check the base64 length, put it again</td></tr>
+<tr><td><code>under the … px floor</code></td><td>the plate is smaller than the marker asked for</td><td>redraw at the generator's largest size for that page shape; never upscale</td></tr>
+<tr><td><code>is not a plate the mint knows</code></td><td>the id is not a brief heading</td><td>copy the id from the <code>## &lt;plate-id&gt;</code> heading, not from the card's name</td></tr>
+<tr><td><code>mint build failed</code></td><td>something the plate feeds would not build</td><td>read the log; usually a plate for a deck whose data is mid-change. The designer's problem, not the artist's</td></tr></tbody></table></div>
 <h2 id="4a-the-courier-when-the-artist-is-a-machine-on-hugging-face-retired">4a · The courier, when the artist is a machine on Hugging Face — RETIRED</h2>
 <blockquote><p><strong>This route is retired. Do not commission a plate through it.</strong> It is kept written down because the machinery still exists and works, and because the reason it was retired is worth not re-discovering: the plates it returned were not the house style, the quota it burned was real, and judging six candidates on a contact sheet is slower than one good plate from an artist who can read the brief. §2 is the route — ChatGPT, pointed at this repository.  Nothing is deleted: <code>tools/mint-job.mjs</code>, <code>tools/hf/draw-plate.py</code> and <a href="../../.github/workflows/fetch-plate.yml"><code>.github/workflows/fetch-plate.yml</code></a> are all intact, and this section comes back by using them.</p></blockquote>
 <p>An artist that draws on <a href="https://huggingface.co">Hugging Face</a> leaves the plate there, and it has to reach <code>docs/art/renders/</code> before anything can be built from it. Step 4 above assumes a person carries it. This is the version where nobody does.</p>
@@ -350,7 +384,7 @@ git push</code></pre>
 <thead><tr><th>Good</th><th>Useless</th></tr></thead>
 <tbody><tr><td>&quot;The subject is against the top edge; there is no margin for the crop to slide in&quot;</td><td>&quot;It doesn't feel right&quot;</td></tr>
 <tr><td>&quot;The fens and the desert are the same ochre — nothing in the pixels can separate them&quot;</td><td>&quot;The colours are a bit off&quot;</td></tr>
-<tr><td>&quot;1024 px on the long side; the brief asked for 4000&quot;</td><td>&quot;It's a bit low-res&quot;</td></tr>
+<tr><td>&quot;640 px on the long side; the marker asked for at least 866&quot;</td><td>&quot;It's a bit low-res&quot;</td></tr>
 <tr><td>&quot;There is lettering in the picture and the brief bans text&quot;</td><td>&quot;Too busy&quot;</td></tr></tbody></table></div>
 <p>If the honest reason really is &quot;it doesn't feel right&quot;, then <strong>the brief was wrong</strong> and the designer owns the fix. Rewrite the brief, do not re-roll the image; a re-roll against a bad brief is a slot machine.</p>
 <p>The draft sheet makes this cheap to act on: six candidates from one wording, side by side. <strong>If they all fail the same way, the wording caused it</strong> — three granary drafts all came back with a horizon and a treeline, because the wording had asked for &quot;a wide field, seen from some way off&quot;, and a model that draws distance draws a horizon. Change the sentence, not the seed.</p>
@@ -360,6 +394,11 @@ git push</code></pre>
 <div class="table-wrap"><table>
 <thead><tr><th>Symptom</th><th>What is actually happening</th><th>Fix</th></tr></thead>
 <tbody><tr><td>The queue says a subject is at DRAW and you have pushed the plate</td><td>the filename does not match the plate id</td><td>rename it to exactly what the request said</td></tr>
+<tr><td>The artist pushed to <code>plate/&lt;id&gt;</code> and nothing happened</td><td>the branch name is not <code>plate/&lt;id&gt;</code>, or Actions is off, or the run failed</td><td>Actions tab → <strong>Land plate</strong>; the summary says why — §4b</td></tr>
+<tr><td>The landing run fails at <code>git push</code> with a 403</td><td>Actions has read-only workflow permissions</td><td><em>Settings → Actions → General → Workflow permissions → Read and write</em> — §4b</td></tr>
+<tr><td>The queue notes plates &quot;under the … px this line would want&quot;</td><td>they clear the floor and not the aspiration</td><td>nothing; it is one note per floor, not a fault</td></tr>
+<tr><td><code>ship-art</code> says <code>under the … px floor</code></td><td>the plate is smaller than its brief's marker asked for</td><td>redraw at the generator's largest size; never upscale</td></tr>
+<tr><td><code>mint-build</code> ends &quot;proof was SKIPPED&quot;</td><td>no Chromium on that machine</td><td>nothing is wrong; look at the card on the site or on a machine with a browser</td></tr>
 <tr><td>The queue says a card is at FRAME forever</td><td>the plate is committed, <code>framing.json</code> has no entry</td><td>the designer adds <code>subject</code>, <code>focal</code> and <code>note</code></td></tr>
 <tr><td>A card's picture is cropped to somebody's chest</td><td>there is a <code>subject</code> box and no <code>focal</code> point</td><td>add the focal point — two numbers</td></tr>
 <tr><td>The map traces as one giant mountain range</td><td>display lettering reads as ink to the sampler</td><td>move the big names over sea, or hand-correct those rows</td></tr>
@@ -382,8 +421,10 @@ git push</code></pre>
 <pre><code>1.  node tools/mint-queue.mjs              see who owes what
 2.  node tools/mint-request.mjs MOD-01     the complete commission, assembled
 3.  you:      paste it into the artist (standing instructions once, up top)
-4.  artist:   render, report pixel size and any wording changes
-5.  you:      save under the EXACT filename, commit, push
+4.  artist:   render, report pixel size against the marker's floor, and any
+              wording changes
+5.  artist:   push the one file to plate/&lt;plate-id&gt; (§4b), and the landing
+              run ships it - or you: node tools/ship-art.mjs &lt;id&gt; &lt;file.png&gt;
 6.  designer: frame it, run the tools, commit
 7.  node tools/mint-queue.mjs              should now say minted</code></pre>
 <p><code>tools/mint-draw.mjs</code> drops to step 2 by itself when it cannot reach the model, so you get the commission printed rather than an error. Nothing is lost — the long sheet is the version that definitely works, and the short one is a shortcut through it.</p>
@@ -431,7 +472,7 @@ git push</code></pre>
 <div class="table-wrap"><table>
 <tbody><tr><td><strong>a step</strong></td><td>missing work — whose turn it is</td></tr>
 <tr><td><strong>a contract problem</strong></td><td>something the line <em>requires</em> is not there. A commission that never said what its terrain budget is cannot be handed to an artist at all</td></tr>
-<tr><td><strong>a note</strong></td><td>true, and nobody's turn. &quot;32 of 56 plates are under the 4000 px this line asks for&quot; is one decision, not thirty findings</td></tr></tbody></table></div>
+<tr><td><strong>a note</strong></td><td>true, and nobody's turn. &quot;46 of 46 square plates are under the 1299 px this line would want for print&quot; is one decision, not forty-six findings</td></tr></tbody></table></div>
 <h2 id="the-two-agents">The two agents</h2>
 <div class="table-wrap"><table>
 <thead><tr><th></th><th><strong>Designer</strong></th><th><strong>Artist</strong></th></tr></thead>
@@ -452,19 +493,20 @@ git push</code></pre>
 **line**     cards
 **plate id** `monster-vhalrik-the-cinder-crowned`
 **save to**  `docs/art/renders/monster-vhalrik-the-cinder-crowned.png`
-**format**   A4 portrait, 4000 px on the long side or better
+**format**   A4 portrait, at least 1260 px on the long side (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if you can
 **brief**    docs/art/prompts/monsters.md § monster-vhalrik-the-cinder-crowned
 
 &lt;the complete prompt, preamble and negative prompt included, pasted in full&gt;
 
 Reply on this thread with `PLATE READY · MON-13` when it is pushed.</code></pre>
 <p>The prompt is pasted <strong>in full</strong>, not linked. The artist should never have to assemble a prompt out of three files, and a prompt that was actually used is worth having in the thread verbatim.</p>
-<p><strong>2 · The artist draws and pushes.</strong></p>
-<p>Generates against the brief, checks it against the acceptance list in <a href="../art/07-ai-agent-brief.md"><code>art/07-ai-agent-brief.md</code></a> and the line's own contract — <a href="../art/09-framing-and-composition.md"><code>art/09-framing-and-composition.md</code></a> for cards, <a href="../map/README.md"><code>map/README.md</code></a> for maps — commits the PNG to the branch, and, if the wording had to change to get an acceptable render, the frozen wording alongside it as <code>&lt;plate&gt;.txt</code>. Then replies on the same thread:</p>
-<pre><code>PLATE READY · MON-13 · `docs/art/renders/monster-vhalrik-the-cinder-crowned.png`
+<p><strong>2 · The artist draws and delivers.</strong></p>
+<p>Generates against the brief, checks it against the acceptance list in <a href="../art/07-ai-agent-brief.md"><code>art/07-ai-agent-brief.md</code></a> and the line's own contract — <a href="../art/09-framing-and-composition.md"><code>art/09-framing-and-composition.md</code></a> for cards, <a href="../map/README.md"><code>map/README.md</code></a> for maps — and delivers the PNG <strong>to the inbox</strong>: the one file, as <code>docs/art/renders/&lt;plate&gt;.png</code>, on a branch named <code>plate/&lt;plate&gt;</code>, with the frozen wording beside it as <code>&lt;plate&gt;.txt</code> if the wording had to change to get an acceptable render. The landing workflow does the rest — validates every byte, refuses a plate under its floor, builds, commits to <code>main</code>, reads the blob back and compares hashes — and the artist never touches <code>main</code>, never runs a build and never assembles a commit by hand. <a href="../art/AGENTS.md"><code>art/AGENTS.md</code></a> is that contract. Then replies on the thread:</p>
+<pre><code>PLATE READY · MON-13 · pushed to plate/monster-vhalrik-the-cinder-crowned, 1055x1491, sha256 3f2a…
 
 Prompt changed: dropped &quot;rearing&quot; — it kept producing a heraldic pose.
-Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt</code></pre>
+Frozen wording pushed beside it as monster-vhalrik-the-cinder-crowned.txt</code></pre>
+<p>&quot;Shipped&quot; is the landing run's word, not the artist's: it says <code>SHIPPED AND VERIFIED</code> in the run summary, the inbox branch disappears, and the next run of the queue shows the subject at FRAME.</p>
 <p><strong>3 · The designer aims, builds and merges.</strong></p>
 <p>Pulls the branch and does the line's third step:</p>
 <ul><li><strong>cards</strong> — adds the plate's <code>subject</code>, <code>focal</code> and <code>note</code> to <code>docs/art/framing.json</code>, checking the crop with <code>node tools/aim-preview.mjs &lt;code&gt;</code> before settling on the numbers — its budget line says what the window can hold at all, which is fixed before any box is drawn — then <code>node tools/validate-framing.mjs</code> to confirm the trim was the one intended, and showing the built card with <code>node tools/card-proof.mjs &lt;code&gt;</code> after</li>
@@ -479,7 +521,7 @@ Frozen wording committed as monster-vhalrik-the-cinder-crowned.txt</code></pre>
 <tbody><tr><td><strong>In</strong></td><td>a card in <code>data/</code>, with a <code>cardCode</code> and a <code>name</code></td></tr>
 <tr><td><strong>Brief</strong></td><td>an <code>## &lt;plate-id&gt;</code> section in the deck's prompt file. The heading <strong>is</strong> the plate id — that is what lets the queue find it with nobody filing an index</td></tr>
 <tr><td><strong>Plate id</strong></td><td>the <code>plateId</code> template on the deck in <code>data/components.json</code> — <code>character-{cardCode|lower}</code> → <code>character-chr-06</code></td></tr>
-<tr><td><strong>Out</strong></td><td><code>docs/art/renders/&lt;plate&gt;.png</code>, at the deck's <code>plateFormat</code>, 4000 px on the long side</td></tr>
+<tr><td><strong>Out</strong></td><td><code>docs/art/renders/&lt;plate&gt;.png</code>, at the deck's <code>plateFormat</code>, at or above the pixel floor derived for that page shape — <strong>a card plate must print cleanly at twice the card's size</strong>, the rulebook's half-page section: <code>data/mint.json lines.cards.plate.minLongSide</code> declares the print scale, the floor and the want, <code>tools/lib/mint.mjs</code> derives the figure from the card's safe area cut to the page's shape, the marker under every brief prints it, and <code>tools/ship-art.mjs</code> refuses a plate under it</td></tr>
 <tr><td><strong>Aim</strong></td><td>an entry in <code>docs/art/framing.json</code>: <code>subject</code> (the veto — what may not be cut), <code>focal</code> (the aim — the one point the picture is of), <code>note</code></td></tr>
 <tr><td><strong>Builds</strong></td><td><code>docs/cards/</code> via <code>build-cards.mjs</code>; the explorer thumbnails via <code>build-data.mjs</code></td></tr></tbody></table></div>
 <h3 id="maps">Maps</h3>
@@ -562,16 +604,18 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <p>Every subject the mint has declared that is not a finished artefact yet, and whose turn it is. The mint is a multi-tool: one <strong>line</strong> per kind of thing that goes designer → artist → build, declared in <a href="../../data/mint.json"><code>../../../data/mint.json</code></a>, and every line runs the same four steps. Who owns each one, and the handover that carries it, are in <a href="#s-mint"><code>../../MINT.md</code></a>; how to set the two agents up is in <a href="#s-setup"><code>../../MINT-SETUP.md</code></a>.</p>
 <p>Nothing here is tracked by hand. A subject's step is worked out from what is in the repository — the brief, the plate, the entry that ties the two to the data — so this file cannot disagree with the truth, only be out of date, and <code>--check</code> catches that in CI.</p>
 <p><strong>cards 102/203 · maps 1/1 · building tiles 44/54</strong></p>
-<blockquote><p><strong>Note.</strong> cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 103 of 203 are under the 1890 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 22 of 22 are under the 1890 px this line would want for print — smallest is <code>CHR-01</code> at 1491 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> cards: every plate clears the 866 px floor (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), and 46 of 46 are under the 1299 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
-<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 368 px floor (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 12 of 54 are under the 736 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 797 px floor (a 67.5 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 4 of 4 are under the 1594 px this line would want for print — smallest is <code>manor</code> at 1536 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 8 of 11 are under the 1289 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
 <p><strong>102 of 203 minted.</strong> 0 waiting on a brief, 100 waiting on art, 1 waiting on frame.</p>
 <h3 id="1-write-the-designer">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="2-draw-the-artist-100-cards">2 · DRAW — the artist — 100 cards</h3>
-<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 866 px on the long side for square or A4 landscape, 3:2 (1299 px if it can be had), and at least 1260 px on the long side for A4 portrait (1890 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Card</th><th>Deck</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
 <tbody><tr><td><code>CHR-09</code></td><td>Odysseus</td><td>Characters</td><td><code>character-chr-09</code></td><td>✓</td><td>·</td><td>·</td></tr>
@@ -713,7 +757,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h3 id="1-write-the-designer-2">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="2-draw-the-artist-10-tiles">2 · DRAW — the artist — 10 tiles</h3>
-<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 644 px on the long side (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1289 px if it can be had, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 368–644 px on the long side depending on the subject's own footprint (736–1289 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
 <tbody><tr><td><code>brickworks</code></td><td>Brickworks</td><td>Production</td><td><code>tile-brickworks</code></td><td>✓</td><td>·</td><td>·</td></tr>

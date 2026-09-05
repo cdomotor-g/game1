@@ -20,9 +20,11 @@ for, what country it is, what the terrain budget is, how many settlements of wha
 rank — and `node tools/mint-queue.mjs` checks that it is complete before anybody
 is asked to draw anything.
 
-Render **landscape**, root-two proportion, **4000 px on the long side minimum** —
-7000 if the map is ever to be printed at A1. Ask for the width before anything
-else: it is the one property of a plate that cannot be recovered later.
+Render **landscape**, root-two proportion. How many pixels is derived from the
+map's own largest print preset — `node tools/mint-request.mjs <map-id>` prints
+the floor and the figure A1 would take — and is never typed here. Ask for the
+width before anything else: it is the one property of a plate that cannot be
+recovered later.
 
 ## Shared preamble — paste ahead of every prompt below
 
@@ -89,8 +91,8 @@ what happens to the drawing afterwards, and both are the part that gets left out
 Seven rules, from [`../../map/README.md`](../../map/README.md), written out
 specifically for the map in hand:
 
-1. **Landscape, root-two, and as large as possible.** 4000 px wide is the working
-   minimum; 7000 is what A1 wants.
+1. **Landscape, root-two, and as large as possible.** The floor is derived from
+   the map's largest print preset and the commission prints it; A1 wants more.
 2. **Flat washes, hard edges.** Every gradient, glow or hillshade is a region the
    sampler reads as two terrains, or as one it has no name for.
 3. **One wash per terrain, and no two terrains sharing one.** This is the rule the

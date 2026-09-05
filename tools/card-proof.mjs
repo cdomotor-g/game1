@@ -175,7 +175,10 @@ if (!chromium) {
   console.error('            Set CHROME_PATH to one, or install Chromium. Nothing in the build depends');
   console.error('            on this tool - the card itself is docs/cards/<CODE>.svg, which any browser');
   console.error('            will open. This only exists to turn that into a PNG you can send someone.');
-  process.exit(1);
+  /* 3, not 1: "no browser" is a different answer from "the card would not
+     render", and tools/mint-build.mjs treats it as a proof skipped, not a
+     build failed. */
+  process.exit(3);
 }
 
 mkdirSync(OUT_DIR, { recursive: true });

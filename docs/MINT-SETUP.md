@@ -16,6 +16,7 @@ Read it once end to end before your first run. After that, the
 | **The designer** | Claude Code, pointed at this repository. The web app, the desktop app or the CLI — all three work; the web app is easiest because the pull request happens where the agent already is |
 | **The artist** | Any image model you can hold a conversation with and get files out of. ChatGPT is the default. Midjourney and the rest work, but you become the courier: they cannot commit to a branch, so you download and push |
 | **A GitHub account** | with write access to this repository. Both agents work on one branch and talk in one pull request thread |
+| **The inbox** | already in the repository: a push of one PNG to a branch called `plate/<plate-id>` lands it on `main`, validated, built and verified, by [`.github/workflows/land-plate.yml`](../.github/workflows/land-plate.yml). What the artist's tool needs to be allowed, and the one repository setting to check, are in **§4b** |
 | **Node** | only if you want to run the tools yourself. The designer runs them for you |
 
 You do not need an image model that can write files. If it cannot, you save the
@@ -227,8 +228,10 @@ missing reference is never a reason to hold up a run.
     "Square plate", "A4 portrait", "Landscape 3:2". Deliver that shape. A
     square deck given a 2:3 portrait page is cropped to a square anyway, so
     a third of what you drew is thrown away and the composition with it
-  · WIDTH below what the brief asks for on its long side. It is the one
-    property that cannot be fixed afterwards
+  · WIDTH below the floor the marker under the heading names. It is the one
+    property that cannot be fixed afterwards, and the landing step refuses
+    it anyway. Deliver the largest size your generator offers for the page
+    shape; never upscale to reach a number
   · ignoring the rest of the FRAMING block, or the WINDOW or LABEL BAND
     blocks. The crop is taken by machine and cannot be argued with, so a
     plate that ignores them is unusable even when the drawing is good
@@ -237,18 +240,29 @@ missing reference is never a reason to hold up a run.
     not mounted on a vehicle, and not in a landscape
 
 ─── 8 · DELIVERY ───────────────────────────────────────────────────────
-Do not commit anything and do not open a pull request. The queue's own table
-says to commit the finished PNG — that instruction is for the designer, not for
-you. Ignore it.
-
 Show me the image in this chat and wait. With it, tell me:
 
-  · the plate id, the pixel dimensions, and the page shape you drew
+  · the plate id, the pixel dimensions against the floor the marker named,
+    and the page shape you drew
   · whether you were able to see the reference sheet
   · any wording you had to change to get an acceptable result, quoted exactly
 
-When I approve it, it goes to docs/art/renders/<plate-id>.png — named exactly
-as the brief's heading, and nothing else.
+Do not push anything until I say "ship it" (or I have said at the start of
+the run that every approved plate ships without asking). Never open a pull
+request. Never push to main.
+
+When I approve it, deliver it to the INBOX and nowhere else: the one file, as
+docs/art/renders/<plate-id>.png — named exactly as the brief's heading — on a
+NEW branch called plate/<plate-id>. Nothing else goes on that branch. A
+workflow in the repository then validates it, refuses it if it is under its
+floor, builds, commits it to main and verifies the committed bytes; you do
+none of that. docs/art/AGENTS.md says how, including the three API calls it
+takes and the base64 rules; follow it exactly.
+
+Report the delivery as: pushed to plate/<plate-id>, the commit, the
+dimensions, and the SHA-256 of the file you read from disk. Say "shipped"
+only if you can see the landing run say SHIPPED AND VERIFIED. A file
+accepted by GitHub is a delivery, not a landing.
 ```
 
 ---
@@ -317,19 +331,28 @@ once — one subject per message keeps the style from drifting.
 
 ### Step 4 — the plate comes back
 
-Save it under the exact filename the request gave. Not `dragon-final-v3.png`. The
-filename is how three different tools find it.
+It lands one of two ways, and both end in the same command.
+
+**The artist delivers it to the inbox** (§4b): the one file, as
+`docs/art/renders/<plate-id>.png`, on a branch called `plate/<plate-id>`. The
+landing workflow takes it from there. Nothing for you to do but watch the
+Actions tab say `SHIPPED AND VERIFIED`, or read why not.
+
+**Or you have the file**, because the artist could only hand you a download:
 
 ```bash
-git add docs/art/renders/monster-vhalrik-the-cinder-crowned.png
-git commit -m "Plate: Vhalrik, the Cinder-Crowned"
-git push
+node tools/ship-art.mjs monster-vhalrik-the-cinder-crowned ~/Downloads/vhalrik.png
 ```
 
-Then reply on the subject's thread with `PLATE READY · <code>`, and note any
-wording you had to change. If the wording changed, save what was actually used
-next to the image as `<plate>.txt` — a prompt that produced an accepted render is
-worth more than the one that was written.
+Not `git add`, not `git commit`, not `git push` — that is what shipped a
+truncated PNG once. `ship-art` validates every byte, refuses a plate under the
+floor its brief named, runs the build, commits, pushes, and reads the committed
+blob back from `main` to compare hashes. If the wording changed, pass what was
+actually used as `--wording=<file.txt>` and it is committed beside the plate — a
+prompt that produced an accepted render is worth more than the one that was
+written.
+
+Then reply on the subject's thread with `PLATE READY · <code>`.
 
 ### Step 5 — the designer aims it and builds
 
@@ -343,6 +366,73 @@ Merge the pull request. The site rebuilds on push and the new card or map is on
 it.
 
 ---
+
+## 4b · The inbox — how a plate lands without anybody running a build
+
+The artist's whole delivery is **one file on one branch**:
+
+```
+branch   plate/<plate-id>
+file     docs/art/renders/<plate-id>.png
+```
+
+Pushing that starts [`land-plate.yml`](../.github/workflows/land-plate.yml),
+which takes the file off the branch by its exact path and hands it to
+`node tools/ship-art.mjs` — the same command §4 step 4 runs by hand, so there
+is one definition of "landed". It validates every chunk of the PNG, refuses a
+plate under its derived floor, runs `mint-build`, commits to `main` with
+everything the plate feeds rebuilt, reads the committed blob back from `main`
+and compares SHA-256, deletes the inbox branch, and asks Pages to redeploy. On
+failure it writes why into the run summary and leaves the branch alone: push a
+corrected file to the same branch and it runs again.
+
+This exists because the other way was tried and it is where every failure
+came from. An artist with a GitHub connector and no checkout assembled commits
+out of blobs, trees and refs by hand, crossed a tool's 1 MB output limit
+encoding a 3.6 MB PNG, committed the truncated result, expanded an 800 MB
+checkout to find out, and spent a minute per attempt on connector round trips.
+Three API calls — read the SHA of `main`, create the branch, put the file — is
+the whole job now, and [`art/AGENTS.md`](art/AGENTS.md) spells them out with
+the base64 rules that keep the bytes whole.
+
+### What to set on GitHub, once
+
+The workflow runs as the repository's own token, and the artist only ever
+writes to a `plate/**` branch. Two things to check:
+
+1. **Actions may write to the repository.** *Settings → Actions → General →
+   Workflow permissions → "Read and write permissions".* Both landing
+   workflows declare `contents: write` themselves, but an organisation or
+   repository policy set to read-only overrides that, and the symptom is the
+   run failing at `git push` with a 403. `actions: write` is declared too, so
+   the run can dispatch the Pages deploy — a push made with the workflow token
+   does not start other workflows on its own.
+2. **The artist's tool may create a branch and a file.** Whatever ChatGPT is
+   using to reach this repository — a connector, a Custom GPT action, a
+   fine-grained personal access token — it needs exactly **Contents: Read and
+   write** on `cdomotor-g/game1`, and nothing wider. The safest way to grant
+   it is a fine-grained token scoped to this one repository
+   (*Settings → Developer settings → Fine-grained tokens*, repository access:
+   only this one, permissions: Contents read/write; Metadata is added
+   automatically). Add **Actions: Read** if you want the artist to be able to
+   read the landing run's result itself and say "shipped"; without it, it
+   reports the push and you read the Actions tab. It never needs Actions
+   write, Workflows, or push rights to `main`, and a token that has them is
+   a token that can do what the inbox exists to prevent.
+
+If `main` is protected, allow the GitHub Actions app to push to it (rulesets:
+bypass list, or classic protection: do not restrict pushes to named users
+only). The artist's token needs no such exception — it never pushes to `main`.
+
+### When it says NOT SHIPPED
+
+| The summary says | What it means | Do |
+| --- | --- | --- |
+| `has no docs/art/renders/<id>.png` | the file is at another path, or the branch name and the filename disagree | the branch is `plate/<id>` and the file is `docs/art/renders/<id>.png`, exactly; push again |
+| `truncated chunk` / `CRC mismatch` / `inflate` | the bytes did not survive the upload | re-read the file whole, check the base64 length, put it again |
+| `under the … px floor` | the plate is smaller than the marker asked for | redraw at the generator's largest size for that page shape; never upscale |
+| `is not a plate the mint knows` | the id is not a brief heading | copy the id from the `## <plate-id>` heading, not from the card's name |
+| `mint build failed` | something the plate feeds would not build | read the log; usually a plate for a deck whose data is mid-change. The designer's problem, not the artist's |
 
 ## 4a · The courier, when the artist is a machine on Hugging Face — RETIRED
 
@@ -438,7 +528,7 @@ reason from the checklist, never with a feeling.**
 | --- | --- |
 | "The subject is against the top edge; there is no margin for the crop to slide in" | "It doesn't feel right" |
 | "The fens and the desert are the same ochre — nothing in the pixels can separate them" | "The colours are a bit off" |
-| "1024 px on the long side; the brief asked for 4000" | "It's a bit low-res" |
+| "640 px on the long side; the marker asked for at least 866" | "It's a bit low-res" |
 | "There is lettering in the picture and the brief bans text" | "Too busy" |
 
 If the honest reason really is "it doesn't feel right", then **the brief was
@@ -462,6 +552,11 @@ because a rejection nobody recorded is one somebody pays for twice.
 | Symptom | What is actually happening | Fix |
 | --- | --- | --- |
 | The queue says a subject is at DRAW and you have pushed the plate | the filename does not match the plate id | rename it to exactly what the request said |
+| The artist pushed to `plate/<id>` and nothing happened | the branch name is not `plate/<id>`, or Actions is off, or the run failed | Actions tab → **Land plate**; the summary says why — §4b |
+| The landing run fails at `git push` with a 403 | Actions has read-only workflow permissions | *Settings → Actions → General → Workflow permissions → Read and write* — §4b |
+| The queue notes plates "under the … px this line would want" | they clear the floor and not the aspiration | nothing; it is one note per floor, not a fault |
+| `ship-art` says `under the … px floor` | the plate is smaller than its brief's marker asked for | redraw at the generator's largest size; never upscale |
+| `mint-build` ends "proof was SKIPPED" | no Chromium on that machine | nothing is wrong; look at the card on the site or on a machine with a browser |
 | The queue says a card is at FRAME forever | the plate is committed, `framing.json` has no entry | the designer adds `subject`, `focal` and `note` |
 | A card's picture is cropped to somebody's chest | there is a `subject` box and no `focal` point | add the focal point — two numbers |
 | The map traces as one giant mountain range | display lettering reads as ink to the sampler | move the big names over sea, or hand-correct those rows |
@@ -517,8 +612,10 @@ or when you would rather draw it yourself.
 1.  node tools/mint-queue.mjs              see who owes what
 2.  node tools/mint-request.mjs MOD-01     the complete commission, assembled
 3.  you:      paste it into the artist (standing instructions once, up top)
-4.  artist:   render, report pixel size and any wording changes
-5.  you:      save under the EXACT filename, commit, push
+4.  artist:   render, report pixel size against the marker's floor, and any
+              wording changes
+5.  artist:   push the one file to plate/<plate-id> (§4b), and the landing
+              run ships it - or you: node tools/ship-art.mjs <id> <file.png>
 6.  designer: frame it, run the tools, commit
 7.  node tools/mint-queue.mjs              should now say minted
 ```

@@ -14,7 +14,7 @@ The same 1600s register as the rest of the game, but this is a **workshop
 inventory plate** rather than an armourer's pattern book: the object as the
 person who owns it would recognise it across a yard.
 
-Render at 2000 px square or better, single subject, centred.
+Square page, single subject, centred. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 ## These plates are generated today, and this brief is how that is undone
 
@@ -262,7 +262,7 @@ not a rule of thumb.)
 
 ## tool-fishing-line — Fishing Line *(fishing, TOL-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/tool-fishing-line.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tool-fishing-line.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

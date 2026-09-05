@@ -34,7 +34,7 @@ import { fileURLToPath } from 'node:url';
 import { crop, readFraming } from './lib/framing.mjs';
 import { pngSize, pngProblem } from './lib/png.mjs';
 import { plateIdFor } from './lib/plates.mjs';
-import { cardsOfDeck } from './lib/mint.mjs';
+import { cardsOfDeck, readMintFile, printDpi } from './lib/mint.mjs';
 import { tileSubjects, plateIdOf, boxOf } from './lib/tiles.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -55,6 +55,18 @@ const pct = (n) => `${(n * 100).toFixed(1)}%`;
 /* ------------------------------------------------------- cards and windows */
 
 const components = readJson(join(ROOT, 'data/components.json'));
+
+/**
+ * The print rule a card plate is held to - data/mint.json lines.cards
+ * plate.minLongSide: a print scale (the rulebook's half-page section, twice
+ * the card), a floor in dpi at that scale, and an aspiration. The floor the
+ * shipping gate refuses on is derived from the safe area and is only ever a
+ * floor; THIS is where the real figure is measured, through the deck's built
+ * window, plate by plate.
+ */
+const PRINT = readMintFile(ROOT).lines.find((l) => l.id === 'cards')?.plate?.minLongSide ?? {};
+const PRINT_SCALE = PRINT.printScale ?? 1;
+const UNITS_PER_MM = components.stock?.unitsPerMm ?? 8;
 
 /**
  * The picture window on a built card, as a bare aspect.
@@ -226,7 +238,21 @@ for (const id of plates) {
   if (claim?.window) {
     windows.push({ name: 'card', aspect: claim.window.aspect, where: claim.card.cardCode });
     if (!decksSeen.has(claim.deck.prefix)) {
-      decksSeen.set(claim.deck.prefix, { ...claim.window, budget: budget(plate, claim.window.aspect) });
+      decksSeen.set(claim.deck.prefix, { ...claim.window, budget: budget(plate, claim.window.aspect), worst: null });
+    }
+    /* How densely this plate prints through this window at the print scale.
+       Whichever axis binds, over the window in millimetres - the same crop the
+       card takes. Under the floor is a warning and not an error, for the same
+       reason a trim is: the plate is already accepted and the queue notes it;
+       what must never happen is a plate landing under the floor unnoticed,
+       and the shipping gate is where that is refused. */
+    const mm = { w: claim.window.w / UNITS_PER_MM, h: claim.window.h / UNITS_PER_MM };
+    const dpi = printDpi(plate, mm, PRINT_SCALE);
+    const deck = decksSeen.get(claim.deck.prefix);
+    if (!deck.worst || dpi < deck.worst.dpi) deck.worst = { dpi, code: claim.card.cardCode };
+    if (PRINT.dpi && dpi < PRINT.dpi) {
+      warnings.push(`${claim.card.cardCode} ${id}: prints at ${dpi} dpi at ${PRINT_SCALE} x card size through its ` +
+        `${mm.w.toFixed(1)} x ${mm.h.toFixed(1)} mm window - under the ${PRINT.dpi} dpi floor in data/mint.json`);
     }
   }
   if (!tile) windows.push({ name: 'thumb', aspect: THUMB_ASPECT, where: 'explorer' });
@@ -269,11 +295,14 @@ for (const e of errors) console.error(`  ERROR ${e}`);
  * appears when it is already too late is not a warning, it is an autopsy.
  */
 if (!quiet && decksSeen.size) {
-  console.log('\n  deck windows, and the most of a plate each can hold:');
+  console.log(`\n  deck windows, the most of a plate each can hold, and how densely the thinnest plate prints ` +
+    `at ${PRINT_SCALE} x card size (floor ${PRINT.dpi ?? '-'} dpi, want ${PRINT.wantDpi ?? '-'}):`);
   for (const [prefix, win] of [...decksSeen].sort()) {
+    const mm = `${(win.w / UNITS_PER_MM).toFixed(1)} x ${(win.h / UNITS_PER_MM).toFixed(1)} mm`;
     console.log(
-      `    ${prefix}  ${win.w} x ${win.h} units, aspect ${win.aspect.toFixed(2)}  ->  ` +
-      `${pct(win.budget.w)} of a plate's width, ${pct(win.budget.h)} of its height`
+      `    ${prefix}  ${mm}, aspect ${win.aspect.toFixed(2)}  ->  ` +
+      `${pct(win.budget.w)} of a plate's width, ${pct(win.budget.h)} of its height` +
+      (win.worst ? `  ·  ${win.worst.dpi} dpi (${win.worst.code})` : '')
     );
   }
 }

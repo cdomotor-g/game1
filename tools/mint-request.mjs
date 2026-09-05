@@ -41,6 +41,10 @@ const targets = args.filter((a) => !a.startsWith('--') && args[args.indexOf(a) -
 const ROOT = process.cwd();
 const promptOnly = flag('prompt-only');
 const render = flag('render');
+/* --json: the same commission as a machine reads it - both prompts, the plate
+   id, where it goes, the page shape and the derived pixel floor - one object per
+   subject, so a courier does not have to scrape any of it out of markdown. */
+const asJson = flag('json');
 
 const found = survey(ROOT);
 
@@ -79,6 +83,32 @@ function formatLine(line, row) {
 
 const chosen = pick();
 let warned = 0;
+
+if (asJson) {
+  const out = chosen.map(({ line, row }) => {
+    const brief = briefFor(ROOT, line.brief.dir, row.briefFile ?? line.brief.file, row.plate);
+    if (!brief) die(`${row.code}: no \`## ${row.plate}\` section in ${line.brief.dir}/${row.briefFile ?? line.brief.file}. It is at step WRITE, not DRAW.`);
+    const corner = line.id === 'buildingtiles' && row.tile?.cells ? envelopeNote(row.tile.cells, 1, { figures: false }) : null;
+    const r = renderPrompt(brief, { cornerNote: corner });
+    const { min, want, from } = minLongSideFor(ROOT, line, row);
+    const carriesCut = /^(WINDOW|LABEL BAND)\./m.test(brief.subject);
+    return {
+      line: line.id,
+      code: row.code,
+      name: row.name,
+      plate: row.plate,
+      step: row.step,
+      saveTo: platePath(line, row),
+      inboxBranch: `plate/${row.plate}`,
+      format: row.format ?? line.plate.format ?? null,
+      pixels: { minLongSide: min || null, wantLongSide: want || null, from },
+      commission: assemble(brief, carriesCut ? null : windowNote(ROOT, line, row)),
+      render: { positive: r.positive, negative: r.negative, moved: r.moved },
+    };
+  });
+  console.log(JSON.stringify(chosen.length === 1 ? out[0] : out, null, 2));
+  process.exit(0);
+}
 
 chosen.forEach(({ line, row }, i) => {
   const brief = briefFor(ROOT, line.brief.dir, row.briefFile ?? line.brief.file, row.plate);

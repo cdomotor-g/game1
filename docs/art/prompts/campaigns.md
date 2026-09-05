@@ -19,8 +19,7 @@ Age Greek things where a thing is shown: olives, oxhide, wattle, thatch,
 bronze, a rock-cut cistern - never a marble temple, a column, a statue, a toga
 or a vase painting.
 
-A4 landscape, 3:2 - the card crops a wide band from the middle. Render at 4000
-px on the long side or better.
+A4 landscape, 3:2 - the card crops a wide band from the middle. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 The FRAMING band below is the house figure and not yet a measurement - this
 deck has no built card to read a window off, so `tools/build-prompts.mjs`
@@ -121,7 +120,7 @@ particles, storyboard panels, multiple vignettes, split scene
 
 ## campaign-odyssey-twelve-ships — Twelve Ships from Troy *(book IX, CAM-01)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-twelve-ships.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-twelve-ships.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -140,7 +139,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-cicones — The Cicones at Ismarus *(book IX, CAM-02)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-cicones.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-cicones.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -161,7 +160,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-storm-off-malea — The Storm off Malea *(book IX, CAM-03)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-storm-off-malea.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-storm-off-malea.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -181,7 +180,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-lotus-eaters — The Lotus-Eaters *(book IX, CAM-04)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-lotus-eaters.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-lotus-eaters.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -202,7 +201,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-cyclops — The Cave of the Cyclops *(book IX, CAM-05)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-cyclops.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-cyclops.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -224,7 +223,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-bag-of-winds — Aeolus and the Bag of Winds *(book X, CAM-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-bag-of-winds.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-bag-of-winds.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -244,7 +243,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-laestrygonians — The Laestrygonians *(book X, CAM-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-laestrygonians.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-laestrygonians.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -266,7 +265,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-circe — Circe of Aeaea *(book X, CAM-08)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-circe.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-circe.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -287,7 +286,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-land-of-the-dead — The Land of the Dead *(book XI, CAM-09)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-land-of-the-dead.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-land-of-the-dead.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -308,7 +307,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-sirens — The Sirens *(book XII, CAM-10)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-sirens.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-sirens.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -330,7 +329,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-scylla-and-charybdis — Scylla and Charybdis *(book XII, CAM-11)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-scylla-and-charybdis.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-scylla-and-charybdis.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -351,7 +350,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-cattle-of-the-sun — The Cattle of the Sun *(book XII, CAM-12)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-cattle-of-the-sun.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-cattle-of-the-sun.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -373,7 +372,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-calypso — Calypso's Island *(book V, VII, CAM-13)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-calypso.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-calypso.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -394,7 +393,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-telemachy — The Telemachy *(book I-IV, CAM-14)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-telemachy.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-telemachy.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -416,7 +415,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-raft — The Raft and Poseidon's Storm *(book V, CAM-15)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-raft.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-raft.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -436,7 +435,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-phaeacians — Nausicaa and the Phaeacians *(book VI-VIII, XIII, CAM-16)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-phaeacians.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-phaeacians.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -458,7 +457,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-swineherd — The Swineherd's Hut *(book XIII-XVI, CAM-17)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-swineherd.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-swineherd.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -479,7 +478,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-beggar-in-the-hall — A Beggar in his own Hall *(book XVII-XX, CAM-18)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-beggar-in-the-hall.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-beggar-in-the-hall.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -500,7 +499,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-the-bow — The Bow and the Axes *(book XXI, CAM-19)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-the-bow.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-the-bow.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -521,7 +520,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-slaughter — The Slaughter of the Suitors *(book XXII, CAM-20)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-slaughter.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-slaughter.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -542,7 +541,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-the-bed — The Bed of Olive-wood *(book XXIII, CAM-21)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-the-bed.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-the-bed.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -563,7 +562,7 @@ sea may run to the margins.
 
 ## campaign-odyssey-laertes — Laertes' Orchard and the Peace *(book XXIV, CAM-22)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/campaign-odyssey-laertes.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/campaign-odyssey-laertes.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

@@ -12,7 +12,7 @@ dusty grey-green, water cold slate blue, air the near-neutral pale tints. No
 glow anywhere, ever — a fire monster is drawn hot the way an engraver would
 draw it: hatching, smoke, and heat-shimmer lines, never light effects.
 
-Render at A4 portrait proportion, 4000 px on the long side or better.
+A4 portrait page. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 ## Shared preamble — paste ahead of every prompt below
 
@@ -450,7 +450,7 @@ is not a rule of thumb.)
 
 ## monster-polyphemus — Polyphemus the Cyclops *(earth, MON-15, unique)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-polyphemus.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/monster-polyphemus.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -479,7 +479,7 @@ is not a rule of thumb.)
 
 ## monster-laestrygonian — Laestrygonian *(earth, MON-16)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-laestrygonian.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/monster-laestrygonian.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -506,7 +506,7 @@ is not a rule of thumb.)
 
 ## monster-scylla — Scylla *(water, MON-17, unique)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-scylla.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/monster-scylla.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -534,7 +534,7 @@ is not a rule of thumb.)
 
 ## monster-charybdis — Charybdis *(water, MON-18, unique)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-charybdis.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/monster-charybdis.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -562,7 +562,7 @@ is not a rule of thumb.)
 
 ## monster-sirens — The Sirens *(air, MON-19, unique)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/monster-sirens.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/monster-sirens.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

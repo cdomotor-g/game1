@@ -10,7 +10,7 @@ The object itself is drawn like every other made thing in the game: timber,
 metal, cord and glass, worn from daily handling and carefully kept. The mana
 bar, name and code are set in type later; the render is the object alone.
 
-Render at 2000 px square or better, single object, centred.
+Square page, single object, centred. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 ## Shared preamble — paste ahead of every prompt below
 

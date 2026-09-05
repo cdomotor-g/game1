@@ -1,5 +1,5 @@
 ---
-description: Mint a card, tile or map end to end from one request — brief, draw on Hugging Face, carry the plate in, aim, build, proof, ship
+description: Mint a card, tile or map end to end from one request — brief, commission the artist, land the plate through the inbox, aim, build, proof, ship
 argument-hint: MOD-01 | tile-warehouse | --deck modifications | a new fire monster, a cinder-crowned stag
 ---
 
@@ -37,28 +37,31 @@ them to run, not a file for them to move. **Go from their one sentence to a
 pushed commit and a proof in the reply**, and stop in the middle only for the two
 things below.
 
-Everything needed is automated and none of it needs them:
+Everything up to the drawing, and everything after it, is automated and none
+of it needs them. The drawing itself is the artist's — ChatGPT, pointed at this
+repository — and the plate comes back through the inbox:
 
 ```
-tile-envelope ─▶ brief ─▶ mint-request --render ─▶ ONE draft job (6 on a sheet)
-      ─▶ pick a seed ─▶ ONE final job ─▶ actions_run_trigger fetch-plate
-      ─▶ merge ─▶ aim ─▶ build ─▶ proof ─▶ push
+tile-envelope ─▶ brief ─▶ mint-request ─▶ the artist draws
+      ─▶ the artist pushes ONE file to plate/<plate-id> ─▶ land-plate.yml ships it to main
+      ─▶ git pull ─▶ aim ─▶ build ─▶ proof ─▶ push
 ```
 
-**Two HF jobs per subject. Not five.** Drawing is metered and the granary emptied
-the quota: twenty-two minutes of `a100-large` over five jobs, eight plates, one
-shipped. Half of that drew nothing, because every job re-downloads fifty gigabytes
-of model before its first pixel. Draft six candidates in one job, look at the one
-contact sheet, then draw the winner once.
+**Drawing on Hugging Face is retired.** `tools/mint-job.mjs`, `tools/hf/` and
+`fetch-plate.yml` are intact and are not to be used: what they drew was not the
+house style, the quota was real, and an artist that can read the brief beats a
+courier that cannot. `docs/MINT.md` says so, marked retired. Do not dispatch a
+drawing job.
 
 **Stop and ask only if:** a subject cannot be briefed without a design decision
 they have not made, or a plate keeps failing for a reason you cannot name. A
 blocked tool is not a reason to stop — say what is blocked, do every part that
 does not depend on it, and finish.
 
-**Never ask them to move a file.** That was the old fallback and it is not one:
-`fetch-plate.yml` exists precisely so nobody drags a PNG between two browser
-tabs, and it does not survive being asked a hundred times.
+**Never ask them to move a file.** The inbox exists precisely so nobody drags a
+PNG between two browser tabs: the artist pushes one file to one branch and the
+landing workflow does the rest. If a file does reach you as a download, land it
+with `node tools/ship-art.mjs <plate-id> <file.png>` — never `git add`.
 
 **Two things are always true at the end:** the proof is in the reply, and the
 commit is pushed. A run that ends with a paragraph about a tile, and no tile, has
@@ -72,68 +75,58 @@ not shown its work.
    prompt, and a `FRAMING.` block. The FRAMING block is the one that gets left out
    and it is the one that decides whether the plate is usable — name the head, the
    hands and the gear the card actually names, and say what margin stays clear.
-2. **Draw it — on Hugging Face, then have the Action carry it in.** This is the
-   part that runs without you touching a file. Three moves, all tool calls:
+2. **Commission it, and let the inbox carry it in.** The artist is ChatGPT,
+   pointed at this repository, and it reads the brief itself; `AGENTS.md` at the
+   root is its standing instruction and `docs/art/AGENTS.md` is its delivery
+   contract. Your part is three moves:
 
-   **a. Get the model's prompt, which is NOT the commission.**
+   **a. Make sure the brief says everything, then print the commission.**
    ```bash
-   node tools/mint-request.mjs <code> --render
+   node tools/build-prompts.mjs          # markers, WINDOW blocks, the derived size
+   node tools/mint-request.mjs <code>    # the commission, assembled, for a person
+   node tools/mint-request.mjs <code> --render   # the same brief as an IMAGE MODEL should get
    ```
-   A commission is written for a person and carries blocks they read as
-   instructions — `FRAMING.`, `WINDOW.`, `LABEL BAND.` A model cannot tell an
-   instruction from a subject and **draws them**: the first warehouse plate came
-   back with the brief rendered onto the page as paragraphs of text. `--render`
-   strips those, moves every "no X" into the negative prompt where it belongs,
-   and keeps the corner rule as the one depictive sentence it can be. It prints
-   what it moved, so nothing is dropped silently. Never hand a model the plain
-   commission.
+   The two prompts are different on purpose. A commission is written for a
+   reader and carries blocks it reads as instructions — `FRAMING.`, `WINDOW.`,
+   `LABEL BAND.` A bare image model cannot tell an instruction from a subject
+   and **draws them**: the first warehouse plate came back with the brief
+   rendered onto the page as paragraphs of text. `--render` strips those, moves
+   every "no X" into the negative prompt where it belongs, keeps the corner rule
+   as the one depictive sentence it can be, and prints what it moved. ChatGPT
+   as artist reads the whole commission and makes that split itself before it
+   calls its image tool — `AGENTS.md` tells it so. An API call to an image
+   model (`tools/mint-draw.mjs`, with a key) gets the `--render` form and
+   nothing else. `--json` prints either, with the plate id, the destination, the
+   page shape and the pixel floor, for anything that would rather not scrape
+   markdown.
 
-   **b. Draw it — draft first, in ONE job.** Write the positive and negative to
-   `hf://datasets/<owner>/game1-plates/render/<plate>.txt` and
-   `prompts/negative-<plate>.txt` with `hf_fs_write`. Then
-   `node tools/mint-job.mjs <id>` prints the exact `hf_jobs` call; the script it
-   names is `tools/hf/draw-plate.py`, which is committed so nobody retypes it.
+   **The pixel figure is never typed.** The marker under the brief's heading
+   carries it — derived from the card's safe area cut to the page's shape, at
+   the print scale `data/mint.json` declares, because a card plate must print
+   cleanly at twice the card's size for the rulebook. `build-prompts --check`
+   fails on a pixel count written into a brief's prose.
 
-   Pass the script **verbatim**. Never inline a variant — an inlined job is a job
-   per attempt, and a job per attempt is what emptied the quota.
-
-   | | |
-   | --- | --- |
-   | `flavor` | `a100-large`. Qwen-Image is 20B; with `enable_model_cpu_offload()` it needs ≥48 GB, and `l40sx1` queues for hardware. |
-   | `with_deps` | **not `with`.** Pass `with` and it is silently dropped, the job starts bare and dies on `ModuleNotFoundError` after it has already been scheduled. |
-   | `secrets` | `{"HF_TOKEN": "$HF_TOKEN"}` — substituted server-side |
-   | draft | `MODE=draft` — six seeds at 640 px / 8 steps, tiled onto ONE sheet |
-   | final | `MODE=final SEED=<n>` — 1328², 34 steps, only for a seed the sheet earned |
-
-   **Cancelling can take siblings with it.** Cancelling one job while another of
-   yours is running has killed the wrong one. Do not run two drawing jobs at once,
-   and if you must cancel, verify with `inspect` which one actually stopped.
-
-   **Judge the draft sheet, not a full render.** One `hf_fs attach` on
-   `draft/<plate>-sheet.jpg` shows every candidate at once. Five of the granary's
-   six rejects were plainly visible at draft size — a horizon that should not
-   exist, a subject too big for the die, text rendered onto the page, a colour
-   cast. Reject against the checklist in `docs/art/07-ai-agent-brief.md`, say the
-   concrete reason, and **write it into `docs/art/renders/<plate>.attempts.md`** so
-   the next run does not buy the same lesson. Three of the granary's six went the
-   same way because the wording that caused it had not been written down.
-
-   If every candidate fails the same way, fix the wording once and redraft —
-   do not re-roll seeds against a prompt that is wrong.
-
-   **c. Carry it in.** Dispatch the courier and it lands, builds and commits
-   itself:
+   **b. Hand it over.** If the user is running the artist, hand them the
+   commission whole, never a diff. If you are asked to be the courier for a
+   file the artist could only download:
+   ```bash
+   node tools/ship-art.mjs <plate-id> <file.png> [--wording=<file.txt>]
    ```
-   mcp__github__actions_run_trigger  run_workflow  fetch-plate.yml  ref: main
-     inputs: { "plate": "<plate-id>" }
-   ```
-   Then `git fetch origin main && git merge --ff-only origin/main`. The subject
-   moves off DRAW on its own, because the queue is computed rather than stored.
-   Setup and the one secret it needs are `docs/MINT-SETUP.md` §4a.
+   which validates every byte, refuses a plate under its floor, builds, commits,
+   pushes to `main` and reads the blob back. Never `git add` a plate.
 
-   **If any of that is unavailable** — no HF connector, no PRO, quota spent —
-   `node tools/mint-draw.mjs <code>` degrades to printing the commission for a
-   human to run, and exits clean. Hand that over rather than inventing a plate.
+   **c. Wait for the landing, then pull.** The artist pushes one file to
+   `plate/<plate-id>` and `.github/workflows/land-plate.yml` ships it to `main`
+   with the same command. `git fetch origin main && git merge --ff-only
+   origin/main`; the subject moves off DRAW on its own, because the queue is
+   computed rather than stored. If the run says `NOT SHIPPED`, its summary says
+   why; `docs/MINT-SETUP.md` §4b has the table.
+
+   **Judge the plate against the checklist**, not against taste — reject with
+   one concrete reason from `docs/art/07-ai-agent-brief.md`, and **write it into
+   `docs/art/renders/<plate>.attempts.md`** so the next run does not buy the same
+   lesson. If every attempt fails the same way, fix the wording once; do not
+   re-roll against a prompt that is wrong.
 
 3. **Aim it.** Read the plate — once. Check it against the acceptance checklist
    in `docs/art/07-ai-agent-brief.md`. Then measure rather than guess:
@@ -159,7 +152,7 @@ not shown its work.
    what to spend, and the `note` is where that choice is written down.
    `node tools/validate-framing.mjs` then confirms the trim you meant and no
    others.
-4. **Build and check.** `node tools/mint-build.mjs <code>` is the six tools a
+4. **Build and check.** `node tools/mint-build.mjs <code>` is the eight tools a
    landing plate needs, in order, and it proofs the card at the end. The full
    list at the foot of `CLAUDE.md` is for when `data/` has moved.
 5. **Show it.** `node tools/card-proof.mjs <code>` renders the finished card —

@@ -17,11 +17,15 @@ catches that in CI.
 
 **cards 102/203 · maps 1/1 · building tiles 44/54**
 
-> **Note.** cards: every plate clears the 945 px floor (a 80 mm card window at 300 dpi), and 103 of 203 are under the 1890 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 22 of 22 are under the 1890 px this line would want for print — smallest is `CHR-01` at 1491 px. That is an aspiration, not a fault.
+
+> **Note.** cards: every plate clears the 866 px floor (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), and 46 of 46 are under the 1299 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
-> **Note.** buildingtiles: every plate clears the 368 px floor (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 12 of 54 are under the 736 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
+> **Note.** buildingtiles: every plate clears the 797 px floor (a 67.5 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 4 of 4 are under the 1594 px this line would want for print — smallest is `manor` at 1536 px. That is an aspiration, not a fault.
+
+> **Note.** buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 8 of 11 are under the 1289 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
 
 
 ## Cards
@@ -36,7 +40,7 @@ Nothing waiting.
 
 ### 2 · DRAW — the artist — 100 cards
 
-The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 945 px on the long side (a 80 mm card window at 300 dpi), 1890 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
+The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side for square or A4 landscape, 3:2 (1299 px if it can be had), and at least 1260 px on the long side for A4 portrait (1890 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
@@ -212,7 +216,7 @@ Nothing waiting.
 
 ### 2 · DRAW — the artist — 10 tiles
 
-The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 644 px on the long side (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), 1289 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
+The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 368–644 px on the long side depending on the subject's own footprint (736–1289 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Tile | Category | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |

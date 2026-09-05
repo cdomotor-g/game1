@@ -5,8 +5,7 @@ Five full-page studies for the book, one per playable people. Each is a
 say they are good at, drawn like a specimen page from a travelling naturalist's
 folio. Full length, one or two figures, tools of their trade around them.
 
-Render at A4 portrait proportion, 4000 px on the long side or better. All type
-is set later — never generated.
+A4 portrait page. All type is set later — never generated. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 ## Shared preamble — paste ahead of every prompt below
 

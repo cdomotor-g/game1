@@ -1,17 +1,21 @@
 name: Fetch plate
 
-# THE COURIER. A plate is drawn on Hugging Face and has to land in
-# docs/art/renders/ before anything can be built from it. This workflow is the
-# leg between those two places, and it exists because that leg is the one part of
-# the mint nobody could automate from a chat session: the agent that commissions
-# a plate cannot reach huggingface.co (organisation egress policy), and the job
-# that draws it cannot reach this repository without a credential nobody should
-# be pasting into a conversation.
+# THE COURIER - RETIRED. Drawing on Hugging Face is retired (docs/MINT.md,
+# docs/MINT-SETUP.md §4a): do not commission a plate through it and do not
+# spend quota on it. The machinery is intact and works, so it is kept.
 #
-# A GitHub Action can reach both. So the token stays where a token belongs -
-# Settings -> Secrets and variables -> Actions, on this repository - and the
-# handover is a dispatch rather than somebody dragging a file between two browser
-# tabs. See docs/MINT-SETUP.md.
+# It was the leg between a plate drawn on Hugging Face and docs/art/renders/,
+# and it existed because that leg was the one part of the mint nobody could
+# automate from a chat session: the agent that commissions a plate cannot reach
+# huggingface.co (organisation egress policy), and the job that draws it cannot
+# reach this repository without a credential nobody should be pasting into a
+# conversation. A GitHub Action can reach both, so the token stays in Settings
+# -> Secrets and variables -> Actions.
+#
+# Everything after the download is tools/ship-art.mjs, the same as the live
+# route (.github/workflows/land-plate.yml) and the same as a person with a
+# checkout. This workflow used to carry its own copy of the build list; two
+# definitions of "landed" is one too many.
 #
 # It fetches the FULL plate, not a reduced one. Reduced copies only ever existed
 # to squeeze a picture through a chat window, and nothing here has to.
@@ -36,21 +40,28 @@ on:
 
 permissions:
   contents: write
+  actions: write
+
+concurrency:
+  group: land-plate
+  cancel-in-progress: false
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # The plate itself. A private dataset needs the token; a public one ignores
-      # it. --fail so a 404 stops the run here rather than committing an HTML
-      # error page with a .png on the end of it, which is exactly the kind of
-      # thing that gets discovered three weeks later inside a card window.
+      # The plate itself, to a scratch path - never straight into the tree. A
+      # private dataset needs the token; a public one ignores it. --fail so a
+      # 404 stops the run here rather than handing ship-art an HTML error page
+      # with a .png on the end of it.
       - name: Fetch the plate
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
@@ -65,24 +76,13 @@ jobs:
           echo "fetching ${url}"
           curl --fail --location --silent --show-error \
             ${HF_TOKEN:+--header "Authorization: Bearer ${HF_TOKEN}"} \
-            --output "docs/art/renders/${PLATE}.png" "$url"
-
-      # A truncated download can retain a perfect signature and IHDR. Validate
-      # every chunk, CRC, IEND and the complete inflated pixel payload before
-      # anything is built or committed.
-      - name: Check it is a plate
-        env:
-          PLATE: ${{ inputs.plate }}
-        run: |
-          node tools/verify-plate.mjs "docs/art/renders/${PLATE}.png"
+            --output "$RUNNER_TEMP/${PLATE}.png" "$url"
 
       # The wording a plate was actually drawn from, when it differs from the
-      # brief. docs/MINT.md asks for it to be committed beside the plate, and the
-      # reason is that a prompt which had to be changed to get an acceptable
-      # render is the only record of how this picture was really made. Absent in
-      # the dataset means the brief was used verbatim, which is not an error.
+      # brief. Absent in the dataset means the brief was used verbatim, which is
+      # not an error.
       - name: Fetch the frozen wording, if there is any
-        continue-on-error: true
+        id: wording
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           PLATE: ${{ inputs.plate }}
@@ -90,57 +90,29 @@ jobs:
         run: |
           set -euo pipefail
           url="https://huggingface.co/datasets/${DATASET}/resolve/main/render/${PLATE}.txt"
-          curl --fail --location --silent --show-error \
-            ${HF_TOKEN:+--header "Authorization: Bearer ${HF_TOKEN}"} \
-            --output "docs/art/renders/${PLATE}.txt" "$url" \
-            && echo "froze the wording" || echo "no frozen wording — the brief was used as written"
+          if curl --fail --location --silent --show-error \
+               ${HF_TOKEN:+--header "Authorization: Bearer ${HF_TOKEN}"} \
+               --output "$RUNNER_TEMP/${PLATE}.txt" "$url"; then
+            echo "wording=--wording=$RUNNER_TEMP/${PLATE}.txt" >> "$GITHUB_OUTPUT"
+            echo "froze the wording"
+          else
+            echo "wording=" >> "$GITHUB_OUTPUT"
+            echo "no frozen wording — the brief was used as written"
+          fi
 
-      # A landing plate is not a change to data/, so this is the short list
-      # rather than the one at the foot of CLAUDE.md: draw what the plate feeds,
-      # and recompute the queue so the subject moves off DRAW by itself.
-      - name: Rebuild what the plate feeds
-        run: |
-          node tools/build-tiles.mjs
-          node tools/build-cards.mjs
-          node tools/build-data.mjs
-          node tools/mint-queue.mjs
-          node tools/build-mint.mjs
-
-      - name: Check nothing else moved
-        run: |
-          node tools/validate-data.mjs
-          node tools/validate-art.mjs
-
-      - name: Commit
+      # Validate, floor, build, commit, push, read back, compare - all of it is
+      # ship-art, and none of it is repeated here.
+      - name: Ship it
         env:
           PLATE: ${{ inputs.plate }}
+          WORDING: ${{ steps.wording.outputs.wording }}
         run: |
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "nothing changed — the plate was already here"
-            exit 0
-          fi
-          git commit -m "The ${PLATE} plate lands" -m "Fetched from the drawn-plate dataset by .github/workflows/fetch-plate.yml and committed with whatever it feeds rebuilt. The plate is the artist's output and is never edited here; everything else in this commit is generated from it."
-          git push
+          node tools/ship-art.mjs "$PLATE" "$RUNNER_TEMP/$PLATE.png" --branch=main --quiet $WORDING
 
-      # A successful push is not proof that the repository contains the source
-      # bytes. Fetch main, read the committed blob back through Git, then compare
-      # its hash with the file this job validated before the commit.
-      - name: Verify the committed bytes
+      - name: Ask Pages to redeploy
         env:
-          PLATE: ${{ inputs.plate }}
-        run: |
-          set -euo pipefail
-          source_hash="$(sha256sum "docs/art/renders/${PLATE}.png" | cut -d' ' -f1)"
-          git fetch --quiet origin main
-          git show "origin/main:docs/art/renders/${PLATE}.png" > "$RUNNER_TEMP/${PLATE}.png"
-          committed_hash="$(sha256sum "$RUNNER_TEMP/${PLATE}.png" | cut -d' ' -f1)"
-          [ "$source_hash" = "$committed_hash" ] || {
-            echo "::error::plate hash mismatch after push: source ${source_hash}, repository ${committed_hash}"
-            exit 1
-          }
-          node tools/verify-plate.mjs "$RUNNER_TEMP/${PLATE}.png"
-          echo "verified committed SHA-256 ${committed_hash}"
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref main || echo "::warning::could not dispatch the Pages workflow; the site will catch up on the next push"

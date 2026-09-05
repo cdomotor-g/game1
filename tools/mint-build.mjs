@@ -85,6 +85,15 @@ if (codes.length) {
   for (const [tool, list] of byTool) {
     console.log(`\n\x1b[1m· ${tool.replace('tools/', '')}\x1b[0m  ${list.join(', ')}`);
     const run = spawnSync(process.execPath, [join(ROOT, tool), ...list], { stdio: 'inherit', cwd: ROOT });
+    /* No browser on this machine is not a failure of anything: the chain
+       passed and the card is built. The proof tools exit 3 for exactly that
+       case, so a runner without Chromium reports a clean build with the proof
+       skipped rather than a red run somebody has to read the log to trust. */
+    if (run.status === 3) {
+      console.log(`\nmint-build: chain clean; the proof was SKIPPED - no browser here to render it. ` +
+        `The artefact is built and checked; look at it on a machine with Chromium, or on the site.`);
+      process.exit(0);
+    }
     if (run.status !== 0) {
       console.error('\nmint-build: the chain passed; only the proof failed. That is a browser, not a build.');
       process.exit(1);

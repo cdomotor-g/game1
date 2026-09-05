@@ -73,9 +73,29 @@ image must first exist as a complete local file or genuine attachment; never
 reconstruct it from connector text, a preview or a base64 payload carried
 through chat. Read `docs/art/AGENTS.md` and use
 `node tools/ship-art.mjs <plate-id> <source.png>` when landing drawn artwork.
-That command fully validates the PNG, pushes it, reads the committed blob back
-from the target branch and requires a matching SHA-256 before it says shipped.
-`node tools/verify-plate.mjs --all` applies the same complete-file check in CI.
+That command fully validates the PNG, refuses it under its pixel floor, runs
+the mint build, pushes, reads the committed blob back from the target branch
+and requires a matching SHA-256 before it says shipped. It is the ONE
+definition of landing: `.github/workflows/land-plate.yml` runs the same command
+when the artist pushes one file to a `plate/<plate-id>` branch — the inbox,
+which is how a plate arrives from an artist that has no checkout — and the
+retired Hugging Face courier runs it too. Never `git add` a plate by hand.
+`node tools/verify-plate.mjs --all` applies the byte check to every committed
+plate in CI.
+
+**A card plate must print cleanly at twice the card's size, and the figure is
+derived.** The rulebook shows a card's picture as a half-page section, twice
+the card; that is `printScale` in `data/mint.json lines.cards.plate.minLongSide`,
+with a floor of 200 dpi at that scale and a want of 300. `minLongSideFor` in
+`tools/lib/mint.mjs` turns it into pixels from the card's safe area cut to the
+page shape the deck draws on — 1260 px on the long side for a portrait page,
+866 for a square or landscape one, today — and nothing types that number: the
+marker under every brief prints it, `ship-art` refuses under it, the queue
+notes plates between floor and want once per floor, and `validate-framing`
+reports what each deck's thinnest plate really prints at through its own
+window. `build-prompts --check` fails on a pixel count written into a brief's
+prose. The briefs used to say 2000 or 4000 px by hand against a queue that
+said 945, and the artist, producing 1254, rightly called that ambiguous.
 
 The line, the hatching, the wash and one **register** per brief. Every
 `## Shared preamble` and `## Negative prompt` block under `docs/art/prompts/`,

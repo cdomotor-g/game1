@@ -5,7 +5,7 @@ Drawn like pages from a **carrier's trade catalogue**: the machine in full
 profile, working, crewed lightly or not at all, with the wear its story earns
 it. A4 landscape proportion — the card crops a wide band from the middle.
 
-Render at 4000 px on the long side or better.
+How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 ## Shared preamble — paste ahead of every prompt below
 

@@ -21,7 +21,7 @@ Everything here is **second-hand and cared for**: kept oiled, kept mended, and
 older than whoever owns it. Nothing is gleaming and nothing is ruined. The wear
 is where a hand goes.
 
-Render at 2000 px square or better, single subject, centred.
+Square page, single subject, centred. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 ## Which of these are generated, and which are waiting on an artist
 
@@ -386,7 +386,7 @@ not a rule of thumb.)
 
 ## item-quiver — Quiver of Arrows *(ITEMS deck · gear, belt, ITM-09)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-quiver.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-quiver.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -424,7 +424,7 @@ not a rule of thumb.)
 
 ## item-waterskin — Waterskin *(ITEMS deck · gear, belt, ITM-10)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-waterskin.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-waterskin.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -459,7 +459,7 @@ not a rule of thumb.)
 
 ## item-map — Map *(ITEMS deck · gear, belt, ITM-11)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-map.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-map.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -497,7 +497,7 @@ not a rule of thumb.)
 
 ## item-compass — Compass *(ITEMS deck · gear, belt, ITM-12)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-compass.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-compass.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -532,7 +532,7 @@ not a rule of thumb.)
 
 ## item-rations-3-day — Three-Day Rations *(ITEMS deck · provision, carried, ITM-13)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-rations-3-day.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-rations-3-day.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -568,7 +568,7 @@ not a rule of thumb.)
 
 ## item-rations-10-day — Ten-Day Rations *(ITEMS deck · provision, carried, ITM-14)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/item-rations-10-day.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-rations-10-day.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

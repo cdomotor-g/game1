@@ -28,8 +28,7 @@ the spells — and a deck has to deal as one deck. An arcane event is still a th
 that happened in the world, and it is told the same way everything here is told:
 by what it left on the ground.
 
-A4 landscape, 3:2 — the card crops a wide band from the middle. Render at 4000
-px on the long side or better.
+A4 landscape, 3:2 — the card crops a wide band from the middle. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 The FRAMING band and the WINDOW block below are both measurements now, written by
 `tools/build-prompts.mjs` off the deck's own built card window. That was the plan
@@ -653,7 +652,7 @@ a rule of thumb.)
 
 ## event-mercenaries-for-hire — Mercenaries for Hire *(conflict, EVT-19)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-mercenaries-for-hire.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-mercenaries-for-hire.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -683,7 +682,7 @@ a rule of thumb.)
 
 ## event-plague — Plague *(social, EVT-20)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-plague.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-plague.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -713,7 +712,7 @@ a rule of thumb.)
 
 ## event-migrants — Migrants *(social, EVT-21)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-migrants.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-migrants.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -743,7 +742,7 @@ a rule of thumb.)
 
 ## event-strike — Strike *(social, EVT-22)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-strike.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-strike.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -773,7 +772,7 @@ a rule of thumb.)
 
 ## event-festival — Festival *(social, EVT-23)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-festival.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-festival.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -803,7 +802,7 @@ a rule of thumb.)
 
 ## event-master-craftsman — Travelling Master *(social, EVT-24)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-master-craftsman.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-master-craftsman.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -833,7 +832,7 @@ a rule of thumb.)
 
 ## event-iron-shortage — Iron Shortage *(market, EVT-25)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-iron-shortage.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-iron-shortage.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -863,7 +862,7 @@ a rule of thumb.)
 
 ## event-glut — Glut *(market, EVT-26)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-glut.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-glut.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -892,7 +891,7 @@ a rule of thumb.)
 
 ## event-foreign-demand — Foreign Demand *(market, EVT-27)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-foreign-demand.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-foreign-demand.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -922,7 +921,7 @@ a rule of thumb.)
 
 ## event-tax-levy — Tax Levy *(market, EVT-28)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-tax-levy.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-tax-levy.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -952,7 +951,7 @@ a rule of thumb.)
 
 ## event-ley-surge — Ley Surge *(arcane, EVT-29)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-ley-surge.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-ley-surge.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -983,7 +982,7 @@ a rule of thumb.)
 
 ## event-curdled-brew — Curdled Brew *(arcane, EVT-30)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-curdled-brew.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-curdled-brew.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1014,7 +1013,7 @@ a rule of thumb.)
 
 ## event-wandering-wizard — Wandering Wizard *(arcane, EVT-31)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-wandering-wizard.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-wandering-wizard.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1045,7 +1044,7 @@ a rule of thumb.)
 
 ## event-camp-fever — Camp Fever *(social, EVT-32)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-camp-fever.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-camp-fever.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1075,7 +1074,7 @@ a rule of thumb.)
 
 ## event-marsh-ague — Marsh Ague *(social, EVT-33)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-marsh-ague.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-marsh-ague.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1105,7 +1104,7 @@ a rule of thumb.)
 
 ## event-grey-pox — The Grey Pox *(social, EVT-34)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-grey-pox.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-grey-pox.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1135,7 +1134,7 @@ a rule of thumb.)
 
 ## event-impure-smelt — Impure Smelt *(industry, EVT-35)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-impure-smelt.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-impure-smelt.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1165,7 +1164,7 @@ a rule of thumb.)
 
 ## event-blood-moon — Blood Moon *(arcane, EVT-36)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-blood-moon.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-blood-moon.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1196,7 +1195,7 @@ a rule of thumb.)
 
 ## event-quiet-season — The Quiet Season *(wildlife, EVT-37)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-quiet-season.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-quiet-season.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1226,7 +1225,7 @@ a rule of thumb.)
 
 ## event-black-sails — Black Sails on the Horizon *(crime, EVT-38)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-black-sails.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-black-sails.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1255,7 +1254,7 @@ a rule of thumb.)
 
 ## event-letter-of-marque — Letter of Marque *(crime, EVT-39)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-letter-of-marque.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-letter-of-marque.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1285,7 +1284,7 @@ a rule of thumb.)
 
 ## event-press-gang — Press Gang *(crime, EVT-40)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-press-gang.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-press-gang.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1315,7 +1314,7 @@ a rule of thumb.)
 
 ## event-dragons-tithe — The Dragon's Tithe *(conflict, EVT-41)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-dragons-tithe.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-dragons-tithe.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1345,7 +1344,7 @@ a rule of thumb.)
 
 ## event-aerial-post — The Aerial Post *(industry, EVT-42)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-aerial-post.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-aerial-post.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1375,7 +1374,7 @@ a rule of thumb.)
 
 ## event-gale — Gale *(weather, EVT-43)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-gale.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-gale.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1405,7 +1404,7 @@ a rule of thumb.)
 
 ## event-early-thaw — Early Thaw *(weather, EVT-44)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-early-thaw.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-early-thaw.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1435,7 +1434,7 @@ a rule of thumb.)
 
 ## event-clipped-coin — Clipped Coin *(market, EVT-45)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-clipped-coin.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-clipped-coin.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1465,7 +1464,7 @@ a rule of thumb.)
 
 ## event-guild-embargo — Guild Embargo *(market, EVT-46)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-guild-embargo.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-guild-embargo.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1495,7 +1494,7 @@ a rule of thumb.)
 
 ## event-new-tolls — New Tolls *(social, EVT-47)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-new-tolls.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-new-tolls.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1524,7 +1523,7 @@ a rule of thumb.)
 
 ## event-green-man — The Sign of the Green Man *(social, EVT-48)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-green-man.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-green-man.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1555,7 +1554,7 @@ a rule of thumb.)
 
 ## event-mead-run — The Mead Run *(market, EVT-49)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-mead-run.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-mead-run.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1585,7 +1584,7 @@ a rule of thumb.)
 
 ## event-ley-drought — Ley Drought *(arcane, EVT-50)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-ley-drought.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-ley-drought.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1616,7 +1615,7 @@ a rule of thumb.)
 
 ## event-boom-town — Boom Town *(market, EVT-51)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-boom-town.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-boom-town.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1647,7 +1646,7 @@ a rule of thumb.)
 
 ## event-frame-breakers — The Frame-Breakers *(industry, EVT-52)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/event-frame-breakers.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-frame-breakers.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

@@ -18,8 +18,7 @@ weather.
 Nobody is the subject. Any people are small, distant, at their own work and
 facing away. No quest-giver, no pointing, no party of adventurers, no sunset.
 
-A4 landscape, 3:2 — the card crops a wide band from the middle. Render at 4000
-px on the long side or better.
+A4 landscape, 3:2 — the card crops a wide band from the middle. How many pixels is not stated here: the marker under each heading carries the figure, derived from the card's safe area at the print scale `data/mint.json` declares, and a number typed into this file fails `node tools/build-prompts.mjs --check`.
 
 The FRAMING band below is the house figure and not yet a measurement — this deck
 has no built card to read a window off, so `tools/build-prompts.mjs` cannot heal
@@ -113,7 +112,7 @@ vignettes, split scene
 
 ## quest-millers-debt — The Miller's Debt *(mini, QST-01)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/quest-millers-debt.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/quest-millers-debt.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -137,7 +136,7 @@ the far bank may run to the margins.
 
 ## quest-lanterns-for-coldwater — Lanterns for Coldwater *(mini, QST-02)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/quest-lanterns-for-coldwater.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/quest-lanterns-for-coldwater.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -161,7 +160,7 @@ boats and the village may run to the margins.
 
 ## quest-boar-of-bramblehold — The Boar of Bramblehold *(mini, QST-03)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/quest-boar-of-bramblehold.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/quest-boar-of-bramblehold.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -184,7 +183,7 @@ coppice and the ride may run to the margins.
 
 ## quest-word-to-dry-wells — Word to Dry Wells *(mini, QST-04)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/quest-word-to-dry-wells.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/quest-word-to-dry-wells.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -208,7 +207,7 @@ thorn and the horizon may run to the margins.
 
 ## quest-strangler-in-the-mire — The Strangler in the Mire *(mini, QST-05)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/quest-strangler-in-the-mire.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/quest-strangler-in-the-mire.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -232,7 +231,7 @@ survives the crop. The reed beds and the water may run to the margins.
 
 ## quest-draught-for-fens-end — A Draught for Fen's End *(mini, QST-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/quest-draught-for-fens-end.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/quest-draught-for-fens-end.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -256,7 +255,7 @@ roof, the drying sheets and the fen may run to the margins.
 
 ## quest-ironspine-road — The Ironspine Road *(campaign, QST-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/quest-ironspine-road.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/quest-ironspine-road.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -280,7 +279,7 @@ peaks and the scree may run to the margins.
 
 ## quest-drowned-bell — The Drowned Bell of Taleowick *(campaign, QST-08)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as `docs/art/renders/quest-drowned-bell.png`.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/quest-drowned-bell.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

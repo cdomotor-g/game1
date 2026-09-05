@@ -101,9 +101,26 @@ function stepsByPlate() {
   for (const entry of survey(ROOT).lines) {
     if (entry.shelved) continue;
     const generated = new Set(entry.generated ?? []);
-    for (const row of entry.rows) steps.set(row.plate, { step: row.step, generated: generated.has(row.code) });
+    for (const row of entry.rows) {
+      steps.set(row.plate, { step: row.step, generated: generated.has(row.code), size: row.size, format: row.format });
+    }
   }
   return steps;
+}
+
+/* The one sentence about pixels an artist is given, and the only place a pixel
+   count appears in a brief. It is derived per subject by minLongSideFor - the
+   card's safe area cut to the page's shape, at the print scale data/mint.json
+   declares - so a portrait page is asked for more than a square one, and a
+   figure typed into a brief's prose is refused below (typedPixelAsks). Before
+   this the briefs said 2000 or 4000 px by hand, the queue said 945, and the
+   artist produced 1254 and called the contract ambiguous, which it was. */
+function sizeSentence(state) {
+  const s = state.size;
+  if (!s || !s.min) return '';
+  const page = state.format ? `Page: ${state.format}. ` : '';
+  return `${page}At least **${s.min} px on the long side** (${s.from}); ${s.want} px if the generator offers it. ` +
+    'A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later.';
 }
 
 /* One line, in the artist's line of sight - directly under the heading it is about,
@@ -117,9 +134,50 @@ function markerFor(plate, state) {
   if (state.step === 'draw') {
     return state.generated
       ? `> 🛠 **NOT FOR AN ARTIST.** This plate is drawn by \`tools/draw-item.mjs\` from the card's own parts. Do not draw it by hand.`
-      : `> ✅ **WAITING — THIS ONE IS YOURS.** Save the finished page as \`${path}\`.`;
+      : `> ✅ **WAITING — THIS ONE IS YOURS.** ${sizeSentence(state)} Deliver the finished page as \`${path}\` — see \`docs/art/AGENTS.md\` for how.`;
   }
   return `> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** \`${path}\` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.`;
+}
+
+/**
+ * A pixel count typed into a brief's prose by hand.
+ *
+ * The figure is derived and written into the marker above; a second copy in the
+ * intro is a copy that goes stale - twelve of them said 2000 or 4000 px against a
+ * floor of 945 - so an ASK for a size in hand-written prose fails the build.
+ * Fenced blocks and blockquotes are skipped: the marker is a blockquote and is
+ * this tool's own, and a history sentence ("it arrived at 1491 px") is a fact,
+ * not an ask, and is left alone. What counts as an ask is a pixel figure in the
+ * same sentence as a word that asks for one.
+ */
+const PIXEL_ASK = /\b\d{3,5}\s*px\b/i;
+const ASKING = /\b(render|deliver|generate|minimum|at least|or better|or larger|preferred|wide minimum|if you can)\b/i;
+function typedPixelAsks(text, where) {
+  const out = [];
+  let fenced = false;
+  let para = [];
+  let paraStart = 0;
+  const lines = text.split('\n');
+  const flush = () => {
+    if (!para.length) return;
+    /* A sentence wraps across lines, so it is tested whole. */
+    const sentences = para.join(' ').split(/(?<=[.!?])\s+/);
+    for (const s of sentences) {
+      if (PIXEL_ASK.test(s) && ASKING.test(s)) {
+        out.push(`  ${where}:${paraStart + 1}: a pixel figure is typed into the brief - "${s.trim()}". Delete it; the marker under each heading carries the derived one.`);
+      }
+    }
+    para = [];
+  };
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.startsWith('```')) { flush(); fenced = !fenced; continue; }
+    if (fenced || line.trimStart().startsWith('>') || !line.trim()) { flush(); continue; }
+    if (!para.length) paraStart = i;
+    para.push(line);
+  }
+  flush();
+  return out;
 }
 
 /**
@@ -387,7 +445,10 @@ for (const t of targets) {
    reach: prose naming a page its tile is not drawn on, a brief promising more
    height than a deck whose window is measurable, a modification naming a vehicle
    its data denies. */
-const clashes = [...pageClashes(), ...bandClashes(), ...vehicleClashes(ROOT)];
+const typed = targets
+  .filter((t) => t.register.id)
+  .flatMap((t) => typedPixelAsks(readFileSync(join(ROOT, t.path), 'utf8'), t.path));
+const clashes = [...pageClashes(), ...bandClashes(), ...vehicleClashes(ROOT), ...typed];
 if (clashes.length) {
   console.error('build-prompts: a brief contradicts its own data —');
   console.error(clashes.join('\n'));
