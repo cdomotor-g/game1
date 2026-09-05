@@ -1,0 +1,22 @@
+spell-loft — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: square tabletop-game artwork plate, not a card
+
+Primary request: Draw a loaded four-wheeled freight wagon standing dead level and wholly unsupported one wheel’s width above the lip and gap of a ravine. Its practical load is roped down and settled; all four wheels turn slowly in empty air. Wheel ruts run across the near ground right up to the broken ravine lip, stop at the void, and resume aligned on the far lip. Between the two lips, show the gap plainly empty: steep rock walls, open air, and one very thin thread of water far below. Nothing supports, lifts, pulls, or surrounds the wagon. A flat violet printing slip is slightly offset across only a small patch of the empty air/ground registration directly beneath the wheels.
+
+Style and medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolor washes. Fine springy varied nib line, slightly heavier only around outer forms. Nearly every surface modeled with short feathered hatching and cross-hatching, dense in shadows, bare paper for highlights. Workaday, observed, restrained, ordinary daylight. Real material detail: worn wagon boards, timber wheel spokes and felloes, iron tires and fittings, taut hemp load ropes, rutted earth, fractured rock strata, sparse grass, distant water.
+
+Composition: Square whole page drawn edge to edge. Three-quarter side view from a slightly raised vantage so the complete wagon, all four wheels, near ravine lip, far ravine lip, discontinuous wheel ruts, and clear unsupported gap are unmistakable. Keep the complete wagon, every wheel, and both ravine lips comfortably inside the middle 80% of page height and centered left to right. The ravine walls may continue toward the lower margins and the roped load toward the upper margin, but nothing essential may be cropped. Make the wagon visibly horizontal and the air gap beneath it easy to read at card size.
+
+Color: Muted, desaturated, uneven thin watercolor washes; warm oatmeal paper and warm near-black ink. Restrained timber ochre, iron grey, dusty green grass, grey-brown rock, and a very small cool blue-grey thread of distant water. The only unusual color is flat violet #6B4C7D, printed slightly out of register on the otherwise blank gap directly beneath part of the wheels, like cheap press misregistration; no light emission.
+
+Constraints: one whole artwork page only; no horse, ox, people, hands, animals, caster, wizard, ropes extending off-page, crane, bridge, plank, road beneath the airborne wagon, visible support, wind vortex, cloud support, levitation beam, card frame, title, code, icons, rules box, caption, banner, border, lettering, symbols, runes, watermark, coffee ring, or circular stain. No gradient, glow, bloom, sparkle, particles, rays, aura, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat color blocks, thick uniform outline, poster composition, horror, ruin, or saturated colors. Violet must remain a plain, unpatterned, offset print wash in the gap, not a magical platform, shadow, vapor, energy, object, or light.
+
+TARGETED CORRECTION
+
+Edit this existing square Loft artwork only. Preserve the wagon, all four wheels, load, ropes, both ravine lips, interrupted wheel ruts, cliffs, distant river, composition, crop, pen-and-ink hatching, muted translucent watercolor, and warm oatmeal paper exactly.
+
+Targeted correction: remove the solid rectangular violet block floating under the wagon, restoring the open air behind it naturally. Replace it with only a faint, narrow, uneven flat violet #6B4C7D print-registration slip immediately below a short portion of the wheels, slightly offset from nearby black hatch marks at the lip/air boundary. It must remain visibly printed on the page but read as cheap misregistered ink—not a rectangle, object, platform, shadow, vapor, support, beam, glow, rune, symbol, or light. Nothing may appear to support the wagon. Add no text or new objects.
