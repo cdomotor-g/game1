@@ -21396,6 +21396,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "character-chr-16": {
+        "file": "art/renders/character-chr-16.png",
+        "width": 1056,
+        "height": 1489,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-boar-in-the-fields": {
         "file": "art/renders/event-boar-in-the-fields.png",
         "width": 1536,
