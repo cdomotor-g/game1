@@ -22556,6 +22556,17 @@ window.GAME_DATA = {
           0.42
         ]
       },
+      "spell-mist-veil": {
+        "file": "art/renders/spell-mist-veil.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "talisman-tal-01": {
         "file": "art/renders/talisman-tal-01.png",
         "width": 1254,

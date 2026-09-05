@@ -1,0 +1,23 @@
+spell-mist-veil — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: square tabletop-game artwork plate, not a card
+Primary request: Draw a drover's road running into fen country. The near hedge and wheel ruts are sharp and complete, but twenty paces ahead the road simply stops in flat white mist along a straight, hard edge as though cut with a rule. Fresh cart tracks and a dog's pawprints enter the mist and do not emerge. A flat violet printing slip is offset only along the straight cut edge of the mist.
+
+Style/medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolour washes. Fine springy varied nib line, only slightly heavier around outer forms. Nearly every surface modelled with short feathered hatching and cross-hatching, dense in shadows, with bare paper for the brightest highlights. Workaday, observed and restrained in ordinary daylight. Natural material detail in hedge twigs, muddy ruts, grasses and fen water.
+
+Composition: Square whole page drawn edge to edge. The straight cut edge of the mist, the road, tracks and pawprints are all clearly readable and comfortably inside the central 80% of page height, centred left-to-right. Hedge and fen may continue toward the margins. Leave quiet expendable scenery above and below. The white mist must have a visibly straight hard boundary, not a soft atmospheric fade.
+
+Colour: Muted, desaturated, uneven thin watercolour washes; warm oatmeal paper and warm near-black ink. The only unusual colour is flat violet #6B4C7D printed slightly out of register along the mist boundary alone, like cheap press misregistration; it emits no light.
+
+Constraints: one whole artwork page only; no people, hands, drover, dog, cart, caster, wizard, spell effect, card frame, title, code, icons, rules box, caption, banner, border, lettering, symbols, runes, or watermark. No coffee ring or circular stain. No gradient, glow, bloom, sparkle, particles, rays, aura, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat colour blocks, thick uniform outline, poster composition, horror, ruin, or saturated colours. Mist must be flat white with a hard straight edge; violet must be an unpatterned misregistered wash, not luminous magic.
+
+TARGETED CORRECTION
+
+Edit the most recent square Mist Veil plate only.
+
+Targeted correction: make the near boundary where the road, wheel ruts, cart tracks, and dog's pawprints enter the white mist a single unmistakably straight, hard-edged line across the road about twenty paces ahead. The detailed road must terminate abruptly at that crisp boundary with no soft feathering or gradual fade. Move the flat violet #6B4C7D misregistered printing slip from the distant horizon to this near hard cut edge only. Remove the distant violet horizon line completely. The violet must be a narrow, plain, unpatterned offset wash and must not glow.
+
+Preserve everything else exactly: empty drover's road, sharp near hedge, muddy ruts, cart tracks and pawprints entering but not emerging, fen landscape, no people or animals, fine pen-and-ink hatching, thin muted watercolour, warm oatmeal paper, square composition, all scenery and proportions. Add no text, border, symbols, caster, glow, particles, or new objects.

@@ -19,7 +19,7 @@ catches that in CI.
 
 > **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 41 of 41 are under the 1890 px this line would want for print — smallest is `CHR-12` at 1488 px. That is an aspiration, not a fault.
 
-> **Note.** cards: every plate clears the 866 px floor (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), and 47 of 47 are under the 1299 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 866 px floor (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), and 48 of 48 are under the 1299 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
@@ -32,19 +32,18 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**102 of 203 minted.** 0 waiting on a brief, 80 waiting on art, 21 waiting on frame.
+**102 of 203 minted.** 0 waiting on a brief, 79 waiting on art, 22 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 80 cards
+### 2 · DRAW — the artist — 79 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), 1299 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `SPL-06` | Mist Veil | Spells | `spell-mist-veil` | ✓ | · | · |
 | `SPL-07` | Fair Wind | Spells | `spell-fair-wind` | ✓ | · | · |
 | `SPL-08` | Stormcall | Spells | `spell-stormcall` | ✓ | · | · |
 | `SPL-09` | Wayfire | Spells | `spell-wayfire` | ✓ | · | · |
@@ -125,7 +124,7 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `ITM-14` | Ten-Day Rations | Items | `item-rations-10-day` | ✓ | · | · |
 | `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate — 21 cards
+### 3 · FRAME — whoever accepts the plate — 22 cards
 
 The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
 
@@ -152,6 +151,7 @@ The plate is committed and `docs/art/framing.json` says nothing about it yet. A 
 | `MON-19` | The Sirens | Monsters | `monster-sirens` | ✓ | ✓ | · |
 | `SPL-04` | Bulwark | Spells | `spell-bulwark` | ✓ | ✓ | · |
 | `SPL-05` | Cleanse | Spells | `spell-cleanse` | ✓ | ✓ | · |
+| `SPL-06` | Mist Veil | Spells | `spell-mist-veil` | ✓ | ✓ | · |
 
 ### Minted
 
