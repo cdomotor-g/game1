@@ -1,0 +1,22 @@
+event-mercenaries-for-hire — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: A4 landscape 3:2 tabletop-game artwork plate, not a card
+
+Primary request: Draw a hired mercenary company camped on common ground outside a town wall. Show rows of low canvas billets in strict straight lines; repeated tripods of stacked spears running down the camp; cooking fires contained in practical dug pits; and a horse line with its picket rope taut between two posts. In front of every billet, kit is laid out on a groundsheet in the same orderly arrangement: folded blanket, leather pack, helm, belt, boots, bowl and cup. The camp is orderly, well kept, disciplined, and plainly available for hire. Any figures are tiny, distant, incidental, facing away and occupied with camp work; no person is a focal subject.
+
+Style and medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolor washes, like an illustrated chronicle of the year. Fine springy varied nib line, slightly heavier only around outer forms. Nearly every surface modeled with short feathered hatching and cross-hatching, dense in shadows, bare paper for highlights. Workaday, observed, restrained, ordinary daylight. Real material detail in canvas seams, hemp lashings, spear shafts, iron heads, leather kit, blankets, fire pits, trampled grass, horse tack, rough town masonry.
+
+Composition: Wide 3:2 landscape whole page drawn edge to edge, middle-distance view from standing eye height. Low horizon in the bottom third; common ground runs to both edges. One clear dominant silhouette: the repeating line of stacked spear tripods. Keep the stacked spears, laid-out kit, and billet lines within the middle 99% of page height; full width survives crop. Horse line and town wall may continue to margins. Make the repeating ordered arrangements legible at card size.
+
+Color: Muted, desaturated, uneven thin watercolor washes over visible ink hatching. Warm oatmeal paper, warm near-black ink, warm ochre canvas, rust-red leather and blankets, cold flat slate-grey spearheads, dusty grey-green common grass, pale grey-brown town wall. No violet anywhere.
+
+Constraints: one whole artwork page only; no close face, portrait, heroic pose, fighting, weapons in use, battle, charge, banners, heraldry, readable signage, recruitment desk, coins, magical effect, violet, card frame, title, code, icons, rules box, caption, panel, border, lettering, symbols, runes, watermark, coffee ring, or circular stain. No gradient, glow, bloom, sparkle, particles, rays, aura, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat color blocks, thick uniform outline, poster composition, horror, disaster spectacle, or saturated colors. This is an orderly material condition observed after arrival, not the moment of action.
+
+TARGETED CORRECTION
+
+Edit this existing wide 3:2 Mercenaries for Hire artwork only. Preserve the orderly mercenary camp, repeated low canvas billets, central stacked-spear tripods, identical kit layouts on groundsheets, dug cooking pits, horse picket line, tiny rear-facing workers, muted pen-and-ink hatching, thin translucent watercolor, and warm oatmeal paper.
+
+Targeted composition correction: lower the distant town-wall skyline and the true land/sky horizon so the horizon lies in the bottom third of the page, leaving more ordinary open sky above. Recompose the distant wall and hills lower and smaller without adding or removing any important camp object. Keep the camp’s one dominant spear-tripod silhouette and all essential stacked spears, laid-out kit, and billet rows inside the middle 99% of page height. Maintain a wide middle-distance chronicle view; no close faces, battle, banner, text, violet, glow, or new focal figure.

@@ -21608,6 +21608,17 @@ window.GAME_DATA = {
           0.34
         ]
       },
+      "event-mercenaries-for-hire": {
+        "file": "art/renders/event-mercenaries-for-hire.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-mine-collapse": {
         "file": "art/renders/event-mine-collapse.png",
         "width": 1536,
