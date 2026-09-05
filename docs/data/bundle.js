@@ -22393,6 +22393,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "monster-sirens": {
+        "file": "art/renders/monster-sirens.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "monster-stone-boar": {
         "file": "art/renders/monster-stone-boar.png",
         "width": 1054,
