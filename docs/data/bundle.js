@@ -22327,6 +22327,17 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "monster-polyphemus": {
+        "file": "art/renders/monster-polyphemus.png",
+        "width": 1057,
+        "height": 1488,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "monster-reef-serpent": {
         "file": "art/renders/monster-reef-serpent.png",
         "width": 1054,
