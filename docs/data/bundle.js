@@ -22511,6 +22511,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "spell-deep-draught": {
+        "file": "art/renders/spell-deep-draught.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "spell-ember-lash": {
         "file": "art/renders/spell-ember-lash.png",
         "width": 1254,
