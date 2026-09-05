@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Asset type: full-page character plate for a tabletop game
+Image 1 is the edit target. Image 2 is the accepted house-style reference.
+Primary request: Change only the lamp treatment in Image 1. Remove every luminous halo, emitted light, bloom, warm glow, and illuminated patch from the stone wall and doorway. The lamp is still visibly burning, but this is conveyed only by a tiny flat warm-ochre mark inside its fine ink outline, with no light radiating from it and no change in the surrounding wall tone.
+Constraints: preserve the person, face, pose, hands, bag, sword and strap, older cloaked man, ship, gangplank, doorway, exact A4 portrait composition, fine pen-and-ink hatching, thin muted washes, aged oatmeal paper, and all other details unchanged. No text, lettering, border, card elements, gradients, glow, bloom, blur, soft shading, or circular stains.
