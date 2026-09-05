@@ -1,0 +1,23 @@
+spell-fair-wind — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: square tabletop-game artwork plate, not a card
+Primary request: Draw a river barge still tied at a timber wharf. Its mooring lines lie slack around the bollards, yet its single square sail is full and hard as a drum, sheets straining and mast bowed slightly forward. The water touching the hull is flat as a plate. The wharf's own simple weathervane points the opposite way, and loose straw on the quay does not move. A flat violet printing slip is offset only across the belly of the full sail.
+
+Style/medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolour washes. Fine springy varied nib line, slightly heavier only around outer forms. Nearly every surface modelled with short feathered hatching and cross-hatching, dense in shadows, bare paper for bright highlights. Workaday, observed, restrained, ordinary daylight. Real material detail: laid rope strands, sail seams and patches, timber grain, iron fittings and still water.
+
+Composition: Square whole page drawn edge to edge. Show the complete square sail, mast, slack mooring lines, bollards and enough flat water to make the contradiction unmistakable. Keep the full sail, mast and mooring lines comfortably inside the central 80% of page height and centred left-to-right. Wharf and far bank may continue toward margins. Leave quiet expendable scenery around the identifying elements.
+
+Colour: Muted, desaturated, uneven thin watercolour washes; warm oatmeal paper and warm near-black ink. The only unusual colour is flat violet #6B4C7D printed slightly out of register across part of the sail belly alone, like cheap press misregistration; no light emission.
+
+Constraints: one whole artwork page only; no people, crew, caster, wizard, card frame, title, code, icons, rules box, caption, banner, border, lettering, symbols, runes, watermark, coffee ring, or circular stain. No gradient, glow, bloom, sparkle, particles, rays, aura, lightning, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat colour blocks, thick uniform outline, poster composition, horror, ruin, or saturated colours. The water must remain visibly flat, lines slack, straw still, and the violet must be a plain unpatterned misregistered wash.
+
+TARGETED CORRECTION
+
+Edit the most recent square Fair Wind plate only.
+
+Targeted correction: reverse only the arrow on the rooster weathervane at the upper-left so its arrowhead clearly points left, opposite the apparent rightward pressure filling the barge's sail. Keep the rooster, pole, roof and weathervane position unchanged.
+
+Preserve everything else exactly: complete river barge tied at the wharf, full drum-tight square sail, bowed mast, plain violet misregistered wash across the sail belly only, visibly slack mooring ropes, bollards, perfectly still water, unmoving straw, cargo, far bank, square framing, fine pen-and-ink hatching, muted thin watercolour and warm oatmeal paper. Add no people, text, symbols, border, glow, particles, or new objects.

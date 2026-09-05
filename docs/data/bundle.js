@@ -22526,6 +22526,17 @@ window.GAME_DATA = {
           0.58
         ]
       },
+      "spell-fair-wind": {
+        "file": "art/renders/spell-fair-wind.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "spell-kindle": {
         "file": "art/renders/spell-kindle.png",
         "width": 1254,
