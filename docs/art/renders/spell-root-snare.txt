@@ -1,0 +1,23 @@
+spell-root-snare — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: square tabletop-game artwork plate, not a card
+Primary request: Draw a close study of one wooden cart wheel stopped on a metalled road, held fast by a dense lacing of live roots that has pushed up through the road and knitted over the felloes, spokes and hub. Root ends are still crumbed with wet soil; road stones are lifted and tipped where the roots broke through. Ten feet behind the wheel the road is unbroken and dusty. A flat violet printing slip is offset only across the living roots.
+
+Style/medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolour washes. Fine springy varied nib line, slightly heavier only around outer forms. Nearly every surface modelled with short feathered hatching and cross-hatching, dense in shadows, bare paper for highlights. Workaday, observed and restrained in ordinary daylight. Real material detail: timber grain, iron tyre and hub fittings, fibrous roots, wet soil crumbs, angular road stone and dry dust.
+
+Composition: Square whole page drawn edge to edge. The complete wheel, root lacing and lifted stones are the close central subject, all comfortably inside the central 80% of page height and centred left-to-right. Show enough road receding behind to make its unbroken dusty condition clear. Road and verge may continue toward margins. Every root crossing the wheel must be legible in ink without relying on colour.
+
+Colour: Muted, desaturated, uneven thin watercolour washes; warm oatmeal paper and warm near-black ink. Restrained timber ochre, grey stone, brown soil and dusty grey-green verge. The only unusual colour is flat violet #6B4C7D printed slightly out of register across only part of the roots, like cheap press misregistration; no light emission.
+
+Constraints: one whole artwork page only; no cart body, horse, people, hands, caster, wizard, card frame, title, code, icons, rules box, caption, banner, border, lettering, symbols, runes, watermark, coffee ring, or circular stain. No gradient, glow, bloom, sparkle, particles, rays, aura, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat colour blocks, thick uniform outline, poster composition, horror, ruin, or saturated colours. The violet must be a plain unpatterned misregistered wash and must not define or replace the roots.
+
+TARGETED CORRECTION
+
+Edit the most recent square Root-Snare plate only.
+
+Targeted correction: scale down the complete wheel, hub and root-lacing group and lower it slightly so the entire iron tyre has clear visible margin above, below and on both sides. Keep the complete wheel, all roots and lifted road stones comfortably within the middle 80% of the square page height; no part of the wheel may touch or be cropped by an edge. Extend the quiet road, verge and warm paper scenery around it to fill the page naturally.
+
+Preserve everything else exactly: one wooden wheel only, no cart body, live roots knitted over felloes, spokes and hub, wet soil on root ends, lifted metalled-road stones, intact dusty road ten feet behind, plain violet misregistered wash across only part of the roots, fine pen-and-ink hatching, muted thin watercolour, warm oatmeal paper. Add no people, horse, text, border, symbols, glow, particles, or new objects.

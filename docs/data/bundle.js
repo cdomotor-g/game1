@@ -22578,6 +22578,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "spell-root-snare": {
+        "file": "art/renders/spell-root-snare.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "spell-seam-sense": {
         "file": "art/renders/spell-seam-sense.png",
         "width": 1254,
