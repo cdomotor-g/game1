@@ -22500,6 +22500,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "spell-cleanse": {
+        "file": "art/renders/spell-cleanse.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "spell-ember-lash": {
         "file": "art/renders/spell-ember-lash.png",
         "width": 1254,

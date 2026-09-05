@@ -1,0 +1,23 @@
+spell-cleanse — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: square tabletop-game artwork plate, not a card
+Primary request: Draw a plain sickroom washstand. A chipped earthenware bowl holds water that has gone perfectly clear; all fouling has settled into grey sludge in a hard-edged shape at the bottom. A soiled cloth has been wrung out and hangs on the rail beside it. A fever-sheet is folded square and bone dry. An unlit tallow candle stands nearby. A flat violet printing slip is offset only across the clear water.
+
+Style/medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolour washes. Fine springy varied nib line, only slightly heavier around outer forms. Nearly every surface modelled with short feathered hatching and cross-hatching, dense in shadows, with bare paper reserved for the brightest highlights. Workaday, observed, restrained; ordinary daylight. Real material detail: chips in earthenware, wood grain, woven cloth, candle wax.
+
+Composition: Square whole page drawn edge to edge. Close naturalist-style object study. Keep the bowl, clear water, hanging cloth, folded sheet, and candle comfortably inside the central 80% of the page height and centred left-to-right, with quiet expendable wall and washstand structure around them. The washstand legs and wall may continue toward the margins. Leave breathing room around every identifying object.
+
+Colour: Muted, desaturated, uneven thin washes. Warm oatmeal paper and warm near-black ink. The only unusual colour is flat violet #6B4C7D printed slightly out of register over the clear water alone, like a cheap press misregistration; it emits no light.
+
+Constraints: one whole artwork page only; no people, hands, caster, wizard, gesture, spell effect, card frame, title, code, icons, rules box, caption, banner, border, lettering, or watermark. No coffee ring or circular stain. No gradient, glow, bloom, sparkle, particles, rays, runes, sigils, aura, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat colour blocks, thick uniform outline, poster composition, horror, ruin, or saturated colours. The clear water must be visually distinct from the grey sludge and the violet must remain a misregistered wash, not luminous magic.
+
+TARGETED CORRECTION
+
+Edit the most recent square Cleanse plate only.
+
+Targeted correction: remove every violet flower, floral motif, symbol, rune-like mark, or decorative pattern from the water. Replace it with one plain, flat, translucent violet (#6B4C7D) printing slip lying only across part of the clear water surface, displaced slightly from the bowl's black ink contours like a cheap press misregistration. It must be an irregular unpatterned wash with no internal design and no glow.
+
+Preserve everything else exactly: the chipped earthenware bowl, visibly clear water, hard-edged grey sludge settled at the bottom, soiled wrung cloth hanging on the rail, folded bone-dry fever sheet, unlit tallow candle, washstand, square framing, fine pen-and-ink hatching, warm oatmeal paper, muted watercolour, all positions and proportions. Add no text, border, symbols, people, hands, light effects, or new objects.
