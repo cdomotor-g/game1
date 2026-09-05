@@ -1,0 +1,23 @@
+spell-seam-sense — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: square tabletop-game artwork plate, not a card
+Primary request: Draw a close study of a bare hillside where a hand's-breadth flap of living turf has lifted like a hatch, still hinged by live roots. Beneath it the hill is exposed as a clean cut section: topsoil, then shillet, then a distinct band of ore running away into the slope, each layer hatched to its own grain. A prospector's pick stands planted in the turf beside the opening, its wooden haft polished dark from use. A flat violet printing slip is offset only across the exposed ore seam.
+
+Style/medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolour washes. Fine springy varied nib line, slightly heavier only around outer forms. Nearly every surface modelled with short feathered hatching and cross-hatching, dense in shadows, bare paper for highlights. Workaday, observed and restrained in ordinary daylight. Geological and material detail must be legible: fibrous roots, crumbly soil, layered shillet, granular ore, worn pick wood and forged iron.
+
+Composition: Square whole page drawn edge to edge. Close naturalist-style cutaway study. Keep the lifted turf hatch, complete cut section, continuous ore band and prospector's pick comfortably inside the central 80% of page height and centred left-to-right. Hillside may continue toward margins. Make the distinct material layers readable by line and hatch, not colour alone.
+
+Colour: Muted, desaturated, uneven thin watercolour washes; warm oatmeal paper and warm near-black ink. Restrained earth ochres, dusty grey-green turf and cold slate iron. The only unusual colour is flat violet #6B4C7D printed slightly out of register across part of the exposed ore seam only, like cheap press misregistration; no light emission.
+
+Constraints: one whole artwork page only; no people, hands, miner, caster, wizard, card frame, title, code, icons, rules box, caption, labels, diagram text, arrows, banner, border, lettering, symbols, runes, watermark, coffee ring, or circular stain. No gradient, glow, bloom, sparkle, particles, rays, aura, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat colour blocks, thick uniform outline, infographic, poster composition, horror, ruin, or saturated colours. Violet must be a plain unpatterned misregistered wash, not luminous magic.
+
+TARGETED CORRECTION
+
+Edit the most recent square Seam-Sense plate only.
+
+Targeted correction: turn the exposed ore band into ordinary non-magical grey-brown mineral rock, fully identifiable by black nib outlines, granular texture and hatching without colour. Remove the purple crystal appearance and all purple mineral facets. Then place one thin, flat, translucent violet #6B4C7D printing slip across only part of that ordinary ore band, visibly displaced slightly beyond its black contours like an out-of-register press wash. The violet must not define the seam, must contain no crystalline pattern, and must not glow.
+
+Preserve everything else exactly: lifted living turf hatch with hinged roots, soil and shillet layers, continuous ore band, planted prospector's pick, hillside, square framing, fine pen-and-ink hatching, muted thin watercolour, warm oatmeal paper, all positions and proportions. Add no people, labels, text, symbols, border, glow, particles, or new objects.
