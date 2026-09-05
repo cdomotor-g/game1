@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Asset type: full-page bestiary plate for a tabletop game
+Image 1 is the edit target. Image 2 is the accepted house-style reference.
+Primary request: Lower the complete giant figure within the A4 portrait page. The TOP of his hair must begin below 30% of the page height, with the centre of his head about 38% down the page. Keep the single small black ship about 65% down the page. Both the entire head and the entire ship must be comfortably inside the vertical band from 26% to 74% of the page. Reduce the giant slightly if needed. The raised boulder and forearms may occupy the upper margin.
+Constraints: preserve the same tied-back hair, plain belted tunic, thick forearms, downward-left gaze, raised boat-sized boulder in both hands, full body, planted feet, cliff, harbour basin, exactly one black ship, exact A4 portrait shape, fine pen-and-ink hatching, thin muted cold-slate and warm-ochre washes, aged oatmeal paper, and workaday observed tone. No other figures or ships. No text, lettering, border, card elements, gradients, glow, bloom, blur, soft shading, or circular stains.

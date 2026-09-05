@@ -22316,6 +22316,17 @@ window.GAME_DATA = {
           0.568
         ]
       },
+      "monster-laestrygonian": {
+        "file": "art/renders/monster-laestrygonian.png",
+        "width": 1055,
+        "height": 1491,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "monster-mire-strangler": {
         "file": "art/renders/monster-mire-strangler.png",
         "width": 1055,
