@@ -1,0 +1,22 @@
+event-ley-surge — final generation wording
+
+INITIAL GENERATION
+
+Use case: stylized-concept
+Asset type: A4 landscape 3:2 tabletop-game artwork plate, not a card
+
+Primary request: Draw an open stretch of quiet moor where every loose iron object has inexplicably stood itself upright and remained there. A heavy iron-toothed farm harrow balances improbably on one single corner, the rest raised. A loose length of chain rises rigid and perfectly straight out of the heather like a vertical rod, while every individual link remains visibly a chain link. In a fallen weathered plank, several ordinary iron nails have pulled themselves halfway out and all point at the same identical angle. A detached iron cart tyre stands upright and leans in open air with no object touching or supporting it. Heather, stones, clouds and grass are completely ordinary and motionless; there is no visible force.
+
+Style and medium: Fine pen-and-ink drawing on warm aged oatmeal paper, finished by hand with thin translucent watercolor washes, like an illustrated chronicle of the year. Fine springy varied nib line, slightly heavier only around outer forms. Nearly every surface modeled with short feathered hatching and cross-hatching, dense in shadows, bare paper for highlights. Workaday, observed, restrained, ordinary daylight. Real material detail in rusty harrow frame and teeth, separate chain links, nail heads and holes, split plank grain, iron tyre edge, heather stems, lichen stones and still moor soil.
+
+Composition: Wide 3:2 landscape whole page drawn edge to edge, middle-distance view from standing eye height. Keep the true land/sky horizon low in the bottom third with broad ordinary sky above. The corner-balanced harrow forms the dominant silhouette. Keep the complete harrow, rigid upright chain, half-drawn aligned nails and unsupported tyre inside the middle 90% of page height; full width survives crop. Moor and sky may continue toward margins. Separate the four iron anomalies spatially so each reads clearly at card size.
+
+Color: Muted, desaturated, uneven thin watercolor washes over visible ink hatching. Warm oatmeal paper and warm near-black ink; dusty grey-green heather, cold flat slate blue iron, warm ochre plank, quiet stone greys. Absolutely no violet anywhere.
+
+Constraints: one whole artwork page only; no person, face, hands, wizard, caster, creature, wind, bent grass, flying debris, lightning, beam, aura, visible magnet, lodestone, rope supporting objects, hidden prop, glowing metal, violet, magic symbol, rune, lettering, numbers, signage, card frame, title, code, icons, rules box, caption, panel, border, watermark, coffee ring, or circular stain. No gradient, glow, bloom, sparkle, particles, rays, drop shadow, blur, soft airbrush shading, dramatic lighting, photorealism, 3D render, digital painting, oil painting, anime, cartoon, vector illustration, woodcut, linocut, block print, flat color blocks, thick uniform outline, poster composition, horror, spectacle, or saturated colors. Draw everything dead straight and material: the wrongness comes only from unsupported iron objects holding impossible positions.
+
+TARGETED CORRECTION
+
+Edit this existing wide 3:2 Ley Surge artwork only. Preserve exactly the corner-balanced harrow, rigid upright chain with separate links, aligned half-drawn nails in the fallen plank, unsupported upright cart tyre, still moor, low horizon, ordinary sky, composition, crop, pen-and-ink hatching and warm oatmeal paper.
+
+Targeted colour correction: remove every violet, purple, lavender and magenta hue from the heather and the entire page. Repaint the heather only in muted dusty grey-green, dry ochre-brown and warm near-black ink hatching, with thin translucent uneven watercolor. The iron stays cold slate blue and rusty brown; the plank stays warm ochre. Add no glow, visible force, wind, symbols, text, people, supports or new objects.

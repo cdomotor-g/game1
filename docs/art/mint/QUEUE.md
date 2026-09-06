@@ -32,19 +32,18 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**102 of 203 minted.** 0 waiting on a brief, 61 waiting on art, 40 waiting on frame.
+**102 of 203 minted.** 0 waiting on a brief, 60 waiting on art, 41 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 61 cards
+### 2 · DRAW — the artist — 60 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi), 1299 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `EVT-29` | Ley Surge | Events | `event-ley-surge` | ✓ | · | · |
 | `EVT-30` | Curdled Brew | Events | `event-curdled-brew` | ✓ | · | · |
 | `EVT-31` | Wandering Wizard | Events | `event-wandering-wizard` | ✓ | · | · |
 | `EVT-32` | Camp Fever | Events | `event-camp-fever` | ✓ | · | · |
@@ -106,7 +105,7 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `ITM-14` | Ten-Day Rations | Items | `item-rations-10-day` | ✓ | · | · |
 | `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate — 40 cards
+### 3 · FRAME — whoever accepts the plate — 41 cards
 
 The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
 
@@ -152,6 +151,7 @@ The plate is committed and `docs/art/framing.json` says nothing about it yet. A 
 | `EVT-26` | Glut | Events | `event-glut` | ✓ | ✓ | · |
 | `EVT-27` | Foreign Demand | Events | `event-foreign-demand` | ✓ | ✓ | · |
 | `EVT-28` | Tax Levy | Events | `event-tax-levy` | ✓ | ✓ | · |
+| `EVT-29` | Ley Surge | Events | `event-ley-surge` | ✓ | ✓ | · |
 
 ### Minted
 

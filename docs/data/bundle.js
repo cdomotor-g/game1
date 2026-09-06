@@ -21637,6 +21637,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "event-ley-surge": {
+        "file": "art/renders/event-ley-surge.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-long-summer": {
         "file": "art/renders/event-long-summer.png",
         "width": 1536,
