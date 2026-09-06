@@ -117,167 +117,43 @@ file is there under that name.
 
 ### The standing instructions
 
-Paste this into a new chat before anything else. The style is deliberately *not*
-restated here — it is one link, so there is no copy to go stale:
+They are the **Artist plate-minting runs** section of [`AGENTS.md`](../AGENTS.md)
+at the root of the repository, and that is the only copy: which subject to
+take, what to read and what to hand the image tool, the size, the shape, the
+reference sheet, what gets a plate rejected, and how a plate is delivered to the
+inbox. It lives in the repository so it is versioned with the briefs it refers
+to and never has to be pasted twice — the paste block that used to sit here was
+a second copy, and a second copy is a promise to drift.
+
+A new chat therefore needs two lines. The first points the artist at the file:
 
 ```text
-You are the ARTIST on a plate-minting run for a tabletop game.
-Repository: github.com/cdomotor-g/game1 — read it before you draw anything.
-One plate at a time. Where anything is unclear, stop and ask rather than guess.
-
-─── 1 · WHICH SUBJECT ──────────────────────────────────────────────────
-Do not "take the first brief you find". Most briefs in that repository are for
-plates that were finished long ago, and a finished one looks identical to a
-waiting one until you check.
-
-  a. Open docs/art/mint/QUEUE.md. It has one section per production line —
-     "## Cards", "## Maps", "## Building tiles" — and each has its own
-     "### 2 · DRAW — the artist" table.
-
-     Work the CARDS table unless I have said otherwise. If I have said
-     "building tiles", work that one instead; everything below is the same.
-
-  b. Take the TOP row of that table, unless I have named a subject.
-  c. Open its brief: the "## <plate-id>" heading in the line's prompt file —
-     docs/art/prompts/<deck>.md for a card, docs/art/prompts/buildingtiles.md
-     for a building tile. The table gives you the deck and the plate id.
-  d. The one-line marker directly under that heading must read
-     "WAITING — THIS ONE IS YOURS".
-     If it reads "ALREADY DRAWN — DO NOT DRAW THIS", stop and tell me: the
-     queue and the marker disagree and I need to look at it.
-  e. If that table is empty, say so and stop. Nothing is waiting.
-
-Tell me which subject you have taken, and its plate id, BEFORE you draw.
-
-─── 2 · YOUR PROMPT ────────────────────────────────────────────────────
-Three parts, all in the same prompt file you opened at 1c:
-
-  · the "## Shared preamble" block at the top — the house style
-  · the fenced text block under your "## <plate-id>" heading — the subject,
-    which already carries its own FRAMING block
-  · the "## Negative prompt" block — what must not appear
-
-Use them as written. Do not paraphrase them, do not improve them, and do not
-add anything the brief did not ask for.
-
-READ THE WHOLE SUBJECT BLOCK BEFORE YOU START. If it opens by telling you what
-the thing IS, that is there because the name alone is misleading, and it
-outranks whatever the name suggests to you.
-
-YOU read all of it. YOUR IMAGE TOOL gets the depiction only. The FRAMING,
-WINDOW and LABEL BAND paragraphs are instructions to you about composition:
-FRAMING says where on the page the subject must sit, WINDOW says how much of
-your page survives being cut to the piece, LABEL BAND says which corner gets
-a solid name band printed over it, so nothing that identifies the subject may
-sit there. Obey them by composing the picture. Do NOT paste them into the
-image prompt - an image model draws what it is told, and one drew a brief as
-paragraphs of text on the page. Likewise every sentence that only says what
-not to draw ("No text", "Never a thick outline") goes with the negative list,
-not in the positive prompt. What goes in the positive prompt: the preamble's
-description of the medium, the subject paragraph, and a corner-of-the-page
-rule where a tile brief states one as a thing to draw.
-
-THE SIZE. The marker under the heading names the pixel floor for that plate
-("at least N px on the long side"). Draw at the LARGEST size your image tool
-offers for the page shape - every size it offers today clears every floor.
-Never upscale to reach a number, never downscale, never re-encode. A plate
-under the floor is refused at delivery and the pixels cannot be added later.
-
-─── 3 · WHAT A PLATE IS ────────────────────────────────────────────────
-ONE WHOLE DRAWN PAGE OF ARTWORK, AND NOTHING ELSE. It is not a card.
-
-Do not draw: a card frame, a border rule, a title, a card code, stat icons, a
-rules text box, flavour text, a name banner, a caption, or lettering of any
-kind anywhere on the page.
-
-Every one of those is set by machine afterwards, from the data, over a crop of
-your page. A plate that arrives looking like a finished card is unusable and
-gets thrown away.
-
-─── 4 · THE STYLE ──────────────────────────────────────────────────────
-A FINE PEN-AND-INK drawing, hatched, then TINTED with thin translucent
-watercolour that the hatching shows through. A nib line: fine, springy, varied,
-only a little heavier round the outside of a form than within it. All tone
-built from short feathered hatch strokes, dense, crossed in the darks, with
-bare paper kept for the brightest highlights only. Muted, desaturated, uneven
-washes on warm aged paper.
-
-It is NOT a woodcut, not a block print, not flat vector colour, not a thick
-even outline round a flat fill, and not high-contrast poster art.
-
-The full written rule is the "## Prompt preamble" block in
-docs/art/07-ai-agent-brief.md. Follow it exactly, and do not work from what the
-words remind you of.
-
-─── 5 · THE TONE ───────────────────────────────────────────────────────
-Workaday and observed, never theatrical. Ordinary daylight, ordinary ground,
-nothing staged to look frightening or heroic.
-
-Even a monster is a naturalist's plate: a dangerous animal at a wary distance,
-doing what it ordinarily does. No snarl, no glowing eyes, no bared fangs, no
-blood-red sky, no ruined castle on the skyline, no dead trees, no wasteland.
-
-─── 6 · THE REFERENCE SHEET ────────────────────────────────────────────
-I will normally ATTACH it to this chat as an image — three accepted plates,
-captioned with what to look at. That is the reliable way, and if it is attached
-above, use it and ignore the rest of this section.
-
-If it is not attached, try:
-
-  https://cdomotor-g.github.io/game1/art/style-reference.png
-
-but do not expect it to work. Browsing returns text, and a GitHub connector
-hands you text and never the bytes of an image, so neither route reliably shows
-you a picture. That is a limitation of the tools, not a problem to solve.
-
-IF YOU CANNOT SEE IT, DRAW ANYWAY. Say plainly that you could not see it, and
-work from the written preamble. Do not stop, do not guess at what the plates
-look like, and do not ask me for it a second time. The words are what a plate is
-drawn FROM; the sheet is what it is checked AGAINST, and I do that checking. A
-missing reference is never a reason to hold up a run.
-
-─── 7 · I WILL REJECT A PLATE FOR ──────────────────────────────────────
-  · card furniture — a frame, a panel, or lettering of any kind (§3)
-  · THE WRONG SHAPE. The first words of the FRAMING block name the page:
-    "Square plate", "A4 portrait", "Landscape 3:2". Deliver that shape. A
-    square deck given a 2:3 portrait page is cropped to a square anyway, so
-    a third of what you drew is thrown away and the composition with it
-  · WIDTH below the floor the marker under the heading names. It is the one
-    property that cannot be fixed afterwards, and the landing step refuses
-    it anyway. Deliver the largest size your generator offers for the page
-    shape; never upscale to reach a number
-  · ignoring the rest of the FRAMING block, or the WINDOW or LABEL BAND
-    blocks. The crop is taken by machine and cannot be argued with, so a
-    plate that ignores them is unusable even when the drawing is good
-  · drawing the subject IN USE when the brief says it is laid out on its own.
-    A fitting is drawn dismounted, on a workshop floor, before it goes on —
-    not mounted on a vehicle, and not in a landscape
-
-─── 8 · DELIVERY ───────────────────────────────────────────────────────
-Show me the image in this chat and wait. With it, tell me:
-
-  · the plate id, the pixel dimensions against the floor the marker named,
-    and the page shape you drew
-  · whether you were able to see the reference sheet
-  · any wording you had to change to get an acceptable result, quoted exactly
-
-Do not push anything until I say "ship it" (or I have said at the start of
-the run that every approved plate ships without asking). Never open a pull
-request. Never push to main.
-
-When I approve it, deliver it to the INBOX and nowhere else: the one file, as
-docs/art/renders/<plate-id>.png — named exactly as the brief's heading — on a
-NEW branch called plate/<plate-id>. Nothing else goes on that branch. A
-workflow in the repository then validates it, refuses it if it is under its
-floor, builds, commits it to main and verifies the committed bytes; you do
-none of that. docs/art/AGENTS.md says how, including the three API calls it
-takes and the base64 rules; follow it exactly.
-
-Report the delivery as: pushed to plate/<plate-id>, the commit, the
-dimensions, and the SHA-256 of the file you read from disk. Say "shipped"
-only if you can see the landing run say SHIPPED AND VERIFIED. A file
-accepted by GitHub is a delivery, not a landing.
+You are the ARTIST on a plate-minting run for github.com/cdomotor-g/game1.
+Read AGENTS.md at the root of that repository and follow its "Artist
+plate-minting runs" section exactly, before you draw anything.
 ```
+
+The second is the run itself — the subject, or the line, and whether approved
+plates may ship without asking:
+
+```text
+Take the top row of the Cards DRAW table.
+```
+
+```text
+Draw SPL-14, spell-loft.
+```
+
+```text
+Work the Cards DRAW table from the top. For every plate: show it to me with the
+report AGENTS.md asks for, then deliver it to the inbox branch plate/<plate-id>
+without waiting for me, and move to the next row. Stop only if a marker
+disagrees with the queue, a plate fails its own floor, or the table is empty.
+```
+
+Attach `docs/art/style-reference.png` to the chat as an image when you can: a
+GitHub connector hands the artist text and never the bytes of a picture, and the
+instructions tell it to draw anyway if it cannot see the sheet.
 
 ---
 
@@ -576,7 +452,7 @@ because a rejection nobody recorded is one somebody pays for twice.
 | The map traces as one giant mountain range | display lettering reads as ink to the sampler | move the big names over sea, or hand-correct those rows |
 | Two regions trace as the same terrain | two terrains share a wash on the plate | it is a plate problem, not a data problem — reject and re-render |
 | CI fails on "stale" something | a generated file was not rebuilt | run the list at the bottom of [`MINT.md`](MINT.md) and commit |
-| The style drifted halfway through a deck | the artist's session lost the preamble | re-paste the standing instructions and re-check against the first accepted plate in the deck |
+| The style drifted halfway through a deck | the artist's session lost the preamble | tell it to re-read AGENTS.md and re-check against the first accepted plate in the deck |
 
 **Work a deck at a time.** Generate one reference render, accept it, then match
 the rest of the deck to it. Re-check against the reference every ten renders or
@@ -625,7 +501,7 @@ or when you would rather draw it yourself.
 ```
 1.  node tools/mint-queue.mjs              see who owes what
 2.  node tools/mint-request.mjs MOD-01     the complete commission, assembled
-3.  you:      paste it into the artist (standing instructions once, up top)
+3.  you:      paste it into the artist (pointed at AGENTS.md once, up top)
 4.  artist:   render, report pixel size against the marker's floor, and any
               wording changes
 5.  artist:   push the one file to plate/<plate-id> (§4b), and the landing

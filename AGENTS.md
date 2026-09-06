@@ -6,9 +6,13 @@ publishes directly.
 
 ## Artist plate-minting runs
 
-These instructions apply whenever the user asks an artist to draw, generate or
-render plates from the mint queue. The user's run prompt only needs to name the
-production line or subject and any override to the defaults below.
+**This section is the artist's standing instruction, and it is the only copy.**
+It applies whenever the user asks an artist — ChatGPT pointed at this
+repository, by default — to draw, generate or render plates from the mint
+queue. A new chat needs nothing pasted into it beyond a pointer at this file:
+the user's run prompt only names the production line or subject and any
+override to the defaults below, and everything else is here, versioned with
+the briefs it refers to.
 
 Work one plate at a time. If anything material is unclear, stop and ask rather
 than guess. A user may explicitly authorise a continuous run; in that case,
@@ -71,12 +75,27 @@ prints what it moved; `--json` gives the same as one object with the plate id,
 destination, page shape and pixel floor. If you can run it, use its output. If
 you cannot, make the split yourself by the rule above and say so.
 
-The exact style wording lives in the generated prompt blocks and
-`data/artstyle.json`; do not create another style prompt from memory. The plate
-should read as workaday and observed rather than staged, frightening or heroic
-unless the live subject block explicitly requires otherwise. Monsters are
-observed animals at a wary distance, performing ordinary behaviour rather than
-posing for attack.
+### The style and the tone, in one breath
+
+A **fine pen-and-ink drawing, hatched, then tinted** with thin translucent
+watercolour that the hatching shows through. A nib line: fine, springy, varied,
+only a little heavier round the outside of a form than within it. All tone
+built from short feathered hatch strokes, dense, crossed in the darks, with
+bare paper kept for the brightest highlights only. Muted, desaturated, uneven
+washes on warm aged paper. It is **not** a woodcut, not a block print, not flat
+vector colour, not a thick even outline round a flat fill, and not
+high-contrast poster art.
+
+Workaday and observed, never theatrical: ordinary daylight, ordinary ground,
+nothing staged to look frightening or heroic. Even a monster is a naturalist's
+plate — a dangerous animal at a wary distance, doing what it ordinarily does.
+No snarl, no glowing eyes, no bared fangs, no blood-red sky, no ruined castle
+on the skyline, no dead trees, no wasteland.
+
+That paragraph is a reminder, not the rule. The exact wording lives in the
+generated `## Shared preamble` blocks and in `data/artstyle.json`; follow it
+exactly, do not work from what the words remind you of, and do not create
+another style prompt from memory.
 
 ### A plate is artwork, not a card
 
@@ -87,9 +106,24 @@ tools over a crop of the plate. Artwork that resembles a finished card is
 unusable.
 
 The first words of `FRAMING` declare the required page shape, such as Square,
-A4 portrait or Landscape 3:2. Deliver that exact shape. If a subject is
-specified laid out or dismounted on its own, do not show it fitted to, carried
-by or being used with another object.
+A4 portrait or Landscape 3:2. Deliver that exact shape: a square deck given a
+2:3 portrait page is cropped to a square anyway, so a third of what was drawn
+is thrown away and the composition with it. If a subject is specified laid out
+or dismounted on its own, do not show it fitted to, carried by or being used
+with another object — a fitting is drawn dismounted, on a workshop floor,
+before it goes on, not mounted on a vehicle and not in a landscape.
+
+### What gets a plate rejected
+
+- card furniture — a frame, a panel, or lettering of any kind;
+- the wrong page shape;
+- width below the floor the marker names — the one property that cannot be
+  fixed afterwards, and the landing step refuses it anyway;
+- ignoring the rest of the `FRAMING` block, or the `WINDOW` or `LABEL BAND`
+  blocks — the crop is taken by machine and cannot be argued with, so a plate
+  that ignores them is unusable even when the drawing is good;
+- drawing the subject in use when the brief says it is laid out on its own;
+- anything on the banned list in `docs/art/07-ai-agent-brief.md`.
 
 ### The size
 
