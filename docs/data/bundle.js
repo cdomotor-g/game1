@@ -21503,6 +21503,17 @@ window.GAME_DATA = {
           0.52
         ]
       },
+      "event-camp-fever": {
+        "file": "art/renders/event-camp-fever.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-caravan-robbery": {
         "file": "art/renders/event-caravan-robbery.png",
         "width": 1536,
