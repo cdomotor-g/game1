@@ -21563,6 +21563,17 @@ window.GAME_DATA = {
           0.47
         ]
       },
+      "event-festival": {
+        "file": "art/renders/event-festival.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-flood": {
         "file": "art/renders/event-flood.png",
         "width": 1536,
