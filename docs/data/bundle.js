@@ -21589,6 +21589,17 @@ window.GAME_DATA = {
           0.62
         ]
       },
+      "event-foreign-demand": {
+        "file": "art/renders/event-foreign-demand.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-glut": {
         "file": "art/renders/event-glut.png",
         "width": 1536,
