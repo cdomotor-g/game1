@@ -21782,6 +21782,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "event-tax-levy": {
+        "file": "art/renders/event-tax-levy.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-train-heist": {
         "file": "art/renders/event-train-heist.png",
         "width": 1536,
