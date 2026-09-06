@@ -21604,6 +21604,17 @@ window.GAME_DATA = {
           0.61
         ]
       },
+      "event-iron-shortage": {
+        "file": "art/renders/event-iron-shortage.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-long-summer": {
         "file": "art/renders/event-long-summer.png",
         "width": 1536,
