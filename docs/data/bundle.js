@@ -21685,6 +21685,17 @@ window.GAME_DATA = {
           0.34
         ]
       },
+      "event-marsh-ague": {
+        "file": "art/renders/event-marsh-ague.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-master-craftsman": {
         "file": "art/renders/event-master-craftsman.png",
         "width": 1536,
