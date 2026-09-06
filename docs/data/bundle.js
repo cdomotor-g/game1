@@ -21633,6 +21633,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "event-grey-pox": {
+        "file": "art/renders/event-grey-pox.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-hard-frost": {
         "file": "art/renders/event-hard-frost.png",
         "width": 1536,
