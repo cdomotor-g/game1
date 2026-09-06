@@ -21589,6 +21589,17 @@ window.GAME_DATA = {
           0.62
         ]
       },
+      "event-glut": {
+        "file": "art/renders/event-glut.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-hard-frost": {
         "file": "art/renders/event-hard-frost.png",
         "width": 1536,
