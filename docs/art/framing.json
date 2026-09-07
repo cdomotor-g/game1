@@ -152,6 +152,11 @@
       ],
       "note": "Both shoulders wall to wall, the torc and the broken sword in the chest thatch, and down to the toppled stone. A 0.96 window on an A4 page can be at most 0.736 of it tall and this troll wants 0.742 from crown to the stone's base, so the box hands the pad three pixels of turf dome and three of buried stone - neither of which anyone will miss. The thumbnail keeps head, shoulders and grave-goods and leaves the stone to the card."
     },
+    "monster-charybdis": {
+      "subject": [0, 0.316, 1, 0.5335],
+      "focal": [0.5, 0.6],
+      "note": "The funnel itself, from the outer rings down to the black throat, with the broken timbers riding round it and the lashed mast and keel - the brief's scale object - at the top right. 4.5% is spent, and it is spent off the TOP as the box's own position rather than as a trim: the crop keeps y 30.0%-80.5%, which puts the fig tree outside the window entirely. That is the one decision on this plate and it was measured, not assumed. The card's own rule names the fig tree, so it was tried: pulled up to 18.5% the window catches the rock the tree leans out from and a fringe of leaf, which does not read as a fig tree, AND cuts the bottom out of the throat - worse on both counts. The tree and the hole cannot both be had. A 1.40 window on a portrait page holds half its height, the leaves stop at 20% down and the throat runs to 70%, and a Charybdis without its throat is a rough sea. So the tree goes, and the hole stays, centred, with rings all round it and the wreckage on the rim. Focal on the throat."
+    },
     "monster-cinder-wolf": {
       "subject": [
         0.107,
@@ -218,6 +223,11 @@
       ],
       "note": "Tail tip to snout - all three undulations - and down past the horizon so the wyrm is seen to be flying over something. Whole at 0.539 of the page, which is the first plate in this deck small enough that both windows take the animal entire and nothing has to be traded. The white band and the reindeer leaving it are below any reachable crop; they are the story, not the subject. The box starts six thousandths below the tail tip and lets the pad carry it, because the lowest frost spikes on the ruff are the true bottom of the animal at 0.645 and the 5:4 thumbnail needs every pixel between the two."
     },
+    "monster-laestrygonian": {
+      "subject": [0.1, 0.238, 0.8, 0.533],
+      "focal": [0.655, 0.325],
+      "note": "The boulder over his head in both hands, the giant under it, the cliff lip he is standing on and the harbour below with the black ship in it. 4.4% is spent off the BOTTOM (y 22.2%-72.7%) and the ship is what pays: it keeps its hull and its mast and loses its waterline to the bottom edge. The box is drawn from 22.2% rather than from the sky, which is 2% of clearance over the boulder and no more - every point above it was worth a point of ship, and the ship is the only thing on this page that says how big he is. Cutting the boulder instead was the alternative and it is not one: a raised boulder is this card's entire silhouette. Focal on the head, small under the rock."
+    },
     "monster-mire-strangler": {
       "subject": [
         0.04,
@@ -226,6 +236,11 @@
         0.58
       ],
       "note": "Both drowned trees, the bundle hung between them, and the first fan of roots."
+    },
+    "monster-polyphemus": {
+      "subject": [0, 0.1775, 1, 0.5725],
+      "focal": [0.555, 0.205],
+      "note": "The one eye under its shaggy brow, the hands cupped under the ewe, and the racks of cheeses and the pens of lambs in the cave behind him. This deck's window is 1.40 against an A4 portrait page, so it holds only 50.7% of the height - the hardest budget in the mint - and the crop keeps y 16.0%-66.7%. The band was moved DOWN off the head, deliberately, and that is the whole decision: aimed hard at the eye it ended at 64.2% and cut his fingertips, and this plate's argument is a monster drawn as a shepherd with careful hands. Two per cent bought the hands whole and the rim of the pail with the milk going into it, at the cost of the clear cave roof above his hair, which is dark rock. What is still spent is the foot of the pail, his boots, and the ram beside them - the ram was the brief's scale object, and it is not missed, because the ewe between his knees and the lambs in the pen do the same job inside the window. Focal on the eye."
     },
     "monster-reef-serpent": {
       "subject": [
@@ -244,6 +259,16 @@
         0.62
       ],
       "note": "Head to talons, both wings. The nest at the foot of the crag is scenery."
+    },
+    "monster-scylla": {
+      "subject": [0.05, 0.225, 0.9, 0.49],
+      "focal": [0.45, 0.52],
+      "note": "All six necks from the cave mouth down to the six heads, the twelve dangling feet just visible in the dark behind them, and the floating oar. The ink fits with the pad giving up the difference: the card keeps y 21.0%-71.5% and nothing named is cut. What that costs is the smooth upper cliff and the top of the cave arch, which is stone; what it buys is the oar, whole, at the bottom of the window - the brief's scale object and the only thing in the picture that says these heads are the size of a boat's crew. Focal on the eye of the near central head."
+    },
+    "monster-sirens": {
+      "subject": [0.05, 0.3275, 0.93, 0.5725],
+      "focal": [0.3, 0.385],
+      "note": "Both singers with their mouths open, the folded gull wings, the meadow, and the ship going by with its oars raised. 8.5% is spent off the BOTTOM (y 31.0%-81.5%) and what it takes is the deep bone-field at the foot of the page - the ribcage and the far scatter. Enough comes into the bottom of the window to do the work: the skull and the long bones lying among the flowers at the near edge, which is the whole point of the plate, that the bones are drawn as matter-of-factly as the flowers. The box starts 1.5% above the nearer woman's hair, because two heads cut by a window rule would read as an error where a half-seen skull reads as a meadow. Focal on the nearer face, at the open mouth."
     },
     "monster-stone-boar": {
       "subject": [
@@ -432,6 +457,31 @@
         0.88
       ],
       "note": "Envelope crown down through the sail and the bow hinge to the gondola and the rowers."
+    },
+    "spell-mist-veil": {
+      "subject": [0, 0.218, 1, 0.732],
+      "focal": [0.47, 0.345],
+      "note": "The drover's road with its sharp ruts and hedge, the fresh cart tracks and the dog's prints going into the mist, and the cut edge of the mist itself with the violet slip along it. The card keeps y 19.6%-95.0% and nothing is trimmed. The 19.6% off the TOP is the decision: it is fen sky and the far shore, and spending it is what brings the prints - which run from about 40% down the page to the bottom of it - into the window with the cut edge still above them. Both halves of the sentence have to be in one picture, the road that stops and the tracks that go in and do not come out. Focal on the road at the mist's edge."
+    },
+    "spell-root-snare": {
+      "subject": [0, 0.16, 1, 0.72],
+      "focal": [0.42, 0.5],
+      "note": "The wheel and the lacing of roots knitted over the felloes, the spokes and the hub, the road stones lifted and tipped where the roots came through, and the unbroken dusty road running away behind. The card keeps y 13.8%-89.3% and nothing is trimmed. Focal where the roots come up out of the road and take the rim - not on the hub, because the hub is a wheel and the card is the road doing something to it."
+    },
+    "spell-seam-sense": {
+      "subject": [0, 0, 1, 0.78],
+      "focal": [0.45, 0.62],
+      "note": "The lifted turf on its hinge of live roots, the cut section under it - soil, shillet, then the ore band with the violet slip on it - and the prospector's pick standing beside the opening. The box starts at the top of the page rather than at the ink so the pick head has paper above it instead of the window rule: it is drawn from 2% down, and 2% is not clearance. 2.6% is trimmed off the BOTTOM (y 0.0%-75.4%) and it takes the scree and the tussocks under the cut, which is hillside. Focal on the ore band."
+    },
+    "spell-stormcall": {
+      "subject": [0, 0.044, 1, 0.8],
+      "focal": [0.52, 0.42],
+      "note": "The hay wagon under its own weather: the rain in ropes, the wet violet ground under it, the empty traces hanging, and the hard line either side beyond which the ruts are white and dry in ordinary daylight. 7.0% is spent off the BOTTOM (y 2.0%-77.4%), taking the far end of the wet road and its reflections - the same wet road again, and the cheapest thing on the page. The top is kept instead because the rain reads as rain only against the pale sky at the top of the plate; lower down it is grey on grey. Focal on the wagon, which is what the weather is standing over."
+    },
+    "spell-wayfire": {
+      "subject": [0, 0.1245, 1, 0.8045],
+      "focal": [0.5, 0.3],
+      "note": "The burnt corridor running away straight to the far edge, the scorched trunks either side still smoking, the green bracken a pace outside it, and the fallen branch burnt through where it crossed the line and nowhere else. 7.4% is spent off the BOTTOM (y 10.0%-85.5%) and 10.0% off the TOP; both are more of the same - canopy above, ash floor below. What the box protects is the middle, where the corridor is wide enough to be read as a corridor and where the branch is, and the branch is the proof: fire that stopped at a line is the card, and a burnt corridor on its own is just a fire. Focal on the corridor floor at mid-distance."
     },
     "talisman-tal-01": {
       "subject": [
@@ -757,6 +807,11 @@
       ],
       "note": "Wedge and poll down to the knob, taking the beard and the binding. Focal on the eye where the bit meets the haft. Drawn plate - measured off the picture."
     },
+    "event-camp-fever": {
+      "subject": [0.1025, 0.02, 0.8775, 0.96],
+      "focal": [0.46, 0.5],
+      "note": "The camp struck in a hurry and not properly: bedrolls left open where they were slept in, the cooking pot upset into the grass, the fire dead and not raked, one pack roped and the rest not, the water skin lying half in the stream mouth, and the green scum on the slow water with the cattle's churned crossing just upstream of it. Centred - the thumbnail keeps x 8.3%-91.7% - and it costs the outermost bedroll on the left and the far bank on the right, both of which repeat. Focal on the upset pot and the dead fire, which is where the camp stopped."
+    },
     "event-caravan-robbery": {
       "subject": [
         0.049,
@@ -796,6 +851,11 @@
       ],
       "note": "The thrown-down wall running away down the slope, the step in the road and the new spring cutting its first channel. The thumbnail spends the cottage's left gable; the chimney stack gone through its own roof survives, which is the half of the cottage that is doing the work. Focal is the spilled line of stones, the longest statement on the page that the ground moved."
     },
+    "event-festival": {
+      "subject": [0.0695, 0.02, 0.8805, 0.96],
+      "focal": [0.2, 0.4],
+      "note": "The square from the top steps: trestles down both sides, bunting between the upper windows, lanterns on their poles, the crowd a hatched mass at the far end, and the carcase turning on its spit over embers at the left. Held LEFT - the thumbnail keeps x 5.0%-88.4% - because the spit is the only thing on a symmetrical plate that is not repeated on the other side, and it is what says festival rather than market day. What the thumbnail spends is the outermost stall on the right, which is more trestles. Focal on the spit."
+    },
     "event-flood": {
       "subject": [
         0.139,
@@ -808,6 +868,21 @@
         0.62
       ],
       "note": "The half-drowned five-bar gate with rubbish stacked against it, the cart in to its axles, and the silt marks on the barn wall. The silt marks are the measure the card is for, so the crop is held to the right and the thumbnail spends the outlying gate post at the far left. Focal is the cart with its load lifted onto the rail."
+    },
+    "event-foreign-demand": {
+      "subject": [0.1025, 0.02, 0.8575, 0.96],
+      "focal": [0.32, 0.3],
+      "note": "The deep-sea hull too big for the berth and rigged like nothing else in the picture, her boats already pulled in to the steps, and on the quay the swept and roped-off space, the beam scales and the rank of empty measuring baskets. Centred - the thumbnail keeps x 8.3%-91.7% - because the two halves of the sentence are at opposite ends: the strange ship from 3% to 62%, the scales and baskets from 73% to 95%. What centring costs is the tip of the bowsprit and the outer arm of the scales, both of which are lines and neither of which is the thing. Focal on the strange hull at the waterline."
+    },
+    "event-glut": {
+      "subject": [0.1345, 0.02, 0.8355, 0.96],
+      "focal": [0.6, 0.45],
+      "note": "The quay stacked six high right out to the water's edge, the tarpaulined stacks standing in the open, the sheds packed to the lintel, the bottom course of the near stack gone soft and slumped, and the barge still unloading onto it. Held RIGHT - the thumbnail keeps x 11.5%-94.9% - which keeps the barge and its crane whole, because a full quay is a picture of prosperity and a full quay with a barge still coming alongside is the joke this card is telling. What it spends is the outermost shed door and the left shoulder of the slumped stack, which keeps its slump. Focal on the quay edge where the stacks reach the water."
+    },
+    "event-grey-pox": {
+      "subject": [0.1025, 0.02, 0.8875, 0.96],
+      "focal": [0.44, 0.55],
+      "note": "The square at full midday and empty: every stall shuttered, every trestle stacked and roped against the walls, the ground swept clean, the conduit running on into its trough with nobody at it, and one laden cart standing dead in the middle with its load still roped and its shafts down on the cobbles. Centred - the thumbnail keeps x 8.3%-91.7% - which keeps the cart and the trough both, and spends the outer arcade at either end. Focal on the cart. The hard flat light and the swept ground are what make this different from a market closed for the night, and neither of them is at either edge."
     },
     "event-hard-frost": {
       "subject": [
@@ -822,6 +897,21 @@
       ],
       "note": "The plough in the iron furrow and the burst butt with its ice plug. Both are named and together they span 92% of the page, so the thumbnail cannot hold both whole: it spends the far-left handle grips and the outer tip of the sprung hoop. The share bitten into the furrow, the dropped traces and the whole tub survive. Focal is the ice plug, which is the one thing on the page that says frost rather than winter."
     },
+    "event-impure-smelt": {
+      "subject": [0.1025, 0.02, 0.8875, 0.96],
+      "focal": [0.45, 0.6],
+      "note": "The week's work on the floor: the sand moulds broken open, the castings lifted out and snapped clean across with the fracture faces drawn flat and dull as broken stone, the stack of bars set aside with several cracked where they lie, and on the bench the lump of flux stone split open to show the bad grey seam that did it. Centred - the thumbnail keeps x 8.3%-91.7% - which is what keeps the flux stone, at 76%-92% across, in the picture at all: it is the cause, and the rest of the plate is the effect. What the edges spend is broken moulding sand on one side and the outer end of the bar stack on the other, and the bars repeat. Focal on the largest fracture face."
+    },
+    "event-iron-shortage": {
+      "subject": [0, 0.02, 0.98, 0.96],
+      "focal": [0.3, 0.35],
+      "note": "The stock rack bare to its pegs down the whole left of the plate, the two short offcuts left on it, the picked-over scrap heap swept into the middle of the yard, and the forge lit and drawing well with nothing to put in it. Held LEFT: the thumbnail keeps x 0.0%-83.3% and spends the tally slate by the door at 88%-98% across. That is a real loss and it was chosen - the slate is the orders still coming in - but the rack is the card, and holding right instead would have cut a third of it off, which is exactly the wrong end of an argument about emptiness. The card keeps both. Focal on the empty pegs at mid-rack."
+    },
+    "event-ley-surge": {
+      "subject": [0.1025, 0.02, 0.8775, 0.96],
+      "focal": [0.57, 0.4],
+      "note": "Four pieces of iron behaving wrongly on an ordinary moor: the harrow balanced up on one corner, the chain standing out of the heather like a rod, the nails drawn half out of the fallen plank and all pointing the same way, and the cart tyre leaning on nothing. Centred - the thumbnail keeps x 8.3%-91.7% - which keeps the harrow whole and takes the outer third of the tyre. That is the right way round: the harrow is the largest and the most obviously impossible, and a rim cut by the frame still stands on nothing, where a harrow cut down its side stops reading as balanced. The card keeps all four. Focal on the standing chain, dead centre, because it is the one thing here whose whole meaning is that it is vertical."
+    },
     "event-long-summer": {
       "subject": [
         0.102,
@@ -834,6 +924,26 @@
         0.34
       ],
       "note": "The loaded wagon and the overfull barn, with the near stooks running out to both margins. The stooks are a field and can lose a member, so the thumbnail spends the far-left green of the second crop and the outermost apple tree. Focal is the wagon roped down twice above its own sides."
+    },
+    "event-marsh-ague": {
+      "subject": [0.1025, 0.02, 0.8775, 0.96],
+      "focal": [0.62, 0.25],
+      "note": "The village at last light with the mist lying flat at knee height, every wall and gatepost cut off at the ankles and sharp above, every shutter closed, the bell rope hanging out of the open belfry, the two barrows and the loaded cart left standing in the lane, and smoke going straight up from three chimneys and no others. Centred - the thumbnail keeps x 8.3%-91.7% - which holds the church and the belfry in the middle and spends the eaves at either end. Focal on the bell in its open belfry: the rope is out and swaying and nobody is on the end of it, and that is the one incident on a plate whose whole subject is stillness."
+    },
+    "event-master-craftsman": {
+      "subject": [0.0395, 0.02, 0.9105, 0.96],
+      "focal": [0.66, 0.45],
+      "note": "The wagon side let down into a bench: the full tool rack with nothing missing from it, the treadle lathe rigged off the axle with the half-turned piece still in the chuck and its shavings under it, and the empty stool set out on the near side. The thumbnail keeps x 2.0%-85.4%, which holds the wagon wheel at the left edge - the piece that says this shop arrived on a road - and spends the market beyond the tilt at the right. Everything named sits between 10% and 80% across and none of it is at risk either way. Focal on the chuck and the shavings: the work is the argument of the card, and the empty stool is the invitation."
+    },
+    "event-mercenaries-for-hire": {
+      "subject": [0, 0.02, 0.98, 0.96],
+      "focal": [0.6, 0.55],
+      "note": "The camp entire: the horse line on its picket rope, the straight rows of billets, the kit laid out on groundsheets in the same order in front of each one, the stacked spear tripods and the cooking fires. The card keeps the whole page. Held LEFT, so the thumbnail keeps x 0.0%-83.3% and spends the far end of the town wall: everything that says FOR SALE rather than merely camped is on the left and in the middle - the kit laid out identically billet after billet, and the horse line - and the town is only what the camp is outside of. Focal on the near spear stack, which is the one object on the page with a top to it."
+    },
+    "event-migrants": {
+      "subject": [0, 0.02, 0.96, 0.96],
+      "focal": [0.58, 0.45],
+      "note": "The column going away up the road and off the top of the page, with the near hand cart and its churn and pots, the goat on its string, the ladder carried between two, and the barrow of rolled bedding at the right. Held LEFT: the thumbnail keeps x 0.0%-83.3% and spends the outer wheel of that barrow. The near cart is the one thing on the page drawn large enough to read at thumbnail size, and what a viewer has to see first is a loaded household on a road; the column behind it does the rest. Focal on the road where the column thins into the distance - the point of this card is that it does not end within the page."
     },
     "event-mine-collapse": {
       "subject": [
@@ -860,6 +970,11 @@
         0.85
       ],
       "note": "The empty bollard in the near corner, the double-moored boats and the sea wall taking green water. The thumbnail spends the crates and sacks stacked back off the net at the left, which the brief did not name. Focal is the bollard with no line on it - the berth of the ship that has not come in, and the only thing here that is about a loss rather than about weather."
+    },
+    "event-wandering-wizard": {
+      "subject": [0.167, 0.02, 0.813, 0.96],
+      "focal": [0.52, 0.72],
+      "note": "The camp in the lee of the hedge: the pack propped open, the square of clean cloth with the lens, the jeweller's scales, the three phials, the cased needle and the holed stone set out in a deliberate row, and the one folding stool standing empty on the near side. Held RIGHT - the thumbnail keeps x 14.8%-98.1% - to keep the stool whole, because the stool is the sentence: everything else on the plate says somebody careful lives here, and the empty stool says they are expecting you. What it spends is the left strap of the pack. Focal on the middle of the row on the cloth."
     },
     "event-warehouse-heist": {
       "subject": [
@@ -1614,20 +1729,60 @@
       ],
       "note": "The adit with its cap piece and the tub on the rails in the left lobe, the winding gin over its collared shaft in the right, and the picking table of sorted ore below it. The piece reads ACROSS, which is what the brief asked a pair for and what the plate was drawn to. A pair window is 1.73 against a 3:2 page: full width, 13.4% of the height spent, pulled off the bottom by the focal on the adit mouth so the grass above the rise and the adit timbering both keep their clearance. The spoil tip runs out of the lower left under the name band, which is where the brief put it."
     },
+    "spell-fair-wind": {
+      "subject": [0, 0.043, 1, 0.754],
+      "focal": [0.47, 0.28],
+      "note": "The full sail with the violet slip across its belly, the bowed mast, the barge, the slack mooring lines on the bollards, the flat water at the hull, the weathervane on the shed pointing the other way, and the straw on the quay that is not moving. 2.2% is trimmed off the BOTTOM (y 2.0%-77.5%) and it takes the near quay planks; every piece of evidence is inside, which is what this box is for - a Fair Wind plate is a list of things that are not doing what the sail is doing, and losing any one of them turns it into a picture of a boat. Focal on the belly of the sail."
+    },
+    "spell-farspeak": {
+      "subject": [0, 0.088, 1, 0.732],
+      "focal": [0.72, 0.44],
+      "note": "The writing-slope let down on the wagon tail: the open ledger, the pencil lying across the page where it was put down, the pigeonholes of papers behind, and the inkwell with the ink standing up in its ridge. The card keeps y 6.6%-82.0% and nothing is trimmed. Focal on the ridged ink - it is the only thing on the plate that has moved, and it is small, so the box is drawn no wider than it needs to be in order to keep it large in the window."
+    },
     "spell-kindle": {
       "subject": [0, 0.1, 1, 0.73],
       "focal": [0.5, 0.53],
       "note": "The hearth mouth, the violet flame standing on bare firebrick and the unlit torch on the hearthstone. Full width survives; the crop spends the top of the chimney breast and the bottom hearth step, both of which the brief calls margin. Focal is the flame itself - the only thing on the page that is not cold."
+    },
+    "spell-bulwark": {
+      "subject": [0, 0.15, 1, 0.73],
+      "focal": [0.42, 0.33],
+      "note": "The whole run of the dry-laid wall with the violet slip across its face, and the wreck piled against it: the splintered shafts, the near wheel, the spilled load and the draught chain snapped back on itself. The card keeps y 12.8%-88.2% and nothing is trimmed - the pad gives up the difference. What the top spends is the bank and the thorn above the coping, which is scenery; the coping itself is inside, and it has to be, because the argument of this card is that not one stone is out of place and a wall cut off at the window rule cannot say that. Focal on the face of the wall where the slip is, not on the wreck - the spell is what did NOT happen."
+    },
+    "spell-cleanse": {
+      "subject": [0, 0.03, 1, 0.71],
+      "focal": [0.42, 0.36],
+      "note": "The washstand entire: the bowl with the water gone clear and the fouling settled hard-edged in the bottom of it, the wrung cloth on the rail, the fever-sheet folded square and dry, the unlit tallow candle. The ink fits exactly - the card keeps y 0.9%-76.3% and nothing named is cut. What the bottom loses is the jug on the shelf under the stand, which the brief never asked for. Focal on the clear water, which is where the violet slip is and the only place on this plate anything has happened."
+    },
+    "spell-deep-draught": {
+      "subject": [0, 0.1245, 1, 0.8045],
+      "focal": [0.4, 0.375],
+      "note": "The brimming barrels with the water slopped over the chime and the violet slip on the near one, against the capped well: the boarded lid, the chain wound right up, the bucket bone dry on its hook, and the yoke and the two unused pails. 7.4% is spent off the BOTTOM (y 10.0%-85.5%), taking the feet of the barrels and some of the dark wet ground round them. That ground is named and it is a shame, but enough of it survives at the near barrel's foot to read, and the alternative was spending the top - which holds the chain and the dry bucket, and a Deep Draught with no dry bucket is a picture of some full barrels. Focal on the water standing in the near barrel's mouth."
     },
     "spell-ember-lash": {
       "subject": [0.1, 0.1, 0.9, 0.75],
       "focal": [0.34, 0.58],
       "note": "Both white-hot edges, the anvil face and the cold ash hafts running off to the top right. The crop spends the quench tub at the far left and the base of the stump; the raked-out fire bed stays in, because a dead forge is half of what this card is saying. Focal is the billhook's glowing curve, the strongest violet on the page."
     },
+    "spell-loft": {
+      "subject": [0, 0.104, 1, 0.8],
+      "focal": [0.45, 0.46],
+      "note": "The loaded wagon standing level on nothing, the ravine lip on both sides with the ruts running up to it and picking up again beyond, and the gap itself drawn plain - rock, air, and the thread of water a long way down. 7.0% is spent off the BOTTOM (y 8.0%-83.4%), taking the deepest part of the ravine. That is the right end to spend: what the card needs is that the drop is bottomless, not that the bottom is visible, and the water thread still runs out of the window rather than stopping in it. Focal on the empty air under the wheels, where the violet slip is, because the subject of this plate is a gap."
+    },
     "spell-mend-stone": {
       "subject": [0.05, 0.155, 0.9, 0.75],
       "focal": [0.52, 0.42],
       "note": "The full run of the closing crack from hairline to sill end, the whole lintel, and the trowel set down clean on the sill. The crop spends the top course of the wall and the bottom step - the brief says the coursing may run to the margins. Focal is the middle of the crack rather than either end, because the card is about it closing, not about where it started."
+    },
+    "event-strike": {
+      "subject": [0.1025, 0.02, 0.8575, 0.96],
+      "focal": [0.5, 0.55],
+      "note": "The yard at a dead stop: the cold furnace with its door open and the ash raked out, the row of barrows tipped up on their noses, the dead cooking fire, and the line of tools laid down straight across the gateway. Centred - the thumbnail keeps x 8.3%-91.7% - and the tool line is what settles that. It runs from 5% to 95% across and no window keeps it whole; centred, it runs out of BOTH edges, which reads as a line that continues, where a line held to one side reads as a line that stopped. What the thumbnail spends is one hammer at either end. Focal on the middle of the tool line, where the tongs are."
+    },
+    "event-tax-levy": {
+      "subject": [0.176, 0.02, 0.814, 0.96],
+      "focal": [0.58, 0.48],
+      "note": "The trestle set square across the carriageway with the scales, the standard weights, the ledger and the inkwell on it, the strongbox chained to its leg, the second chest with its two locks behind, the rope on posts running out either side, and the carts backed up along the road. Held RIGHT: the thumbnail keeps x 15.7%-99.0%, which keeps both chests whole and spends the left-hand gatepost and its rope run. The rope survives on the right and says the same thing from one side; the chests do not repeat, and a levy with no strongbox in it is a weighbridge. Focal on the ledger and the inkwell in the middle of the table, where the actual transaction is."
     },
     "event-train-heist": {
       "subject": [0.2, 0.035, 0.8, 0.95],
@@ -1649,15 +1804,95 @@
       "focal": [0.65, 0.6],
       "note": "The broken-through hurdle, the fleece caught in the split hazel, the single file of prints going away, and the crook with its lantern still burning at the right. Held right: the thumbnail takes a quarter off the far end of the hurdle lying flat, which still reads as a woven panel, rather than clipping the lantern. Focal is the gap in the fold."
     },
+    "character-chr-09": {
+      "subject": [0.1, 0.0735, 0.86, 0.7565],
+      "focal": [0.35, 0.135],
+      "note": "Odysseus squatting under the black hull with the coil across his knee, the marlinspike in his right hand and the sealed wine jar at his elbow. The ink runs 77.5% of the page against a card window that holds 73.4%, so 4.1% is spent and it goes off the BOTTOM - the crop keeps y 5.5%-78.9%. What that costs is his toes and the far ends of the scattered oarblades, which are sand and ground; this deck's own brief sets the lower margin aside for exactly that. Everything the card names is inside: the sheathed sword on its baldric at his left, the whole coil, the spike, and the jar down to its foot. Focal on the face, which is turned back over his shoulder - the card is a man listening to something behind him, and the eyes are the only part that says so."
+    },
+    "character-chr-10": {
+      "subject": [0.08, 0.1235, 0.87, 0.7765],
+      "focal": [0.335, 0.205],
+      "note": "Eurylochus outside the door he will not go through: the head, the folded arms, the sheathed sword hanging past his knee, and the plank door ajar beside him. 6.1% cannot be kept and it is spent off the BOTTOM (y 10.5%-83.9%), which puts the dropped bronze cup - drawn at 85%-90% down the page - outside the window. That is the cheap loss and it was chosen: this deck's brief sets the lower margin aside for anything at the feet, the cup is the only named thing that fell into it, and the only way to buy it back was to cut his hair. The box starts about 2% above the crown so the head has air rather than sitting on the window rule. Focal on the face, which is turned at the door and not at us."
+    },
+    "character-chr-11": {
+      "subject": [0.1, 0.1225, 0.82, 0.7575],
+      "focal": [0.645, 0.205],
+      "note": "Polites with his hand up to knock and his grin turned back over his shoulder, the sheathed sword and the ochre cloak, and the lion lying at the step with its head on its paws. 4.1% is spent off the BOTTOM (y 10.5%-83.9%) and it takes the toes of his boots and the outer flags of the threshold. The lion is whole, and it had to be: a young man knocking at a door is a picture of a young man, and the lion is the whole of what makes it Circe's house. Focal on the face."
+    },
+    "character-chr-12": {
+      "subject": [0.1, 0.1225, 0.821, 0.6575],
+      "focal": [0.5, 0.2],
+      "note": "Perimedes kneeling to haul the lashing tight - both hands on the rope, the knife in his belt, the mast foot he is working against. The ink fits: the card keeps x 3.0%-97.0%, y 10.5%-79.7% and nothing named is cut. The wax comb and the ram's fleece are drawn at 79%-95% down the page, in the lower margin this deck's brief sets aside, and only the top of the fleece reaches the window; they are the offerings for the dead and worth naming here even though the picture spends them. Focal on the face, set in the effort - the rope runs off the top of the page, and a crop cannot aim at a line."
+    },
+    "character-chr-13": {
+      "subject": [0.02, 0.066, 0.98, 0.724],
+      "focal": [0.475, 0.125],
+      "note": "Elpenor on the roof ridge rubbing the sleep out of his eyes, with the empty cup on the parapet beside him and the ladder leaning a little too far to his left. 1.1% is spent off the BOTTOM (y 4.5%-77.9%) and all it takes is the sole of one boot. Everything that tells the story is inside the window: the cup, the ladder he is going to miss, and the beached ship on the shore below to the right. Focal on the face - the card is a boy who has not woken up yet."
+    },
+    "character-chr-14": {
+      "subject": [0.05, 0.1155, 0.95, 0.7445],
+      "focal": [0.475, 0.185],
+      "note": "Antiphus on the shingle with the oar under his arm, sorting cheeses out of the basket, the fleece heaped beside it and the cave mouth with its great flat stone small on the hill behind him. 2.8% is spent off the BOTTOM (y 9.5%-83.2%), taking the foot of the basket and his boots. What the TOP edge takes is the point of the grounded spear, drawn at 4% down the page: a spear is a line, a crop cannot aim at a line, and the point is the cheapest thing here - the shaft still runs the full height of the window and reads as a spear without it. Focal on the face, bent over the basket."
+    },
+    "character-chr-15": {
+      "subject": [0.02, 0.076, 0.98, 0.724],
+      "focal": [0.415, 0.155],
+      "note": "Telemachus on the quay at dawn checking the strap of a sword he has not worn before, with the travelling bag on his shoulder, the lamp still burning in the doorway at the right, and the ship and the cloaked man small at the left. 1.1% is spent off the BOTTOM (y 5.5%-78.9%) and it takes his boots. The box starts about 2% above the crown so the head is not left standing on the window rule. Focal on the face, which is turned down onto his own hands - that is the card: a boy who has not done this before."
+    },
+    "character-chr-16": {
+      "subject": [0, 0.1265, 1, 0.8235],
+      "focal": [0.41, 0.18],
+      "note": "Penelope unpicking the shroud: her hands and the small bronze pin at the loom, the finished cloth hanging in its fold behind her, the lamp and the cup on the stool at her left. This is the deepest trim in the deck - the ink runs 84.5% of the page against a window that holds 73.5%, so 11.0% goes, all of it off the BOTTOM (y 10.5%-84.0%). It buys the whole of the work: the hands, the pin, the warp, the fold of shroud. What it costs is the skirt of her dress and the foot of the wool basket in the corner, which keeps its rim and its wool. Focal on the face, in profile and looking at the thread rather than at us."
+    },
+    "character-chr-17": {
+      "subject": [0, 0.071, 0.98, 0.714],
+      "focal": [0.545, 0.235],
+      "note": "Eumaeus at the gate of his sties cutting his own sandals out of the oxhide, four sows and their piglets about his feet, the boar-spear standing at the gatepost and the thatched hut small behind him. Everything survives but 0.2% (y 5.0%-78.3%), the spearhead at the top of the page included - which is why the box is drawn from 5% rather than down at his hair. What the bottom takes is the spread hide on the ground and the offcuts, which is the same material again and reads as ground. Focal on the face over the knife."
+    },
+    "character-chr-18": {
+      "subject": [0, 0.0915, 1, 0.8085],
+      "focal": [0.33, 0.175],
+      "note": "Nausicaa wringing the linen at the river mouth, with the rest of it drying on the shingle behind her, the mule cart with its tailboard down at the right, and the olive bush at the left she is looking under. 9.6% is spent off the BOTTOM (y 7.0%-80.4%) and the leather ball, drawn at 78%-89% down the page, is what pays it: only its crown comes into the window. That was decided rather than allowed - the alternative was cutting her hair, which is the failure this file exists to stop, and a ball resting on the bottom edge still reads as a ball where a clipped head reads as a mistake. Focal on the face; she is looking off the left edge on purpose, because the brief put Odysseus under that bush."
+    },
+    "character-chr-19": {
+      "subject": [0.05, 0.0945, 0.95, 0.6455],
+      "focal": [0.435, 0.145],
+      "note": "Circe at the great loom holding the two-handled cup out in both hands, the slender wand laid along the beam, the wolf lying across the threshold behind her, and the barley, the cheese and the honey jar on the table at the right. The ink fits and nothing named is cut (y 2.4%-75.9%). Worth saying out loud: the crop sits as high on the page as the box allows and her head still lands about 17% down the window rather than the 40% a focal point asks for. The plate has no paper above her - she is drawn with her hair at 7.5% of the page - and no box can buy back what was never drawn. What the bottom spends is her skirt and her sandals. Focal on the face."
+    },
+    "character-chr-20": {
+      "subject": [0.02, 0.198, 0.88, 0.592],
+      "focal": [0.355, 0.265],
+      "note": "Calypso in the cave mouth turning the bronze axe-head over to test the edge, with the adze and the augur laid on the rock beside her, the springs running out below, and Odysseus far and small on his headland with his back to the cave. The ink fits: the card keeps x 0.0%-93.0%, y 12.5%-80.8%, and the 7% off the right is the focal sliding the window onto her - it costs open sea and nothing else. He is why the box runs out to 90% rather than stopping at the augur; the axe, the adze and the augur are the tools he leaves on, and the man looking away is what the card is about. Focal on her face, bent over the blade."
+    },
+    "character-chr-21": {
+      "subject": [0.05, 0.123, 0.848, 0.777],
+      "focal": [0.6, 0.19],
+      "note": "Athena as Mentor, leaning in the doorway on the staff with one foot crossed over the other, watching the boy on the quay below. 6.1% is spent off the BOTTOM (y 10.5%-83.9%), taking the foot of the staff and the toes; the TOP edge takes the swallow on the lintel, drawn at 3%-8% down the page and out of reach of any box that also keeps the head whole. That is the decision here and it is the right way round - the card is the EYES, which are the one part of this figure that is not an old Ithacan, and a swallow at the top of the page is a grace note. Telemachus on the quay survives whole, which matters: who she is watching is half of who she is. Focal on the eyes, not on the middle of the face."
+    },
+    "character-chr-22": {
+      "subject": [0.05, 0.0755, 0.95, 0.7745],
+      "focal": [0.375, 0.2],
+      "note": "Antinous sprawled in the carved chair at the head of the table, the gold cup halfway to his mouth and the footstool already in his other hand, the sword on the chair-back above him and the wreck of the feast running away to the right. 6.2% is spent off the BOTTOM (y 5.5%-78.8%), taking his boot and the bone on the floor. The box starts at the sword's pommel at 5.5% rather than at his hair, because a sword hung on somebody else's chair in somebody else's hall is the whole character in one object. Focal on the face - he is smiling."
+    },
     "event-boar-in-the-fields": {
       "subject": [0.164, 0.035, 0.836, 0.95],
       "focal": [0.62, 0.6],
       "note": "The troughs ploughed through the standing barley, the hurdle smashed out of its posts and the cloven slots printed in the churned drinking place. The thumbnail spends the bramble at the far left and 2.2% off the outer edge of the wallow - the slots are well inside that. The scarecrow with its snapped crossbar survives whole. Focal is where the troughs meet the mud."
     },
+    "event-curdled-brew": {
+      "subject": [0.1025, 0.02, 0.8775, 0.96],
+      "focal": [0.42, 0.3],
+      "note": "The alembic cracked clean across the neck with its head lifted off and set down beside it, the tongue of set-hard contents stopped halfway to the floor over the bench edge, the scorched patch on the slate, and the rest of the glassware shoved back out of the way. Centred - the thumbnail keeps x 8.3%-91.7% - and everything named sits between 28% and 88%, so nothing is at risk. What both edges spend is more glassware, of which there is plenty. Focal on the body of the alembic just under the crack."
+    },
     "event-dragon-sighting": {
       "subject": [0.1795, 0.035, 0.8205, 0.95],
       "focal": [0.6, 0.5],
       "note": "The abandoned hand cart with its load still roped on, the inn barred and benched, and the shadow band running edge to edge. The thumbnail spends the rock outcrop and half the stock crowded in the cleft - a herd is a scatter - and 0.6% off the far corner of the inn wall. Focal sits between the dropped shaft and the barred door, which are the two halves of the same sentence."
+    },
+    "event-plague": {
+      "subject": [0, 0.02, 0.95, 0.96],
+      "focal": [0.36, 0.48],
+      "note": "The gate shut in daylight, the clean straw laid thick in front of it, the rope on its posts a few paces out, and the painted cross on the door of the nearest house. Held hard LEFT - the thumbnail keeps x 0.0%-83.3% - and that is the whole decision on this plate. The cross is at 2%-10% across and the abandoned barrow in the bare market square is at 78%-92%, so the two cannot both be in a window that keeps five sixths of the width. The cross wins: it is the sign the card is named for, and a barrow is a barrow. The card itself keeps the page and loses neither. Focal on the straw at the shut gate, between the two."
     },
     "event-raiders": {
       "subject": [0.0395, 0.035, 0.8205, 0.95],

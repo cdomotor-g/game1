@@ -101,10 +101,10 @@ the way an innkeeper's is: professionally. Wash: dusty grey-green on the
 cloak, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -122,10 +122,10 @@ with a copper spike; a hand lamp hooked to her shoulder strap. Wash: cold
 slate blue on her coat, ochre in the stream gravel, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -143,10 +143,10 @@ open, one drawer glinting with three faceted shards. Practical field clothes,
 hem mud-stained and neatly darned. Wash: dusty grey-green throughout, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -164,10 +164,10 @@ spoon of office worn like a badge. The expression says the count is wrong and
 she knows whose fault it is. Wash: warm ochre on apron and provisions, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -185,10 +185,10 @@ company's brass token on a thong at the throat. One ear cocked to the road.
 Wash: rust red on the harness and axe wrap, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -207,10 +207,10 @@ one knee to keep it off the mud. Wash: cold slate blue on the coat, one rust
 red note on the bag's cross, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -229,10 +229,10 @@ stands on the footplate like a patient dog. Wash: rust red on the engine
 plates, ochre lamplight tone on the cab wood, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -252,16 +252,16 @@ the eave; a cat declines to be drawn well. Wash: dusty grey-green on shawl
 and herbs; the charm's violet slip #6B4C7D, offset, no glow.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-09 — Odysseus, king of Ithaca
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-09.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-09.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -275,21 +275,21 @@ clay wine jar with a wax seal and a scatter of oarblades. Wash: cold slate on
 the hull and the sea behind, warm ochre on the sand, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-10 — Eurylochus, second in command
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-10.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-10.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -302,21 +302,21 @@ bronze cup. Wash: dusty grey-green on the wall and the shadow, rust on the belt,
 flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-11 — Polites, dearest of the companions
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-11.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-11.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -328,21 +328,21 @@ its head on its paws like a dog, drawn calmly and without menace. Wash: warm
 ochre on the cloak and the flags, grey-green on the trees, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-12 — Perimedes, companion
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-12.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-12.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -354,21 +354,21 @@ Beside him on the deck a wax comb and a ram's fleece. Wash: cold slate on the
 planking, ochre on the rope, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-13 — Elpenor, youngest of the crew
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-13.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-13.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -381,21 +381,21 @@ page, the tops of trees and a glimpse of a beached ship. Wash: pale ochre on
 the roof, grey-green on the trees, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-14 — Antiphus, companion
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-14.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-14.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -408,21 +408,21 @@ a hillside with a great flat stone leaning beside it. Wash: warm ochre on the
 basket and the shingle, grey-green on the hill, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-15 — Telemachus, prince of Ithaca
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-15.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-15.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -435,21 +435,21 @@ a lamp still burning in it. Wash: cold slate on the harbour, ochre on the bag,
 flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-16 — Penelope, queen of Ithaca
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-16.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-16.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -462,21 +462,21 @@ beside her a lamp, a basket of wool and a cup. Wash: pale ochre on the cloth,
 grey-green on the wall, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-17 — Eumaeus, swineherd
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-17.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-17.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -488,21 +488,21 @@ gatepost; behind him, small, a thatched hut and a hillside of oak. Wash: ochre
 on the hide and the thatch, grey-green on the oak, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-18 — Nausicaa, princess of the Phaeacians
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-18.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-18.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -515,21 +515,21 @@ left edge of the page under an olive bush. Wash: cold slate on the river, pale
 ochre on the linen, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-19 — Circe, enchantress of Aeaea
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-19.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-19.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -543,21 +543,21 @@ No glow, no smoke, no sparks. Wash: ochre on the cloth on the loom, grey-green
 on the wolf and the stone, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-20 — Calypso, nymph of Ogygia
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-20.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-20.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -571,21 +571,21 @@ the sea. Wash: grey-green on the vines and the trees, cold slate on the sea,
 flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-21 — Athena, as Mentor
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-21.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-21.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -599,21 +599,21 @@ helmet, no owl, no light. Wash: dusty grey-green on the cloak, ochre on the
 door, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## character-chr-22 — Antinous, chief of the suitors
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 portrait. At least **1260 px on the long side** (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi); 1890 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/character-chr-22.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/character-chr-22.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -626,14 +626,14 @@ feast: bones, bread, spilled wine. Nobody else is in the picture. Wash: rust
 red on the wine and the cloth, ochre on the cup, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 78% of the page height;
+Head, both hands and the named gear inside the middle 69% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 78% of its height - everything that matters
-must sit between 11% and 89% down the page. Outside that band nothing can
+of the page but only the middle 69% of its height - everything that matters
+must sit between 15% and 85% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 360 x 419, on the 1024 x 1536 page this deck is drawn at. It
+card window, 340.5 x 353, on the 1024 x 1536 page this deck is drawn at. It
 is not a rule of thumb.)
 ```

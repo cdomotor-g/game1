@@ -15,7 +15,7 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 102/203 · maps 1/1 · building tiles 44/54**
+**cards 149/203 · maps 1/1 · building tiles 44/54**
 
 > **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 41 of 41 are under the 1890 px this line would want for print — smallest is `CHR-12` at 1488 px. That is an aspiration, not a fault.
 
@@ -32,7 +32,7 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**102 of 203 minted.** 0 waiting on a brief, 54 waiting on art, 47 waiting on frame.
+**149 of 203 minted.** 0 waiting on a brief, 54 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
@@ -99,63 +99,13 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `ITM-14` | Ten-Day Rations | Items | `item-rations-10-day` | ✓ | · | · |
 | `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate — 47 cards
+### 3 · FRAME — whoever accepts the plate
 
-The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
-
-| Code | Card | Deck | Plate | brief | plate | frame |
-| --- | --- | --- | --- | :-: | :-: | :-: |
-| `CHR-09` | Odysseus | Characters | `character-chr-09` | ✓ | ✓ | · |
-| `CHR-10` | Eurylochus | Characters | `character-chr-10` | ✓ | ✓ | · |
-| `CHR-11` | Polites | Characters | `character-chr-11` | ✓ | ✓ | · |
-| `CHR-12` | Perimedes | Characters | `character-chr-12` | ✓ | ✓ | · |
-| `CHR-13` | Elpenor | Characters | `character-chr-13` | ✓ | ✓ | · |
-| `CHR-14` | Antiphus | Characters | `character-chr-14` | ✓ | ✓ | · |
-| `CHR-15` | Telemachus | Characters | `character-chr-15` | ✓ | ✓ | · |
-| `CHR-16` | Penelope | Characters | `character-chr-16` | ✓ | ✓ | · |
-| `CHR-17` | Eumaeus | Characters | `character-chr-17` | ✓ | ✓ | · |
-| `CHR-18` | Nausicaa | Characters | `character-chr-18` | ✓ | ✓ | · |
-| `CHR-19` | Circe | Characters | `character-chr-19` | ✓ | ✓ | · |
-| `CHR-20` | Calypso | Characters | `character-chr-20` | ✓ | ✓ | · |
-| `CHR-21` | Athena | Characters | `character-chr-21` | ✓ | ✓ | · |
-| `CHR-22` | Antinous | Characters | `character-chr-22` | ✓ | ✓ | · |
-| `MON-15` | Polyphemus the Cyclops | Monsters | `monster-polyphemus` | ✓ | ✓ | · |
-| `MON-16` | Laestrygonian | Monsters | `monster-laestrygonian` | ✓ | ✓ | · |
-| `MON-17` | Scylla | Monsters | `monster-scylla` | ✓ | ✓ | · |
-| `MON-18` | Charybdis | Monsters | `monster-charybdis` | ✓ | ✓ | · |
-| `MON-19` | The Sirens | Monsters | `monster-sirens` | ✓ | ✓ | · |
-| `SPL-04` | Bulwark | Spells | `spell-bulwark` | ✓ | ✓ | · |
-| `SPL-05` | Cleanse | Spells | `spell-cleanse` | ✓ | ✓ | · |
-| `SPL-06` | Mist Veil | Spells | `spell-mist-veil` | ✓ | ✓ | · |
-| `SPL-07` | Fair Wind | Spells | `spell-fair-wind` | ✓ | ✓ | · |
-| `SPL-08` | Stormcall | Spells | `spell-stormcall` | ✓ | ✓ | · |
-| `SPL-09` | Wayfire | Spells | `spell-wayfire` | ✓ | ✓ | · |
-| `SPL-10` | Seam-Sense | Spells | `spell-seam-sense` | ✓ | ✓ | · |
-| `SPL-11` | Root-Snare | Spells | `spell-root-snare` | ✓ | ✓ | · |
-| `SPL-12` | Deep Draught | Spells | `spell-deep-draught` | ✓ | ✓ | · |
-| `SPL-13` | Farspeak | Spells | `spell-farspeak` | ✓ | ✓ | · |
-| `SPL-14` | Loft | Spells | `spell-loft` | ✓ | ✓ | · |
-| `EVT-19` | Mercenaries for Hire | Events | `event-mercenaries-for-hire` | ✓ | ✓ | · |
-| `EVT-20` | Plague | Events | `event-plague` | ✓ | ✓ | · |
-| `EVT-21` | Migrants | Events | `event-migrants` | ✓ | ✓ | · |
-| `EVT-22` | Strike | Events | `event-strike` | ✓ | ✓ | · |
-| `EVT-23` | Festival | Events | `event-festival` | ✓ | ✓ | · |
-| `EVT-24` | Travelling Master | Events | `event-master-craftsman` | ✓ | ✓ | · |
-| `EVT-25` | Iron Shortage | Events | `event-iron-shortage` | ✓ | ✓ | · |
-| `EVT-26` | Glut | Events | `event-glut` | ✓ | ✓ | · |
-| `EVT-27` | Foreign Demand | Events | `event-foreign-demand` | ✓ | ✓ | · |
-| `EVT-28` | Tax Levy | Events | `event-tax-levy` | ✓ | ✓ | · |
-| `EVT-29` | Ley Surge | Events | `event-ley-surge` | ✓ | ✓ | · |
-| `EVT-30` | Curdled Brew | Events | `event-curdled-brew` | ✓ | ✓ | · |
-| `EVT-31` | Wandering Wizard | Events | `event-wandering-wizard` | ✓ | ✓ | · |
-| `EVT-32` | Camp Fever | Events | `event-camp-fever` | ✓ | ✓ | · |
-| `EVT-33` | Marsh Ague | Events | `event-marsh-ague` | ✓ | ✓ | · |
-| `EVT-34` | The Grey Pox | Events | `event-grey-pox` | ✓ | ✓ | · |
-| `EVT-35` | Impure Smelt | Events | `event-impure-smelt` | ✓ | ✓ | · |
+Nothing waiting.
 
 ### Minted
 
-102 cards complete: `CHR-01`, `CHR-02`, `CHR-03`, `CHR-04`, `CHR-05`, `CHR-06`, `CHR-07`, `CHR-08`, `VEH-01`, `VEH-02`, `VEH-03`, `VEH-04`, `VEH-05`, `VEH-06`, `VEH-07`, `VEH-08`, `VEH-09`, `VEH-10`, `VEH-11`, `VEH-12`, `VEH-13`, `VEH-14`, `VEH-15`, `VEH-16`, `VEH-17`, `MON-01`, `MON-02`, `MON-03`, `MON-04`, `MON-05`, `MON-06`, `MON-07`, `MON-08`, `MON-09`, `MON-10`, `MON-11`, `MON-12`, `MON-13`, `MON-14`, `TAL-01`, `TAL-02`, `TAL-03`, `TAL-04`, `TAL-05`, `TAL-06`, `MOD-01`, `MOD-02`, `MOD-03`, `MOD-04`, `MOD-05`, `MOD-06`, `MOD-07`, `MOD-08`, `MOD-09`, `MOD-10`, `MOD-11`, `SPL-01`, `SPL-02`, `SPL-03`, `EVT-01`, `EVT-02`, `EVT-03`, `EVT-04`, `EVT-05`, `EVT-06`, `EVT-07`, `EVT-08`, `EVT-09`, `EVT-10`, `EVT-11`, `EVT-12`, `EVT-13`, `EVT-14`, `EVT-15`, `EVT-16`, `EVT-17`, `EVT-18`, `ITM-07`, `ITM-01`, `ITM-04`, `ITM-05`, `ITM-06`, `ITM-08`, `ITM-03`, `ITM-02`, `WPN-01`, `WPN-02`, `WPN-04`, `WPN-03`, `WPN-05`, `WPN-06`, `WPN-07`, `ARM-01`, `ARM-04`, `ARM-05`, `ARM-02`, `ARM-03`, `TOL-01`, `TOL-02`, `TOL-03`, `TOL-04`, `TOL-05`.
+149 cards complete: `CHR-01`, `CHR-02`, `CHR-03`, `CHR-04`, `CHR-05`, `CHR-06`, `CHR-07`, `CHR-08`, `CHR-09`, `CHR-10`, `CHR-11`, `CHR-12`, `CHR-13`, `CHR-14`, `CHR-15`, `CHR-16`, `CHR-17`, `CHR-18`, `CHR-19`, `CHR-20`, `CHR-21`, `CHR-22`, `VEH-01`, `VEH-02`, `VEH-03`, `VEH-04`, `VEH-05`, `VEH-06`, `VEH-07`, `VEH-08`, `VEH-09`, `VEH-10`, `VEH-11`, `VEH-12`, `VEH-13`, `VEH-14`, `VEH-15`, `VEH-16`, `VEH-17`, `MON-01`, `MON-02`, `MON-03`, `MON-04`, `MON-05`, `MON-06`, `MON-07`, `MON-08`, `MON-09`, `MON-10`, `MON-11`, `MON-12`, `MON-13`, `MON-14`, `MON-15`, `MON-16`, `MON-17`, `MON-18`, `MON-19`, `TAL-01`, `TAL-02`, `TAL-03`, `TAL-04`, `TAL-05`, `TAL-06`, `MOD-01`, `MOD-02`, `MOD-03`, `MOD-04`, `MOD-05`, `MOD-06`, `MOD-07`, `MOD-08`, `MOD-09`, `MOD-10`, `MOD-11`, `SPL-01`, `SPL-02`, `SPL-03`, `SPL-04`, `SPL-05`, `SPL-06`, `SPL-07`, `SPL-08`, `SPL-09`, `SPL-10`, `SPL-11`, `SPL-12`, `SPL-13`, `SPL-14`, `EVT-01`, `EVT-02`, `EVT-03`, `EVT-04`, `EVT-05`, `EVT-06`, `EVT-07`, `EVT-08`, `EVT-09`, `EVT-10`, `EVT-11`, `EVT-12`, `EVT-13`, `EVT-14`, `EVT-15`, `EVT-16`, `EVT-17`, `EVT-18`, `EVT-19`, `EVT-20`, `EVT-21`, `EVT-22`, `EVT-23`, `EVT-24`, `EVT-25`, `EVT-26`, `EVT-27`, `EVT-28`, `EVT-29`, `EVT-30`, `EVT-31`, `EVT-32`, `EVT-33`, `EVT-34`, `EVT-35`, `ITM-07`, `ITM-01`, `ITM-04`, `ITM-05`, `ITM-06`, `ITM-08`, `ITM-03`, `ITM-02`, `WPN-01`, `WPN-02`, `WPN-04`, `WPN-03`, `WPN-05`, `WPN-06`, `WPN-07`, `ARM-01`, `ARM-04`, `ARM-05`, `ARM-02`, `ARM-03`, `TOL-01`, `TOL-02`, `TOL-03`, `TOL-04`, `TOL-05`.
 
 38 of them are framed but have no `focal` point — they predate it and are not broken, they are just aimed at the middle of their subject box. Adding one is a two-number improvement: `character-chr-01`, `character-chr-02`, `character-chr-03`, `character-chr-04`, `character-chr-05`, `character-chr-06`, `character-chr-07`, `character-chr-08`, `vehicle-veh-01`, `vehicle-veh-02`, `vehicle-veh-03`, `vehicle-veh-04`, `vehicle-veh-05`, `vehicle-veh-06`, `vehicle-veh-07`, `vehicle-veh-08`, `vehicle-veh-09`, `vehicle-veh-10`, `vehicle-veh-11`, `vehicle-veh-12`, `vehicle-veh-13`, `vehicle-veh-14`, `vehicle-veh-15`, `vehicle-veh-16`, `vehicle-veh-17`, `monster-gravel-wyrm`, `monster-mire-strangler`, `monster-reef-serpent`, `monster-deepwater-maw`, `monster-rime-harpy`, `monster-dust-devil`, `monster-storm-roc`, `talisman-tal-01`, `talisman-tal-02`, `talisman-tal-03`, `talisman-tal-04`, `talisman-tal-05`, `talisman-tal-06`.
 

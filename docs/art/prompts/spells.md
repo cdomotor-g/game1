@@ -113,15 +113,15 @@ dry and pitch-headed. The soot on the fireback is old. The violet slip is
 offset across the flame alone.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The hearth mouth, the flame and the torch all well inside the middle 80% of the
+The hearth mouth, the flame and the torch all well inside the middle 75% of the
 page height, centred left to right. The fireback and the hearthstone may run to
 the margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -139,14 +139,14 @@ out, tongs cold on the hook. Nothing is being heated by anything. The violet
 slip is offset across the two hot edges only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-Both edges and the anvil face inside the middle 80% of the page height, centred
+Both edges and the anvil face inside the middle 75% of the page height, centred
 left to right. The dead forge behind may run to the margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -164,15 +164,15 @@ trowel is set down on the sill, clean and unused. The violet slip is offset
 along the closing crack only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The full run of the crack, the lintel and the trowel inside the middle 80% of
+The full run of the crack, the lintel and the trowel inside the middle 75% of
 the page height, centred left to right. The wall coursing may run to the
 margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -190,21 +190,21 @@ stone of the wall is out of place and not one is chipped. The violet slip is
 offset across the face of the wall only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The wall face and the broken shafts inside the middle 80% of the page height,
+The wall face and the broken shafts inside the middle 75% of the page height,
 centred left to right. The wall's run and the spilled load may go to the
 margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-cleanse — Cleanse *(water, SPL-05)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-cleanse.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-cleanse.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -216,21 +216,21 @@ fever-sheet folded square and bone dry. A tallow candle, unlit. The violet slip
 is offset across the clear water only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The bowl, the water and the folded sheet inside the middle 80% of the page
+The bowl, the water and the folded sheet inside the middle 75% of the page
 height, centred left to right. The washstand legs and the wall may run to the
 margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-mist-veil — Mist Veil *(water, SPL-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-mist-veil.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-mist-veil.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -242,21 +242,21 @@ cart tracks and a dog's prints go into it and do not come out. The violet slip
 is offset along the cut edge of the mist only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The cut edge of the mist, the road and the tracks inside the middle 80% of the
+The cut edge of the mist, the road and the tracks inside the middle 75% of the
 page height, centred left to right. The hedge and the fen may run to the
 margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-fair-wind — Fair Wind *(air, SPL-07)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-fair-wind.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-fair-wind.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -268,21 +268,21 @@ wharf's own weathervane points the other way. Loose straw on the quay does not
 move. The violet slip is offset across the belly of the sail only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The full sail, the mast and the mooring lines inside the middle 80% of the page
+The full sail, the mast and the mooring lines inside the middle 75% of the page
 height, centred left to right. The wharf and the far bank may run to the
 margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-stormcall — Stormcall *(air, SPL-08)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-stormcall.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-stormcall.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -294,21 +294,21 @@ and hard-edged, white dust and dry ruts in ordinary daylight. The horse traces
 hang empty. The violet slip is offset across the wet ground only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The wagon, the wet ground and both edges of the dry road inside the middle 80%
+The wagon, the wet ground and both edges of the dry road inside the middle 75%
 of the page height, centred left to right. The rain above and the road ahead
 may run to the margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-wayfire — Wayfire *(fire, SPL-09)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-wayfire.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-wayfire.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -322,20 +322,20 @@ else. The violet slip is offset along the burnt line only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
 The burnt corridor, its two scorched edges and the untouched bracken inside the
-middle 80% of the page height, centred left to right. The canopy may run to the
+middle 75% of the page height, centred left to right. The canopy may run to the
 margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-seam-sense — Seam-Sense *(earth, SPL-10)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-seam-sense.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-seam-sense.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -347,21 +347,21 @@ grain. A prospector's pick stands in the turf beside the opening, the haft
 polished dark. The violet slip is offset across the exposed seam only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The lifted turf, the cut section and the ore band inside the middle 80% of the
+The lifted turf, the cut section and the ore band inside the middle 75% of the
 page height, centred left to right. The hillside above and below may run to the
 margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-root-snare — Root-Snare *(earth, SPL-11)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-root-snare.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-root-snare.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -373,21 +373,21 @@ road lifted and tipped where they came through. The road ten feet behind is
 unbroken and dusty. The violet slip is offset across the roots only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The wheel, the roots and the lifted road stones inside the middle 80% of the
+The wheel, the roots and the lifted road stones inside the middle 75% of the
 page height, centred left to right. The road and the verge may run to the
 margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-deep-draught — Deep Draught *(water, SPL-12)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-deep-draught.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-deep-draught.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -401,20 +401,20 @@ in the near barrel's mouth only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
 The near barrel's brimming mouth, the row behind it and the dry bucket inside
-the middle 80% of the page height, centred left to right. The well-house wall
+the middle 75% of the page height, centred left to right. The well-house wall
 may run to the margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-farspeak — Farspeak *(air, SPL-13)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-farspeak.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-farspeak.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -427,21 +427,21 @@ not rolled, the page is not lifted, there is no draught. The violet slip is
 offset across the ridged ink only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The inkwell, the ridge on the ink and the open ledger inside the middle 80% of
+The inkwell, the ridge on the ink and the open ledger inside the middle 75% of
 the page height, centred left to right. The wagon tail and the slope may run to
 the margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
 ## spell-loft — Loft *(air, SPL-14)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/spell-loft.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/spell-loft.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -454,14 +454,14 @@ and empty - rock, air, a thread of water a long way down. Nothing is lifting
 it. The violet slip is offset across the empty ground beneath the wheels only.
 
 FRAMING. Square plate, whole page drawn edge to edge.
-The wagon, the wheels and both lips of the ravine inside the middle 80% of the
+The wagon, the wheels and both lips of the ravine inside the middle 75% of the
 page height, centred left to right. The ravine walls and the load may run to
 the margins.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 80% of its height - everything that matters
-must sit between 10% and 90% down the page. Outside that band nothing can
+of the page but only the middle 75% of its height - everything that matters
+must sit between 12% and 88% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 456 x 366, on the 1024 x 1024 page this deck is drawn at. It
+card window, 456 x 344, on the 1024 x 1024 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
