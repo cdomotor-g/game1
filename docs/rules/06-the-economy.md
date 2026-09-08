@@ -2,6 +2,8 @@
 
 Everything you make, move or sell is a commodity; every way of spending effort is a recipe; and a recipe runs at a site, which is usually a building. This chapter says what those three things are and what each one asks of you. How many hours a job costs you, and what a tool does to it, is in [Effort and jobs](05-effort-and-jobs.md); what a good fetches is in [Trade and the market](09-trade-and-the-market.md).
 
+{{fig:plate:tile-sawmill,plate:tile-steelworks,plate:tile-mine,plate:item-coil-of-rope,plate:tile-farm|frieze}}
+
 ## Commodities
 
 A commodity is a good you can hold in a stockpile, load on a cart, sell at a market or lose to a thief. There are {{count:commodities.commodities}} of them, in {{count:commodities.categories}} families. Effort is not a commodity: it cannot be kept, carried or sold. Neither is a tool or an item, which you own one at a time and which wear out. Every commodity is listed with its numbers in Annex I, *Commodities*.
@@ -20,6 +22,8 @@ A commodity is a good you can hold in a stockpile, load on a cart, sell at a mar
 | Arcane | Herbs, roots, lichen and mana crystal: what potions and enchantments are made of |
 | Manufactured | Finished goods of several materials: ironware and parchment |
 
+{{fig:plate:tile-warehouse|margin|A commodity is whatever a warehouse will hold and a thief will take.}}
+
 An event card that shoves a family shoves every commodity in it.
 
 ### Bulk
@@ -34,6 +38,8 @@ Bulk is not mass. Bulk is what a commodity costs to store and ship; mass, in kil
 
 ### Value
 
+{{fig:plate:talisman-tal-05|margin|Gems and jewellery: the most value in the least bulk, so the thing worth shipping.}}
+
 Every commodity has a **base value** in coin ({{rules.currency.symbol}}), and the price a town pays is that value stepped along its price row: see [Trade and the market](09-trade-and-the-market.md). Value divided by bulk is what a storage slot or a cart is really carrying. Logs are worth {{commodities.commodities[id=logs].baseValue}} at bulk {{commodities.commodities[id=logs].bulk}}; jewellery is worth {{commodities.commodities[id=jewellery].baseValue}} at bulk {{commodities.commodities[id=jewellery].bulk}}. Nobody ships raw logs across the map.
 
 ### Containers and animals
@@ -41,6 +47,8 @@ Every commodity has a **base value** in coin ({{rules.currency.symbol}}), and th
 A liquid cannot be held without a **barrel**: water, milk, oil, ale, mead and wine all take one as an input, and the barrel comes back empty when the liquid is used. Crates and sacks are reusable in the same way and are what cargo travels in: see *Moving goods* in [Trade and the market](09-trade-and-the-market.md). **Livestock** lives in a pasture, breeds there, and can be sheared, milked or butchered; buy your first animal at a market.
 
 ### The four kinds of good
+
+{{fig:board:market|half|The market board's rules sheet, one panel per kind of good.}}
 
 Every commodity is one of four kinds, and the mark in the corner of its token says which. A ![staple](../art/icons/pricing-staple.svg) **staple** adds nothing to the market roll: its price is the dice and nothing else, and more than half the goods in the game are staples. A ![perishable](../art/icons/pricing-perish.svg) **perishable** adds nothing either, but every stack of it you are still holding at the end of a round faces the spoil die. A ![finite](../art/icons/pricing-deplete.svg) **finite** good gets dearer every time a unit of it is burnt, and never cheaper again. A ![sought](../art/icons/pricing-hype.svg) **sought** good adds whatever move its price made last round, and so chases its own price. The whole rule for each is in [Trade and the market](09-trade-and-the-market.md).
 
@@ -52,6 +60,8 @@ Almost nothing in the game is made in one step. Logs become lumber at a sawmill;
 - Lumber feeds the blacksmith, which forges ironware and every tool, and the carpenter's shop, which makes ploughs, looms, barrels and crates.
 - A mine gives ore, a smelter turns it into pig iron, a steelworks turns that into steel, and steel is the only road to rail.
 - Gold and gems, smelted and cut, become jewellery at a blacksmith: the densest value in the game.
+
+{{fig:flow:steelworks|half|The steelworks: pig iron and hot fuel in, tier-three steel out, walk left for the ore.}}
 
 Three goods sit at the top of the tree and are marked **tier three**: steel, fine cloth and jewellery. Every unit of them counts towards your industry score, and so does the depth of your longest completed chain: see [The game](01-the-game.md). Every chain is drawn out, one diagram per building, in Annex I, *The flows of work*: find the thing you want on the right of a diagram and walk left until every input is something you can gather.
 
@@ -78,6 +88,8 @@ A few recipes take either of two sites: felling timber runs on a forest hex or a
 
 If a recipe names a tool, a worker without one cannot run it. Some recipes name a tool as a bonus instead: a plough halves the hours of sowing, and a scythe doubles a harvest. Some name a **specialist**: fine cloth takes a trained weaver, jewellery and tools take a smith, garments a tailor, potions an alchemist, brokering a merchant and nursing a healer. Training is in [People, food and unrest](07-people.md).
 
+{{fig:plate:character-chr-06|margin|A healer is a specialist; nursing runs only with one present and fed.}}
+
 You can always work with your hands. Gathering deadwood, foraging, and angling for fish with a line need no building; gathering field stone and cutting peat need only a shovel; and hewing timber with an axe gives you lumber before you own a saw. These are slow, and they are the way back for a player who has lost everything.
 
 ### Variants
@@ -95,6 +107,8 @@ Some recipes pay out later. A sown crop sits on one of a farm's {{buildings.buil
 | Flax | {{recipes.recipes[id=sow-flax].effortHours}} h and {{recipes.recipes[id=sow-flax].inputs[0].qty}} flax | {{recipes.recipes[id=sow-flax].maturationRounds}} rounds | {{recipes.recipes[id=harvest-flax].effortHours}} h for {{recipes.recipes[id=harvest-flax].outputs[0].qty}} flax |
 | Cotton (warm ground only) | {{recipes.recipes[id=sow-cotton].effortHours}} h and {{recipes.recipes[id=sow-cotton].inputs[0].qty}} cotton | {{recipes.recipes[id=sow-cotton].maturationRounds}} rounds | {{recipes.recipes[id=harvest-cotton].effortHours}} h for {{recipes.recipes[id=harvest-cotton].outputs[0].qty}} cotton |
 | Hops | {{recipes.recipes[id=sow-hops].effortHours}} h and {{recipes.recipes[id=sow-hops].inputs[0].qty}} hops | {{recipes.recipes[id=sow-hops].maturationRounds}} rounds | {{recipes.recipes[id=harvest-hops].effortHours}} h for {{recipes.recipes[id=harvest-hops].outputs[0].qty}} hops |
+
+{{fig:plate:tile-orchard|margin|An orchard, once built, crops every round without re-sowing.}}
 
 A plough halves the sowing hours; a scythe doubles the harvest. Tending an orchard gives {{recipes.recipes[id=tend-orchard].outputs[0].qty}} apples, one more if an apiary stands on the next hex; a vineyard gives {{recipes.recipes[id=harvest-grapes].outputs[0].qty}} grapes; an apiary gives {{recipes.recipes[id=collect-honey].outputs[0].qty}} honey.
 
@@ -124,9 +138,13 @@ Bare ground is a site in its own right. Each terrain carries one or more feature
 | Salt flat | D | Salt may be raked with a shovel, 1 per 2 hours, no mine needed |
 | Caves | H, M | A discovery roll here can reveal a cave mouth: see [Discovery and encounters](11-discovery.md) |
 
+{{fig:terrain:forest,terrain:grassland,terrain:hills,terrain:marsh,terrain:desert|The letters the feature table names: F, G, H, B and D.}}
+
 Clearing a forest with an axe is a job of its own: it yields logs and flips the hex to grassland for good. There is no way to plant a forest back.
 
 ## Deposits and surveys
+
+{{fig:plate:tile-oil-derrick|margin|An oil field yields nothing until a derrick stands on it and hours are spent.}}
 
 A deposit is a source hidden under a hex: a coal seam, an iron deposit, a gem vein. It is not a commodity and never enters a stockpile. It is a place that yields one when the right building stands on it and somebody spends the hours. Deposits are face-down tokens laid under the map at setup ([Setting up](03-setting-up.md)), and each one carries its own **yield**: the number of units it holds before it is worked out. Two coal seams are not the same prospect, and what a survey tells you is which one you found.
 
@@ -164,9 +182,13 @@ A mine goes on a revealed mineral deposit and an oil derrick on a revealed oil f
 
 > **Open.** A peat bog and a sand bar are dealt as deposit tokens, but cutting peat and digging sand need no deposit and draw none down, so finding one changes nothing yet. Until that is settled, treat one as a sign of good ground and nothing more.
 
+{{fig:flow:mine|third|The mine's jobs; every batch draws units off the deposit beneath it.}}
+
 Drawing a finite good out of the ground is not what makes it dearer; burning it is. Each unit of coal, ore or any other finite good that a furnace consumes puts a pip on that good's depletion grid, and the pip never comes off: see [Trade and the market](09-trade-and-the-market.md).
 
 ## Buildings
+
+{{fig:tile:hut,tile:quarry,tile:smelter,tile:warehouse,tile:town-hall,tile:barracks|Six of the eight categories as hex counters; the ladder, not the building, sets their size.}}
 
 A building stands on a hex, costs commodities to raise, takes build-points of work and a minimum number of rounds to finish, and then is a site where recipes run. There are {{count:buildings.buildings}}, in eight categories. Costs, build-points and how construction is paid for are in [Effort and jobs](05-effort-and-jobs.md); every building's numbers are in Annex I, *Buildings*, and its full card in Annex II.
 
@@ -192,6 +214,8 @@ A building stands on a hex, costs commodities to raise, takes build-points of wo
 
 ### Housing
 
+{{fig:plate:tile-brick-house|margin|Workers in a brick house ignore a cold snap; every one of them is a die a round.}}
+
 A hut houses {{buildings.buildings[id=hut].housing}} worker, a timber house {{buildings.buildings[id=timber-house].housing}}, a brick house {{buildings.buildings[id=brick-house].housing}}, and a manor {{buildings.buildings[id=manor].housing}} workers and {{buildings.buildings[id=manor].specialistHousing}} specialist. Workers in a brick house ignore Cold Snap events. A manor scores {{buildings.buildings[id=manor].victoryPoints}} at the end of the game. Every worker is an effort die every round, which is why the first thing anyone builds is a hut.
 
 ### Extraction and production
@@ -203,6 +227,8 @@ Extraction buildings are where the land is worked: the lumber camp lets you fell
 A town holds {{rules.storage.stockpileFreeSlotsPerTown}} slots of its own and {{buildings.buildings[id=town-hall].storage}} more in its town hall. A warehouse adds {{buildings.buildings[id=warehouse].storage}} slots for anything, and a granary {{buildings.buildings[id=granary].storage}} for food and drink only, where a perishable stack reads the spoil die one row kinder. Both are what a thief looks for first. What happens above the cap is in [Effort and jobs](05-effort-and-jobs.md).
 
 ### Civic, military and arcane
+
+{{fig:plate:tile-town-hall,plate:tile-barracks,plate:tile-alchemist,plate:tile-shrine|The machinery of a town: hall, barracks, alchemist and a shrine that re-rolls one die.}}
 
 The market lets a town trade with the board; the trading house removes the spread for its owner and opens trade with other players; the guildhall trains one specialist a round; the inn serves drink against unrest, rests travellers and hires escorts; the infirmary tends the sick. The barracks turns fed workers into soldiers and holds {{buildings.buildings[id=barracks].garrison}} of them; the watchtower cancels one theft or raid event per game against its town and reveals the face-down hexes beside it; the palisade gives defenders an extra die: see [Monsters and battle](12-battle.md). The alchemist brews potions and needs an alembic ([Mana, talismans, spells and potions](13-magic.md)); the shrine lets you re-roll one effort die in its town each round and scores {{buildings.buildings[id=shrine].victoryPoints}}.
 

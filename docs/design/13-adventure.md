@@ -7,12 +7,16 @@ rather than floating beside it** — every sword is still a production chain, ev
 quest reward is still coin, goods or hours, and the fastest way across the map is
 still the railway somebody had to build.
 
+{{fig:plate:item-lantern,plate:event-wolf-pack,plate:spell-kindle,plate:item-sword,plate:tile-rail-depot|frieze}}
+
 The data lives in five files, one system each: `travel.json`, `discovery.json`,
 `monsters.json`, `quests.json`, `arcana.json` — with the decks in
 `vehicles.json` and `characters.json` and the talismans in `items.json`. Prose
 here, numbers there.
 
 ## Days, nights and light
+
+{{fig:card:ITM-03,card:ITM-02|Torch and lantern: one wear against eight, in the same W box.}}
 
 Every moving figure, party or vehicle gets one **day leg** per round, at the
 speed in `travel.json` for its mode and the terrain letter codes it crosses.
@@ -50,6 +54,8 @@ becomes a known camp: resting there is free.
 
 ## Discovery rolls
 
+{{fig:terrain:desert,terrain:mountain,terrain:marsh|Monster country, exactly as the tables say: desert, mountain and marsh.}}
+
 When a figure, party or vehicle **ends** a movement leg, it rolls a d20 on the
 discovery table for the hex it stopped in — one roll per leg, never one per hex
 crossed. A road or rail on the hex overrides its terrain table.
@@ -77,6 +83,8 @@ band always shrinks by 2 — the land there is walked, hunted and lit. Bands
 widen downward from their printed bottom and never claim 1 or 20.
 
 ## Monsters
+
+{{fig:card:MON-13|margin|Vhalrik's strip: H, S, A, P, Y and the fire mark, all of it a board can hold.}}
 
 Fourteen — three of each element, fire, earth, water and air, and then the two
 dragons the sighting cards had been promising — in `monsters.json`, drawn when a
@@ -133,6 +141,8 @@ leg there. The wild accumulates.
 
 ### Running away
 
+{{fig:card:MON-12|margin|The storm roc prints pace 8; nothing in the game outruns it.}}
+
 **A party may run only if its pace is GREATER than the monster's.** Equal is not
 greater: a thing that matches you stays with you, and there is no roll to make it
 otherwise. A party that cannot outpace what it has met **may not decline the
@@ -187,6 +197,8 @@ and every one of those goes the other way. That is the sentence the flee rule wa
 missing: a night's camp used to be about health and strength, and now it is about
 whether you get to leave.
 
+{{fig:plate:item-plate-harness|margin|Plate harness: three points of armour bought with one of pace.}}
+
 And it means plate harness costs you something real: **−1 pace** as well as +3
 armour. The best armour in the game is also the reason you have to use it.
 
@@ -197,6 +209,8 @@ enough thing gets its one swing at it as it goes. Full rules in
 `rules.json → conflict.flee`.
 
 ## Mana, talismans and spells
+
+{{fig:icon:element-fire,icon:element-earth,icon:element-water,icon:element-air|The four elements; a slaying pays mana in the monster's own.}}
 
 Slaying a monster yields **mana**, element-matched — and how much is a die, not a
 price. The **Y** box on the card is the *most* the corpse can give up; what you
@@ -236,6 +250,8 @@ the violet is a printing error, exactly as
 | ![Gold Locket](../art/renders/talisman-tal-04.png) | ![Gemfire Pendant](../art/renders/talisman-tal-05.png) | ![Crystal Phylactery](../art/renders/talisman-tal-06.png) |
 | *Gold Locket (TAL-04) — holds 6* | *Gemfire Pendant (TAL-05) — holds 8* | *Crystal Phylactery (TAL-06) — holds 10* |
 
+{{fig:plate:spell-ember-lash,plate:spell-mend-stone,plate:spell-deep-draught,plate:spell-stormcall|One spell of each element; Stormcall, at five mana, is the dearest.}}
+
 Mana is spent on **spells** (`arcana.json`): fourteen of them, at least three per
 element, running from a 1-mana Kindle to a 5-mana Stormcall. Like the potions,
 every one buys the things the game actually cares about — hours, movement, safety,
@@ -264,6 +280,8 @@ merchant with exactly the lantern you need is a small story the dice wrote.
 - **Drinks** — the old job: serve ale to clear unrest, per the recipe.
 
 ## Illness and healers
+
+{{fig:plate:event-camp-fever,plate:event-marsh-ague,plate:event-grey-pox,plate:event-plague|The four illness cards, each with a mitigation that could have been bought in advance.}}
 
 Illness arrived in the event deck: **Camp Fever** hits a travelling party,
 **Marsh Ague** hits a region, **The Grey Pox** hits every town of four or more
@@ -322,6 +340,8 @@ Wagonrow (VEH-09) is still to be drawn:
 | ![Steppe Pony](../art/renders/vehicle-veh-11.png) | ![Black Malchior](../art/renders/vehicle-veh-12.png) | |
 | *Steppe Pony (VEH-11)* | *Black Malchior (VEH-12)* | |
 
+{{fig:card:CHR-05|margin|Ruk's strip: strength 6, eighteen kilograms, read left to right onto the board.}}
+
 **Characters** (`characters.json`) — eight named adventurers; each player's hero
 figure takes one at setup for a face and a **summary strip** across the top of
 the card, which is every number they have, printed once:
@@ -369,6 +389,8 @@ in the [annex](14-annex.md#items).
 
 ### Armour — the only thing between you and the blow
 
+{{fig:plate:item-leather-jerkin,plate:item-chain-mail,plate:item-helm,plate:item-shield|Body, head and off-hand; worn together a figure reaches five.}}
+
 A battle is one opposed total: your strength plus your gear plus two blue dice
 against its strength plus its armour plus two red, and the lower total loses
 health equal to the difference. **Armour is a number you add to your own side of
@@ -403,6 +425,8 @@ Armour wears. One wear point per round of battle on every piece worn, both sides
 win or lose, because a blow you turned still dented the plate.
 
 ### Wear — everything a figure carries is running out
+
+{{fig:plate:tool-axe,plate:tool-saw,plate:tool-pick,plate:tool-hammer,plate:tool-scythe|The tools, which wear a point a job and run six to fourteen.}}
 
 **Tools wore out and nothing else did.** A sword was immortal, a suit of plate
 never dented, a rope never frayed and a lantern burned forever — so the only
@@ -545,6 +569,8 @@ All thirty-two sheet artworks are accepted and live in
 | *Holdings: The River Meadow (PSM-01)* | *Grounds: marsh (TBM-05)* | *Places: Vossgard (SET-01)* |
 
 ## The player board
+
+{{fig:board:player|wide|The player board: four tracks up the middle, a wear ladder against each kit recess.}}
 
 The adventure layer arrived one card at a time — a health bar here, a burden bar
 there, a mana bar inboard of that one — and every bar was on an edge, which is

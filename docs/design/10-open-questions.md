@@ -4,9 +4,13 @@ Things that are genuinely undecided, roughly in order of how much they would cha
 game. Where a decision has been provisionally made, the provisional answer is marked
 **[working answer]** — it is in the data, and it is not settled.
 
+{{fig:plate:monster-cinder-wolf,plate:people-elf,plate:tile-warehouse,plate:event-plague,plate:tile-mine|frieze}}
+
 ## Structural
 
 ### 1. Is effort a town-wide pool or a per-worker assignment?
+
+{{fig:plate:people-dwarf|margin|Placing a die on a mine is a better game than subtracting three.}}
 
 The brief says each worker rolls a die and the player allocates that effort. The
 prototype pools all the hours, which is much easier to play — but it makes several
@@ -27,6 +31,8 @@ because placing a die on a mine is a better game than subtracting 3 from a numbe
 
 ### 2. How are commodity tokens handled physically?
 
+{{fig:icon:pricing-staple,icon:pricing-perish,icon:pricing-deplete,icon:pricing-hype|Four marks for the corner of a hexagon, whether there are sixty-three kinds or eleven.}}
+
 63 commodities is far too many for one bit each. Generic coloured cubes plus a player
 board grid, or printed chits per commodity? See [08-components.md](08-components.md).
 This needs a paper prototype, not an argument.
@@ -39,6 +45,8 @@ a coin and because round-against-hexagonal is the fastest distinction a hand can
 a heap. Whether there are sixty-three kinds of hexagon or eleven is still the open half.
 
 ### 3. Is 24 rounds right?
+
+{{fig:board:ledger|half|A row is a round; at twenty-six the figures fall below a pencil stroke.}}
 
 The simulator gets one town to ten buildings in 24 rounds. Tier-3 chains are reachable
 but rarely worth it. Either the game is longer, buildings are cheaper, or the deep
@@ -62,6 +70,8 @@ live *in* a specific warehouse — makes theft cards much more interesting (whic
 warehouse?) and bookkeeping much worse.
 
 ### 5. Does anything stop a player hoarding one commodity? — *answered four different ways, and one of them is worse than it was*
+
+{{fig:plate:tile-granary|margin|A granary reads one row up the spoil strip, which is what a granary is for.}}
 
 This used to have a clean half-answer: 45 commodities priced by **glut**, five tokens sold
 into a town stepped that line's memory down a cell to a floor of −3, and a player sitting on
@@ -115,6 +125,8 @@ reason to build a market at all beyond the safety net.
 
 ### 22. Is twenty-one pips the right length of a seam?
 
+{{fig:board:depletion|wide|Nine grids across and two down; a longer seam is fewer grids a sheet.}}
+
 A finite commodity's depletion grid is seven rows of three: `step` 1, `per` 3, `top` 6 in
 `data/pricing.json`. Twenty-one cells, one pip per unit **burnt**, nothing ever lifted off,
 and the twenty-first pip puts that commodity's price up by six for the rest of the game —
@@ -166,6 +178,8 @@ a simulator run, and it should be decided that way rather than by adding paper.
 
 ### 7. Hex or square tiles?
 
+{{fig:board:minimap-hills|half|A drawn map is hexed by an overlay; the tile question waits behind it.}}
+
 Hexes are in the data (`terrain.tileShape`), squares are listed as an alternative. Hexes
 are better for movement and worse for rail networks, which want to branch orthogonally.
 
@@ -201,6 +215,8 @@ able to take your only smith? Dramatic, and possibly infuriating.
 ## Conflict
 
 ### 12. Is one round of combat enough — and what does an inconclusive one leave behind?
+
+{{fig:plate:item-sword,plate:item-leather-jerkin,plate:monster-vhalrik-the-cinder-crowned|Sword and jerkin at strength four beat a wolf and die to Vhalrik in three rounds.}}
 
 The rule is `roundsPerBattle: 1`, and it survived the redesign unchanged while everything
 underneath it moved. There is no to-hit roll, no 4+, nothing simultaneous and no hits
@@ -241,6 +257,8 @@ keep one worker and one hut) or a comeback mechanism.
 
 ### 24. Are four kit slots a harder limit than they were?
 
+{{fig:plate:item-chain-mail,plate:item-helm,plate:item-shield,plate:item-war-hammer,plate:item-lantern|Three cards of armour and a weapon fill the board before a lantern has a slot.}}
+
 Four recesses, and the argument for four has always been that a hero who wants a fifth thing
 has to put something down. That was a preference dressed as a rule. It is a rule now: every
 slot has a **wear ladder** ruled against it, so a fifth thing in play is a fifth thing whose
@@ -265,6 +283,8 @@ paid for.
 
 ### 18. Does per-player event drawing scale?
 
+{{fig:card:EVT-01,card:EVT-04,card:EVT-14,card:EVT-23,card:EVT-28|Five players, five or six of these a round; that is a lot of weather.}}
+
 Each player now turns a card in the Events phase, so a five-player round is five or
 six events. That is a lot of weather. It makes every player own a piece of the round
 and it feeds the discovery-band cards nicely — but if a round drowns in card
@@ -280,12 +300,16 @@ the campaign for everyone (currently: only if abandoned).
 
 ### 20. Is mana too slow to matter?
 
+{{fig:plate:spell-kindle,plate:spell-ember-lash,plate:spell-bulwark,plate:spell-stormcall|Spells cost one to five mana; a whole game may yield six.}}
+
 Twelve monsters yielding 1–4 mana each, spells costing 1–5, and monsters must be
 *found*. If a whole game yields a player 6 mana, spells need to be strong; if the
 Blood Moon floods the map, they need to be weak. The dial is `manaYield` on the
 monster cards, and it needs plays, not opinions.
 
 ### 21. Do enslaved monsters break the labour economy?
+
+{{fig:plate:monster-barrow-troll|margin|A d8 worker for three food and one unrest, once beaten without being killed.}}
 
 A Barrow Troll is a d8 worker for 3 food and 1 unrest. Compare a real worker: d6 for
 1 food. Probably fine — the troll had to be beaten by 2+ hits without killing it
@@ -310,6 +334,8 @@ fine for long.
 ## Presentation
 
 ### 16. Is `halfling` the right name?
+
+{{fig:plate:people-halfling|margin|The rendition is settled; the word is not.}}
 
 Four of the five peoples are named with folklore terms in the public domain and used
 across hundreds of unrelated works. `halfling` is the exception worth a decision: the word

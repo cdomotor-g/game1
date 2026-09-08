@@ -2,6 +2,8 @@
 
 A game is {{rules.victory.gameLengthRounds}} rounds, and every round is the same six phases in the same order: the event cards come out, the workers roll for hours, the players spend them, the world moves on a step, everybody eats, and the market fixes next round's prices. This chapter is the order of play. Each phase points to the chapter that holds its full rules.
 
+{{fig:plate:event-hard-frost,plate:tile-granary,plate:tile-market,plate:character-chr-07|frieze}}
+
 ## The six phases
 
 | Phase | What happens | Who, and in what order |
@@ -13,9 +15,13 @@ A game is {{rules.victory.gameLengthRounds}} rounds, and every round is the same
 | 5. Feeding | Every town pays food; then the spoil die is rolled | Every town, then every player |
 | 6. Market | The market is rolled for every column on the ledger | One player rolls for the whole table |
 
+{{fig:board:player|wide|The player board, with the six phases printed under THE ROUND.}}
+
 The same list is printed on every player board under THE ROUND, so nobody has to hold it in their head.
 
 ## Turn order
+
+{{fig:card:CHR-01,card:CHR-02,card:CHR-03,card:CHR-04|Four seats at the table; the first player moves one to the left each round.}}
 
 Turn order runs to the left, clockwise, from the first player. Anything done "in turn order" — revealing event cards, taking turns in the Actions phase, passing an offer round the table, buying from the board — starts with the first player and goes left from there.
 
@@ -30,9 +36,13 @@ At the end of every round, once the Market phase is done, **turn order passes to
 3. From round {{events.deck.lateGame.round}}, the first player reveals and resolves a second card as well.
 4. When the deck runs out, shuffle the discard pile and carry on.
 
+{{fig:card:EVT-02,card:EVT-05,card:EVT-17,card:EVT-24|Four scopes: a global drought, a local flood, a raid on the leader, an offer.}}
+
 Events come before anything else in the round so that you plan around them, rather than being punished for a plan you have already committed to. What each card does, what a region is, who the leader is and what would have softened the blow are in [Events](10-events.md).
 
 ## 2. Labour Roll
+
+{{fig:plate:people-dwarf|margin|A dwarf rolls in the open like anyone else; at a mine the die steps up.}}
 
 Every worker rolls {{rules.effort.dicePerWorker}} die. The pips are hours of **effort**, the currency you spend in the next phase.
 
@@ -55,6 +65,8 @@ In turn order, each player takes one **turn**: they spend their hours, their coi
 - **Forage**, hunt, survey and prospect — jobs done on the ground rather than in a building. [Effort and jobs](05-effort-and-jobs.md), [Discovery and encounters](11-discovery.md)
 - **Fight**, or refuse to — the monster the road turned up, a town somebody else owns, or in defence of your own. [Monsters and battle](12-battle.md)
 
+{{fig:plate:item-lantern|margin|A lit lantern buys a night leg after the day's, and wears a point for it.}}
+
 Three things to hold onto while you take a turn:
 
 - The price you trade at is the one already written on the ledger. The board sells at most as many of a commodity as its red supply dice rolled last Market phase, first come first served in turn order, and it buys any quantity. [Trade and the market](09-trade-and-the-market.md)
@@ -62,6 +74,8 @@ Three things to hold onto while you take a turn:
 - When a leg ends, the discovery roll is made at once, and whatever it turns up is dealt with in the middle of your turn, not saved for later.
 
 ## 4. Production Tick
+
+{{fig:plate:tile-winery|margin|Wine in the barrel comes one round closer; nobody chooses anything.}}
 
 Nothing is chosen in this phase. Every progress track on the table advances one step, all at the same time:
 
@@ -77,6 +91,8 @@ Nothing is chosen in this phase. Every progress track on the table advances one 
 3. A town fed from {{rules.population.foodVarietyBonus.threshold}} or more different food commodities in the same Feeding phase earns the variety bonus: one extra hour for every worker there next round.
 4. Figures on the road eat too. Every figure that is not in a town being fed by it eats {{rules.upkeep.food.perFigurePerRound}} food from what its party carries, and a figure that goes unfed loses 1 health. Sleep is the other half of a traveller's upkeep: a party that made camp has its strength back, and a party that did not has lost some. [The map and travel](08-the-map-and-travel.md)
 
+{{fig:plate:tile-dock|margin|The dock's catch faces the ochre spoil die whoever is holding it.}}
+
 At the end of the phase, two more things happen:
 
 - Storage overflows. Anything a town holds above its storage capacity is lost: half of it, rounded up. [Effort and jobs](05-effort-and-jobs.md)
@@ -85,6 +101,8 @@ At the end of the phase, two more things happen:
 Feeding is the deadline every other decision is measured against: you can spend the whole round on a steelworks, but the workers still want feeding at the end of it.
 
 ## 6. Market
+
+{{fig:board:ledger|half|The price ledger: a row a round, the old price struck through, the move boxed.}}
 
 Nobody trades in this phase. It fixes the price everybody will trade at **next** round, so that you act on a price you can see and find out afterwards what your acting did to it.
 
@@ -96,9 +114,13 @@ Nobody trades in this phase. It fixes the price everybody will trade at **next**
 6. Remember the red total for each column: it is also how many of that commodity the board will sell before the next Market phase.
 7. Turn order passes to the left.
 
+{{fig:board:market|wide|The market board carries the volatility strip and the swing ruler the net is read on.}}
+
 The swing ruler, the four kinds of good, the spread, and every commodity's row of six prices are in [Trade and the market](09-trade-and-the-market.md) and Annex I, *The market and every price*. In round 1, before any market has been rolled, prices stand where setup put them — see [Setting up](03-setting-up.md).
 
 ## The end of the round
+
+{{fig:plate:talisman-tal-06|margin|Mana with nowhere to sit blows away; a phylactery is somewhere for it to sit.}}
 
 When the Market phase is done, before the next round's cards come out:
 
@@ -108,5 +130,7 @@ When the Market phase is done, before the next round's cards come out:
 - The ledger's rows are numbered by round down its left-hand edge, so the next empty row is the round you are about to play.
 
 ## The end of the game
+
+{{fig:plate:tile-manor|margin|A manor is still standing when the last Market phase is done, and scores.}}
 
 The game ends when round {{rules.victory.gameLengthRounds}}'s Market phase is done. Stop there and score — how is in [The game](01-the-game.md).

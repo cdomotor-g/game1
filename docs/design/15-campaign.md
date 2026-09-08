@@ -8,11 +8,15 @@ economy, the market, travel and battle run exactly as before; what changes is
 that one deck is read *in order* rather than shuffled, and it says where the
 party is and what happens there.
 
+{{fig:plate:character-chr-09,plate:monster-polyphemus,plate:character-chr-16,plate:monster-scylla|frieze}}
+
 Both modes, every campaign, and the campaign deck live in one file,
 [`data/campaigns.json`](../../data/campaigns.json), the way a price lives in
 `pricing.json`. The first campaign is **Homer's Odyssey**.
 
 ## What a campaign is made of
+
+{{fig:card:CHR-10,card:MON-17|Eurylochus and Scylla, full citizens of their decks, the ship in each corner.}}
 
 A campaign brings things with it, and every one of them is a full citizen of
 its own deck:
@@ -31,6 +35,8 @@ belong to it. Nothing about free play was touched to make room for this:
 Odysseus has a summary strip, Polyphemus has a P box, and the Wine-Dark Sea
 has settlements with harbours.
 
+{{fig:icon:campaign-homers-odyssey|margin|The Odyssey's mark: a black ship under a square sail.}}
+
 **Every card a campaign brings carries the campaign's mark** beside its card
 code, in the top right corner — the Odyssey's is a black ship under a square
 sail. It is there so a table setting the campaign out can pull the cast and the
@@ -41,12 +47,16 @@ how to draw it is `components.json marks.campaign`, and `tools/build-icons.mjs`
 draws it into `docs/art/icons/`. The code itself does not change: `CHR-09` is
 still `CHR-09`, and the mark is an addition to it rather than a replacement.
 
+{{fig:plate:character-chr-21,plate:character-chr-20,plate:character-chr-19|Athena, Calypso and Circe: immortal, and not a people.}}
+
 Three of the Odyssey's cast are gods or nymphs. They are not a *people* —
 there is no immortal worker type, no immortal town — so their `people` field
 says `immortal`, a value the reference check allows the way `mounted` is
 allowed as a vehicle mode. They are characters and nothing else.
 
 ## The campaign deck
+
+{{fig:plate:character-chr-18|margin|Nausicaa on the Phaeacian shore, where xenia is kept.}}
 
 A campaign card is neither accepted nor declined, which is what makes it not a
 quest. (The quest deck's staged quests are called *campaign quests* in
@@ -64,6 +74,8 @@ story reaches it, and it carries:
 - **xenia** — whether guest-friendship was kept or broken here. The game has a
   rule for hospitality already (an inn, a bed, a gift), and the Odyssey is the
   poem about it.
+
+{{fig:plate:monster-charybdis|margin|Charybdis: the card says which way Odysseus steered, and the table steers it too.}}
 
 **A card never offers a fork the poem did not take.** Where Odysseus chose,
 the card says what he chose and the table does the same. What the dice decide
@@ -88,6 +100,8 @@ the deck knows the events in order *and* knows the poem's shape.
 | I — The Wanderings | IX–XII | 1–12 | Odysseus and his named companions |
 | II — The Household | I–VIII, XIII–XXIV | 13–22 | Odysseus; and Telemachus, Penelope, Athena as Mentor, Eumaeus |
 
+{{fig:plate:monster-laestrygonian|margin|The Laestrygonian, in whose harbour eleven ships go down.}}
+
 **The fleet** is the one piece of furniture the campaign adds, and it is a
 piece the table already owns: a spare player board whose health track counts
 ships, from twelve, and whose pace track is the rowers. Six men lost is a rung
@@ -95,6 +109,8 @@ off the pace, because Homer's losses are exact — six from each ship at
 Ismarus, six to the Cyclops, six to Scylla — and a slower ship is what the
 table feels for each of them. Eleven ships go down in one harbour; the last is
 struck by a thunderbolt off Thrinacia, and that is the end of Act I.
+
+{{fig:plate:character-chr-10,plate:character-chr-11,plate:character-chr-12,plate:character-chr-13,plate:character-chr-14|The named companions, every one of whom the story takes.}}
 
 **Every companion dies**, because in the poem every companion dies, and the
 campaign says why: Homer names the cattle of the Sun, in his first ten lines,
@@ -104,6 +120,8 @@ up the household. Homer runs the Telemachy beside the wanderings, and so does
 the deck: while Odysseus sits three rounds on Ogygia, the other players are in
 Ithaca watching the suitors eat the herds.
 
+{{fig:plate:character-chr-15,plate:character-chr-17,plate:character-chr-22|The household of Act II: the son, the swineherd and the suitor eating the herds.}}
+
 **The Wine-Dark Sea** (`data/maps/wine-dark-sea.json`) is a generated board.
 The real coast — Troy, Ismarus, Cape Malea, Pylos, Sparta, Ithaca — is placed
 where it is; everything west of Malea is where the poem puts it, which is
@@ -112,6 +130,8 @@ the order the ship reaches them, sweeping south and west and back, and a fleet
 following the cards traces the voyage across the table. The Cimmerians, on whom
 the sun never shines, are at the western edge of the paper. In free play it is
 a sea board with a mainland down one side, which neither of the other two is.
+
+{{fig:plate:monster-sirens|margin|The Sirens, passed by wit: the crew's ears stopped, the captain bound.}}
 
 **What it teaches** is listed on the campaign itself (`teaches`) and printed
 in the annex: the places in order with their book numbers; that the poem is
@@ -124,6 +144,8 @@ The full deck, the cast and the monsters are in [14-annex.md](14-annex.md)
 under *Campaign deck*, generated from the data.
 
 ## Adding a campaign
+
+{{fig:graph:dependencies|wide|The web the validator checks; a second campaign is more lines in it and no new rule.}}
 
 A second campaign is an entry under `campaigns`, its cards under `cards` with
 its id in their `campaign` field, its cast and monsters added to their own

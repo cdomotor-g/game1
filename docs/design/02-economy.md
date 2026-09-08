@@ -1,5 +1,6 @@
 # 02 — The economy
 
+{{fig:plate:tile-smelter,plate:tile-mill,plate:vehicle-veh-08,plate:talisman-tal-04|frieze}}
 ## Commodities
 
 66 of them, in eleven categories. Every commodity carries five numbers that matter:
@@ -18,6 +19,8 @@
   again; or a **sought** good, which adds whatever it did last round and so runs after its
   own price. The count is 34 · 11 · 14 · 7. See
   [04-trade.md](04-trade.md#what-kind-of-good-it-is).
+
+{{fig:icon:pricing-staple,icon:pricing-perish,icon:pricing-deplete,icon:pricing-hype|The four marks; the staple's level balance is the only one that does not lean.}}
 
 **The largest of the four is the one where nothing special happens**, and that is worth a
 name and worth a mark. Thirty-four of the sixty-six are staples — stone, lumber, cloth,
@@ -41,6 +44,8 @@ raw logs across the map; everybody ships jewellery.
 
 ## Recipes
 
+{{fig:flow:blacksmith|third|One recipe's shape at the smithy: site, tool, hours, inputs, output.}}
+
 83 recipes. The shape is always the same:
 
 ```
@@ -54,12 +59,16 @@ be told to do.
 
 ### Variants
 
+{{fig:flow:butcher|third|Butchery is one job at one site, whichever animal goes in.}}
+
 Some jobs accept different inputs for different results. Spinning takes wool, flax or
 cotton; butchery takes cattle, pigs, sheep or chickens. These are `alternatives` on the
 recipe rather than separate recipes, because they are one job at one site — the player
 just decides what goes in.
 
 ### Fuel
+
+{{fig:plate:tile-charcoal-kiln|margin|The charcoal kiln: two of its output stand in for one coal.}}
 
 Furnace recipes name a fuel *bundle* rather than a specific fuel, and the player pays
 any one option:
@@ -72,6 +81,8 @@ a brickworks on peat forever; you will just always be one brick behind the playe
 found a coal seam.
 
 ## The tiers
+
+{{fig:plate:tile-quarry,plate:tile-sawmill,plate:tile-steelworks,plate:item-plate-harness|Tiers rising left to right: stone off the ground, lumber, steel, and a harness at the end.}}
 
 Tier is computed from the recipe graph, not authored. It is the depth of the tree
 behind one unit.
@@ -95,13 +106,19 @@ total effort hours per unit all the way down.
 Every worker is a die every round forever, which makes housing the strongest
 compounding investment in the game and the reason the first thing anyone builds is a hut.
 
+{{fig:tile:hut,tile:timber-house,tile:brick-house,tile:manor|Housing, one to four workers; the tile grows with the beds.}}
+
 **Storage** is the quiet constraint. A town starts with 10 free slots plus 6 from its
 town hall. Logs are bulk 2. You will hit the cap sooner than you expect, and overflow
 spoils half. Warehouses hold 12 of anything; granaries hold 10 of food and drink and
 stop it perishing.
 
+{{fig:plate:tile-warehouse|margin|A warehouse holds twelve of anything and nothing in it keeps.}}
+
 **Extraction** sits on terrain or on a deposit. Mines are the gate to the industrial
 half of the game, and they exhaust: a coal seam holds 30 coal and then it is done.
+
+{{fig:board:depletion|half|The depletion sheet: a pip for every unit burnt, and the seam's price climbs behind them.}}
 
 **Production** turns things into other things. The dependency spine is:
 
@@ -112,11 +129,17 @@ lumber-camp ─→ sawmill ─→ [lumber] ─┬─→ blacksmith ─→ [tools
 mine ─→ [ore] ─→ smelter ─→ [pig-iron] ─→ steelworks ─→ [steel] ─→ rail
 ```
 
+{{fig:plate:tile-market|margin|Minding the market is a job, and it competes for the same hours.}}
+
+{{fig:flow:sawmill|third|The sawmill, the first joint in the spine: logs in, lumber out to two shops.}}
+
 **Civic** buildings cost effort like anything else: minding a market is a job, brokering
 a trade is a job, training a specialist is a job. This keeps trade competing with
 production for the same scarce hours instead of being free.
 
 ## Where the money is
+
+{{fig:plate:tile-brewery,plate:tile-mine,plate:talisman-tal-05,plate:tile-rail-depot|Four livings: drink, ore, a jewel, and the rail that taxes the other three.}}
 
 Three broad strategies fall out of the numbers, and they are meant to:
 

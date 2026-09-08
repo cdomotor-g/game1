@@ -2,9 +2,13 @@
 
 Everything in the box, and what each piece means. One rule runs through all of it: a card prints a number once, as a maximum, and nothing on a card ever moves — everything that moves is a token on a board. This chapter says which board, which token, and what the letters and marks on every piece stand for.
 
+{{fig:plate:item-lantern,tile:mill,card:TAL-01,board:minimap-hills,icon:pricing|frieze}}
+
 ## The map
 
 The world is one drawn map with a hexagonal grid over it. The first map is the Korvane Reach; a campaign may bring its own (see [Quests and campaigns](15-quests-and-campaigns.md)). Hexes are pointy-topped, and every hex has a column and a row, counted from the top-left corner — that pair is the hex's name whenever a sheet asks for one.
+
+{{fig:map:korvane-reach|wide|The Korvane Reach under its hex grid; the corner letter is the ruling.}}
 
 A single letter in the bottom corner of every hex is its **terrain code**. The letter is the ruling when the artwork straddles a grid line, and it is the key into the travel and discovery tables.
 
@@ -24,6 +28,8 @@ A single letter in the bottom corner of every hex is its **terrain code**. The l
 
 **Waterside** is never printed: a land hex with a water hex beside it is waterside, read off the map when a rule asks. Crossing costs and what waterside allows are in [The map and travel](08-the-map-and-travel.md).
 
+{{fig:terrain:grassland,terrain:forest,terrain:hills,terrain:mountain,terrain:marsh,terrain:tundra|Six land terrains and the code letter each hex carries.}}
+
 What stands on the map:
 
 - **Figures** — prospector, merchant, soldier and hero: the pieces that move rather than work. Your hero is the figure a character card belongs to.
@@ -37,6 +43,8 @@ What stands on the map:
 Every card is 63 × 88 mm and carries a **code**: a deck prefix and a two-digit number, CHR-01, MON-09, QST-07, with a v2 suffix if it is ever reprinted changed. The prefix is which deck it goes back into.
 
 ### The summary strip
+
+{{fig:card:MON-02|margin|The Ash Drake's strip: H, S, A, P, Y, then the element mark.}}
 
 Across the top of a card is a row of lettered boxes, the letter first and the figure after it. Each figure is the most that number can ever be. Where the player board has a track with that letter, the strip is where you read the number to set the token; where it has none, the number is printed, used, and never walked.
 
@@ -67,6 +75,8 @@ Across the top of a card is a row of lettered boxes, the letter first and the fi
 | Buildings | B and R, then L, J, G and V where the building has them |
 | Events, Quests, Campaign | No strip: everything the card does is in its text |
 
+{{fig:card:CHR-04,card:VEH-02,card:TAL-03,card:TOL-01,card:BLD-36|Five decks, five strips: a character, a vehicle, a talisman, a tool, a building.}}
+
 A character's KG is its strength × {{rules.carrying.kgPerStrength}}, printed so nobody multiplies at the table. An element mark is one of four: ![fire](../art/icons/element-fire.svg) fire, ![earth](../art/icons/element-earth.svg) earth, ![water](../art/icons/element-water.svg) water, ![air](../art/icons/element-air.svg) air.
 
 ### The decks and their backs
@@ -94,6 +104,8 @@ Talismans and spells share a back apart from the word; read the word. The campai
 
 ## The player board
 
+{{fig:board:player|wide|The player board: recess, four kit slots with ladders, four tracks, the round along the foot.}}
+
 One A4 sheet per player, every one identical. Print one more than there are players — the spare is the **encounter board** — and one for every vehicle anyone expects to have on the road at once. On it:
 
 - **IN PLAY**, top left: a recess for the card this board is running — a character, a monster or a vehicle.
@@ -118,6 +130,8 @@ Two numbers deliberately have no track. **Kilograms**: total what a figure wears
 
 ### The encounter board
 
+{{fig:card:MON-06|margin|The Gravel Wyrm dealt face up; H, S, P and M set from its strip, A left where it is.}}
+
 When a discovery roll turns up a monster or a stranger, the spare board runs it:
 
 1. Deal the card face up into the IN PLAY recess.
@@ -128,6 +142,8 @@ When a discovery roll turns up a monster or a stranger, the spare board runs it:
 How an encounter plays out is in [Discovery and encounters](11-discovery.md) and [Monsters and battle](12-battle.md).
 
 ### A vehicle's board
+
+{{fig:plate:vehicle-veh-03,plate:modification-compound-boiler|Old Smoke on a board of its own; the boiler lies in a kit slot.}}
 
 A vehicle in play is dealt a board of its own and run the same way: its card in the recess, its hull on the H track, its cargo and modifications in the four kit slots. C on the card is how much bulk the hold takes, and there is no token for it — the cargo is what is in the slots. At zero hull the vehicle is wrecked. See [Heroes, vehicles and gear](14-heroes-vehicles-and-gear.md).
 
@@ -149,6 +165,8 @@ Blue is what you want and red is what stands in your way, everywhere: a market i
 
 ## The market board and the depletion sheet
 
+{{fig:board:market|wide|The market board: the roll across its head, four kinds of goods beneath.}}
+
 The **market board** is one A4 sheet for the whole table. Nothing stands on it and it records no price: it says how a price moves. Across its head is THE ROLL — a key to the dice, the three-cell volatility strip, and the seven-cell swing ruler that turns the net of a roll into how many places a price steps. Under it are FOUR KINDS OF GOODS, a panel per kind with its mark and a worked example, and along the foot THE MARKET, the trading rules. Every commodity is exactly one of the four, and the mark is engraved in the corner of its token:
 
 | Mark | Kind | On the swing |
@@ -158,9 +176,13 @@ The **market board** is one A4 sheet for the whole table. Nothing stands on it a
 | ![finite](../art/icons/pricing-deplete.svg) | Finite | Adds the lowest number still visible on its depletion grid |
 | ![sought](../art/icons/pricing-hype.svg) | Sought | Adds the move it made last round, read off the ledger |
 
+{{fig:board:depletion|wide|The depletion sheet; a pip covers a cell for every unit burnt, never traded.}}
+
 The **depletion sheet** is a page of identical grids, one per finite commodity in play. A grid is {{pricing.depletion.per}} cells wide and runs from a row of noughts down to a row of {{pricing.depletion.top}}, under a hexagonal seat the commodity's own token stands in all game. Every time a unit of it is burnt — never when it is traded — a pip goes on the lowest uncovered cell, and it is never lifted off. The lowest number you can still see is what that commodity adds; a fresh grid reads 0. Print a fresh sheet every game. The procedure is in [Trade and the market](09-trade-and-the-market.md).
 
 ## The price ledger
+
+{{fig:board:ledger|half|The ledger: six seated columns, a row a round, hollow figures and a move box.}}
 
 The ledger is the only place a price lives: one A4 portrait sheet per town whose market you are trading in, printed fresh each game. Six columns run across it, each headed by a hexagonal seat — a column is not the grain column until the grain token stands in it — and a row runs down it for every round, 1 to {{rules.victory.gameLengthRounds}}. Each cell is three hollow seven-segment figures and a small move box.
 
@@ -172,9 +194,13 @@ The one un-struck figure in a column is the price now. The four kind-of-good mar
 
 ## Mini-maps
 
+{{fig:board:minimap-forest|wide|A forest hex opened out to sixty-one cells, encounter panel left, holdings right.}}
+
 Some moments need more board than one hex — a battle, a settlement growing into a town. A **mini-map** is one hex of the world opened out: an A4 sheet per terrain, a hexagon of cells {{components.minimap.cellsPerSide}} to a side, sixty-one in all, in that terrain's colour and mark. Each cell is exactly a world-map hex, so a figure, a route bar or a building tile moves between the two as it is. The ENCOUNTER panel on the left has rows for Order, Round and Morale, out for a fight and put away after; the HOLDINGS panel on the right has Built, Garrison and Stores, in front of you as long as the settlement stands. The footer prints the sheet code and the terrain code, with a pencil blank for the map hex it stands in for. Play happens inside the sheet and the result is written back to the big map.
 
 ## Building tiles
+
+{{fig:tile:hut,tile:farm,tile:granary,tile:manor|One to four cells: a hut, a farm and its yard, a granary, a manor and its grounds.}}
 
 A building tile is what you put down when you build. Its **face** is the finished building in colour, its name in a solid band along the lower-left edge. Its **back** is the same picture without the colour and the same name in a hollow band: the site pegged out, or a field sown. Lay a tile back up the round work starts and turn it over when the effort is paid — for a field, when the crop has stood its maturation rounds. A tile carries no number; the building's numbers are on its card, which you keep as well as the tile.
 

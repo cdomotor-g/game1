@@ -2,6 +2,8 @@
 
 Places where two careful tables would rule two ways. None of these stops a game; every one of them starts an argument, and an argument at the table is a rule the book failed to print. The *Open* notes the chapters already carry are re-examined here, because an interim rule is only worth printing if it holds.
 
+{{fig:plate:monster-cinder-wolf,plate:tile-manor,plate:event-raiders,plate:talisman-tal-06|frieze}}
+
 ### R-20 · How much the board sells in round one
 
 **Severity** unclear · **Where** Setting up, *Prices at the start* · **Status** Corrected
@@ -12,6 +14,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 
 ### R-21 · Who goes first
 
+{{fig:card:CHR-01,card:CHR-02,card:CHR-03,card:CHR-04|Four character cards; the strip prints the coin and health the proposal reads.}}
+
 **Severity** unclear · **Where** Setting up; The round · **Status** Open, with a proposal
 
 **As printed.** Two chapters say the first player is not decided and tell the table to agree one. The first player draws the first event, spends hours first, buys from the board first — and from round {{events.deck.lateGame.round}} draws a second event card.
@@ -20,6 +24,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 
 ### R-22 · The leader, and the region a card hits
 
+{{fig:map:korvane-reach|wide|Korvane Reach names thirteen regions; the d20 is rolled against them.}}
+
 **Severity** unclear · **Where** Events, *What a card says* · **Status** Open, with a proposal
 
 **As printed.** A crime card hits the leader; a local card hits a region, rolled for. Neither is defined. The interim rule counts victory points by the first chapter's count, which R-01 found does not exist yet, and numbers "the board's regions", which the drawn map prints — Korvane Reach names thirteen.
@@ -27,6 +33,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 **Fix.** The leader is the player with the most points under P-01, ties to the fuller purse. A region is rolled on the discovery d20 against the regions the map prints, rerolling above the count — P-12.
 
 ### R-23 · Mana held past the top of the M track
+
+{{fig:plate:talisman-tal-01,plate:talisman-tal-02,plate:talisman-tal-03,plate:talisman-tal-04,plate:talisman-tal-05|The talismans, each adding its own M to a track that stops at fourteen.}}
 
 **Severity** unclear · **Where** Mana, talismans, spells and potions, *Mana* · **Status** Proposed
 
@@ -38,6 +46,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 
 ### R-24 · How a party fights
 
+{{fig:plate:event-wolf-pack|third|A party meets a wolf, and the chapter does not say who fights it.}}
+
 **Severity** unclear · **Where** Monsters and battle, *The battle roll*; *Fighting other players* · **Status** Proposed
 
 **As printed.** Against a monster, "you" add up your strength, your gear and two dice, and the wound comes off "the loser's H track". Against another player, "each side totals its figures". A party of a hero, a soldier and a hireling meets a wolf: whether all three strengths are added, or one figure fights, and whose track takes the wound, the chapter does not say. The bandits result says an escort "rolls first", which is a third reading.
@@ -47,6 +57,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 **Fix.** One figure fights each exchange, named before the dice; every other fighting figure in the party adds one to the total; the wound lands on the fighter. An escort is the fighter in the first exchange, which is what "rolls first" meant — P-14.
 
 ### R-25 · Raiding a town with nobody in it
+
+{{fig:tile:watchtower|margin|The watchtower cancels the raid whether or not anybody is home.}}
 
 **Severity** unclear · **Where** Monsters and battle, *Fighting other players*; Events, *Raiders* · **Status** Proposed
 
@@ -72,6 +84,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 
 ### R-28 · A vehicle "in use"
 
+{{fig:plate:vehicle-veh-05|margin|A ship at harbour with a full hold; in use, or laid up.}}
+
 **Severity** unclear · **Where** Trade and the market, *Moving goods* · **Status** Proposed
 
 **As printed.** Upkeep is paid each round the vehicle is in use. A ship that sits at a harbour with a hold full of wine is either in use or laid up, and {{transport.modes[id=ship].upkeep}} coin a round turns on the word.
@@ -80,6 +94,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 
 ### R-29 · A dagger beside a sword
 
+{{fig:plate:item-sword,plate:item-dagger|Sword and dagger in one slot; one is swung and one wears.}}
+
 **Severity** unclear · **Where** Heroes, vehicles and gear, *Kit* · **Status** Proposed
 
 **As printed.** A dagger sits in a slot with another weapon. Gear is "your weapon's battle number", singular; nothing says whether the dagger's +{{items.items[id=dagger].battle}} is added to the sword's, or whether both wear.
@@ -87,6 +103,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 **Fix.** One weapon is swung in an exchange and one weapon wears; the dagger is the one you swing when the sword breaks — P-16.
 
 ### R-30 · The manor's fifth bed
+
+{{fig:tile:manor|margin|The manor tile; four beds and a specialist's, or five in all.}}
 
 **Severity** nit · **Where** People, food and unrest, *Workers* · **Status** Proposed
 
@@ -112,6 +130,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 
 ### R-33 · Which vehicle card
 
+{{fig:card:VEH-07,card:VEH-08,card:VEH-09|Three cards of the vehicle deck, not equal, drawn blind for the same inputs.}}
+
 **Severity** unclear · **Where** Heroes, vehicles and gear, *Vehicles* · **Status** Open, with a proposal
 
 **As printed.** Build a cart and draw from the vehicle deck until a cart turns up. The deck is small and its cards are not equal, so the draw hands one player a better cart than another for the same inputs.
@@ -119,6 +139,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 **Fix.** Choose. The cards of a mode are the models a yard can build; a player building one names it — P-17.
 
 ### R-34 · The monster nobody finished
+
+{{fig:plate:monster-ash-drake|margin|A drake left on its hex is a lair, and mends a health a round.}}
 
 **Severity** unclear · **Where** Monsters and battle, *The battle roll* · **Status** Open; the interim rule holds
 
@@ -135,6 +157,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 **Fix.** Coin moves at once; goods change owner where they stand, and the buyer hauls them — P-16.
 
 ### R-36 · The survey difficulty nobody rolls against
+
+{{fig:plate:tile-mine|margin|A mine on a deposit whose survey difficulty no rule has read.}}
 
 **Severity** unclear · **Where** The economy, *Deposits*; The map and travel, *Surveying* · **Status** Open, with a proposal
 
@@ -159,6 +183,8 @@ Places where two careful tables would rule two ways. None of these stops a game;
 **The reading.** The interim rule is sound and should become the rule, as a number in the data rather than a sentence in a note — P-18.
 
 ### R-39 · A quarter of the value of what you are carrying
+
+{{fig:plate:event-caravan-robbery|third|Bandits take a quarter of the cargo; at which ledger is the question.}}
 
 **Severity** nit · **Where** Discovery and encounters, *Bandits* · **Status** Proposed
 

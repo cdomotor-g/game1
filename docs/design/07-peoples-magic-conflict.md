@@ -1,6 +1,9 @@
 # 07 — Peoples, magic and conflict
 
+{{fig:plate:character-chr-06,plate:spell-stormcall,plate:monster-vhalrik-the-cinder-crowned,plate:event-mercenaries-for-hire,plate:item-plate-harness|frieze}}
 ## Peoples
+
+{{fig:plate:character-chr-08|margin|Old Mother Keswick, hedge-witch: a human who holds every drop of mana in a talisman.}}
 
 Five, each with a distinct economic shape rather than a stat block.
 
@@ -33,6 +36,12 @@ carries named examples of two of them.
 
 ## Magic
 
+{{fig:plate:monster-cinder-wolf|margin|Yield 1: any roll of the purple die but a one still pays a cinder wolf's mana in full.}}
+
+{{fig:plate:talisman-tal-01,plate:talisman-tal-02,plate:talisman-tal-03,plate:talisman-tal-04,plate:talisman-tal-05,plate:talisman-tal-06|The six talismans, from a two-capacity bone charm to a ten-capacity crystal phylactery.}}
+
+{{fig:plate:tile-alchemist|margin|The alchemist, where every potion in the table is brewed under an alembic.}}
+
 Deliberately small and economic rather than a second system bolted on.
 
 **Mana crystals** come from mana veins — six per vein, difficulty 6 to survey, two
@@ -64,6 +73,8 @@ Every one of them buys hours, movement, safety or information. None of them brea
 economy, and all of them are made of things the economy produces.
 
 ### The four elements
+
+{{fig:plate:spell-kindle,plate:spell-mend-stone,plate:spell-mist-veil,plate:spell-loft|One spell of each element: Kindle for fire, Mend Stone for earth, Mist Veil for water, Loft for air.}}
 
 Every monster, every spell, every enchantment and every arcane fitting belongs to
 one of four elements, and each one has a mark. The mark is **data** — one drawn
@@ -111,6 +122,16 @@ right way round: the small kill is wages, the great kill is a gamble, and an elf
 standing there with an empty phylactery has a reason to hold their breath.
 
 ## Conflict
+
+{{fig:tile:inn|margin|The inn, where thugs, militiamen and hired blades escort one journey for a flat fee.}}
+
+{{fig:plate:monster-ash-drake,plate:monster-gravel-wyrm,plate:monster-reef-serpent,plate:monster-rime-harpy|Fire, earth, water and air, one beast apiece; the harpy at armour 0 is the war hammer's worst target.}}
+
+{{fig:tile:palisade|margin|A wall and a coat are the same sentence at different scales; the palisade adds armour to every defender.}}
+
+{{fig:plate:item-sword,plate:item-war-axe,plate:item-war-hammer,plate:item-leather-jerkin,plate:item-shield|Gear is a number added to your side, and each piece takes a wear point per round of battle.}}
+
+{{fig:card:MON-01|margin|Strength 2, armour 1, health 4: the wolf's whole side of the roll is on its strip.}}
 
 **A battle is one subtraction, and it is the subtraction the market already taught you.**
 You total your **strength**, your **gear** and **two blue dice**. The thing in front of you

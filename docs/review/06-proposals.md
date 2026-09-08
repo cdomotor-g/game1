@@ -2,7 +2,11 @@
 
 Every finding marked *Proposed* or *Open* points here. Each proposal is written as the rule it would become — present tense, second person, ready to be pasted into a chapter — followed by what has to change in the data for the chapter to print it. A proposal is a recommendation and not a rule: a table may play it tonight, but Book I does not say it until the data does.
 
+{{fig:plate:tile-barracks,plate:tile-granary,plate:item-lantern,plate:event-migrants|frieze}}
+
 ### P-01 · A scoring schedule (R-01, R-22)
+
+{{fig:plate:tile-harbour|margin|The harbour, scored at its printed points under Network.}}
 
 **The rule.** At the end of round {{rules.victory.gameLengthRounds}}, after the last Feeding phase, count:
 
@@ -21,6 +25,8 @@ The highest total wins. A tie goes to the fuller purse, then to whoever was firs
 
 ### P-02 · One way of moving (R-02)
 
+{{fig:terrain:grassland,terrain:forest,terrain:hills,terrain:mountain,terrain:marsh|The five grounds a figure pays move points to enter, dearest last.}}
+
 **The rule.** A figure moves on move points: {{rules.movement.figureMovePointsPerRound}} by default, or the number printed for its kind — a hero {{transport.figures[id=hero].movePoints}}, a soldier {{transport.figures[id=soldier].movePoints}}. Set the P track to that number at the start of the leg. Entering a hex costs its ground's move cost — grassland {{terrain.terrains[id=grassland].moveCost}}, forest {{terrain.terrains[id=forest].moveCost}}, hills {{terrain.terrains[id=hills].moveCost}}, mountain {{terrain.terrains[id=mountain].moveCost}}, marsh {{terrain.terrains[id=marsh].moveCost}} — or 1 on a road whatever lies under it, and a leg that stays on a road is a point longer. Gear and traits that say "cost 1 less", "+1 move point" and "minimum 1" apply to these numbers as written. A vehicle moves on the travel table, hexes a leg for its mode and the ground, and a party aboard one moves as the vehicle does.
 
 **The data.** The on-foot row of the travel table is already this rule tabulated; the mounted row becomes a mount's move points and a forest cost for a mount. The *Open* note in the travel chapter goes.
@@ -32,6 +38,8 @@ The highest total wins. A tie goes to the fuller purse, then to whoever was firs
 **The data.** One civic recipe naming the barracks; the soldier's price comes off the figure table, which then lists what a soldier does and not what it costs.
 
 ### P-04 · Deposits are drawn, not hidden (R-04, R-36)
+
+{{fig:plate:tile-mine|margin|A mine stands on a token drawn from a stack, not found under the hex.}}
 
 **The rule.** At setup, sort the deposit tokens by kind into face-down stacks beside the map; nothing goes on the map. A survey is a job as printed. On a 1 or 2 the hex is barren: mark it and never survey it again. On a 3, traces: survey again next round at +1. On a 4 or more, draw the top token of a kind this ground can hold, choosing among kinds if more than one can. If the roll reached the token's survey difficulty, it is revealed on the hex; if not, it lies face down on the hex as a trace and is surveyed again next round at +1. A 6 adds 2 yield to a revealed token. When a stack is empty that kind is found nowhere else.
 
@@ -45,17 +53,23 @@ The highest total wins. A tie goes to the fuller purse, then to whoever was firs
 
 ### P-06 · A town has a board (R-06)
 
+{{fig:board:player|half|The player board, dealt once more for every town founded.}}
+
 **The rule.** Every town you found is dealt a player board of its own. Its town hall card lies in the recess, its tools lie in the four kit slots, and their wear is walked on the ladders beside them. A tool a figure takes on the road moves to that figure's board. A town owns at most four tools in play; more lie in the stockpile, unworn and unused.
 
 **The data.** The board's own summary says one per player, one per vehicle and one spare. Add one per town.
 
 ### P-07 · Bandits and pirates get a card (R-07)
 
+{{fig:plate:event-piracy|third|Pirates, henceforth H 8, S 3, A 1, dealt onto the encounter board.}}
+
 **The rule.** Bandits: H 6, S 2 (+1 for every full 20 bulk the party carries), A 0, P 4, no mana. Pirates: H 8, S 3, A 1, P 5, no mana. Both are dealt onto the encounter board like a monster. The toll stands as printed and is paid at base value.
 
 **The data.** Five numbers on each of the two discovery results, and a ceiling check that reads them.
 
 ### P-08 · Text that says the old rule (R-08 to R-13, R-15)
+
+{{fig:card:BLD-36,card:ITM-02,card:TOL-01|Three cards whose rules text is rewritten; nothing on their strips moves.}}
 
 Seven edits to card and job text, none of them a decision:
 
@@ -69,11 +83,15 @@ Seven edits to card and job text, none of them a decision:
 
 ### P-09 · Haulage is earned by hauling (R-16)
 
+{{fig:plate:tile-rail-depot|margin|The rail depot; three hexes of your own rail before the tenth is paid.}}
+
 **The rule.** Cargo sells for a tenth over the town price only if it has moved at least three hexes over your own road or rail, between two different settlements, on the journey that brought it to market.
 
 **The data.** A minimum-hexes field on the haulage rule, read by the chapter and by the twin.
 
 ### P-10 · The board buys up to demand (R-17)
+
+{{fig:plate:tile-market|margin|The market, which now buys at full price only up to the blue dice.}}
 
 **The rule.** The board buys at the ledger price, less the spread, up to as many units of a commodity as this round's blue dice rolled for it. Every unit past that sells one figure down the row. Trade between players is unlimited, as it is now.
 
@@ -93,17 +111,23 @@ Seven edits to card and job text, none of them a decision:
 
 ### P-13 · The M track is the cap (R-23)
 
+{{fig:plate:people-elf|margin|The elf, who holds the most mana of anybody and no more than fourteen.}}
+
 **The rule.** No character holds more than {{components.board.track.to}} mana, whatever it is carrying. A talisman past that holds nothing more, and mana with nowhere to go blows away at the end of the round.
 
 **The data.** The arcane rules state the cap as the board's ceiling, and the ceiling sweep learns to add a body's mana to the largest talisman's.
 
 ### P-14 · How a side fights (R-18, R-24, R-25)
 
+{{fig:plate:tile-palisade|margin|The palisade adds two armour to the defending fighter, and no die.}}
+
 **The rule.** Each exchange, each side names one figure to fight before the dice are rolled. That figure's strength, gear and two dice are the side's total, plus 1 for every other figure of that side able to fight. The wound lands on the fighter. An escort — a soldier or a hireling — is the fighter in the first exchange. A town's defenders are its garrison and whatever soldiers or heroes stand there; a town with none is raided without a roll, and the attacker takes {{pct:rules.conflict.lootFraction}} of its stockpile unless a watchtower cancels it. A palisade adds 2 armour to a defending fighter, and no die.
 
 **The data.** The battle rule gains the *one fighter, plus one a figure* clause; the palisade's text changes from a die to armour so the two sides of R-12 agree.
 
 ### P-15 · Hirelings can fall (R-18)
+
+{{fig:plate:event-mercenaries-for-hire,plate:tile-town-hall|Mercenaries for hire, and the town hall that pays them; each now has a health.}}
 
 **The rule.** A thug has H 5, a militiaman H 6, a hired blade H 7. A party or a cargo may hire at most one. A hireling at 0 health is dead and its fee is spent; a thug who refuses a monster goes home and keeps the fee.
 
@@ -122,6 +146,8 @@ Seven edits to card and job text, none of them a decision:
 - **Tolls.** A bandits' or pirates' toll is reckoned at base value.
 
 ### P-17 · Vehicles and lairs (R-33, R-34)
+
+{{fig:plate:monster-hoarwyrm|margin|The Hoarwyrm as a lair, mending one health a round up to its printed H.}}
 
 **The rule.** A player building or buying a vehicle names which card of that mode it is, from those not in play. A monster left unresolved on its hex is a lair: it mends 1 health a round up to its printed H, and it is met again by whoever ends a leg there, without a discovery roll.
 

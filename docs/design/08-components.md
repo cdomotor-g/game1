@@ -3,7 +3,11 @@
 A first pass at the physical bill of materials, generated from the data. Quantities are
 for a 4-player game and are estimates, not a manufacturing spec.
 
+{{fig:card:CHR-09,tile:manor,plate:item-lantern,board:minimap-forest|frieze}}
+
 ## Board
+
+{{fig:map:korvane-reach|wide|The board as currently built: one printed map plate, the hex grid an overlay read over it.}}
 
 > **The 61 terrain tiles are shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** They stay in the bill
 > of materials because they are still the right answer for a *tile set*; the board
@@ -19,6 +23,8 @@ for a 4-player game and are estimates, not a manufacturing spec.
 - **~40 tree tokens** — forest tiles carry 6 each; removed as they are felled.
 
 ## Building tiles
+
+{{fig:tile:hut,tile:timber-house,tile:mine,tile:pasture|One cell to four, a hut to a pasture; the name band hugs one edge and no tile carries a number.}}
 
 Placed on the board, or on a mini-map sheet opened out from one of its hexes. One cell of a
 tile is exactly one world-map hex, so a piece cut for one board seats on the other without
@@ -60,6 +66,10 @@ how big each one is comes out of `data/buildingtiles.json` and is never typed on
   ladder effects
 
 ## Cards
+
+{{fig:tile:sawmill,card:BLD-18|Tile and card of one building: the piece says where it stands, the card shows what the die cut away.}}
+
+{{fig:card:CHR-01,card:MON-13,card:VEH-01,card:BLD-36,card:WPN-01,card:ARM-03|Six decks, one geometry: the lettered strip across the top prints every number once, as a maximum.}}
 
 - **69 event cards** — the deck in `data/events.json`
 - **66 commodity reference cards** — one per commodity, showing value, bulk, and what
@@ -181,6 +191,8 @@ overlapping — which is precisely what mail is: twenty thousand identical small
 roundel size that is what it should look like.
 
 ## The player board
+
+{{fig:board:player|wide|A recess for the hero, four kit slots with wear ladders, four tracks up the middle, and no border.}}
 
 One A4 landscape sheet a player keeps in front of them. It does three jobs, and the
 third is the one that earned it:
@@ -345,6 +357,8 @@ not one coordinate typed to do any of it.
 
 ### A fight
 
+{{fig:plate:monster-vhalrik-the-cinder-crowned|margin|Vhalrik, strength 7 and armour 3: eighteen against thirteen, and the character takes five.}}
+
 **One subtraction, and it is the subtraction the market already taught you.** It is printed
 on the board because it is the only arithmetic a player needs while a monster card is face
 up in front of them, and it is printed from `rules.json conflict.battle` rather than
@@ -387,6 +401,8 @@ bestiary cannot be run away from.
 
 ### An encounter
 
+{{fig:card:MON-05|margin|Dealt onto the spare board: H, S and P go to tracks, A and Y stay on the card.}}
+
 A discovery roll that turns up a living thing has always produced a monster and never said
 how to run one. It does now, and the answer is the furniture already on the table: **deal
 its card onto the spare player board.** Set that board's tracks from the card's summary
@@ -400,6 +416,8 @@ card is put away, the tokens come off, and nothing is written down. A stranger m
 road is set up exactly like a hero, because that is exactly what they are to themselves.
 
 ## The market board
+
+{{fig:board:market,board:depletion|Sheet one says what the rules are; sheet two is spent, covered in pips by the end of a game.}}
 
 **Two A4 landscape sheets, and neither of them records a price.** That is the whole of what
 changed. The board used to be a price tracker: six identical lines of tally, memory and
@@ -461,6 +479,8 @@ plus its clearance and a grid is the ladder in `pricing.json depletion`, so maki
 last longer is one number there and a taller grid here.
 
 ## The price ledger
+
+{{fig:board:ledger|half|Six columns, twenty-four rounds, hollow figures waiting for a pencil; the only sheet written on.}}
 
 **One A4 portrait sheet, and the only place in the game where a price lives.** Six commodity
 columns across, twenty-four rows down — one per round of the game — and every cell is three
@@ -529,6 +549,8 @@ stationery. So they are **printed fresh per game**, in pencil-ready ink, with sp
 the ledger carries no chromatic ink at all — a pencil is the only colour it is going to get.
 
 ## Tokens and bits
+
+{{fig:icon:pricing-staple,icon:pricing-perish,icon:pricing-deplete,icon:pricing-hype|The corner mark on a commodity token: staple, perishable, finite, sought; the balance alone is symmetrical.}}
 
 - **Commodity tokens** — the big question. 63 commodities is far too many to give each
   its own wooden bit. Two candidate approaches:
@@ -610,6 +632,8 @@ the ledger carries no chromatic ink at all — a pencil is the only colour it is
 
 ## Mini-maps
 
+{{fig:board:minimap-grassland,board:minimap-marsh,board:minimap-tundra|A colour, a mark and a grid, sixty-one cells inside one world hex, and no art at all.}}
+
 One A4 landscape sheet per terrain: a hexagon of 61 hexagonal cells — the inside of a
 single campaign-map cell — with an encounter panel and a holdings panel in the space a
 hexagon on a rectangle leaves over.
@@ -643,6 +667,8 @@ shelved tile board ([#18](https://github.com/cdomotor-g/game1/issues/18)) — st
 at [`docs/minimaps/img/`](../minimaps/img/) and are not touched.
 
 ## Player aids
+
+{{fig:graph:dependencies|wide|The web the explorer draws, and the working draft of the production chain poster.}}
 
 - **Turn reference** — the six phases, and the legality checklist for allocating effort
 - **Travel & discovery reference** — the speed table and the d20 tables, straight from

@@ -2,9 +2,15 @@
 
 This is a game of turning hours into a town and a town into a fortune, on a drawn continent you travel, trade across and fight in. It runs for {{rules.victory.gameLengthRounds}} rounds in one of two modes: free play, where each player builds and scores against the others, or a campaign, where the table plays one story together and wins or loses as one. This chapter says what the game is, who plays it, how long it lasts and what winning means.
 
+{{fig:plate:character-chr-01,plate:tile-town-hall,plate:monster-cinder-wolf,plate:vehicle-veh-05|frieze}}
+
 ## What the game is
 
+{{fig:plate:tile-lumber-camp,plate:tile-clay-pit,plate:tile-smelter,plate:tile-palisade|Four places hours go: felling, digging clay, minding a furnace, raising a wall.}}
+
 Workers live in houses. Each round every worker rolls a die, and the pips are hours of effort. You spend those hours on jobs: felling trees, digging clay, minding a furnace, raising a wall. A job needs a place, usually a tool, and usually something to work on. At the end of the round everybody has to eat, and every worker you cannot feed turns into unrest. Everything else in the game — trade, roads and rail, magic, war — is a way of getting more hours, better hours, or more out of each hour.
+
+{{fig:plate:monster-ash-drake,plate:talisman-tal-05,plate:spell-kindle|A slain drake yields mana; the pendant holds it and the spell spends it.}}
 
 Around your town lies a continent. Your hero and your figures travel it by day and, with a light, by night. Each time a leg of travel ends you roll to see what you found there, and the map fills in as it is walked. Monsters can be slain, run from, befriended, enslaved or tamed; a slain monster yields mana, which talismans hold and spells spend. Quests arrive and may be accepted or declined. Named ships, trains, caravans and horses carry your cargo, and named characters carry your name. The economy is still the engine of all of it: the adventure is a new set of ways to spend hours and new things the hours can buy.
 
@@ -16,17 +22,25 @@ Three ideas run through every chapter that follows.
 
 ## Players
 
+{{fig:plate:character-chr-04,plate:character-chr-05,plate:character-chr-06,plate:character-chr-08|Four heroes from the character deck; each names a player on the map.}}
+
 Free play is for two to five players. A campaign says how many it seats: Homer's Odyssey takes {{campaigns.campaigns[id=homers-odyssey].players.min}} to {{campaigns.campaigns[id=homers-odyssey].players.max}}.
 
 Each player has a hero on the map, named by one of the {{count:characters.characters}} character cards; a player board that hero's card sits in; a starting town with its workers; and the purse of coin its character card prints. Setting all of it out is [Setting up](03-setting-up.md).
+
+{{fig:plate:monster-stone-boar|margin|A boar met on the road is run from the spare board by the seat to the left.}}
 
 The table also keeps one spare player board. When a monster or a stranger is met on the road, its card is dealt onto that board and it is played, for as long as the meeting lasts, by the player on the left of whoever met it — a seat at the table that happens not to be a person. See [Discovery and encounters](11-discovery.md).
 
 ## Length
 
+{{fig:plate:event-hard-frost|margin|Every round opens with an event; a hard frost is one of them.}}
+
 A game is {{rules.victory.gameLengthRounds}} rounds. Every round is the same {{count:rules.round.phases}} phases in the same order — Events, Labour Roll, Actions, Production Tick, Feeding, Market — and each is described in [The round](04-the-round.md). Turn order runs clockwise and passes one seat to the left at the end of every round, so nobody goes first twice running.
 
 ## Coin
+
+{{fig:plate:item-bag|margin|Coin travels in a bag and weighs on the same scales as rope.}}
 
 The money of the game is {{rules.currency.name}}, written {{rules.currency.symbol}}. It buys tools, figures, hirelings, beds, care and goods; it pays tolls on other people's roads; and it is what the market gives you for what you sell.
 
@@ -46,11 +60,15 @@ Coin is not the score. None of the ways of winning below counts it.
 
 ### Free play
 
+{{fig:card:CHR-09|margin|Odysseus in the free-play deck; the campaign mark sits beside his card code.}}
+
 Choose a board. Each player deals or picks a character. Shuffle every deck. Play {{rules.victory.gameLengthRounds}} rounds and score.
 
 Everything a campaign brings with it — its characters, its monsters, its board — is in the free-play decks too, and each of those cards is exactly what it says it is. Such a card carries the campaign's mark beside its card code, in the top right corner, so you can see at a glance which story it came from and so a table setting out a campaign can pull its cast from the decks by the corner alone. The mark changes nothing about how the card plays.
 
 ### Campaign
+
+{{fig:plate:monster-polyphemus,plate:monster-scylla,plate:character-chr-16,plate:character-chr-21|Campaign I's cast and monsters: Polyphemus, Scylla, Penelope, Athena.}}
 
 A campaign lays a storyline over the same game. One campaign is chosen at setup. It names its board, it deals its cast, and its cards are read in order rather than shuffled: a card is turned when the story reaches it, and it says where the party is and what happens there. The economy, the market, travel and battle run exactly as in free play.
 
@@ -62,6 +80,8 @@ Choosing a campaign, setting it out, reading a card and replaying a chapter are 
 
 ### In free play
 
+{{fig:plate:tile-manor,plate:tile-trading-house,plate:tile-harbour,plate:tile-shrine|The four buildings that print victory points of their own, counted at game end.}}
+
 When the last round ends, count victory points. They come from {{count:rules.victory.conditions}} conditions, and each scores separately, so a mining-and-rail game and a farming-and-trade game can both end in a win.
 
 | Condition | What it counts |
@@ -69,6 +89,8 @@ When the last round ends, count victory points. They come from {{count:rules.vic
 | Prosperity | Your fed population, your completed buildings, and the luxury goods you hold at game end |
 | Industry | The depth of your longest completed production chain, and each tier-3 good you produced |
 | Network | The towns joined by road, rail and sea routes you built |
+
+{{fig:plate:talisman-tal-06|margin|A crystal phylactery held at game end is worth one point.}}
 
 Where a thing carries a victory-point value of its own, that value is printed on it and is counted as printed.
 
@@ -88,5 +110,7 @@ Where a thing carries a victory-point value of its own, that value is printed on
 > **Open.** How many points a fed worker, a unit of luxury goods, a production chain, a tier-3 good or a connected town is worth is not yet decided, and neither is whether the three conditions are added into one total or each names its own winner. Until it is, count the printed points in the table above, add them into one total, and the highest total wins.
 
 ### In a campaign
+
+{{fig:plate:character-chr-09|margin|Odysseus; the table wins when he stands in Ithaca before the last round ends.}}
 
 There are no victory points and the three conditions are not scored. The campaign states its own victory, and the table reaches it together or not at all. In Homer's Odyssey the table wins when the last chapter is turned and finished — Odysseus stands in Ithaca, the suitors are dead, Penelope has known him by the bed, and Athena has made the peace — within {{campaigns.campaigns[id=homers-odyssey].length.rounds}} rounds. If the last round ends before the last chapter does, the story has not been brought home.

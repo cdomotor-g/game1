@@ -1,10 +1,13 @@
 # 00 — Overview
 
+{{fig:plate:character-chr-01,plate:tile-town-hall,plate:monster-cinder-wolf,plate:vehicle-veh-03,map:korvane-reach|frieze}}
 ## What this is
 
 A settlement-and-economy game where you turn worker-hours into buildings, buildings
 into production chains, and production chains into food, wealth and the ability to
 survive whatever the event deck does to you next.
+
+{{fig:plate:monster-ash-drake,plate:talisman-tal-05,plate:vehicle-veh-05,plate:character-chr-06|The adventure layer: a beast, a talisman, a ship and a face, each a new way to spend hours.}}
 
 Around that economic core an **open world** has grown: a drawn continent to travel
 by day and night, discovery rolls that fill the map in as it is walked, monsters to
@@ -20,6 +23,10 @@ change to a recipe changes the printed reference sheet and the web prototype at 
 
 ## The one-paragraph pitch
 
+{{fig:flow:lumber-camp|third|Felling trees, the first job most hours are spent on.}}
+
+{{fig:plate:tile-hut|margin|A hut holds one worker, and one worker is one die a round.}}
+
 Workers live in houses. Each round every worker rolls a die, and the pips are hours of
 effort. You spend those hours on jobs — felling trees, digging clay, minding a furnace,
 raising a wall. Jobs need a place, usually a tool, and usually something to work on.
@@ -29,6 +36,8 @@ getting more hours, better hours, or more out of each hour.
 
 ## Design pillars
 
+{{fig:plate:item-bag|margin|Coin weighs 25 g a piece; a fortune goes home in a bag.}}
+
 **1. Effort is the real currency, not coin.**
 Coin is useful. Hours are scarce. Every interesting decision in the game is "what do I
 do with these eleven hours?" — and the answer changes when a die comes up 2. Coin is not
@@ -37,10 +46,14 @@ the sword and the rope, so a strength-3 figure could shoulder 360 of it and noth
 A fortune is a thing that has to be *carried home*, which was the last place coin could
 still pretend to be pure score.
 
+{{fig:flow:steelworks|half|Steel, read whole: coal and pig-iron in, four hours, one ingot out.}}
+
 **2. Everything is a chain, and you can always see the whole chain.**
 Steel is coal plus iron plus a smelter plus a steelworks plus four hours. That should
 be legible at a glance, which is what the explorer's Chains view is for. Depth should
 feel like an achievement, not like homework.
+
+{{fig:plate:tool-axe,plate:tool-saw,plate:tool-pick,plate:tool-hammer,plate:tool-scythe|The five tools; only the pick gates a recipe outright.}}
 
 **3. Hand labour is always possible; tools multiply it.**
 You can gather deadwood with your hands and pick field stone off a hillside. You cannot
@@ -48,16 +61,22 @@ mine coal without a pick. The line is drawn so that a player who loses everythin
 always claw back to a market — see [11-bootstrap.md](11-bootstrap.md) — while tools
 still feel like the thing that changes your life.
 
+{{fig:plate:event-caravan-robbery,plate:tile-granary,tile:watchtower|A robbery on the road, and two mitigations a player could have bought first.}}
+
 **4. Every disaster should be traceable to a decision.**
 Event cards hit hard. Each one carries at least one mitigation a player could have
 bought in advance: a watchtower, a granary, a soldier escorting the caravan. Being
 wiped out by bad luck alone is a design failure.
+
+{{fig:plate:tile-rail-depot|margin|The rail depot, where the network score is made.}}
 
 **5. Several ways to win.**
 Prosperity, industry and network score separately, so a mining-and-rail game and a
 farming-and-trade game can both end in a win.
 
 ## Scope: board and digital
+
+{{fig:graph:dependencies|wide|The one data web both editions read; every arrow is a check the validator runs.}}
 
 | | Board game | Digital |
 | --- | --- | --- |
@@ -95,6 +114,8 @@ printed — see [12-what-simulation-found.md](12-what-simulation-found.md).
 | [../art/README.md](../art/README.md) | What all of it looks like, in both editions |
 
 ## Status
+
+{{fig:board:minimap-grassland|half|A mini-map sheet, the nearest thing to a board the box holds yet.}}
 
 Early. The data is complete enough to explore and to play a single-town sandbox; none
 of the numbers are balanced, and the board layer does not exist yet. See

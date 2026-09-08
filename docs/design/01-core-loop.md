@@ -1,5 +1,6 @@
 # 01 — The core loop
 
+{{fig:plate:character-chr-07,plate:tile-farm,plate:event-hard-frost,plate:item-torch|frieze}}
 ## The round
 
 Six phases, in this order. All of it lives in `data/rules.json` under `round.phases`.
@@ -8,6 +9,8 @@ Six phases, in this order. All of it lives in `data/rules.json` under `round.pha
 the card's scope decides who it hits, so a global card is everyone's problem whoever
 drew it. From round 13 the first player draws a second card. Resolving first means
 the cards shape your plan rather than punishing a plan you already committed to.
+
+{{fig:card:EVT-02,card:EVT-17,card:EVT-26,card:EVT-28|Four event cards; the scope line on each says whose problem it is.}}
 
 **2. Labour Roll.** Every player rolls one die per worker. Pips are hours. This is
 public — everyone sees how good everyone else's round is going to be, which matters
@@ -18,6 +21,8 @@ for trade negotiation.
 **4. Production Tick.** Advance every progress track at once: construction, crop
 growth, wine ageing, cargo in transit, livestock breeding.
 
+{{fig:plate:tile-bakery|margin|The bakery, where Friday's bread is settled before the market opens.}}
+
 **5. Feeding.** Every town pays food upkeep from stock held in that town. Shortfalls
 become unrest. Then, at the end of the phase, every player rolls the ochre **spoil die**
 once for each perishable stack still in their hands — grown, bought, looted or found, it
@@ -25,6 +30,8 @@ makes no difference to a fish — and discards what the spoil strip says. It sit
 not one phase later because rot is a thing that happens to food, not a thing that happens
 to a market, and because the round you failed to shift a hold full of milk is the round it
 should cost you.
+
+{{fig:board:ledger|half|The price ledger: one column a commodity, one row a round, a move box on every row.}}
 
 **6. Market.** Roll the market for every column on the price ledger: **two blue dice for
 demand, two red for supply, one green for volatility**, plus whatever the good's own nature
@@ -35,11 +42,15 @@ along that commodity's printed row of six, fill the new figure into the ledger, 
 old one through, and write the move in the row's move box. Then turn order passes to the
 left.
 
+{{fig:board:market|wide|The market sheet, with the swing ruler and one panel per kind of good.}}
+
 Nobody trades in this phase. It fixes the price everybody will trade at **next** round, in
 the Actions phase, against a figure they can already see. See
 [04-trade.md](04-trade.md#how-a-price-is-arrived-at).
 
 ## Effort
+
+{{fig:plate:tile-timber-house|margin|A timber house is two workers, so two dice, so four to twelve hours.}}
 
 One d6 per worker, by default. The pips are hours; a 6 is a good day and a 1 is a bad
 one. A three-worker town rolls 3d6 and gets somewhere between 3 and 18 hours, usually
@@ -49,6 +60,8 @@ That variance is the point. It is small enough to plan around and large enough t
 cannot cut your margins to zero.
 
 ### Modifiers, in resolution order
+
+{{fig:plate:tile-shrine|margin|A shrine adds a flat hour a worker, the last and smallest step of the ladder.}}
 
 1. **Extra dice** — a rare, powerful effect.
 2. **Die ladder steps** — d4 · d6 · d8 · d10 · d12. A potion of vigour steps a worker
@@ -65,6 +78,8 @@ fund a loud one, which keeps every round tactically live and stops a player from
 disappearing for three rounds and returning with a war chest of labour.
 
 ## Allocation
+
+{{fig:flow:mine|third|A mine's jobs: site, tool, inputs and hours read off one diagram.}}
 
 Spending hours means picking a **job**: a recipe you can legally run right now. A job
 is legal when all of these hold:
@@ -87,12 +102,16 @@ tool in the build.
 
 ### Worker slots
 
+{{fig:flow:farm|third|Four workers at the farm and no more, whatever the dice said.}}
+
 Each building caps how many workers can be allocated to it in one round. Four workers
 at a farm, two at a bakery. This is what stops a player from dumping an entire round's
 labour into one lucrative recipe, and it is the main reason to build a second of
 anything.
 
 ## Tools wear out
+
+{{fig:board:player|wide|The player board; the four W ladders stand one beside each kit slot.}}
 
 A tool has a wear track. **Each job done with it costs one wear point** — one, whether the
 job was one hour or nine — and when the track empties the tool is gone, with the effort
@@ -101,6 +120,8 @@ which meant adding hours up all round and a durability number running past thirt
 point a job now, on the player board's own 0–14 scale, and an axe that was twenty-four wear
 at three hours a job is ten wear at one a job. Slightly longer-lived, and nobody adds hours
 up any more.
+
+{{fig:plate:item-sword,plate:item-helm,plate:item-coil-of-rope,plate:item-lantern|Everything carried wears, at one point a use, on one scale.}}
 
 A tool is no longer the only thing this happens to. **Everything a figure carries wears**,
 on one track, in one unit, at one point a use — a sword swung, a plate dented by the blow it
@@ -123,6 +144,8 @@ a scythe doubles the yield. The difference is deliberate and is explained in
 
 ## Building takes time
 
+{{fig:plate:tile-manor|half|The manor: thirty build-points, four rounds at the least, materials paid on day one.}}
+
 Founding a site pays the full material cost up front. After that the building needs
 **build-points** — one per hour of construction labour, two per hour if you are using
 the right specialised tool for its material — and it also has a **minimum rounds**
@@ -134,6 +157,8 @@ real commitment, and so that a thief who empties your warehouse cannot also un-b
 your foundations.
 
 ## Why the feeding phase is last
+
+{{fig:plate:tile-steelworks|margin|A steelworks half-raised does not feed nine workers on Friday.}}
 
 Because it turns every other decision into a question with a deadline. You can spend
 the whole round building a steelworks — but nine workers still want feeding on Friday,

@@ -372,6 +372,14 @@ on its own from the **Print…** picker in the bar or the button on its title pa
 | **The Design Notes** | Why the rules are shaped as they are | `docs/design/*.md` |
 | **Addendum I — The Review** | What an adversarial reading of Book I found — numbered findings with a severity and a status, and a proposal for every one that needs a decision | `docs/review/*.md`, hand-written, tokens as in Book I |
 
+Every page carries art. A chapter names its own figures with `{{fig:…}}` tokens
+against the index of everything drawn or built here (`tools/lib/book-art.mjs`);
+the build adds a vignette for each thing a chapter's paragraphs name most, a
+cropped thumbnail beside every table row that begins with a thing's name, the
+built card beside every half-page catalogue entry, and a frieze under each title
+page's plate. Nothing is placed by hand in the tool, so a new plate is on every
+page that mentions its subject the day it lands.
+
 A plate that is not yet drawn shows its deck's own device in a ruled window, so the
 catalogue is complete on the day the data is and fills in as the art lands. The faces
 are OFL types committed under `docs/book/fonts/` so the page sets the same off disk;

@@ -3,7 +3,11 @@
 This is a short doc about one rule, because that rule was arrived at the hard way and it
 is the kind of thing that gets "tidied up" by someone who does not know why it is there.
 
+{{fig:plate:tile-quarry,plate:tool-axe,plate:tile-market,plate:tile-farm|frieze}}
+
 ## The problem
+
+{{fig:tile:quarry,tile:blacksmith,tile:sawmill,tile:mine|Four buildings, each waiting on another, and none of them buildable first.}}
 
 An economy where every tool needs a building and every building needs a processed
 material will deadlock. The first version of this data did exactly that, in two places
@@ -20,11 +24,15 @@ blacksmith, which needed a mine, a smelter and a pick. So a player could not pla
 field until they had built an industrial base — while eating one food per worker per
 round from round one.
 
+{{fig:flow:blacksmith|third|Every loop ran through the blacksmith, and the blacksmith cost what it made.}}
+
 None of these were visible by reading the files. All three fell out of the first
 headless simulation, which reported a town that starved in round 2 and never built its
 fourth building.
 
 ## The rule
+
+{{fig:terrain:forest,terrain:grassland,terrain:hills,terrain:marsh,terrain:mountain,terrain:tundra|Where deadwood and field stone lie for the taking, no tool required.}}
 
 **Hand labour is always possible. Tools multiply it.**
 
@@ -39,15 +47,21 @@ Concretely, three toolless or near-toolless jobs form the floor of the economy:
 Against the tooled versions — 2 logs per 2h with an axe, 2 stone per 3h at a quarry —
 they are bad. That is the design: they are not a strategy, they are a floor.
 
+{{fig:plate:tool-scythe|margin|Six by hand, twelve with a scythe: a multiplier, never a gate.}}
+
 And farm tools became **optional multipliers** rather than gates:
 
 - Sowing takes 4 hours by hand, 2 with a plough.
 - Harvesting yields 6 by hand, 12 with a scythe.
 
+{{fig:plate:tool-pick|margin|The one gate that stayed; nobody breaks rock with their hands.}}
+
 Mining kept its hard gate. You cannot break rock with your hands, and coal should stay
 behind a real investment.
 
 ## The safety net
+
+{{fig:flow:market|third|Four logs and nothing else, and tools bought here for coin.}}
 
 The floor guarantees a player can always gather *something*. The market turns that into
 a recovery:
@@ -58,6 +72,8 @@ a recovery:
 
 So the worst case in the game — every tool broken, empty stockpile — is: gather deadwood
 by hand, put up a stall, buy an axe, carry on. Slow and humiliating, but never dead.
+
+{{fig:card:TOL-01|margin|The axe as the stall sells it; the worst case ends here.}}
 
 This is also why the market's cost was changed from `3 logs + 1 cloth`. Cloth is four
 steps into the textile chain; requiring it made the safety net unreachable by exactly
@@ -72,11 +88,15 @@ path to the first harvest is: build a farm (2 rounds), sow (1 round), wait 3 rou
 harvest. Eight grain bridges that gap with a little to spare. Start with four — as the
 first version did — and the opening is unwinnable no matter how well it is played.
 
+{{fig:plate:tile-warehouse|margin|The starting stock sits under the cap, so nothing bleeds before the first decision.}}
+
 The starting stock also sits deliberately **under** the storage cap. A town that begins
 in overflow bleeds goods before the player has made a single decision, which is a
 terrible first impression of a rule that is otherwise fine.
 
 ## If you change these numbers
+
+{{fig:plate:event-strike|margin|If games with unrest climbs, something in the floor has broken.}}
 
 Run the simulator. It takes two seconds and it will tell you.
 

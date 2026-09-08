@@ -2,7 +2,11 @@
 
 Seven findings a table meets before the end of round one or at the end of round twenty-four, and cannot rule its way round without deciding something the book has not. Each carries the interim rule the chapters already print, and a proposal that would close it.
 
+{{fig:plate:vehicle-veh-11,plate:event-piracy,plate:tile-town-hall,plate:character-chr-05|frieze}}
+
 ### R-01 · Free play cannot be scored as printed
+
+{{fig:plate:tile-manor,plate:tile-rail-depot|A manor's printed points against rail, the one score that grows without limit}}
 
 **Severity** breaks play · **Where** The game, *The object of the game* · **Status** Open, with a proposal
 
@@ -16,6 +20,10 @@ Seven findings a table meets before the end of round one or at the end of round 
 
 ### R-02 · Two ways of moving, and the book uses both
 
+{{fig:terrain:grassland,terrain:forest,terrain:hills,terrain:mountain|Four grounds, each carrying a move cost to enter}}
+
+{{fig:plate:item-coil-of-rope,plate:item-travelling-cloak,plate:item-plate-harness,plate:people-dwarf,plate:people-elf|Gear and peoples written in move points, which a table of hexes cannot apply}}
+
 **Severity** breaks play · **Where** The map and travel, *Legs* · **Status** Open, with a proposal
 
 **As printed.** A leg's pace is a number of hexes read from the travel table for the mode and the ground, walked down one rung a hex on the P track. The chapter admits it cannot pace a leg that crosses two kinds of ground.
@@ -27,6 +35,8 @@ Seven findings a table meets before the end of round one or at the end of round 
 **Fix.** Choose one language and translate the other into it. The proposal, P-02, keeps the move points, because that is where the gear and the traits already live, and keeps the travel table as the printed pace of a vehicle and of a walker on one kind of ground.
 
 ### R-03 · Nobody can raise a soldier
+
+{{fig:plate:tile-barracks|margin|The barracks holds soldiers and names no job that makes one}}
 
 **Severity** breaks play · **Where** People, food and unrest, *Soldiers* · **Status** Open, with a proposal
 
@@ -40,6 +50,8 @@ Seven findings a table meets before the end of round one or at the end of round 
 
 ### R-04 · Hidden deposits on a map that hides nothing
 
+{{fig:map:korvane-reach|wide|The drawn map carries terrain, settlements and routes, and nowhere to hide a token}}
+
 **Severity** breaks play · **Where** Setting up, *The deposits* · **Status** Open, with a proposal
 
 **As printed.** Deposit tokens go down face down at setup and stay hidden until surveyed. The chapter admits it cannot say which hexes take them, how many, or how a token hides on a drawn map with no tile to slide it under.
@@ -51,6 +63,8 @@ Seven findings a table meets before the end of round one or at the end of round 
 **Fix.** Do not hide tokens; draw them. A successful survey draws the top token of a kind that ground can hold — P-04.
 
 ### R-05 · Where a new worker comes from
+
+{{fig:plate:tile-hut,plate:tile-timber-house,plate:tile-brick-house,plate:event-migrants|Three housings, and the card that only means something if their beds can be empty}}
 
 **Severity** breaks play · **Where** People, food and unrest, *Workers* · **Status** Proposed
 
@@ -64,6 +78,10 @@ Seven findings a table meets before the end of round one or at the end of round 
 
 ### R-06 · Whose board holds the town's tools
 
+{{fig:plate:tool-axe,plate:item-sword,plate:item-lantern,plate:item-bag|A hero's four things; the woodcutters' axe has to be one of them}}
+
+{{fig:board:player|wide|Four kit slots and four wear ladders, drawn for what a figure carries}}
+
 **Severity** breaks play · **Where** Effort and jobs, *Tools*; Setting up, *Set your player board* · **Status** Proposed
 
 **As printed.** A tool in play lies in a kit slot on the player board and its wear is walked on the ladder beside that slot. At setup the hero's board takes the starting axe and shovel in two of its four slots.
@@ -75,6 +93,10 @@ Seven findings a table meets before the end of round one or at the end of round 
 **Fix.** The board is generic on purpose, so deal one to the town as well: its town hall card in the recess and its tools in the four slots — P-06.
 
 ### R-07 · Bandits and pirates have a strength and nothing else
+
+{{fig:card:MON-01|margin|A monster card prints five numbers; a bandit prints one}}
+
+{{fig:plate:event-caravan-robbery|third|Bandits on the road, with a strength and a price and nothing else}}
 
 **Severity** breaks play · **Where** Discovery and encounters, *The results* · **Status** Open, with a proposal
 

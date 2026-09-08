@@ -35,6 +35,27 @@ The first segment is a dataset key from `data/manifest.json`; then dotted keys,
 or a flat array of them resolves; anything else, or a path that does not exist,
 fails `node tools/build-book.mjs` naming the chapter and the token.
 
+**A picture is a token too.** A chapter puts art on its page with a `{{fig:…}}`
+line of its own, and the build resolves it against the index of every picture
+the repository already has — `tools/lib/book-art.mjs` — and fails on one it does
+not:
+
+```
+{{fig:monster:cinder-wolf}}                                   a margin figure, captioned with the thing's name
+{{fig:board:ledger|wide|The price ledger, one column a commodity.}}   a size and a caption
+{{fig:people:human,people:dwarf,people:elf|The peoples.}}     several refs make a row
+{{fig:character:chr-03,monster:ash-drake,tool:axe|frieze}}    the row under the chapter head
+```
+
+A ref is `plate:<plate-id>`, `card:<CODE>`, `tile:<building>`, `flow:<building>`,
+`icon:<name>`, `board:player|market|depletion|ledger`, `map:<id>`, `terrain:<id>`,
+or the shorthand `<kind>:<id>` — `monster:cinder-wolf`, `building:granary`,
+`item:lantern`, `event:raiders` — which is the plate if drawn and the card if not.
+Sizes are `margin` (the default, 42 mm, right of the text), `third`, `half`,
+`wide` and `frieze`. A caption is one clause in the book's voice. What a chapter
+does not illustrate the build does: the things its paragraphs name most get a
+small vignette at their first mention, so no page of the book is bare.
+
 **What the data leaves undecided is not filled in.** Where a table would be stuck
 and nothing in `data/` or `docs/design/` decides it, a chapter says so in one
 blockquote — `> **Open.** …` — and the book sets it apart. There are a handful; the

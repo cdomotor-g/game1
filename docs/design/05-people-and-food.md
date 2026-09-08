@@ -1,6 +1,9 @@
 # 05 — People, food and unrest
 
+{{fig:plate:tile-manor,plate:event-migrants,plate:tile-bakery,plate:event-plague|frieze}}
 ## Getting workers
+
+{{fig:tile:hut,tile:timber-house,tile:brick-house,tile:manor|The four housings as tiles: one, two, three, and four workers with a specialist.}}
 
 Workers come from housing, and only from housing:
 
@@ -18,6 +21,8 @@ Migrant event cards offer more workers if you have the housing *and* the food to
 them in. Turning them away costs a point of unrest, which is a small, sharp decision.
 
 ## Feeding
+
+{{fig:plate:tile-granary|margin|A granary reads a row up the ochre strip; it takes food and drink and nothing else.}}
 
 At the end of every round, each town pays **1 food per worker** from stock held in that
 town. Specialists eat too.
@@ -70,6 +75,10 @@ front door, because units that rot are units nobody sells.
 
 ### On the road: food and sleep
 
+{{fig:plate:item-satchel|margin|Forty coin to the kilogram, against the same strength as the sword and the rope.}}
+
+{{fig:plate:character-chr-06|margin|A physician standing there mends two health a round; sleep mends none.}}
+
 The rules above are the town's. A party out on the map has its own upkeep, and it spends
 two different numbers:
 
@@ -113,6 +122,8 @@ like any other cargo on the road. A fortune is heavy. Full rules in
 
 ## Unrest
 
+{{fig:plate:event-strike|margin|A Strike halves the effort of a town with unrest on it; drinks at an inn end it.}}
+
 Every mouth you cannot feed is 1 unrest.
 
 - **3 unrest** — the town riots. Workers roll d4 until it settles.
@@ -127,6 +138,10 @@ The distance from "one bad round" to "losing a worker" is five rounds of neglect
 is enough time to notice and do something.
 
 ## Specialists
+
+{{fig:plate:event-grey-pox|margin|The Grey Pox; an infirmary and a fed healer lose no worker to it.}}
+
+{{fig:flow:guildhall|third|The guildhall's work: a worker goes in, a specialist comes out.}}
 
 A worker trained at a guildhall becomes a specialist: same die, but unlocks recipes
 plain workers cannot run, and adds a bonus at their own building.
@@ -153,6 +168,8 @@ loses no worker to any of them. The healer is deliberately the first specialist 
 absence has a body count rather than a slower economy.
 
 ## Soldiers
+
+{{fig:plate:tile-barracks|margin|A barracks holds four soldiers off the housing count; they still eat.}}
 
 A worker under arms. Produces no effort, eats normally, fights. A barracks holds four
 without them costing you a housing slot.

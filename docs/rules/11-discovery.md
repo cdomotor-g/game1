@@ -2,7 +2,13 @@
 
 The land does something back. Every time a figure, a party or a vehicle ends a leg, a d20 on the table for the ground it stopped on says what: nothing, most often; a merchant, a traveller, bandits, a trace worth surveying, a cave, a monster, or an omen. This chapter is the roll, every result, and how a living thing you meet is run.
 
+{{fig:plate:monster-gravel-wyrm,plate:vehicle-veh-08,plate:item-binoculars,plate:character-chr-04|frieze}}
+
 ## The roll
+
+{{fig:board:minimap-marsh|half|A marsh sheet: the hex the leg ends on is the one rolled for, never each hex crossed.}}
+
+{{fig:terrain:grassland,terrain:forest,terrain:desert,terrain:mountain,terrain:marsh,terrain:river|Read the table by the terrain letter; desert, mountain and marsh grow monsters.}}
 
 1. When a leg ends — a day leg or a night leg — roll a {{discovery.die}} on the discovery table for the hex you stopped in. One roll for the leg, never one per hex crossed.
 2. Read the table by the hex's terrain letter. A hex with a road or a rail line on it uses the road or rail table instead of its ground.
@@ -11,6 +17,8 @@ The land does something back. Every time a figure, a party or a vehicle ends a l
 The tables are in Annex I, *Discovery tables*. Roads grow merchants, travellers and bandits; desert, mountain and marsh grow monsters; a trace is rare everywhere, because discovery is what you find when you are not looking. Surveying, foraging and hunting are jobs of their own, and a discovery roll never stands in for one.
 
 ### Moving the bands
+
+{{fig:plate:item-lantern|margin|A lit lantern under a Blood Moon lets a party withdraw before the encounter begins.}}
 
 Each table's monster band can be widened or shrunk. A band widens by claiming that many rolls below its printed bottom; it never claims 1 and never claims 20, which is always the omen. A band shrunk past its own top simply does not occur. The modifiers stack.
 
@@ -24,6 +32,10 @@ Each table's monster band can be widened or shrunk. A band widens by claiming th
 A party with binoculars may re-roll one discovery roll a round and keep the second. A party with a lit lantern under a Blood Moon may always withdraw before a monster encounter begins.
 
 ## The results
+
+{{fig:plate:monster-mire-strangler|margin|A mire strangler, drawn until the monster's ground includes the hex.}}
+
+{{fig:plate:event-caravan-robbery,plate:item-torch,plate:item-coil-of-rope,plate:event-piracy|Bandits on the road, a cave entered by torchlight, rope spent on a hazard, pirates.}}
 
 **Nothing.** {{discovery.results[id=nothing].summary}}
 
@@ -53,6 +65,10 @@ A party with binoculars may re-roll one discovery roll a round and keep the seco
 
 ## Running an encounter
 
+{{fig:card:MON-05|margin|Set the tracks from the strip, H, S, P and M; A is printed and does not move.}}
+
+{{fig:board:player|wide|The encounter board is a spare player board; the card goes in the IN PLAY recess.}}
+
 A discovery roll that turns up a living thing hands it to the **encounter board**, the spare player board every table prints ([On the table](02-on-the-table.md)):
 
 1. Shuffle the deck the result names — monsters for a beast, characters for a stranger on the road — and deal one card face up into the board's IN PLAY recess.
@@ -61,5 +77,7 @@ A discovery roll that turns up a living thing hands it to the **encounter board*
 4. When the encounter ends, put the card away: back into its deck; onto the hex as a lair, if the monster is left unresolved; or into the winner's hand, if it was befriended, enslaved or domesticated. Clear the board. Nothing is written down.
 
 A monster left on its hex is a **lair**. It attacks any party that ends a leg there, and event cards may move it. The wild accumulates.
+
+{{fig:plate:character-chr-17|margin|A stranger off the character deck, run by the player to the left.}}
 
 A stranger dealt from the character deck is a character like any other, run by the player to the left for the length of the encounter. What they want of you is theirs to say.

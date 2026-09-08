@@ -2,7 +2,11 @@
 
 Every round opens with the event deck. Each player turns a card, and the card says whose problem it is, what it does, and — on the disaster cards — what you could have bought to blunt it. This chapter is how the deck is drawn and how a card is read.
 
+{{fig:plate:event-hard-frost,plate:event-raiders,plate:event-storms,plate:event-glut,plate:event-ley-surge|frieze}}
+
 ## Drawing
+
+{{fig:plate:event-tax-levy|margin|A tax levy turned at the top of the round, before any hour is spent.}}
 
 The Events phase is the first phase of the round ([The round](04-the-round.md)).
 
@@ -13,6 +17,8 @@ The Events phase is the first phase of the round ([The round](04-the-round.md)).
 The deck is {{events.deck.totalCards}} cards; some cards are in it more than once, and a card's number of copies is printed on its page in Annex II, *Events*.
 
 ## Reading a card
+
+{{fig:card:EVT-01,card:EVT-05,card:EVT-09,card:EVT-13|Four scopes: a global frost, a local flood, a heist for the leader, a smuggler's offer.}}
 
 A card carries its name, its category, its **scope**, a line of story, and then one or more sentences saying what happens, in order. Do what the sentences say, in that order.
 
@@ -31,9 +37,13 @@ A card carries its name, its category, its **scope**, a line of story, and then 
 
 > **Open.** Neither how a region is rolled for nor who counts as the leader is settled. Until it is: number the board's regions and roll a die for one, and the leader is the player with the most victory points by the count in [The game](01-the-game.md), the first player breaking a tie.
 
+{{fig:plate:event-iron-shortage|margin|An iron shortage stands face up beside the deck until its rounds have passed.}}
+
 A card that lasts — a frost for a round, a shortage for three, a widened monster band for two — stays face up beside the deck until its rounds have passed, and its effect stands through every phase in between. Mark the round it ends on.
 
 ## What a card can do
+
+{{fig:plate:event-wolf-pack,plate:event-caravan-robbery,plate:event-mine-collapse|Three things a card does: a fight started, cargo taken, a building brought down.}}
 
 Cards do one or more of these, and each card's sentences say which:
 
@@ -54,6 +64,10 @@ A price move from a card is taken in the Events phase and written in the ledger'
 
 ## Categories
 
+{{fig:plate:event-impure-smelt|margin|Industry has one card, and it is the bad smelt.}}
+
+{{fig:plate:event-drought,plate:event-flood,plate:event-piracy,plate:event-dragon-sighting,plate:event-strike,plate:event-curdled-brew|Weather, disaster, crime, wildlife, people and arcane: one card of each.}}
+
 | Category | What it brings |
 | --- | --- |
 | Weather | Frost, drought, storms and long summers: the seasons turning |
@@ -70,6 +84,12 @@ Weather and market cards are the common ones. Crime hits whoever is ahead.
 
 ## Illness
 
+{{fig:flow:infirmary|third|Tend the Sick, the healer's job at the infirmary, cures a marker after the fact.}}
+
+{{fig:plate:character-chr-06|margin|Doctor Elspeth Marrow, the physician who shrugs off Camp Fever.}}
+
+{{fig:plate:event-camp-fever,plate:event-marsh-ague,plate:event-grey-pox,plate:event-plague|The four illnesses in order of reach: a party, a region, every town, a region hard.}}
+
 Four cards make people sick, in order of reach: Camp Fever hits one travelling party, Marsh Ague one region, the Grey Pox every sizeable town on the map, and Plague a region hard. Each one names what blunts it, and it is always one of three things:
 
 - a **Healing Draught** or a **Physic Tonic** in stock, spent;
@@ -79,5 +99,7 @@ Four cards make people sick, in order of reach: Camp Fever hits one travelling p
 Tend the Sick, the healer's job at the infirmary, cures an illness marker after the fact ([People, food and unrest](07-people.md)).
 
 ## What could have prevented it
+
+{{fig:tile:brick-house,tile:well,tile:watchtower,tile:palisade,tile:barracks|Brick houses, a well, a watchtower, a palisade and a garrison: what the cards name.}}
 
 Every disaster card lists at least one thing a player could have bought in advance: brick houses ignore a frost, a well rides out a drought, a watchtower cancels one heist a game, an escort turns a robbery, a palisade and a garrison meet raiders at the gate. Those mitigations are not printed on the card. They are printed with every card in Annex II, *Events*, and gathered into one table in Annex I, *What could have prevented it*. If a card wipes you out, that table is where you find the name of the building you did not put up.

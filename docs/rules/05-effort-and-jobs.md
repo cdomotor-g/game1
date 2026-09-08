@@ -2,12 +2,16 @@
 
 Every worker rolls a die at the start of the round, and the pips are hours. You spend those hours on jobs: a recipe run at a site, usually with a tool, usually on something out of the stockpile. Hours you have not spent when the round ends are gone.
 
+{{fig:plate:tool-axe,plate:tile-lumber-camp,plate:people-human,plate:tile-warehouse|frieze}}
+
 ## The labour roll
 
 The labour roll is the second phase of the round (see [The round](04-the-round.md)). It is made in the open, so everyone can see how much work everyone else has this round.
 
 1. Roll {{rules.effort.dicePerWorker}} die for every worker in every town you own. Most peoples roll a {{rules.effort.dieDefault}}; orcs roll a {{peoples.peoples[id=orc].effortDie}}. A people's traits can change the die a worker rolls at a particular kind of site — see [People, food and unrest](07-people.md).
 2. Leave each die beside its worker. The pips on it are that worker's hours for the round.
+
+{{fig:plate:character-chr-05|margin|A hero is a figure, not a worker, and rolls no effort die.}}
 
 A specialist rolls the same die as any other worker. A soldier rolls none, and neither does a character: heroes are figures, not workers.
 
@@ -18,6 +22,8 @@ Anything that changes a worker's roll does one of three things. Apply them in th
 1. **Extra dice.** Roll the extra die as well as the worker's own.
 2. **Die steps.** Move the worker's die up or down the ladder: {{rules.effort.dieLadder}}.
 3. **Flat hours.** Add or take hours from the pips. However many bonuses stack, a worker never gains more than {{rules.effort.maxFlatBonusPerWorker}} flat hours in a round.
+
+{{fig:plate:people-dwarf,plate:people-elf,plate:tile-shrine|A dwarf steps up at a mine, an elf steps down, and a shrine re-rolls one die a round.}}
 
 The modifiers a table meets most rounds:
 
@@ -44,6 +50,8 @@ You spend hours by putting workers at sites. A site is wherever a job happens:
 - a deposit, through the mine built on top of it;
 - a figure on the map — a prospector surveys where it stands.
 
+{{fig:flow:farm|third|The farm's jobs; two workers' hours pool there into one sowing.}}
+
 To allocate a worker, put its die on the site. Then:
 
 - **A worker works at one site a round.** Its hours are spent there and nowhere else.
@@ -54,6 +62,8 @@ To allocate a worker, put its die on the site. Then:
 > **Open.** No worker cap is given for a job on bare ground or on a figure. Until there is one, allow a bare hex the same {{rules.construction.workersPerSiteDefault}} workers as a construction site.
 
 ## Running a job
+
+{{fig:flow:smelter|half|A smelter job asks for all six at once: site, tool, inputs, fuel, hours and nobody sick.}}
 
 A job is a recipe you can legally run right now. It is legal when all of these hold:
 
@@ -75,11 +85,15 @@ When you run a batch everything happens at once:
 3. If this is the first batch of this job this round, knock the tool's wear down one rung.
 4. Put the outputs into the stockpile.
 
+{{fig:plate:tile-pasture|margin|A breeding pair is a batch that pays out rounds later; the marker waits on the pasture.}}
+
 Some recipes do not pay out at once. A sown crop, a breeding pair, a barrel of wine: the recipe says how many rounds it waits. Put the marker down, advance it at each Production Tick, and collect when it is ripe.
 
 Where a recipe accepts more than one input — spinning wool, flax or cotton; butchering any of four animals — it is one job with a choice. Pick the variant when you run the batch. Every job, with its hours, inputs and outputs, is set out building by building in Annex I, *The flows of work*; the chains behind them are in [Commodities, recipes and buildings](06-the-economy.md).
 
 ## Tools
+
+{{fig:plate:tool-saw,plate:tool-pick,plate:tool-hammer,plate:tool-scythe|Four tools: the pick gates coal, the scythe merely doubles a harvest.}}
 
 A tool is owned one at a time, not counted in a stockpile. In play it lies in a kit slot on the player board, and the W ladder beside that slot counts its wear (see [On the table](02-on-the-table.md)).
 
@@ -88,6 +102,8 @@ A tool is owned one at a time, not counted in a stockpile. In play it lies in a 
 **An optional tool improves the job.** Sowing and harvesting are done by hand. A plough halves the hours of a sowing; a scythe doubles the yield of a harvest. An optional tool used in a job wears like any other.
 
 ### Wear
+
+{{fig:card:TOL-03|margin|The W box in the pick's strip is where its ladder pip starts.}}
 
 1. When a tool comes into play, set the pip on its W ladder to the W box on its card.
 2. Every job the tool is used in knocks it down {{rules.wear.perUse}} rung. A job is one recipe at one site for the round, however many hours go into it and however many batches come out: a worker who spends nine hours felling timber has run one job and blunted one axe by one.
@@ -109,6 +125,8 @@ Multiplied output rounds down, and is never less than 1.
 
 ### Repair
 
+{{fig:flow:blacksmith|third|Repair Tool and Forge Tool both run at the blacksmith, one with a hammer, one with a smith.}}
+
 Any settlement with a blacksmith can mend a tool. Repair Tool is a job: {{recipes.recipes[id=repair-tool].effortHours}} hours at the blacksmith, with a hammer. It puts up to {{rules.wear.repair.wearPerRound}} rungs back on one thing's W ladder, at {{rules.wear.repair.coinPerPoint}} coin a rung, never above the W box on its card. A tool may be mended any number of times. A tool at 0 is not damaged, it is gone, and cannot be mended.
 
 ### Getting a tool
@@ -129,6 +147,8 @@ A recipe that burns something names a fuel bundle rather than a fuel. Pay any on
 | Hot | {{recipes.fuelOptions.hot[1].label}} | {{recipes.fuelOptions.hot[1].inputs[0].qty}} | {{recipes.fuelOptions.hot[1].outputPenalty}} |
 | Hot | {{recipes.fuelOptions.hot[2].label}} | {{recipes.fuelOptions.hot[2].inputs[0].qty}} | +{{recipes.fuelOptions.hot[2].outputBonus}}, steelworks only |
 
+{{fig:plate:tile-charcoal-kiln|margin|Charcoal is one option in the standard bundle, and the kiln is where it comes from.}}
+
 Fuel is an input like any other: it comes out of the stockpile, and the finite kinds mark their depletion grid when burnt (see [Trade and the market](09-trade-and-the-market.md)).
 
 ## Building
@@ -140,6 +160,8 @@ A building is raised in three steps: found it, work it, finish it.
 1. Check the building's requirements — the ground, the deposit or water, the building it must follow — on its card and in [Commodities, recipes and buildings](06-the-economy.md).
 2. Pay the whole material cost from the town's stockpile, now. Nothing is paid at the end.
 3. Put the building's tile on the hex face down. It is a construction site: a place of work with an empty progress track.
+
+{{fig:tile:timber-house|margin|A tile face down is a construction site; its name band is hollow until it turns.}}
 
 A half-built site never decays; the points on it keep.
 
@@ -165,11 +187,15 @@ A building is finished at the Production Tick when both of these are true:
 - its progress track holds all of its build points;
 - its minimum rounds have passed, counting the round it was founded as the first.
 
+{{fig:plate:tile-hut,plate:tile-manor|A hut can finish the round it is founded; a manor waits on the calendar however many hands it has.}}
+
 Turn the tile face up. From then on it is a site, it houses whoever it houses, and its storage counts. A hut is {{buildings.buildings[id=hut].buildPoints}} points and {{buildings.buildings[id=hut].minRounds}} round, so a good roll finishes it the round it is founded. A manor is {{buildings.buildings[id=manor].buildPoints}} points and at least {{buildings.buildings[id=manor].minRounds}} rounds, and no number of workers buys its way past the calendar. Every building's cost, points and rounds are in Annex I, *Buildings*.
 
 ## Storage and overflow
 
 Every commodity has a bulk, and bulk is what it costs to store: one slot holds one point of bulk. Logs are bulk {{commodities.commodities[id=logs].bulk}}, lumber is bulk {{commodities.commodities[id=lumber].bulk}}, gems are bulk {{commodities.commodities[id=gems].bulk}}. Bulk is why raw goods are worth processing before they are stored or moved. Tools and items have no bulk: they are owned, not stored, and take no slot.
+
+{{fig:plate:tile-granary|margin|Food and drink only, and a perishable stack inside reads the spoil strip a row kinder.}}
 
 A town's stockpile is one pool of slots. It starts with {{rules.storage.stockpileFreeSlotsPerTown}} free slots and {{buildings.buildings[id=town-hall].storage}} more from its town hall, and buildings add to it:
 

@@ -552,6 +552,23 @@ set the same off disk as on the site, so nothing loads a font from the network.
 The look lives in `tools/lib/book.css`, filled from `docs/art/palette.json`: the
 book has no colours of its own.
 
+**Every page carries art, and none of it is placed by hand in the tool.**
+`tools/lib/book-art.mjs` indexes every picture the repository already has — the
+drawn plates, the built card fronts, the tiles, the flow diagrams, the marks, the
+boards, the maps, the graph, a swatch per terrain — under a `ref` a chapter can
+name (`monster:cinder-wolf`, `card:MON-01`, `tile:granary`, `board:ledger`).
+Four things put a picture on a page, and every one of them is derived: a
+`{{fig:…}}` token in a hand-written chapter (`docs/rules/README.md` is the
+contract; a ref the index does not have fails the build); the **vignettes** the
+build adds to a chapter for the things its own paragraphs mention most, one per
+first mention, spaced so they never crowd a figure the author placed; a cropped
+**thumbnail** — the framing's own `crop()`, aimed at the face — beside every
+Annex I table row that begins with a thing's name; and the built **card** beside
+every half-page catalogue entry, with a **frieze** of pieces under each title
+page's plate. Add a plate and every one of those picks it up on the next build;
+nothing is listed twice. If a page is bare, the fix is a `{{fig:}}` in its
+chapter or a name in its text, never an image tag.
+
 **`docs/review/*.md` is Addendum I — the review — and it is the one place a
 finding against the rules lives.** It is hand-written like Book I and resolves
 the same `{{data.path}}` tokens, but it is not rules: it is what an adversarial

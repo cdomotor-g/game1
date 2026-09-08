@@ -1,5 +1,6 @@
 # 03 — The map, terrain and movement
 
+{{fig:plate:vehicle-veh-08,plate:tile-harbour,plate:tile-rail-depot,plate:event-wolf-pack|frieze}}
 ## Why the grid is hexagonal
 
 For the record, because it gets re-litigated every time somebody notices that a square grid
@@ -24,6 +25,8 @@ person on foot (`rules.json → conflict.flee`, argued in
 exits at all — it goes back the way you came, which is the one hex the geometry was never in
 any doubt about.
 
+{{fig:plate:monster-cinder-wolf|margin|An unresolved monster holds its hex; six equal neighbours make the detour one hex.}}
+
 What the six exits actually buy against a monster is the **detour**. An unresolved monster
 sits on its hex as a figure and attacks anything that ends a leg there, so the question a
 party asks is never *which way out* but *how dearly do I pay to go round*, and that is a
@@ -37,6 +40,10 @@ A mini-map's own grid is hexagonal for exactly the same reason — plus one more
 that a mini-map cell has to line up with a world hex.
 
 ## Tiles
+
+{{fig:terrain:desert,terrain:river,terrain:lake,terrain:shallow-water,terrain:deep-water|Desert, and the four waters: river, lake, shallows and deep water.}}
+
+{{fig:terrain:grassland,terrain:forest,terrain:hills,terrain:mountain,terrain:marsh,terrain:tundra|Six of the seven land terrains, each with its letter; the letter is the ruling.}}
 
 > **The tile board is shelved — [#18](https://github.com/cdomotor-g/game1/issues/18).** What is below stays true as
 > rules, and it is not what is being built. The board in play is a **drawn map
@@ -66,6 +73,8 @@ the ruling.
 | **T** | Tundra | 2 | 2 | | | | | |
 
 ### There is no shore terrain
+
+{{fig:plate:tile-dock|margin|A dock on waterside land; the shore is read off the board and printed on no hex.}}
 
 There was one, called **Coast**, and it meant "the edge of the water". That made a
 shore a *kind of ground*: a beach in front of a forest had to be drawn as neither, a
@@ -99,6 +108,8 @@ is meant to be the kind of thing another player watches you attempt with interes
 
 ## Exploration and fog
 
+{{fig:plate:people-dwarf|margin|A dwarf surveys at +1; hills and mountains give the same.}}
+
 Face-down tiles are the fog. A **prospector** figure moving onto one flips it, which
 reveals the terrain immediately. What is *under* it takes more work.
 
@@ -116,6 +127,8 @@ Racing someone to a coal seam you found is a real and intended situation.
 
 ## Deposits are finite
 
+{{fig:plate:tile-mine|margin|A mine on a thirty-coal seam; drawn out, it is a shed.}}
+
 A coal seam holds 30 coal. An iron deposit holds 28. A gold deposit holds 10, a gem
 vein 8, a mana vein 6. When the total is drawn the token flips and the mine is a shed.
 
@@ -124,6 +137,8 @@ into something that changes shape over 24 rounds. The player who built on the fi
 coal seam is in trouble around round 15 if they have not found the second.
 
 ## Movement
+
+{{fig:plate:item-torch,plate:item-lantern|Torch and lantern: a night leg needs a light, and goes slower for it.}}
 
 **Figures** — prospector, merchant, soldier, hero — have move points and spend terrain
 move cost. Four points crosses four tiles of grassland, one tile of mountain, or two of
@@ -144,6 +159,8 @@ covered in [04-trade.md](04-trade.md).
 
 ## Roads, rail, bridges
 
+{{fig:plate:vehicle-veh-03|margin|Rail ignores terrain: eighty bulk at six hexes a round, and a point a tile.}}
+
 All three are **infrastructure**: built onto a tile rather than into a town, and their
 build-point cost is multiplied by the terrain.
 
@@ -159,6 +176,8 @@ that nobody ever builds it.
 cannot be bridged by anyone, ever, and that is what makes the sea lanes matter.
 
 ### A road is yours, and it pays
+
+{{fig:plate:vehicle-veh-09|margin|A wagonrow on another player's road pays a coin a hex, six a leg at most.}}
 
 Roads were the one thing in the game you built for everybody and were paid for by
 nobody. The Network victory condition scored them at the very end and nothing scored them
@@ -190,6 +209,8 @@ used it.
 
 ### Route tokens
 
+{{fig:map:korvane-reach|wide|Korvane Reach; a route bar is nine tenths of one hex, centre to centre.}}
+
 A road is marked on the map as it is laid, and the token **is** the record: an unmarked
 road belongs to nobody. A route token is a **bar**, not a chit — it lies along the line
 between two hex centres, which is where a road actually is, and it is the length of that
@@ -206,6 +227,8 @@ still see whose road it is. A mini-map cell is the same hex, so a bar cut for th
 board fits a mini-map lane too.
 
 ## Water
+
+{{fig:plate:vehicle-veh-05,plate:event-storms|A ship carries sixty bulk out of a harbour, and a storm can sink the whole thing.}}
 
 Four water terrains, and they are not interchangeable. **Rivers** and **lakes** are
 inland fresh water: barges work them, a bridge crosses them, and nothing wheeled

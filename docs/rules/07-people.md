@@ -2,7 +2,11 @@
 
 Workers are the game: every one of them is a die every round, and every one of them eats. This chapter is where workers come from, what they cost to keep, what happens when you cannot feed them, and how a worker becomes a specialist or a soldier.
 
+{{fig:plate:event-migrants,plate:character-chr-06,plate:event-festival,plate:character-chr-04|frieze}}
+
 ## Workers
+
+{{fig:plate:tile-hut,plate:tile-timber-house,plate:tile-brick-house,plate:tile-manor|The four housings, hut to manor; beds are the only source of workers.}}
 
 A worker lives in a town and rolls one effort die there every Labour Roll. Workers come from housing and only from housing: when a housing building is finished, put new worker pieces in the town up to the beds it adds. A town can never hold more workers than its housing lodges, and a migrant card only brings people you have beds and food for.
 
@@ -23,6 +27,8 @@ Three kinds of piece live in a town:
 
 ## Feeding
 
+{{fig:plate:tile-farm,plate:tile-orchard,plate:tile-dairy,plate:tile-bakery|Four food trades; a town fed from several of them earns the variety bonus.}}
+
 The Feeding phase is the fifth phase of the round ([The round](04-the-round.md)). In it every town pays {{rules.population.foodPerWorkerPerRound}} food for every worker, specialist and soldier living in it, out of the stock held in that town. Food lying in another town does not count, and neither does food on a cart between the two.
 
 1. Count the mouths in the town.
@@ -38,6 +44,8 @@ The Feeding phase is the fifth phase of the round ([The round](04-the-round.md))
 A specialist that is not fed cannot work its profession: a town whose only smith went hungry cannot forge anything this round, even if the smith is still there.
 
 ## Unrest
+
+{{fig:plate:event-strike|margin|A Strike halves the effort of any town carrying unrest.}}
 
 Unrest is a count on the town. It starts at 0 and rises {{rules.population.starvation.unrestPerUnfedWorker}} for every unfed mouth in a Feeding phase, and event cards can add to it.
 
@@ -55,9 +63,13 @@ Unrest clears slowly:
 | Serving wine at the inn | 2 |
 | A Draught of Forbearance broached at the inn | 2 |
 
+{{fig:flow:inn|third|Serve Drinks at the inn, one hour and one barrel, is how unrest clears.}}
+
 Serve Drinks is a job at an inn: one hour and one barrel. Every printed settlement has an inn; your own town needs the building.
 
 ## Specialists
+
+{{fig:flow:guildhall|third|Train Specialist at the guildhall: one worker, the profession's coin, one training a round.}}
 
 A specialist is trained at a **guildhall**. Train Specialist is a job there, one training per guildhall per round: name a worker in the town and pay the profession's coin, and from the next round that worker is a smith, a weaver, a merchant, a healer or whatever you paid for. The professions, what each costs to train and what each one does are in Annex I, *Professions*. Every profession belongs to one building — a smith to the blacksmith, a farmer to the farm, an engineer to the rail depot — and gives its bonus there.
 
@@ -67,15 +79,21 @@ A specialist is trained at a **guildhall**. Train Specialist is a job there, one
 
 ## Soldiers
 
+{{fig:plate:tile-barracks|margin|A barracks garrisons soldiers without spending a bed of housing.}}
+
 A soldier is a worker under arms. It stops rolling effort, keeps eating, and can fight, escort a cargo or a party, and garrison a town. A **barracks** holds {{buildings.buildings[id=barracks].garrison}} soldiers without using a bed of housing, and a soldier on the map moves as a figure does ([The map and travel](08-the-map-and-travel.md)). What a soldier is worth in a fight is in [Monsters and battle](12-battle.md).
 
 > **Open.** No job yet says what it costs, in hours, to arm a worker. Until one does: at a town with a barracks, pay {{transport.figures[id=soldier].cost}} coin and take a worker off the labour roll; it is a soldier from the next round.
 
 ## Healers and illness
 
+{{fig:plate:event-camp-fever,plate:event-marsh-ague,plate:event-grey-pox,plate:event-plague|The four illnesses; each names the healer or infirmary that would have blunted it.}}
+
 Some event cards make people sick or take workers away: Camp Fever, Marsh Ague, the Grey Pox and Plague. Every one of them names what would have blunted it. The building is the **infirmary** and the profession is the **healer**: a town with an infirmary and a fed healer loses no worker to Marsh Ague or the Grey Pox, and a healer's town loses one worker fewer to any illness card. Tend the Sick is the healer's job at the infirmary: cure one illness marker, or mend 2 health on a character resting there; spend a Physic Tonic with it and the whole town is cured. The cards themselves are in [Events](10-events.md).
 
 ## The five peoples
+
+{{fig:plate:people-human,plate:people-dwarf,plate:people-elf,plate:people-halfling|Humans, dwarves, elves and halflings; each sets the die its workers roll.}}
 
 Your people sets the die your workers roll, how many you start with, what they like to eat, and a handful of traits that apply to every worker and figure of yours all game. The full trait list is in Annex I, *Peoples*, and each people's page is in Annex II.
 
@@ -86,6 +104,8 @@ Your people sets the die your workers roll, how many you start with, what they l
 | Elves | {{peoples.peoples[id=elf].effortDie}} | {{peoples.peoples[id=elf].startingWorkers}} | {{peoples.peoples[id=elf].summary}} |
 | Halflings | {{peoples.peoples[id=halfling].effortDie}} | {{peoples.peoples[id=halfling].startingWorkers}} | {{peoples.peoples[id=halfling].summary}} |
 | Orcs | {{peoples.peoples[id=orc].effortDie}} | {{peoples.peoples[id=orc].startingWorkers}} | {{peoples.peoples[id=orc].summary}} |
+
+{{fig:plate:character-chr-05|margin|Ruk of the Red Road, an orc; the fifth people, drawn as one of its heroes.}}
 
 How a trait is applied:
 

@@ -5,7 +5,11 @@ order, and the first player draws a second from round 13 — so a four-player ro
 four or five cards of weather, and the back half of the game is noticeably rougher
 than the front.
 
+{{fig:plate:event-hard-frost,plate:event-raiders,plate:event-warehouse-heist,plate:event-festival,plate:event-wildfire|frieze}}
+
 ## Scopes
+
+{{fig:card:EVT-03,card:EVT-05,card:EVT-09,card:EVT-13|Four scopes on four cards: a global summer, a local flood, a heist aimed at the leader, an offer.}}
 
 - **Global** — everyone, whoever drew it. Weather and market cards mostly.
 - **Local** — one region; roll for which.
@@ -16,6 +20,10 @@ Crime cards target the leader whoever draws them. That is the catch-up mechanism
 it is deliberate: being ahead should mean being worth robbing.
 
 ## Categories
+
+{{fig:plate:event-glut|margin|Glut, capitalised: a card that crashes a price, no longer a model that sets one.}}
+
+{{fig:plate:event-drought,plate:event-flood,plate:event-caravan-robbery,plate:event-wolf-pack,plate:event-iron-shortage,plate:event-ley-surge|Weather, disaster, crime, wildlife, market and arcane: one plate from six of the nine rows.}}
 
 | Category | Cards | What it brings |
 | --- | --- | --- |
@@ -45,6 +53,10 @@ larger one.
 
 ## Illness
 
+{{fig:tile:infirmary|margin|The infirmary, whose fed healer is one of the three purchases that blunt every illness card.}}
+
+{{fig:plate:event-camp-fever,plate:event-marsh-ague,plate:event-grey-pox,plate:event-plague|The illnesses in order of reach: one party, one region, every town, and the old Plague.}}
+
 The illness cards scale by blast radius: **Camp Fever** hits one travelling party,
 **Marsh Ague** one region, **The Grey Pox** every sizeable town on the map, and the
 old **Plague** still stalks regions. Every one of them is cancelled or blunted by
@@ -54,12 +66,18 @@ first specialist whose absence has a body count.
 
 ## The wild, dialled
 
+{{fig:plate:monster-cinder-wolf|margin|What a widened band lets out of the discovery table; the cinder wolf is the least of it.}}
+
 Two cards move the discovery tables themselves: **Blood Moon** widens every monster
 band by 3 for two rounds, **The Quiet Season** shrinks it by 2. They are the volume
 knob on how dangerous travel feels, and adding copies of either re-tunes the whole
 map without touching a table.
 
 ## Every disaster has a mitigation
+
+{{fig:plate:monster-stone-boar|margin|A palisade is a stone boar with a gate in it: armour added to a total, never a die.}}
+
+{{fig:tile:brick-house,tile:well,tile:watchtower,tile:palisade|The buildings you did not put up: brick house, well, watchtower and palisade, one per row of the table.}}
 
 This is the rule that keeps the deck from feeling arbitrary. Each disaster card lists at
 least one thing a player could have bought in advance:
@@ -94,6 +112,8 @@ happens to be shooting at it: one wall, one number, however many raids it turns.
 
 ## Structured effects
 
+{{fig:card:EVT-06|margin|The printed text is the half the table reads; the effects array under it is the engine's.}}
+
 Cards carry both the printed text and a machine-readable `effects` array, so the digital
 build can resolve what it can and hand the rest to the player. The vocabulary:
 
@@ -110,6 +130,8 @@ price shifts. Anything targeted, local, or offering a choice is logged and left 
 player — the single-town prototype has no board to apply "one region" to.
 
 ## Deck feel
+
+{{fig:plate:event-long-summer,plate:event-storms,plate:event-tax-levy,plate:event-mercenaries-for-hire|Texture and a decision: two weathers, a levy, and an offer the drawer has to think about.}}
 
 Weather and market cards are the most common because they should be the texture of the
 game, not its drama. Disasters and crime are rarer and land harder. Offers exist so

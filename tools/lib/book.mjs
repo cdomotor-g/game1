@@ -28,6 +28,7 @@ import { join } from 'node:path';
 import { cardsOfDeck } from './decks.mjs';
 import { plateIdFor } from './plates.mjs';
 import { tileSubjects } from './tiles.mjs';
+import { inlineSvg } from './book-art.mjs';
 
 /* ------------------------------------------------------------------- data */
 
@@ -205,6 +206,10 @@ export function openCatalogue(root, { data }) {
   const facts = (xs) => `<ul class="facts">${xs.filter(Boolean).map((f) => `<li>${f}</li>`).join('')}</ul>`;
   const story = (s) => (s ? `<p class="story">${inline(s)}</p>` : '');
   const code = (c, camp) => `<span class="code">${esc(c)}${campaignMark(camp)}</span>`;
+  /* The built card, at a little under half its printed size, beside a half-page
+     entry: the plate is the page the card was cut from, and this is the cut. */
+  const CARDS = join(root, 'docs', 'cards');
+  const cardInset = (c) => (c && existsSync(join(CARDS, `${c}.svg`)) ? `<figure class="cardinset">${inlineSvg(join(CARDS, `${c}.svg`))}<figcaption>the card · ${esc(c)}</figcaption></figure>` : '');
 
   /* --- one entry per kind ------------------------------------------------ */
 
@@ -221,7 +226,7 @@ export function openCatalogue(root, { data }) {
           { letter: L.health, value: c.health, tint: 'oxide' }, { letter: L.strength, value: c.strength, tint: 'ochre' },
           { letter: L.mana, value: c.manaCapacity ?? 0, tint: 'bruise' }, { letter: L.gold, value: c.startingGold, tint: 'ochre' },
           { letter: L.carry, value: kg, tint: 'slate' },
-        ])}${facts([
+        ])}${cardInset(c.cardCode)}${facts([
           ...(c.traits ?? []).map(inline),
           kit.length ? `<em>Starts with</em> ${esc(andList(kit))}.` : null,
           c.manaNote ? `<em>Mana.</em> ${inline(c.manaNote)}` : null,
@@ -242,7 +247,7 @@ export function openCatalogue(root, { data }) {
           { letter: L.health, value: m.health, tint: 'oxide' }, { letter: L.strength, value: m.strength, tint: 'ochre' },
           { letter: L.armour, value: m.armour, tint: 'slate' }, { letter: L.pace, value: m.pace, tint: 'verdigris' },
           { letter: L.yield, value: m.manaYield, tint: 'bruise' }, { element: m.element },
-        ])}${facts([
+        ])}${cardInset(m.cardCode)}${facts([
           `<em>${esc(opts.join(' · '))}.</em> Run only if your pace beats ${m.pace}; slain, it yields the lesser of ${m.manaYield} and the purple die.`,
           m.special ? inline(m.special) : null,
           m.gift ? `<em>Gift to befriend:</em> ${inline(m.gift)}.` : null,
@@ -278,7 +283,7 @@ export function openCatalogue(root, { data }) {
     if (tile && existsSync(tileFile)) {
       const m = readFileSync(tileFile, 'utf8').match(/width="([\d.]+)" height="([\d.]+)"/);
       const u = data.components.stock.unitsPerMm;
-      if (m) piece = `<figure class="piece"><img src="../tiles/${esc(b.id)}.svg" alt="" style="width:${(+m[1] / u).toFixed(2)}mm;height:${(+m[2] / u).toFixed(2)}mm"><figcaption>the tile, actual size · ${CELLS[tile.cells.length] ?? tile.cells.length}</figcaption></figure>`;
+      if (m) piece = `<figure class="piece">${inlineSvg(tileFile, { attrs: `style="width:${(+m[1] / u).toFixed(2)}mm;height:${(+m[2] / u).toFixed(2)}mm"` })}<figcaption>the tile, actual size · ${CELLS[tile.cells.length] ?? tile.cells.length}</figcaption></figure>`;
     }
     const format = tile ? (tile.cells.length === 1 || tile.shape === 'single' ? 'square' : 'landscape') : 'square';
     return {
@@ -293,7 +298,7 @@ export function openCatalogue(root, { data }) {
           ...(b.workerSlots ? [{ letter: L.jobs, value: b.workerSlots, tint: 'verdigris' }] : []),
           ...(b.storage ? [{ letter: L.goods, value: b.storage, tint: 'oxide' }] : []),
           ...(b.victoryPoints ? [{ letter: L.victory, value: b.victoryPoints, tint: 'bruise' }] : []),
-        ])}${facts([
+        ])}${cardInset(b.cardCode)}${facts([
           bill(b.cost) ? `<em>Raise it from</em> ${esc(bill(b.cost))}.` : null,
           esc(site),
           holds.length ? `<em>Holds</em> ${esc(holds.join(' and '))}.` : null,
@@ -315,7 +320,7 @@ export function openCatalogue(root, { data }) {
           name: esc(v.name), plain: mode ? esc(mode.summary) : '',
         })}${strip([
           { letter: L.health, value: v.hull, tint: 'oxide' }, { letter: L.cargo, value: v.cargoCapacity, tint: 'slate' },
-        ])}${facts([
+        ])}${cardInset(v.cardCode)}${facts([
           inline(v.quirk),
           mode ? `<em>Runs as ${esc(aOrAn(mode.name.toLowerCase()))}:</em> speed ${mode.speed}${mode.speedOnRoad ? ` (${mode.speedOnRoad} on a road)` : ''}, ${mode.capacity} bulk, ${mode.requires && mode.requires !== 'none' ? `needs ${esc(aOrAn(name(buildings, mode.requires).toLowerCase()))}` : 'needs nothing'}${mode.upkeep ? `, upkeep ${esc(String(mode.upkeep))}` : ''}.` : null,
         ])}${story(v.story)}</div>`,

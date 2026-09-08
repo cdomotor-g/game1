@@ -29,6 +29,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderMarkdown, escapeHtml } from './lib/docpage.mjs';
 import { loadData, interpolate, openCatalogue, sheets, roman, word, inline, esc } from './lib/book.mjs';
+import { artIndex, figureTokens, placeFigures, figureHtml, autoVignettes, pictureHtml } from './lib/book-art.mjs';
+import { crop, readFraming } from './lib/framing.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const RULES = join(ROOT, 'docs', 'rules');
@@ -41,6 +43,8 @@ const checkOnly = process.argv.includes('--check');
 const palette = JSON.parse(readFileSync(join(ROOT, 'docs/art/palette.json'), 'utf8'));
 const { data } = loadData(ROOT);
 const cat = openCatalogue(ROOT, { data });
+const art = artIndex(ROOT, data);
+const framing = readFraming(ROOT);
 
 const BOOK_TITLE = 'The Almanac';
 const GAME = 'game1';
@@ -68,18 +72,60 @@ function rewriteHref(href) {
   return `#${prefix}-${slugOf(file)}${frag ? `--${frag}` : ''}`;
 }
 
+/* ------------------------------------------------------------ pictures */
+
+/** A cropped square of a plate - the framing's own crop, aimed at the face - or a
+    whole card, tile or icon, small enough to head a table row. */
+function thumb(e) {
+  if (e.inline) return `<span class="thumb">${e.inline}</span>`;
+  if (e.what !== 'plate') return `<span class="thumb whole">${pictureHtml(e)}</span>`;
+  const f = framing.plates?.[e.ref.slice(6)];
+  const r = crop({ width: e.w, height: e.h }, f?.subject, 1, framing.pad ?? 0, f?.focal, framing.focalTarget);
+  const W = 100 / r.w;
+  return `<span class="thumb"><img src="${e.src}" alt="" loading="lazy" style="width:${W.toFixed(2)}%;left:${(-r.x * W).toFixed(2)}%;top:${(-r.y * W * e.h / e.w).toFixed(2)}%"></span>`;
+}
+
+/* The name of a thing, lower-cased, to the best picture of it: how a table row
+   that begins with "Cinder Wolf" gets the wolf beside the words. */
+const nameToArt = new Map();
+for (const e of art.byThing.values()) for (const n of e.names ?? []) if (n && !nameToArt.has(n.toLowerCase())) nameToArt.set(n.toLowerCase(), e);
+const codeToArt = new Map();
+for (const e of art.entries.values()) if (e.code && (!codeToArt.has(e.code) || e.what === 'plate')) codeToArt.set(e.code, e);
+for (const t of data.terrain.terrains) codeToArt.set(`terrain-letter:${t.code}`, art.resolve(`terrain:${t.id}`));
+function thumbTables(html) {
+  return html.replace(/<tr><td>([\s\S]*?)<\/td>/g, (m, cell) => {
+    const plain = cell.replace(/<[^>]+>/g, '').trim();
+    const code = plain.match(/^([A-Z]{3}-\d{2})$/) ?? plain.match(/\(([A-Z]{3}-\d{2})\)$/);
+    const e = code ? codeToArt.get(code[1])
+      : /^[A-Z]$/.test(plain) ? codeToArt.get(`terrain-letter:${plain}`)
+        : nameToArt.get(plain.toLowerCase());
+    return e ? `<tr><td class="named">${thumb(e)}${cell}</td>` : m;
+  });
+}
+
+/** A hand-written chapter's own figures ({{fig:...}} tokens), and then vignettes
+    of whatever its paragraphs name and no figure already shows. */
+function illustrate(src, where, render) {
+  const { text, figs, shown } = figureTokens(src, art, where, { inlineFn: inline });
+  const out = render(text);
+  const skip = new Set(figs.flatMap((f) => f.things));
+  for (const e of art.byThing.values()) if (e.src && shown.has(e.src)) skip.add(e.thing);
+  out.html = autoVignettes(placeFigures(out.html, figs), art, { skip, max: 6, gap: 3 });
+  return out;
+}
+
 /** Heading ids are made unique per chapter, and the chapter's own links follow. */
 const scopeIds = (html, id) => html.replace(/ id="([^"]+)"/g, (_, s) => ` id="${id}--${s}"`);
 
 /** A rules chapter: the title becomes the chapter head, the first paragraph its lede, the next its drop capital. */
 function rulesChapter(file, n) {
   const id = `rules-${slugOf(file)}`;
-  const src = interpolate(readFileSync(join(RULES, file), 'utf8'), data, `docs/rules/${file}`);
-  const { title, html } = renderMarkdown(src, { rewriteHref, fallbackTitle: file });
+  const { title, html } = illustrate(readFileSync(join(RULES, file), 'utf8'), `docs/rules/${file}`,
+    (text) => renderMarkdown(interpolate(text, data, `docs/rules/${file}`), { rewriteHref, fallbackTitle: file }));
   let body = scopeIds(html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, ''), id);
   let lede = '';
   body = body.replace(/^<p>([\s\S]*?)<\/p>\n?/, (_, p) => { lede = p; return ''; });
-  body = body.replace(/^<p>/, '<p class="dropcap">');
+  body = body.replace(/^((?:<!--fig-->[\s\S]*?<!--\/fig-->\s*)*)<p>/, '$1<p class="dropcap">');
   body = body.replace(/<blockquote><p><strong>Open\.?<\/strong>/g, '<blockquote class="open"><p><strong>Open.</strong>');
   return {
     id, title, kind: 'text',
@@ -91,8 +137,8 @@ function rulesChapter(file, n) {
     with the {{ }} tokens so a finding that cites a number cannot cite a stale one. */
 function reviewChapter(file, n) {
   const id = `review-${slugOf(file)}`;
-  const src = interpolate(readFileSync(join(REVIEW, file), 'utf8'), data, `docs/review/${file}`);
-  const { title, html } = renderMarkdown(src, { rewriteHref, fallbackTitle: file });
+  const { title, html } = illustrate(readFileSync(join(REVIEW, file), 'utf8'), `docs/review/${file}`,
+    (text) => renderMarkdown(interpolate(text, data, `docs/review/${file}`), { rewriteHref, fallbackTitle: file }));
   let body = scopeIds(html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, ''), id);
   let lede = '';
   body = body.replace(/^<p>([\s\S]*?)<\/p>\n?/, (_, p) => { lede = p; return ''; });
@@ -122,7 +168,7 @@ function annexChapters() {
   /* rendered in a second pass, once every annex heading knows its home */
   for (const c of chapters) {
     const { html } = renderMarkdown(c.md, { rewriteHref, fallbackTitle: c.title });
-    c.html = `<header class="chap small"><div class="num">Annex I · Table ${c.n}</div><h2 class="title">${escapeHtml(c.title)}</h2>${ORNAMENT}</header>${scopeIds(html, c.id)}`;
+    c.html = `<header class="chap small"><div class="num">Annex I · Table ${c.n}</div><h2 class="title">${escapeHtml(c.title)}</h2>${ORNAMENT}</header>${scopeIds(thumbTables(html), c.id)}`;
     delete c.md;
   }
   return chapters;
@@ -130,7 +176,8 @@ function annexChapters() {
 
 function designChapter(file) {
   const id = `design-${slugOf(file)}`;
-  const { title, html } = renderMarkdown(readFileSync(join(DESIGN, file), 'utf8'), { rewriteHref, fallbackTitle: file });
+  const { title, html } = illustrate(readFileSync(join(DESIGN, file), 'utf8'), `docs/design/${file}`,
+    (text) => renderMarkdown(text, { rewriteHref, fallbackTitle: file }));
   const bare = title.replace(/^\d\d\s+—\s+/, '');
   return {
     id, title: bare, kind: 'text',
@@ -151,16 +198,24 @@ const FRAME = `<svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="non
 
 /* ------------------------------------------------------------ title pages */
 
+/** The row of small pieces under a title page's plate: what the section holds, at a glance. */
+function friezeHtml(refs) {
+  if (!refs?.length) return '';
+  const pieces = refs.map((r) => { const e = art.resolve(r); if (!e) throw new Error(`title page frieze: ${r} is not a picture the book has`); return e; });
+  return `<div class="tfrieze">${pieces.map((e) => `<div class="fp${e.what === 'card' ? ' card' : e.what === 'tile' ? ' tile' : ''}">${pictureHtml(e)}</div>`).join('')}</div>`;
+}
+
 function titlePage(s) {
   const plate = s.plate && cat.hasPlate(s.plate)
     ? `<figure class="tplate ${s.plateFormat ?? 'portrait'}"><img src="${cat.plateSrc(s.plate)}" alt="${esc(s.plateAlt ?? '')}"></figure>`
     : s.plateSrc
       ? `<figure class="tplate ${s.plateFormat ?? 'landscape'}"><img src="${esc(s.plateSrc)}" alt="${esc(s.plateAlt ?? '')}"></figure>`
       : '<figure class="tplate empty"></figure>';
+  const frieze = friezeHtml(s.frieze);
   return `<div class="titlepage" id="${esc(s.id)}-title">${FRAME}
   <header><div class="label">${esc(s.label)}</div><h1 class="ttitle">${esc(s.title)}</h1>${s.subtitle ? `<div class="script">${esc(s.subtitle)}</div>` : ''}${ORNAMENT}</header>
-  ${plate}
-  <footer>${s.caption ? `<div class="tcaption">${esc(s.caption)}</div>` : ''}<button type="button" class="print-this screen-only" data-part="${esc(s.id)}">Print this section</button></footer>
+  ${frieze ? plate.replace('class="tplate ', 'class="tplate with-frieze ') : plate}${frieze}
+  <footer${frieze ? ' class="short"' : ''}>${s.caption ? `<div class="tcaption">${esc(s.caption)}</div>` : ''}<button type="button" class="print-this screen-only" data-part="${esc(s.id)}">Print this section</button></footer>
 </div>`;
 }
 
@@ -298,6 +353,7 @@ sections.push({
   id: 'rules', label: 'Book I', title: 'The Rules',
   subtitle: 'being everything a table needs to know to play, and nothing it does not',
   plate: 'tile-town-hall', plateFormat: 'landscape', plateAlt: 'The town hall', caption: 'The town hall · BLD-39',
+  frieze: ['character:chr-01', 'card:MON-01', 'tool:axe', 'board:player', 'people:dwarf'],
   chapters: rulesFiles.map((f, i) => rulesChapter(f, i + 1)),
 });
 
@@ -305,6 +361,7 @@ sections.push({
   id: 'annex-1', label: 'Annex I', title: 'The Reference Tables',
   subtitle: 'every number in the game, set from the data the cards were built from',
   plate: 'tile-market', plateFormat: 'landscape', plateAlt: 'The market', caption: 'The market · BLD-37',
+  frieze: ['board:ledger', 'tile:granary', 'icon:pricing-deplete', 'board:market', 'tile:sawmill'],
   chapters: annexOne,
 });
 
@@ -312,6 +369,7 @@ sections.push({
   id: 'annex-2', label: 'Annex II', title: 'The Catalogue',
   subtitle: 'the base game: every thing in the box, with its picture whole',
   plate: 'monster-vhalrik-the-cinder-crowned', plateFormat: 'portrait', plateAlt: 'Vhalrik, the Cinder-Crowned, on his hoard', caption: 'Vhalrik, the Cinder-Crowned · MON-13',
+  frieze: ['character:chr-09', 'vehicle:veh-01', 'building:granary', 'item:lantern', 'spell:kindle', 'event:festival'],
   chapters: catalogueChapters('base', { idPrefix: 'cat', head: 'Annex II · The Catalogue' }),
 });
 
@@ -322,6 +380,7 @@ data.campaigns.campaigns.forEach((camp, i) => {
   sections.push({
     id: `annex-${annexNo}`, label: `Annex ${roman(annexNo)} · Campaign ${roman(i + 1)}`, title: camp.name,
     subtitle: camp.subtitle, plate, plateFormat: 'portrait', plateAlt: hero?.name ?? '', caption: hero ? `${hero.name} · ${hero.cardCode}` : '',
+    frieze: [`map:${camp.map}`, ...data.monsters.monsters.filter((m) => m.campaign === camp.id).slice(0, 4).map((m) => `monster:${m.id}`)].filter((r) => art.resolve(r)),
     chapters: campaignChapters(camp, i + 1),
   });
   annexNo++;
@@ -343,6 +402,7 @@ sections.push({
   id: 'design', label: `Annex ${roman(annexNo)}`, title: 'The Design Notes',
   subtitle: 'why the rules are shaped the way they are, for the reader who wants to know',
   plate: 'vehicle-veh-01', plateFormat: 'landscape', plateAlt: 'The Reach Flyer', caption: 'The Reach Flyer · VEH-01',
+  frieze: ['graph:dependencies', 'flow:blacksmith', 'tool:saw', 'board:depletion', 'modification:spinnaker'],
   chapters: designFiles.map(designChapter),
 });
 
@@ -354,6 +414,7 @@ if (reviewFiles.length) {
     id: 'addendum-1', label: 'Addendum I', title: 'The Review',
     subtitle: 'what a hard reading of the rules found, and what to do about each finding',
     plate: 'character-chr-06', plateFormat: 'portrait', plateAlt: 'Doctor Elspeth Marrow', caption: 'Doctor Elspeth Marrow · CHR-06',
+    frieze: ['event:mercenaries-for-hire', 'building:manor', 'item:lantern', 'building:barracks', 'board:ledger'],
     chapters: reviewFiles.map((f, i) => reviewChapter(f, i + 1)),
   });
 }
@@ -366,8 +427,8 @@ const contentsHtml = () => `<div class="titlepage contents" id="contents-title">
 
 const coverHtml = () => `<div class="titlepage cover" id="cover-title">${FRAME}
   <header><div class="label">${esc(GAME)}</div><h1 class="ttitle grand">${esc(BOOK_TITLE)}</h1><div class="script">being the Rules, the Reference Tables, the Catalogue &amp; the Campaigns</div>${ORNAMENT}</header>
-  <figure class="tplate portrait"><img src="${cat.plateSrc('people-human')}" alt="A builder at work"></figure>
-  <footer><div class="tcaption">Set from the game's own data. The figures here are the figures on the cards.</div></footer>
+  <figure class="tplate portrait with-frieze"><img src="${cat.plateSrc('people-human')}" alt="A builder at work"></figure>${friezeHtml(['character:chr-02', 'monster:ash-drake', 'building:town-hall', 'vehicle:veh-05', 'character:chr-11'])}
+  <footer class="short"><div class="tcaption">Set from the game's own data. The figures here are the figures on the cards.</div></footer>
 </div>`;
 
 const sectionHtml = (s) => {

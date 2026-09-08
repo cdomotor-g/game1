@@ -2,7 +2,13 @@
 
 A battle is one subtraction, and it is the subtraction the market already taught you: your total against theirs, the lower loses the difference, and blue is what you want while red is what stands in your way. This chapter is what you may do when you meet a monster, how a fight is scored, what running costs, and what a slain monster is worth.
 
+{{fig:plate:monster-cinder-wolf,plate:item-sword,plate:monster-vhalrik-the-cinder-crowned,plate:item-shield,plate:character-chr-05|frieze}}
+
 ## Meeting a monster
+
+{{fig:plate:monster-barrow-troll,plate:monster-rime-harpy,plate:monster-storm-roc,plate:monster-reef-serpent|Slay is always allowed; enslave, befriend or domesticate only where the card says.}}
+
+{{fig:card:MON-01|margin|A monster card prints five numbers and a mark; the armour never moves.}}
 
 A monster is dealt onto the encounter board the moment a discovery roll, a quest or an event card names it ([Discovery and encounters](11-discovery.md)). Its card prints five numbers and a mark: **H** health, **S** strength, **A** armour, **P** pace, **Y** the most mana its death is worth, and its element. Every monster is in Annex II, *Monsters*, with what it allows and what it wants.
 
@@ -20,6 +26,10 @@ A monster whose card allows none of the three is fought or fled and nothing else
 
 ### Running away
 
+{{fig:plate:vehicle-veh-09|half|A cargo wagon fleeing a monster of strength 4 takes one free exchange whatever its pace.}}
+
+{{fig:plate:monster-dust-devil|margin|A dust devil's pace: equal is not greater, and it stays with you.}}
+
 You may run only if your party's pace for the leg it is on — the number on the P track — is **greater** than the monster's P. Equal is not greater: a thing that matches you stays with you, and there is no roll to make it otherwise. A party that cannot outpace what it has met may not decline the fight; it may still befriend it, offer it something, or fight.
 
 If you can run: withdraw the way you came, end your movement, make no discovery roll for this leg, and loot nothing. A monster of strength 4 or more gets one free exchange against a fleeing cargo vehicle whatever its pace.
@@ -27,6 +37,10 @@ If you can run: withdraw the way you came, end your movement, make no discovery 
 A party on foot in the mountains has a pace of 1 and outruns nothing. A party under a lantern at night has half its pace, and pushing on past dark is the cheapest way in the game to be caught.
 
 ## The battle roll
+
+{{fig:plate:item-leather-jerkin,plate:item-helm,plate:item-chain-mail,plate:item-plate-harness|Every piece of armour worn adds once, and takes 1 wear at the end of each round.}}
+
+{{fig:plate:item-war-hammer,plate:item-bow,plate:item-crossbow,plate:item-staff,plate:item-dagger|Riders: a hammer strips armour, a bow needs a quiver, a crossbow counts every second round.}}
 
 One exchange is one **round of battle**, and a battle is one exchange in each round of the game while both sides stay.
 
@@ -48,13 +62,21 @@ After an exchange either side may withdraw if it can — for you, the flee rule 
 
 ## Health, and what happens at nothing
 
+{{fig:plate:vehicle-veh-05|margin|At 0 hull a vehicle is wrecked and its cargo spills on the hex.}}
+
 A character at 0 health falls. It is carried to the nearest settlement, stays there until it is healed to half its H, and loses everything it was carrying on the way — see [Heroes, vehicles and gear](14-heroes-vehicles-and-gear.md). A monster at 0 is slain. A vehicle at 0 hull is wrecked and spills its cargo on the hex.
 
 ## What a slain monster yields
 
+{{fig:icon:element-fire,icon:element-earth,icon:element-water,icon:element-air|Mana comes in the monster's own element, the lesser of its Y and the purple die.}}
+
 The moment a monster reaches 0 health, roll the purple mana die once. You take the **lesser** of that roll and the monster's Y, in the monster's element, split among the characters who fought it as they agree. A cinder wolf yields 1 on any roll but a 1; Vhalrik yields 6 only on a 6. Mana with nowhere to be held blows away at the end of the round — [Mana, talismans, spells and potions](13-magic.md). Enslaving, befriending and domesticating pay no mana at all.
 
 ## Hirelings
+
+{{fig:plate:event-mercenaries-for-hire|half|Mercenaries for hire, the card that brings the inn's table out onto the road.}}
+
+{{fig:tile:inn|margin|The inn: a hireling escorts one journey for a flat fee, eats nothing, and goes home.}}
 
 Between a soldier you feed every round and a war you cannot afford there is the inn. At any settlement of village rank or better a hireling escorts one journey — a party or a cargo — for a flat fee, eats nothing, and goes home. It fights at the numbers on the inn's board:
 
@@ -67,6 +89,10 @@ Between a soldier you feed every round and a war you cannot afford there is the 
 An escorted cargo has no theft risk.
 
 ## Fighting other players
+
+{{fig:plate:event-raiders|margin|Raiders out of the event deck attack like a player, run by the player to the left.}}
+
+{{fig:tile:palisade,tile:barracks,tile:watchtower|Palisade, garrison and watchtower: the defences that stand without being ordered.}}
 
 You may attack another player's town, or their cargo on the road, in your Actions phase, with soldiers or your hero standing on the hex. Each side totals its figures as above. The winner takes {{pct:rules.conflict.lootFraction}} of the loser's stockpile or cargo — an orc takes 40%.
 

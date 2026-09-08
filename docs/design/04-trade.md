@@ -1,5 +1,6 @@
 # 04 — Trade, markets and moving goods
 
+{{fig:plate:tile-market,plate:vehicle-veh-06,plate:event-glut,plate:tile-trading-house|frieze}}
 ## Two kinds of trade
 
 **With the board** — buying and selling at a market at the price the ledger is showing,
@@ -10,6 +11,8 @@ ever gets truly stuck.
 no limit, and no enforcement beyond the table. This is where the game should get loud.
 
 ## Price bands
+
+{{fig:plate:event-iron-shortage|margin|An Iron Shortage steps every metal two places for three rounds.}}
 
 Every commodity has six prices, and they are ×0.5, ×0.75, ×1.0, ×1.25, ×1.5 and ×2.0 of its
 base value. Prices start at ×1.0. Event cards shove them by family — an iron shortage moves
@@ -30,6 +33,8 @@ market board with nothing replacing it, and it is why the word *band* survives h
 a way of saying **how far along the row**.
 
 ## How a price is arrived at
+
+{{fig:plate:monster-forge-wight|margin|Blue against red scores a fight the way it prices a market; the loser takes the difference.}}
 
 Prices used to *drift*: one random family, one band, every round. It was a rule you could
 not plan against and could not affect. A player could sell four hundred grain into one town
@@ -132,6 +137,8 @@ at the bottom of a ledger column the most-read number on the table.
 
 ## What kind of good it is
 
+{{fig:icon:pricing-staple,icon:pricing-perish,icon:pricing-deplete,icon:pricing-hype|The four marks in a token's corner: balance, fish skeleton, running glass, arrow.}}
+
 This section was called *What a market remembers*, and the title had to go because nothing
 remembers anything now. There is no memory strip. There is no tally. Every line on the old
 market board carried both — a modifier from −3 to +3 walked by a bar, and beside it a count
@@ -176,6 +183,8 @@ deposit yields and does not price by depletion is a hole in the ground that neve
 
 ### The spoil die, and what the glut model got wrong
 
+{{fig:plate:tile-granary|margin|A granary reads one row up the strip; insurance, not immunity.}}
+
 Glut bent the price *down* through the memory strip: flood a market and the market sagged.
 That is a fair model of a market and a poor model of a fish.
 
@@ -206,6 +215,8 @@ everything else — through the blue and red dice, like everything else.
 
 ### Depletion moved from sold to burnt
 
+{{fig:plate:tile-smelter|margin|A smelter burns ore; the pip goes on the grid in the hand that lit the furnace.}}
+
 The old tally filled as tokens crossed to the board, which meant a seam was worked out by
 **trading**. That is the version of this rule that a merchant beats without owning a mine: buy
 the hundred tons of coal, sell it back, buy it again, and the hill runs dry from the
@@ -231,6 +242,8 @@ owns the market, and it always did; this is the version of that sentence you can
 a table.
 
 ### Which delta does a sought good read?
+
+{{fig:plate:vehicle-veh-12|margin|Nobody needs a famous horse; it is bought because it is going up.}}
 
 It is the **previous** move, in **bands**, and it is neither of the two things it could have
 been.
@@ -273,6 +286,8 @@ to a third.
 
 ### The market board
 
+{{fig:board:market|wide|The market board: the sum across the head, four panels below, and nowhere to put a piece.}}
+
 One A4 landscape sheet that holds no state at all, with nothing on it to move and nowhere to
 put a piece.
 
@@ -299,6 +314,8 @@ of layout. See [08-components.md](08-components.md#the-market-board).
 
 ### The depletion sheet
 
+{{fig:board:depletion|wide|The depletion sheet, printed fresh each game; a covered cell's number is gone.}}
+
 A second A4 landscape page of identical numbered grids — one per finite commodity in play,
 each headed by a hexagonal seat its own token stands in for the whole game. The token is the
 label here exactly as it was on the old market lines: a grid is not the coal grid until
@@ -318,6 +335,8 @@ one you can still see* a matter of opinion, and the build checks it rather than 
 anybody's eye.
 
 ### The price ledger
+
+{{fig:board:ledger|half|The price ledger: six columns, twenty-four rows, hollow figures and a move box.}}
 
 The price is written down now, in figures, on one A4 **portrait** sheet — and that sheet is
 the only place in this game where a price lives.
@@ -421,6 +440,8 @@ the centre of every negotiation.
 
 ## Shopping: merchants met and visited
 
+{{fig:card:ITM-02,card:ITM-01,card:ITM-05,card:ITM-08|A merchant's stock dealt face up, at base value and a tenth.}}
+
 Items are bought from **merchants** — met on the road through a discovery roll, or
 visited in any settlement. Either way the procedure is the same: shuffle the item
 deck and deal cards face up. What is dealt is the stock, this visit, at base value
@@ -453,6 +474,8 @@ being free money.
 
 ## Moving commodities
 
+{{fig:plate:vehicle-veh-07,plate:vehicle-veh-04,plate:vehicle-veh-01|Caravan, ship and train: twenty-four, sixty and eighty bulk.}}
+
 Six modes, in `data/transport.json`. Capacity is bulk, speed is tiles per round.
 
 | Mode | Capacity | Speed | Needs | Theft risk |
@@ -477,6 +500,8 @@ event cards and raided by players. A caravan with a soldier escorting it drops t
 theft risk — and the soldier eats every round whether anything happens or not.
 
 ## Why moving things matters
+
+{{fig:plate:tile-butcher|margin|Meat rolls the ochre die every round it is held; salted, it is a staple and rolls nothing.}}
 
 Because prices differ by town and bulk differs by commodity. The whole logistics puzzle
 is the interaction of three numbers:

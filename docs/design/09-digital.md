@@ -1,6 +1,9 @@
 # 09 — The digital build
 
+{{fig:graph:dependencies,plate:tile-farm,plate:tool-saw,plate:event-glut|frieze}}
 ## What exists
+
+{{fig:flow:steelworks|half|The Chains view on paper: a steelworks traced to the ground, hours and all.}}
 
 `docs/index.html` is a single page with no build step, no dependencies and no network
 requests. Open it from disk and it works.
@@ -16,6 +19,8 @@ per unit all the way to the ground.
 effort, allocate it, found buildings, forge tools, trade, feed everyone, take the
 consequences.
 
+{{fig:card:MON-01,card:VEH-01,card:CHR-01,card:SPL-01|The decks the explorer ships but does not yet draw: monster, vehicle, character, spell.}}
+
 **What the explorer does not render yet:** the adventure decks — monsters, vehicles,
 characters, quests, spells, the travel and discovery tables. Their data ships in the
 bundle (anything in `manifest.json` does), so the explorer's views are the gap, not the
@@ -23,6 +28,8 @@ pipeline. The sandbox likewise plays the single-town economy only; nothing digit
 moves a party across the board yet.
 
 ## Architecture
+
+{{fig:board:market|wide|The engine plays the market off the same bands this sheet prints.}}
 
 ```
 data/*.json                   the single source of truth
@@ -51,6 +58,8 @@ openable by double-clicking it with no server and no install. Run
 
 ## What the sandbox implements faithfully
 
+{{fig:plate:tool-axe,plate:tool-pick,plate:tool-hammer,plate:tool-scythe|Tools wear and break in the sandbox exactly as they do on the table.}}
+
 Effort dice and the modifier ladder · tool durability and breakage · recipe inputs,
 outputs and variants · fuel bundles with output penalties · maturation waits · crop
 sowing, growth and harvest · construction with build-points and a minimum-rounds floor ·
@@ -58,6 +67,12 @@ storage caps and overflow · feeding, unrest and the variety bonus · market pri
 and the spread · specialist training · the event deck.
 
 ## What it simplifies, and where the table rule differs
+
+{{fig:map:korvane-reach|wide|Designed and not implemented: the board the single-town sandbox has no room for.}}
+
+{{fig:plate:people-dwarf|margin|A dwarf rolls d8 in a mine, if the game knows which worker is in it.}}
+
+{{fig:plate:tile-granary|margin|A granary shelters the stack; without one a quarter spoils each round.}}
 
 Each of these is marked `SIMPLIFIED` in `engine.js`.
 
@@ -86,6 +101,8 @@ the effort pool is town-wide rather than per-site.
 
 ## The simulator
 
+{{fig:plate:tile-bakery|margin|Feed the town before anything else; the bot's policy in one building.}}
+
 ```bash
 node tools/simulate.mjs                        # one game, printed round by round
 node tools/simulate.mjs --people dwarf --seed 7
@@ -101,6 +118,10 @@ It has already earned its keep: see
 [12-what-simulation-found.md](12-what-simulation-found.md).
 
 ## Where this goes next
+
+{{fig:tile:hut,tile:farm,tile:mine,tile:market,tile:town-hall|The tiles a digital board would have to place, and the fog it would have to keep.}}
+
+{{fig:plate:vehicle-veh-08|margin|Cargo moving over rounds: the wagons the engine cannot yet drive.}}
 
 The natural order, in rising cost:
 

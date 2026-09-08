@@ -2,7 +2,11 @@
 
 The world is a drawn map with a hexagonal grid over it, and everything that moves on it — a figure, a party, a cart, a ship — moves in legs. This chapter is the ground, what it costs to cross, what a road and a rail line do for you, and what a party spends by being out on it.
 
+{{fig:plate:character-chr-01,plate:vehicle-veh-08,plate:item-travelling-cloak,plate:event-wolf-pack|frieze}}
+
 ## The ground
+
+{{fig:map:korvane-reach|wide|Korvane Reach under its hex grid; the letter in a hex's corner is the ruling.}}
 
 Every hex prints a terrain letter in its corner, and the letter is the ruling when the drawing straddles a line. The eleven terrains, their codes and what each one offers are in [On the table](02-on-the-table.md) and in Annex I, *Terrain*; each has a page in Annex II.
 
@@ -11,6 +15,8 @@ Every hex prints a terrain letter in its corner, and the letter is the ruling wh
 **Fresh water** is a river, a lake, or a marsh, and any hex beside a river or a lake. Water can be drawn there without a well, and a town there ignores a Drought.
 
 ## Exploring
+
+{{fig:plate:item-binoculars|margin|Binoculars in the party add 1 to the survey roll.}}
 
 On a drawn map the whole country is in view from the first round. What is hidden is under it: the deposit tokens laid face down at setup ([Setting up](03-setting-up.md)). Finding one is a **survey**, and only a prospector can make one.
 
@@ -24,6 +30,8 @@ A table playing on loose hex tiles instead of a drawn map deals them face down, 
 
 ## Figures
 
+{{fig:plate:character-chr-03,plate:character-chr-07,plate:character-chr-08,plate:character-chr-02|Heroes: the figure a character card belongs to, one a player, free at setup.}}
+
 A figure is a piece that moves rather than works. Your **hero** is the figure your character card belongs to, one per player, free at setup. The other three are bought in the Actions phase at a town of yours and appear on its hex:
 
 | Figure | Costs | Does |
@@ -35,6 +43,8 @@ A figure is a piece that moves rather than works. Your **hero** is the figure yo
 Figures that travel together are a **party**, and a party moves as one at the pace of its slowest member. A vehicle carries figures as passengers where its card says so.
 
 ## Legs
+
+{{fig:plate:vehicle-veh-10,plate:vehicle-veh-07,plate:vehicle-veh-05,plate:vehicle-veh-03,plate:vehicle-veh-17|Mounted, caravan, ship, train and airship; each mode has its own pace on each ground.}}
 
 Every moving figure, party or vehicle gets one **day leg** a round, in the Actions phase. How far it goes is its **pace**: the number of hexes for its mode of travel on the ground it is crossing, read from the travel table. Set the P track on the board to that number at the start of the leg and walk it down one rung for every hex entered; at 0 the leg is over.
 
@@ -60,6 +70,8 @@ Every hex a leg enters that carries another player's road or rail pays that play
 
 ### Night legs
 
+{{fig:plate:item-torch,plate:item-lantern|A torch spends its one use; a lantern takes a wear and goes half the day pace.}}
+
 After its day leg a party may push on into the dark, and only with a light in hand:
 
 | Light | The night leg |
@@ -74,17 +86,25 @@ A train with a lantern fitted runs at night at full speed; a ship with one rigge
 
 ### Caves
 
+{{fig:plate:monster-barrow-troll|margin|What a cave mouth on the hills may hold; the draw is on the cave table.}}
+
 A discovery roll on hills or mountain can leave a **cave mouth** on the hex. A party may go in only with a lit torch or lantern — a torch spends one use, a lantern nothing — and going in resolves one draw on the cave table ([Discovery and encounters](11-discovery.md)). A cave that has been emptied is marked spent, and from then on it is a known camp: resting in it counts as an inn that costs no coin.
 
 ### Wind
+
+{{fig:plate:vehicle-veh-16,plate:modification-sweep-rig,plate:spell-fair-wind|An airship, a sweep rig and a Fair Wind; the last two change the wind roll.}}
 
 An airship pays no heed to the ground and every heed to the wind. Roll a d6 before each of its day legs: on a 1 the wind is foul and the ship moves 1 hex in a direction the player on your left chooses; on a 2 or 3 it is contrary and the ship makes half pace, rounded down; on a 4 or 5 full pace; on a 6 full pace and 2 hexes more. A sweep rig, a Fair Wind and an Aeronaut's Draught each change that roll as their cards say.
 
 ### Winter
 
+{{fig:plate:event-hard-frost,plate:vehicle-veh-13|Under a Hard Frost the water freezes and only a sled team crosses it.}}
+
 While a Hard Frost card is in play, and on tundra and mountain at any time, marsh, river, lake and shallow water are frozen. A sled crosses frozen water at the pace in the table; no other land mode may enter it, and no barge or ship may. When the frost lifts, a sled standing on a marsh or a water hex is lost with its cargo, so move it before the round ends.
 
 ## Roads, rail and bridges
+
+{{fig:plate:tile-steelworks,plate:tile-rail-depot|Rail wants a steelworks to own it and a depot to board it.}}
 
 A road, a rail line or a bridge is built onto a hex rather than into a town, and it belongs to the player who paid for it for the rest of the game. Lay a route token along the hex's edge as it is finished; the token is the record, and an unmarked road belongs to nobody.
 
@@ -104,6 +124,8 @@ Cargo that starts or ends its journey in a settlement your own road or rail reac
 
 ## Food and sleep on the road
 
+{{fig:plate:item-bag|margin|The pack: rations in it wear down a rung for every figure they feed.}}
+
 A party out of town keeps itself. Two different things are spent, and they are mended two different ways:
 
 - **Every figure eats {{rules.upkeep.food.perFigurePerRound}} food a round**, from what the party carries, forages or buys. A figure that ends the round unfed loses 1 health, and being fed again does not put it back. A pack of rations is an item whose wear is the days left in it: knock its ladder down a rung for every figure it feeds. Other food a party carries is a commodity, and a perishable one rolls the spoil die every round it is in the pack.
@@ -115,6 +137,8 @@ A figure at 0 health is carried to the nearest settlement and stays there until 
 
 ## Settlements and inns
 
+{{fig:tile:inn|margin|The inn tile; every printed settlement has one of its rank.}}
+
 The map prints settlements in four ranks — village, town, city and seat — and they belong to nobody. Every printed settlement has an inn of its rank; a town of your own has one when you build it. An inn does four things:
 
 | At the inn | The rule |
@@ -123,5 +147,7 @@ The map prints settlements in four ranks — village, town, city and seat — an
 | Hirelings | At any settlement of village rank or better: a thug, a militiaman or a hired blade escorts one journey — a party or a cargo — for a flat fee, eats nothing, and goes home. See [Monsters and battle](12-battle.md) |
 | Rumours | Pay 5 coin and draw a quest card; accept it or decline it. See [Quests and campaigns](15-quests-and-campaigns.md) |
 | Drinks | Serve ale or wine to clear the town's unrest. See [People, food and unrest](07-people.md) |
+
+{{fig:plate:event-mercenaries-for-hire|margin|Hirelings escort one journey for a flat fee, eat nothing, and go home.}}
 
 A settlement is also where you shop and sell: what a merchant deals, and how a town's rank sets its stock, is in [Trade and the market](09-trade-and-the-market.md). A vehicle is repaired at any settlement of town rank or better.
