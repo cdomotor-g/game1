@@ -508,6 +508,57 @@ or thumbed corner, a crease, a soft fold, die marks, an edge worn pale. Anything
 that looks like the page was *used* rather than like something was *set down on
 it*.
 
+## The book is three sources, and only one of them is rules
+
+`docs/book/index.html` is the printed book — *The Almanac* — and it is generated
+by `tools/build-book.mjs` from three kinds of source that must not be confused:
+
+**`docs/rules/*.md` is Book I, and it is the only part written by hand.** It says
+what a table needs to know to play and nothing else: present tense, second
+person, steps and tables, no "this used to be", no file names, no reasoning. The
+reasoning is `docs/design/`, which the book prints last as the design notes. A
+rule stated in a design doc and not in a rules chapter is a rule the table does
+not have; a rationale pasted into a rules chapter is the thing this split exists
+to keep out. **No constant is typed into a chapter** — it is a `{{data.path}}`
+token (`{{rules.wear.perUse}}`, `{{count:monsters.monsters}}`,
+`{{pct:rules.market.buySpread}}`, `{{peoples.peoples[id=elf].manaStorage.innate}}`)
+that `tools/lib/book.mjs` resolves at build time and fails on when the path does
+not exist. What the data leaves undecided is written as one `> **Open.** …`
+blockquote, never filled with a plausible number. `docs/rules/README.md` is the
+contract.
+
+**Everything after Book I is generated.** Annex I is `docs/design/14-annex.md`,
+split into one table per `##` heading. Annex II is the catalogue: one entry per
+thing in the base game, drawn from the same `data/*.json` and the same plates the
+cards are built from, at half a page for a character, a monster, a building or a
+vehicle and a quarter for everything else, showing the plate WHOLE — never the
+card window's crop. Then one annex per campaign — *Campaign I* is Homer's
+Odyssey — carrying the rules of it, its board, its cast and monsters at half a
+page each, every chapter card in order, and what it teaches; and one per
+expansion. **Which set a thing belongs to is a tag on the record**: `campaign`
+(resolved against `campaigns.json`) or `expansion` (against
+`data/expansions.json`, empty until the first exists). Untagged is the base game.
+Nothing about an entry is authored in the book tool: the strip is the card's
+strip, the recipe the card's recipe, the jobs the recipes that name the building.
+A plate not yet drawn is a ruled window with the deck's own device in it, so the
+book is complete the day the data is.
+
+**Every section opens on a title page with a plate from the catalogue, and every
+section and chapter prints on its own** — the *Print…* picker, the button on a
+title page, or `?print=rules,annex-2` in the URL. The faces are OFL and committed
+under `docs/book/fonts/` (`fonts/README.md` says which and why); the book must
+set the same off disk as on the site, so nothing loads a font from the network.
+The look lives in `tools/lib/book.css`, filled from `docs/art/palette.json`: the
+book has no colours of its own.
+
+**The book is never seen by any check, so look at it.** `node tools/book-proof.mjs
+[section…]` prints it through a headless Chromium into `docs/book/proofs/`,
+git-ignored, exactly as a reader's browser would with those boxes ticked. A
+title page whose plate had slipped onto the next page passed every other check
+in this repository; a grid title page on a named `@page` does that under
+Chromium's fragmentation, which is why the title pages are block flow with
+fixed millimetre rows and must stay so.
+
 ## Nothing here draws the thing you are about to ship — so look at it
 
 Every check in this repository proves something about the numbers. None of them
@@ -609,7 +660,7 @@ node tools/build-market.mjs    # regenerate docs/markets/ - the rules sheet AND 
 node tools/build-ledger.mjs    # regenerate docs/ledger/ from ledger + components
 node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap + terrain
 node tools/build-tiles.mjs     # regenerate docs/tiles/ from buildingtiles + buildings + recipes
-node tools/build-book.mjs      # regenerate docs/book/ from docs/design/*.md
+node tools/build-book.mjs      # regenerate docs/book/ from docs/rules/, data/ and docs/design/
 node tools/validate-framing.mjs # every crop against its deck's current window
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md
 node tools/build-mint.mjs      # regenerate docs/mint/ from MINT*.md + QUEUE.md

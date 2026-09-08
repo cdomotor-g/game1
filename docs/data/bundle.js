@@ -208,6 +208,13 @@ window.GAME_DATA = {
         "summary": "The two ways to sit down at the table - free play and campaign - the campaigns themselves, and the CAMPAIGN deck: a storyline read in order rather than shuffled. The first is Homer's Odyssey. A campaign brings characters, monsters and a map with it, each a full citizen of its own deck and usable in free play; only the order is the campaign's."
       },
       {
+        "key": "expansions",
+        "file": "expansions.json",
+        "collection": "expansions",
+        "idField": "id",
+        "summary": "Which set a thing arrived with. An `expansion` tag on a character, monster, building, vehicle, modification, tool, item, spell, quest or event files it under that expansion's own annex of the printed book; untagged is the base game; `campaign` (campaigns.json) does the same job for a campaign's cast. Empty until the first expansion exists."
+      },
+      {
         "key": "graph",
         "file": "graph.json",
         "collection": "nodes",
@@ -496,6 +503,66 @@ window.GAME_DATA = {
           "from": "characters",
           "path": "characters[].campaign",
           "to": "campaigns"
+        },
+        {
+          "from": "characters",
+          "path": "characters[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "monsters",
+          "path": "monsters[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "buildings",
+          "path": "buildings[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "vehicles",
+          "path": "vehicles[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "modifications",
+          "path": "modifications[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "tools",
+          "path": "tools[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "items",
+          "path": "items[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "arcana",
+          "path": "spells[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "arcana",
+          "path": "enchantments.cards[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "quests",
+          "path": "quests[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "events",
+          "path": "cards[].expansion",
+          "to": "expansions"
+        },
+        {
+          "from": "peoples",
+          "path": "peoples[].expansion",
+          "to": "expansions"
         },
         {
           "from": "monsters",
@@ -17126,6 +17193,11 @@ window.GAME_DATA = {
         "lesson": "The Odyssey ends not with the slaughter but with a peace: its last lines are Athena's, and the last word of the poem is hers."
       }
     ]
+  },
+  "expansions": {
+    "$comment": "The EXPANSION system: which things in the box arrived with which set.\n\nThe game is one box until it is not. A CAMPAIGN (data/campaigns.json) brings characters, monsters and a board with it and tags each of them with the campaign's id; an EXPANSION does the same for anything a later set adds to the base game - a new deck of monsters, a run of vehicles, a people. The tag is one field, `expansion`, on the record itself, resolved against the list here the way `campaign` resolves against campaigns.json, and it changes nothing about how the thing plays: an expansion's monster is dealt from the same deck as any other. What the tag decides is where the thing is FILED. The printed book (tools/build-book.mjs) catalogues the base game in one annex, each campaign in its own, and each expansion in its own, so a table that owns the box and not the expansion can print the book it owns - and the tag is how the book knows. The explorer reads the same field.\n\nThere are no expansions yet. The list is here so that the first one is a tag and an entry, not a rewrite: add it below, tag its records, and the annex appears. `plate` names a catalogue plate for its title page (a plate id under docs/art/renders/), `plateFormat` says which way that page is drawn, and `summary` is the paragraph that opens its annex.",
+    "version": "0.1.0",
+    "expansions": []
   },
   "graph": {
     "$comment": "The dependency graph: which collections are THINGS in the web of the game, as opposed to vocabularies that classify their own file. This file declares the NODES only. The arrows are never declared anywhere - docs/js/graph.js computes them from manifest.json references.checks, the same declarations tools/validate-data.mjs enforces, so the graph cannot drift from what the validator guarantees and redraws itself the moment the data moves. A node's id is the collection spec exactly as the checks name it: a dataset key, or dataset.subcollection for a collection that lives inside another file. 'name' is the legend label, singular, because it captions one dot. 'wash' is one of the five chromatic inks in docs/art/palette.json - the graph has no colours of its own - and kinds sharing an ink are a family on purpose: the land is verdigris, goods and folk are ochre, work and danger are oxide, structure and movement are slate, the arcane and the adventure are bruise. Within a family, docs/js/graph.js steps the ink toward soot or paper by declaration order, so the order of this list is meaningful. Drawn by the explorer's Graph tab live from the bundle, and by tools/build-graph.mjs into docs/art/graph/dependencies.svg for the printed rulebook.",

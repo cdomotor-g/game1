@@ -26,3 +26,9 @@ docs/ledger/proof/
 
 node_modules/
 .DS_Store
+
+# And `node tools/book-proof.mjs [section ...]` prints the book, or any section of
+# it, to a PDF through a headless Chromium - the picker's own selection, running
+# heads and page numbers included - so a title page can be looked at before it is
+# shipped. A photograph of a generated page, and not for history either.
+docs/book/proofs/

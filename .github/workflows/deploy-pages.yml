@@ -156,8 +156,10 @@ jobs:
       - name: Fail if the committed element icons are stale
         run: node tools/build-icons.mjs --check
 
-      # The rulebook is docs/design/*.md rendered to one page, committed for the
-      # same reason: GitHub Pages serves markdown as plain text.
+      # The printed book is docs/rules/*.md, the annexes generated from data/ and
+      # docs/design/*.md rendered to one page, committed for the same reason:
+      # GitHub Pages serves markdown as plain text. It fails on a rules chapter
+      # whose {{data.path}} token no longer resolves.
       - name: Fail if the committed rulebook is stale
         run: node tools/build-book.mjs --check
 

@@ -90,6 +90,7 @@ printed — see [12-what-simulation-found.md](12-what-simulation-found.md).
 | [13-adventure.md](13-adventure.md) | Travel, discovery, monsters, mana, quests — the open world |
 | [14-annex.md](14-annex.md) | Every reference table, generated from the data |
 | [15-campaign.md](15-campaign.md) | Campaign mode — a storyline over the same game — and Homer's Odyssey |
+| [../rules/](../rules/README.md) | The rulebook itself — Book I of the printed book — which says what the rules are and leaves the why to the documents above |
 | [../GLOSSARY.md](../GLOSSARY.md) | Commodity vs effort vs deposit, and the rest |
 | [../art/README.md](../art/README.md) | What all of it looks like, in both editions |
 
