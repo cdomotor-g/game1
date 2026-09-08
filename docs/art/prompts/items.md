@@ -602,6 +602,83 @@ window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
 not a rule of thumb.)
 ```
 
+## item-arrows-10 — Ten Arrows *(ITEMS deck · gear, carried, ITM-15)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-arrows-10.png` — see `docs/art/AGENTS.md` for how.
+
+```text
+[PREAMBLE]
+
+A sheaf of ten arrows lying flat on a bench, seen from a little above and
+along their length, with no quiver anywhere on the page: ten straight pale
+shafts of a single length, bound once about a third of the way up from the
+heads with a twist of waxed cord tied off in a simple knot, the ends of the
+cord left long and lying loose across the shafts. Above the binding the
+sheaf opens into a shallow fan so that every shaft can be counted and no two
+overlap for long. Each is fletched with three low trimmed feathers bound at
+both ends with fine thread, the vanes cut square at the back and tapered at
+the front; the nocks are cut square and one is bound with a turn of thread
+against splitting. The heads are simple leaf broadheads socketed onto the
+shafts and whipped at the socket, laid all one way; one of the ten is a
+narrow bodkin rather than a broadhead, and one broadhead is bent a little
+out of the plane of its shaft. Two loose feathers and a curl of shaving lie
+on the bench beside the sheaf. Wash: warm ochre on the shafts and the loose
+shaving, cold slate blue on the heads, rust red on the binding cord and the
+fletching thread, flat; the feather vanes left as bare paper.
+
+FRAMING. Square plate, whole page drawn edge to edge. The full length of
+every shaft from head to nock, the binding and its loose cord ends, the
+whole fan of fletchings and all ten heads inside the middle 81%. Low bench
+line in the bottom third with the sheaf resting along it. Clear, quiet page
+above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
+## item-arrows-20 — Twenty Arrows *(ITEMS deck · gear, carried, ITM-16)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-arrows-20.png` — see `docs/art/AGENTS.md` for how.
+
+```text
+[PREAMBLE]
+
+Two bound sheaves of arrows lying in an opened war-bag on a bench, seen from
+a little above and along their length, with no quiver anywhere on the page:
+a long flat bag of coarse canvas unrolled flat so that its far flap lies
+back behind the arrows as a plain band, its near edge folded down, and the
+two sheaves lying in it side by side and slightly staggered so that the
+heads of the far sheaf show above the shafts of the near one. Each sheaf is
+ten straight pale shafts bound once with a twist of waxed cord about a third
+of the way up from the heads, fanning a little above the binding; each shaft
+is fletched with three low trimmed feathers bound at both ends with fine
+thread and the nocks are cut square. The heads are simple leaf broadheads
+socketed and whipped, all laid one way. Two cloth ties are stitched to the
+near edge of the bag and hang open and uncrossed, one of them frayed to a
+few threads at the tip. The canvas is rubbed pale and furred along the fold,
+and a small dark stain spreads at one end where it has stood in wet grass.
+Wash: warm ochre on the shafts, rust red on the canvas, the binding cord and
+the ties, cold slate blue on the heads, flat; the feather vanes left as bare
+paper.
+
+FRAMING. Square plate, whole page drawn edge to edge. The full length of
+both sheaves from heads to nocks, both bindings, both fans of fletchings,
+the unrolled bag from fold to far flap and both cloth ties inside the middle
+81%. Low bench line in the bottom third with the bag lying along it. Clear,
+quiet page above.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 81% of its height - everything that matters
+must sit between 9% and 91% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+not a rule of thumb.)
+```
+
 ## item-sword — Sword *(WEAPONS deck · weapon, hand, WPN-01)*
 
 > ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-sword.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.

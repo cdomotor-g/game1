@@ -15,7 +15,7 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 149/203 · maps 1/1 · building tiles 44/54**
+**cards 149/205 · maps 1/1 · building tiles 44/54**
 
 > **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 41 of 41 are under the 1890 px this line would want for print — smallest is `CHR-12` at 1488 px. That is an aspiration, not a fault.
 
@@ -32,13 +32,13 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**149 of 203 minted.** 0 waiting on a brief, 54 waiting on art, 0 waiting on frame.
+**149 of 205 minted.** 0 waiting on a brief, 56 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 54 cards
+### 2 · DRAW — the artist — 56 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi), 1299 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -97,6 +97,8 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `ITM-12` | Compass | Items | `item-compass` | ✓ | · | · |
 | `ITM-13` | Three-Day Rations | Items | `item-rations-3-day` | ✓ | · | · |
 | `ITM-14` | Ten-Day Rations | Items | `item-rations-10-day` | ✓ | · | · |
+| `ITM-15` | Ten Arrows | Items | `item-arrows-10` | ✓ | · | · |
+| `ITM-16` | Twenty Arrows | Items | `item-arrows-20` | ✓ | · | · |
 | `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
 ### 3 · FRAME — whoever accepts the plate

@@ -878,6 +878,8 @@ Kit that is not for fighting, wearing or drinking: rope, a hook, a bag, a glass.
 | Waterskin (ITM-10) | tailor | 1 leather | 1 | 20 | 1 kg | 6 | Holds 3 draughts. Filled in an hour at a well, a marsh or fresh water, with no barrel (recipes.json draw-water). Spend a draught to Forage on desert or tundra, which recipes.json forage otherwise forbids. Wears 1 each time it is drunk dry. |
 | Map (ITM-11) | trading-house | 1 parchment | 3 | 70 | 0.25 kg | 6 | +1 hex on a day leg between two settlements printed on it (travel.json legs.day). Once a round, learn the price band of one commodity family in any settlement it covers, without going there. Wears 1 for every round it is unfolded. |
 | Compass (ITM-12) | blacksmith | 1 copper + 1 glass | 4 | 95 | 0.25 kg | 8 | A night leg under a lantern runs at full day speed rather than half (travel.json night.lantern). Its extra discovery roll is made at the ordinary monster band (rules.json movement.legs.nightRisk). Wears 1 for every night leg it steers. |
+| Ten Arrows (ITM-15) | carpenter | 1 lumber | 1 | 14 | 0.25 kg | 5 | Shot from a quiver, and no use to anybody without one. Each battle with a bow or a crossbow spends 1, from the sheaf before the quiver. The uses ARE the wear: an empty sheaf is a spent sheaf. |
+| Twenty Arrows (ITM-16) | carpenter | 2 lumber | 2 | 26 | 0.5 kg | 10 | Shot from a quiver, and no use to anybody without one. Each battle with a bow or a crossbow spends 1, from the bag before the quiver. The uses ARE the wear: an empty bag is a spent bag. |
 
 ### Provision
 

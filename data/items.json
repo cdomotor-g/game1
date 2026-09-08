@@ -153,6 +153,15 @@
       "story": "The crossing pack: ten days in a bound sack with the seams doubled, sold at every granary within a week of the desert and nowhere else at all.",
       "effects": ["Ten days' food: one rung of the W track for every figure fed at the end of a round (rules.json upkeep.food).", "The uses ARE the wear: an empty sack is a spent sack.", "Eight kilograms - most of what strength 3 can shoulder (rules.json carrying)."] },
 
+    { "id": "arrows-10", "name": "Ten Arrows", "class": "gear", "cardCode": "ITM-15", "slot": "carried", "madeAt": "carpenter",
+      "inputs": [{ "commodity": "lumber", "qty": 1 }], "effortHours": 1, "baseValue": 14, "massKg": 0.25, "wear": 5, "uses": 5,
+      "story": "A sheaf of ten, bound at the neck with a twist of cord. An archer looses a dozen in a fight and walks the field afterwards for most of them; what this card counts is the two that split on a shield or go into the grass.",
+      "effects": ["Shot from a quiver, and no use to anybody without one.", "Each battle with a bow or a crossbow spends 1, from the sheaf before the quiver.", "The uses ARE the wear: an empty sheaf is a spent sheaf."] },
+    { "id": "arrows-20", "name": "Twenty Arrows", "class": "gear", "cardCode": "ITM-16", "slot": "carried", "madeAt": "carpenter",
+      "inputs": [{ "commodity": "lumber", "qty": 2 }], "effortHours": 2, "baseValue": 26, "massKg": 0.5, "wear": 10, "uses": 10,
+      "story": "Two sheaves in a war-bag, which is what a village fletcher sells to somebody who has said where the road goes. The same arrows, twice as long between fletchers, and still the cheapest line on any archer's bill.",
+      "effects": ["Shot from a quiver, and no use to anybody without one.", "Each battle with a bow or a crossbow spends 1, from the bag before the quiver.", "The uses ARE the wear: an empty bag is a spent bag."] },
+
     { "id": "potion-vigour", "name": "Draught of Vigour", "class": "potion", "madeAt": "alchemist",
       "inputs": [{ "commodity": "arcane-herb", "qty": 2 }, { "commodity": "honey", "qty": 1 }], "effortHours": 3, "baseValue": 70, "massKg": 0.25,
       "effects": ["Step one worker's effort die up two sizes for one round."] },
