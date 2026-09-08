@@ -18,7 +18,7 @@ Three ideas run through every chapter that follows.
 
 Free play is for two to five players. A campaign says how many it seats: Homer's Odyssey takes {{campaigns.campaigns[id=homers-odyssey].players.min}} to {{campaigns.campaigns[id=homers-odyssey].players.max}}.
 
-Each player has a hero on the map, named by one of the {{count:characters.characters}} character cards; a player board that hero's card sits in; a starting town with its workers; and a purse of {{rules.currency.startingAmount}} coin. Setting all of it out is [Setting up](03-setting-up.md).
+Each player has a hero on the map, named by one of the {{count:characters.characters}} character cards; a player board that hero's card sits in; a starting town with its workers; and the purse of coin its character card prints. Setting all of it out is [Setting up](03-setting-up.md).
 
 The table also keeps one spare player board. When a monster or a stranger is met on the road, its card is dealt onto that board and it is played, for as long as the meeting lasts, by the player on the left of whoever met it — a seat at the table that happens not to be a person. See [Discovery and encounters](11-discovery.md).
 

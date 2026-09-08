@@ -32,6 +32,7 @@ import { loadData, interpolate, openCatalogue, sheets, roman, word, inline, esc 
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const RULES = join(ROOT, 'docs', 'rules');
+const REVIEW = join(ROOT, 'docs', 'review');
 const DESIGN = join(ROOT, 'docs', 'design');
 const OUT_DIR = join(ROOT, 'docs', 'book');
 const OUT = join(OUT_DIR, 'index.html');
@@ -48,6 +49,7 @@ const GAME = 'game1';
 
 const slugOf = (s) => s.replace(/\.md$/, '');
 const rulesFiles = existsSync(RULES) ? readdirSync(RULES).filter((f) => /^\d\d-.*\.md$/.test(f)).sort() : [];
+const reviewFiles = existsSync(REVIEW) ? readdirSync(REVIEW).filter((f) => /^\d\d-.*\.md$/.test(f)).sort() : [];
 const designFiles = readdirSync(DESIGN).filter((f) => /^\d\d-.*\.md$/.test(f) && f !== '14-annex.md').sort();
 
 /* Where a `NN-name.md` link points once everything is one page: a rules file to
@@ -62,7 +64,7 @@ function rewriteHref(href) {
     if (frag && annexSlugHome.has(frag)) return `#${annexSlugHome.get(frag)}--${frag}`;
     return '#annex-1';
   }
-  const prefix = rulesFiles.includes(file) ? 'rules' : 'design';
+  const prefix = rulesFiles.includes(file) ? 'rules' : reviewFiles.includes(file) ? 'review' : 'design';
   return `#${prefix}-${slugOf(file)}${frag ? `--${frag}` : ''}`;
 }
 
@@ -82,6 +84,22 @@ function rulesChapter(file, n) {
   return {
     id, title, kind: 'text',
     html: `<header class="chap"><div class="num">Chapter ${roman(n)}</div><h2 class="title">${escapeHtml(title)}</h2>${lede ? `<p class="lede">${lede}</p>` : ''}${ORNAMENT}</header>${body}`,
+  };
+}
+
+/** An addendum chapter: the review, written by hand like the rules and set the same way,
+    with the {{ }} tokens so a finding that cites a number cannot cite a stale one. */
+function reviewChapter(file, n) {
+  const id = `review-${slugOf(file)}`;
+  const src = interpolate(readFileSync(join(REVIEW, file), 'utf8'), data, `docs/review/${file}`);
+  const { title, html } = renderMarkdown(src, { rewriteHref, fallbackTitle: file });
+  let body = scopeIds(html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, ''), id);
+  let lede = '';
+  body = body.replace(/^<p>([\s\S]*?)<\/p>\n?/, (_, p) => { lede = p; return ''; });
+  body = body.replace(/<blockquote><p><strong>Open\.?<\/strong>/g, '<blockquote class="open"><p><strong>Open.</strong>');
+  return {
+    id, title, kind: 'text',
+    html: `<header class="chap small"><div class="num">Addendum I · ${roman(n)}</div><h2 class="title">${escapeHtml(title)}</h2>${lede ? `<p class="lede">${lede}</p>` : ''}${ORNAMENT}</header>${body}`,
   };
 }
 
@@ -327,6 +345,18 @@ sections.push({
   plate: 'vehicle-veh-01', plateFormat: 'landscape', plateAlt: 'The Reach Flyer', caption: 'The Reach Flyer · VEH-01',
   chapters: designFiles.map(designChapter),
 });
+
+/* The addendum: what a review of the rules found, and what to do about each
+   finding. Hand-written in docs/review/, one file per kind of finding, and
+   printed last so a table can carry it with the rules or leave it in the box. */
+if (reviewFiles.length) {
+  sections.push({
+    id: 'addendum-1', label: 'Addendum I', title: 'The Review',
+    subtitle: 'what a hard reading of the rules found, and what to do about each finding',
+    plate: 'character-chr-06', plateFormat: 'portrait', plateAlt: 'Doctor Elspeth Marrow', caption: 'Doctor Elspeth Marrow · CHR-06',
+    chapters: reviewFiles.map((f, i) => reviewChapter(f, i + 1)),
+  });
+}
 
 /* -------------------------------------------------------------- the page */
 

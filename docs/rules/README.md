@@ -5,6 +5,14 @@ only pages of the book a table needs to play from, and they are the only pages
 written by hand: every annex after them is generated from `data/*.json` by
 `tools/build-book.mjs`, and the design notes at the back are `docs/design/`.
 
+**A finding against a chapter goes in `docs/review/`, not in the chapter.** That
+folder is Addendum I of the book — what an adversarial reading found, one
+`### R-nn` finding at a time with a severity and a status, and a `### P-nn`
+proposal for each one that needs a decision. It resolves the same tokens as a
+chapter and is written to the same standard, but it is not rules: a proposal
+becomes a rule only when the data carries it and a chapter says it, and the
+finding is then marked Corrected rather than deleted.
+
 **A chapter says what the rule is, never why.** The history of a rule — what it
 replaced, what went wrong the first time — lives in `docs/design/`, and a rulebook
 that opened with it was the thing this split fixed. Present tense, second person,

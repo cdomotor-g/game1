@@ -511,7 +511,8 @@ it*.
 ## The book is three sources, and only one of them is rules
 
 `docs/book/index.html` is the printed book — *The Almanac* — and it is generated
-by `tools/build-book.mjs` from three kinds of source that must not be confused:
+by `tools/build-book.mjs` from three kinds of source that must not be confused,
+plus one addendum that is neither rules nor reasoning:
 
 **`docs/rules/*.md` is Book I, and it is the only part written by hand.** It says
 what a table needs to know to play and nothing else: present tense, second
@@ -550,6 +551,19 @@ under `docs/book/fonts/` (`fonts/README.md` says which and why); the book must
 set the same off disk as on the site, so nothing loads a font from the network.
 The look lives in `tools/lib/book.css`, filled from `docs/art/palette.json`: the
 book has no colours of its own.
+
+**`docs/review/*.md` is Addendum I — the review — and it is the one place a
+finding against the rules lives.** It is hand-written like Book I and resolves
+the same `{{data.path}}` tokens, but it is not rules: it is what an adversarial
+reading of the chapters found, one finding per `### R-nn` heading with a
+**Severity** (breaks play / wrong / exploit / unclear / nit) and a **Status**
+(Corrected / Proposed / Open), and one `### P-nn` proposal for every finding that
+needs a decision, written as the rule it would become plus the data edit that
+would let a chapter print it. A finding is never silently fixed in the
+chapter: correct the chapter AND leave the finding, marked Corrected, so a reader
+of the last printing knows what moved. A proposal that is adopted becomes data
+and a chapter sentence, and its finding is then marked Corrected; nothing in the
+addendum is a rule until then. The book prints it last, after the design notes.
 
 **The book is never seen by any check, so look at it.** `node tools/book-proof.mjs
 [section…]` prints it through a headless Chromium into `docs/book/proofs/`,
@@ -660,7 +674,7 @@ node tools/build-market.mjs    # regenerate docs/markets/ - the rules sheet AND 
 node tools/build-ledger.mjs    # regenerate docs/ledger/ from ledger + components
 node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap + terrain
 node tools/build-tiles.mjs     # regenerate docs/tiles/ from buildingtiles + buildings + recipes
-node tools/build-book.mjs      # regenerate docs/book/ from docs/rules/, data/ and docs/design/
+node tools/build-book.mjs      # regenerate docs/book/ from docs/rules/, docs/review/, data/ and docs/design/
 node tools/validate-framing.mjs # every crop against its deck's current window
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md
 node tools/build-mint.mjs      # regenerate docs/mint/ from MINT*.md + QUEUE.md

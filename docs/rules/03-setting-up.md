@@ -93,7 +93,8 @@ Each kind hides only under certain ground; which terrains hold which deposit is 
 
 1. **Every good begins at its base value.** A commodity's six prices are printed as one row of six figures in Annex I, *The market and every price*, at ×{{rules.market.priceBands}} of its base value; the base value is the third figure of the row. Nothing is filled in on any ledger at setup. Until the first Market phase every good trades at its base value, and the first roll steps from that figure into row 1.
 2. **Sought goods start on nothing.** There is no move box above row 1, so the first round is played on the dice alone. The mark in a token's corner says which kind of good it is — ![staple](../art/icons/pricing-staple.svg) staple, ![perishable](../art/icons/pricing-perish.svg) perishable, ![finite](../art/icons/pricing-deplete.svg) finite, ![sought](../art/icons/pricing-hype.svg) sought — and each kind's rule is in [Trade and the market](09-trade-and-the-market.md).
-3. **A fresh depletion grid reads 0.** Stand a finite good's token in the seat of an empty grid the first time a unit of it is burnt.
+3. **The board has stock in round 1.** The first time a commodity's token is stood in a ledger seat before the first Market phase, roll two red dice: that is how many units of it the board will sell until the market has been rolled.
+4. **A fresh depletion grid reads 0.** Stand a finite good's token in the seat of an empty grid the first time a unit of it is burnt.
 
 ## Turn order and the first round
 

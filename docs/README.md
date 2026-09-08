@@ -22,8 +22,10 @@ mint/index.html   GENERATED from those two and the live queue, by
                   tools/build-mint.mjs — the readable version, on the site
 rules/            the rulebook chapters - Book I of the printed book - and
                   the only pages of it written by hand. See rules/README.md
-book/index.html   GENERATED printed book from rules/, data/ and design/, by
-                  tools/build-book.mjs; fonts/ are its committed OFL faces
+review/           the adversarial review of the rules - Addendum I of the
+                  printed book, findings and proposals, hand-written like rules/
+book/index.html   GENERATED printed book from rules/, data/, design/ and review/,
+                  by tools/build-book.mjs; fonts/ are its committed OFL faces
 design/           the fifteen design documents; 14-annex.md is GENERATED
                   by tools/build-annex.mjs from data/*.json
 map/              the campaign map: plate, viewer, print sheets

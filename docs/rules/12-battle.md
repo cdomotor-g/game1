@@ -36,7 +36,7 @@ One exchange is one **round of battle**, and a battle is one exchange in each ro
 
 **Gear** is your weapon's battle number plus every piece of armour you are wearing, each added once. A monster's gear is its armour and nothing else; its weapon is itself. A soldier or a hireling fights on its own strength and whatever it carries; a figure without a card fights on its people's strength.
 
-**A third die.** A few things grant an extra die of your own colour — a steel sword, a hired blade, an orc attacking, Ruk of the Red Road guarding a cargo. Roll it and keep the best two. It is the only place in the game where more dice are rolled than are counted. A halfling unit rolls one die fewer.
+**A third die.** A few things grant an extra die of your own colour — a steel sword, a hired blade, an orc attacking, Ruk of the Red Road guarding a cargo. Roll it and keep the best two. It is the only place in the game where more dice are rolled than are counted. A halfling unit rolls one blue die instead of two.
 
 **Wear.** Every weapon swung and every piece of armour worn takes 1 wear at the end of every round of battle, both sides, win or lose. A blow you turned still dented the plate; a sword that goes to 0 mid-fight leaves you swinging with nothing.
 
