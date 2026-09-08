@@ -569,6 +569,22 @@ page's plate. Add a plate and every one of those picks it up on the next build;
 nothing is listed twice. If a page is bare, the fix is a `{{fig:}}` in its
 chapter or a name in its text, never an image tag.
 
+**The book reads a JPEG copy of every plate, never the PNG.** A plate is three
+or four megabytes and the book shows every one of them several times; opening
+it fetched most of a gigabyte, and a browser printing a section with a picture
+on every page held every plate decoded at once and died. `tools/build-book-art.mjs`
+writes `docs/book/art/<plate>.jpg` at the plate's own pixels and `<plate>-s.jpg`
+at `components.json book.figureLongSidePx` for the figures, thumbnails, friezes
+and inlined card windows that print under fifty millimetres, through the same
+headless Chromium `card-proof` uses; `index.json` beside them holds the digest of
+the PNG each was made from, which is what `--check` compares on a fresh clone.
+They are committed like the card fronts. The PNG in `docs/art/renders/` is still
+the plate and nothing about it changes. A built card or tile draws its plate
+with `<image href>`, which a browser will not fetch through `<img>`, so cards
+and tiles are inlined into the page with their ids prefixed per copy.
+`node tools/book-proof.mjs <section> --split` prints a section a chapter at a
+time, which is the only way a headless Chromium gets through Book I.
+
 **`docs/review/*.md` is Addendum I — the review — and it is the one place a
 finding against the rules lives.** It is hand-written like Book I and resolves
 the same `{{data.path}}` tokens, but it is not rules: it is what an adversarial
@@ -691,6 +707,7 @@ node tools/build-market.mjs    # regenerate docs/markets/ - the rules sheet AND 
 node tools/build-ledger.mjs    # regenerate docs/ledger/ from ledger + components
 node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap + terrain
 node tools/build-tiles.mjs     # regenerate docs/tiles/ from buildingtiles + buildings + recipes
+node tools/build-book-art.mjs  # JPEG copies of new or changed plates -> docs/book/art/ (needs Chromium; --check does not)
 node tools/build-book.mjs      # regenerate docs/book/ from docs/rules/, docs/review/, data/ and docs/design/
 node tools/validate-framing.mjs # every crop against its deck's current window
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md

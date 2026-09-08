@@ -156,6 +156,9 @@ jobs:
       - name: Fail if the committed element icons are stale
         run: node tools/build-icons.mjs --check
 
+      - name: Fail if the book's JPEG copies of the plates are missing or stale
+        run: node tools/build-book-art.mjs --check
+
       # The printed book is docs/rules/*.md, the annexes generated from data/ and
       # docs/design/*.md rendered to one page, committed for the same reason:
       # GitHub Pages serves markdown as plain text. It fails on a rules chapter

@@ -134,7 +134,9 @@ export function openCatalogue(root, { data }) {
   const decks = data.components.decks;
   const deckByPrefix = (p) => decks.find((d) => d.prefix === p);
   const hasPlate = (id) => existsSync(join(RENDERS, `${id}.png`));
-  const plateSrc = (id) => `../art/renders/${id}.png`;
+  /* the book's own JPEG copy of the plate where tools/build-book-art.mjs has made one */
+  const BOOKART = join(root, 'docs', 'book', 'art');
+  const plateSrc = (id) => (existsSync(join(BOOKART, `${id}.jpg`)) ? `art/${id}.jpg` : `../art/renders/${id}.png`);
   const byId = (arr) => new Map(arr.map((x) => [x.id, x]));
 
   const commodities = byId(data.commodities.commodities);
@@ -209,7 +211,7 @@ export function openCatalogue(root, { data }) {
   /* The built card, at a little under half its printed size, beside a half-page
      entry: the plate is the page the card was cut from, and this is the cut. */
   const CARDS = join(root, 'docs', 'cards');
-  const cardInset = (c) => (c && existsSync(join(CARDS, `${c}.svg`)) ? `<figure class="cardinset">${inlineSvg(join(CARDS, `${c}.svg`))}<figcaption>the card · ${esc(c)}</figcaption></figure>` : '');
+  const cardInset = (c) => (c && existsSync(join(CARDS, `${c}.svg`)) ? `<figure class="cardinset">${inlineSvg(join(CARDS, `${c}.svg`), { root })}<figcaption>the card · ${esc(c)}</figcaption></figure>` : '');
 
   /* --- one entry per kind ------------------------------------------------ */
 
@@ -283,7 +285,7 @@ export function openCatalogue(root, { data }) {
     if (tile && existsSync(tileFile)) {
       const m = readFileSync(tileFile, 'utf8').match(/width="([\d.]+)" height="([\d.]+)"/);
       const u = data.components.stock.unitsPerMm;
-      if (m) piece = `<figure class="piece">${inlineSvg(tileFile, { attrs: `style="width:${(+m[1] / u).toFixed(2)}mm;height:${(+m[2] / u).toFixed(2)}mm"` })}<figcaption>the tile, actual size · ${CELLS[tile.cells.length] ?? tile.cells.length}</figcaption></figure>`;
+      if (m) piece = `<figure class="piece">${inlineSvg(tileFile, { root, attrs: `style="width:${(+m[1] / u).toFixed(2)}mm;height:${(+m[2] / u).toFixed(2)}mm"` })}<figcaption>the tile, actual size · ${CELLS[tile.cells.length] ?? tile.cells.length}</figcaption></figure>`;
     }
     const format = tile ? (tile.cells.length === 1 || tile.shape === 'single' ? 'square' : 'landscape') : 'square';
     return {

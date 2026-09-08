@@ -79,7 +79,9 @@ img[src*="icons/element-"], img[src*="icons/pricing-"] { width: 1.25em; height: 
 .orn { display: block; width: 44mm; height: 3mm; margin: 2mm auto 0; color: var(--t55); }
 
 /* --------------------------------------------------------- chapter heads */
-.chapter { border-top: .4pt solid var(--t25); padding-top: 9mm; margin-top: 12mm; }
+/* flow-root: a chapter keeps its own floats. A margin figure at the end of one chapter
+   used to be carried by the page break onto the next chapter's opening page. */
+.chapter { display: flow-root; border-top: .4pt solid var(--t25); padding-top: 9mm; margin-top: 12mm; }
 .chapter:first-of-type { border-top: none; }
 header.chap { text-align: center; margin: 0 0 7mm; }
 header.chap .num { font-family: var(--sc); font-size: 10pt; letter-spacing: .22em; color: var(--t70); }
@@ -329,3 +331,8 @@ svg.inl { display: block; }
 .cardinset svg.inl { border-radius: 1mm; box-shadow: 0 .5mm 1.5mm rgba(26,23,20,.22); }
 .fig .fp.card svg.inl { box-shadow: 0 .6mm 1.6mm rgba(26,23,20,.22); border-radius: 1.2mm; }
 .tfrieze .fp.card svg.inl { border-radius: 1mm; box-shadow: 0 .5mm 1.5mm rgba(26,23,20,.2); }
+/* the tailpiece: a row of what the chapter named and did not show, after its last line */
+.fig.row.tail { margin: 5mm 0 0; padding-top: 3mm; border-top: .4pt solid var(--t25); justify-content: center; }
+.fig.row.tail .fp { max-width: 34mm; }
+.card-chapter .plate.stand-in figcaption { font: italic 7.4pt/1.25 var(--display); color: var(--t70); margin-top: .8mm; }
+.titlepage.contents .tfrieze { margin: 5mm 0 2mm; }

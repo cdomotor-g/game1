@@ -14848,6 +14848,12 @@ window.GAME_DATA = {
         "gutterMm": 2,
         "$note": "A4 portrait. Every tile prints at its own true size and they FLOW across the page - each one in its own bounding box, gutter between - rather than nesting on a shared hex lattice.\n\nThat is a deliberate deferral, not an oversight. Hexes do nest, and nesting is why everything loose in this game is a hexagon (see tokens above): butted on a lattice, one cut line serves two pieces. But four different polyhex shapes on one lattice is a packing problem, and a packing that is nearly right wastes more paper than the flow does while being far harder to check. It is worth solving the day these are die-cut in quantity, and worth nothing while they are scissors-and-a-prototype - which is what they are until the plates land."
       }
+    },
+    "book": {
+      "$comment": "The printed book (docs/book/) reads a JPEG copy of every plate rather than the PNG, written by tools/build-book-art.mjs into docs/book/art/ and committed. A copy at the plate's own pixel size stands in for it on a title page and in the catalogue; a small one, figureLongSidePx on its long side, is what a margin figure, a table thumbnail, a frieze piece and an inlined card's window are printed from - none of them is wider than fifty millimetres on the page, which at three hundred dots an inch is six hundred pixels. The qualities are JPEG's 0..1; the plates are hatched, and hatching is what JPEG spends its bytes on, so the full copy is held a little lower than the small one.",
+      "figureLongSidePx": 640,
+      "plateJpegQuality": 0.72,
+      "figureJpegQuality": 0.78
     }
   },
   "mint": {

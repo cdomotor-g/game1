@@ -180,6 +180,7 @@ tools/
   build-cards.mjs    data/*.json + art/renders → docs/cards/, fronts and backs
   build-board.mjs    data/playerboard.json + components.json → docs/boards/
   build-icons.mjs    data/{arcana,pricing}.json → docs/art/icons/, the marks
+  build-book-art.mjs docs/art/renders/*.png → docs/book/art/*.jpg, the copies the book reads
   build-book.mjs     docs/{rules,review}/*.md + data/*.json + docs/design/*.md → docs/book/,
                      the printed book, every section printable on its own
   book-proof.mjs     prints the book, or any section of it, to a PDF to look at
@@ -286,6 +287,7 @@ node tools/build-market.mjs    # regenerate the market board and depletion sheet
 node tools/build-ledger.mjs    # regenerate the price ledger
 node tools/build-minimaps.mjs  # regenerate the mini-map sheets
 node tools/build-tiles.mjs     # regenerate the building tiles
+node tools/build-book-art.mjs  # JPEG copies of new or changed plates for the book
 node tools/build-book.mjs      # regenerate the printable design book
 node tools/mint-queue.mjs      # regenerate the mint worklist
 node tools/build-mint.mjs      # regenerate the mint page on the site

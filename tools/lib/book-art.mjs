@@ -54,7 +54,18 @@ export function artIndex(root, data) {
   const FLOWS = join(root, 'docs', 'art', 'flows');
   const ICONS = join(root, 'docs', 'art', 'icons');
   const entries = new Map();
-  const add = (e) => { if (e.src?.startsWith('../')) e.abs = join(root, 'docs', e.src.slice(3)); entries.set(e.ref, e); return e; };
+  const BOOKART = join(root, 'docs', 'book', 'art');
+  const add = (e) => {
+    if (e.src?.startsWith('../')) e.abs = join(root, 'docs', e.src.slice(3));
+    /* a drawn plate is shown from its JPEG copy (tools/build-book-art.mjs) when
+       there is one: the same pixels, a fifth of the bytes; the small copy is for
+       anything printed under fifty millimetres */
+    if (e.what === 'plate' || e.what === 'map') {
+      const id = e.what === 'map' ? `map-${e.id}` : e.ref.slice(6);
+      if (existsSync(join(BOOKART, `${id}.jpg`))) { e.png = e.src; e.src = `art/${id}.jpg`; e.small = `art/${id}-s.jpg`; }
+    }
+    entries.set(e.ref, e); return e;
+  };
   const file = (abs, rel) => (existsSync(abs) ? { abs, src: rel } : null);
   const shape = ({ w, h }) => (w / h > 1.15 ? 'landscape' : w / h < 0.87 ? 'portrait' : 'square');
 
@@ -109,11 +120,13 @@ export function artIndex(root, data) {
   ];
   const MM = join(root, 'docs', 'minimaps', 'sheets');
   if (existsSync(MM)) for (const f of readdirSync(MM).filter((f) => f.startsWith('field-') && f.endsWith('.svg'))) sheets.push([`minimap-${f.slice(6, -4)}`, `docs/minimaps/sheets/${f}`, `A mini-map sheet: ${f.slice(6, -4).replace(/-/g, ' ')}`]);
+  const BOARD_NAMES = { player: ['player board', 'encounter board', 'spare board'], market: ['market board', 'swing ruler'], depletion: ['depletion sheet', 'depletion grid'], ledger: ['price ledger', 'ledger'] };
   for (const [id, rel, name] of sheets) {
     const abs = join(root, rel);
     if (!existsSync(abs)) continue;
     const size = sizeOf(abs);
-    add({ ref: `board:${id}`, kind: 'board', thing: `board:${id}`, id, name, names: [], src: `../${rel.replace(/^docs\//, '')}`, ...size, shape: shape(size), what: 'board' });
+    const e = add({ ref: `board:${id}`, kind: 'board', thing: `board:${id}`, id, name, names: BOARD_NAMES[id] ?? [], src: `../${rel.replace(/^docs\//, '')}`, ...size, shape: shape(size), what: 'board' });
+    if (BOARD_NAMES[id]) byThing.set(`board:${id}`, e);
   }
   for (const m of (Array.isArray(data.maps) ? data.maps : Object.values(data.maps ?? {}))) {
     const id = m.id;
@@ -126,7 +139,7 @@ export function artIndex(root, data) {
     byThing.set(`map:${id}`, e);
   }
   const graph = join(root, 'docs', 'art', 'graph', 'dependencies.svg');
-  if (existsSync(graph)) { const size = sizeOf(graph); add({ ref: 'graph:dependencies', kind: 'graph', thing: 'graph:dependencies', id: 'dependencies', name: 'The web of the data', names: [], src: '../art/graph/dependencies.svg', ...size, shape: shape(size), what: 'graph' }); }
+  if (existsSync(graph)) { const size = sizeOf(graph); byThing.set('graph:dependencies', add({ ref: 'graph:dependencies', kind: 'graph', thing: 'graph:dependencies', id: 'dependencies', name: 'The web of the data', names: ['dependency graph', 'the graph'], src: '../art/graph/dependencies.svg', ...size, shape: shape(size), what: 'graph' })); }
   const styleref = join(root, 'docs', 'art', 'style-reference.png');
   if (existsSync(styleref)) { const size = sizeOf(styleref); add({ ref: 'sheet:style-reference', kind: 'sheet', thing: 'sheet:style-reference', id: 'style-reference', name: 'The style reference sheet', names: [], src: '../art/style-reference.png', ...size, shape: shape(size), what: 'sheet' }); }
   const palette = JSON.parse(readFileSync(join(root, 'docs/art/palette.json'), 'utf8'));
@@ -156,7 +169,7 @@ export function artIndex(root, data) {
   const STOP = new Set(['strike', 'flood', 'glut', 'storms', 'road', 'rail', 'bridge', 'well', 'market', 'mill', 'farm', 'mine', 'hut', 'dock', 'bag', 'pasture', 'shrine', 'hammer', 'saw', 'axe', 'pick']);
   const mentions = [];
   for (const e of new Set(byThing.values())) {
-    if (!['character', 'monster', 'building', 'vehicle', 'people', 'item', 'weapon', 'armour', 'talisman', 'tool', 'spell', 'event', 'modification', 'quest', 'chapter', 'terrain', 'map'].includes(e.kind)) continue;
+    if (!['character', 'monster', 'building', 'vehicle', 'people', 'item', 'weapon', 'armour', 'talisman', 'tool', 'spell', 'event', 'modification', 'quest', 'chapter', 'terrain', 'map', 'board', 'graph'].includes(e.kind)) continue;
     for (const n of e.names) {
       if (!n || n.length < 4 || STOP.has(n.toLowerCase())) continue;
       mentions.push({ name: n, thing: e.thing, entry: e });
@@ -176,9 +189,11 @@ export function artIndex(root, data) {
    the card. Ids are prefixed per copy so two cards on a page do not share a
    clip path. */
 let inlined = 0;
-export function inlineSvg(abs, { attrs = '' } = {}) {
+export function inlineSvg(abs, { attrs = '', root = null } = {}) {
   const pre = `i${++inlined}-`;
   let svg = readFileSync(abs, 'utf8').replace(/<\?xml[^>]*>\s*/, '').replace(/<!DOCTYPE[^>]*>\s*/, '');
+  /* the window is printed small, so it reads the small copy of its plate when there is one */
+  svg = svg.replace(/href="\.\.\/art\/renders\/([^"]+)\.png"/g, (m, id) => (root && existsSync(join(root, 'docs', 'book', 'art', `${id}-s.jpg`)) ? `href="art/${id}-s.jpg"` : m));
   svg = svg.replace(/\bid="([^"]+)"/g, (_, id) => `id="${pre}${id}"`)
     .replace(/url\(#([^)]+)\)/g, (_, id) => `url(#${pre}${id})`)
     .replace(/href="#([^"]+)"/g, (_, id) => `href="#${pre}${id}"`);
@@ -186,22 +201,23 @@ export function inlineSvg(abs, { attrs = '' } = {}) {
 }
 export const inlinesPlate = (e) => e.what === 'card' || e.what === 'tile';
 /** The picture of an entry, as markup: a swatch, an inlined card or tile, or an <img>. */
-export function pictureHtml(e, { attrs = '' } = {}) {
+export function pictureHtml(e, { attrs = '', small = false, root = null } = {}) {
   if (e.inline) return e.inline;
-  if (inlinesPlate(e)) return inlineSvg(e.abs, { attrs });
-  return `<img src="${e.src}" alt="${esc(e.name)}" loading="lazy"${attrs ? ` ${attrs}` : ''}>`;
+  if (inlinesPlate(e)) return inlineSvg(e.abs, { attrs, root });
+  return `<img src="${small && e.small ? e.small : e.src}" alt="${esc(e.name)}" loading="lazy"${attrs ? ` ${attrs}` : ''}>`;
 }
 
 /** Width on the page for a figure size, in mm; a row shares the width between its pieces. */
 const WIDTH = { margin: 42, third: 56, half: 84, wide: 180, row: 180 };
 
-export function figureHtml(pieces, { size = 'margin', caption = '', cls = '', row = null } = {}) {
+export function figureHtml(pieces, { size = 'margin', caption = '', cls = '', row = null, root = null } = {}) {
   const n = pieces.length;
   const isRow = row ?? n > 1;
+  const small = isRow || size === 'margin';
   const width = isRow ? WIDTH.row : (WIDTH[size] ?? WIDTH.margin);
   const each = isRow ? (width - 3 * (n - 1)) / n : width;
   const body = pieces.map((e) => {
-    const inner = pictureHtml(e);
+    const inner = pictureHtml(e, { small, root });
     const h = e.inline ? each : Math.min(each * (e.h / e.w), isRow ? (cls === 'frieze' ? 44 : 70) : size === 'wide' ? 150 : 999);
     const w = e.inline ? each : Math.min(each, h * (e.w / e.h));
     const kindCls = e.what === 'card' ? ' card' : e.what === 'tile' ? ' tile' : e.what === 'icon' ? ' icon' : e.what === 'flow' ? ' flow' : '';
@@ -221,7 +237,7 @@ export function figureHtml(pieces, { size = 'margin', caption = '', cls = '', ro
  *
  * Every ref must resolve or the build fails naming the chapter and the token.
  */
-export function figureTokens(text, art, where, { inlineFn = (s) => s, shown = new Set() } = {}) {
+export function figureTokens(text, art, where, { inlineFn = (s) => s, shown = new Set(), root = null } = {}) {
   const figs = [];
   /* what the chapter's own markdown already shows - a gallery, a flow - is not shown again */
   for (const m of text.matchAll(/!\[[^\]]*\]\(([^)\s]+)/g)) shown.add(m[1].replace(/^\.\.\//, '../'));
@@ -236,7 +252,7 @@ export function figureTokens(text, art, where, { inlineFn = (s) => s, shown = ne
     let size = 'margin'; let caption = '';
     if (a != null && sizes.includes(a.trim())) { size = a.trim(); caption = (b ?? '').trim(); } else { caption = (a ?? '').trim(); if (b) caption = `${caption} ${b}`.trim(); }
     const frieze = size === 'frieze';
-    const html = figureHtml(pieces, { size: frieze ? 'row' : size, caption: caption ? inlineFn(caption) : '', cls: frieze ? 'frieze' : (pieces.length === 1 && pieces[0].what === 'flow' ? 'flow' : ''), row: frieze || pieces.length > 1 });
+    const html = figureHtml(pieces, { size: frieze ? 'row' : size, caption: caption ? inlineFn(caption) : '', cls: frieze ? 'frieze' : (pieces.length === 1 && pieces[0].what === 'flow' ? 'flow' : ''), row: frieze || pieces.length > 1, root });
     figs.push({ html, things: pieces.map((e) => e.thing) });
     return `\n\n%%FIG${figs.length - 1}%%\n\n`;
   });
@@ -255,12 +271,14 @@ export function placeFigures(html, figs) {
  * `gap` paragraphs of each other or of a figure the author placed. Deterministic,
  * so --check holds.
  */
-export function autoVignettes(html, art, { max = 6, gap = 3, skip = new Set() } = {}) {
-  const parts = html.split(/(?=<p[ >])|(?<=<\/p>)/);
-  const counts = new Map(); const first = new Map();
+export function autoVignettes(html, art, { max = 6, gap = 3, skip = new Set(), root = null, longest = 2400 } = {}) {
+  /* paragraphs and list items both count as a stretch of text a figure can sit beside */
+  const parts = html.split(/(?=<p[ >])|(?<=<\/p>)|(?=<li[ >])|(?<=<\/li>)/);
+  const isPara = (p) => /^<(p|li)[ >]/.test(p);
+  const counts = new Map(); const first = new Map(); const occ = new Map();
   const text = (s) => s.replace(/<[^>]+>/g, ' ');
   parts.forEach((p, i) => {
-    if (!/^<p[ >]/.test(p)) return;
+    if (!isPara(p)) return;
     const t = ` ${text(p).toLowerCase()} `;
     for (const m of art.mentions) {
       if (skip.has(m.thing)) continue;
@@ -268,19 +286,79 @@ export function autoVignettes(html, art, { max = 6, gap = 3, skip = new Set() } 
       if (re.test(t)) {
         counts.set(m.thing, (counts.get(m.thing) ?? 0) + 1);
         if (!first.has(m.thing)) first.set(m.thing, i);
+        if (!occ.has(m.thing)) occ.set(m.thing, []);
+        if (!occ.get(m.thing).includes(i)) occ.get(m.thing).push(i);
       }
     }
   });
+  const entry = (thing) => art.mentions.find((m) => m.thing === thing).entry;
   const ranked = [...counts.entries()].sort((a, b) => b[1] - a[1] || first.get(a[0]) - first.get(b[0])).map(([t]) => t);
   const taken = [];
   for (let i = 0; i < parts.length; i++) if (/<!--fig-->/.test(parts[i]) || /<figure/.test(parts[i])) taken.push(i);
-  const placed = new Map();
+  const placed = new Map(); const repeated = new Set();
+  const place = (thing, at) => { placed.set(at, entry(thing)); taken.push(at); };
   for (const thing of ranked) {
     if (placed.size >= max) break;
     const at = first.get(thing);
     if (taken.some((t) => Math.abs(t - at) < gap)) continue;
-    placed.set(at, art.mentions.find((m) => m.thing === thing).entry);
-    taken.push(at);
+    place(thing, at);
   }
-  return parts.map((p, i) => (placed.has(i) ? figureHtml([placed.get(i)], { size: 'margin', cls: 'auto' }) + p : p)).join('');
+  /* Then the long stretches: a run of more than `longest` characters of text
+     with no picture - about two thirds of a page - gets the most-mentioned thing
+     named inside it, so a page deep in a wordy chapter is never bare. */
+  const paragraphs = parts.map((p, i) => i).filter((i) => isPara(parts[i]));
+  const chars = (run) => run.reduce((n, i) => n + text(parts[i]).length, 0);
+  const shown = () => [...placed.values()];
+  let guard = 0;
+  while (guard++ < 60) {
+    const sorted = [...taken].sort((a, b) => a - b);
+    let from = -1; let found = null;
+    for (const t of [...sorted, parts.length]) {
+      const run = paragraphs.filter((i) => i > from && i < t);
+      if (chars(run) > longest) {
+        /* the most-mentioned thing not yet shown that is named anywhere in the run,
+           set beside the paragraph nearest the run's middle that names it */
+        const mid = run[Math.floor(run.length / 2)];
+        const nearest = (th) => (occ.get(th) ?? []).filter((i) => run.includes(i) && !placed.has(i)).sort((a, b) => Math.abs(a - mid) - Math.abs(b - mid))[0];
+        for (const th of ranked) {
+          if (shown().includes(entry(th))) continue;
+          const at = nearest(th);
+          if (at != null) { found = [th, at]; break; }
+        }
+        /* nothing new is named in the run: show a thing again, as its card where it
+           has one, rather than leave a stretch of pages bare - once per thing */
+        if (!found) for (const th of ranked) {
+          if (repeated.has(th)) continue;
+          const at = nearest(th);
+          if (at == null) continue;
+          const e = entry(th);
+          const other = [...art.entries.values()].find((x) => x.thing === e.thing && x !== e && x.what === 'card') ?? e;
+          repeated.add(th); placed.set(at, other); taken.push(at); found = true; break;
+        }
+        if (found) break;
+      }
+      from = t;
+    }
+    if (!found) break;
+    if (found !== true) place(found[0], found[1]);
+  }
+  const leftover = ranked.filter((th) => !shown().includes(entry(th)) && !repeated.has(th)).map(entry);
+  const out = parts.map((p, i) => {
+    if (!placed.has(i)) return p;
+    const fig = figureHtml([placed.get(i)], { size: 'margin', cls: 'auto', root });
+    /* a figure before a list item goes inside it, where a float is allowed */
+    return /^<li[ >]/.test(p) ? p.replace(/^<li[^>]*>/, (m) => m + fig) : fig + p;
+  }).join('');
+  return { html: out, leftover };
+}
+
+/**
+ * The tailpiece: three things the chapter named and had no room to show, in a
+ * row after its last paragraph, so the page a chapter's last lines spill onto
+ * carries a picture like every other. Nothing named, nothing drawn.
+ */
+export function tailpiece(leftover, { root = null, n = 3 } = {}) {
+  const pieces = leftover.slice(0, n);
+  if (!pieces.length) return '';
+  return figureHtml(pieces, { row: true, cls: 'tail', caption: '', root });
 }

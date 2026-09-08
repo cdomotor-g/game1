@@ -29,7 +29,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderMarkdown, escapeHtml } from './lib/docpage.mjs';
 import { loadData, interpolate, openCatalogue, sheets, roman, word, inline, esc } from './lib/book.mjs';
-import { artIndex, figureTokens, placeFigures, figureHtml, autoVignettes, pictureHtml } from './lib/book-art.mjs';
+import { artIndex, figureTokens, placeFigures, figureHtml, autoVignettes, tailpiece, pictureHtml } from './lib/book-art.mjs';
 import { crop, readFraming } from './lib/framing.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -78,11 +78,11 @@ function rewriteHref(href) {
     whole card, tile or icon, small enough to head a table row. */
 function thumb(e) {
   if (e.inline) return `<span class="thumb">${e.inline}</span>`;
-  if (e.what !== 'plate') return `<span class="thumb whole">${pictureHtml(e)}</span>`;
+  if (e.what !== 'plate') return `<span class="thumb whole">${pictureHtml(e, { small: true, root: ROOT })}</span>`;
   const f = framing.plates?.[e.ref.slice(6)];
   const r = crop({ width: e.w, height: e.h }, f?.subject, 1, framing.pad ?? 0, f?.focal, framing.focalTarget);
   const W = 100 / r.w;
-  return `<span class="thumb"><img src="${e.src}" alt="" loading="lazy" style="width:${W.toFixed(2)}%;left:${(-r.x * W).toFixed(2)}%;top:${(-r.y * W * e.h / e.w).toFixed(2)}%"></span>`;
+  return `<span class="thumb"><img src="${e.small ?? e.src}" alt="" loading="lazy" style="width:${W.toFixed(2)}%;left:${(-r.x * W).toFixed(2)}%;top:${(-r.y * W * e.h / e.w).toFixed(2)}%"></span>`;
 }
 
 /* The name of a thing, lower-cased, to the best picture of it: how a table row
@@ -106,11 +106,14 @@ function thumbTables(html) {
 /** A hand-written chapter's own figures ({{fig:...}} tokens), and then vignettes
     of whatever its paragraphs name and no figure already shows. */
 function illustrate(src, where, render) {
-  const { text, figs, shown } = figureTokens(src, art, where, { inlineFn: inline });
+  const { text, figs, shown } = figureTokens(src, art, where, { inlineFn: inline, root: ROOT });
   const out = render(text);
   const skip = new Set(figs.flatMap((f) => f.things));
-  for (const e of art.byThing.values()) if (e.src && shown.has(e.src)) skip.add(e.thing);
-  out.html = autoVignettes(placeFigures(out.html, figs), art, { skip, max: 6, gap: 3 });
+  for (const e of art.byThing.values()) if (shown.has(e.png ?? e.src)) skip.add(e.thing);
+  const v = autoVignettes(placeFigures(out.html, figs), art, { skip, max: 6, gap: 3, root: ROOT });
+  out.html = v.html + tailpiece(v.leftover, { root: ROOT });
+  /* a chapter's own gallery reads the copies too, when there are copies */
+  out.html = out.html.replace(/src="\.\.\/art\/renders\/([^"]+)\.png"/g, (m, id) => (existsSync(join(ROOT, 'docs', 'book', 'art', `${id}.jpg`)) ? `src="art/${id}.jpg"` : m));
   return out;
 }
 
@@ -168,11 +171,34 @@ function annexChapters() {
   /* rendered in a second pass, once every annex heading knows its home */
   for (const c of chapters) {
     const { html } = renderMarkdown(c.md, { rewriteHref, fallbackTitle: c.title });
-    c.html = `<header class="chap small"><div class="num">Annex I · Table ${c.n}</div><h2 class="title">${escapeHtml(c.title)}</h2>${ORNAMENT}</header>${scopeIds(thumbTables(html), c.id)}`;
+    const body = thumbTables(html);
+    /* the frieze under the head: the first things the table's own rows name, or
+       else what a table with no named rows is about */
+    const named = [...body.matchAll(/<td class="named">(?:<span class="thumb[^>]*>)/g)].length
+      ? [...new Set([...body.matchAll(/<td class="named"><span class="thumb[^"]*">(?:<img src="([^"]+)"|<span class="swatch")/g)].map((m) => m[1]).filter(Boolean))].slice(0, 6)
+        .map((src) => [...art.byThing.values()].find((e) => e.small === src || e.src === src)).filter(Boolean)
+      : ANNEX_FRIEZE.filter(([re]) => re.test(c.title)).flatMap(([, refs]) => refs).map((r) => art.resolve(r)).filter(Boolean).slice(0, 6);
+    const frieze = named.length ? figureHtml(named, { row: true, cls: 'frieze', root: ROOT }) : '';
+    const v = autoVignettes(body, art, { max: 4, gap: 3, root: ROOT });
+    c.html = `<header class="chap small"><div class="num">Annex I · Table ${c.n}</div><h2 class="title">${escapeHtml(c.title)}</h2>${ORNAMENT}</header>${frieze}${scopeIds(v.html, c.id)}${tailpiece(v.leftover.filter((e) => !named.includes(e)), { root: ROOT })}`;
     delete c.md;
   }
   return chapters;
 }
+
+/* What a table with no named rows is about, as pictures: matched on its title. */
+const ANNEX_FRIEZE = [
+  [/travel|night legs/i, ['map:korvane-reach', 'item:lantern', 'item:torch', 'vehicle:veh-03', 'vehicle:veh-01']],
+  [/discovery/i, ['monster:cinder-wolf', 'event:caravan-robbery', 'monster:reef-serpent', 'event:piracy', 'monster:barrow-troll']],
+  [/market/i, ['board:market', 'board:ledger', 'board:depletion', 'icon:pricing-deplete', 'icon:pricing-hype']],
+  [/commodit/i, ['icon:pricing-staple', 'icon:pricing-perish', 'icon:pricing-deplete', 'icon:pricing-hype', 'building:granary']],
+  [/wear/i, ['tool:axe', 'weapon:sword', 'armour:plate-harness', 'item:lantern', 'item:coil-of-rope']],
+  [/transport/i, ['vehicle:veh-01', 'vehicle:veh-03', 'vehicle:veh-05', 'vehicle:veh-08', 'vehicle:veh-12']],
+  [/element/i, ['icon:element-fire', 'icon:element-earth', 'icon:element-water', 'icon:element-air']],
+  [/enchant/i, ['spell:mend-stone', 'spell:kindle', 'talisman:tal-06', 'modification:keelbound']],
+  [/quest/i, ['character:chr-09', 'monster:polyphemus', 'event:wandering-wizard', 'building:inn']],
+  [/web|flow/i, ['building:blacksmith', 'building:sawmill', 'tool:hammer', 'building:mill', 'building:market']],
+];
 
 function designChapter(file) {
   const id = `design-${slugOf(file)}`;
@@ -202,7 +228,7 @@ const FRAME = `<svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="non
 function friezeHtml(refs) {
   if (!refs?.length) return '';
   const pieces = refs.map((r) => { const e = art.resolve(r); if (!e) throw new Error(`title page frieze: ${r} is not a picture the book has`); return e; });
-  return `<div class="tfrieze">${pieces.map((e) => `<div class="fp${e.what === 'card' ? ' card' : e.what === 'tile' ? ' tile' : ''}">${pictureHtml(e)}</div>`).join('')}</div>`;
+  return `<div class="tfrieze">${pieces.map((e) => `<div class="fp${e.what === 'card' ? ' card' : e.what === 'tile' ? ' tile' : ''}">${pictureHtml(e, { small: true, root: ROOT })}</div>`).join('')}</div>`;
 }
 
 function titlePage(s) {
@@ -252,10 +278,18 @@ function campaignChapters(camp, ordinal) {
   /* 1. how to play it */
   const acts = camp.acts ?? [];
   const cast = camp.cast ?? {};
+  /* the cast in a row under the head - the hero, the hosts, the adversaries, the monsters - whoever is drawn */
+  const castRefs = [cast.odysseus, ...Object.values(cast.heroes ?? {}).flat(), ...(cast.hosts ?? []), ...(cast.adversaries ?? [])]
+    .filter((id, i, a) => id && a.indexOf(id) === i).map((id) => `character:${id}`)
+    .concat((camp.monsters ?? []).map((id) => `monster:${id}`))
+    .filter((r) => art.resolve(r)?.what === 'plate');
+  const castFrieze = castRefs.length ? figureHtml(castRefs.slice(0, 6).map((r) => art.resolve(r)), { row: true, cls: 'frieze', root: ROOT }) : '';
+  /* a generated chapter gets the vignettes a written one does, for the things its own paragraphs name */
+  const vignette = (html) => { const v = autoVignettes(html, art, { max: 6, gap: 3, root: ROOT }); return v.html + tailpiece(v.leftover, { root: ROOT }); };
   chapters.push({
     id: `${prefix}-playing`, title: 'Playing the campaign', kind: 'text',
-    html: `<header class="chap"><div class="num">Campaign ${roman(ordinal)}</div><h2 class="title">${esc(camp.name)}</h2><p class="lede">${esc(camp.subtitle ? camp.subtitle[0].toUpperCase() + camp.subtitle.slice(1) : '')}.</p>${ORNAMENT}</header>`
-      + `<p class="dropcap">${inline(camp.summary)}</p>`
+    html: `<header class="chap"><div class="num">Campaign ${roman(ordinal)}</div><h2 class="title">${esc(camp.name)}</h2><p class="lede">${esc(camp.subtitle ? camp.subtitle[0].toUpperCase() + camp.subtitle.slice(1) : '')}.</p>${ORNAMENT}</header>${castFrieze}`
+      + vignette(`<p class="dropcap">${inline(camp.summary)}</p>`
       + (camp.source ? `<h3>The source</h3><p><em>${esc(camp.source.work)}</em>, ${esc(camp.source.author)}${camp.source.composed ? `, ${esc(camp.source.composed)}` : ''}${camp.source.books ? `, in ${word(camp.source.books)} books` : ''}. ${inline(camp.source.note ?? '')}</p>` : '')
       + `<h3>The table</h3>${list([
         `<strong>Players.</strong> ${camp.players.min} to ${camp.players.max}. ${inline(camp.players.note ?? '')}`,
@@ -284,12 +318,12 @@ function campaignChapters(camp, ordinal) {
       + `<h3>Winning, and losing</h3>${list([`<strong>Victory.</strong> ${inline(camp.victory)}`, camp.defeat ? `<strong>Defeat.</strong> ${inline(camp.defeat)}` : null].filter(Boolean))}`
       + (camp.order ? `<h3>The order of things</h3>${list([`<strong>As the poem tells it:</strong> ${inline(camp.order.homer)}`, `<strong>As the deck plays it:</strong> ${inline(camp.order.deck)}`])}` : '')
       + (camp.mark ? `<h3>The mark</h3><p><img class="cmark big" src="../art/icons/campaign-${esc(camp.id)}.svg" alt=""> ${inline(camp.mark.note ?? '')} It is printed beside the card code of every card that belongs to this campaign - its own, and every character and monster it brings - so a table can pull them out of the free-play decks by the corner alone.</p>` : '')
-      + (camp.freePlay ? `<h3>In free play</h3>${P(camp.freePlay)}` : ''),
+      + (camp.freePlay ? `<h3>In free play</h3>${P(camp.freePlay)}` : '')),
   });
 
   /* 2. the board */
   if (map) {
-    const plateSrc = `../map/${map.plate.file}`;
+    const plateSrc = existsSync(join(ROOT, 'docs', 'book', 'art', `map-${map.id}.jpg`)) ? `art/map-${map.id}.jpg` : `../map/${map.plate.file}`;
     const preset = (map.print?.presets ?? []).find((p) => p.id === map.print.default);
     chapters.push({
       id: `${prefix}-board`, title: `The board: ${map.name}`, kind: 'text',
@@ -298,7 +332,8 @@ function campaignChapters(camp, ordinal) {
         + P(map.summary)
         + `<h3>The regions</h3>${table(['Region', 'Ground', 'What is there'], (map.regions ?? []).map((r) => [esc(r.name), esc(cat.name(new Map(data.terrain.terrains.map((t) => [t.id, t])), r.terrain)), inline(r.summary ?? '')]))}`
         + `<h3>The places</h3>${table(['Place', 'Rank', 'Harbour', 'Note'], (map.settlements ?? []).map((s) => [esc(s.name), esc(s.rank ?? ''), s.harbour ? 'yes' : '—', inline(s.note ?? '')]))}`
-        + (map.print?.presets?.length ? `<h3>Printing it</h3>${table(['Preset', 'Sheets', 'Map', 'Hex'], map.print.presets.map((p) => [esc(p.name), `${p.sheetCols} × ${p.sheetRows} ${esc(p.sheet)} ${esc(p.orientation)}`, `${p.mapWidthMm} × ${p.mapHeightMm} mm`, `${p.hexAcrossFlatsMm} mm`]))}<p>The map page on the site tiles the plate across the sheets with trim marks; print at 100% and butt the pieces.</p>` : ''),
+        + (map.print?.presets?.length ? `<h3>Printing it</h3>${table(['Preset', 'Sheets', 'Map', 'Hex'], map.print.presets.map((p) => [esc(p.name), `${p.sheetCols} × ${p.sheetRows} ${esc(p.sheet)} ${esc(p.orientation)}`, `${p.mapWidthMm} × ${p.mapHeightMm} mm`, `${p.hexAcrossFlatsMm} mm`]))}<p>The map page on the site tiles the plate across the sheets with trim marks; print at 100% and butt the pieces.</p>` : '')
+        + tailpiece(castRefs.slice(6).map((r) => art.resolve(r)), { root: ROOT }),
     });
   }
 
@@ -314,8 +349,15 @@ function campaignChapters(camp, ordinal) {
       return esc(s?.name ?? id);
     });
     const meets = [...(c.meets?.characters ?? []).map(cname), ...(c.meets?.monsters ?? []).map(mname)];
+    /* while the card's own plate is not drawn, whoever the chapter meets stands in its window */
+    const met = cat.hasPlate(`campaign-${c.id}`) ? null
+      : [...(c.meets?.monsters ?? []).map((id) => `monster:${id}`), ...(c.meets?.characters ?? []).map((id) => `character:${id}`)]
+        .map((r) => art.resolve(r)).find((e) => e && e.what === 'plate');
+    const plate = met
+      ? `<figure class="plate landscape stand-in"><img src="${met.src}" alt="${esc(met.name)}" loading="lazy"><figcaption>${esc(met.name)}, met here · the chapter's own plate is not yet drawn</figcaption></figure>`
+      : cat.plate(`campaign-${c.id}`, { format: 'landscape', deck, alt: c.name });
     return `<article class="card-chapter" id="${prefix}-card-${esc(c.id)}">
-      ${cat.plate(`campaign-${c.id}`, { format: 'landscape', deck, alt: c.name })}
+      ${plate}
       <div class="text"><header class="ehead"><div class="kicker"><span class="code">${esc(c.cardCode)}${cat.campaignMark(camp.id)}</span> · ${camp.source?.work ? `${esc(camp.source.work)}, ` : ''}book ${esc(c.books)}${site.length ? ` · ${site.join(', ')}` : ''}</div><h4 class="ename"><span class="chno">${c.chapter}.</span> ${esc(c.name)}</h4></header>
       <p class="told"><span class="readaloud">Read aloud</span> ${inline(c.told)}</p>
       <ul class="facts"><li><em>Play.</em> ${inline(c.play)}</li>${c.cost ? `<li><em>Cost.</em> ${inline(c.cost)}</li>` : ''}${meets.length ? `<li><em>Met here.</em> ${meets.join(', ')}.</li>` : ''}${c.xenia && typeof c.xenia === 'object' ? `<li><em>Guest-friendship ${c.xenia.kept ? 'kept' : 'broken'}.</em> ${inline(c.xenia.note ?? '')}</li>` : ''}</ul>
@@ -332,7 +374,7 @@ function campaignChapters(camp, ordinal) {
   if (camp.teaches?.length) {
     chapters.push({
       id: `${prefix}-teaches`, title: 'What the campaign teaches', kind: 'text',
-      html: `<header class="chap small"><div class="num">Campaign ${roman(ordinal)}</div><h2 class="title">What it teaches</h2>${ORNAMENT}</header>${list(camp.teaches.map(inline), 'ol')}`,
+      html: `<header class="chap small"><div class="num">Campaign ${roman(ordinal)}</div><h2 class="title">What it teaches</h2>${ORNAMENT}</header>${vignette(list(camp.teaches.map((t) => `<p>${inline(t)}</p>`), 'ol'))}`,
     });
   }
   return chapters;
@@ -421,9 +463,9 @@ if (reviewFiles.length) {
 
 /* -------------------------------------------------------------- the page */
 
-const contentsHtml = () => `<div class="titlepage contents" id="contents-title">${FRAME}<header><div class="label">${esc(GAME)}</div><h1 class="ttitle">Contents</h1>${ORNAMENT}</header>
+const contentsHtml = () => `<div class="titlepage contents" id="contents-title">${FRAME}<header><div class="label">${esc(GAME)}</div><h1 class="ttitle">Contents</h1>${ORNAMENT}</header>${friezeHtml(['character:chr-01', 'building:town-hall', 'monster:cinder-wolf', 'vehicle:veh-01', 'tool:axe', 'people:elf'])}
 <div class="toc-page">${sections.filter((s) => s.chapters.length).map((s) => `<div class="toc-part"><a class="toc-head" href="#${s.id}-title"><span class="lab">${esc(s.label)}</span><span class="ttl">${esc(s.title)}</span></a><ol>${s.chapters.map((c) => `<li><a href="#${esc(c.id)}">${escapeHtml(c.title)}</a></li>`).join('')}</ol></div>`).join('')}</div>
-<footer><div class="tcaption">Every section prints on its own: the button on its title page, or <em>Print…</em> in the bar.</div></footer></div>`;
+${friezeHtml(['character:chr-03', 'building:market', 'monster:ash-drake', 'vehicle:veh-07', 'item:lantern', 'people:halfling'])}<footer><div class="tcaption">Every section prints on its own: the button on its title page, or <em>Print…</em> in the bar.</div></footer></div>`;
 
 const coverHtml = () => `<div class="titlepage cover" id="cover-title">${FRAME}
   <header><div class="label">${esc(GAME)}</div><h1 class="ttitle grand">${esc(BOOK_TITLE)}</h1><div class="script">being the Rules, the Reference Tables, the Catalogue &amp; the Campaigns</div>${ORNAMENT}</header>
