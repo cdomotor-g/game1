@@ -79,29 +79,58 @@ on that branch.
 
 The push starts `.github/workflows/land-plate.yml`, which takes the file off the
 branch by its exact path and hands it to `node tools/ship-art.mjs`. That command
-validates every chunk of the PNG, refuses a plate under its floor, runs the mint
-build, commits the plate to `main` with everything it feeds rebuilt, pushes,
-reads the committed blob back from `main`, compares its SHA-256 with the source
-and validates the returned bytes again. On success the inbox branch is deleted
-and the queue on `main` moves the subject off DRAW by itself. On failure the
-branch is left alone, the run's summary says why, and pushing a corrected file
-to the same branch runs it again.
+validates every chunk of the PNG, refuses a plate under its floor or on the
+wrong page, runs the mint build, commits the plate to `main` with everything it
+feeds rebuilt, pushes, reads the committed blob back from `main`, compares its
+SHA-256 with the source and validates the returned bytes again. On success the
+inbox branch is deleted and the queue on `main` moves the subject off DRAW by
+itself. On failure the branch is left alone, the run's summary says why, and
+pushing a corrected file to the same branch runs it again.
 
-The artist therefore never assembles a commit out of blobs and trees, never runs
-the build, never expands a checkout to verify a push, and never touches `main`.
+The artist therefore never assembles a commit out of blobs and trees unless its
+own tools make it do so, never runs the build, never expands a checkout to
+verify a push, and never touches `main`.
+
+**Creating the branch is a push too, and it rings the landing workflow.** That
+first run finds no plate, says **the inbox is open** and goes green; it is not a
+rejection and it is not the run that decides anything. Only the run started by
+the file itself lands a plate. A red **Land plate** run against a branch that
+has never had a file on it predates September 2026 and was this false alarm.
 
 ### Doing it through the GitHub API
 
-Whatever tool the artist has, the inbox needs three calls, and a connector that
-can create a file on a branch can make all of them:
+There are two routes and the artist takes whichever one its own tools allow.
+Both need the branch first:
 
 1. `GET /repos/cdomotor-g/game1/git/ref/heads/main` — the SHA of `main`.
 2. `POST /repos/cdomotor-g/game1/git/refs` with
    `{"ref": "refs/heads/plate/<plate-id>", "sha": "<that sha>"}`.
+
+**Route A — the contents API, one call.** Where the tool sends the request body
+itself:
+
 3. `PUT /repos/cdomotor-g/game1/contents/docs/art/renders/<plate-id>.png` with
    `{"message": "<plate-id> plate", "branch": "plate/<plate-id>", "content": "<base64>"}`.
 
-Rules for step 3, each of which has been broken here:
+**Route B — the git data API, four calls.** Take this one when the file-writing
+tool available takes *text* content and base64-encodes it for you: such a tool
+cannot carry a PNG, because there is no text whose encoding is those bytes.
+That is a limit of one tool, never of the connector, and never a reason to stop:
+
+3. `POST /repos/cdomotor-g/game1/git/blobs` with
+   `{"content": "<base64>", "encoding": "base64"}` → the blob SHA.
+4. `POST /repos/cdomotor-g/game1/git/trees` with
+   `{"base_tree": "<the branch's commit tree>", "tree": [{"path": "docs/art/renders/<plate-id>.png", "mode": "100644", "type": "blob", "sha": "<blob sha>"}]}`.
+5. `POST /repos/cdomotor-g/game1/git/commits` with
+   `{"message": "<plate-id> plate", "tree": "<new tree sha>", "parents": ["<branch head sha>"]}`.
+6. `PATCH /repos/cdomotor-g/game1/git/refs/heads/plate/<plate-id>` with
+   `{"sha": "<new commit sha>"}`.
+
+A run has stalled on the belief that a connector could not upload binary at all.
+It could: the same account has landed fifteen plates through this inbox. If one
+route is unavailable, say which one and take the other.
+
+Rules for the upload, whichever route, each of which has been broken here:
 
 - Read the file's bytes from the local file or attachment, whole, and note its
   byte length and SHA-256 first.
@@ -109,14 +138,14 @@ Rules for step 3, each of which has been broken here:
   if it is not, the read was truncated or chunked wrongly — do not upload it.
   A tool with a per-call output limit has to read the file in pieces and
   concatenate the **bytes** before encoding, never encode piece by piece.
-- Send the whole file in **one** `PUT`. The contents API takes a file up to
-  100 MB; a 4 MB plate is not near it.
+- Send the whole file in **one** call. The contents API takes a file up to
+  100 MB and a blob up to the same; a 4 MB plate is not near either.
 - Never decode what is already binary, never re-encode a decoded copy, and
   never build the payload out of text a connector returned.
 
-The commit `PUT` returns carries the blob's SHA-1 and size; a size that differs
-from the local byte length means the upload is wrong and the branch should be
-fixed before the landing run reads it.
+What comes back carries the blob's SHA-1 and its size; a size that differs from
+the local byte length means the upload is wrong and the branch should be fixed
+before the landing run reads it.
 
 ### What "shipped" means, and who says it
 

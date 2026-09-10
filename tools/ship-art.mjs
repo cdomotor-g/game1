@@ -16,9 +16,10 @@
  *   2. the source PNG is validated whole - every chunk CRC, IEND, the inflated
  *      pixel payload - and its SHA-256 recorded;
  *   3. the plate is a subject the mint knows, and it clears that subject's
- *      pixel FLOOR (data/mint.json, derived per subject by tools/lib/mint.mjs).
- *      Pixels never drawn cannot be added later, so this is the one property
- *      that is refused rather than noted;
+ *      pixel FLOOR (data/mint.json, derived per subject by tools/lib/mint.mjs),
+ *      and it is drawn on the PAGE its brief names. Neither can be fixed after
+ *      the fact - pixels never drawn cannot be added, and a page the crop threw
+ *      away cannot be got back - so these are refused rather than noted;
  *   4. the bytes are copied in, with the frozen wording beside them if any;
  *   5. tools/mint-build.mjs runs - the short chain a landing plate needs;
  *   6. one commit, pushed to the target branch;
@@ -86,7 +87,7 @@ console.log(`source verified: ${sourceInfo.width}x${sourceInfo.height}, ${source
    subject - a portrait page is asked for more than a square one - and printed
    into the brief's own marker by tools/build-prompts.mjs, so the artist was
    told the same figure this refuses on. */
-const { survey } = await import('./lib/mint.mjs');
+const { survey, nearestFormat } = await import('./lib/mint.mjs');
 const found = survey(ROOT);
 let hit = null;
 for (const entry of found.lines) {
@@ -105,6 +106,22 @@ if (min && longSide < min) {
 if (min) {
   console.log(`floor cleared: ${longSide} px on the long side against ${min} px (${from})` +
     (want && longSide < want ? `; under the ${want} px this line would want for print, which is an aspiration, not a fault` : ''));
+}
+
+/* 3b · the page it was drawn on. "The wrong page shape" has been on the
+   rejection list in AGENTS.md since there was a list, and nothing enforced it:
+   a square page delivered for a landscape deck cleared the floor on its long
+   side and was cropped to a band, throwing a third of the drawing away
+   silently. The shape is CLASSIFIED against the line's own declared sizes
+   rather than measured against a tolerance - see nearestFormat - so the true-A4
+   pages the generator actually makes for a 2:3 "A4 portrait" still land. */
+const shape = nearestFormat(hit.line, sourceInfo.width, sourceInfo.height);
+if (shape && hit.row.format) {
+  if (shape.format !== hit.row.format) {
+    fail(`${sourceInfo.width}x${sourceInfo.height} is a ${shape.format} page and \`${plate}\` is drawn on ${hit.row.format}. ` +
+      'The crop is taken by machine to the card window and cannot be argued with, so a plate on the wrong page loses whatever the window has no room for. Redraw it on the page the brief names.');
+  }
+  console.log(`page shape: ${shape.format}, ${(sourceInfo.width / sourceInfo.height).toFixed(3)} against the ${shape.aspect.toFixed(3)} this line declares`);
 }
 
 /* 4 · in */

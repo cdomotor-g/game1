@@ -27,6 +27,8 @@ catches that in CI.
 
 > **Note.** buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 8 of 11 are under the 1289 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
 
+> **Note.** buildingtiles: 1 landed plate is drawn on a page the brief did not ask for — `tile-timber-house` asks for A4 landscape, 3:2 and is 1054x1492, an A4 portrait page. The card or tile window still cuts to the shape the brief names, so what the wrong page added is thrown away. Redrawing on the right page is the only fix; `node tools/aim-preview.mjs` shows what is being lost.
+
 
 ## Cards
 

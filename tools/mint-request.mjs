@@ -30,7 +30,7 @@
  * message so the style cannot drift, so --deck prints them in order, separated,
  * to be sent one at a time rather than in a heap.
  */
-import { survey, platePath, briefFor, assemble, renderPrompt, minLongSideFor, windowNote, at } from './lib/mint.mjs';
+import { survey, platePath, briefFor, assemble, renderPrompt, checkList, minLongSideFor, windowNote, at } from './lib/mint.mjs';
 import { envelopeNote } from './lib/tiles.mjs';
 
 const args = process.argv.slice(2);
@@ -104,6 +104,7 @@ if (asJson) {
       pixels: { minLongSide: min || null, wantLongSide: want || null, from },
       commission: assemble(brief, carriesCut ? null : windowNote(ROOT, line, row)),
       render: { positive: r.positive, negative: r.negative, moved: r.moved },
+      check: checkList(brief, { format: row.format ?? line.plate.format ?? null, minLongSide: min || 0, cornerNote: corner }),
     };
   });
   console.log(JSON.stringify(chosen.length === 1 ? out[0] : out, null, 2));
@@ -141,6 +142,9 @@ chosen.forEach(({ line, row }, i) => {
     console.log('POSITIVE\n```text\n' + r.positive + '\n```\n');
     console.log('NEGATIVE\n```text\n' + r.negative + '\n```\n');
     console.log(`Moved out of the positive, because a model draws what it is told:\n  ${r.moved.join('\n  ')}`);
+    console.log('\nThose are also what the finished render has to be CHECKED against by eye,'
+      + '\nsince they are the half of the brief the model was never given. Run this'
+      + '\nwithout --render for the commission and its numbered check.');
     if (i < chosen.length - 1) console.log('\n' + '─'.repeat(72) + '\n');
     return;
   }
@@ -157,11 +161,18 @@ chosen.forEach(({ line, row }, i) => {
     return;
   }
 
+  /* The check goes WITH the commission, not in a document about commissions.
+     An artist that reads only what it was handed still gets it, and a check
+     that has to be fetched from somewhere else is the one that gets skipped. */
+  const corner = line.id === 'buildingtiles' && row.tile?.cells ? envelopeNote(row.tile.cells, 1, { figures: false }) : null;
+  const checks = checkList(brief, { format: row.format ?? line.plate.format ?? null, minLongSide: minLongSideFor(ROOT, line, row).min || 0, cornerNote: corner });
+
   console.log(`### ${found.mint.handover.prefixes.request} · ${row.code} · ${row.name}
 
 **line**     ${line.id}
 **plate id** \`${row.plate}\`
 **save to**  \`${platePath(line, row)}\`
+**inbox**    \`plate/${row.plate}\` — the branch to push that one file to
 **format**   ${formatLine(line, row)}
 **brief**    ${brief.file} § ${row.plate}
 
@@ -169,8 +180,18 @@ chosen.forEach(({ line, row }, i) => {
 ${prompt}
 \`\`\`
 
-Reply with \`${found.mint.handover.prefixes.ready} · ${row.code}\` when it is pushed. If the wording had to
-change to get an acceptable render, say so and send back what you actually used.`);
+CHECK THE RENDER AGAINST THIS BEFORE SHOWING IT TO ANYBODY. Every item is off
+this brief. A render that fails one is generated again and the attempt is
+written into \`docs/art/renders/${row.plate}.attempts.md\` with the reason; it is
+not shown and asked about, because approval settles whether a picture is wanted,
+never whether it meets the brief.
+
+${checks.map((c, n) => `${String(n + 1).padStart(2)}. ${c}`).join('\n')}
+
+Then report the dimensions and page shape, whether the style reference was
+visible, and any wording that had to change, quoted exactly — and push the one
+PNG to \`plate/${row.plate}\`. Reply with \`${found.mint.handover.prefixes.ready} · ${row.code}\` when it is pushed:
+that is a delivery, and the landing run says whether it shipped.`);
 
   if (i < chosen.length - 1) console.log('\n' + '─'.repeat(72) + '\n');
 });

@@ -81,6 +81,18 @@ jobs:
       # Only the plate's own file is taken off the inbox branch - by its exact
       # path - so a stray edit committed alongside it cannot ride into main.
       # The optional frozen wording (.txt) beside it is taken the same way.
+      #
+      # Three things can be on the other end of that path, and only one of them
+      # is a fault. OPENING an inbox is a push too - a connector creates the
+      # branch, then puts the file on it - so an artist's every delivery used to
+      # ring this workflow twice and the first ring was always red. Three of the
+      # last fifteen runs are that false alarm, and the artist that read one of
+      # them concluded the inbox had refused its upload and stopped. A branch
+      # carrying no commit of its own is an inbox that is OPEN, and says so in
+      # green. A branch whose plate is already the plate on main is a delivery
+      # that has already landed, and is tidied away rather than failed. Only a
+      # branch that has been written to and still has no plate at the path is
+      # something the artist has to fix.
       - name: Take the plate off the inbox branch
         id: fetch
         env:
@@ -89,12 +101,49 @@ jobs:
         run: |
           set -euo pipefail
           git fetch --quiet origin "refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
+          git fetch --quiet --force origin "refs/heads/main:refs/remotes/origin/main"
           png="docs/art/renders/$PLATE.png"
+
+          if git merge-base --is-ancestor "origin/$BRANCH" origin/main; then
+            echo "state=waiting" >> "$GITHUB_OUTPUT"
+            {
+              echo "## $PLATE — the inbox is open"
+              echo
+              echo "\`$BRANCH\` exists and carries no commit of its own yet, so there is nothing to land."
+              echo "Nothing is wrong. Push the plate to it and this runs again:"
+              echo
+              echo '```'
+              echo "branch:  $BRANCH"
+              echo "path:    $png"
+              echo '```'
+              echo
+              echo "See \`docs/art/AGENTS.md\` for the two ways to put a PNG there with a connector."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "inbox open, no commit of its own yet"
+            exit 0
+          fi
+
           if ! git cat-file -e "origin/$BRANCH:$png" 2>/dev/null; then
-            echo "::error::origin/$BRANCH has no $png. The file must be at exactly that path, named after the brief's own heading. It has:"
+            echo "::error::origin/$BRANCH has commits but no $png. The file must be at exactly that path, named after the brief's own heading. It has:"
             git diff --name-only "origin/main...origin/$BRANCH" | sed 's/^/  /' || true
             exit 1
           fi
+
+          if git cat-file -e "origin/main:$png" 2>/dev/null \
+             && [ "$(git rev-parse "origin/$BRANCH:$png")" = "$(git rev-parse "origin/main:$png")" ]; then
+            echo "state=landed" >> "$GITHUB_OUTPUT"
+            git push origin --delete "$BRANCH" || echo "::warning::could not delete $BRANCH; it holds nothing that is not on main"
+            {
+              echo "## $PLATE was already landed"
+              echo
+              echo "The plate on \`$BRANCH\` is byte-for-byte the plate already committed to \`main\`, so there was nothing to do and the inbox branch has been deleted."
+              echo "A branch left behind would land the same plate again on the next push to it."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "already on main; inbox emptied"
+            exit 0
+          fi
+
+          echo "state=ready" >> "$GITHUB_OUTPUT"
           git show "origin/$BRANCH:$png" > "$RUNNER_TEMP/$PLATE.png"
           echo "took $(wc -c < "$RUNNER_TEMP/$PLATE.png") bytes"
           txt="docs/art/renders/$PLATE.txt"
@@ -111,6 +160,7 @@ jobs:
       # pushes to main, reads the blob back from origin/main and compares
       # SHA-256. Any failure is NOT SHIPPED and says why.
       - name: Ship it
+        if: steps.fetch.outputs.state == 'ready'
         env:
           PLATE: ${{ steps.which.outputs.plate }}
           WORDING: ${{ steps.fetch.outputs.wording }}
@@ -132,6 +182,7 @@ jobs:
       # Landed and verified, so the inbox is empty: the branch goes. A branch
       # left behind would land the same plate again on the next push to it.
       - name: Empty the inbox
+        if: steps.fetch.outputs.state == 'ready'
         env:
           BRANCH: ${{ steps.which.outputs.branch }}
         run: git push origin --delete "$BRANCH"
@@ -140,6 +191,7 @@ jobs:
       # the Pages deploy would not run on its own. Ask for it. The deploy
       # workflow checks which Pages mode is on and does nothing in branch mode.
       - name: Ask Pages to redeploy
+        if: steps.fetch.outputs.state == 'ready'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run deploy-pages.yml --ref main || echo "::warning::could not dispatch the Pages workflow; the site will catch up on the next push"

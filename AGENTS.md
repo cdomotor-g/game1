@@ -147,6 +147,30 @@ blocks anyway. Do not stop the run, invent what the reference looks like, or ask
 the user to attach it again. The words define what to draw; the sheet is only a
 visual check.
 
+### Check the render before anybody sees it
+
+**A plate is checked against its own brief before it is shown, not after it is
+approved.** Read the finished image against the brief item by item: the page it
+is on, every sentence that says what not to draw, the `FRAMING`, `WINDOW` and
+`LABEL BAND` blocks, the deck's negative list, and the subject paragraph
+sentence by sentence. `node tools/mint-request.mjs <code>` prints that list
+numbered, derived from the brief itself; if you cannot run it, the list is the
+brief's own "no X" sentences and there is nothing to work out.
+
+A render that fails an item is **generated again**. It is not shown with a note
+about it, and it is not put to the user as a question: write the attempt into
+`docs/art/renders/<plate-id>.attempts.md` with the reason and draw it again.
+
+**An approval is not an acceptance.** A user saying yes to a picture settles
+whether that picture is wanted. It does not certify the picture against a brief
+they have not got open, and it cannot: they are looking at the render and you
+are the only one holding the checklist. Approval is the gate on *delivering*
+what already passed; it is never the gate that passing was skipped for. This
+rule exists because a run drew `event-blood-moon` — a small low rust-coloured
+moon, no glow, no drama, no creature — as a cinematic landscape under a huge
+glowing red moon, showed it unchecked, and shipped the approval instead of the
+plate.
+
 ### Show and report the result
 
 Unless the user has explicitly pre-authorised automatic continuation, show the
@@ -171,11 +195,18 @@ request, and never push to `main`.
 
 **An approved plate is delivered to the inbox and nowhere else:** the file, as
 `docs/art/renders/<plate-id>.png`, on a branch named `plate/<plate-id>`. That
-push starts the landing workflow, which validates it, refuses it if it is
-under its floor, builds, commits it to `main`, verifies the committed bytes and
-deletes the branch. The whole procedure — including the three API calls it
-takes with a connector, and the base64 rules — is in `docs/art/AGENTS.md`, and
-that file is the contract.
+push starts the landing workflow, which validates it, refuses it if it is under
+its floor or on the wrong page, builds, commits it to `main`, verifies the
+committed bytes and deletes the branch. The whole procedure — both routes a
+connector can take, and the base64 rules — is in `docs/art/AGENTS.md`, and that
+file is the contract.
+
+Creating the branch is itself a push, so the landing workflow runs once before
+the file is there and reports **the inbox is open**. That is green and expected;
+it is not a rejection and it decides nothing. If a tool that writes files takes
+text content and encodes it for you, it cannot carry a PNG — use the blob route
+in `docs/art/AGENTS.md` rather than concluding that binary cannot be uploaded.
+It can: this inbox has taken fifteen plates.
 
 Report the delivery as a push to the inbox, with the commit, the dimensions and
 the SHA-256 of the file you read from disk. **Say "shipped" only when the

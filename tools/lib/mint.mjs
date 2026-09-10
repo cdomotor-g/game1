@@ -193,6 +193,48 @@ export function renderPrompt(brief, { cornerNote = null } = {}) {
 }
 
 /**
+ * What to look at the finished render FOR, before anybody else sees it.
+ *
+ * The acceptance check is the step that gets skipped. An artist run against
+ * event-blood-moon - a brief asking for a small low rust-coloured moon with no
+ * glow, drawn plainly and without any drama at all - produced a cinematic
+ * landscape with a huge glowing red moon, showed it without checking it, and
+ * then treated the user saying yes as though it settled the question. It does
+ * not: a person approving a picture is approving the picture, not certifying it
+ * against a brief they have not got open.
+ *
+ * So the check is written down, per plate, as a list somebody has to answer
+ * rather than a paragraph telling them to be careful. Nothing in it is typed.
+ * The items ARE the sentences renderPrompt already takes out of the positive
+ * prompt - every "no X" and "never Y" in the preamble and the subject, which is
+ * exactly what an image model cannot be told and so exactly what has to be
+ * checked by eye afterwards - plus the two properties the shipping step refuses
+ * outright. On the run above, "Strictly no gradients, no glow ..." was item
+ * three of six.
+ *
+ * The positives are not enumerated: that would be the brief again, one line
+ * wider. They get the one item that covers them.
+ */
+export function checkList(brief, { format = null, minLongSide = 0, cornerNote = null } = {}) {
+  const items = [];
+  if (format) items.push(`The page is ${format}. Another page is refused at the shipping step and cannot be cropped into this one.`);
+  if (minLongSide) items.push(`At least ${minLongSide} px on the long side. Pixels never drawn cannot be added later.`);
+  items.push('It is one whole drawn page of artwork and NOT a card: no frame, no panel, no border rule, no title, no lettering anywhere.');
+  /* renderPrompt names a composition block rather than quoting it - "FRAMING
+     block" - which is the right thing to print in a list of what was taken OUT
+     of a prompt and too terse to answer as a question. Asked as one, it says
+     what obeying it means. */
+  for (const item of renderPrompt(brief, { cornerNote })?.moved ?? []) {
+    items.push(/ block$/.test(item)
+      ? `The ${item.replace(/ block$/, '')} block is obeyed by where the subject SITS on the page. The crop is taken by machine and cannot be argued with.`
+      : item);
+  }
+  items.push('The subject paragraph, sentence by sentence: every thing it names is in the picture, and nothing it did not ask for has been added.');
+  items.push('Nothing on the deck\'s own negative list is in the picture.');
+  return items;
+}
+
+/**
  * What the card window will actually keep of this plate, in numbers, for the
  * artist who cannot see the card.
  *
@@ -598,6 +640,44 @@ export function pageAspectOf(line, row) {
 }
 
 /**
+ * Which of the line's declared page shapes a delivered plate was actually drawn
+ * on: the NEAREST one, off the same `draw.sizeByFormat` table, rather than a
+ * tolerance somebody typed.
+ *
+ * A tolerance was the obvious thing and it is the wrong thing. Every character
+ * and monster plate in the repository was generated at 1055 x 1491 - true A4,
+ * 1:root-two - against a format called "A4 portrait" whose declared size is
+ * 1024 x 1536, which is 2:3. That is a 6% disagreement on forty-nine plates
+ * that were all correct, all accepted, and all the shape the generator makes
+ * for that page. Any tolerance loose enough to keep them is loose enough to be
+ * worth nothing, and any tolerance tight enough to mean something refuses the
+ * whole back catalogue.
+ *
+ * The distinction that actually matters is not how near a page is to its
+ * declared ratio; it is WHICH OF THE THREE it is. Square, portrait and
+ * landscape sit an even ln(1.5) apart in log-ratio - the only scale-free way to
+ * compare two proportions - so classifying is unambiguous and needs no figure
+ * at all. A square page handed to a landscape deck is a third of the drawing
+ * thrown away at the crop, and that is what this catches.
+ *
+ * Returns { format, aspect, distance } for the nearest declared shape, or null
+ * where the line declares no table to classify against.
+ */
+export function nearestFormat(line, width, height) {
+  const table = line?.draw?.sizeByFormat;
+  if (!table || !width || !height) return null;
+  const got = width / height;
+  let best = null;
+  for (const [format, spec] of Object.entries(table)) {
+    const [w, h] = String(spec).split('x').map(Number);
+    if (!w || !h) continue;
+    const distance = Math.abs(Math.log(got / (w / h)));
+    if (!best || distance < best.distance) best = { format, aspect: w / h, distance };
+  }
+  return best;
+}
+
+/**
  * How densely a landed plate prints through a window, in dots per inch, at a
  * print scale. The crop keeps the largest sub-rectangle of the plate with the
  * window's aspect, so the density is whichever axis binds - the plate's width
@@ -719,6 +799,11 @@ export function survey(root = HERE) {
        quoted one figure for the whole line would quote the wrong one for half
        of it. Keyed by the provenance string, which is what the note prints. */
     const bounds = new Map();
+    /* Landed plates drawn on a page their brief did not ask for. Same shape of
+       finding as the floor buckets below and reported the same way - once per
+       line, with the count - because it is the same finding every time and
+       thirty copies of it would bury the rows that are somebody's turn. */
+    const offPage = [];
     if (!entry.shelved) {
       const { rows, deferred, generated } = subjectsOf(root, line);
       entry.deferred = deferred;
@@ -746,14 +831,20 @@ export function survey(root = HERE) {
           unreadable = pngProblem(file);
           if (unreadable) {
             out.problems.push(`${line.id}/${row.code}: the plate at ${platePath(line, row)} ${unreadable}`);
-          } else if (size.min) {
+          } else {
             const { width, height } = pngSize(file);
-            longSide = Math.max(width, height);
-            if (!bounds.has(size.from)) bounds.set(size.from, { ...size, seen: 0, undersized: [], belowWant: [] });
-            const bucket = bounds.get(size.from);
-            bucket.seen += 1;
-            if (longSide < size.min) bucket.undersized.push({ code: row.code, longSide });
-            else if (size.want && longSide < size.want) bucket.belowWant.push({ code: row.code, longSide });
+            const drawnOn = nearestFormat(line, width, height);
+            if (drawnOn && row.format && drawnOn.format !== row.format) {
+              offPage.push({ code: row.code, plate: row.plate, asked: row.format, drawnOn: drawnOn.format, size: `${width}x${height}` });
+            }
+            if (size.min) {
+              longSide = Math.max(width, height);
+              if (!bounds.has(size.from)) bounds.set(size.from, { ...size, seen: 0, undersized: [], belowWant: [] });
+              const bucket = bounds.get(size.from);
+              bucket.seen += 1;
+              if (longSide < size.min) bucket.undersized.push({ code: row.code, longSide });
+              else if (size.want && longSide < size.want) bucket.belowWant.push({ code: row.code, longSide });
+            }
           }
         }
 
@@ -813,6 +904,19 @@ export function survey(root = HERE) {
               `\`${worst.code}\` at ${worst.longSide} px. That is an aspiration, not a fault.`
           );
         }
+      }
+
+      /* A plate on the wrong page is a plate the crop is quietly throwing a
+         third of away, and it is not fixable after the fact any more than a
+         missing pixel is: it has to be drawn again. These predate the shape
+         gate in tools/ship-art.mjs, which refuses one now. */
+      if (offPage.length) {
+        out.notes.push(
+          `${line.id}: ${offPage.length} landed plate${offPage.length === 1 ? ' is' : 's are'} drawn on a page the brief did not ask for — ` +
+            offPage.map((p) => `\`${p.plate}\` asks for ${p.asked} and is ${p.size}, ${/^[aeiou]/i.test(p.drawnOn) ? 'an' : 'a'} ${p.drawnOn} page`).join('; ') +
+            `. The card or tile window still cuts to the shape the brief names, so what the wrong page added is thrown away. ` +
+            `Redrawing on the right page is the only fix; \`node tools/aim-preview.mjs\` shows what is being lost.`
+        );
       }
     }
     out.lines.push(entry);
