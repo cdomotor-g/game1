@@ -19,7 +19,7 @@ catches that in CI.
 
 > **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 41 of 41 are under the 1890 px this line would want for print — smallest is `CHR-12` at 1488 px. That is an aspiration, not a fault.
 
-> **Note.** cards: every plate clears the 866 px floor (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), and 61 of 61 are under the 1299 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
+> **Note.** cards: every plate clears the 866 px floor (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), and 62 of 62 are under the 1299 px this line would want for print — smallest is `TAL-01` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
@@ -34,13 +34,13 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**154 of 205 minted.** 0 waiting on a brief, 51 waiting on art, 0 waiting on frame.
+**154 of 205 minted.** 0 waiting on a brief, 50 waiting on art, 1 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 51 cards
+### 2 · DRAW — the artist — 50 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi), 1299 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -96,11 +96,14 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `ITM-12` | Compass | Items | `item-compass` | ✓ | · | · |
 | `ITM-15` | Ten Arrows | Items | `item-arrows-10` | ✓ | · | · |
 | `ITM-16` | Twenty Arrows | Items | `item-arrows-20` | ✓ | · | · |
-| `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate
+### 3 · FRAME — whoever accepts the plate — 1 card
 
-Nothing waiting.
+The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
+
+| Code | Card | Deck | Plate | brief | plate | frame |
+| --- | --- | --- | --- | :-: | :-: | :-: |
+| `TOL-06` | Fishing Line | Tools | `tool-fishing-line` | ✓ | ✓ | · |
 
 ### Minted
 

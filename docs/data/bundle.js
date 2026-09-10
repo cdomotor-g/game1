@@ -23974,6 +23974,17 @@ window.GAME_DATA = {
           0.21
         ]
       },
+      "tool-fishing-line": {
+        "file": "art/renders/tool-fishing-line.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "tool-hammer": {
         "file": "art/renders/tool-hammer.png",
         "width": 1254,
