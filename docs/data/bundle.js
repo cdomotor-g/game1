@@ -22257,6 +22257,17 @@ window.GAME_DATA = {
           0.4
         ]
       },
+      "item-compass": {
+        "file": "art/renders/item-compass.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "item-crossbow": {
         "file": "art/renders/item-crossbow.png",
         "width": 1254,
