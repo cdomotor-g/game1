@@ -137,6 +137,23 @@ export function openCatalogue(root, { data }) {
   /* the book's own JPEG copy of the plate where tools/build-book-art.mjs has made one */
   const BOOKART = join(root, 'docs', 'book', 'art');
   const plateSrc = (id) => (existsSync(join(BOOKART, `${id}.jpg`)) ? `art/${id}.jpg` : `../art/renders/${id}.png`);
+
+  /**
+   * The two attributes a big plate is shown with: the small copy on screen, the
+   * full one named beside it for the printer.
+   *
+   * A reader opening the book was fetching 67 MB of full-size JPEG for 278
+   * pictures they were looking at four inches wide - a screen wants about a
+   * fifth of the pixels a page at three hundred dots an inch does, and the
+   * small copy has been sitting beside every one of them all along. The swap
+   * back is tools/lib/book-print.js, which does it before the print dialog
+   * opens and waits for the pixels to arrive.
+   */
+  const plateImgSrc = (id) => {
+    const full = plateSrc(id);
+    const small = existsSync(join(BOOKART, `${id}-s.jpg`)) ? `art/${id}-s.jpg` : full;
+    return small === full ? `src="${full}"` : `src="${small}" data-print-src="${full}"`;
+  };
   const byId = (arr) => new Map(arr.map((x) => [x.id, x]));
 
   const commodities = byId(data.commodities.commodities);
@@ -191,7 +208,7 @@ export function openCatalogue(root, { data }) {
   /** The plate, whole. Or, while it is not yet drawn, the deck's own device in a ruled window. */
   function plate(id, { format = 'portrait', deck = null, element = null, alt = '' } = {}) {
     if (id && hasPlate(id)) {
-      return `<figure class="plate ${format}"><img src="${plateSrc(id)}" alt="${esc(alt)}" loading="lazy"></figure>`;
+      return `<figure class="plate ${format}"><img ${plateImgSrc(id)} alt="${esc(alt)}" loading="lazy"></figure>`;
     }
     const motif = deck?.back?.motif ? data.components.back.motifs[deck.back.motif] : null;
     const device = element
@@ -525,7 +542,7 @@ export function openCatalogue(root, { data }) {
     ...Object.fromEntries([...expansions.values()].map((x, i) => [`expansion:${x.id}`, { id: `expansion-${x.id}`, title: x.name, expansion: x, ordinal: i + 1 }])),
   };
 
-  return { chapters, sets, plate, hasPlate, plateSrc, campaignMark, mark, name, inline, esc };
+  return { chapters, sets, plate, hasPlate, plateSrc, plateImgSrc, campaignMark, mark, name, inline, esc };
 }
 
 /**

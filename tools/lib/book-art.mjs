@@ -204,7 +204,13 @@ export const inlinesPlate = (e) => e.what === 'card' || e.what === 'tile';
 export function pictureHtml(e, { attrs = '', small = false, root = null } = {}) {
   if (e.inline) return e.inline;
   if (inlinesPlate(e)) return inlineSvg(e.abs, { attrs, root });
-  return `<img src="${small && e.small ? e.small : e.src}" alt="${esc(e.name)}" loading="lazy"${attrs ? ` ${attrs}` : ''}>`;
+  /* The screen gets the small copy whatever size the figure is, and the full one
+     is named beside it for tools/lib/book-print.js to put back before the print
+     dialog opens. `small` no longer decides what is FETCHED, only whether the
+     full copy is worth naming: a margin figure at 42mm has no use for it. */
+  const screen = e.small || e.src;
+  const forPrint = !small && e.src !== screen ? ` data-print-src="${e.src}"` : '';
+  return `<img src="${screen}"${forPrint} alt="${esc(e.name)}" loading="lazy"${attrs ? ` ${attrs}` : ''}>`;
 }
 
 /** Width on the page for a figure size, in mm; a row shares the width between its pieces. */

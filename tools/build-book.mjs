@@ -112,13 +112,44 @@ function illustrate(src, where, render) {
   for (const e of art.byThing.values()) if (shown.has(e.png ?? e.src)) skip.add(e.thing);
   const v = autoVignettes(placeFigures(out.html, figs), art, { skip, max: 6, gap: 3, root: ROOT });
   out.html = v.html + tailpiece(v.leftover, { root: ROOT });
-  /* a chapter's own gallery reads the copies too, when there are copies */
-  out.html = out.html.replace(/src="\.\.\/art\/renders\/([^"]+)\.png"/g, (m, id) => (existsSync(join(ROOT, 'docs', 'book', 'art', `${id}.jpg`)) ? `src="art/${id}.jpg"` : m));
+  /* a chapter's own gallery reads the copies too, when there are copies: the
+     small one on screen, the full one named beside it for the printer */
+  out.html = out.html.replace(/src="\.\.\/art\/renders\/([^"]+)\.png"/g, (m, id) => {
+    const has = (suffix) => existsSync(join(ROOT, 'docs', 'book', 'art', `${id}${suffix}`));
+    if (!has('.jpg')) return m;
+    return has('-s.jpg') ? `src="art/${id}-s.jpg" data-print-src="art/${id}.jpg"` : `src="art/${id}.jpg"`;
+  });
   return out;
 }
 
-/** Heading ids are made unique per chapter, and the chapter's own links follow. */
-const scopeIds = (html, id) => html.replace(/ id="([^"]+)"/g, (_, s) => ` id="${id}--${s}"`);
+/**
+ * Heading ids are made unique per chapter, and the chapter's own links follow.
+ *
+ * The second half of that sentence was the documentation and not the code: this
+ * renamed every id and no reference to one, and a chapter is where the figures
+ * have already been placed. So every card and tile inlined into a rules, review,
+ * annex or design chapter had its `<clipPath id="portrait-window">` renamed out
+ * from under the `clip-path="url(#portrait-window)"` still asking for it - 171
+ * broken references over 295 sites - and a browser that cannot resolve a clip
+ * draws the thing UNCLIPPED. The window is a hole cut in a picture bigger than
+ * itself, so what came through was the whole plate at window scale: the crop
+ * every card is aimed with, silently thrown away, in the book only.
+ *
+ * A reference is followed only when the id it names was renamed here. That is
+ * what keeps a cross-chapter link working: `<a href="#rules-08-the-map-and-
+ * travel">` points at a chapter this fragment does not define, so it is left
+ * exactly as it is, while `url(#i152-portrait-window)` two lines away is
+ * followed because its definition is right there.
+ */
+const scopeIds = (html, id) => {
+  const own = new Set([...html.matchAll(/ id="([^"]+)"/g)].map((m) => m[1]));
+  if (!own.size) return html;
+  const scoped = (s) => `${id}--${s}`;
+  return html
+    .replace(/ id="([^"]+)"/g, (_, s) => ` id="${scoped(s)}"`)
+    .replace(/url\(#([^)"']+)\)/g, (m, s) => (own.has(s) ? `url(#${scoped(s)})` : m))
+    .replace(/((?:xlink:)?href=")#([^"]+)"/g, (m, head, s) => (own.has(s) ? `${head}#${scoped(s)}"` : m));
+};
 
 /** A rules chapter: the title becomes the chapter head, the first paragraph its lede, the next its drop capital. */
 function rulesChapter(file, n) {
@@ -236,7 +267,7 @@ function friezeHtml(refs) {
 
 function titlePage(s) {
   const plate = s.plate && cat.hasPlate(s.plate)
-    ? `<figure class="tplate ${s.plateFormat ?? 'portrait'}"><img src="${cat.plateSrc(s.plate)}" alt="${esc(s.plateAlt ?? '')}"></figure>`
+    ? `<figure class="tplate ${s.plateFormat ?? 'portrait'}"><img ${cat.plateImgSrc(s.plate)} alt="${esc(s.plateAlt ?? '')}"></figure>`
     : s.plateSrc
       ? `<figure class="tplate ${s.plateFormat ?? 'landscape'}"><img src="${esc(s.plateSrc)}" alt="${esc(s.plateAlt ?? '')}"></figure>`
       : '<figure class="tplate empty"></figure>';
@@ -326,12 +357,15 @@ function campaignChapters(camp, ordinal) {
 
   /* 2. the board */
   if (map) {
-    const plateSrc = existsSync(join(ROOT, 'docs', 'book', 'art', `map-${map.id}.jpg`)) ? `art/map-${map.id}.jpg` : `../map/${map.plate.file}`;
+    const mapArt = (suffix) => existsSync(join(ROOT, 'docs', 'book', 'art', `map-${map.id}${suffix}`));
+    const plateSrc = mapArt('.jpg')
+      ? (mapArt('-s.jpg') ? `src="art/map-${map.id}-s.jpg" data-print-src="art/map-${map.id}.jpg"` : `src="art/map-${map.id}.jpg"`)
+      : `src="${esc(`../map/${map.plate.file}`)}"`;
     const preset = (map.print?.presets ?? []).find((p) => p.id === map.print.default);
     chapters.push({
       id: `${prefix}-board`, title: `The board: ${map.name}`, kind: 'text',
       html: `<header class="chap small"><div class="num">Campaign ${roman(ordinal)} · The board</div><h2 class="title">${esc(map.name)}</h2>${map.subtitle ? `<p class="lede">${esc(map.subtitle[0].toUpperCase() + map.subtitle.slice(1))}.</p>` : ''}${ORNAMENT}</header>`
-        + `<figure class="mapplate"><img src="${esc(plateSrc)}" alt="${esc(map.name)}"><figcaption>${esc(map.name)}${preset ? ` — printed at the ${esc(preset.name.toLowerCase())} preset it is ${preset.mapWidthMm} × ${preset.mapHeightMm} mm with ${preset.hexAcrossFlatsMm} mm hexes` : ''}. The hex grid is laid over the plate at the table.</figcaption></figure>`
+        + `<figure class="mapplate"><img ${plateSrc} alt="${esc(map.name)}"><figcaption>${esc(map.name)}${preset ? ` — printed at the ${esc(preset.name.toLowerCase())} preset it is ${preset.mapWidthMm} × ${preset.mapHeightMm} mm with ${preset.hexAcrossFlatsMm} mm hexes` : ''}. The hex grid is laid over the plate at the table.</figcaption></figure>`
         + P(map.summary)
         + `<h3>The regions</h3>${table(['Region', 'Ground', 'What is there'], (map.regions ?? []).map((r) => [esc(r.name), esc(cat.name(new Map(data.terrain.terrains.map((t) => [t.id, t])), r.terrain)), inline(r.summary ?? '')]))}`
         + `<h3>The places</h3>${table(['Place', 'Rank', 'Harbour', 'Note'], (map.settlements ?? []).map((s) => [esc(s.name), esc(s.rank ?? ''), s.harbour ? 'yes' : '—', inline(s.note ?? '')]))}`
@@ -357,7 +391,7 @@ function campaignChapters(camp, ordinal) {
       : [...(c.meets?.monsters ?? []).map((id) => `monster:${id}`), ...(c.meets?.characters ?? []).map((id) => `character:${id}`)]
         .map((r) => art.resolve(r)).find((e) => e && e.what === 'plate');
     const plate = met
-      ? `<figure class="plate landscape stand-in"><img src="${met.src}" alt="${esc(met.name)}" loading="lazy"><figcaption>${esc(met.name)}, met here · the chapter's own plate is not yet drawn</figcaption></figure>`
+      ? `<figure class="plate landscape stand-in"><img src="${met.small ?? met.src}"${met.small && met.small !== met.src ? ` data-print-src="${met.src}"` : ''} alt="${esc(met.name)}" loading="lazy"><figcaption>${esc(met.name)}, met here · the chapter's own plate is not yet drawn</figcaption></figure>`
       : cat.plate(`campaign-${c.id}`, { format: 'landscape', deck, alt: c.name });
     return `<article class="card-chapter" id="${prefix}-card-${esc(c.id)}">
       ${plate}
@@ -472,7 +506,7 @@ ${friezeHtml(['character:chr-03', 'building:market', 'monster:ash-drake', 'vehic
 
 const coverHtml = () => `<div class="titlepage cover" id="cover-title">${FRAME}
   <header><div class="label">${esc(GAME)}</div><h1 class="ttitle grand">${esc(BOOK_TITLE)}</h1><div class="script">being the Rules, the Reference Tables, the Catalogue &amp; the Campaigns</div>${ORNAMENT}</header>
-  <figure class="tplate portrait with-frieze"><img src="${cat.plateSrc('people-human')}" alt="A builder at work"></figure>${friezeHtml(['character:chr-02', 'monster:ash-drake', 'building:town-hall', 'vehicle:veh-05', 'character:chr-11'])}
+  <figure class="tplate portrait with-frieze"><img ${cat.plateImgSrc('people-human')} alt="A builder at work"></figure>${friezeHtml(['character:chr-02', 'monster:ash-drake', 'building:town-hall', 'vehicle:veh-05', 'character:chr-11'])}
   <footer class="short"><div class="tcaption">Set from the game's own data. The figures here are the figures on the cards.</div></footer>
 </div>`;
 
@@ -545,7 +579,7 @@ ${sections.map(sectionHtml).join('\n\n')}
 <div class="print-panel" id="print-panel" hidden>
   <div class="panel">
     <h2>Print</h2>
-    <p>Choose what to print. A section prints with its title page; open a section to pick single chapters. Set the printer to A4, 100%, backgrounds on.</p>
+    <p>Choose what to print. A section prints with its title page; open a section to pick single chapters. Set the printer to A4, 100%, backgrounds on. The pictures are shown at screen resolution and swapped for the full-size ones here, so print from this panel rather than the browser's own command.</p>
     <div class="picks" id="picks"></div>
     <div class="actions"><button type="button" id="pick-all">All</button><button type="button" id="pick-none">None</button><span class="spacer"></span><button type="button" id="do-print" class="primary">Print selection</button><button type="button" id="close-print">Close</button></div>
   </div>

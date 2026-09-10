@@ -13,7 +13,9 @@
  *
  * Only cards whose plate exists are rendered — a card with no accepted render
  * is not a card yet. Output: docs/cards/<CODE>.svg, docs/cards/index.html and
- * docs/cards/print.html, the sheets you cut cards out of.
+ * docs/cards/print.html, the sheets you cut cards out of, plus
+ * docs/cards/web/<CODE>.svg — the same cards reading a screen-sized JPEG of
+ * each plate, which is all the gallery embeds. The card itself keeps the PNG.
  *
  * Card anatomy (data/components.json statStrip and storyRail):
  *   name and card code at the top · a SUMMARY STRIP of lettered boxes under
@@ -61,6 +63,39 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = join(ROOT, 'data');
 const RENDERS = join(ROOT, 'docs', 'art', 'renders');
 const OUT_DIR = join(ROOT, 'docs', 'cards');
+const WEB_DIR = 'web';
+
+/**
+ * The gallery's copy of a card: the same SVG, reading a JPEG of the plate
+ * instead of the PNG.
+ *
+ * docs/cards/index.html embeds every card as an <object>, and every card's
+ * window pulls its whole three-or-four-megabyte plate: 188 cards, 676 MB, to
+ * look at a wall of thumbnails. The JPEG copies tools/build-book-art.mjs makes
+ * for the book are the same pictures at a screen's worth of pixels, and this is
+ * the second reader of them - a card in the gallery is 63 mm wide, so the small
+ * copy is more resolution than the window can spend either way.
+ *
+ * The card itself is untouched: docs/cards/<CODE>.svg keeps the PNG, and that
+ * is what print.html lays out, what tools/card-proof.mjs photographs and what
+ * the book inlines. A copy under web/ is a build output, like the fronts.
+ */
+/** Every file this tool owns under docs/cards/, the web/ copies included. */
+const generated = () => {
+  const out = [];
+  for (const f of readdirSync(OUT_DIR)) {
+    if (f === WEB_DIR) {
+      for (const g of readdirSync(join(OUT_DIR, WEB_DIR))) if (g.endsWith('.svg')) out.push(`${WEB_DIR}/${g}`);
+    } else if (f.endsWith('.svg') || f.endsWith('.html')) out.push(f);
+  }
+  return out;
+};
+
+const webCopy = (svg) => svg
+  .replace(/href="\.\.\/art\/renders\/([^"]+)\.png"/g, (m, id) =>
+    (existsSync(join(ROOT, 'docs', 'book', 'art', `${id}-s.jpg`)) ? `href="../../book/art/${id}-s.jpg"` : m))
+  /* one level deeper than the card it was copied from, so what is left relative moves with it */
+  .replace(/="\.\.\/(?!\.\.\/)/g, '="../../');
 const checkOnly = process.argv.includes('--check');
 
 const read = (f) => JSON.parse(readFileSync(join(DATA, f), 'utf8'));
@@ -1420,11 +1455,12 @@ const index = `<!doctype html>
 plates in <code>docs/art/renders/</code> — edit those, re-run the tool, and never these files. Only cards whose
 plate has been accepted are rendered${skipped.length ? ` (still waiting on renders: ${skipped.join(', ')})` : ''}.
 Each card is shown here with its 3&nbsp;mm bleed; <a href="print.html">the print page</a> lays them out on paper
-at their true ${CARD_MM.w} × ${CARD_MM.h}&nbsp;mm, cut lines and all.</p>
+at their true ${CARD_MM.w} × ${CARD_MM.h}&nbsp;mm, cut lines and all. The cards on this page read a screen-sized
+copy of each plate so that the page loads; the print page reads the plates themselves.</p>
 ${DECKS.map(({ prefix, name: title }) => {
   const deck = rendered(prefix);
   if (!deck.length) return '';
-  return `<h2>${title}</h2>\n<div class="deck">\n${deck.map((s) => `  <object data="${s.code}.svg" type="image/svg+xml" aria-label="${esc(s.name)}"></object>`).join('\n')}\n</div>`;
+  return `<h2>${title}</h2>\n<div class="deck">\n${deck.map((s) => `  <object data="web/${s.code}.svg" type="image/svg+xml" aria-label="${esc(s.name)}"></object>`).join('\n')}\n</div>`;
 }).join('\n')}
 <h2>The backs</h2>
 <p class="note">One per deck, so a face-down stack is identifiable across the table. Each carries its deck's
@@ -1432,7 +1468,7 @@ name mirrored across the card's horizontal centre line — a back with an up and
 the card away. Described in <code>data/components.json</code> under <code>back</code>, and generated with
 the fronts.</p>
 <div class="deck">
-${DECKS.map((d) => `  <object data="back-${d.prefix}.svg" type="image/svg+xml" aria-label="${esc(d.name)} — the card back"></object>`).join('\n')}
+${DECKS.map((d) => `  <object data="web/back-${d.prefix}.svg" type="image/svg+xml" aria-label="${esc(d.name)} — the card back"></object>`).join('\n')}
 </div>
 </body>
 </html>
@@ -1930,12 +1966,18 @@ for (const deck of DECKS) {
   const cards = rendered(deck.prefix);
   if (cards.length) {
     const geom = deckGeometry(cards, deck);
-    for (const spec of cards) wanted.set(`${spec.code}.svg`, card(spec, geom));
+    for (const spec of cards) {
+      const svg = card(spec, geom);
+      wanted.set(`${spec.code}.svg`, svg);
+      wanted.set(`${WEB_DIR}/${spec.code}.svg`, webCopy(svg));
+    }
   }
   /* Every declared deck gets a back, cards or no cards. A deck that is still
      waiting on its plates is still a deck, and its back is still what tells it
      apart from the stack next to it. */
-  wanted.set(`back-${deck.prefix}.svg`, back(deck));
+  const backSvg = back(deck);
+  wanted.set(`back-${deck.prefix}.svg`, backSvg);
+  wanted.set(`${WEB_DIR}/back-${deck.prefix}.svg`, webCopy(backSvg));
 }
 wanted.set('index.html', index);
 wanted.set('print.html', print);
@@ -1987,8 +2029,8 @@ if (checkOnly) {
     try { current = readFileSync(join(OUT_DIR, name), 'utf8'); } catch { /* absent is stale */ }
     if (current !== content) { console.error(`docs/cards/${name} is stale.`); stale = true; }
   }
-  for (const f of readdirSync(OUT_DIR)) {
-    if ((f.endsWith('.svg') || f.endsWith('.html')) && !wanted.has(f)) {
+  for (const f of generated()) {
+    if (!wanted.has(f)) {
       console.error(`docs/cards/${f} is no longer generated.`);
       stale = true;
     }
@@ -1996,10 +2038,8 @@ if (checkOnly) {
   if (stale) { console.error('Run: node tools/build-cards.mjs'); process.exit(1); }
   console.log(`docs/cards/ is up to date (${specs.length} cards)`);
 } else {
-  mkdirSync(OUT_DIR, { recursive: true });
-  for (const f of readdirSync(OUT_DIR)) {
-    if ((f.endsWith('.svg') || f.endsWith('.html')) && !wanted.has(f)) unlinkSync(join(OUT_DIR, f));
-  }
+  mkdirSync(join(OUT_DIR, WEB_DIR), { recursive: true });
+  for (const f of generated()) if (!wanted.has(f)) unlinkSync(join(OUT_DIR, f));
   for (const [name, content] of wanted) writeFileSync(join(OUT_DIR, name), content, 'utf8');
   console.log(`wrote ${specs.length} cards + index.html + print.html to docs/cards/` +
     (skipped.length ? ` — no render yet for ${skipped.join(', ')}` : ''));

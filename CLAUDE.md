@@ -581,7 +581,21 @@ the PNG each was made from, which is what `--check` compares on a fresh clone.
 They are committed like the card fronts. The PNG in `docs/art/renders/` is still
 the plate and nothing about it changes. A built card or tile draws its plate
 with `<image href>`, which a browser will not fetch through `<img>`, so cards
-and tiles are inlined into the page with their ids prefixed per copy.
+and tiles are inlined into the page with their ids prefixed per copy — and
+whatever prefixes an id must prefix every `url(#…)` and `href="#…"` that names
+it, or the clip goes and the window stops being a window.
+
+**A screen gets the small copy; the print button puts the full one back.** Those
+JPEGs are not the book's private business any more: they are what every screen
+view of a plate reads. The book names the full copy in `data-print-src` beside
+the small one and `tools/lib/book-print.js` swaps it in and *waits for it* before
+opening the dialog — neither `<source media="print">` nor a `beforeprint` swap
+survives to the printed page, both tested. `docs/cards/index.html` embeds
+`docs/cards/web/<CODE>.svg`, the same cards reading `-s.jpg`, because the
+gallery was pulling 676 MB of PNG to show a wall of thumbnails. The card itself,
+`docs/cards/<CODE>.svg`, keeps the PNG: that is what `print.html` lays out, what
+`card-proof` photographs and what the book inlines. Opening the book costs 19 MB
+where it cost 86, and the gallery 16 MB where it cost 676.
 `node tools/book-proof.mjs <section> --split` prints a section a chapter at a
 time, which is the only way a headless Chromium gets through Book I.
 

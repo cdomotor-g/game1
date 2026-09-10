@@ -65,13 +65,68 @@
     document.body.classList.remove('selective');
     Array.prototype.forEach.call(document.querySelectorAll('.chosen'), function (el) { el.classList.remove('chosen'); });
   }
+  /* ------------------------------------------------------- the print swap
+     Every big picture is shown on screen at the small copy's resolution and
+     names its full-size copy in data-print-src; opening the book was fetching
+     67 MB of print-resolution JPEG to be looked at four inches wide. The full
+     copies go back in before the dialog opens.
+
+     They have to be WAITED FOR. Two cheaper mechanisms were tried against a
+     headless Chromium printing to PDF and neither works: <source media="print">
+     inside a <picture> is ignored, and a swap made in a beforeprint handler
+     lands after the snapshot is taken. Both come out with the screen copy - not
+     a blank, which is the one mercy, and is why beforeprint still tries below
+     for a reader who prints with the keyboard. Printing from the panel or from
+     a title page's own button is the path that is sure, because that path can
+     wait. */
+  function bigPictures(scope) {
+    return Array.prototype.slice.call((scope || document).querySelectorAll('img[data-print-src]'));
+  }
+  function toPrint(imgs) {
+    var loading = [];
+    imgs.forEach(function (img) {
+      var full = img.getAttribute('data-print-src');
+      if (!full || img.getAttribute('src') === full) return;
+      img.setAttribute('data-screen-src', img.getAttribute('src'));
+      img.src = full;
+      loading.push(img);
+    });
+    return loading;
+  }
+  function toScreen() {
+    bigPictures().forEach(function (img) {
+      var small = img.getAttribute('data-screen-src');
+      if (!small) return;
+      img.src = small;
+      img.removeAttribute('data-screen-src');
+    });
+  }
+  /* A picture that will not load must not hold the dialog shut, so the wait is
+     whichever comes first: every swapped picture decoded, or ten seconds. */
+  function settled(imgs) {
+    var done = imgs.map(function (img) {
+      if (img.decode) return img.decode().catch(function () {});
+      return new Promise(function (r) { img.addEventListener('load', r); img.addEventListener('error', r); });
+    });
+    return Promise.race([Promise.all(done), new Promise(function (r) { setTimeout(r, 10000); })]);
+  }
+  /* Only what is going to be printed is swapped. A hundred and thirty pages of
+     full-size plates decoded at once is what killed this renderer once already. */
+  function chosenPictures() {
+    var sel = '.part.chosen > .titlepage img[data-print-src], .chapter.chosen img[data-print-src]';
+    var hits = Array.prototype.slice.call(document.querySelectorAll(sel));
+    return hits.length ? hits : bigPictures();
+  }
+
   function printSelection() {
     apply();
     panel.hidden = true;
+    var waiting = toPrint(chosenPictures());
     /* give the browser a frame to lay the hidden sections out of the page */
-    setTimeout(function () { window.print(); }, 60);
+    settled(waiting).then(function () { setTimeout(function () { window.print(); }, 60); });
   }
-  window.addEventListener('afterprint', clear);
+  window.addEventListener('beforeprint', function () { toPrint(bigPictures()); });
+  window.addEventListener('afterprint', function () { clear(); toScreen(); });
 
   document.getElementById('open-print').addEventListener('click', function () { panel.hidden = false; });
   document.getElementById('close-print').addEventListener('click', function () { panel.hidden = true; });
@@ -105,7 +160,10 @@
     Array.prototype.forEach.call(picks.querySelectorAll('.ch-box'), function (b) {
       if (b.checked) picks.querySelector('.part-box[value="' + b.getAttribute('data-part') + '"]').checked = true;
     });
-    if (/[?&]now\b/.test(location.search)) apply();
+    /* &now is how tools/book-proof.mjs prints headless, and a proof has to be
+       what a reader gets: it takes the full-size pictures too, the same ones
+       and only the ones the selection will print. */
+    if (/[?&]now\b/.test(location.search)) { apply(); toPrint(chosenPictures()); }
     else panel.hidden = false;
   }
 })();
