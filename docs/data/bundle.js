@@ -22352,10 +22352,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.07,
+          0.207,
+          0.89,
+          0.595
+        ],
+        "focal": [
+          0.58,
+          0.43
         ]
       },
       "item-plate-harness": {
@@ -22378,10 +22382,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.282,
+          0.0795,
+          0.4275,
+          0.8455
+        ],
+        "focal": [
+          0.5,
+          0.3
         ]
       },
       "item-rations-10-day": {
@@ -22389,10 +22397,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.136,
+          0.257,
+          0.794,
+          0.539
+        ],
+        "focal": [
+          0.7,
+          0.45
         ]
       },
       "item-rations-3-day": {
@@ -22400,10 +22412,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.097,
+          0.209,
+          0.817,
+          0.598
+        ],
+        "focal": [
+          0.7,
+          0.43
         ]
       },
       "item-satchel": {
@@ -22531,10 +22547,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.178,
+          0.105,
+          0.623,
+          0.781
+        ],
+        "focal": [
+          0.63,
+          0.17
         ]
       },
       "modification-compound-boiler": {

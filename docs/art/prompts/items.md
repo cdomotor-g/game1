@@ -153,16 +153,16 @@ part is furred and glazed where it has run over rock. Wash: rust red across
 the rope, flat, the whipping twine left as bare paper.
 
 FRAMING. Square plate, whole page drawn edge to edge. The whole coil, the
-spliced eye, the whipped end and both hanging tails inside the middle 81%.
+spliced eye, the whipped end and both hanging tails inside the middle 86%.
 Low ground line in the bottom third with the coil standing on it. Clear,
 quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-lantern — Lantern *(ITEMS deck · light, ITM-02)*
@@ -184,15 +184,15 @@ blue on the iron frame and the glazing, warm ochre on the horn pane, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. The cap and its vent
 holes, the carrying ring, all four panes, the door catch, the candle stub and
-the waxed base inside the middle 81%. Low ground line in the bottom third
+the waxed base inside the middle 86%. Low ground line in the bottom third
 with the lantern standing on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-torch — Torch *(ITEMS deck · light, ITM-03)*
@@ -215,15 +215,15 @@ ink.
 
 FRAMING. Square plate, whole page drawn edge to edge. The whole stave from
 charred head to butt, the wedge, the packed cloth and every turn of the cord
-inside the middle 81%. Low ground line in the bottom third with the butt
+inside the middle 86%. Low ground line in the bottom third with the butt
 standing on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-grappling-hook — Grappling Hook *(ITEMS deck · gear, carried, ITM-04)*
@@ -245,15 +245,15 @@ blue on the iron, rust red on the rope and the seizing, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. All four flukes and
 their points, the shank, the ring, the thimble and the seized rope tail
-inside the middle 81%. Low ground line in the bottom third with the hook
+inside the middle 86%. Low ground line in the bottom third with the hook
 lying on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-bag — Bag *(ITEMS deck · gear, belt, ITM-05)*
@@ -276,15 +276,15 @@ paper.
 
 FRAMING. Square plate, whole page drawn edge to edge. The whole bag - all
 four seams, the gathered neck, both cord tails, the belt loop and the darned
-patch - inside the middle 81%. Low ground line in the bottom third with the
+patch - inside the middle 86%. Low ground line in the bottom third with the
 bag sitting on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-satchel — Satchel *(ITEMS deck · gear, back, ITM-06)*
@@ -307,15 +307,15 @@ across the leather, flat, cold slate blue on the buckles and the D-rings.
 
 FRAMING. Square plate, whole page drawn edge to edge. The body, both gussets,
 the flap, both buckled straps, both D-rings and the full loop of the shoulder
-strap inside the middle 81%. Low ground line in the bottom third with the
+strap inside the middle 86%. Low ground line in the bottom third with the
 satchel standing on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-travelling-cloak — Travelling Cloak *(ITEMS deck · clothing, back, ITM-07)*
@@ -339,15 +339,15 @@ toggle.
 
 FRAMING. Square plate, whole page drawn edge to edge. The hood, the shoulder
 cape, the throat strap and toggle, the full drop of the folds and the whole
-hem inside the middle 81%. Low ground line in the bottom third with the hem
+hem inside the middle 86%. Low ground line in the bottom third with the hem
 hanging above it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-binoculars — Binoculars *(ITEMS deck · gear, belt, ITM-08)*
@@ -372,21 +372,21 @@ leather and the cord, cold slate blue on the lens glass, flat.
 
 FRAMING. Square plate, whole page drawn edge to edge. Both tubes end to end,
 both objective rims, both eyepiece collars, the hinged bridge and its screw,
-the leather binding and the knotted cord inside the middle 81%. Low ground
+the leather binding and the knotted cord inside the middle 86%. Low ground
 line in the bottom third with the glasses lying on it. Clear, quiet page
 above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-quiver — Quiver of Arrows *(ITEMS deck · gear, belt, ITM-09)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-quiver.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-quiver.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -411,20 +411,20 @@ the two visible heads, flat.
 FRAMING. Square plate, whole page drawn edge to edge. The whole body of the
 quiver from rim to base cap, the stitched seam, both riveted lugs and the
 strap, and the full standing sheaf of arrows to the tips of the fletchings
-inside the middle 81%. Low ground line in the bottom third with the base of
+inside the middle 86%. Low ground line in the bottom third with the base of
 the quiver on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-waterskin — Waterskin *(ITEMS deck · gear, belt, ITM-10)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-waterskin.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-waterskin.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -446,20 +446,20 @@ the waxed stitching left as bare paper.
 FRAMING. Square plate, whole page drawn edge to edge. The whole body of the
 skin from neck to base, all three seams, the bound neck and its collar, the
 bung on its thong, both stitched tabs and the full length of the strap inside
-the middle 81%. Low ground line in the bottom third with the skin standing on
+the middle 86%. Low ground line in the bottom third with the skin standing on
 it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-map — Map *(ITEMS deck · gear, belt, ITM-11)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-map.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-map.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -484,15 +484,15 @@ and the river, flat.
 FRAMING. Square plate, whole page drawn edge to edge. All four panels and the
 linen hinges between them, the drawn coastline, river and hill work, the worn
 hole at the crossing of the folds, and the whole of the open leather case at
-the foot inside the middle 81%. Low ground line in the bottom third with the
+the foot inside the middle 86%. Low ground line in the bottom third with the
 standing panels and the case on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-compass — Compass *(ITEMS deck · gear, belt, ITM-12)*
@@ -519,20 +519,20 @@ with a little verdigris on the copper, flat.
 FRAMING. Square plate, whole page drawn edge to edge. The whole case with the
 lid thrown back, the glass, the graduated card and its pierced north star,
 the needle on its pin, the knurled rim, the bail and the spring catch inside
-the middle 81%. Low ground line in the bottom third with the compass standing
+the middle 86%. Low ground line in the bottom third with the compass standing
 on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-rations-3-day — Three-Day Rations *(ITEMS deck · provision, carried, ITM-13)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-rations-3-day.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-rations-3-day.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -555,20 +555,20 @@ beef, flat.
 FRAMING. Square plate, whole page drawn edge to edge. The whole sack from
 base to lashed neck, the rolled collar and its cord, the chalked stroke, the
 darned corner, and both biscuit rounds, the salt beef and the salt twist set
-out in front of it inside the middle 81%. Low ground line in the bottom third
+out in front of it inside the middle 86%. Low ground line in the bottom third
 with the sack and the food standing on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-rations-10-day — Ten-Day Rations *(ITEMS deck · provision, carried, ITM-14)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-rations-10-day.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-rations-10-day.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -591,15 +591,15 @@ rust red on the salt beef and the cord, flat.
 FRAMING. Square plate, whole page drawn edge to edge. The whole sack from
 base to lashed neck, both doubled side seams, the toggle, the full run of the
 carrying sling and its knot, the canvas repair, and the biscuit and salt beef
-at its foot inside the middle 81%. Low ground line in the bottom third with
+at its foot inside the middle 86%. Low ground line in the bottom third with
 the sack standing on it. Clear, quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-arrows-10 — Ten Arrows *(ITEMS deck · gear, carried, ITM-15)*
@@ -628,16 +628,16 @@ fletching thread, flat; the feather vanes left as bare paper.
 
 FRAMING. Square plate, whole page drawn edge to edge. The full length of
 every shaft from head to nock, the binding and its loose cord ends, the
-whole fan of fletchings and all ten heads inside the middle 81%. Low bench
+whole fan of fletchings and all ten heads inside the middle 86%. Low bench
 line in the bottom third with the sheaf resting along it. Clear, quiet page
 above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-arrows-20 — Twenty Arrows *(ITEMS deck · gear, carried, ITM-16)*
@@ -672,11 +672,11 @@ the unrolled bag from fold to far flap and both cloth ties inside the middle
 quiet page above.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 81% of its height - everything that matters
-must sit between 9% and 91% down the page. Outside that band nothing can be
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+a rule of thumb.)
 ```
 
 ## item-sword — Sword *(WEAPONS deck · weapon, hand, WPN-01)*

@@ -537,6 +537,11 @@
       ],
       "note": "Stopper to base of the flask, with the crystal caged inside it."
     },
+    "item-waterskin": {
+      "subject": [0.178, 0.105, 0.623, 0.781],
+      "focal": [0.63, 0.17],
+      "note": "The bung, the bound neck and its turned collar, the ring and both stitched tabs, the full loop of the shoulder strap, the waxed cross-stitch down the seam, and the base on its ground line. The top edge is the bung at 10%, not the shoulder of the skin at 14% - that 4% is the whole reason both windows hold this plate with nothing spent. Focal on the bound neck."
+    },
     "modification-compound-boiler": {
       "subject": [
         0.06,
@@ -703,6 +708,11 @@
       ],
       "note": "Collar to the split hem, both sleeves and the belt. Focal on the buckle. Drawn plate - measured off the picture."
     },
+    "item-map": {
+      "subject": [0.07, 0.207, 0.89, 0.595],
+      "focal": [0.58, 0.43],
+      "note": "All four panels and the linen hinges between them, the whole of the drawn coastline, river, hill work and forest, the worn patch where two folds cross, and the rolled leather case with its thong and tassel at the left. Nothing has to be spent. The drawing lies in the lower two thirds of the page, so the focal sits on the middle of the open panels to pull the crop up off an empty head rather than leave the map riding high in its window."
+    },
     "item-plate-harness": {
       "subject": [
         0.13,
@@ -741,6 +751,21 @@
         0.6
       ],
       "note": "Crown to the tip of the nasal, brow band and every rivet. Focal where the nasal meets the band. Drawn plate - measured off the picture."
+    },
+    "item-quiver": {
+      "subject": [0.282, 0.0795, 0.4275, 0.8455],
+      "focal": [0.5, 0.3],
+      "note": "The whole quiver from rolled rim to base, the stitched side seam, the riveted lug with its ring and thong, the belt strap and the full standing sheaf. The subject spans 89% of the page against a card budget of 86%, so 3.5% is spent off the TOP: the points of the two tallest arrows run past the edge, which reads as a picture, where cutting the base out from under it would read as a mistake. The 5:4 thumbnail has 80% and cannot hold it either way - it spends both ends. Drawn plate - measured off the picture."
+    },
+    "item-rations-10-day": {
+      "subject": [0.136, 0.257, 0.794, 0.539],
+      "focal": [0.7, 0.45],
+      "note": "The whole bundle, both roped turns and their knots, the stitched patch on the belly, and the open end with the biscuit round, the cheese and the salt beef showing. Nothing has to be spent. Focal on the open end, which is the heaviest ink on the page and the thing that says ten days rather than three. The plate is a corded bundle where the brief asked for an upright sack - that departure is written up in item-rations-10-day.attempts.md."
+    },
+    "item-rations-3-day": {
+      "subject": [0.097, 0.209, 0.817, 0.598],
+      "focal": [0.7, 0.43],
+      "note": "The whole bundle, every turn of cord and the knot on its leather tab, the stitched patch, and the open end with the biscuit and the salt beef showing. Nothing has to be spent. Focal on the open end, because what is inside it is what the card is about. The plate is a corded bundle where the brief asked for an upright sack - that departure is written up in item-rations-3-day.attempts.md."
     },
     "item-satchel": {
       "subject": [
