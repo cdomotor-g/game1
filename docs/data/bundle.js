@@ -22347,6 +22347,17 @@ window.GAME_DATA = {
           0.63
         ]
       },
+      "item-map": {
+        "file": "art/renders/item-map.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "item-plate-harness": {
         "file": "art/renders/item-plate-harness.png",
         "width": 1254,
