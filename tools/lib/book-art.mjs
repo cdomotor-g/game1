@@ -210,6 +210,34 @@ export function pictureHtml(e, { attrs = '', small = false, root = null } = {}) 
 /** Width on the page for a figure size, in mm; a row shares the width between its pieces. */
 const WIDTH = { margin: 42, third: 56, half: 84, wide: 180, row: 180 };
 
+/* The title page's frieze, in mm. Its measure is the page less the 14mm of
+   padding a title page takes on each side; the gap and the band are what
+   tools/lib/book.css draws it at. */
+const TFRIEZE = { measure: WIDTH.wide - 2 * 14, gap: 3, band: 30 };
+
+/**
+ * How tall a title page's frieze may stand, so that it fits the paper.
+ *
+ * Every other figure here is given a WIDTH and takes whatever height its
+ * proportions make of it. The frieze is the one row built the other way up -
+ * uniform height, because a shelf of pieces of different heights is not a shelf
+ * - and being the exception it was the one nothing measured. It was a flat 30mm
+ * on a non-wrapping centred flex row: six landscape pieces came to 285mm on a
+ * 152mm measure and, centred, hung off both edges of the page.
+ *
+ * So the height is derived from what is actually in the row. Ask for the band,
+ * and if the pieces will not fit at it, hand back the height at which they do.
+ */
+export function friezeBand(pieces) {
+  const n = pieces.length;
+  if (!n) return TFRIEZE.band;
+  const aspect = (e) => (e.w > 0 && e.h > 0 ? e.w / e.h : 1);
+  const total = pieces.reduce((sum, e) => sum + aspect(e), 0);
+  const gaps = TFRIEZE.gap * (n - 1);
+  if (TFRIEZE.band * total + gaps <= TFRIEZE.measure) return TFRIEZE.band;
+  return (TFRIEZE.measure - gaps) / total;
+}
+
 export function figureHtml(pieces, { size = 'margin', caption = '', cls = '', row = null, root = null } = {}) {
   const n = pieces.length;
   const isRow = row ?? n > 1;

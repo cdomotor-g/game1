@@ -29,7 +29,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderMarkdown, escapeHtml } from './lib/docpage.mjs';
 import { loadData, interpolate, openCatalogue, sheets, roman, word, inline, esc } from './lib/book.mjs';
-import { artIndex, figureTokens, placeFigures, figureHtml, autoVignettes, tailpiece, pictureHtml } from './lib/book-art.mjs';
+import { artIndex, figureTokens, placeFigures, figureHtml, autoVignettes, tailpiece, pictureHtml, friezeBand } from './lib/book-art.mjs';
 import { crop, readFraming } from './lib/framing.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -228,7 +228,10 @@ const FRAME = `<svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="non
 function friezeHtml(refs) {
   if (!refs?.length) return '';
   const pieces = refs.map((r) => { const e = art.resolve(r); if (!e) throw new Error(`title page frieze: ${r} is not a picture the book has`); return e; });
-  return `<div class="tfrieze">${pieces.map((e) => `<div class="fp${e.what === 'card' ? ' card' : e.what === 'tile' ? ' tile' : ''}">${pictureHtml(e, { small: true, root: ROOT })}</div>`).join('')}</div>`;
+  /* Uniform height, chosen so the row fits the measure - a board or a map in a
+     frieze is three times as wide as a card and nothing was counting. */
+  const band = friezeBand(pieces);
+  return `<div class="tfrieze" style="--fh:${band.toFixed(2)}mm">${pieces.map((e) => `<div class="fp${e.what === 'card' ? ' card' : e.what === 'tile' ? ' tile' : ''}">${pictureHtml(e, { small: true, root: ROOT })}</div>`).join('')}</div>`;
 }
 
 function titlePage(s) {

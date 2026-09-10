@@ -222,6 +222,12 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-size: 20
 
 /* -------------------------------------------------------- the print panel */
 .print-panel { position: fixed; inset: 0; z-index: 20; background: rgba(26,23,20,.45); display: grid; place-items: center; }
+/* An author `display` beats the browser's own [hidden] rule, so the panel above
+   was on from the moment the page loaded and Close did nothing to it: the one
+   line of script that hides it sets the attribute this rule now answers. It
+   printed correctly the whole time - @media print drops the panel - which is
+   why every proof of this book looked right. */
+.print-panel[hidden] { display: none; }
 .print-panel .panel { background: var(--tallow); color: var(--soot); width: min(560px, 92vw); max-height: 88vh; overflow: auto; padding: 18px 22px; border: 1px solid var(--t40); box-shadow: 0 6px 30px rgba(0,0,0,.3); font-family: var(--sans); font-size: 13.5px; }
 .print-panel h2 { font-family: var(--grand); font-size: 26px; margin: 0 0 6px; }
 .print-panel p { margin: 0 0 12px; color: var(--t85); }
@@ -314,9 +320,14 @@ td .thumb + b, td .thumb + strong { vertical-align: middle; }
 /* the frieze under a title page's plate */
 .tplate.with-frieze { height: 118mm; }
 .tplate.with-frieze img { max-height: 118mm; }
-.tfrieze { display: flex; justify-content: center; align-items: flex-end; gap: 3mm; height: 34mm; margin: 4mm 0 0; }
+/* --fh is the band height, worked out by friezeBand in tools/lib/book-art.mjs
+   from these pieces' own proportions against the title page's measure. It was a
+   flat 30mm with no wrapping and nothing counting the width, so six landscape
+   pieces made a row half again as wide as the paper and, being centred, ran off
+   BOTH edges of the page. */
+.tfrieze { display: flex; justify-content: center; align-items: flex-end; gap: 3mm; height: calc(var(--fh, 30mm) + 4mm); margin: 4mm 0 0; }
 .tfrieze .fp { flex: 0 0 auto; }
-.tfrieze img { display: block; height: 30mm; width: auto; border: .45pt solid var(--t40); }
+.tfrieze img { display: block; height: var(--fh, 30mm); width: auto; border: .45pt solid var(--t40); }
 .tfrieze .fp.card img, .tfrieze .fp.tile img { border: none; }
 .tfrieze .fp.card img { border-radius: 1mm; box-shadow: 0 .5mm 1.5mm rgba(26,23,20,.2); }
 .tfrieze .swatch { height: 30mm; width: 30mm; display: grid; place-items: center; background: var(--wash); border: .45pt solid var(--t40); }
@@ -326,7 +337,7 @@ td .thumb + b, td .thumb + strong { vertical-align: middle; }
 /* an inlined card or tile sizes like the picture it replaces */
 svg.inl { display: block; }
 .fp svg.inl, .cardinset svg.inl, .piece svg.inl { width: 100%; height: auto; }
-.tfrieze .fp svg.inl { width: auto; height: 30mm; }
+.tfrieze .fp svg.inl { width: auto; height: var(--fh, 30mm); }
 .thumb.whole svg.inl { width: 100%; height: 100%; }
 .cardinset svg.inl { border-radius: 1mm; box-shadow: 0 .5mm 1.5mm rgba(26,23,20,.22); }
 .fig .fp.card svg.inl { box-shadow: 0 .6mm 1.6mm rgba(26,23,20,.22); border-radius: 1.2mm; }
