@@ -22362,6 +22362,17 @@ window.GAME_DATA = {
           0.42
         ]
       },
+      "item-quiver": {
+        "file": "art/renders/item-quiver.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "item-satchel": {
         "file": "art/renders/item-satchel.png",
         "width": 1254,
