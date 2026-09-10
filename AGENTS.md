@@ -158,8 +158,11 @@ numbered, derived from the brief itself; if you cannot run it, the list is the
 brief's own "no X" sentences and there is nothing to work out.
 
 A render that fails an item is **generated again**. It is not shown with a note
-about it, and it is not put to the user as a question: write the attempt into
-`docs/art/renders/<plate-id>.attempts.md` with the reason and draw it again.
+about it, and it is not put to the user as a question: record the attempt with
+its reason and draw it again. With a checkout that means
+`docs/art/renders/<plate-id>.attempts.md`; without one it means saying the
+wording used and the one reason in the reply, because the inbox takes a plate
+and nothing else. What matters is that the rejection is written down somewhere.
 
 **An approval is not an acceptance.** A user saying yes to a picture settles
 whether that picture is wanted. It does not certify the picture against a brief

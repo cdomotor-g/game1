@@ -184,5 +184,11 @@ the wording used and one concrete reason from the checklist in
 `07-ai-agent-brief.md`. A rejection nobody wrote down is one somebody pays for
 twice. Do not push a rejected plate to the inbox.
 
+**An artist with no checkout cannot write that file, and must not try.** The
+inbox carries one plate and nothing else, which is the whole of why it can be
+trusted unreviewed. So say the rejection in the reply instead — the wording
+used and the one reason — and whoever has the checkout files it. The rule is
+that a rejection is *recorded*, not that the artist is the one holding the pen.
+
 One plate per inbox branch and per landing commit keeps failures isolated. Do
 not alter, recompress or colour-convert an approved master during delivery.
