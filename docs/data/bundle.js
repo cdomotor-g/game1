@@ -22193,6 +22193,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "item-arrows-20": {
+        "file": "art/renders/item-arrows-20.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "item-bag": {
         "file": "art/renders/item-bag.png",
         "width": 1254,
