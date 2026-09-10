@@ -82,17 +82,24 @@ jobs:
       # path - so a stray edit committed alongside it cannot ride into main.
       # The optional frozen wording (.txt) beside it is taken the same way.
       #
-      # Three things can be on the other end of that path, and only one of them
-      # is a fault. OPENING an inbox is a push too - a connector creates the
-      # branch, then puts the file on it - so an artist's every delivery used to
-      # ring this workflow twice and the first ring was always red. Three of the
-      # last fifteen runs are that false alarm, and the artist that read one of
-      # them concluded the inbox had refused its upload and stopped. A branch
-      # carrying no commit of its own is an inbox that is OPEN, and says so in
-      # green. A branch whose plate is already the plate on main is a delivery
-      # that has already landed, and is tidied away rather than failed. Only a
-      # branch that has been written to and still has no plate at the path is
-      # something the artist has to fix.
+      # NO PLATE AT THE PATH IS NEVER A FAILURE. OPENING an inbox is a push too
+      # - a connector creates the branch, then puts the file on it - so an
+      # artist's every delivery used to ring this workflow twice and the first
+      # ring was always red. Three of the last fifteen runs are that false
+      # alarm, and the artist that read one of them concluded the inbox had
+      # refused its upload and stopped.
+      #
+      # The remedy is the same whichever way the plate is missing - the branch
+      # is new, or something else was pushed to it - and it is "push the PNG to
+      # exactly this path", which the summary now says in green. Distinguishing
+      # the two would take history this job has not got: the checkout is
+      # shallow, so origin/main and an inbox branch share no merge base here.
+      # An ancestry test written as though they did is what made the first cut
+      # of this fix fail, and the old error's `git diff origin/main...` was
+      # already dying of the same thing where nobody was reading it.
+      #
+      # A branch whose plate is already the plate on main is a delivery that has
+      # landed, and is tidied away rather than failed.
       - name: Take the plate off the inbox branch
         id: fetch
         env:
@@ -104,29 +111,27 @@ jobs:
           git fetch --quiet --force origin "refs/heads/main:refs/remotes/origin/main"
           png="docs/art/renders/$PLATE.png"
 
-          if git merge-base --is-ancestor "origin/$BRANCH" origin/main; then
+          if ! git cat-file -e "origin/$BRANCH:$png" 2>/dev/null; then
             echo "state=waiting" >> "$GITHUB_OUTPUT"
             {
               echo "## $PLATE — the inbox is open"
               echo
-              echo "\`$BRANCH\` exists and carries no commit of its own yet, so there is nothing to land."
-              echo "Nothing is wrong. Push the plate to it and this runs again:"
+              echo "There is no plate at \`$png\` on \`$BRANCH\` yet, so there is nothing to land."
+              if [ "$(git rev-parse "origin/$BRANCH^{tree}")" = "$(git rev-parse "origin/main^{tree}")" ]; then
+                echo "The branch carries no commit of its own: it has just been opened."
+              fi
+              echo
+              echo "**Nothing is wrong and nothing has been refused.** Push the finished PNG to exactly this branch and path, and this runs again and lands it:"
               echo
               echo '```'
               echo "branch:  $BRANCH"
               echo "path:    $png"
               echo '```'
               echo
-              echo "See \`docs/art/AGENTS.md\` for the two ways to put a PNG there with a connector."
+              echo "The path is the brief's own \`## <plate-id>\` heading. \`docs/art/AGENTS.md\` has the two ways to put a PNG there with a connector."
             } >> "$GITHUB_STEP_SUMMARY"
-            echo "inbox open, no commit of its own yet"
+            echo "inbox open; no plate at $png yet"
             exit 0
-          fi
-
-          if ! git cat-file -e "origin/$BRANCH:$png" 2>/dev/null; then
-            echo "::error::origin/$BRANCH has commits but no $png. The file must be at exactly that path, named after the brief's own heading. It has:"
-            git diff --name-only "origin/main...origin/$BRANCH" | sed 's/^/  /' || true
-            exit 1
           fi
 
           if git cat-file -e "origin/main:$png" 2>/dev/null \
