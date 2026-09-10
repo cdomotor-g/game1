@@ -9,7 +9,7 @@
 <g id="wash">
   <rect x="0" y="0" width="552" height="752" fill="#EDE4D1"/>
   <g clip-path="url(#portrait-window)">
-    <image href="../art/renders/item-arrows-20.png" x="48" y="143.5" width="360" height="360" preserveAspectRatio="xMidYMid slice"/>
+    <image href="../art/renders/item-arrows-20.png" x="35.11" y="119.93" width="380.83" height="380.83" preserveAspectRatio="xMidYMid slice"/>
   </g>
   <rect x="48" y="106" width="71.83" height="36.8" rx="4" fill="#3C5A6E" opacity="0.55"/><rect x="124.83" y="106" width="71.83" height="36.8" rx="4" fill="#C4882B" opacity="0.55"/><rect x="201.67" y="106" width="71.83" height="36.8" rx="4" fill="#3C5A6E" opacity="0.55"/>
   <rect x="420" y="168.8" width="110" height="561.2" fill="#D8CEBE" opacity="0.5"/>

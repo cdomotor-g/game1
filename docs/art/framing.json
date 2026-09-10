@@ -1027,6 +1027,16 @@
       ],
       "note": "The stack of boards burnt through at one end and sound at the other, the fire line stopped dead along the stream, and the near trunks. The thumbnail spends the outermost trunks on both edges - trunks are a stand and can lose a member. Focal is the stack, where the whole card is written in one object."
     },
+    "item-arrows-10": {
+      "subject": [0.075, 0.15, 0.9, 0.74],
+      "focal": [0.45, 0.52],
+      "note": "Every shaft from head to nock, both bindings and their loose cord ends, the whole fan of fletchings and all the heads. Nothing has to be spent - but only after the box was widened. The first measurement stopped the ink at 89% and the crop cut the nocks off the right-hand corner: a thin nock is invisible both to a percentage-of-scanline threshold and to a 40-cell plate map, and the true ink runs to 97%. Focal on the middle of the sheaf. The sheaf is bound twice where the brief asked for one binding, and the loose feathers and curl of shaving are not on the page - see item-arrows-10.attempts.md."
+    },
+    "item-arrows-20": {
+      "subject": [0.055, 0.15, 0.903, 0.705],
+      "focal": [0.48, 0.52],
+      "note": "Every shaft from head to nock, the binding with its cord and knot, the whole fan of fletchings and all the heads. Nothing has to be spent. Focal on the middle of the sheaf, which is also where the binding is. The plate is one loose sheaf where the brief asked for two sheaves lying in an opened war-bag - see item-arrows-20.attempts.md."
+    },
     "item-bag": {
       "subject": [
         0.1,
@@ -1078,6 +1088,11 @@
         0.4
       ],
       "note": "The whole coil, the spliced eye, the whipped end and both hanging tails. Nothing is spent: a coil is a wheel, so the subject is nearly as wide as it is tall and both windows take it whole - the pad gives up the last 0.6% rather than any ink. Focal on the middle of the coil, where the hole is, because that is where an eye lands on a wheel of rope and centring on the box alone would aim at the same place by accident rather than on purpose. Drawn plate - measured off the picture."
+    },
+    "item-compass": {
+      "subject": [0.177, 0.096, 0.632, 0.77],
+      "focal": [0.58, 0.55],
+      "note": "The whole case with the lid thrown right back, the hinge, the domed glass, the graduated card and its rose, the needle on its centre pin, the knurled rim and the bail. Nothing has to be spent in either window. Focal on the centre pin, which is what the picture is of and also nearly the centre of the ink."
     },
     "item-crossbow": {
       "subject": [
@@ -1452,6 +1467,11 @@
         0.2
       ],
       "note": "Both ends of the head - the drawn point and the mushroomed one - the wedged eye, and the haft to the butt. Focal on the eye. Drawn plate - measured off the picture."
+    },
+    "tool-fishing-line": {
+      "subject": [0.095, 0.195, 0.785, 0.6],
+      "focal": [0.42, 0.45],
+      "note": "The winder and its full wind of line, the red lashing, the cork float, the lead and the hook at the end of the run-out line, on their ground line. Nothing has to be spent - the TOL window is 1.01 against a square page, so it keeps very nearly the whole plate and the aim barely bites. Focal on the wound line. The plate is a line winder and its tackle where the brief asked for a rod and its tackle - that departure is written up in tool-fishing-line.attempts.md."
     },
     "tool-hammer": {
       "subject": [

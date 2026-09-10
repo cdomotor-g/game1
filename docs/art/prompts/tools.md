@@ -140,12 +140,10 @@ bit and its edge, the eye wedge and the full haft to the knob inside the
 middle 99%. Low ground line in the bottom third with the knob on it. Clear,
 quiet page above.
 
-WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 99% of its height - everything that matters
-must sit between 1% and 99% down the page. Outside that band nothing can be
-relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## tool-saw — Saw *(edged, TOL-02)*
@@ -168,12 +166,10 @@ FRAMING. Square plate, whole page drawn edge to edge. Toe, the entire toothed
 edge, both saw nuts and the whole handle inside the middle 99%. Low ground
 line in the bottom third. Clear, quiet page above.
 
-WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 99% of its height - everything that matters
-must sit between 1% and 99% down the page. Outside that band nothing can be
-relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## tool-pick — Pick *(digging, TOL-03)*
@@ -195,12 +191,10 @@ FRAMING. Square plate, whole page drawn edge to edge. Both ends of the head,
 the eye and wedge, and the full haft to the butt inside the middle 99%. Low
 ground line in the bottom third with the butt on it. Clear, quiet page above.
 
-WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 99% of its height - everything that matters
-must sit between 1% and 99% down the page. Outside that band nothing can be
-relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## tool-hammer — Hammer *(smithing, TOL-04)*
@@ -223,12 +217,10 @@ FRAMING. Square plate, whole page drawn edge to edge. Face, pein, the wedged
 eye and the full haft to the butt inside the middle 99%. Low ground line in
 the bottom third with the butt on it. Clear, quiet page above.
 
-WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 99% of its height - everything that matters
-must sit between 1% and 99% down the page. Outside that band nothing can be
-relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## tool-scythe — Scythe *(edged, TOL-05)*
@@ -252,17 +244,15 @@ tang to point, the collar, both nibs and the full snaith to the butt inside
 the middle 99%. Low ground line in the bottom third with the butt on it.
 Clear, quiet page above.
 
-WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 99% of its height - everything that matters
-must sit between 1% and 99% down the page. Outside that band nothing can be
-relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
 
 ## tool-fishing-line — Fishing Line *(fishing, TOL-06)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tool-fishing-line.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/tool-fishing-line.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -290,10 +280,8 @@ the hook at the line's end and the open horn box inside the middle 99%. Low
 ground line in the bottom third with the rod and the tackle lying along it.
 Clear, quiet page above.
 
-WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 99% of its height - everything that matters
-must sit between 1% and 99% down the page. Outside that band nothing can be
-relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 375, on the 1024 x 1024 page this deck is drawn at. It is
-not a rule of thumb.)
+WINDOW. The card cut from this plate keeps very nearly the whole page, so
+the FRAMING band above is the only constraint. (Worked out from this deck's
+card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+is not a rule of thumb.)
 ```
