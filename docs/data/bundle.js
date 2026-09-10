@@ -22384,6 +22384,17 @@ window.GAME_DATA = {
           1
         ]
       },
+      "item-rations-3-day": {
+        "file": "art/renders/item-rations-3-day.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "item-satchel": {
         "file": "art/renders/item-satchel.png",
         "width": 1254,
