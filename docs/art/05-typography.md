@@ -59,6 +59,19 @@ webfont:
 --nums:    "Oswald", "Roboto Condensed", "Arial Narrow", var(--rules);
 ```
 
+### The printed book
+
+The book (`docs/book/`) is the one place the game sets long text, and long text
+wants a book face rather than a card face. It follows the same division: what is
+**read** - the rules, the ledes, the captions - is set in **Merriweather**, a
+plain serif with a large x-height and lining figures, at 9.8pt in two columns of
+about fifty characters; tables and anything read for a number are Alegreya Sans
+with lining figures switched on (its default figures are old-style); what is
+**looked at** - titles, heads, entry names - stays in the Fell types, in upper and
+lower case and never below 11pt, with their digits borrowed from Merriweather
+because the Fell's own are old-style. Nothing in the book is set in blackletter
+or a script hand. `docs/book/fonts/README.md` has the detail.
+
 ## Setting rules text
 
 - **Ranged left, never justified.** Justified text in a 40mm card column opens rivers that

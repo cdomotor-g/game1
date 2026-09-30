@@ -216,6 +216,73 @@ export function pictureHtml(e, { attrs = '', small = false, root = null } = {}) 
 /** Width on the page for a figure size, in mm; a row shares the width between its pieces. */
 const WIDTH = { margin: 42, third: 56, half: 84, wide: 180, row: 180 };
 
+/* The tallest a row may stand, in mm. A row of four cards at the full measure
+   was sixty millimetres of picture with a band of names under it, and Book I
+   has fifty-five rows; the pictures are there to be recognised, not read. */
+const ROW_H = { row: 50, frieze: 30 };
+
+/* A chapter set in two columns: the measure tools/lib/book.css gives it. */
+const COL = { page: 180, gap: 7 };
+COL.col = (COL.page - COL.gap) / 2;
+
+/**
+ * Where a single figure goes in a two-column chapter, and how wide it is.
+ *
+ * The sizes a chapter asks for - margin, third, half, wide - were widths on a
+ * 180mm measure, and a column is not half of that in any way that keeps them
+ * sensible: a third of the page beside a column leaves the text a finger wide.
+ * So each size keeps what it MEANT. A margin figure is small and the text runs
+ * round it (`float`); a half or a wide one takes the column (`col`), and so does
+ * a flow of work or a board asked for at a third, because it carries its own
+ * labels and at a third of the column they are too small to read.
+ *
+ * Every one of them FLOATS, the column-wide ones included, and that is the
+ * point of the whole arrangement. A block that does not fit at the foot of a
+ * column goes to the next one and leaves the gap behind it; a float goes to the
+ * next one and the text after it closes the gap. And nothing but the chapter's
+ * head crosses both columns: a picture across the page that did not fit took
+ * everything under it to the next page, and one chapter's second page came out
+ * a third full.
+ *
+ * Every size has a height it may not pass. `wide` was 150mm - a board shown
+ * across the page took half of it - and a board in this book is there so a
+ * reader knows which sheet the text means; the sheet itself is in the box.
+ */
+function colFit(e, size, auto) {
+  const a = e.inline ? 1 : e.w > 0 && e.h > 0 ? e.w / e.h : 1;
+  if (auto) return { mode: 'float', w: Math.min(28, 48 * a) };
+  if (size === 'margin') return { mode: 'float', w: Math.min(32, 52 * a) };
+  const drawing = ['flow', 'board', 'map', 'graph'].includes(e.what);
+  if (size === 'third' && !drawing && a < 1.8) return { mode: 'float', w: Math.min(40, 60 * a) };
+  const w = Math.min(COL.col, (size === 'wide' ? 92 : 88) * a);
+  /* too narrow to be worth the column to itself: the text runs beside it */
+  return w < 0.6 * COL.col ? { mode: 'float', w } : { mode: 'col', w };
+}
+
+/**
+ * How a row of pictures sits in a column: how many to a line, and how wide.
+ * As few lines as leave each picture at least about 22mm square - four cards
+ * go in one line, four landscape plates in two - and never taller than 34mm a
+ * line, because a column is narrow and the page is not infinitely long. The
+ * line is sized to fit inside a list item too (wordsAfterHeads can put it in
+ * one), where it would otherwise wrap its last piece.
+ */
+const COL_ROW = { gap: 2.5, lineH: 34, minArea: 484, indent: 5 };
+function colRow(pieces) {
+  const n = pieces.length;
+  const aspect = (e) => (e.inline ? 1 : e.w > 0 && e.h > 0 ? e.w / e.h : 1);
+  let best = null;
+  for (let lines = 1; lines <= 3; lines++) {
+    const perLine = Math.ceil(n / lines);
+    /* the measure less a list's indent, since a row can stand in a list item */
+    const each = (COL.col - COL_ROW.indent - COL_ROW.gap * (perLine - 1)) / perLine - 0.2;
+    const smallest = Math.min(...pieces.map((e) => { const a = aspect(e); const h = Math.min(each / a, COL_ROW.lineH); return h * h * a; }));
+    best = { perLine, each };
+    if (smallest >= COL_ROW.minArea) break;
+  }
+  return best;
+}
+
 /* The title page's frieze, in mm. Its measure is the page less the 14mm of
    padding a title page takes on each side; the gap and the band are what
    tools/lib/book.css draws it at. */
@@ -244,21 +311,32 @@ export function friezeBand(pieces) {
   return (TFRIEZE.measure - gaps) / total;
 }
 
-export function figureHtml(pieces, { size = 'margin', caption = '', cls = '', row = null, root = null } = {}) {
+/**
+ * A figure: one picture, or a row of them sharing the measure. `cols` says the
+ * chapter is set in two columns (see colFit and colRow): everything is then
+ * sized to the column and floats in it, except a frieze, which sits under the
+ * chapter's head across both columns at the full measure.
+ */
+export function figureHtml(pieces, { size = 'margin', caption = '', cls = '', row = null, root = null, cols = false, rowH: askH = null } = {}) {
   const n = pieces.length;
   const isRow = row ?? n > 1;
-  const small = isRow || size === 'margin';
-  const width = isRow ? WIDTH.row : (WIDTH[size] ?? WIDTH.margin);
-  const each = isRow ? (width - 3 * (n - 1)) / n : width;
+  const inCol = cols && !/\bfrieze\b/.test(cls);
+  const fit = !isRow && inCol ? colFit(pieces[0], size, /\bauto\b/.test(cls)) : null;
+  const line = isRow && inCol ? colRow(pieces) : null;
+  const small = isRow || size === 'margin' || fit?.mode === 'float';
+  const width = isRow ? (line ? COL.col : WIDTH.row) : fit ? fit.w : (WIDTH[size] ?? WIDTH.margin);
+  const each = line ? line.each : isRow ? (width - 3 * (n - 1)) / n : width;
+  const rowH = askH ?? (line ? COL_ROW.lineH : ROW_H[cls === 'frieze' ? 'frieze' : 'row']);
   const body = pieces.map((e) => {
     const inner = pictureHtml(e, { small, root });
-    const h = e.inline ? each : Math.min(each * (e.h / e.w), isRow ? (cls === 'frieze' ? 44 : 70) : size === 'wide' ? 150 : 999);
-    const w = e.inline ? each : Math.min(each, h * (e.w / e.h));
+    const h = e.inline ? each : Math.min(each * (e.h / e.w), isRow ? rowH : size === 'wide' ? 150 : 999);
+    const w = e.inline ? Math.min(each, rowH) : Math.min(each, h * (e.w / e.h));
     const kindCls = e.what === 'card' ? ' card' : e.what === 'tile' ? ' tile' : e.what === 'icon' ? ' icon' : e.what === 'flow' ? ' flow' : '';
     return `<div class="fp${kindCls}" style="width:${w.toFixed(1)}mm">${inner}${isRow ? `<span class="pname">${esc(e.name)}</span>` : ''}</div>`;
   }).join('');
   const cap = caption || (!isRow ? pieces[0].name : '');
-  return `<figure class="fig ${isRow ? 'row' : size}${cls ? ` ${cls}` : ''}" style="--fw:${width}mm">${body}${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`;
+  const kind = isRow ? (line ? 'row col' : 'row') : fit ? `${fit.mode} ${size}` : size;
+  return `<figure class="fig ${kind}${cls ? ` ${cls}` : ''}" style="--fw:${width.toFixed(1)}mm">${body}${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`;
 }
 
 /**
@@ -271,7 +349,7 @@ export function figureHtml(pieces, { size = 'margin', caption = '', cls = '', ro
  *
  * Every ref must resolve or the build fails naming the chapter and the token.
  */
-export function figureTokens(text, art, where, { inlineFn = (s) => s, shown = new Set(), root = null } = {}) {
+export function figureTokens(text, art, where, { inlineFn = (s) => s, shown = new Set(), root = null, cols = false } = {}) {
   const figs = [];
   /* what the chapter's own markdown already shows - a gallery, a flow - is not shown again */
   for (const m of text.matchAll(/!\[[^\]]*\]\(([^)\s]+)/g)) shown.add(m[1].replace(/^\.\.\//, '../'));
@@ -286,7 +364,7 @@ export function figureTokens(text, art, where, { inlineFn = (s) => s, shown = ne
     let size = 'margin'; let caption = '';
     if (a != null && sizes.includes(a.trim())) { size = a.trim(); caption = (b ?? '').trim(); } else { caption = (a ?? '').trim(); if (b) caption = `${caption} ${b}`.trim(); }
     const frieze = size === 'frieze';
-    const html = figureHtml(pieces, { size: frieze ? 'row' : size, caption: caption ? inlineFn(caption) : '', cls: frieze ? 'frieze' : (pieces.length === 1 && pieces[0].what === 'flow' ? 'flow' : ''), row: frieze || pieces.length > 1, root });
+    const html = figureHtml(pieces, { size: frieze ? 'row' : size, caption: caption ? inlineFn(caption) : '', cls: frieze ? 'frieze' : (pieces.length === 1 && pieces[0].what === 'flow' ? 'flow' : ''), row: frieze || pieces.length > 1, root, cols });
     figs.push({ html, things: pieces.map((e) => e.thing) });
     return `\n\n%%FIG${figs.length - 1}%%\n\n`;
   });
@@ -305,7 +383,7 @@ export function placeFigures(html, figs) {
  * `gap` paragraphs of each other or of a figure the author placed. Deterministic,
  * so --check holds.
  */
-export function autoVignettes(html, art, { max = 6, gap = 3, skip = new Set(), root = null, longest = 2400 } = {}) {
+export function autoVignettes(html, art, { max = 6, gap = 3, skip = new Set(), root = null, longest = 2400, cols = false } = {}) {
   /* paragraphs and list items both count as a stretch of text a figure can sit beside */
   const parts = html.split(/(?=<p[ >])|(?<=<\/p>)|(?=<li[ >])|(?<=<\/li>)/);
   const isPara = (p) => /^<(p|li)[ >]/.test(p);
@@ -379,7 +457,7 @@ export function autoVignettes(html, art, { max = 6, gap = 3, skip = new Set(), r
   const leftover = ranked.filter((th) => !shown().includes(entry(th)) && !repeated.has(th)).map(entry);
   const out = parts.map((p, i) => {
     if (!placed.has(i)) return p;
-    const fig = figureHtml([placed.get(i)], { size: 'margin', cls: 'auto', root });
+    const fig = figureHtml([placed.get(i)], { size: 'margin', cls: 'auto', root, cols });
     /* a figure before a list item goes inside it, where a float is allowed */
     return /^<li[ >]/.test(p) ? p.replace(/^<li[^>]*>/, (m) => m + fig) : fig + p;
   }).join('');
@@ -391,8 +469,8 @@ export function autoVignettes(html, art, { max = 6, gap = 3, skip = new Set(), r
  * row after its last paragraph, so the page a chapter's last lines spill onto
  * carries a picture like every other. Nothing named, nothing drawn.
  */
-export function tailpiece(leftover, { root = null, n = 3 } = {}) {
+export function tailpiece(leftover, { root = null, n = 3, cols = false } = {}) {
   const pieces = leftover.slice(0, n);
   if (!pieces.length) return '';
-  return figureHtml(pieces, { row: true, cls: 'tail', caption: '', root });
+  return figureHtml(pieces, { row: true, cls: 'tail', caption: '', root, cols });
 }

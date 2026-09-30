@@ -307,7 +307,8 @@ export function openCatalogue(root, { data }) {
     const format = tile ? (tile.cells.length === 1 || tile.shape === 'single' ? 'square' : 'landscape') : 'square';
     return {
       id: `bld-${b.id}`, size: 'half', layout: format,
-      html: plate(plateIdFor(deck, b), { format, deck, alt: b.name })
+      /* the plate and the tile cut from it stand together on the left */
+      html: `<div class="lcol">${plate(plateIdFor(deck, b), { format, deck, alt: b.name })}${piece}</div>`
         + `<div class="text">${head({
           pre: `${code(b.cardCode ?? '', b.campaign)} · ${esc(name(byId(data.buildings.categories), b.category))} · tier ${b.tier}`,
           name: esc(b.name), plain: esc(b.summary),
@@ -324,7 +325,7 @@ export function openCatalogue(root, { data }) {
           b.specialist ? `Wants ${esc(aOrAn(name(professions, b.specialist).toLowerCase()))} to run.` : null,
           jobs.length ? `<em>Work here:</em> ${jobs.join(' · ')}.` : null,
           makes.length ? `<em>Made here:</em> ${esc(makes.join(', '))}.` : null,
-        ])}${story(b.story)}${piece}</div>`,
+        ])}${story(b.story)}</div>`,
     };
   }
 

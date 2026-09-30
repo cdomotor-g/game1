@@ -59,11 +59,16 @@
     parts.forEach(function (part) {
       var boxes = picks.querySelectorAll('.ch-box[data-part="' + part.id + '"]');
       if (!boxes.length) Array.prototype.forEach.call(part.querySelectorAll('article.chapter'), function (ch) { ch.classList.toggle('chosen', part.classList.contains('chosen')); });
+      /* a chapter that runs on from the one before it under a rule opens the
+         page instead when that one is not being printed */
+      var first = part.querySelector('article.chapter.chosen');
+      if (first) first.classList.add('first-chosen');
     });
   }
   function clear() {
     document.body.classList.remove('selective');
     Array.prototype.forEach.call(document.querySelectorAll('.chosen'), function (el) { el.classList.remove('chosen'); });
+    Array.prototype.forEach.call(document.querySelectorAll('.first-chosen'), function (el) { el.classList.remove('first-chosen'); });
   }
   /* ------------------------------------------------------- the print swap
      Every big picture is shown on screen at the small copy's resolution and

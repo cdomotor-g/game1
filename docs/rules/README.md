@@ -51,10 +51,17 @@ A ref is `plate:<plate-id>`, `card:<CODE>`, `tile:<building>`, `flow:<building>`
 `icon:<name>`, `board:player|market|depletion|ledger`, `map:<id>`, `terrain:<id>`,
 or the shorthand `<kind>:<id>` — `monster:cinder-wolf`, `building:granary`,
 `item:lantern`, `event:raiders` — which is the plate if drawn and the card if not.
-Sizes are `margin` (the default, 42 mm, right of the text), `third`, `half`,
-`wide` and `frieze`. A caption is one clause in the book's voice. What a chapter
-does not illustrate the build does: the things its paragraphs name most get a
-small vignette at their first mention, so no page of the book is bare.
+Sizes are `margin` (the default: small, with the text running round it), `third`,
+`half`, `wide` and `frieze`. The book sets a chapter in two columns, so each size
+is what it means there rather than a width: a margin figure floats beside the
+text, a half or a wide one takes the column, and a flow of work or a board takes
+the column whatever it was asked at; a row of several fits the column. A frieze
+sits under the chapter's head on screen and is left out of print, where the
+columns already carry the chapter's pictures. Put a figure after the paragraph it
+belongs to, not straight under a head - the build moves it there anyway. A
+caption is one clause in the book's voice. What a chapter does not illustrate the
+build does: the things its paragraphs name most get a small vignette at their
+first mention, so no page of the book is bare.
 
 **What the data leaves undecided is not filled in.** Where a table would be stuck
 and nothing in `data/` or `docs/design/` decides it, a chapter says so in one

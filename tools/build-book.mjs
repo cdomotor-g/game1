@@ -103,15 +103,87 @@ function thumbTables(html) {
   });
 }
 
+
+/* A figure the author placed, as it stands in a rendered chapter. */
+const FIG = '<!--fig-->(?:(?!<!--\\/fig-->)[\\s\\S])*<!--\\/fig-->';
+
+/**
+ * A head is followed by words, never by a picture: in a two-column chapter the
+ * figures that stand straight after a head are set after the paragraph that
+ * follows it, or at the end of the first item of the list that does.
+ *
+ * A head keeps with what follows it, and a picture has to wait for a column it
+ * fits in. Together they took the head along to wherever the picture went, and
+ * the head a chapter opened with took the chapter along with it: under a head
+ * placed low on a page, a design note left a third of the page empty.
+ */
+function wordsAfterHeads(html) {
+  const head = '<h[234][^>]*>(?:(?!<\\/h[234]>)[\\s\\S])*<\\/h[234]>\\s*';
+  /* a figure the author placed carries <!--fig--> markers; a vignette the build
+     added does not */
+  const anyFig = `(?:${FIG}|<figure class="fig[^"]*"[^>]*>(?:(?!<\\/figure>)[\\s\\S])*<\\/figure>)`;
+  const figs = `(?:${anyFig}\\s*)+`;
+  const block = '<p[ >][\\s\\S]*?<\\/p>|<div class="table-wrap[^"]*"><table>[\\s\\S]*?<\\/table><\\/div>|<blockquote[\\s\\S]*?<\\/blockquote>|<pre>[\\s\\S]*?<\\/pre>';
+  return html
+    .replace(new RegExp(`(${head})(${figs})(${block})`, 'g'), '$1$3$2')
+    .replace(new RegExp(`(${head})(${figs})(<(?:ul|ol)>\\s*<li>(?:(?!<\\/li>)[\\s\\S])*)(<\\/li>)`, 'g'), (m, h, f, li, end) => `${h}${li}${f.trim()}${end}`);
+}
+
+/**
+ * A two-column chapter's body, as blocks of columns: the head stays above them,
+ * and a table that crosses both columns (fitTables) ends one block and starts
+ * the next. See .cbody in tools/lib/book.css for why nothing spans instead.
+ */
+function columnize(html) {
+  const head = html.match(/^\s*<header class="chap[\s\S]*?<\/header>/)?.[0] ?? '';
+  const parts = html.slice(head.length).split(/(<div class="table-wrap[^"]*\bspan\b[^"]*"><table>[\s\S]*?<\/table><\/div>)/);
+  return head + parts.map((part, i) => (i % 2 ? part : part.trim() ? `<div class="cbody">${part}</div>` : '')).join('');
+}
+
+/**
+ * What a table may do on the page, as classes on its wrapper.
+ *
+ * `long`: past eight rows it may break between rows, its header row repeated.
+ * Every table was kept whole, which is right for six rows and ruinous for fifty
+ * - a table taller than what was left of the page went to the next one whole,
+ * and Annex I's buildings table left its own chapter head alone on a page
+ * three-quarters empty.
+ *
+ * `span`: in a two-column chapter, it crosses both columns. A table stays in its
+ * column when its columns can each have what they hold, to twenty characters -
+ * past which a cell wraps, and that is fine - and crosses when they cannot, which
+ * is also any table of six columns or more. A table that crosses may always break
+ * between rows: whole, one that did not fit took the rest of the page with it.
+ * Crossing is kept for the tables that need it because it is the one thing in a
+ * two-column page that cannot give way to what is round it.
+ */
+const COLUMN_CHARS = 74;
+function fitTables(html, cols) {
+  return html.replace(/<div class="table-wrap"><table>([\s\S]*?)<\/table><\/div>/g, (m, inner) => {
+    const cells = (tr) => [...tr.matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/g)].map((c) => c[1].replace(/<[^>]+>/g, '').replace(/&[a-z#0-9]+;/g, 'x').trim());
+    const rows = [...inner.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((r) => cells(r[1]));
+    const n = Math.max(0, ...rows.map((r) => r.length));
+    const body = (inner.match(/<tbody>([\s\S]*?)<\/tbody>/)?.[1].match(/<tr[ >]/g) ?? []).length;
+    const cls = [];
+    if (body > 8) cls.push('long');
+    if (cols) {
+      const need = Array.from({ length: n }, (_, i) => Math.max(0, ...rows.map((r) => Math.min((r[i] ?? '').length, 20))));
+      if (n >= 6 || need.reduce((a, b) => a + b + 3, 0) > COLUMN_CHARS) cls.push('span');
+    }
+    return cls.length ? m.replace('<div class="table-wrap">', `<div class="table-wrap ${cls.join(' ')}">`) : m;
+  });
+}
+
 /** A hand-written chapter's own figures ({{fig:...}} tokens), and then vignettes
-    of whatever its paragraphs name and no figure already shows. */
+    of whatever its paragraphs name and no figure already shows. Every such
+    chapter is set in two columns, and its figures are sized to them. */
 function illustrate(src, where, render) {
-  const { text, figs, shown } = figureTokens(src, art, where, { inlineFn: inline, root: ROOT });
+  const { text, figs, shown } = figureTokens(src, art, where, { inlineFn: inline, root: ROOT, cols: true });
   const out = render(text);
   const skip = new Set(figs.flatMap((f) => f.things));
   for (const e of art.byThing.values()) if (shown.has(e.png ?? e.src)) skip.add(e.thing);
-  const v = autoVignettes(placeFigures(out.html, figs), art, { skip, max: 6, gap: 3, root: ROOT });
-  out.html = v.html + tailpiece(v.leftover, { root: ROOT });
+  const v = autoVignettes(placeFigures(out.html, figs), art, { skip, max: 6, gap: 3, root: ROOT, cols: true });
+  out.html = v.html + tailpiece(v.leftover, { root: ROOT, cols: true });
   /* a chapter's own gallery reads the copies too, when there are copies: the
      small one on screen, the full one named beside it for the printer */
   out.html = out.html.replace(/src="\.\.\/art\/renders\/([^"]+)\.png"/g, (m, id) => {
@@ -151,6 +223,30 @@ const scopeIds = (html, id) => {
     .replace(/((?:xlink:)?href=")#([^"]+)"/g, (m, head, s) => (own.has(s) ? `${head}#${scoped(s)}"` : m));
 };
 
+/* A chapter's frieze stands inside its head. The two are one thing on the page,
+   and a page must not fall between them - nor between them and the chapter's
+   first lines, which is what the head's reserve in tools/lib/book.css is for. */
+const FRIEZE_AT_START = /^\s*(<!--fig--><figure class="fig row frieze"[\s\S]*?<\/figure><!--\/fig-->)\s*/;
+function takeFrieze(body) {
+  let frieze = '';
+  const rest = body.replace(FRIEZE_AT_START, (_, f) => { frieze = f; return ''; });
+  return { frieze, rest };
+}
+
+/* The drop capital goes on the chapter's opening paragraph, past any figures and
+   heads in front of it - and only those: the lazy match this replaced ran on
+   over tables and lists to whichever paragraph came next, and set a capital on
+   a stray sentence halfway down the page. The figures it passes are set after
+   that paragraph instead of before it. A drop capital is a float, a float may
+   not stand higher than one before it, and a picture that had to wait for the
+   next column took the capital - and so the chapter's first lines - with it. */
+function dropCap(body) {
+  return body.replace(new RegExp(`^((?:(?:${FIG}|<h[234][^>]*>[^<]*<\\/h[234]>)\\s*)*)<p>([\\s\\S]*?<\\/p>)`), (m, lead, para) => {
+    const figs = lead.match(new RegExp(FIG, 'g')) ?? [];
+    return `${lead.replace(new RegExp(`${FIG}\\s*`, 'g'), '')}<p class="dropcap">${para}${figs.join('')}`;
+  });
+}
+
 /** A rules chapter: the title becomes the chapter head, the first paragraph its lede, the next its drop capital. */
 function rulesChapter(file, n) {
   const id = `rules-${slugOf(file)}`;
@@ -159,11 +255,13 @@ function rulesChapter(file, n) {
   let body = scopeIds(html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, ''), id);
   let lede = '';
   body = body.replace(/^<p>([\s\S]*?)<\/p>\n?/, (_, p) => { lede = p; return ''; });
-  body = body.replace(/^((?:<!--fig-->[\s\S]*?<!--\/fig-->\s*)*)<p>/, '$1<p class="dropcap">');
+  const { frieze, rest } = takeFrieze(body);
+  body = rest;
+  body = dropCap(body);
   body = body.replace(/<blockquote><p><strong>Open\.?<\/strong>/g, '<blockquote class="open"><p><strong>Open.</strong>');
   return {
-    id, title, kind: 'text',
-    html: `<header class="chap"><div class="num">Chapter ${roman(n)}</div><h2 class="title">${escapeHtml(title)}</h2>${lede ? `<p class="lede">${lede}</p>` : ''}${ORNAMENT}</header>${body}`,
+    id, title, kind: 'text', cols: true, runOn: true,
+    html: `<header class="chap"><div class="num">Chapter ${roman(n)}</div><h2 class="title">${escapeHtml(title)}</h2>${lede ? `<p class="lede">${lede}</p>` : ''}${ORNAMENT}${frieze}</header>${body}`,
   };
 }
 
@@ -176,10 +274,11 @@ function reviewChapter(file, n) {
   let body = scopeIds(html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, ''), id);
   let lede = '';
   body = body.replace(/^<p>([\s\S]*?)<\/p>\n?/, (_, p) => { lede = p; return ''; });
-  body = body.replace(/<blockquote><p><strong>Open\.?<\/strong>/g, '<blockquote class="open"><p><strong>Open.</strong>');
+  const { frieze, rest } = takeFrieze(body);
+  body = rest.replace(/<blockquote><p><strong>Open\.?<\/strong>/g, '<blockquote class="open"><p><strong>Open.</strong>');
   return {
-    id, title, kind: 'text',
-    html: `<header class="chap small"><div class="num">Addendum I · ${roman(n)}</div><h2 class="title">${escapeHtml(title)}</h2>${lede ? `<p class="lede">${lede}</p>` : ''}${ORNAMENT}</header>${body}`,
+    id, title, kind: 'text', cols: true, runOn: true, notes: true,
+    html: `<header class="chap small"><div class="num">Addendum I · ${roman(n)}</div><h2 class="title">${escapeHtml(title)}</h2>${lede ? `<p class="lede">${lede}</p>` : ''}${ORNAMENT}${frieze}</header>${body}`,
   };
 }
 
@@ -197,7 +296,7 @@ function annexChapters() {
     const id = `annex-1-${slug}`;
     for (const h of html.matchAll(/ id="([^"]+)"/g)) annexSlugHome.set(h[1], id);
     annexSlugHome.set(slug, id);
-    chapters.push({ id, title: titleLine, kind: 'tables', html: null, md, n: chapters.length + 1 });
+    chapters.push({ id, title: titleLine, kind: 'tables', runOn: true, html: null, md, n: chapters.length + 1 });
   }
   /* rendered in a second pass, once every annex heading knows its home */
   for (const c of chapters) {
@@ -209,9 +308,15 @@ function annexChapters() {
       ? [...new Set([...body.matchAll(/<td class="named"><span class="thumb[^"]*">(?:<img src="([^"]+)"|<span class="swatch")/g)].map((m) => m[1]).filter(Boolean))].slice(0, 6)
         .map((src) => [...art.byThing.values()].find((e) => e.small === src || e.src === src)).filter(Boolean)
       : ANNEX_FRIEZE.filter(([re]) => re.test(c.title)).flatMap(([, refs]) => refs).map((r) => art.resolve(r)).filter(Boolean).slice(0, 6);
-    const frieze = named.length ? figureHtml(named, { row: true, cls: 'frieze', root: ROOT }) : '';
+    const frieze = named.length ? figureHtml(named, { row: true, cls: 'frieze', root: ROOT, rowH: 22 }) : '';
     const v = autoVignettes(body, art, { max: 4, gap: 3, root: ROOT });
-    c.html = `<header class="chap small"><div class="num">Annex I · Table ${c.n}</div><h2 class="title">${escapeHtml(c.title)}</h2>${ORNAMENT}</header>${frieze}${scopeIds(v.html, c.id)}${tailpiece(v.leftover.filter((e) => !named.includes(e)), { root: ROOT })}`;
+    /* a short table stays with its head: it is shorter than most of a page, and
+       run on under the table before it, its head could otherwise end a page with
+       the table on the next */
+    const rows = (body.match(/<tr[ >]/g) ?? []).length;
+    const words = body.replace(/<table[\s\S]*?<\/table>/g, '').replace(/<[^>]+>/g, ' ').length;
+    c.keep = rows <= 11 && words <= 900;
+    c.html = `<header class="chap small"><div class="num">Annex I · Table ${c.n}</div><h2 class="title">${escapeHtml(c.title)}</h2>${ORNAMENT}${frieze}</header>${scopeIds(v.html, c.id)}${tailpiece(v.leftover.filter((e) => !named.includes(e)), { root: ROOT })}`;
     delete c.md;
   }
   return chapters;
@@ -231,14 +336,25 @@ const ANNEX_FRIEZE = [
   [/web|flow/i, ['building:blacksmith', 'building:sawmill', 'tool:hammer', 'building:mill', 'building:market']],
 ];
 
+/* A design note's head, and its frieze in it. A note that opens with a
+   paragraph and then its frieze has that paragraph as its lede, the way a rules
+   chapter does - which is what it is, and it keeps the frieze with the head. */
+function designHead(file, title, body) {
+  let lede = '';
+  const opened = body.match(/^<p>([\s\S]*?)<\/p>\s*(?=<!--fig--><figure class="fig row frieze")/);
+  if (opened) { lede = opened[1]; body = body.slice(opened[0].length); }
+  const { frieze, rest } = takeFrieze(body);
+  return `<header class="chap small"><div class="num">Design note ${file.slice(0, 2)}</div><h2 class="title">${escapeHtml(title)}</h2>${lede ? `<p class="lede">${lede}</p>` : ''}${ORNAMENT}${frieze}</header>${rest}`;
+}
+
 function designChapter(file) {
   const id = `design-${slugOf(file)}`;
   const { title, html } = illustrate(readFileSync(join(DESIGN, file), 'utf8'), `docs/design/${file}`,
     (text) => renderMarkdown(text, { rewriteHref, fallbackTitle: file }));
   const bare = title.replace(/^\d\d\s+—\s+/, '');
   return {
-    id, title: bare, kind: 'text',
-    html: `<header class="chap small"><div class="num">Design note ${file.slice(0, 2)}</div><h2 class="title">${escapeHtml(bare)}</h2>${ORNAMENT}</header>${scopeIds(html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, ''), id)}`,
+    id, title: bare, kind: 'text', cols: true, runOn: true, notes: true,
+    html: designHead(file, bare, scopeIds(html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, ''), id)),
   };
 }
 
@@ -319,10 +435,10 @@ function campaignChapters(camp, ordinal) {
     .filter((r) => art.resolve(r)?.what === 'plate');
   const castFrieze = castRefs.length ? figureHtml(castRefs.slice(0, 6).map((r) => art.resolve(r)), { row: true, cls: 'frieze', root: ROOT }) : '';
   /* a generated chapter gets the vignettes a written one does, for the things its own paragraphs name */
-  const vignette = (html) => { const v = autoVignettes(html, art, { max: 6, gap: 3, root: ROOT }); return v.html + tailpiece(v.leftover, { root: ROOT }); };
+  const vignette = (html) => { const v = autoVignettes(html, art, { max: 6, gap: 3, root: ROOT, cols: true }); return v.html + tailpiece(v.leftover, { root: ROOT, cols: true }); };
   chapters.push({
-    id: `${prefix}-playing`, title: 'Playing the campaign', kind: 'text',
-    html: `<header class="chap"><div class="num">Campaign ${roman(ordinal)}</div><h2 class="title">${esc(camp.name)}</h2><p class="lede">${esc(camp.subtitle ? camp.subtitle[0].toUpperCase() + camp.subtitle.slice(1) : '')}.</p>${ORNAMENT}</header>${castFrieze}`
+    id: `${prefix}-playing`, title: 'Playing the campaign', kind: 'text', cols: true, runOn: true,
+    html: `<header class="chap"><div class="num">Campaign ${roman(ordinal)}</div><h2 class="title">${esc(camp.name)}</h2><p class="lede">${esc(camp.subtitle ? camp.subtitle[0].toUpperCase() + camp.subtitle.slice(1) : '')}.</p>${ORNAMENT}${castFrieze}</header>`
       + vignette(`<p class="dropcap">${inline(camp.summary)}</p>`
       + (camp.source ? `<h3>The source</h3><p><em>${esc(camp.source.work)}</em>, ${esc(camp.source.author)}${camp.source.composed ? `, ${esc(camp.source.composed)}` : ''}${camp.source.books ? `, in ${word(camp.source.books)} books` : ''}. ${inline(camp.source.note ?? '')}</p>` : '')
       + `<h3>The table</h3>${list([
@@ -363,7 +479,7 @@ function campaignChapters(camp, ordinal) {
       : `src="${esc(`../map/${map.plate.file}`)}"`;
     const preset = (map.print?.presets ?? []).find((p) => p.id === map.print.default);
     chapters.push({
-      id: `${prefix}-board`, title: `The board: ${map.name}`, kind: 'text',
+      id: `${prefix}-board`, title: `The board: ${map.name}`, kind: 'text', runOn: true,
       html: `<header class="chap small"><div class="num">Campaign ${roman(ordinal)} · The board</div><h2 class="title">${esc(map.name)}</h2>${map.subtitle ? `<p class="lede">${esc(map.subtitle[0].toUpperCase() + map.subtitle.slice(1))}.</p>` : ''}${ORNAMENT}</header>`
         + `<figure class="mapplate"><img ${plateSrc} alt="${esc(map.name)}"><figcaption>${esc(map.name)}${preset ? ` — printed at the ${esc(preset.name.toLowerCase())} preset it is ${preset.mapWidthMm} × ${preset.mapHeightMm} mm with ${preset.hexAcrossFlatsMm} mm hexes` : ''}. The hex grid is laid over the plate at the table.</figcaption></figure>`
         + P(map.summary)
@@ -402,7 +518,7 @@ function campaignChapters(camp, ordinal) {
   };
   const byAct = (acts.length ? acts : [{ id: null, name: 'The chapters' }]).map((a) => ({ a, cards: cards.filter((c) => !a.id || c.act === a.id) })).filter((x) => x.cards.length);
   chapters.push({
-    id: `${prefix}-deck`, title: 'The deck, chapter by chapter', kind: 'text',
+    id: `${prefix}-deck`, title: 'The deck, chapter by chapter', kind: 'text', runOn: true,
     html: `<header class="chap small"><div class="num">Campaign ${roman(ordinal)} · The deck</div><h2 class="title">The ${word(cards.length)} chapters</h2><p class="lede">Turned in order, never shuffled. Read the passage marked <em>read aloud</em> when the card is turned, then play what it says.</p>${ORNAMENT}</header>`
       + byAct.map(({ a, cards: cs }) => `${a.id ? `<h3 class="act">${esc(a.name)}</h3>` : ''}${cs.map(cardHtml).join('\n')}`).join('\n'),
   });
@@ -410,7 +526,7 @@ function campaignChapters(camp, ordinal) {
   /* 5. what it teaches */
   if (camp.teaches?.length) {
     chapters.push({
-      id: `${prefix}-teaches`, title: 'What the campaign teaches', kind: 'text',
+      id: `${prefix}-teaches`, title: 'What the campaign teaches', kind: 'text', cols: true, runOn: true,
       html: `<header class="chap small"><div class="num">Campaign ${roman(ordinal)}</div><h2 class="title">What it teaches</h2>${ORNAMENT}</header>${vignette(list(camp.teaches.map((t) => `<p>${inline(t)}</p>`), 'ol'))}`,
     });
   }
@@ -470,7 +586,7 @@ data.campaigns.campaigns.forEach((camp, i) => {
     id: `annex-${annexNo}`, label: `Annex ${roman(annexNo)} · Expansion ${roman(i + 1)}`, title: x.name,
     subtitle: x.subtitle, plate: x.plate ?? null, plateFormat: x.plateFormat ?? 'portrait', caption: x.caption ?? '',
     chapters: [
-      { id: `expansion-${x.id}-about`, title: 'About the expansion', kind: 'text', html: `<header class="chap"><div class="num">Expansion ${roman(i + 1)}</div><h2 class="title">${esc(x.name)}</h2>${ORNAMENT}</header>${P(x.summary)}` },
+      { id: `expansion-${x.id}-about`, title: 'About the expansion', kind: 'text', cols: true, html: `<header class="chap"><div class="num">Expansion ${roman(i + 1)}</div><h2 class="title">${esc(x.name)}</h2>${ORNAMENT}</header>${P(x.summary)}` },
       ...catalogueChapters(`expansion:${x.id}`, { idPrefix: `expansion-${x.id}`, head: `Expansion ${roman(i + 1)} · ${x.name}` }),
     ],
   });
@@ -515,30 +631,35 @@ const sectionHtml = (s) => {
   if (s.kind === 'contents') return `<section class="part" id="${s.id}" data-label="Contents">${contentsHtml()}</section>`;
   if (!s.chapters.length) return '';
   return `<section class="part" id="${s.id}" data-label="${esc(`${s.label} · ${s.title}`)}">${titlePage(s)}
-${s.chapters.map((c) => `<article class="chapter ${c.kind}" id="${esc(c.id)}" data-title="${escapeHtml(c.title)}">\n${c.html}\n</article>`).join('\n')}
+${s.chapters.map((c) => `<article class="chapter ${c.kind}${c.cols ? ' cols' : ''}${c.runOn ? ' run-on' : ''}${c.notes ? ' notes' : ''}${c.keep ? ' keep' : ''}" id="${esc(c.id)}" data-title="${escapeHtml(c.title)}">\n${c.cols ? columnize(wordsAfterHeads(fitTables(c.html, true))) : fitTables(c.html, false)}\n</article>`).join('\n')}
 </section>`;
 };
 
 const navHtml = sections.filter((s) => s.chapters.length).map((s) => `<div class="nav-part"><a href="#${s.id}-title"><b>${esc(s.label)}</b> ${esc(s.title)}</a>${s.chapters.map((c) => `<a class="ch" href="#${esc(c.id)}">${escapeHtml(c.title)}</a>`).join('')}</div>`).join('\n');
 
+/* The faces, and what each is for, are docs/book/fonts/README.md. Three of the
+   families are built here out of two files each: the Fell types have only
+   old-style figures, in which a 1 is a small capital I and 10 reads IO, so every
+   head borrows its digits from Merriweather, scaled to the Fell's cap height
+   (the `adjust`) and drawn at the head's own light weight. A Fell face is
+   declared over every weight so that nothing is ever emboldened by the browser. */
 const FONTS = [
-  ['IM Fell DW Pica', 'normal', 400, 'im-fell-dw-pica-400'], ['IM Fell DW Pica', 'italic', 400, 'im-fell-dw-pica-400-italic'],
-  ['IM Fell DW Pica SC', 'normal', 400, 'im-fell-dw-pica-sc-400'],
-  ['IM Fell English', 'normal', 400, 'im-fell-english-400'], ['IM Fell English', 'italic', 400, 'im-fell-english-400-italic'],
-  ['IM Fell English SC', 'normal', 400, 'im-fell-english-sc-400'],
-  ['IM Fell Double Pica', 'normal', 400, 'im-fell-double-pica-400'], ['IM Fell Double Pica', 'italic', 400, 'im-fell-double-pica-400-italic'],
-  ['IM Fell Great Primer', 'normal', 400, 'im-fell-great-primer-400'], ['IM Fell Great Primer', 'italic', 400, 'im-fell-great-primer-400-italic'],
-  ['UnifrakturMaguntia', 'normal', 400, 'unifrakturmaguntia-400'], ['Pirata One', 'normal', 400, 'pirata-one-400'],
-  ['Pinyon Script', 'normal', 400, 'pinyon-script-400'], ['Tangerine', 'normal', 400, 'tangerine-400'], ['Tangerine', 'normal', 700, 'tangerine-700'],
-  ['Alegreya Sans', 'normal', 400, 'alegreya-sans-400'], ['Alegreya Sans', 'italic', 400, 'alegreya-sans-400-italic'], ['Alegreya Sans', 'normal', 700, 'alegreya-sans-700'],
-  ['Oswald', 'normal', 400, 'oswald-400'], ['Oswald', 'normal', 500, 'oswald-500'], ['Oswald', 'normal', 600, 'oswald-600'],
-].map(([f, st, w, file]) => `@font-face{font-family:'${f}';font-style:${st};font-weight:${w};font-display:swap;src:url(fonts/${file}.woff2) format('woff2')}`).join('\n');
+  /* family, style, weight range, file, unicode-range, size-adjust */
+  ['Book Serif', 'normal', '300 900', 'merriweather-var'], ['Book Serif', 'italic', '300 900', 'merriweather-var-italic'],
+  ['Book Display', 'normal', '100 900', 'im-fell-english-400'], ['Book Display', 'italic', '100 900', 'im-fell-english-400-italic'],
+  ['Book Display', 'normal', '100 900', 'merriweather-var', 'U+0030-0039', '90%'], ['Book Display', 'italic', '100 900', 'merriweather-var-italic', 'U+0030-0039', '90%'],
+  ['Book Label', 'normal', '100 900', 'im-fell-english-sc-400'], ['Book Label', 'normal', '100 900', 'merriweather-var', 'U+0030-0039', '84%'],
+  ['Book Grand', 'normal', '100 900', 'im-fell-great-primer-400'], ['Book Grand', 'normal', '100 900', 'merriweather-var', 'U+0030-0039', '93%'],
+  ['Alegreya Sans', 'normal', '400', 'alegreya-sans-400'], ['Alegreya Sans', 'italic', '400', 'alegreya-sans-400-italic'], ['Alegreya Sans', 'normal', '700', 'alegreya-sans-700'],
+  ['Oswald', 'normal', '400 700', 'oswald-var'],
+].map(([f, st, w, file, range, adjust]) => `@font-face{font-family:'${f}';font-style:${st};font-weight:${w};font-display:swap;src:url(fonts/${file}.woff2) format('woff2')${range ? `;unicode-range:${range}` : ''}${adjust ? `;size-adjust:${adjust}` : ''}}`).join('\n');
 
 const css = readFileSync(join(ROOT, 'tools', 'lib', 'book.css'), 'utf8')
   .replace(/\$\{(\w+)\}/g, (_, k) => ({
     TALLOW: palette.paper.tallow.hex, FOXING: palette.paper.foxing.hex, SOOT: palette.ink.soot.hex,
     T85: palette.ink.tints['85'].hex, T70: palette.ink.tints['70'].hex, T55: palette.ink.tints['55'].hex,
     T40: palette.ink.tints['40'].hex, T25: palette.ink.tints['25'].hex, T12: palette.ink.tints['12'].hex,
+    T70U: palette.ink.tints['70'].hex.replace('#', '%23'),
     OCHRE: palette.inks.ochre.hex, OXIDE: palette.inks.oxide.hex, SLATE: palette.inks.slate.hex,
     VERDIGRIS: palette.inks.verdigris.hex, BRUISE: palette.inks.bruise.hex, LINK: palette.categories.drink.wash,
   })[k]);

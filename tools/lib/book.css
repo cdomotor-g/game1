@@ -1,36 +1,46 @@
 /* The printed book's stylesheet. Inlined by tools/build-book.mjs, which fills the
    ${COLOUR} tokens from docs/art/palette.json - the book has no colours of its
    own. Millimetres wherever a thing has a size on paper, so the screen shows the
-   page the printer will make. */
+   page the printer will make.
+
+   The faces are docs/book/fonts/README.md. What is READ is set in Merriweather
+   (--body) and, for a table or a number, Alegreya Sans (--sans): a large x-height,
+   plain letters and lining figures, because a player of ten reading "1 turn" in
+   a face whose 1 is a small capital I reads it wrong. The Fell types are kept
+   for what is LOOKED AT - titles and heads, in upper and lower case - and never
+   below 11pt, where the ink spread they were scanned with closes the letters up
+   (docs/art/05-typography.md). Nothing is set in blackletter or a script hand. */
 :root {
   color-scheme: light;
   --tallow: ${TALLOW}; --foxing: ${FOXING}; --soot: ${SOOT};
   --t85: ${T85}; --t70: ${T70}; --t55: ${T55}; --t40: ${T40}; --t25: ${T25}; --t12: ${T12};
   --ochre: ${OCHRE}; --oxide: ${OXIDE}; --slate: ${SLATE}; --verdigris: ${VERDIGRIS}; --bruise: ${BRUISE}; --link: ${LINK};
-  --page-w: 180mm; --page-h: 265mm;
-  --body: 'IM Fell DW Pica', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
-  --display: 'IM Fell English', 'Iowan Old Style', Georgia, serif;
-  --sc: 'IM Fell English SC', 'IM Fell DW Pica SC', Georgia, serif;
-  --grand: 'UnifrakturMaguntia', 'Pirata One', 'IM Fell Double Pica', Georgia, serif;
-  --run: 'Pirata One', 'UnifrakturMaguntia', Georgia, serif;
-  --script: 'Pinyon Script', 'Tangerine', cursive;
+  --page-w: 180mm; --page-h: 265mm; --gutter: 7mm;
+  --body: 'Book Serif', Georgia, 'Times New Roman', serif;
+  --display: 'Book Display', 'Iowan Old Style', Georgia, serif;
+  --label: 'Book Label', 'Book Display', Georgia, serif;
+  --grand: 'Book Grand', 'Book Display', Georgia, serif;
   --sans: 'Alegreya Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --nums: 'Oswald', 'Roboto Condensed', 'Arial Narrow', var(--sans);
+  /* the Fell heads draw their borrowed Merriweather digits at this weight, which
+     is the Fell's own colour */
+  --head-w: 340;
 }
 * { box-sizing: border-box; }
 html { background: var(--foxing); }
-body { margin: 0; background: var(--tallow); color: var(--soot); font-family: var(--body); font-size: 11.5pt; line-height: 1.42; }
+body { margin: 0; background: var(--tallow); color: var(--soot); font-family: var(--body); font-size: 9.8pt; line-height: 1.46; }
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 img { max-width: 100%; height: auto; }
+em, i { font-style: italic; }
 
 /* ------------------------------------------------------------- the shell */
 .bar {
   position: sticky; top: 0; z-index: 5; display: flex; gap: 14px; align-items: baseline;
   padding: 9px 18px; background: var(--tallow); border-bottom: 1px solid var(--t25);
-  font-family: var(--sans); font-size: 13.5px;
+  font-family: var(--sans); font-size: 13.5px; flex-wrap: wrap; row-gap: 4px;
 }
-.bar strong { font-family: var(--grand); font-weight: 400; font-size: 20px; margin-right: auto; }
+.bar strong { font-family: var(--grand); font-weight: var(--head-w); font-size: 21px; margin-right: auto; }
 .bar a, .bar button { color: var(--link); background: none; border: none; font: inherit; cursor: pointer; padding: 0; }
 .bar a:hover, .bar button:hover { text-decoration: underline; }
 .wrap { display: flex; gap: 30px; max-width: calc(var(--page-w) + 340px); margin: 0 auto; padding: 22px 16px 80px; }
@@ -41,57 +51,93 @@ nav.toc {
 }
 .nav-part { margin-bottom: 10px; }
 .nav-part > a { display: block; color: var(--soot); padding: 2px 0; }
-.nav-part > a b { font-family: var(--sc); font-weight: 400; letter-spacing: .06em; }
+.nav-part > a b { font-weight: 700; }
 .nav-part a.ch { display: block; color: var(--t70); padding: 1px 0 1px 12px; }
 .nav-part a.ch:hover { color: var(--soot); }
 main.book { flex: none; width: var(--page-w); min-width: 0; }
-@media (max-width: 900px) {
+/* screen only: an A4 page is narrower than this too, and in print it turned the
+   two-column chapters back into one */
+@media screen and (max-width: 900px) {
   .wrap { flex-direction: column; }
   nav.toc { position: static; flex-basis: auto; max-height: none; }
   main.book { width: 100%; }
+  .cbody { column-count: 1 !important; }
 }
 
 /* ---------------------------------------------------------- type, general */
 h1, h2, h3, h4 { font-weight: 400; margin: 0; }
-.chapter > h2 { font: 400 17pt/1.2 var(--sc); letter-spacing: .04em; margin: 8mm 0 2.5mm; }
-.chapter > h3 { font: 400 14pt/1.25 var(--sc); letter-spacing: .03em; margin: 6mm 0 2mm; }
-.chapter > h4 { font: italic 12pt/1.3 var(--display); margin: 4mm 0 1.5mm; }
-.chapter p { margin: 0 0 2.6mm; }
-.chapter ul, .chapter ol { margin: 0 0 2.6mm; padding-left: 5mm; }
-.chapter li { margin-bottom: .8mm; }
-.chapter strong { font-family: var(--sc); font-weight: 400; letter-spacing: .02em; }
-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .84em; background: var(--foxing); padding: 0 3px; border-radius: 3px; }
-pre { background: var(--foxing); padding: 3mm 4mm; border-radius: 1mm; overflow-x: auto; font-size: 9pt; }
-pre code { background: none; padding: 0; }
-blockquote { margin: 2.5mm 0; padding: 1.5mm 4mm; border-left: 2pt solid var(--t25); color: var(--t70); font-style: italic; }
-blockquote.open { border-left-color: var(--oxide); color: var(--t85); background: color-mix(in srgb, var(--oxide) 7%, transparent); }
-hr { border: none; border-top: .5pt solid var(--t25); margin: 5mm 0; }
-.table-wrap { overflow-x: auto; margin: 2mm 0 3.5mm; }
-table { border-collapse: collapse; font-family: var(--sans); font-size: 8.8pt; line-height: 1.3; width: 100%; }
-th, td { border-top: .4pt solid var(--t25); border-bottom: .4pt solid var(--t25); padding: 1.1mm 1.8mm; text-align: left; vertical-align: top; }
-th { font-family: var(--sc); font-weight: 400; font-size: 8.5pt; letter-spacing: .05em; background: color-mix(in srgb, var(--foxing) 60%, transparent); }
+h1, h2, h3, h4, header.chap .lede, .titlepage .script, .chead .cblurb, figcaption { text-wrap: balance; }
+:is(.chapter, .cbody) > h2 { font: var(--head-w) 15.5pt/1.18 var(--display); margin: 5mm 0 1.6mm; break-after: avoid; }
+:is(.chapter, .cbody) > h3 { font: var(--head-w) 12.5pt/1.22 var(--display); margin: 3.6mm 0 1.2mm; break-after: avoid; }
+:is(.chapter, .cbody) > h4 { font: 700 9.8pt/1.3 var(--body); margin: 3mm 0 1mm; break-after: avoid; }
+.cbody > :first-child { margin-top: 0; }
+.chapter p { margin: 0 0 2mm; }
+.chapter ul, .chapter ol { margin: 0 0 2mm; padding-left: 4.6mm; }
+.chapter li { margin-bottom: .7mm; }
+.chapter li::marker { color: var(--t70); }
+.chapter strong, .chapter b { font-weight: 700; }
+/* A cross-reference to another chapter or table: italic, behind a small arrow.
+   The rules close a step with the chapter that holds its detail, and printed in
+   plain ink with nothing to mark it that read as a stray phrase. The arrow is an
+   image rather than a glyph, so no face has to carry it, and generated content,
+   so it prints with the browser's background graphics off. */
+.chapter :is(p, li, td, blockquote) a[href^="#"] { font-style: italic; }
+.chapter :is(p, li, td, blockquote) a[href^="#"]::before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='7' viewBox='0 0 9 7'%3E%3Cpath d='M.3 3.5h7.4M4.6.8l2.9 2.7-2.9 2.7' fill='none' stroke='${T70U}' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  margin: 0 .18em 0 .05em; font-style: normal;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .82em; background: var(--foxing); padding: 0 2px; border-radius: 2px; overflow-wrap: anywhere; }
+pre { background: var(--foxing); padding: 2.5mm 3mm; border-radius: 1mm; overflow-x: auto; font-size: 7.8pt; line-height: 1.35; white-space: pre-wrap; }
+pre code { background: none; padding: 0; overflow-wrap: normal; }
+blockquote { margin: 2mm 0 2.6mm; padding: 1.2mm 3mm; border-left: 2pt solid var(--t25); color: var(--t85); font-size: .95em; }
+blockquote p:last-child { margin-bottom: 0; }
+blockquote.open { border-left-color: var(--oxide); background: color-mix(in srgb, var(--oxide) 7%, transparent); }
+hr { border: none; border-top: .5pt solid var(--t25); margin: 4mm 0; }
+.table-wrap { overflow-x: auto; margin: 1.6mm 0 3mm; }
+table { border-collapse: collapse; font-family: var(--sans); font-size: 8.9pt; line-height: 1.28; width: 100%; font-variant-numeric: lining-nums tabular-nums; }
+th, td { border-top: .4pt solid var(--t25); border-bottom: .4pt solid var(--t25); padding: .9mm 1.6mm; text-align: left; vertical-align: top; }
+th { font-weight: 700; font-size: 8.4pt; letter-spacing: .01em; background: color-mix(in srgb, var(--foxing) 60%, transparent); }
+td strong, td b { font-weight: 700; }
 img[src*="icons/element-"], img[src*="icons/pricing-"] { width: 1.25em; height: 1.25em; vertical-align: -.28em; }
 .gallery table { width: 100%; }
 .gallery th, .gallery td { border: none; padding: 1mm; }
-.gallery td { font-style: italic; font-size: 8.5pt; color: var(--t70); text-align: center; }
+.gallery td { font-style: italic; font-family: var(--body); font-size: 7.8pt; color: var(--t70); text-align: center; }
 .gallery img { display: block; margin: 0 auto; border: .4pt solid var(--t25); }
-.chapter > p > img:only-child, .chapter img[src*="/flows/"], .chapter img[src*="/graph/"] { display: block; margin: 2mm auto; max-width: 100%; }
-.orn { display: block; width: 44mm; height: 3mm; margin: 2mm auto 0; color: var(--t55); }
+:is(.chapter, .cbody) > p > img:only-child, .chapter img[src*="/flows/"], .chapter img[src*="/graph/"] { display: block; margin: 2mm auto; max-width: 100%; }
+.orn { display: block; width: 40mm; height: 3mm; margin: 1.6mm auto 0; color: var(--t55); }
 
 /* --------------------------------------------------------- chapter heads */
 /* flow-root: a chapter keeps its own floats. A margin figure at the end of one chapter
    used to be carried by the page break onto the next chapter's opening page. */
-.chapter { display: flow-root; border-top: .4pt solid var(--t25); padding-top: 9mm; margin-top: 12mm; }
+.chapter { display: flow-root; border-top: .4pt solid var(--t25); padding-top: 8mm; margin-top: 10mm; }
 .chapter:first-of-type { border-top: none; }
-header.chap { text-align: center; margin: 0 0 7mm; }
-header.chap .num { font-family: var(--sc); font-size: 10pt; letter-spacing: .22em; color: var(--t70); }
-header.chap .title { font-family: var(--grand); font-size: 32pt; line-height: 1.08; margin: 1.5mm 0 2mm; color: var(--soot); }
-header.chap.small .title { font-size: 24pt; }
-header.chap .lede { font: italic 12.5pt/1.4 var(--display); color: var(--t85); max-width: 150mm; margin: 0 auto; }
+header.chap { text-align: center; margin: 0 0 4.5mm; }
+header.chap .num { font-family: var(--label); font-weight: var(--head-w); font-size: 11pt; letter-spacing: .18em; color: var(--t70); }
+header.chap .title { font-family: var(--grand); font-weight: var(--head-w); font-size: 30pt; line-height: 1.08; margin: .8mm 0 1.6mm; color: var(--soot); }
+header.chap.small .title { font-size: 23pt; }
+header.chap .lede { font: italic 350 10.4pt/1.45 var(--body); color: var(--t85); max-width: 150mm; margin: 0 auto; }
+/* orphans: a drop capital is a float, and a float that does not fit at the foot
+   of a column goes to the next one without the line it belongs to */
+p.dropcap { orphans: 4; }
 p.dropcap::first-letter {
-  font-family: var(--grand); font-size: 3.15em; line-height: .82; float: left;
-  padding: .06em .09em 0 0; color: var(--oxide);
+  font-family: var(--grand); font-weight: var(--head-w); font-size: 3.35em; line-height: .78; float: left;
+  padding: .07em .07em 0 0; color: var(--oxide);
 }
+
+/* A chapter of running text is set in two columns. A line across the whole page
+   ran past a hundred characters, which is hard going for anybody and harder for
+   a young reader; a column is half that. The columns are the .cbody blocks
+   inside the chapter (columnize in tools/build-book.mjs), and nothing crosses
+   them: the head stands above the first, and a table too broad for a column
+   (fitTables) closes one and opens the next. `column-span` did the same on
+   screen and failed on paper - under a head that fell low on a page, a picture
+   too tall for the strip left beneath it sent the whole chapter to the next
+   page. Every picture floats in its column (tools/lib/book-art.mjs says why). */
+.cbody { column-count: 2; column-gap: var(--gutter); column-fill: balance; }
+.chapter.cols > header.chap { margin-bottom: 4mm; }
+/* The design notes and the review are for the reader who wants to know why, not
+   for the table, and are set a size smaller than the rules. */
+.chapter.notes { font-size: 9.2pt; line-height: 1.43; }
 
 /* ------------------------------------------------------------ title pages */
 .titlepage {
@@ -105,26 +151,29 @@ p.dropcap::first-letter {
 .titlepage .frame { position: absolute; inset: 3mm; width: calc(100% - 6mm); height: calc(100% - 6mm); color: var(--t55); pointer-events: none; }
 .titlepage .rivet { position: absolute; width: 2.6mm; height: 2.6mm; border-radius: 50%; background: var(--t55); box-shadow: inset 0 0 0 .5mm var(--tallow), inset 0 0 0 .8mm var(--t55); }
 .rivet.tl { top: 3.9mm; left: 3.9mm; } .rivet.tr { top: 3.9mm; right: 3.9mm; } .rivet.bl { bottom: 3.9mm; left: 3.9mm; } .rivet.br { bottom: 3.9mm; right: 3.9mm; }
-.titlepage .label { font-family: var(--sc); font-size: 12.5pt; letter-spacing: .3em; color: var(--t70); }
-.titlepage .ttitle { font-family: var(--grand); font-size: 46pt; line-height: 1.05; margin: 3mm 0 2mm; }
-.titlepage .ttitle.grand { font-size: 64pt; }
-.titlepage .script { font-family: var(--script); font-size: 24pt; line-height: 1.15; color: var(--oxide); max-width: 140mm; margin: 0 auto; }
+.titlepage .label { font-family: var(--label); font-weight: var(--head-w); font-size: 13pt; letter-spacing: .26em; color: var(--t70); }
+.titlepage .ttitle { font-family: var(--grand); font-weight: var(--head-w); font-size: 44pt; line-height: 1.05; margin: 3mm 0 2.5mm; }
+.titlepage .ttitle.grand { font-size: 62pt; }
+.titlepage .script { font: italic var(--head-w) 17pt/1.3 var(--display); color: var(--oxide); max-width: 140mm; margin: 0 auto; }
 .titlepage header .orn { margin-top: 4mm; }
 .tplate { margin: 0; height: 155mm; display: flex; align-items: center; justify-content: center; }
 .tplate img { display: block; max-width: 100%; max-height: 155mm; width: auto; height: auto; border: .5pt solid var(--t40); box-shadow: 0 1mm 4mm rgba(26,23,20,.18); }
-.tcaption { font-family: var(--sc); font-size: 9.5pt; letter-spacing: .1em; color: var(--t70); }
+.tcaption { font-family: var(--label); font-weight: var(--head-w); font-size: 11pt; letter-spacing: .08em; color: var(--t70); }
 .print-this { display: block; margin: 2.5mm auto 0; font: 12px var(--sans); color: var(--link); background: none; border: .5pt solid var(--t40); border-radius: 3px; padding: 3px 9px; cursor: pointer; }
 .print-this:hover { background: var(--foxing); }
 
 /* the contents page flows: it is as long as the book is */
 .titlepage.contents { display: block; height: auto; min-height: var(--page-h); text-align: left; padding: 14mm 14mm 12mm; }
-.titlepage.contents header { text-align: center; margin-bottom: 7mm; }
-.titlepage.contents footer { margin-top: 6mm; text-align: center; }
-.toc-page { column-count: 2; column-gap: 8mm; font-size: 9.2pt; line-height: 1.32; }
-.toc-part { break-inside: avoid; margin-bottom: 3.5mm; }
-.toc-head { display: block; color: var(--soot); margin-bottom: .8mm; }
-.toc-head .lab { font-family: var(--sc); letter-spacing: .12em; font-size: 8.5pt; color: var(--t70); display: block; }
-.toc-head .ttl { font-family: var(--grand); font-size: 14pt; line-height: 1.1; }
+/* one page: a head only as tall as what is in it, and three columns */
+.titlepage.contents > header { height: auto; text-align: center; margin-bottom: 3mm; }
+.titlepage.contents footer { height: auto; margin-top: 4mm; text-align: center; }
+.titlepage.contents footer .tcaption { font: italic 350 8.6pt/1.4 var(--body); letter-spacing: 0; }
+.toc-page { column-count: 3; column-gap: 6mm; font-size: 8.2pt; line-height: 1.3; }
+.toc-part { margin-bottom: 3mm; }
+.toc-part li { break-inside: avoid; }
+.toc-head { display: block; color: var(--soot); margin-bottom: .8mm; break-inside: avoid; break-after: avoid; }
+.toc-head .lab { font-family: var(--label); font-weight: var(--head-w); letter-spacing: .05em; font-size: 10pt; color: var(--t70); display: block; }
+.toc-head .ttl { font-family: var(--grand); font-weight: var(--head-w); font-size: 15pt; line-height: 1.1; }
 .toc-part ol { margin: 0; padding-left: 5mm; color: var(--t85); }
 .toc-part ol a { color: inherit; }
 
@@ -132,28 +181,50 @@ p.dropcap::first-letter {
 .sheet { height: var(--page-h); display: grid; grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr); row-gap: 4mm; margin: 0 0 12mm; }
 .sheet.quarter { grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr); grid-template-columns: 1fr 1fr; column-gap: 6mm; }
 .chead { grid-column: 1 / -1; border-bottom: .5pt solid var(--t40); padding-bottom: 1.6mm; text-align: center; }
-.chead .running { font-family: var(--sc); font-size: 8.5pt; letter-spacing: .16em; color: var(--t70); }
-.chead .ctitle { font-family: var(--grand); font-size: 30pt; line-height: 1.05; margin: .5mm 0 1mm; }
-.chead .cblurb { font: italic 10.5pt/1.3 var(--display); color: var(--t85); margin: 0; }
-.chead .count { font-family: var(--sc); font-style: normal; font-size: 8.5pt; letter-spacing: .1em; color: var(--t70); }
+.chead .running { font-family: var(--label); font-weight: var(--head-w); font-size: 11pt; letter-spacing: .14em; color: var(--t70); }
+.chead .ctitle { font-family: var(--grand); font-weight: var(--head-w); font-size: 28pt; line-height: 1.05; margin: .5mm 0 1mm; }
+.chead .cblurb { font: italic 350 9.4pt/1.35 var(--body); color: var(--t85); margin: 0; }
+.chead .count { font: normal 400 8.4pt var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--t70); }
 .chead.run { display: flex; justify-content: space-between; align-items: baseline; text-align: left; }
-.chead.run .rtitle { font-family: var(--run); font-size: 13pt; letter-spacing: .04em; }
+.chead.run .rtitle { font: italic var(--head-w) 13pt var(--display); }
 
 .entry { min-height: 0; overflow: hidden; position: relative; }
 .entry .text { min-width: 0; min-height: 0; }
 .entry.half { display: grid; column-gap: 5mm; grid-template-columns: auto minmax(0, 1fr); }
-.entry.half.landscape, .entry.half.square { display: block; }
-.entry.half.landscape .plate, .entry.half.square .plate { float: left; margin: 0 5mm 2.5mm 0; }
-.entry.half.landscape .plate { width: 104mm; }
-.entry.half.square .plate { width: 74mm; }
-.entry.quarter { display: grid; grid-template-rows: auto minmax(0, 1fr); row-gap: 2.5mm; }
+/* a vehicle: the plate floats, and the words run beside it and on under it */
+.entry.half.landscape:not(:has(> .lcol)), .entry.half.square:not(:has(> .lcol)) { display: block; }
+.entry.half.landscape > .plate, .entry.half.square > .plate { float: left; margin: 0 5mm 2.5mm 0; }
+.entry.half.landscape > .plate { width: 104mm; }
+.entry.half.square > .plate { width: 74mm; }
+.entry.half.landscape > .plate img, .entry.half.square > .plate img { max-height: 104mm; width: auto; max-width: 100%; }
+/* A building: the plate and the tile cut from it in a column on the left, the
+   plate giving up height so the tile always has room under it, and the words
+   on the right. The tile used to float at the foot of the words, in a column
+   already narrowed by the card beside them, and on sixteen buildings it ran off
+   the bottom of the entry - which hides it, the entry being a window. */
+.entry.half:has(> .lcol) { grid-template-columns: auto minmax(0, 1fr); }
+.entry.half .lcol { display: flex; flex-direction: column; align-items: center; gap: 2mm; min-height: 0; height: 100%; }
+.entry.half.landscape .lcol { width: 104mm; }
+.entry.half.square .lcol { width: 74mm; }
+.entry.half .lcol .plate { flex: 0 1 auto; min-height: 0; display: flex; justify-content: center; max-width: 100%; }
+.entry.half .lcol .plate img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+.entry.half .lcol .plate.undrawn { width: 100%; flex: 1 1 auto; }
+.entry.half .lcol .piece { flex: none; float: none; margin: 0; }
+/* A quarter entry is a column: the picture, then the words. The picture has a
+   height it wants and gives some of it up - to a floor - when the words need the
+   room, rather than the words running off the foot of an entry that is a window. */
+.entry.quarter { display: flex; flex-direction: column; gap: 2.5mm; }
+.entry.quarter > .plate { flex: 0 1 auto; min-height: 30mm; display: flex; justify-content: center; }
+.entry.quarter > .text { flex: none; }
 .plate { margin: 0; min-height: 0; }
 .plate img { display: block; width: 100%; height: auto; border: .45pt solid var(--t40); }
 .entry.half.portrait .plate { height: 100%; }
 .entry.half.portrait .plate img { height: 100%; width: auto; max-width: 92mm; object-fit: contain; }
-.entry.quarter .plate.square img { height: 66mm; width: auto; max-width: 100%; margin: 0 auto; }
-.entry.quarter .plate.portrait img { height: 52mm; width: auto; max-width: 100%; margin: 0 auto; }
-.entry.quarter .plate.landscape img { width: 100%; height: auto; }
+.entry.quarter .plate.square { flex-basis: 58mm; }
+.entry.quarter .plate.portrait { flex-basis: 48mm; }
+.entry.quarter .plate img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+.entry.quarter .plate.square img { height: 58mm; }
+.entry.quarter .plate.portrait img { height: 48mm; }
 .plate.undrawn, .plate.swatch {
   display: grid; place-items: center; align-content: center; gap: 1.5mm; border: .5pt solid var(--t40);
   background: color-mix(in srgb, var(--foxing) 55%, transparent); color: var(--t55);
@@ -164,25 +235,25 @@ p.dropcap::first-letter {
 .entry.half.portrait .plate.undrawn { height: 100%; }
 .plate .device { width: 34%; opacity: .55; }
 .plate .device svg, .plate .device img { width: 100%; height: auto; display: block; }
-.plate.undrawn figcaption { font: italic 8pt var(--display); }
+.plate.undrawn figcaption { font: italic 350 7.6pt var(--body); }
 .plate.swatch { background: var(--wash); color: var(--soot); }
 .plate.swatch svg { width: 50%; opacity: .55; }
 .plate.swatch figcaption { font-family: var(--nums); font-size: 14pt; letter-spacing: .05em; opacity: .7; }
 
 .ehead { margin: 0 0 1.5mm; }
-.kicker { font-family: var(--sans); font-size: 7.4pt; letter-spacing: .08em; text-transform: uppercase; color: var(--t70); }
+.kicker { font-family: var(--sans); font-size: 7.6pt; letter-spacing: .07em; text-transform: uppercase; color: var(--t70); font-variant-numeric: lining-nums; }
 .kicker .code { font-family: var(--nums); letter-spacing: .06em; color: var(--t85); }
 .cmark { width: 3.4mm; height: 3.4mm; vertical-align: -.7mm; margin-left: 1mm; }
 .cmark.big { width: 6mm; height: 6mm; vertical-align: middle; }
 .elmark { width: 3mm; height: 3mm; vertical-align: -.6mm; }
 .kicker .elmark { margin: 0 .3mm 0 .5mm; }
 .unique { text-transform: none; font-style: italic; letter-spacing: 0; }
-.ename { font-family: var(--sc); font-size: 17pt; line-height: 1.1; letter-spacing: .02em; margin: .6mm 0 0; }
-.entry.quarter .ename { font-size: 13pt; }
-.calling { font-family: var(--script); font-size: 15pt; line-height: 1.15; color: var(--oxide); margin-top: .4mm; }
-.entry.quarter .calling { font-size: 12pt; }
-.calling.plain { font-family: var(--display); font-style: italic; font-size: 10.5pt; color: var(--t85); }
-.entry.quarter .calling.plain { font-size: 9pt; }
+.ename { font-family: var(--display); font-weight: var(--head-w); font-size: 17pt; line-height: 1.1; margin: .6mm 0 0; }
+.entry.quarter .ename { font-size: 13.5pt; }
+.calling { font: italic var(--head-w) 13pt/1.2 var(--display); color: var(--oxide); margin-top: .4mm; }
+.entry.quarter .calling { font-size: 11.5pt; }
+.calling.plain { font: italic 350 8.6pt/1.36 var(--body); color: var(--t85); }
+.entry.quarter .calling.plain { font-size: 7.8pt; }
 .strip { display: flex; flex-wrap: wrap; gap: 1.2mm; margin: 1.6mm 0 2mm; }
 .strip .cell {
   display: inline-flex; align-items: baseline; gap: 1.4mm; padding: .5mm 1.8mm .3mm; border: .45pt solid var(--t40); border-radius: 1mm;
@@ -192,33 +263,39 @@ p.dropcap::first-letter {
 .strip .cell i { font-family: var(--nums); font-style: normal; font-weight: 500; font-size: 11pt; }
 .strip .cell.mark { padding: .6mm 1.4mm; }
 .strip .cell.mark img { width: 3.6mm; height: 3.6mm; vertical-align: middle; }
-.facts { list-style: none; margin: 0 0 1.5mm; padding: 0; font-family: var(--sans); font-size: 9.2pt; line-height: 1.3; }
+.facts { list-style: none; margin: 0 0 1.5mm; padding: 0; font-family: var(--sans); font-size: 9pt; line-height: 1.28; font-variant-numeric: lining-nums; }
 .entry.quarter .facts { font-size: 8.3pt; }
 .facts li { margin: 0 0 .9mm; }
-.facts em { font-family: var(--sc); font-style: normal; letter-spacing: .03em; }
+.facts em { font-style: normal; font-weight: 700; }
 .facts .hrs { font-family: var(--nums); font-size: .9em; color: var(--t70); }
-.story { font: italic 9.6pt/1.32 var(--display); color: var(--t85); margin: 1mm 0 0; }
-.entry.quarter .story { font-size: 8.6pt; }
+.story { font: italic 350 8pt/1.38 var(--body); color: var(--t85); margin: 1mm 0 0; }
+.entry.quarter .story { font-size: 7.4pt; }
 .piece { float: right; margin: 1mm 0 0 3mm; text-align: center; }
 .piece img { display: block; margin: 0 auto; }
-.piece figcaption { font: italic 7pt/1.2 var(--display); color: var(--t70); max-width: 28mm; margin-top: .6mm; }
-.hook { font: italic 9.4pt/1.32 var(--display); color: var(--t85); margin: 0 0 1.2mm; }
-.stages { margin: 0 0 1mm; padding-left: 4mm; font-family: var(--sans); font-size: 8.3pt; line-height: 1.3; }
-.stages em { font-family: var(--sc); font-style: normal; }
+.piece figcaption { font: italic 350 6.8pt/1.25 var(--body); color: var(--t70); max-width: 28mm; margin-top: .6mm; }
+.hook { font: italic 350 8.1pt/1.36 var(--body); color: var(--t85); margin: 0 0 1.2mm; }
+.stages { margin: 0 0 1mm; padding-left: 4mm; font-family: var(--sans); font-size: 8.4pt; line-height: 1.3; font-variant-numeric: lining-nums; }
+.stages em { font-style: normal; font-weight: 700; }
 .stages .pays { color: var(--t70); }
-.entry .note { font: italic 8pt/1.3 var(--display); color: var(--t70); margin: 0; }
+.entry .note { font: italic 350 7.2pt/1.32 var(--body); color: var(--t70); margin: 0; }
 
 /* ------------------------------------------------------ campaign chapters */
 .mapplate { margin: 0 0 3mm; }
 .mapplate img { display: block; width: 100%; border: .5pt solid var(--t40); }
-.mapplate figcaption { font: italic 9pt/1.3 var(--display); color: var(--t70); margin-top: 1.2mm; text-align: center; }
-h3.act { text-align: center; font-family: var(--grand) !important; font-size: 20pt !important; margin: 7mm 0 3mm !important; }
-.card-chapter { display: grid; grid-template-columns: 52mm minmax(0, 1fr); column-gap: 5mm; padding: 3mm 0 2.5mm; border-top: .4pt solid var(--t25); break-inside: avoid; }
-.card-chapter .plate.undrawn { height: 34mm; }
-.card-chapter .chno { font-family: var(--grand); font-size: 1.15em; color: var(--oxide); margin-right: .3em; }
-.card-chapter .told { font: 10.2pt/1.36 var(--body); margin: 1mm 0 1.6mm; }
-.readaloud { font-family: var(--sc); font-size: 8pt; letter-spacing: .12em; color: var(--oxide); margin-right: 1mm; }
-.card-chapter .lesson { font: italic 9pt/1.32 var(--display); color: var(--t85); margin: 0; }
+.mapplate figcaption { font: italic 350 8.4pt/1.35 var(--body); color: var(--t70); margin-top: 1.2mm; text-align: center; }
+h3.act { text-align: center; font-family: var(--grand) !important; font-weight: var(--head-w) !important; font-size: 19pt !important; margin: 5mm 0 2mm !important; }
+/* The picture floats beside the words rather than standing in a grid track: a
+   grid row would not break, so every chapter card went whole to the next page
+   and left a third of the one before it empty. */
+.card-chapter { display: flow-root; padding: 2.6mm 0 2.2mm; border-top: .4pt solid var(--t25); }
+.card-chapter > .plate { float: left; width: 44mm; margin: 0 5mm 1mm 0; }
+.card-chapter > .text { display: flow-root; }
+.card-chapter .plate.undrawn { height: 29mm; }
+.card-chapter .chno { font-family: var(--grand); font-size: 1.12em; color: var(--oxide); margin-right: .3em; }
+.card-chapter .ename { font-size: 15pt; }
+.card-chapter .told { font: 9.4pt/1.45 var(--body); margin: .8mm 0 1.4mm; }
+.readaloud { font: 700 7.4pt var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--oxide); margin-right: 1mm; }
+.card-chapter .lesson { font: italic 350 8.6pt/1.38 var(--body); color: var(--t85); margin: 0; }
 
 /* -------------------------------------------------------- the print panel */
 .print-panel { position: fixed; inset: 0; z-index: 20; background: rgba(26,23,20,.45); display: grid; place-items: center; }
@@ -229,10 +306,10 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-size: 20
    why every proof of this book looked right. */
 .print-panel[hidden] { display: none; }
 .print-panel .panel { background: var(--tallow); color: var(--soot); width: min(560px, 92vw); max-height: 88vh; overflow: auto; padding: 18px 22px; border: 1px solid var(--t40); box-shadow: 0 6px 30px rgba(0,0,0,.3); font-family: var(--sans); font-size: 13.5px; }
-.print-panel h2 { font-family: var(--grand); font-size: 26px; margin: 0 0 6px; }
+.print-panel h2 { font-family: var(--grand); font-weight: var(--head-w); font-size: 27px; margin: 0 0 6px; }
 .print-panel p { margin: 0 0 12px; color: var(--t85); }
 .picks label { display: block; padding: 3px 0; }
-.picks .part-pick { font-family: var(--sc); font-size: 15px; letter-spacing: .04em; }
+.picks .part-pick { font-weight: 700; font-size: 14px; }
 .picks details { margin: 0 0 4px 22px; }
 .picks summary { cursor: pointer; color: var(--t70); font-size: 12.5px; }
 .picks details label { padding-left: 14px; font-size: 12.5px; }
@@ -243,8 +320,8 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-size: 20
 
 /* --------------------------------------------------------------- print */
 @page { size: A4; margin: 14mm 15mm 16mm;
-  @bottom-center { content: counter(page); font: 9pt 'IM Fell English', Georgia, serif; color: ${T85}; }
-  @top-center { content: 'The Almanac'; font: 8pt 'IM Fell English SC', Georgia, serif; letter-spacing: .18em; color: ${T70}; } }
+  @bottom-center { content: counter(page); font: 8.5pt 'Book Serif', Georgia, serif; color: ${T85}; }
+  @top-center { content: 'The Almanac'; font: 9pt 'Book Label', Georgia, serif; letter-spacing: .18em; color: ${T70}; } }
 @page plain { @top-center { content: none; } @bottom-center { content: none; } }
 .titlepage { page: plain; }
 @media print {
@@ -255,10 +332,57 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-size: 20
   .titlepage { break-before: page; break-after: page; margin: 0; box-shadow: none; }
   .part:first-child .titlepage { break-before: auto; }
   .chapter { break-before: page; border-top: none; padding-top: 0; margin-top: 0; }
+  /* A chapter follows on from the one before under a rule, rather than turning
+     to a fresh page. Turning the page left every chapter's last page as blank as
+     it happened to be, and a quarter of them held two lines; a table of Annex I,
+     a design note or a finding of the review is mostly shorter than a page, and
+     one to a page left the book a third blank paper. The first chapter after a
+     title page starts a page all the same, because the title page breaks after
+     itself; and any chapter still prints alone, from the picker. */
+  .chapter.run-on { break-before: auto; border-top: none; padding-top: 0; margin-top: 8mm; }
+  /* The rule is the head's, so it goes where the head goes. And the head keeps
+     room under itself - taken back by the negative margin, so nothing moves -
+     which it cannot be split from: a head with less than that left under it on
+     the page starts the next page instead, rather than ending this one with its
+     chapter's first lines overleaf. */
+  .chapter.run-on > header.chap {
+    border-top: .5pt solid var(--t40); padding-top: 5mm;
+    break-inside: avoid; padding-bottom: var(--keep); margin-bottom: calc(4mm - var(--keep));
+  }
+  .chapter.run-on { --keep: 42mm; }
+  .chapter.tables.run-on { --keep: 30mm; }
+  .titlepage + .chapter.run-on, body.selective .chapter.run-on.first-chosen { margin-top: 0; }
+  .titlepage + .chapter.run-on > header.chap, body.selective .chapter.run-on.first-chosen > header.chap { border-top: none; padding-top: 0; }
+  /* The contents is one page: the second row of pieces is the screen's. And so
+     is the rule under the title - with it, Chromium broke the page after the
+     title and set the whole contents overleaf, though it fits with room over. */
+  .titlepage.contents .toc-page ~ .tfrieze, .titlepage.contents > header .orn { display: none; }
   .sheet { break-before: page; break-inside: avoid; margin: 0; }
   .chapter.sheets { break-before: auto; }
   .chapter.sheets > .sheet:first-child { break-before: page; }
-  .entry, .card-chapter, .table-wrap, pre, blockquote, figure { break-inside: avoid; }
+  .entry, pre, blockquote, figure, tr { break-inside: avoid; }
+  /* A campaign chapter card may run on over a page, three lines or more a side:
+     kept whole, two of them filled a page and left a third of it blank. */
+  .card-chapter { orphans: 3; widows: 3; }
+  /* ...but its head does not part from itself or from its first lines, and it
+     starts only where its picture - floated beside it, and 35mm tall - fits
+     too: the room is reserved under the head and taken back by the margin. */
+  .card-chapter .ehead { break-inside: avoid; break-after: avoid; padding-bottom: 34mm; margin-bottom: calc(1.5mm - 34mm); }
+  /* A short table of Annex I stays with its head (tools/build-book.mjs marks it). */
+  .chapter.keep { break-inside: avoid; }
+  /* The tailpiece is for the screen. Printed, it is what spills: a row of three
+     pictures after a chapter's last line that did not fit under it was a page to
+     itself, and the pictures in the columns already put art on every page. */
+  .fig.row.tail { display: none; }
+  /* So is the frieze under a chapter's head. Set in the columns, a chapter's
+     pictures are on every page of it already; under the head the row was a third
+     of a page kept with the head, and leaving it out of print took twelve pages
+     off the book and most of the half-empty ones with them. A title page keeps
+     its frieze. */
+  header.chap .fig.frieze { display: none; }
+  .table-wrap { overflow: visible; }
+  .table-wrap:not(.long):not(.span) { break-inside: avoid; }
+  header.chap { break-after: avoid; }
   a { color: inherit; }
   body.selective .part:not(.chosen) { display: none; }
   body.selective .chapter:not(.chosen) { display: none; }
@@ -269,41 +393,55 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-size: 20
 }
 
 /* ---------------------------------------------------------------- figures */
-/* Art in the running text. A margin figure floats right of the paragraphs at
-   --fw wide; a third or a half floats left; a wide one is a block; a row is a
-   block of pieces sharing the measure, each named. The frieze is the row under a
-   chapter head. Captions are the display face, italic, small. */
+/* Art in the running text. In a chapter of one column a margin figure floats
+   right of the paragraphs at --fw wide; a third or a half floats left; a wide one
+   is a block. In a chapter of two (.cols) tools/lib/book-art.mjs has already
+   decided each figure's place: a float beside the text in its column, a block
+   the width of the column, or a span across both. A row is a block of pieces
+   sharing the measure, each named, and always crosses both columns. The frieze
+   is the row under a chapter head. Captions are the body face, italic, small. */
 .fig { margin: 1mm 0 3mm; min-width: 0; }
 .fig img { display: block; width: 100%; height: auto; border: .45pt solid var(--t40); background: var(--tallow); }
-.fig .fp { display: inline-block; vertical-align: top; }
+.fig .fp { display: inline-block; vertical-align: top; max-width: 100%; }
 .fig.margin { float: right; width: var(--fw); margin: .8mm 0 2.5mm 5mm; clear: right; }
-.fig.margin.auto { width: 36mm; margin-top: .4mm; }
-.fig.margin.auto figcaption { font-size: 7.6pt; }
+.fig.margin.auto { width: 34mm; margin-top: .4mm; }
+.fig.margin.auto figcaption { font-size: 7.2pt; }
 .fig.third { float: left; width: var(--fw); margin: .8mm 5mm 2.5mm 0; clear: left; }
 .fig.half { float: right; width: var(--fw); margin: .8mm 0 3mm 5mm; clear: right; }
 .fig.half.flow, .fig.third.flow { float: left; margin: .8mm 5mm 2.5mm 0; }
 .fig.wide { clear: both; display: flow-root; width: 100%; margin: 3mm 0 4mm; text-align: center; }
 .fig.wide .fp { margin: 0 auto; display: block; }
 .fig.wide img { margin: 0 auto; }
-.fig.row { clear: both; width: 100%; margin: 3mm 0 4mm; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 2.4mm 3mm; }
+.cols .fig.float { float: right; clear: right; width: var(--fw); margin: .6mm 0 1.6mm 3.6mm; }
+.cols .fig.float.auto { margin-top: .3mm; }
+/* the column's own width: the picture centred in it and nothing beside it */
+.cols .fig.col { float: right; clear: right; width: 100%; margin: 1mm 0 3mm; text-align: center; }
+.cols .fig.col:not(.row) .fp { display: block; margin: 0 auto; }
+.cols .fig.col figcaption { text-align: center; }
+.fig.row { clear: both; width: 100%; margin: 2.6mm 0 3.4mm; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 2mm 3mm; }
+.cols .fig.row.col { gap: 1.6mm 2.5mm; margin: 1mm 0 3mm; }
 .fig.row .fp { flex: 0 0 auto; text-align: center; }
 .fig.row figcaption { flex: 1 0 100%; }
-.fig.row .pname { display: block; font: 7.4pt/1.2 var(--sc); letter-spacing: .04em; color: var(--t70); margin-top: .7mm; }
-.fig.frieze { margin: -3mm 0 5mm; align-items: flex-end; }
+.fig.row .pname { display: block; font: 7.2pt/1.2 var(--sans); letter-spacing: .02em; color: var(--t70); margin-top: .6mm; }
+.fig.frieze { margin: -1.5mm 0 4mm; align-items: flex-end; }
 .fig.frieze img { border-color: var(--t25); }
 .fig .fp.card img, .fig .fp.tile img, .fig .fp.icon img { border: none; background: none; }
 .fig .fp.card img { box-shadow: 0 .6mm 1.6mm rgba(26,23,20,.22); border-radius: 1.2mm; }
 .fig .fp.flow img { border: none; }
-.fig figcaption { font: italic 8.6pt/1.3 var(--display); color: var(--t70); margin-top: 1mm; text-align: center; }
-.fig.margin figcaption, .fig.third figcaption, .fig.half figcaption { text-align: left; }
+.fig figcaption { font: italic 350 7.8pt/1.35 var(--body); color: var(--t70); margin-top: .9mm; text-align: center; }
+.fig.margin figcaption, .fig.third figcaption, .fig.half figcaption, .cols .fig.float figcaption { text-align: left; }
 .fig .swatch { display: grid; place-items: center; gap: 1mm; width: 100%; aspect-ratio: 1; background: var(--wash); border: .45pt solid var(--t40); color: var(--soot); }
 .fig .swatch svg { width: 45%; opacity: .55; }
 .fig .swatch b { font-family: var(--nums); font-weight: 500; font-size: 12pt; opacity: .7; }
-.chapter > h2, .chapter > h3 { clear: both; }
-header.chap + .fig.frieze { margin-top: -4mm; }
+/* A head clears only the figures of a one-column chapter. In two columns a float
+   is a finger wide and a head can stand beside it; clearing it left a hole the
+   depth of the picture under every section that ended beside one. */
+.chapter:not(.cols) > h2, .chapter:not(.cols) > h3 { clear: both; }
+.chapter.cols > .table-wrap.span { clear: both; }
+header.chap .fig.frieze { margin: 3mm 0 0; }
 
 /* a cropped square of a plate, at the head of a table row */
-.thumb { display: inline-block; width: 8.4mm; height: 8.4mm; overflow: hidden; vertical-align: middle; margin: -1mm 1.6mm -1mm 0; border: .4pt solid var(--t40); position: relative; background: var(--tallow); }
+.thumb { display: inline-block; width: 6.6mm; height: 6.6mm; overflow: hidden; vertical-align: middle; margin: -1.1mm 1.4mm -1mm 0; border: .4pt solid var(--t40); position: relative; background: var(--tallow); }
 .thumb img { position: absolute; max-width: none; display: block; }
 .thumb.whole img { position: static; width: 100%; height: 100%; object-fit: contain; }
 .thumb .swatch { display: grid; place-items: center; width: 100%; height: 100%; background: var(--wash); color: var(--soot); }
@@ -314,8 +452,9 @@ td .thumb + b, td .thumb + strong { vertical-align: middle; }
 /* the built card beside a catalogue entry, at half its printed size */
 .cardinset { float: right; width: 34mm; margin: 1mm 0 1.5mm 3.5mm; text-align: center; }
 .cardinset img { display: block; width: 100%; border-radius: 1mm; box-shadow: 0 .5mm 1.5mm rgba(26,23,20,.22); }
-.cardinset figcaption { font: italic 7pt/1.2 var(--display); color: var(--t70); margin-top: .6mm; }
+.cardinset figcaption { font: italic 350 6.8pt/1.25 var(--body); color: var(--t70); margin-top: .6mm; }
 .entry.half.portrait .cardinset { width: 31mm; }
+.entry.half:has(> .lcol) .cardinset { width: 30mm; margin-left: 3mm; }
 
 /* the frieze under a title page's plate */
 .tplate.with-frieze { height: 118mm; }
@@ -343,7 +482,8 @@ svg.inl { display: block; }
 .fig .fp.card svg.inl { box-shadow: 0 .6mm 1.6mm rgba(26,23,20,.22); border-radius: 1.2mm; }
 .tfrieze .fp.card svg.inl { border-radius: 1mm; box-shadow: 0 .5mm 1.5mm rgba(26,23,20,.2); }
 /* the tailpiece: a row of what the chapter named and did not show, after its last line */
-.fig.row.tail { margin: 5mm 0 0; padding-top: 3mm; border-top: .4pt solid var(--t25); justify-content: center; }
-.fig.row.tail .fp { max-width: 34mm; }
-.card-chapter .plate.stand-in figcaption { font: italic 7.4pt/1.25 var(--display); color: var(--t70); margin-top: .8mm; }
-.titlepage.contents .tfrieze { margin: 5mm 0 2mm; }
+.fig.row.tail { margin: 4mm 0 0; padding-top: 2.4mm; border-top: .4pt solid var(--t25); justify-content: center; }
+.fig.row.tail .fp { max-width: 28mm; }
+.cols .fig.row.tail { margin: 2mm 0 0; }
+.card-chapter .plate.stand-in figcaption { font: italic 350 7pt/1.3 var(--body); color: var(--t70); margin-top: .8mm; }
+.titlepage.contents .tfrieze { margin: 3mm 0 3mm; }

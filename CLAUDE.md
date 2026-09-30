@@ -620,6 +620,24 @@ in this repository; a grid title page on a named `@page` does that under
 Chromium's fragmentation, which is why the title pages are block flow with
 fixed millimetre rows and must stay so.
 
+**The running text is two columns, and nothing crosses them.** Every hand-written
+chapter is set in `.cbody` blocks of two columns under a head that stands above
+them (`columnize` in `tools/build-book.mjs`); a table too broad for a column ends
+one block and starts the next. Do not bring back `column-span`: on paper, under a
+head that fell low on a page, a picture too tall for the strip beneath it sent the
+whole chapter to the next page. Three more rules came out of proofing and hold for
+the same reason - a picture that has to wait for the next column must never drag
+anything with it. Every figure in a column **floats** (`colFit` in
+`tools/lib/book-art.mjs`); a float that does not fit waits and the text closes the
+gap, where a block leaves the gap behind. A head is followed by words, never by a
+picture (`wordsAfterHeads`). And a chapter's frieze stands inside its head, and like
+the tailpiece it is the screen's: print leaves both out, because the columns carry
+the chapter's pictures and those rows cost the book twelve pages. Chapters
+run on under a rule rather than turning the page, and the face that is read is
+Merriweather, not a Fell type - `docs/book/fonts/README.md` says why. A catalogue
+entry is a fixed box that hides what overflows it, so a change to its type or its
+pieces is checked against every entry, not one.
+
 ## Nothing here draws the thing you are about to ship — so look at it
 
 Every check in this repository proves something about the numbers. None of them
