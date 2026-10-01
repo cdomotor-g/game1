@@ -83,6 +83,10 @@ main.book { flex: none; width: var(--page-w); min-width: 0; }
   nav.toc { position: static; flex-basis: auto; max-height: none; }
   main.book { width: 100%; }
   .cbody { column-count: 1 !important; }
+  /* A title page's frieze is one row sized to the 180mm page. On a phone that
+     row was wider than the screen, the page grew to hold it, and the print
+     panel - fixed to the grown page - opened half off the screen. */
+  .tfrieze { flex-wrap: wrap; height: auto; row-gap: 2mm; }
 }
 
 /* ---------------------------------------------------------- type, general */
@@ -334,25 +338,73 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-weight: 
 .picks details { margin: 0 0 4px 22px; }
 .picks summary { cursor: pointer; color: var(--t70); font-size: 12.5px; }
 .picks details label { padding-left: 14px; font-size: 12.5px; }
-.print-panel .actions { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+/* the buttons stay in reach at the foot of the panel however long the list above them */
+.print-panel .actions {
+  display: flex; gap: 8px; align-items: center; position: sticky; bottom: -18px;
+  margin: 12px -22px -18px; padding: 10px 22px 14px; background: var(--tallow); border-top: 1px solid var(--t25);
+}
 .print-panel .actions .spacer { flex: 1; }
 .print-panel button { font: inherit; padding: 5px 12px; border: 1px solid var(--t40); background: var(--tallow); color: var(--soot); border-radius: 3px; cursor: pointer; }
 .print-panel button.primary { background: var(--soot); color: var(--tallow); border-color: var(--soot); }
+.print-panel .opts { margin: 12px 0 0; padding: 8px 12px 10px; border: 1px solid var(--t25); border-radius: 3px; }
+.print-panel .opts legend { padding: 0 4px; font-weight: 700; }
+.print-panel .opts label { display: block; padding: 3px 0; }
+.print-panel .opts small { display: block; margin-left: 22px; color: var(--t70); font-size: 12px; }
+.print-panel .opts .cost { color: var(--t70); font-variant-numeric: tabular-nums; }
+.print-panel .opts .titles { margin-top: 6px; padding-top: 7px; border-top: 1px solid var(--t25); }
+.print-panel .note { margin: 8px 0 0; min-height: 1.35em; color: var(--oxide); font-size: 12.5px; }
+.print-panel .note:empty { min-height: 0; margin: 0; }
+
+/* The print view: the page holding only what is about to print, under a bar
+   that says what it is, how its pictures are coming on, and the way back. */
+.print-bar {
+  position: sticky; top: 0; z-index: 6; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center;
+  padding: 9px 18px; background: var(--soot); color: var(--tallow); font: 13.5px/1.35 var(--sans);
+}
+.print-bar[hidden] { display: none; }
+.print-bar b { font-weight: 700; margin-right: 4px; }
+.print-bar .pv-what { flex: 1 1 260px; }
+.print-bar .pv-status { flex: 1 1 220px; color: var(--t12); }
+.print-bar[data-state="loading"] .pv-status { color: var(--ochre); }
+.print-bar[data-state="partial"] .pv-status { color: var(--ochre); font-weight: 700; }
+.print-bar .pv-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.print-bar .pv-pics label { white-space: nowrap; margin-left: 6px; }
+.print-bar button { font: inherit; padding: 4px 11px; border: 1px solid var(--t55); background: transparent; color: var(--tallow); border-radius: 3px; cursor: pointer; }
+.print-bar button:hover { border-color: var(--tallow); }
+.print-bar button.primary { background: var(--tallow); color: var(--soot); border-color: var(--tallow); font-weight: 700; }
+body.print-view .bar, body.print-view nav.toc, body.print-view .print-this { display: none; }
+body.print-view .wrap { justify-content: center; }
+/* what the printed page leaves out, the view leaves out too, so the screen is the page */
+body.print-view .fig.row.tail, body.print-view header.chap .fig.frieze, body.print-view .titlepage.contents .toc-page ~ .tfrieze { display: none; }
 
 /* --------------------------------------------------------------- print */
-@page { size: A4; margin: 14mm 15mm 16mm;
+/* A4 portrait. The measure above is this page's own: 210mm less the side margins
+   is the 180mm of --page-w, and 297mm less the head and foot leaves 267mm, which
+   a 265mm title page or catalogue sheet fills with two to spare. */
+@page { size: A4 portrait; margin: 14mm 15mm 16mm;
   @bottom-center { content: counter(page); font: 8.5pt 'Book Serif', Georgia, serif; color: #3D3630; }
   @top-center { content: 'The Almanac'; font: 9pt 'Book Label', Georgia, serif; letter-spacing: .18em; color: #5F564C; } }
 @page plain { @top-center { content: none; } @bottom-center { content: none; } }
 .titlepage { page: plain; }
 @media print {
+  /* The tint behind a strip's figures, a terrain's swatch, a table's head and a
+     title page's rivets are colour a reader needs, and a browser prints none of
+     it unless its "background graphics" box is ticked - which the panel used to
+     ask the reader to do. Now nobody has to. The page itself stays white. */
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   html, body { background: white; }
-  .bar, nav.toc, .print-panel, .screen-only { display: none !important; }
+  .bar, nav.toc, .print-panel, .print-bar, .screen-only { display: none !important; }
   .wrap { display: block; padding: 0; max-width: none; }
   main.book { width: auto; }
   .titlepage { break-before: page; break-after: page; margin: 0; box-shadow: none; }
   .part:first-child .titlepage { break-before: auto; }
   .chapter { break-before: page; border-top: none; padding-top: 0; margin-top: 0; }
+  /* A section printed without its title page still opens a fresh page - its
+     first chapter is then the section's first child, which it never is in the
+     whole book - except when it is the first thing printed. The print view takes
+     what is not printed out of the page, so "first" here is first of what prints. */
+  .part > .chapter:first-child { break-before: page; }
+  .part:first-child > .chapter:first-child { break-before: auto; }
   /* A chapter follows on from the one before under a rule, rather than turning
      to a fresh page. Turning the page left every chapter's last page as blank as
      it happened to be, and a quarter of them held two lines; a table of Annex I,
@@ -372,8 +424,9 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-weight: 
   }
   .chapter.run-on { --keep: 42mm; }
   .chapter.tables.run-on { --keep: 30mm; }
-  .titlepage + .chapter.run-on, body.selective .chapter.run-on.first-chosen { margin-top: 0; }
-  .titlepage + .chapter.run-on > header.chap, body.selective .chapter.run-on.first-chosen > header.chap { border-top: none; padding-top: 0; }
+  /* the first chapter of a section opens its page, after the title page or in place of it */
+  .part > .chapter.run-on:first-of-type { margin-top: 0; }
+  .part > .chapter.run-on:first-of-type > header.chap { border-top: none; padding-top: 0; }
   /* The contents is one page: the second row of pieces is the screen's. And so
      is the rule under the title - with it, Chromium broke the page after the
      title and set the whole contents overleaf, though it fits with room over. */
@@ -405,8 +458,6 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-weight: 
   .table-wrap:not(.long):not(.span) { break-inside: avoid; }
   header.chap { break-after: avoid; }
   a { color: inherit; }
-  body.selective .part:not(.chosen) { display: none; }
-  body.selective .chapter:not(.chosen) { display: none; }
 }
 @media screen {
   .titlepage, .sheet { background: var(--tallow); box-shadow: 0 0 0 .5pt var(--t25), 0 2px 10px rgba(26,23,20,.12); }
@@ -512,6 +563,17 @@ svg.inl { display: block; }
 </style>
 </head>
 <body>
+
+<div class="print-bar" id="print-bar" hidden>
+  <div class="pv-what"><b>Print view</b> <span id="print-what"></span></div>
+  <div class="pv-status" id="print-status" role="status" aria-live="polite"></div>
+  <div class="pv-controls">
+    <span class="pv-pics">Pictures <label><input type="radio" name="pv-pictures" value="full"> full size</label> <label><input type="radio" name="pv-pictures" value="low"> low resolution</label></span>
+    <button type="button" id="pv-print" class="primary">Print</button>
+    <button type="button" id="pv-change">Change…</button>
+    <button type="button" id="pv-back">Back to the book</button>
+  </div>
+</div>
 
 <div class="bar">
   <strong>The Almanac</strong>
@@ -22550,26 +22612,81 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
 </div>
 
 <div class="print-panel" id="print-panel" hidden>
-  <div class="panel">
-    <h2>Print</h2>
-    <p>Choose what to print. A section prints with its title page; open a section to pick single chapters. Set the printer to A4, 100%, backgrounds on. The pictures are shown at screen resolution and swapped for the full-size ones here, so print from this panel rather than the browser's own command.</p>
+  <div class="panel" role="dialog" aria-labelledby="print-head">
+    <h2 id="print-head">Print</h2>
+    <p>Choose what to print; open a section to pick single chapters. The book then shows only that, loads its pictures and opens the print dialog. The pages are A4 portrait: print at 100% (not “fit to page”) with the default margins.</p>
     <div class="picks" id="picks"></div>
+    <fieldset class="opts">
+      <legend>Pictures</legend>
+      <label><input type="radio" name="pictures" value="full" checked> Full size <span class="cost" data-cost="full"></span><small>Sharpest. Slower to load and to print.</small></label>
+      <label><input type="radio" name="pictures" value="low"> Low resolution <span class="cost" data-cost="low"></span><small>The screen copies. Quick, a much smaller file, softer pictures.</small></label>
+      <label class="titles"><input type="checkbox" id="opt-titles" checked> Each section’s title page</label>
+    </fieldset>
+    <p class="note" id="print-note"></p>
     <div class="actions"><button type="button" id="pick-all">All</button><button type="button" id="pick-none">None</button><span class="spacer"></span><button type="button" id="do-print" class="primary">Print selection</button><button type="button" id="close-print">Close</button></div>
   </div>
 </div>
 
+<script type="application/json" id="print-bytes">{"../art/flows/alchemist.svg":38157,"../art/flows/apiary.svg":1569,"../art/flows/bakery.svg":2622,"../art/flows/blacksmith.svg":57437,"../art/flows/brewery.svg":5262,"../art/flows/brickworks.svg":2315,"../art/flows/butcher.svg":4565,"../art/flows/carpenter.svg":32368,"../art/flows/charcoal-kiln.svg":1852,"../art/flows/clay-pit.svg":1586,"../art/flows/dairy.svg":2162,"../art/flows/dock.svg":3164,"../art/flows/farm.svg":11463,"../art/flows/field-arcane.svg":6421,"../art/flows/field-gathering.svg":6341,"../art/flows/field-prospecting.svg":3005,"../art/flows/field-works.svg":5570,"../art/flows/glassworks.svg":8692,"../art/flows/granary.svg":4805,"../art/flows/guildhall.svg":1629,"../art/flows/harbour.svg":7410,"../art/flows/infirmary.svg":2169,"../art/flows/inn.svg":1821,"../art/flows/lumber-camp.svg":2989,"../art/flows/market.svg":1581,"../art/flows/mill.svg":1812,"../art/flows/mine.svg":9414,"../art/flows/oil-derrick.svg":1927,"../art/flows/orchard.svg":1571,"../art/flows/pasture.svg":6514,"../art/flows/quarry.svg":1570,"../art/flows/rail.svg":1757,"../art/flows/road.svg":1784,"../art/flows/sand-pit.svg":1555,"../art/flows/sawmill.svg":1843,"../art/flows/smelter.svg":5710,"../art/flows/steelworks.svg":6799,"../art/flows/tailor.svg":14574,"../art/flows/tannery.svg":3970,"../art/flows/town-hall.svg":1828,"../art/flows/trading-house.svg":3366,"../art/flows/vineyard.svg":1577,"../art/flows/weaver.svg":14904,"../art/flows/well.svg":1947,"../art/flows/winery.svg":2800,"../art/graph/dependencies.svg":399721,"../art/icons/campaign-homers-odyssey.svg":952,"../art/icons/element-air.svg":942,"../art/icons/element-earth.svg":1014,"../art/icons/element-fire.svg":1184,"../art/icons/element-water.svg":940,"../art/icons/pricing-deplete.svg":979,"../art/icons/pricing-hype.svg":803,"../art/icons/pricing-perish.svg":1117,"../art/icons/pricing-staple.svg":991,"../art/icons/pricing.svg":2284,"../boards/player-board.svg":36315,"../ledger/price-ledger.svg":405847,"../map/wine-dark-sea.svg":133798,"../markets/depletion-sheet.svg":112343,"../markets/market-board.svg":36636,"../minimaps/img/PSM-01.png":3643540,"../minimaps/img/SET-01.png":3693709,"../minimaps/img/TBM-05.png":3785653,"../minimaps/sheets/field-forest.svg":52448,"../minimaps/sheets/field-grassland.svg":59945,"../minimaps/sheets/field-hills.svg":55009,"../minimaps/sheets/field-marsh.svg":53173,"../minimaps/sheets/field-tundra.svg":52817,"art/character-chr-01-s.jpg":60914,"art/character-chr-01.jpg":295713,"art/character-chr-02-s.jpg":63466,"art/character-chr-02.jpg":305444,"art/character-chr-03-s.jpg":61115,"art/character-chr-03.jpg":294700,"art/character-chr-04-s.jpg":69726,"art/character-chr-04.jpg":351463,"art/character-chr-05-s.jpg":68057,"art/character-chr-05.jpg":347799,"art/character-chr-06-s.jpg":63101,"art/character-chr-06.jpg":330401,"art/character-chr-07-s.jpg":68477,"art/character-chr-07.jpg":350289,"art/character-chr-08-s.jpg":70342,"art/character-chr-08.jpg":365638,"art/character-chr-09-s.jpg":82437,"art/character-chr-09.jpg":381973,"art/character-chr-10-s.jpg":75173,"art/character-chr-10.jpg":378715,"art/character-chr-11-s.jpg":84184,"art/character-chr-11.jpg":415000,"art/character-chr-12-s.jpg":74244,"art/character-chr-12.jpg":368417,"art/character-chr-13-s.jpg":69032,"art/character-chr-13.jpg":334580,"art/character-chr-14-s.jpg":79009,"art/character-chr-14.jpg":386256,"art/character-chr-15-s.jpg":73560,"art/character-chr-15.jpg":319762,"art/character-chr-16-s.jpg":69037,"art/character-chr-16.jpg":359731,"art/character-chr-17-s.jpg":79047,"art/character-chr-17.jpg":400663,"art/character-chr-18-s.jpg":81634,"art/character-chr-18.jpg":389449,"art/character-chr-19-s.jpg":73938,"art/character-chr-19.jpg":386841,"art/character-chr-20-s.jpg":83685,"art/character-chr-20.jpg":395039,"art/character-chr-21-s.jpg":74880,"art/character-chr-21.jpg":371753,"art/character-chr-22-s.jpg":64928,"art/character-chr-22.jpg":342437,"art/event-boar-in-the-fields-s.jpg":63640,"art/event-boar-in-the-fields.jpg":340151,"art/event-border-dispute-s.jpg":63296,"art/event-border-dispute.jpg":346965,"art/event-camp-fever-s.jpg":86569,"art/event-camp-fever.jpg":449607,"art/event-caravan-robbery-s.jpg":69755,"art/event-caravan-robbery.jpg":379954,"art/event-curdled-brew-s.jpg":61269,"art/event-curdled-brew.jpg":313578,"art/event-dragon-sighting-s.jpg":70576,"art/event-dragon-sighting.jpg":377102,"art/event-drought-s.jpg":73022,"art/event-drought.jpg":404779,"art/event-earthquake-s.jpg":67449,"art/event-earthquake.jpg":390276,"art/event-festival-s.jpg":78278,"art/event-festival.jpg":405741,"art/event-flood-s.jpg":61780,"art/event-flood.jpg":347400,"art/event-foreign-demand-s.jpg":71501,"art/event-foreign-demand.jpg":377524,"art/event-glut-s.jpg":72220,"art/event-glut.jpg":379066,"art/event-grey-pox-s.jpg":72726,"art/event-grey-pox.jpg":383134,"art/event-hard-frost-s.jpg":69054,"art/event-hard-frost.jpg":390601,"art/event-impure-smelt-s.jpg":72800,"art/event-impure-smelt.jpg":379445,"art/event-iron-shortage-s.jpg":73034,"art/event-iron-shortage.jpg":377526,"art/event-ley-surge-s.jpg":68579,"art/event-ley-surge.jpg":342998,"art/event-long-summer-s.jpg":85891,"art/event-long-summer.jpg":467801,"art/event-marsh-ague-s.jpg":58058,"art/event-marsh-ague.jpg":321291,"art/event-master-craftsman-s.jpg":75016,"art/event-master-craftsman.jpg":386681,"art/event-mercenaries-for-hire-s.jpg":61660,"art/event-mercenaries-for-hire.jpg":313536,"art/event-migrants-s.jpg":69942,"art/event-migrants.jpg":370333,"art/event-mine-collapse-s.jpg":78775,"art/event-mine-collapse.jpg":455168,"art/event-piracy-s.jpg":61119,"art/event-piracy.jpg":338657,"art/event-plague-s.jpg":82605,"art/event-plague.jpg":429837,"art/event-raiders-s.jpg":70782,"art/event-raiders.jpg":369366,"art/event-smuggling-ring-s.jpg":60658,"art/event-smuggling-ring.jpg":320367,"art/event-storms-s.jpg":68468,"art/event-storms.jpg":362164,"art/event-strike-s.jpg":78838,"art/event-strike.jpg":425777,"art/event-tax-levy-s.jpg":74091,"art/event-tax-levy.jpg":387328,"art/event-train-heist-s.jpg":64877,"art/event-train-heist.jpg":350506,"art/event-wandering-wizard-s.jpg":88512,"art/event-wandering-wizard.jpg":462257,"art/event-warehouse-heist-s.jpg":64051,"art/event-warehouse-heist.jpg":359781,"art/event-wildfire-s.jpg":80988,"art/event-wildfire.jpg":449566,"art/event-wolf-pack-s.jpg":63955,"art/event-wolf-pack.jpg":319797,"art/item-arrows-10-s.jpg":83574,"art/item-arrows-10.jpg":268973,"art/item-arrows-20-s.jpg":86670,"art/item-arrows-20.jpg":276467,"art/item-bag-s.jpg":95830,"art/item-bag.jpg":305058,"art/item-binoculars-s.jpg":108094,"art/item-binoculars.jpg":339941,"art/item-bow-s.jpg":56732,"art/item-bow.jpg":194043,"art/item-chain-mail-s.jpg":123799,"art/item-chain-mail.jpg":362708,"art/item-coil-of-rope-s.jpg":111618,"art/item-coil-of-rope.jpg":343746,"art/item-compass-s.jpg":82717,"art/item-compass.jpg":262965,"art/item-crossbow-s.jpg":103953,"art/item-crossbow.jpg":329937,"art/item-dagger-s.jpg":89499,"art/item-dagger.jpg":286357,"art/item-grappling-hook-s.jpg":87365,"art/item-grappling-hook.jpg":279478,"art/item-helm-s.jpg":104415,"art/item-helm.jpg":333292,"art/item-lantern-s.jpg":92872,"art/item-lantern.jpg":290151,"art/item-leather-jerkin-s.jpg":98151,"art/item-leather-jerkin.jpg":309908,"art/item-map-s.jpg":93329,"art/item-map.jpg":290156,"art/item-plate-harness-s.jpg":113020,"art/item-plate-harness.jpg":358726,"art/item-quiver-s.jpg":76210,"art/item-quiver.jpg":248559,"art/item-rations-10-day-s.jpg":85757,"art/item-rations-10-day.jpg":272083,"art/item-rations-3-day-s.jpg":92323,"art/item-rations-3-day.jpg":287155,"art/item-satchel-s.jpg":113840,"art/item-satchel.jpg":361382,"art/item-shield-s.jpg":125808,"art/item-shield.jpg":397950,"art/item-staff-s.jpg":64290,"art/item-staff.jpg":220904,"art/item-sword-s.jpg":81976,"art/item-sword.jpg":268555,"art/item-torch-s.jpg":73031,"art/item-torch.jpg":250024,"art/item-travelling-cloak-s.jpg":85957,"art/item-travelling-cloak.jpg":283016,"art/item-war-axe-s.jpg":73519,"art/item-war-axe.jpg":252744,"art/item-war-hammer-s.jpg":72806,"art/item-war-hammer.jpg":241988,"art/item-waterskin-s.jpg":79276,"art/item-waterskin.jpg":247793,"art/map-korvane-reach-s.jpg":65133,"art/map-korvane-reach.jpg":317035,"art/modification-compound-boiler-s.jpg":106520,"art/modification-compound-boiler.jpg":331170,"art/modification-copper-sheathing-s.jpg":119666,"art/modification-copper-sheathing.jpg":369505,"art/modification-fleetfoot-binding-s.jpg":122895,"art/modification-fleetfoot-binding.jpg":375000,"art/modification-ice-runners-s.jpg":119634,"art/modification-ice-runners.jpg":369178,"art/modification-iron-ram-s.jpg":114943,"art/modification-iron-ram.jpg":351499,"art/modification-keelbound-s.jpg":123131,"art/modification-keelbound.jpg":368593,"art/modification-salamander-grate-s.jpg":115523,"art/modification-salamander-grate.jpg":355114,"art/modification-spinnaker-s.jpg":144428,"art/modification-spinnaker.jpg":431700,"art/modification-storm-shutters-s.jpg":109165,"art/modification-storm-shutters.jpg":336693,"art/modification-sweep-rig-s.jpg":97664,"art/modification-sweep-rig.jpg":315128,"art/modification-warded-hold-s.jpg":132722,"art/modification-warded-hold.jpg":399838,"art/monster-ash-drake-s.jpg":68174,"art/monster-ash-drake.jpg":343161,"art/monster-barrow-troll-s.jpg":78127,"art/monster-barrow-troll.jpg":393288,"art/monster-charybdis-s.jpg":88353,"art/monster-charybdis.jpg":402965,"art/monster-cinder-wolf-s.jpg":76332,"art/monster-cinder-wolf.jpg":386272,"art/monster-deepwater-maw-s.jpg":89635,"art/monster-deepwater-maw.jpg":434733,"art/monster-dust-devil-s.jpg":76322,"art/monster-dust-devil.jpg":387366,"art/monster-forge-wight-s.jpg":90363,"art/monster-forge-wight.jpg":441503,"art/monster-gravel-wyrm-s.jpg":93193,"art/monster-gravel-wyrm.jpg":455837,"art/monster-hoarwyrm-s.jpg":99174,"art/monster-hoarwyrm.jpg":489104,"art/monster-laestrygonian-s.jpg":66494,"art/monster-laestrygonian.jpg":333969,"art/monster-mire-strangler-s.jpg":89316,"art/monster-mire-strangler.jpg":440992,"art/monster-polyphemus-s.jpg":79329,"art/monster-polyphemus.jpg":399414,"art/monster-reef-serpent-s.jpg":74934,"art/monster-reef-serpent.jpg":377829,"art/monster-rime-harpy-s.jpg":79007,"art/monster-rime-harpy.jpg":377278,"art/monster-scylla-s.jpg":70468,"art/monster-scylla.jpg":318914,"art/monster-sirens-s.jpg":79393,"art/monster-sirens.jpg":397772,"art/monster-stone-boar-s.jpg":100159,"art/monster-stone-boar.jpg":501363,"art/monster-storm-roc-s.jpg":90287,"art/monster-storm-roc.jpg":473908,"art/monster-vhalrik-the-cinder-crowned-s.jpg":102000,"art/monster-vhalrik-the-cinder-crowned.jpg":513788,"art/people-dwarf-s.jpg":84400,"art/people-dwarf.jpg":391131,"art/people-elf-s.jpg":75866,"art/people-elf.jpg":369948,"art/people-halfling-s.jpg":78882,"art/people-halfling.jpg":388814,"art/people-human-s.jpg":75311,"art/people-human.jpg":371212,"art/spell-bulwark-s.jpg":134367,"art/spell-bulwark.jpg":411732,"art/spell-cleanse-s.jpg":100157,"art/spell-cleanse.jpg":298416,"art/spell-deep-draught-s.jpg":136150,"art/spell-deep-draught.jpg":402991,"art/spell-ember-lash-s.jpg":145251,"art/spell-ember-lash.jpg":463726,"art/spell-fair-wind-s.jpg":92183,"art/spell-fair-wind.jpg":263632,"art/spell-farspeak-s.jpg":100163,"art/spell-farspeak.jpg":281446,"art/spell-kindle-s.jpg":147984,"art/spell-kindle.jpg":461895,"art/spell-loft-s.jpg":102905,"art/spell-loft.jpg":279044,"art/spell-mend-stone-s.jpg":124844,"art/spell-mend-stone.jpg":396465,"art/spell-mist-veil-s.jpg":117636,"art/spell-mist-veil.jpg":322913,"art/spell-root-snare-s.jpg":126600,"art/spell-root-snare.jpg":367957,"art/spell-seam-sense-s.jpg":146502,"art/spell-seam-sense.jpg":397549,"art/spell-stormcall-s.jpg":135763,"art/spell-stormcall.jpg":396532,"art/spell-wayfire-s.jpg":158865,"art/spell-wayfire.jpg":460410,"art/talisman-tal-01-s.jpg":77311,"art/talisman-tal-01.jpg":244070,"art/talisman-tal-02-s.jpg":96941,"art/talisman-tal-02.jpg":299974,"art/talisman-tal-03-s.jpg":94106,"art/talisman-tal-03.jpg":298351,"art/talisman-tal-04-s.jpg":103220,"art/talisman-tal-04.jpg":320660,"art/talisman-tal-05-s.jpg":77054,"art/talisman-tal-05.jpg":255451,"art/talisman-tal-06-s.jpg":74011,"art/talisman-tal-06.jpg":237869,"art/tile-alchemist-s.jpg":59663,"art/tile-alchemist.jpg":344227,"art/tile-apiary-s.jpg":146298,"art/tile-apiary.jpg":425456,"art/tile-bakery-s.jpg":127529,"art/tile-bakery.jpg":387299,"art/tile-barracks-s.jpg":67521,"art/tile-barracks.jpg":292376,"art/tile-brewery-s.jpg":68014,"art/tile-brewery.jpg":392932,"art/tile-brick-house-s.jpg":70371,"art/tile-brick-house.jpg":410270,"art/tile-butcher-s.jpg":131274,"art/tile-butcher.jpg":394927,"art/tile-charcoal-kiln-s.jpg":71468,"art/tile-charcoal-kiln.jpg":393835,"art/tile-clay-pit-s.jpg":71047,"art/tile-clay-pit.jpg":377087,"art/tile-dairy-s.jpg":136643,"art/tile-dairy.jpg":410347,"art/tile-dock-s.jpg":137695,"art/tile-dock.jpg":422072,"art/tile-farm-s.jpg":70458,"art/tile-farm.jpg":398171,"art/tile-granary-s.jpg":99572,"art/tile-granary.jpg":324813,"art/tile-harbour-s.jpg":108904,"art/tile-harbour.jpg":339650,"art/tile-hut-s.jpg":113115,"art/tile-hut.jpg":359000,"art/tile-lumber-camp-s.jpg":152990,"art/tile-lumber-camp.jpg":447395,"art/tile-manor-s.jpg":79238,"art/tile-manor.jpg":451183,"art/tile-market-s.jpg":61925,"art/tile-market.jpg":354030,"art/tile-mill-s.jpg":67139,"art/tile-mill.jpg":396616,"art/tile-mine-s.jpg":81757,"art/tile-mine.jpg":437552,"art/tile-oil-derrick-s.jpg":65907,"art/tile-oil-derrick.jpg":363505,"art/tile-orchard-s.jpg":160941,"art/tile-orchard.jpg":480558,"art/tile-palisade-s.jpg":133191,"art/tile-palisade.jpg":381906,"art/tile-pasture-s.jpg":72110,"art/tile-pasture.jpg":404601,"art/tile-quarry-s.jpg":150740,"art/tile-quarry.jpg":428038,"art/tile-rail-depot-s.jpg":117282,"art/tile-rail-depot.jpg":356798,"art/tile-sand-pit-s.jpg":65291,"art/tile-sand-pit.jpg":372292,"art/tile-sawmill-s.jpg":139053,"art/tile-sawmill.jpg":412080,"art/tile-shrine-s.jpg":137947,"art/tile-shrine.jpg":402991,"art/tile-smelter-s.jpg":143952,"art/tile-smelter.jpg":419417,"art/tile-steelworks-s.jpg":63213,"art/tile-steelworks.jpg":351340,"art/tile-tailor-s.jpg":123352,"art/tile-tailor.jpg":376085,"art/tile-timber-house-s.jpg":54397,"art/tile-timber-house.jpg":307838,"art/tile-town-hall-s.jpg":62037,"art/tile-town-hall.jpg":345910,"art/tile-trading-house-s.jpg":68548,"art/tile-trading-house.jpg":407030,"art/tile-vineyard-s.jpg":162682,"art/tile-vineyard.jpg":477500,"art/tile-warehouse-s.jpg":90515,"art/tile-warehouse.jpg":286424,"art/tile-well-s.jpg":128813,"art/tile-well.jpg":392846,"art/tile-winery-s.jpg":70532,"art/tile-winery.jpg":388960,"art/tool-axe-s.jpg":62343,"art/tool-axe.jpg":207573,"art/tool-fishing-line-s.jpg":85554,"art/tool-fishing-line.jpg":275421,"art/tool-hammer-s.jpg":67259,"art/tool-hammer.jpg":221767,"art/tool-pick-s.jpg":73712,"art/tool-pick.jpg":248941,"art/tool-saw-s.jpg":70173,"art/tool-saw.jpg":248735,"art/tool-scythe-s.jpg":60243,"art/tool-scythe.jpg":197175,"art/vehicle-veh-01-s.jpg":47454,"art/vehicle-veh-01.jpg":288276,"art/vehicle-veh-02-s.jpg":52301,"art/vehicle-veh-02.jpg":304405,"art/vehicle-veh-03-s.jpg":48383,"art/vehicle-veh-03.jpg":280580,"art/vehicle-veh-04-s.jpg":52413,"art/vehicle-veh-04.jpg":296039,"art/vehicle-veh-05-s.jpg":51129,"art/vehicle-veh-05.jpg":305445,"art/vehicle-veh-06-s.jpg":48945,"art/vehicle-veh-06.jpg":303610,"art/vehicle-veh-07-s.jpg":45846,"art/vehicle-veh-07.jpg":298021,"art/vehicle-veh-08-s.jpg":51458,"art/vehicle-veh-08.jpg":319881,"art/vehicle-veh-09-s.jpg":89430,"art/vehicle-veh-09.jpg":467075,"art/vehicle-veh-10-s.jpg":46684,"art/vehicle-veh-10.jpg":294341,"art/vehicle-veh-11-s.jpg":53851,"art/vehicle-veh-11.jpg":312085,"art/vehicle-veh-12-s.jpg":61451,"art/vehicle-veh-12.jpg":405582,"art/vehicle-veh-13-s.jpg":95939,"art/vehicle-veh-13.jpg":462933,"art/vehicle-veh-14-s.jpg":77119,"art/vehicle-veh-14.jpg":389279,"art/vehicle-veh-15-s.jpg":83628,"art/vehicle-veh-15.jpg":422908,"art/vehicle-veh-16-s.jpg":68752,"art/vehicle-veh-16.jpg":360781,"art/vehicle-veh-17-s.jpg":78856,"art/vehicle-veh-17.jpg":377008}</script>
 <script>
-/* The print picker. A section prints with its title page; open one to choose
-   single chapters. ?print=rules,annex-2 preselects (nothing prints on its own -
-   a browser would refuse the dialog anyway). Inlined by tools/build-book.mjs. */
+/* The print picker, and the print view it opens. Inlined by tools/build-book.mjs.
+
+   Printing a selection used to mean hiding the rest of the book from a print
+   stylesheet, opening the dialog, and putting the rest back on `afterprint`.
+   That holds only where `afterprint` comes after the last page has been drawn,
+   and nothing promises it: a dialog that draws its pages later, or lays them out
+   again when a setting changes, prints whatever the page says by then. The
+   pictures were worse. Every picture in a chapter is lazy, and a lazy picture
+   far down the page never loads: picked alone, Chapter III of Book I waited the
+   whole ten seconds of the panel's patience on a picture that was never going
+   to arrive, then opened the dialog with ten of the thirty-one pictures it
+   prints missing and the reader's click long expired. And `beforeprint` swapped every
+   big picture in the book for its full copy - 69 MB fetched to print five pages.
+
+   So choosing now takes everything that is not chosen OUT of the page, into a
+   print view that shows exactly what will print: one chapter is one chapter's
+   worth of page, in every browser, however that browser prints. Every picture
+   in it is told to load, the bar counts them in, and the dialog opens when the
+   last has arrived. The view stays until the reader leaves it, so a second try
+   from the bar - or the browser's own Print command - prints the selection too.
+
+   ?print=rules,annex-2 preselects and opens the panel. &now opens the view at
+   once with no panel and no dialog, which is how tools/book-proof.mjs prints
+   headless; &pictures=low keeps the screen copies and &titles=off leaves each
+   section's title page out, in either. */
 (function () {
   'use strict';
   var panel = document.getElementById('print-panel');
   var picks = document.getElementById('picks');
-  var parts = Array.prototype.slice.call(document.querySelectorAll('section.part[data-label]'));
-
+  var bar = document.getElementById('print-bar');
+  var what = document.getElementById('print-what');
+  var status = document.getElementById('print-status');
+  var main = document.querySelector('main.book');
+  var all = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+  var parts = all('section.part[data-label]');
+  /* Read once. The view takes chapters out of their parts, and a part asked for
+     its children while the view is open forgets the ones it is not showing. */
   parts.forEach(function (part) {
-    var chapters = Array.prototype.slice.call(part.querySelectorAll('article.chapter'));
+    var kids = Array.prototype.slice.call(part.children);
+    part.bookChapters = kids.filter(function (el) { return el.matches('article.chapter'); });
+    part.bookTitle = kids.filter(function (el) { return el.classList.contains('titlepage'); })[0] || null;
+  });
+  var chaptersOf = function (part) { return part.bookChapters; };
+  var titleOf = function (part) { return part.bookTitle; };
+  var boxFor = function (id) { return picks.querySelector('input[value="' + id + '"]'); };
+
+  /* What every picture copy the book names weighs, written in by the build, so
+     the panel can say what a choice of pictures costs before it is made. */
+  var BYTES = {};
+  try { BYTES = JSON.parse(document.getElementById('print-bytes').textContent); } catch (e) { /* no estimate, then */ }
+
+  /* Shown in the page but never printed (tools/lib/book.css): their pictures are
+     neither waited for nor swapped. */
+  var NOT_PRINTED = '.fig.row.tail, header.chap .fig.frieze, .titlepage.contents .toc-page ~ .tfrieze, .screen-only';
+
+  /* ------------------------------------------------------------ the picks */
+  parts.forEach(function (part) {
+    var chapters = chaptersOf(part);
     var wrap = document.createElement('div');
     var label = document.createElement('label');
     label.className = 'part-pick';
@@ -22596,141 +22713,329 @@ node tools/simulate.mjs --games 20             # aggregate across seeds</code></
       });
       wrap.appendChild(det);
       box.addEventListener('change', function () {
-        Array.prototype.forEach.call(det.querySelectorAll('.ch-box'), function (b) { b.checked = box.checked; });
+        all('.ch-box', det).forEach(function (b) { b.checked = box.checked; });
       });
     }
     picks.appendChild(wrap);
   });
 
   function setAll(on) {
-    Array.prototype.forEach.call(picks.querySelectorAll('input'), function (b) { b.checked = on; });
+    all('input', picks).forEach(function (b) { b.checked = on; });
   }
-  function apply() {
-    document.body.classList.add('selective');
-    Array.prototype.forEach.call(picks.querySelectorAll('.part-box'), function (b) {
-      var part = document.getElementById(b.value);
-      part.classList.toggle('chosen', b.checked);
-    });
-    Array.prototype.forEach.call(picks.querySelectorAll('.ch-box'), function (b) {
-      var ch = document.getElementById(b.value);
-      ch.classList.toggle('chosen', b.checked);
-    });
-    /* a part with no chapter boxes (cover, contents) and every chapter of a
-       part whose box is on but has no detail list */
+
+  /** What the boxes say: each chosen part with the chapters of it to print. */
+  function chosen() {
+    var out = [];
     parts.forEach(function (part) {
-      var boxes = picks.querySelectorAll('.ch-box[data-part="' + part.id + '"]');
-      if (!boxes.length) Array.prototype.forEach.call(part.querySelectorAll('article.chapter'), function (ch) { ch.classList.toggle('chosen', part.classList.contains('chosen')); });
-      /* a chapter that runs on from the one before it under a rule opens the
-         page instead when that one is not being printed */
-      var first = part.querySelector('article.chapter.chosen');
-      if (first) first.classList.add('first-chosen');
+      if (!boxFor(part.id).checked) return;
+      var chapters = chaptersOf(part);
+      var picked = chapters.length > 1 ? chapters.filter(function (ch) { return boxFor(ch.id).checked; }) : chapters;
+      out.push({ part: part, chapters: picked });
     });
+    return out;
   }
-  function clear() {
-    document.body.classList.remove('selective');
-    Array.prototype.forEach.call(document.querySelectorAll('.chosen'), function (el) { el.classList.remove('chosen'); });
-    Array.prototype.forEach.call(document.querySelectorAll('.first-chosen'), function (el) { el.classList.remove('first-chosen'); });
-  }
-  /* ------------------------------------------------------- the print swap
-     Every big picture is shown on screen at the small copy's resolution and
-     names its full-size copy in data-print-src; opening the book was fetching
-     67 MB of print-resolution JPEG to be looked at four inches wide. The full
-     copies go back in before the dialog opens.
 
-     They have to be WAITED FOR. Two cheaper mechanisms were tried against a
-     headless Chromium printing to PDF and neither works: <source media="print">
-     inside a <picture> is ignored, and a swap made in a beforeprint handler
-     lands after the snapshot is taken. Both come out with the screen copy - not
-     a blank, which is the one mercy, and is why beforeprint still tries below
-     for a reader who prints with the keyboard. Printing from the panel or from
-     a title page's own button is the path that is sure, because that path can
-     wait. */
-  function bigPictures(scope) {
-    return Array.prototype.slice.call((scope || document).querySelectorAll('img[data-print-src]'));
+  /** Everything a selection prints, in book order: each part's title page -
+      unless title pages are off and chapters of it were picked - and then its
+      picked chapters. A part with nothing but a title page (the cover, the
+      contents) is its title page. */
+  function pages(sel, o) {
+    var out = [];
+    sel.forEach(function (s) {
+      var title = titleOf(s.part);
+      if (title && (o.titles || !s.chapters.length)) out.push(title);
+      out.push.apply(out, s.chapters);
+    });
+    return out;
   }
-  function toPrint(imgs) {
-    var loading = [];
-    imgs.forEach(function (img) {
+
+  function picturesIn(nodes) {
+    var out = [];
+    nodes.forEach(function (n) {
+      all('img', n).forEach(function (img) { if (!img.closest(NOT_PRINTED)) out.push(img); });
+    });
+    return out;
+  }
+
+  /* ------------------------------------------------------------- options */
+  var KEY = 'almanac-print';
+  var opts = { pictures: 'full', titles: true };
+  try {
+    var kept = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (kept && (kept.pictures === 'full' || kept.pictures === 'low')) opts.pictures = kept.pictures;
+    if (kept && typeof kept.titles === 'boolean') opts.titles = kept.titles;
+  } catch (e) { /* a private window, or storage turned off: the defaults */ }
+  function keep() {
+    try { localStorage.setItem(KEY, JSON.stringify(opts)); } catch (e) { /* not remembered, then */ }
+  }
+  function readPanel() {
+    var pic = panel.querySelector('input[name="pictures"]:checked');
+    return { pictures: pic ? pic.value : opts.pictures, titles: document.getElementById('opt-titles').checked };
+  }
+  function showOptions(o) {
+    all('input[name="pictures"], input[name="pv-pictures"]').forEach(function (r) { r.checked = r.value === o.pictures; });
+    document.getElementById('opt-titles').checked = o.titles;
+  }
+
+  /* --------------------------------------------------------- what it costs */
+  var mb = function (b) { return (b < 10485760 ? (b / 1048576).toFixed(1) : Math.round(b / 1048576)) + ' MB'; };
+  function weigh(nodes) {
+    var full = {}, low = {};
+    picturesIn(nodes).forEach(function (img) {
+      var screen = img.getAttribute('data-screen-src') || img.getAttribute('src');
+      low[screen] = 1;
+      full[img.getAttribute('data-print-src') || screen] = 1;
+    });
+    /* an inlined card's window is the small copy whichever is chosen */
+    nodes.forEach(function (n) {
+      all('image', n).forEach(function (im) {
+        var href = im.getAttribute('href') || im.getAttribute('xlink:href');
+        if (href && !im.closest(NOT_PRINTED)) { low[href] = 1; full[href] = 1; }
+      });
+    });
+    var sum = function (set) { var b = 0; for (var k in set) b += BYTES[k] || 0; return b; };
+    return { full: sum(full), low: sum(low) };
+  }
+  /* Past this a browser is asked to hold more pictures than some of them can,
+     and the whole book at full size is three times it. */
+  var HEAVY = 30 * 1048576;
+  function describeCost() {
+    var o = readPanel();
+    var nodes = pages(chosen(), o);
+    var w = weigh(nodes);
+    all('.cost', panel).forEach(function (el) { el.textContent = nodes.length ? '· ' + mb(w[el.getAttribute('data-cost')]) : ''; });
+    var note = document.getElementById('print-note');
+    if (!nodes.length) note.textContent = 'Nothing is ticked.';
+    else if (o.pictures === 'full' && w.full > HEAVY) note.textContent = 'That is a lot of pictures for a browser to print at full size at once. Low resolution, or a section at a time, is safer.';
+    else note.textContent = '';
+  }
+
+  /* ----------------------------------------------------------- the view */
+  var held = [];       /* [mark, node]: what the view took out of the page, and where it goes back */
+  var view = null;     /* { nodes, opts, ready, printWhenReady } while the view is open */
+  var round = 0;       /* which preparation is current; a newer one makes an older one moot */
+  var scrollBack = 0;
+
+  function hold(node) {
+    var mark = document.createComment(' kept out of the print view ');
+    node.parentNode.replaceChild(mark, node);
+    held.push([mark, node]);
+  }
+  function release() {
+    while (held.length) {
+      var h = held.pop();
+      h[0].parentNode.replaceChild(h[1], h[0]);
+    }
+  }
+
+  /* Each big picture is shown at the small copy's resolution and names its full
+     copy in data-print-src. Full size puts that in; low resolution leaves the
+     small one, which is what the screen was showing all along. */
+  function setPictures(kind) {
+    all('img[data-print-src]', main).forEach(function (img) {
+      if (img.closest(NOT_PRINTED)) return;
       var full = img.getAttribute('data-print-src');
-      if (!full || img.getAttribute('src') === full) return;
-      img.setAttribute('data-screen-src', img.getAttribute('src'));
-      img.src = full;
-      loading.push(img);
+      var screen = img.getAttribute('data-screen-src');
+      if (kind === 'full') {
+        if (img.getAttribute('src') === full) return;
+        img.setAttribute('data-screen-src', img.getAttribute('src'));
+        img.setAttribute('src', full);
+      } else if (screen) {
+        img.setAttribute('src', screen);
+        img.removeAttribute('data-screen-src');
+      }
     });
-    return loading;
-  }
-  function toScreen() {
-    bigPictures().forEach(function (img) {
-      var small = img.getAttribute('data-screen-src');
-      if (!small) return;
-      img.src = small;
-      img.removeAttribute('data-screen-src');
-    });
-  }
-  /* A picture that will not load must not hold the dialog shut, so the wait is
-     whichever comes first: every swapped picture decoded, or ten seconds. */
-  function settled(imgs) {
-    var done = imgs.map(function (img) {
-      if (img.decode) return img.decode().catch(function () {});
-      return new Promise(function (r) { img.addEventListener('load', r); img.addEventListener('error', r); });
-    });
-    return Promise.race([Promise.all(done), new Promise(function (r) { setTimeout(r, 10000); })]);
-  }
-  /* Only what is going to be printed is swapped. A hundred and thirty pages of
-     full-size plates decoded at once is what killed this renderer once already. */
-  function chosenPictures() {
-    var sel = '.part.chosen > .titlepage img[data-print-src], .chapter.chosen img[data-print-src]';
-    var hits = Array.prototype.slice.call(document.querySelectorAll(sel));
-    return hits.length ? hits : bigPictures();
   }
 
+  function say(state, text) {
+    bar.setAttribute('data-state', state);
+    status.textContent = text;
+  }
+  function loading(done, total) {
+    say('loading', 'Loading pictures: ' + done + ' of ' + total + '…' + (view.printWhenReady ? ' The print dialog opens when they are in.' : ''));
+  }
+
+  function summary(sel) {
+    return sel.map(function (s) {
+      var label = s.part.getAttribute('data-label');
+      var count = chaptersOf(s.part).length;
+      if (!s.chapters.length || s.chapters.length === count) return label;
+      if (s.chapters.length === 1) return label + ': ' + s.chapters[0].getAttribute('data-title');
+      return label + ': ' + s.chapters.length + ' of ' + count + ' chapters';
+    }).join(' · ');
+  }
+
+  function openView(sel, o, auto) {
+    var nodes = pages(sel, o);
+    if (!nodes.length) return;
+    if (view) closeView(true);
+    else scrollBack = window.pageYOffset;
+    /* said before anything is taken out, while a part still knows its chapters */
+    what.textContent = summary(sel);
+    parts.forEach(function (part) {
+      var kids = [titleOf(part)].concat(chaptersOf(part)).filter(Boolean);
+      var mine = kids.filter(function (k) { return nodes.indexOf(k) !== -1; });
+      if (!mine.length) { hold(part); return; }
+      kids.forEach(function (k) { if (mine.indexOf(k) === -1) hold(k); });
+    });
+    view = { nodes: nodes, opts: { pictures: o.pictures, titles: o.titles }, ready: false, printWhenReady: !!auto };
+    document.body.classList.add('print-view');
+    showOptions(view.opts);
+    bar.hidden = false;
+    window.scrollTo(0, 0);
+    prepare();
+  }
+
+  function closeView(quiet) {
+    round++;
+    release();
+    setPictures('low');
+    document.body.classList.remove('print-view');
+    bar.hidden = true;
+    view = null;
+    if (!quiet) window.scrollTo(0, scrollBack);
+  }
+
+  /* A lazy picture loads when it nears the screen, and a picture in a chapter
+     the reader has not scrolled to never does - so every picture in the view is
+     made eager and counted in, and the view is ready when the last has loaded
+     or failed. A picture that has not come in a minute and a half does not hold
+     the dialog shut: the bar says how many are missing and Print still prints. */
+  var PATIENCE = 90000;
+  function prepare() {
+    var mine = ++round;
+    view.ready = false;
+    setPictures(view.opts.pictures);
+    var imgs = picturesIn(view.nodes);
+    var pending = imgs.filter(function (img) {
+      if (img.loading === 'lazy') img.loading = 'eager';
+      return !img.complete;
+    });
+    var total = imgs.length;
+    var left = pending.length;
+    var failed = 0;
+    var missing = function () { say('partial', left + ' of ' + total + ' pictures have not arrived. Print now, or wait for them.'); };
+    var finish = function (whole) {
+      if (mine !== round) return;
+      view.ready = true;
+      var printing = whole && view.printWhenReady;
+      var got = !total ? 'Ready.' : failed ? 'Ready: ' + (total - failed) + ' of ' + total + ' pictures are in; ' + failed + ' could not be fetched.' : 'Ready: all ' + total + ' pictures are in.';
+      if (whole) say('ready', got + (printing ? ' If the print dialog does not open, press Print.' : ''));
+      else missing();
+      if (printing) {
+        view.printWhenReady = false;
+        /* a frame for the browser to lay the last pictures out */
+        setTimeout(function () { if (mine === round) window.print(); }, 80);
+      }
+    };
+    if (!left) { finish(true); return; }
+    loading(total - left, total);
+    var timer = setTimeout(function () { finish(false); }, PATIENCE);
+    pending.forEach(function (img) {
+      var done = function (e) {
+        img.removeEventListener('load', done);
+        img.removeEventListener('error', done);
+        if (mine !== round) return;
+        left--;
+        if (e.type === 'error') failed++;
+        if (!left) { clearTimeout(timer); finish(true); }
+        else if (view.ready) missing();
+        else loading(total - left, total);
+      };
+      img.addEventListener('load', done);
+      img.addEventListener('error', done);
+    });
+  }
+
+  function printView() {
+    if (!view) return;
+    if (view.ready) { window.print(); return; }
+    view.printWhenReady = true;
+    var n = /(\d+) of (\d+)/.exec(status.textContent);
+    if (n) loading(+n[1], +n[2]);
+  }
+
+  /* --------------------------------------------------------------- wiring */
+  function openPanel() {
+    showOptions(opts);
+    describeCost();
+    panel.hidden = false;
+  }
   function printSelection() {
-    apply();
+    var o = readPanel();
+    opts.pictures = o.pictures; opts.titles = o.titles; keep();
+    var sel = chosen();
+    if (!pages(sel, o).length) { describeCost(); return; }
     panel.hidden = true;
-    var waiting = toPrint(chosenPictures());
-    /* give the browser a frame to lay the hidden sections out of the page */
-    settled(waiting).then(function () { setTimeout(function () { window.print(); }, 60); });
+    openView(sel, o, true);
   }
-  window.addEventListener('beforeprint', function () { toPrint(bigPictures()); });
-  window.addEventListener('afterprint', function () { clear(); toScreen(); });
 
-  document.getElementById('open-print').addEventListener('click', function () { panel.hidden = false; });
+  picks.addEventListener('change', describeCost);
+  all('input[name="pictures"], #opt-titles', panel).forEach(function (el) { el.addEventListener('change', describeCost); });
+  document.getElementById('open-print').addEventListener('click', openPanel);
   document.getElementById('close-print').addEventListener('click', function () { panel.hidden = true; });
-  document.getElementById('pick-all').addEventListener('click', function () { setAll(true); });
-  document.getElementById('pick-none').addEventListener('click', function () { setAll(false); });
+  document.getElementById('pick-all').addEventListener('click', function () { setAll(true); describeCost(); });
+  document.getElementById('pick-none').addEventListener('click', function () { setAll(false); describeCost(); });
   document.getElementById('do-print').addEventListener('click', printSelection);
   panel.addEventListener('click', function (e) { if (e.target === panel) panel.hidden = true; });
 
-  Array.prototype.forEach.call(document.querySelectorAll('.print-this'), function (btn) {
-    btn.addEventListener('click', function () {
-      setAll(false);
-      var id = btn.getAttribute('data-part');
-      Array.prototype.forEach.call(picks.querySelectorAll('input'), function (b) {
-        if (b.value === id || b.getAttribute('data-part') === id) b.checked = true;
-      });
-      printSelection();
+  document.getElementById('pv-print').addEventListener('click', printView);
+  document.getElementById('pv-change').addEventListener('click', openPanel);
+  document.getElementById('pv-back').addEventListener('click', function () { closeView(false); });
+  all('input[name="pv-pictures"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      if (!view || !r.checked) return;
+      opts.pictures = r.value; keep();
+      view.opts.pictures = r.value;
+      showOptions(view.opts);
+      prepare();
     });
   });
 
-  /* ?print=rules,annex-2 preselects and opens the panel; add &now and the
-     selection is applied at once with no panel, which is how
-     tools/book-proof.mjs prints a section headless. */
+  all('.print-this').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setAll(false);
+      var id = btn.getAttribute('data-part');
+      all('input', picks).forEach(function (b) {
+        if (b.value === id || b.getAttribute('data-part') === id) b.checked = true;
+      });
+      openView(chosen(), opts, true);
+    });
+  });
+
+  /* The browser's own Print command, outside the view, would print all three
+     hundred pages of the book: it opens the panel instead. In the view it
+     prints the view, once its pictures are in. */
+  document.addEventListener('keydown', function (e) {
+    if (!(e.ctrlKey || e.metaKey) || e.altKey || e.shiftKey || (e.key !== 'p' && e.key !== 'P')) return;
+    if (view && view.ready) return;
+    e.preventDefault();
+    if (view) printView(); else openPanel();
+  });
+
+  /* ?print=rules,annex-2 preselects and opens the panel; &now opens the view at
+     once, with no panel and no dialog, which is how tools/book-proof.mjs prints
+     headless - and a proof has to be what a reader gets, so it is the same view,
+     loading the same pictures. */
   var q = /[?&]print=([^&]+)/.exec(location.search);
   if (q) {
     var want = q[1].split(',');
     setAll(false);
-    Array.prototype.forEach.call(picks.querySelectorAll('input'), function (b) {
+    all('input', picks).forEach(function (b) {
       if (want.indexOf(b.value) !== -1 || want.indexOf(b.getAttribute('data-part')) !== -1) b.checked = true;
     });
     /* a chosen chapter needs its section on, the way a click would have done */
-    Array.prototype.forEach.call(picks.querySelectorAll('.ch-box'), function (b) {
-      if (b.checked) picks.querySelector('.part-box[value="' + b.getAttribute('data-part') + '"]').checked = true;
+    all('.ch-box', picks).forEach(function (b) {
+      if (b.checked) boxFor(b.getAttribute('data-part')).checked = true;
     });
-    /* &now is how tools/book-proof.mjs prints headless, and a proof has to be
-       what a reader gets: it takes the full-size pictures too, the same ones
-       and only the ones the selection will print. */
-    if (/[?&]now\b/.test(location.search)) { apply(); toPrint(chosenPictures()); }
-    else panel.hidden = false;
+    var low = /[?&]pictures=low\b/.test(location.search);
+    var bare = /[?&]titles=off\b/.test(location.search);
+    if (/[?&]now\b/.test(location.search)) openView(chosen(), { pictures: low ? 'low' : 'full', titles: !bare }, false);
+    else {
+      if (low) opts.pictures = 'low';
+      if (bare) opts.titles = false;
+      openPanel();
+    }
   }
 })();
 

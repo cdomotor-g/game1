@@ -62,6 +62,10 @@ main.book { flex: none; width: var(--page-w); min-width: 0; }
   nav.toc { position: static; flex-basis: auto; max-height: none; }
   main.book { width: 100%; }
   .cbody { column-count: 1 !important; }
+  /* A title page's frieze is one row sized to the 180mm page. On a phone that
+     row was wider than the screen, the page grew to hold it, and the print
+     panel - fixed to the grown page - opened half off the screen. */
+  .tfrieze { flex-wrap: wrap; height: auto; row-gap: 2mm; }
 }
 
 /* ---------------------------------------------------------- type, general */
@@ -313,25 +317,73 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-weight: 
 .picks details { margin: 0 0 4px 22px; }
 .picks summary { cursor: pointer; color: var(--t70); font-size: 12.5px; }
 .picks details label { padding-left: 14px; font-size: 12.5px; }
-.print-panel .actions { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+/* the buttons stay in reach at the foot of the panel however long the list above them */
+.print-panel .actions {
+  display: flex; gap: 8px; align-items: center; position: sticky; bottom: -18px;
+  margin: 12px -22px -18px; padding: 10px 22px 14px; background: var(--tallow); border-top: 1px solid var(--t25);
+}
 .print-panel .actions .spacer { flex: 1; }
 .print-panel button { font: inherit; padding: 5px 12px; border: 1px solid var(--t40); background: var(--tallow); color: var(--soot); border-radius: 3px; cursor: pointer; }
 .print-panel button.primary { background: var(--soot); color: var(--tallow); border-color: var(--soot); }
+.print-panel .opts { margin: 12px 0 0; padding: 8px 12px 10px; border: 1px solid var(--t25); border-radius: 3px; }
+.print-panel .opts legend { padding: 0 4px; font-weight: 700; }
+.print-panel .opts label { display: block; padding: 3px 0; }
+.print-panel .opts small { display: block; margin-left: 22px; color: var(--t70); font-size: 12px; }
+.print-panel .opts .cost { color: var(--t70); font-variant-numeric: tabular-nums; }
+.print-panel .opts .titles { margin-top: 6px; padding-top: 7px; border-top: 1px solid var(--t25); }
+.print-panel .note { margin: 8px 0 0; min-height: 1.35em; color: var(--oxide); font-size: 12.5px; }
+.print-panel .note:empty { min-height: 0; margin: 0; }
+
+/* The print view: the page holding only what is about to print, under a bar
+   that says what it is, how its pictures are coming on, and the way back. */
+.print-bar {
+  position: sticky; top: 0; z-index: 6; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center;
+  padding: 9px 18px; background: var(--soot); color: var(--tallow); font: 13.5px/1.35 var(--sans);
+}
+.print-bar[hidden] { display: none; }
+.print-bar b { font-weight: 700; margin-right: 4px; }
+.print-bar .pv-what { flex: 1 1 260px; }
+.print-bar .pv-status { flex: 1 1 220px; color: var(--t12); }
+.print-bar[data-state="loading"] .pv-status { color: var(--ochre); }
+.print-bar[data-state="partial"] .pv-status { color: var(--ochre); font-weight: 700; }
+.print-bar .pv-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.print-bar .pv-pics label { white-space: nowrap; margin-left: 6px; }
+.print-bar button { font: inherit; padding: 4px 11px; border: 1px solid var(--t55); background: transparent; color: var(--tallow); border-radius: 3px; cursor: pointer; }
+.print-bar button:hover { border-color: var(--tallow); }
+.print-bar button.primary { background: var(--tallow); color: var(--soot); border-color: var(--tallow); font-weight: 700; }
+body.print-view .bar, body.print-view nav.toc, body.print-view .print-this { display: none; }
+body.print-view .wrap { justify-content: center; }
+/* what the printed page leaves out, the view leaves out too, so the screen is the page */
+body.print-view .fig.row.tail, body.print-view header.chap .fig.frieze, body.print-view .titlepage.contents .toc-page ~ .tfrieze { display: none; }
 
 /* --------------------------------------------------------------- print */
-@page { size: A4; margin: 14mm 15mm 16mm;
+/* A4 portrait. The measure above is this page's own: 210mm less the side margins
+   is the 180mm of --page-w, and 297mm less the head and foot leaves 267mm, which
+   a 265mm title page or catalogue sheet fills with two to spare. */
+@page { size: A4 portrait; margin: 14mm 15mm 16mm;
   @bottom-center { content: counter(page); font: 8.5pt 'Book Serif', Georgia, serif; color: ${T85}; }
   @top-center { content: 'The Almanac'; font: 9pt 'Book Label', Georgia, serif; letter-spacing: .18em; color: ${T70}; } }
 @page plain { @top-center { content: none; } @bottom-center { content: none; } }
 .titlepage { page: plain; }
 @media print {
+  /* The tint behind a strip's figures, a terrain's swatch, a table's head and a
+     title page's rivets are colour a reader needs, and a browser prints none of
+     it unless its "background graphics" box is ticked - which the panel used to
+     ask the reader to do. Now nobody has to. The page itself stays white. */
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   html, body { background: white; }
-  .bar, nav.toc, .print-panel, .screen-only { display: none !important; }
+  .bar, nav.toc, .print-panel, .print-bar, .screen-only { display: none !important; }
   .wrap { display: block; padding: 0; max-width: none; }
   main.book { width: auto; }
   .titlepage { break-before: page; break-after: page; margin: 0; box-shadow: none; }
   .part:first-child .titlepage { break-before: auto; }
   .chapter { break-before: page; border-top: none; padding-top: 0; margin-top: 0; }
+  /* A section printed without its title page still opens a fresh page - its
+     first chapter is then the section's first child, which it never is in the
+     whole book - except when it is the first thing printed. The print view takes
+     what is not printed out of the page, so "first" here is first of what prints. */
+  .part > .chapter:first-child { break-before: page; }
+  .part:first-child > .chapter:first-child { break-before: auto; }
   /* A chapter follows on from the one before under a rule, rather than turning
      to a fresh page. Turning the page left every chapter's last page as blank as
      it happened to be, and a quarter of them held two lines; a table of Annex I,
@@ -351,8 +403,9 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-weight: 
   }
   .chapter.run-on { --keep: 42mm; }
   .chapter.tables.run-on { --keep: 30mm; }
-  .titlepage + .chapter.run-on, body.selective .chapter.run-on.first-chosen { margin-top: 0; }
-  .titlepage + .chapter.run-on > header.chap, body.selective .chapter.run-on.first-chosen > header.chap { border-top: none; padding-top: 0; }
+  /* the first chapter of a section opens its page, after the title page or in place of it */
+  .part > .chapter.run-on:first-of-type { margin-top: 0; }
+  .part > .chapter.run-on:first-of-type > header.chap { border-top: none; padding-top: 0; }
   /* The contents is one page: the second row of pieces is the screen's. And so
      is the rule under the title - with it, Chromium broke the page after the
      title and set the whole contents overleaf, though it fits with room over. */
@@ -384,8 +437,6 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-weight: 
   .table-wrap:not(.long):not(.span) { break-inside: avoid; }
   header.chap { break-after: avoid; }
   a { color: inherit; }
-  body.selective .part:not(.chosen) { display: none; }
-  body.selective .chapter:not(.chosen) { display: none; }
 }
 @media screen {
   .titlepage, .sheet { background: var(--tallow); box-shadow: 0 0 0 .5pt var(--t25), 0 2px 10px rgba(26,23,20,.12); }

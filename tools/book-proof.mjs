@@ -7,8 +7,10 @@
  * whose plate had slipped onto the following page passed every check this
  * repository runs. This is the card-proof of the book. It opens
  * docs/book/index.html in a headless Chromium with the print picker's own
- * ?print=...&now selection, so what it prints is exactly what a reader who
- * ticked those boxes would get, running heads and page numbers included.
+ * ?print=...&now selection, which opens the same print view a reader's Print
+ * selection does - only what was picked left in the page, every picture in it
+ * loaded - so what it prints is exactly what a reader who ticked those boxes
+ * would get, running heads and page numbers included.
  *
  * Output is docs/book/proofs/<name>.pdf, git-ignored: a proof is a photograph of
  * the artefact, never the artefact.
@@ -17,6 +19,11 @@
  *        node tools/book-proof.mjs rules annex-3      sections, by id
  *        node tools/book-proof.mjs cat-characters     a chapter, by id
  *        node tools/book-proof.mjs rules --split      a section one chapter at a time
+ *        ... --low                                    with the low-resolution pictures
+ *        ... --no-titles                              without the sections' title pages
+ *
+ * --low and --no-titles are the print panel's two choices, and the proof's name
+ * carries them (rules-low.pdf) so a proof of one never passes for the other.
  *
  * --split prints each chapter of the named sections to its own PDF under
  * docs/book/proofs/<section>/. A headless Chromium given a whole section holds
@@ -37,6 +44,10 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const BOOK = join(ROOT, 'docs', 'book', 'index.html');
 const OUT_DIR = join(ROOT, 'docs', 'book', 'proofs');
 const ids = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+const low = process.argv.includes('--low');
+const bare = process.argv.includes('--no-titles');
+const choices = `${low ? '&pictures=low' : ''}${bare ? '&titles=off' : ''}`;
+const suffix = `${low ? '-low' : ''}${bare ? '-bare' : ''}`;
 
 if (!existsSync(BOOK)) {
   console.error('docs/book/index.html is not built. Run: node tools/build-book.mjs');
@@ -50,8 +61,12 @@ if (!chromium) {
 
 mkdirSync(OUT_DIR, { recursive: true });
 
+/* The whole book is every section ticked, the way the panel's All is: through
+   the same print view, so its pictures are loaded rather than left lazy. */
+const everything = [...readFileSync(BOOK, 'utf8').matchAll(/<section class="part" id="([^"]+)"/g)].map((m) => m[1]);
+
 function print(out, picks) {
-  const url = pathToFileURL(BOOK).href + (picks.length ? `?print=${picks.join(',')}&now` : '');
+  const url = `${pathToFileURL(BOOK).href}?print=${(picks.length ? picks : everything).join(',')}&now${choices}`;
   const t = Date.now();
   execFileSync(chromium, [
     '--headless', '--no-sandbox', '--disable-gpu', '--hide-scrollbars',
@@ -75,12 +90,13 @@ if (process.argv.includes('--split')) {
     mkdirSync(dir, { recursive: true });
     /* a chapter picked alone prints with its section's title page in front of it */
     chapters.forEach((c, i) => {
-      const s = print(join(dir, `${String(i + 1).padStart(2, '0')}-${c}.pdf`), [c]);
-      console.log(`printed ${c} -> docs/book/proofs/${section}/${String(i + 1).padStart(2, '0')}-${c}.pdf in ${s}s`);
+      const file = `${String(i + 1).padStart(2, '0')}-${c}${suffix}.pdf`;
+      const s = print(join(dir, file), [c]);
+      console.log(`printed ${c} -> docs/book/proofs/${section}/${file} in ${s}s`);
     });
   }
 } else {
-  const name = ids.length ? ids.join('+') : 'the-almanac';
+  const name = `${ids.length ? ids.join('+') : 'the-almanac'}${suffix}`;
   const s = print(join(OUT_DIR, `${name}.pdf`), ids);
   console.log(`printed ${ids.length ? ids.join(', ') : 'the whole book'} -> docs/book/proofs/${name}.pdf in ${s}s (git-ignored; regenerate whenever)`);
 }

@@ -585,19 +585,41 @@ and tiles are inlined into the page with their ids prefixed per copy — and
 whatever prefixes an id must prefix every `url(#…)` and `href="#…"` that names
 it, or the clip goes and the window stops being a window.
 
-**A screen gets the small copy; the print button puts the full one back.** Those
+**A screen gets the small copy; the printer gets what the reader chose.** Those
 JPEGs are not the book's private business any more: they are what every screen
 view of a plate reads. The book names the full copy in `data-print-src` beside
-the small one and `tools/lib/book-print.js` swaps it in and *waits for it* before
-opening the dialog — neither `<source media="print">` nor a `beforeprint` swap
-survives to the printed page, both tested. `docs/cards/index.html` embeds
+the small one, and the print panel asks which to print — *full size* swaps the
+full copy in, *low resolution* keeps the small one — and says what each would
+weigh for the selection, from a table of file sizes the build writes into the
+page. Neither `<source media="print">` nor a `beforeprint` swap survives to the
+printed page, both tested, so the swap is made and *waited for* before the
+dialog opens. `docs/cards/index.html` embeds
 `docs/cards/web/<CODE>.svg`, the same cards reading `-s.jpg`, because the
 gallery was pulling 676 MB of PNG to show a wall of thumbnails. The card itself,
 `docs/cards/<CODE>.svg`, keeps the PNG: that is what `print.html` lays out, what
 `card-proof` photographs and what the book inlines. Opening the book costs 19 MB
 where it cost 86, and the gallery 16 MB where it cost 676.
-`node tools/book-proof.mjs <section> --split` prints a section a chapter at a
-time, which is the only way a headless Chromium gets through Book I.
+
+**Printing opens a print view, and the view is what prints.** Picking takes
+everything not picked OUT of the page — `tools/lib/book-print.js` leaves a
+comment where each piece was and puts it back on *Back to the book* — makes
+every picture left in the page eager, and opens the dialog only when the last
+has loaded or failed. A reader picking one chapter got blank pages from the way
+this was done before, which had three faults a browser could turn into that: the
+rest of the book was hidden by a print stylesheet and restored on `afterprint`,
+trusting `afterprint` to come after the drawing; every picture is lazy, and one
+far down the page never loads, so the panel sat out its ten-second timeout and
+printed a chapter of Book I with ten of the thirty-one pictures it prints
+missing; and
+`beforeprint` fetched the full copy of every plate in the book, 69 MB for five
+pages. Nothing hangs off `beforeprint` or `afterprint` now; the view stays until
+the reader leaves it; Ctrl+P outside it opens the panel rather than printing
+three hundred pages. The page is A4 portrait, and print sets
+`print-color-adjust: exact`, because a strip's tint, a terrain's swatch and a
+table's head are colour a reader needs and a browser drops backgrounds unless
+somebody ticks a box. `node tools/book-proof.mjs` prints through the same view:
+`--low` and `--no-titles` proof the panel's two choices, and `--split` prints a
+section a chapter at a time.
 
 **`docs/review/*.md` is Addendum I — the review — and it is the one place a
 finding against the rules lives.** It is hand-written like Book I and resolves

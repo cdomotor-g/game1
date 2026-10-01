@@ -24,7 +24,7 @@
  *
  * Usage: node tools/build-book.mjs [--check]
  */
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderMarkdown, escapeHtml } from './lib/docpage.mjs';
@@ -664,6 +664,20 @@ const css = readFileSync(join(ROOT, 'tools', 'lib', 'book.css'), 'utf8')
     VERDIGRIS: palette.inks.verdigris.hex, BRUISE: palette.inks.bruise.hex, LINK: palette.categories.drink.wash,
   })[k]);
 
+const bookHtml = sections.map(sectionHtml).join('\n\n');
+
+/* What every picture the book names weighs, for the print panel to say what a
+   choice of pictures will cost: the small copy a screen reads, the full copy
+   named for the printer, an inlined card's window. Sizes of committed files,
+   so --check reads the same table on every clone. */
+const printBytes = {};
+for (const [, src] of bookHtml.matchAll(/\s(?:src|data-print-src|href)="((?!#|data:|https?:)[^"]+\.(?:jpg|png|svg))"/g)) {
+  if (src in printBytes) continue;
+  const file = join(OUT_DIR, src);
+  if (existsSync(file)) printBytes[src] = statSync(file).size;
+}
+const printBytesJson = JSON.stringify(Object.fromEntries(Object.entries(printBytes).sort(([a], [b]) => a.localeCompare(b))));
+
 const page = `<!doctype html>
 <html lang="en">
 <head>
@@ -676,6 +690,17 @@ ${css}
 </style>
 </head>
 <body>
+
+<div class="print-bar" id="print-bar" hidden>
+  <div class="pv-what"><b>Print view</b> <span id="print-what"></span></div>
+  <div class="pv-status" id="print-status" role="status" aria-live="polite"></div>
+  <div class="pv-controls">
+    <span class="pv-pics">Pictures <label><input type="radio" name="pv-pictures" value="full"> full size</label> <label><input type="radio" name="pv-pictures" value="low"> low resolution</label></span>
+    <button type="button" id="pv-print" class="primary">Print</button>
+    <button type="button" id="pv-change">Change…</button>
+    <button type="button" id="pv-back">Back to the book</button>
+  </div>
+</div>
 
 <div class="bar">
   <strong>${escapeHtml(BOOK_TITLE)}</strong>
@@ -693,19 +718,27 @@ ${css}
 ${navHtml}
   </nav>
   <main class="book">
-${sections.map(sectionHtml).join('\n\n')}
+${bookHtml}
   </main>
 </div>
 
 <div class="print-panel" id="print-panel" hidden>
-  <div class="panel">
-    <h2>Print</h2>
-    <p>Choose what to print. A section prints with its title page; open a section to pick single chapters. Set the printer to A4, 100%, backgrounds on. The pictures are shown at screen resolution and swapped for the full-size ones here, so print from this panel rather than the browser's own command.</p>
+  <div class="panel" role="dialog" aria-labelledby="print-head">
+    <h2 id="print-head">Print</h2>
+    <p>Choose what to print; open a section to pick single chapters. The book then shows only that, loads its pictures and opens the print dialog. The pages are A4 portrait: print at 100% (not “fit to page”) with the default margins.</p>
     <div class="picks" id="picks"></div>
+    <fieldset class="opts">
+      <legend>Pictures</legend>
+      <label><input type="radio" name="pictures" value="full" checked> Full size <span class="cost" data-cost="full"></span><small>Sharpest. Slower to load and to print.</small></label>
+      <label><input type="radio" name="pictures" value="low"> Low resolution <span class="cost" data-cost="low"></span><small>The screen copies. Quick, a much smaller file, softer pictures.</small></label>
+      <label class="titles"><input type="checkbox" id="opt-titles" checked> Each section’s title page</label>
+    </fieldset>
+    <p class="note" id="print-note"></p>
     <div class="actions"><button type="button" id="pick-all">All</button><button type="button" id="pick-none">None</button><span class="spacer"></span><button type="button" id="do-print" class="primary">Print selection</button><button type="button" id="close-print">Close</button></div>
   </div>
 </div>
 
+<script type="application/json" id="print-bytes">${printBytesJson}</script>
 <script>
 ${readFileSync(join(ROOT, 'tools', 'lib', 'book-print.js'), 'utf8')}
 </script>
