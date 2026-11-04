@@ -14605,6 +14605,72 @@ window.GAME_DATA = {
         "howMany": "One per hex of road or rail built. A player who runs out has run out of road, which is a real limit and a fair one."
       }
     },
+    "mapPlate": {
+      "$comment": "How a GENERATED campaign map is drawn. tools/draw-map.mjs reads it and tools/lib/cartography.mjs holds the technique, the same split draw-item.mjs and itemPlate already use: no number here belongs to one map, and no map names a number of its own.\n\nEvery length is a fraction of a hex's across-flats width, so the same figures hold whether a hex prints at 9 mm on the one-sheet reference or 27 mm on the nine-sheet layout. That is the only unit a map plate can safely have: it has no long side, and the grid is the one thing on it that is the same size on every preset.\n\nThe texture is the mini-map's reversal carried up to world scale. These plates were a flat terrain colour and a coastline, on the argument that drawn ground competes with the pieces standing on it; the mini-maps found that argument half right, and this is the same finding one storey up. A mark at a fifth of a hex, on the ink plate, at a third of full strength, says which ground this is from across the table and still leaves the hex clear enough to stand a figure on.",
+      "line": {
+        "$comment": "Four weights and no fifth, per docs/art/03-line-and-texture.md. The coast weight is doing most of the work: it is what makes an island sit on the page and what survives a photocopy.",
+        "coast": 0.034,
+        "structure": 0.019,
+        "detail": 0.013,
+        "hatch": 0.009
+      },
+      "coastWaves": {
+        "$comment": "A heavy shoreline with progressively lighter lines running parallel to it out into the water. Engravers have done this since the 1500s because it gives the sea a direction and the land an edge without either needing a colour - and because it is the one cartographic device that reads at arm's length across a table.",
+        "offsets": [
+          0.11,
+          0.24,
+          0.39,
+          0.57
+        ],
+        "weights": [
+          0.021,
+          0.017,
+          0.013,
+          0.011
+        ],
+        "lakeOffsets": [
+          0.1,
+          0.22
+        ],
+        "$lakeNote": "Two, not four. A pond should not announce itself like an ocean."
+      },
+      "texture": {
+        "$comment": "Ground texture on the ink plate. `strength` is its opacity: the number that decides whether this helps a player read the board or competes with the pieces on it.",
+        "strength": 0.38,
+        "waterStrength": 0.3,
+        "inset": 0.74
+      },
+      "grid": {
+        "$comment": "The play grid is printed, but quietly - it is an overlay everywhere else in this repository, and on the plate it is a hairline at a soot tint. Gone at arm's length, unambiguous when you lean in.",
+        "weight": 0.007,
+        "tint": "25"
+      },
+      "river": {
+        "$comment": "Width bands, narrow to broad, so a watercourse thickens as tributaries join it. A river that is the same width at its spring and its mouth is a canal.",
+        "widths": [
+          0.01,
+          0.016,
+          0.024
+        ],
+        "casing": 0.085,
+        "$casingNote": "The wash band under the ink line, as a filled ribbon rather than a stroke - the wash plate is flat shapes and nothing else.",
+        "$widthNote": "Narrow on purpose. A river here is already a hex wide and washed blue with a shoreline round it; the ink is the THREAD OF THE CURRENT down the middle of that channel, not the river itself. Drawn at road weight it reads as a road, which is the one thing on a map a river must never be confused with."
+      },
+      "frame": {
+        "$comment": "Plank and iron banding, and a lettered and numbered index around the inside of it so any hex on the table has a name you can say out loud. I and O are skipped: they read as 1 and 0.",
+        "bandFraction": 0.62,
+        "indexSize": 0.3,
+        "compassRadius": 0.055,
+        "$compassNote": "Also a fraction of the plate width, and for the same reason."
+      },
+      "cartouche": {
+        "$comment": "Title, scale and the terrain key, drawn with the plate's own ground textures so the key is a sample of the map rather than a table of swatches. Placed by search over open water, and allowed to lap the frame, which is period-correct and costs the players no ground.\n\nUnlike everything else in this block these are fractions of the PLATE WIDTH, not of a hex. Furniture belongs to the page: a key sized in hexes is a third of the board on a ten-column map and a tenth of it on a thirty-column one, which is the same mistake as sizing a card's title off its illustration.",
+        "widthFraction": 0.205,
+        "rowHeight": 0.0255,
+        "borderFraction": 0.009,
+        "minWaterShare": 0.6
+      }
+    },
     "minimap": {
       "$comment": "The zoom-in sheet: one hex of the world map, opened out. Play happens inside it and the result is written back to the big map.\n\nIt is a flat colour, a PATTERN and a grid. No render and no plate: the field is a hexagon of hexagons filled with the plain colour that terrain already prints in, with that terrain's own map mark scattered across the cells (marks.terrain) and the grid ruled on top. That is the whole sheet, and it is still generated rather than commissioned - it needs no artist and no framing entry, which is why it is not in the mint queue and why it is not waiting on anything.\n\nThe pattern is a reversal. These sheets were a flat colour and nothing else, on the argument that drawn ground competes with the pieces standing on it. The argument was half right: a DRAWN sheet competes, and a mark at a third of a cell, on the ink plate, at a third of full strength, does not. It does the job the wash was failing to do on its own - say which ground this is from across the table - and it does it in the black-and-white edition too, where the wash is not there at all. The marks are the world map's own, one set, from data/terrain.json.\n\nThe cell is the load-bearing decision: a mini-map cell is EXACTLY the size of a world-map hex. A figure standing on the big board picks up and stands on a mini-map cell without being re-based, a route token cut for the world map fits a mini-map lane, and one ruler measures both. The scale is a fiction - the ground inside one hex is not nine hexes of ground - and it is the right fiction, because everything physical about the two boards already agrees.",
       "sheet": {
@@ -17313,6 +17379,484 @@ window.GAME_DATA = {
   },
   "maps": [
     {
+      "$comment": "A GENERATED map: the board is the source and the plate is an output, so `rows`, `regions`, `settlements`, `rivers`, `routes` and `plate` below are all written by tools/draw-map.mjs and must never be hand-edited. Change the commission and run the tool. See docs/map/README.md.",
+      "version": "0.1.0",
+      "id": "kelder-vale",
+      "name": "The Kelder Vale",
+      "subtitle": "a survey of the vale, its fells, its waters and the roads between",
+      "summary": "One continent on a near-square frame, cut to print on six sheets of A4 and lie on a dining table. A massif in the middle, fells falling away from it on every side, and every watercourse on the board running off that high ground to salt water. Commissioned as the board that answers 'what does this game look like laid out', so the grid, the plate and the sheet layout are all chosen together rather than one after another.",
+      "commission": {
+        "$comment": "Written before anything was grown and kept afterwards, so the board can be read against what was asked for.",
+        "why": "The first board meant to be PRINTED and played on rather than read. Everything above is downstream of that: six sheets of A4 is the unit a home printer can actually deliver, a near-square frame is what six of them make, and a fifty-millimetre hex is what fits on that frame while still taking a standing figure.",
+        "landmass": "One continent held to the north-east of the frame, with a gulf of open water off the south-west and a shelf running off the north and east. One small island in the gulf and no second country. The high ground is a single massif, so the long drainage runs south-west: the vale is named for what falls away from it. The gulf is not spare room - it is where the key and the compass stand, and furniture standing on playable ground is ground nobody can use.",
+        "terrainBudget": [
+          {
+            "terrain": "deep-water",
+            "share": 0.14
+          },
+          {
+            "terrain": "shallow-water",
+            "share": 0.135
+          },
+          {
+            "terrain": "river",
+            "share": 0.06
+          },
+          {
+            "terrain": "lake",
+            "share": 0.02
+          },
+          {
+            "terrain": "grassland",
+            "share": 0.215
+          },
+          {
+            "terrain": "forest",
+            "share": 0.15
+          },
+          {
+            "terrain": "hills",
+            "share": 0.125
+          },
+          {
+            "terrain": "mountain",
+            "share": 0.072
+          },
+          {
+            "terrain": "marsh",
+            "share": 0.036
+          },
+          {
+            "terrain": "tundra",
+            "share": 0.024
+          },
+          {
+            "terrain": "desert",
+            "share": 0.023
+          }
+        ],
+        "$terrainBudgetNote": "A share of the WHOLE grid, water included, and an aim rather than a rule - a drawn continent is not a shuffled tile bag. Two of these do not behave like the rest. The RIVER share is not a quota: rivers are run downhill and the share is the ceiling that stops the vale turning into a delta - and because a river hex is water, every one of them comes out of the land total, which is why the land shares here add up to more than the 75 hexes a five-player game needs. The LAKE share is overruled by the commission's one crater.",
+        "settlements": {
+          "count": 9,
+          "seat": 1,
+          "city": 2,
+          "town": 3,
+          "village": 3,
+          "harbours": 4
+        },
+        "$settlementNote": "Ten is deliberately short of the Isles' fourteen on a board with three times the hex area. This one is meant to be built on rather than toured.",
+        "routes": {
+          "rail": false,
+          "shipping": true,
+          "road": true
+        },
+        "$routeNote": "No rail at commission: rail is a thing players lay, and a board that arrives with it has made the biggest capital decision in the game on their behalf.",
+        "mustHave": [
+          "one continent, not an archipelago — a player should be able to walk from any town to any other without a hull",
+          "a central massif, and every watercourse on the board springing from it and reaching salt water",
+          "open sea on two adjoining edges, so the coast has a corner in it rather than running straight down one side",
+          "a frame and a lettered index, because this board is printed in pieces and has to be talked about across a table",
+          "a plate whose aspect matches six sheets of A4 with a 10 mm overlap, so nothing is letterboxed"
+        ],
+        "mustNotHave": [
+          "rail, or any infrastructure a player is supposed to build",
+          "a river that starts in the middle of a plain or stops before the sea",
+          "a ring stain, a coffee mark or anything else that reads as something set down on the page"
+        ],
+        "landform": {
+          "seed": 20261104,
+          "$seedNote": "Same seed, same board, every run. That is what lets docs/map/ be a committed build output and --check mean something.",
+          "shareIsRelative": true,
+          "islands": [
+            {
+              "id": "kelder",
+              "name": "The Kelder Vale",
+              "chain": "main",
+              "at": [
+                7,
+                4
+              ],
+              "share": 0.9,
+              "relief": "volcanic"
+            },
+            {
+              "id": "hallow",
+              "name": "Hallowstrand",
+              "chain": "south",
+              "at": [
+                2,
+                10
+              ],
+              "share": 0.1
+            }
+          ],
+          "$islandNote": "A share is a WEIGHT, normalised onto the land total the terrain budget already asks for, so adding an island shrinks the others rather than quietly making the board more land. The continent is anchored NORTH-EAST of centre on purpose: the massif grows at whatever is furthest from the sea, and an anchor in the middle of the frame puts it three hexes from salt water in every direction, which is a board full of brooks. Off-centre, the long drainage runs south-west and the rivers are rivers.",
+          "links": [],
+          "edges": {
+            "north": "shelf",
+            "south": "deep",
+            "east": "shelf",
+            "west": "deep"
+          },
+          "shelfWidth": 1,
+          "riverNames": [
+            "The Kelder",
+            "Arrowwater",
+            "The Shale",
+            "Brackbourne",
+            "Nethergill",
+            "The Winnow"
+          ],
+          "$riverNameNote": "Names are the one thing a tool may not invent. These are assigned longest course first, so the name a player will actually trace with a finger is the one that got written down."
+        },
+        "places": [
+          {
+            "id": "kelderstead",
+            "name": "Kelderstead",
+            "rank": "seat",
+            "harbour": false,
+            "island": "kelder",
+            "note": "Where the two largest waters meet, inland, with a day's haul to either coast."
+          },
+          {
+            "id": "arrowmouth",
+            "name": "Arrowmouth",
+            "rank": "city",
+            "harbour": true,
+            "island": "kelder",
+            "note": "The west gate. Everything that leaves the vale by hull leaves here."
+          },
+          {
+            "id": "shalegate",
+            "name": "Shalegate",
+            "rank": "city",
+            "harbour": false,
+            "island": "kelder",
+            "note": "Under the fells, at the only pass worth driving a road through."
+          },
+          {
+            "id": "brackmire",
+            "name": "Brackmire",
+            "rank": "town",
+            "harbour": false,
+            "island": "kelder",
+            "note": "Peat, clay and patience."
+          },
+          {
+            "id": "winnowfield",
+            "name": "Winnowfield",
+            "rank": "town",
+            "harbour": false,
+            "island": "kelder",
+            "note": "The grain of the vale, on the flat ground east of the massif."
+          },
+          {
+            "id": "coldstrand",
+            "name": "Coldstrand",
+            "rank": "town",
+            "harbour": true,
+            "island": "kelder",
+            "note": "The north landfall, first off the shelf."
+          },
+          {
+            "id": "hallow",
+            "name": "Hallowstrand",
+            "rank": "village",
+            "harbour": true,
+            "island": "hallow",
+            "note": "A beach, a smokehouse and forty people."
+          },
+          {
+            "id": "nethergill",
+            "name": "Nethergill",
+            "rank": "village",
+            "harbour": false,
+            "island": "kelder",
+            "note": "The last steading before the ground stops being worth it."
+          }
+        ],
+        "$placesNote": "Who is where is a person's decision; WHICH HEX is the tool's. Every one of these is sited by tools/draw-map.mjs against its island, its rank and whether it needs a shore.",
+        "plate": {
+          "minWidthPx": 4000,
+          "wantWidthPx": 4000,
+          "aspect": "near-square, to match six A4 sheets with a 10 mm overlap",
+          "$note": "A generated plate is vector and has no long side to fall short of, so these are the drawing's own chosen pixels rather than a floor somebody has to meet."
+        }
+      },
+      "plate": {
+        "kind": "generated",
+        "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
+        "file": "kelder-vale.svg",
+        "width": 4000,
+        "height": 3897,
+        "field": {
+          "x": 203,
+          "y": 203,
+          "width": 3594,
+          "height": 3491
+        },
+        "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line."
+      },
+      "grid": {
+        "shape": "hex",
+        "orientation": "pointy",
+        "offset": "odd-r",
+        "cols": 11,
+        "rows": 12,
+        "fit": "sheet-block",
+        "$fitNote": "Solved, not chosen. Six A4 portrait at an 8 mm printer margin and a 10 mm overlap make a block 562 x 552 mm; 11 x 12 is the grid whose plate comes out at that aspect to within eight parts in a thousand, and it puts a hex at about 46 mm across the flats. Eleven columns rather than ten because ten could not carry both the 75 land hexes a five-player game asks for and a gulf big enough to stand the key in - and shrinking either of those to fit a rounder number is the wrong trade."
+      },
+      "print": {
+        "$comment": "Sheet layouts. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived from the plate by tools/build-map.mjs and are stored so the numbers are greppable and a change to the grid shows up as a diff.",
+        "default": "six-sheet",
+        "presets": [
+          {
+            "id": "six-sheet",
+            "name": "Six sheets, A4 portrait",
+            "sheet": "A4",
+            "orientation": "portrait",
+            "sheetCols": 3,
+            "sheetRows": 2,
+            "marginMm": 8,
+            "overlapMm": 10,
+            "note": "The board this map was commissioned for. Three across, two down, printed portrait. Trim the left and top edge of each sheet, lap it over its neighbour's 10 mm band and tape from behind.",
+            "mapWidthMm": 562,
+            "mapHeightMm": 547.5,
+            "hexAcrossFlatsMm": 45.9
+          },
+          {
+            "id": "four-sheet",
+            "name": "Four sheets, A2",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 2,
+            "sheetRows": 2,
+            "marginMm": 8,
+            "overlapMm": 10,
+            "note": "Smaller, and still a board. The vale loses about a fifth of its hex size.",
+            "mapWidthMm": 388,
+            "mapHeightMm": 378,
+            "hexAcrossFlatsMm": 31.7
+          },
+          {
+            "id": "one-sheet",
+            "name": "One sheet, reference",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 1,
+            "sheetRows": 1,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "The whole board on one page, for reading rather than playing.",
+            "mapWidthMm": 199.1,
+            "mapHeightMm": 194,
+            "hexAcrossFlatsMm": 16.3
+          }
+        ]
+      },
+      "legend": {
+        "$comment": "Character to terrain id, for the 'rows' block. Identical to the Reach's and the Isles', so a board from any of the three reads the same in a text editor.",
+        "~": "deep-water",
+        "-": "shallow-water",
+        "r": "river",
+        "l": "lake",
+        ".": "grassland",
+        "f": "forest",
+        "h": "hills",
+        "^": "mountain",
+        "m": "marsh",
+        "t": "tundra",
+        "d": "desert"
+      },
+      "rows": [
+        "----.d....-",
+        "~~-rhffffr.",
+        "~~-.rrhhhrm",
+        "~-.fhr^^rf.",
+        "~-.fh^r^hfd",
+        "~-dfh^^^hfm",
+        "~~-.fhh^hfm",
+        "---.ffhhh..",
+        "-.--..ffff.",
+        "-..--.....-",
+        "-.f.m------",
+        "-..--~~~~~-"
+      ],
+      "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+      "$riversNote": "GENERATED. Each course is the chain of hexes the water runs through, spring first, and every one of those hexes is terrain `river` in rows. Run downhill by tools/draw-map.mjs from the terrain bands and the distance inland - never hand-placed, because a hand-placed river is how you get one that starts nowhere.",
+      "regions": [
+        {
+          "id": "kelder",
+          "name": "The Kelder Vale",
+          "terrain": "grassland",
+          "labelAt": [
+            7,
+            4
+          ],
+          "summary": "77 hexes of the main chain, mostly grassland. Kelderstead, Arrowmouth, Shalegate, Brackmire, Winnowfield, Coldstrand, Nethergill."
+        },
+        {
+          "id": "hallow",
+          "name": "Hallowstrand",
+          "terrain": "grassland",
+          "labelAt": [
+            2,
+            10
+          ],
+          "summary": "9 hexes of the south chain, mostly grassland. Hallowstrand."
+        }
+      ],
+      "settlements": [
+        {
+          "id": "kelderstead",
+          "name": "Kelderstead",
+          "col": 4,
+          "row": 3,
+          "rank": "seat",
+          "note": "Where the two largest waters meet, inland, with a day's haul to either coast."
+        },
+        {
+          "id": "arrowmouth",
+          "name": "Arrowmouth",
+          "col": 9,
+          "row": 9,
+          "rank": "city",
+          "harbour": true,
+          "note": "The west gate. Everything that leaves the vale by hull leaves here."
+        },
+        {
+          "id": "shalegate",
+          "name": "Shalegate",
+          "col": 8,
+          "row": 4,
+          "rank": "city",
+          "note": "Under the fells, at the only pass worth driving a road through."
+        },
+        {
+          "id": "brackmire",
+          "name": "Brackmire",
+          "col": 7,
+          "row": 7,
+          "rank": "town",
+          "note": "Peat, clay and patience."
+        },
+        {
+          "id": "winnowfield",
+          "name": "Winnowfield",
+          "col": 5,
+          "row": 6,
+          "rank": "town",
+          "note": "The grain of the vale, on the flat ground east of the massif."
+        },
+        {
+          "id": "coldstrand",
+          "name": "Coldstrand",
+          "col": 9,
+          "row": 0,
+          "rank": "town",
+          "harbour": true,
+          "note": "The north landfall, first off the shelf."
+        },
+        {
+          "id": "hallow",
+          "name": "Hallowstrand",
+          "col": 1,
+          "row": 11,
+          "rank": "village",
+          "harbour": true,
+          "note": "A beach, a smokehouse and forty people."
+        },
+        {
+          "id": "nethergill",
+          "name": "Nethergill",
+          "col": 8,
+          "row": 2,
+          "rank": "village",
+          "note": "The last steading before the ground stops being worth it."
+        }
+      ],
+      "rivers": [
+        {
+          "id": "river-1",
+          "name": "The Kelder",
+          "from": "c05r04",
+          "to": "c03r00",
+          "hexes": [
+            [
+              6,
+              4
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              3,
+              1
+            ]
+          ]
+        },
+        {
+          "id": "river-2",
+          "name": "Arrowwater",
+          "from": "c07r03",
+          "to": "c10r00",
+          "hexes": [
+            [
+              8,
+              3
+            ],
+            [
+              9,
+              2
+            ],
+            [
+              9,
+              1
+            ]
+          ]
+        }
+      ],
+      "routes": {
+        "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.",
+        "shipping": [],
+        "road": [
+          {
+            "from": "kelderstead",
+            "to": "arrowmouth"
+          },
+          {
+            "from": "arrowmouth",
+            "to": "shalegate"
+          },
+          {
+            "from": "shalegate",
+            "to": "brackmire"
+          },
+          {
+            "from": "brackmire",
+            "to": "winnowfield"
+          },
+          {
+            "from": "winnowfield",
+            "to": "coldstrand"
+          },
+          {
+            "from": "coldstrand",
+            "to": "nethergill"
+          }
+        ]
+      }
+    },
+    {
       "$comment": "The Korvane Reach: a drawn map, hexed. The artwork in docs/map/korvane-reach.png is the plate; everything a program needs to know about what is ON that plate is in this file. 'rows' is the board — one string per grid row, one character per hex, decoded through 'legend'. Edit it by hand: it is a picture of the map you can read in a text editor, and it diffs like one. tools/trace-map.mjs proposes rows by sampling the plate; it never rewrites them unless asked.",
       "version": "0.1.0",
       "id": "korvane-reach",
@@ -18503,12 +19047,12 @@ window.GAME_DATA = {
         "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
         "file": "sundering-isles.svg",
         "width": 4000,
-        "height": 2830,
+        "height": 2856,
         "field": {
-          "x": 34,
-          "y": 34,
-          "width": 3932,
-          "height": 2762
+          "x": 79,
+          "y": 79,
+          "width": 3842,
+          "height": 2698
         },
         "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line."
       },
@@ -18535,9 +19079,9 @@ window.GAME_DATA = {
             "marginMm": 8,
             "overlapMm": 0,
             "note": "Two by two, printed landscape. The working size for a table.",
-            "mapWidthMm": 548.4,
+            "mapWidthMm": 543.4,
             "mapHeightMm": 388,
-            "hexAcrossFlatsMm": 18
+            "hexAcrossFlatsMm": 17.4
           },
           {
             "id": "nine-sheet",
@@ -18549,9 +19093,9 @@ window.GAME_DATA = {
             "marginMm": 8,
             "overlapMm": 0,
             "note": "Three by three. Worth printing only if the plate arrives at 7000 px.",
-            "mapWidthMm": 822.6,
+            "mapWidthMm": 815.1,
             "mapHeightMm": 582,
-            "hexAcrossFlatsMm": 27
+            "hexAcrossFlatsMm": 26.1
           },
           {
             "id": "one-sheet",
@@ -18563,9 +19107,9 @@ window.GAME_DATA = {
             "marginMm": 8,
             "overlapMm": 0,
             "note": "The whole board on one page, for reading rather than playing.",
-            "mapWidthMm": 274.2,
+            "mapWidthMm": 271.7,
             "mapHeightMm": 194,
-            "hexAcrossFlatsMm": 9
+            "hexAcrossFlatsMm": 8.7
           }
         ]
       },
@@ -18610,6 +19154,7 @@ window.GAME_DATA = {
         "-f.f-----~~~~~~~~~~~~~~~~~~~~~"
       ],
       "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+      "$riversNote": "GENERATED. Each course is the chain of hexes the water runs through, spring first, and every one of those hexes is terrain `river` in rows. Run downhill by tools/draw-map.mjs from the terrain bands and the distance inland - never hand-placed, because a hand-placed river is how you get one that starts nowhere.",
       "regions": [
         {
           "id": "vharsel",
@@ -18838,6 +19383,7 @@ window.GAME_DATA = {
           "note": "The last land before the open south. Salvage, mostly."
         }
       ],
+      "rivers": [],
       "routes": {
         "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.",
         "shipping": [
@@ -19829,12 +20375,12 @@ window.GAME_DATA = {
         "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
         "file": "wine-dark-sea.svg",
         "width": 4000,
-        "height": 2657,
+        "height": 2686,
         "field": {
-          "x": 34,
-          "y": 34,
-          "width": 3932,
-          "height": 2589
+          "x": 75,
+          "y": 75,
+          "width": 3850,
+          "height": 2536
         },
         "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line."
       },
@@ -19862,8 +20408,8 @@ window.GAME_DATA = {
             "overlapMm": 0,
             "note": "Two by two, printed landscape. The working size for a table.",
             "mapWidthMm": 562,
-            "mapHeightMm": 373.3,
-            "hexAcrossFlatsMm": 17.3
+            "mapHeightMm": 377.4,
+            "hexAcrossFlatsMm": 16.9
           },
           {
             "id": "nine-sheet",
@@ -19876,8 +20422,8 @@ window.GAME_DATA = {
             "overlapMm": 0,
             "note": "Three by three. A vector plate prints at this size without asking.",
             "mapWidthMm": 843,
-            "mapHeightMm": 560,
-            "hexAcrossFlatsMm": 25.9
+            "mapHeightMm": 566.1,
+            "hexAcrossFlatsMm": 25.4
           },
           {
             "id": "one-sheet",
@@ -19890,7 +20436,7 @@ window.GAME_DATA = {
             "overlapMm": 0,
             "note": "The whole board on one page, for reading rather than playing.",
             "mapWidthMm": 281,
-            "mapHeightMm": 186.7,
+            "mapHeightMm": 188.7,
             "hexAcrossFlatsMm": 8.6
           }
         ]
@@ -19936,6 +20482,7 @@ window.GAME_DATA = {
         "-~-f...-~~~~~~~~--~~~~-d.ff--~~~"
       ],
       "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+      "$riversNote": "GENERATED. Each course is the chain of hexes the water runs through, spring first, and every one of those hexes is terrain `river` in rows. Run downhill by tools/draw-map.mjs from the terrain bands and the distance inland - never hand-placed, because a hand-placed river is how you get one that starts nowhere.",
       "regions": [
         {
           "id": "hellas",
@@ -20231,6 +20778,7 @@ window.GAME_DATA = {
           "note": "Alders, poplars and cypresses, four springs, and seven years."
         }
       ],
+      "rivers": [],
       "routes": {
         "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.",
         "shipping": [

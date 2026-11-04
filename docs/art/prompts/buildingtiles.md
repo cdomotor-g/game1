@@ -1285,7 +1285,7 @@ them there.
 
 ## tile-brickworks — three cells, square
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **644 px on the long side** (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 1289 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-brickworks.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **1095 px on the long side** (a 92.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 2191 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-brickworks.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1328,7 +1328,7 @@ them there.
 
 ## tile-glassworks — three cells, square
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **644 px on the long side** (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 1289 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-glassworks.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **1095 px on the long side** (a 92.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 2191 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-glassworks.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1372,7 +1372,7 @@ them there.
 
 ## tile-blacksmith — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **638 px on the long side** (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 1276 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-blacksmith.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **1084 px on the long side** (a 91.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 2169 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-blacksmith.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1417,7 +1417,7 @@ them there.
 
 ## tile-carpenter — one cell, square
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **368 px on the long side** (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 736 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-carpenter.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **626 px on the long side** (a 53 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 1252 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-carpenter.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1460,7 +1460,7 @@ them there.
 
 ## tile-weaver — one cell, square
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **368 px on the long side** (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 736 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-weaver.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **626 px on the long side** (a 53 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 1252 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-weaver.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -1503,7 +1503,7 @@ them there.
 
 ## tile-tannery — three cells, square
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **644 px on the long side** (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 1289 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-tannery.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **1095 px on the long side** (a 92.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 2191 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-tannery.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -2069,7 +2069,7 @@ them there.
 
 ## tile-guildhall — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **638 px on the long side** (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 1276 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-guildhall.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **1084 px on the long side** (a 91.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 2169 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-guildhall.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -2113,7 +2113,7 @@ them there.
 
 ## tile-inn — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **638 px on the long side** (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 1276 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-inn.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **1084 px on the long side** (a 91.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 2169 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-inn.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -2158,7 +2158,7 @@ them there.
 
 ## tile-infirmary — two cells, 3:2 landscape
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **638 px on the long side** (a 54 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 1276 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-infirmary.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **1084 px on the long side** (a 91.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 2169 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-infirmary.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]
@@ -2279,7 +2279,7 @@ prompt.
 
 ## tile-watchtower — one cell, square
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **368 px on the long side** (a 31.2 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares); 736 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-watchtower.png` — see `docs/art/AGENTS.md` for how.
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **626 px on the long side** (a 53 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares); 1252 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/tile-watchtower.png` — see `docs/art/AGENTS.md` for how.
 
 ```text
 [PREAMBLE]

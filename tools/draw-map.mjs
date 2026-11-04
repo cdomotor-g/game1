@@ -39,6 +39,10 @@ import { spawnSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { layout, neighbours, distance, hexId } from './lib/hexgrid.mjs';
+import {
+  n2, esc, makePen, curve, smooth, wobble, offsetPath, dashify, polyPath,
+  TERRAIN_TEXTURE, compassRose, plankFrame, scatterInHex,
+} from './lib/cartography.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -72,6 +76,7 @@ if (!existsSync(mapPath)) { console.error(`draw-map: no data/maps/${mapId}.json`
 const map = readJson(mapPath);
 const terrainFile = readJson(join(ROOT, 'data', 'terrain.json'));
 const palette = readJson(join(ROOT, 'docs', 'art', 'palette.json'));
+const components = readJson(join(ROOT, 'data', 'components.json'));
 
 const terrainById = new Map(terrainFile.terrains.map((t) => [t.id, t]));
 const isWaterId = (id) => terrainById.get(id)?.family === 'water';
@@ -296,6 +301,113 @@ for (const island of islands.filter((i) => i.relief === 'volcanic')) {
   if (peak && (inland.get(peak.k) ?? 0) > 1) { terrain.set(peak.k, 'lake'); craterAt = peak; }
 }
 
+/* ------------------------------------------------------ 3b · the watercourses */
+
+/* A shuffled tile bag gives you a river hex with no river either side of it. The
+   fix is not to place rivers, it is to RUN water downhill and see where it goes.
+   This is the smallest honest version of that: no second elevation field, no
+   second set of numbers to keep in step with the board - the height a drop falls
+   down is read off what the board already says, which is the terrain band and how
+   far inland the hex is.
+   
+   A course therefore cannot start in the middle of a plain and cannot stop
+   halfway. It begins on the highest ground an island has, it only ever steps to
+   lower ground or - out of a basin - to ground nearer the water, and it ends when
+   it reaches water or joins a course already running. */
+
+const RIVER_HEIGHT = { mountain: 1, hills: 0.72, forest: 0.46, grassland: 0.4, desert: 0.38, tundra: 0.44, marsh: 0.16 };
+const heightAt = (k) => (RIVER_HEIGHT[terrain.get(k)] ?? 0.3) + (inland.get(k) ?? 0) * 0.02;
+
+/* Steps to the nearest water, so a course trapped in a basin still knows which
+   way is downhill in the only sense that matters. */
+const toWater = new Map();
+wave = [];
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+  if (!isLand(c, r)) { toWater.set(key(c, r), 0); wave.push({ col: c, row: r }); }
+}
+for (let d = 1; wave.length; d++) {
+  const next = [];
+  for (const h of wave) for (const n of ring(h.col, h.row)) {
+    const k = key(n.col, n.row);
+    if (!toWater.has(k)) { toWater.set(k, d); next.push(n); }
+  }
+  wave = next;
+}
+
+const riverBudget = Math.round((budget.get('river') ?? 0) * CELLS);
+const riverNames = form.riverNames ?? map.commission?.places?.rivers ?? [];
+const riverHexes = new Set();
+const courses = [];
+const riverReject = { tried: 0, tooShort: 0 };
+
+if (riverBudget > 0) {
+  /* Springs: the highest ground, one island at a time, spaced so two courses do
+     not set off down the same valley. A source must be far enough inland to have
+     somewhere to run - a spring one hex from the shore is a puddle. */
+  const springs = allLand
+    .filter((h) => (inland.get(h.k) ?? 0) >= 2 && (RIVER_HEIGHT[terrain.get(h.k)] ?? 0) >= 0.44)
+    .sort((a, b) => heightAt(b.k) - heightAt(a.k) || (rand() - 0.5));
+
+  /* Spacing is a want, not a rule. Two springs in the same corrie make one river
+     drawn twice, so they are kept apart while there is still high ground to be
+     had - and the rule is relaxed rather than abandoned once the budget would
+     otherwise go unspent. */
+  const taken = [];
+  for (const pass of [3, 2]) {
+    for (const spring of springs) {
+    if (riverHexes.size >= riverBudget) break;
+    if (taken.includes(spring)) continue;
+    if (taken.some((t) => distance(t, spring) < pass)) continue;
+
+    /* Walk down. Lowest neighbour wins; a basin is left by whichever neighbour is
+       nearest the water, which is what makes arrival certain. */
+    const run = [];
+    let at = spring;
+    const visited = new Set([spring.k]);
+    for (let guard = 0; guard < COLS * ROWS; guard++) {
+      const here = key(at.col, at.row);
+      const options = ring(at.col, at.row).filter((n) => !visited.has(key(n.col, n.row)));
+      if (!options.length) break;
+      const wet = options.find((n) => !isLand(n.col, n.row) || riverHexes.has(key(n.col, n.row)));
+      if (wet) { run.push([wet.col, wet.row]); break; }
+      options.sort((a, b) => {
+        const ka = key(a.col, a.row), kb = key(b.col, b.row);
+        return (heightAt(ka) - heightAt(kb)) || ((toWater.get(ka) ?? 99) - (toWater.get(kb) ?? 99));
+      });
+      const down = options[0];
+      const dk = key(down.col, down.row);
+      if (heightAt(dk) >= heightAt(here) && (toWater.get(dk) ?? 99) >= (toWater.get(here) ?? 99)) break;
+      visited.add(dk);
+      run.push([down.col, down.row]);
+      at = down;
+    }
+
+    /* The last entry is the water it arrived at, and is not part of the course.
+       A run of one or two hexes is a stream nobody would print. */
+    const mouth = run[run.length - 1];
+    const body = run.filter(([c, r]) => isLand(c, r) && !riverHexes.has(key(c, r)));
+    riverReject.tried++;
+    if (body.length < 3) { riverReject.tooShort++; continue; }
+
+    taken.push(spring);
+    for (const [c, r] of body) { riverHexes.add(key(c, r)); terrain.set(key(c, r), 'river'); }
+    courses.push({
+      id: `river-${courses.length + 1}`,
+      name: riverNames[courses.length] ?? null,
+      from: hexId(spring.col, spring.row),
+      to: hexId(mouth[0], mouth[1]),
+      hexes: body,
+    });
+    }
+    if (riverHexes.size >= riverBudget) break;
+  }
+}
+
+/* Named first, longest first: a name is a scarce thing a person wrote down, and
+   it belongs on the course a player will actually trace with a finger. */
+courses.sort((a, b) => b.hexes.length - a.hexes.length);
+courses.forEach((c, i) => { c.id = `river-${i + 1}`; c.name = riverNames[i] ?? null; });
+
 /* ---------------------------------------------------------- 4 · the sea, laid */
 const board = [];
 for (let r = 0; r < ROWS; r++) {
@@ -310,6 +422,13 @@ for (let r = 0; r < ROWS; r++) {
   board.push(line.join(''));
 }
 const idAt = (c, r) => (inGrid(c, r) ? map.legend[board[r][c]] : null);
+
+/* How many hexes of each terrain the board actually came out with. The budget is
+   a wish and a grid is integers, so this is the number that gets printed in the
+   key and reported against the commission. */
+const tally = {};
+for (const line of board) for (const ch of line) { const id = map.legend[ch]; tally[id] = (tally[id] ?? 0) + 1; }
+const tallyOf = (id) => tally[id] ?? 0;
 
 /* -------------------------------------------------------- 5 · site the places */
 
@@ -427,9 +546,14 @@ const regions = islands.map((island) => {
 /* A generated plate's geometry is CHOSEN, not measured. That is the whole saving
    over a drawn one: there is no inner frame rule to find with a ruler, so
    plate.field is exact and the overlay cannot drift off the coastline. */
-const FRAME = 34;
+/* The frame is a fraction of a hex rather than a fixed number of pixels, so a
+   board with 30 columns and a board with 50 get a border in the same proportion
+   to the ground inside it. Solved rather than guessed: pick the hex size that
+   leaves room for two bands of it, and the band follows. */
 const plateWidth = 4000;
-const acrossFlats = (plateWidth - 2 * FRAME) / COLS;
+const BAND = components.mapPlate.frame.bandFraction;
+const acrossFlats = plateWidth / (COLS + 2 * BAND);
+const FRAME = Math.round(acrossFlats * BAND);
 const grid = layout({ cols: COLS, rows: ROWS, acrossFlats, originX: FRAME, originY: FRAME });
 const fieldH = Math.round(grid.extentY);
 const plateHeight = fieldH + 2 * FRAME;
@@ -452,50 +576,350 @@ const SOOT = palette.ink.soot.hex;
    drops the line silently. It cost nine shipping lanes that were in the file,
    with correct coordinates, and rendered as nothing. */
 const TINT = Object.fromEntries(Object.entries(palette.ink.tints).map(([k, v]) => [k, v.hex ?? v]));
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const n2 = (v) => Number(v.toFixed(2));
+const STYLE = components.mapPlate;
+const FONT = "Georgia, 'Iowan Old Style', 'Times New Roman', serif";
+/* A name set straight onto drawn ground is a name nobody can read. Knocking a
+   little paper out behind it is what docs/art/02-palette.md permits for display
+   type, and it is the difference between a label and a smudge. */
+const HALO = `stroke="${palette.paper.tallow.hex}" stroke-width="${n2(acrossFlats * 0.028)}" stroke-linejoin="round" paint-order="stroke"`;
+
+
 /* Each wash cell is grown by a hair about its own centre so that neighbours
    OVERLAP instead of butting up. Two polygons sharing an edge antialias against
    each other and leave a pale seam down it - and a seam on every edge is a hex
    grid, printed into the artwork, which is the one thing docs/map/README.md says
-   a plate must never carry. The grid is an overlay drawn at read time. */
+   a plate must never carry. The grid it DOES carry is drawn deliberately, as a
+   hairline, below. */
 const BLEED = 1.008;
-const poly = (c, r) => {
+const hexPoints = (c, r, bleed = BLEED) => {
   const { x: cx, y: cy } = grid.centre(c, r);
-  return grid.corners(c, r)
-    .map(([x, y]) => `${n2(cx + (x - cx) * BLEED)},${n2(cy + (y - cy) * BLEED)}`)
-    .join(' ');
+  return grid.corners(c, r).map(([x, y]) => ({ x: cx + (x - cx) * bleed, y: cy + (y - cy) * bleed }));
 };
+const poly = (c, r) => hexPoints(c, r).map((p) => `${n2(p.x)},${n2(p.y)}`).join(' ');
+const hexPath = (c, r) => `M${hexPoints(c, r, 1).map((p) => `${n2(p.x)},${n2(p.y)}`).join('L')}Z`;
 
 const washCells = [];
 for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
   washCells.push(`<polygon points="${poly(c, r)}" fill="${wash(idAt(c, r))}"/>`);
 }
 
-/* The coastline is the only line the ink plate draws over the field: it is the
-   one edge a player has to read at a glance, and it is an edge between hexes
-   rather than a hex of its own. */
-/* hexgrid's DIRECTIONS run in AXIAL order - E, NE, NW, W, SW, SE - and corners()
+/* ---- the shoreline, as rings rather than as loose edges --------------------
+   hexgrid's DIRECTIONS run in AXIAL order - E, NE, NW, W, SW, SE - and corners()
    walks clockwise from the top vertex, so edge i is not direction i. Getting
    this wrong does not draw the wrong NUMBER of edges, which is why it looks
    plausible: it draws the right count in the wrong places, and scatters hex
    outlines across the middle of an island. */
 const EDGE_FOR_DIRECTION = [1, 0, 5, 4, 3, 2];
+const ptKey = (p) => `${Math.round(p.x * 100)},${Math.round(p.y * 100)}`;
 
-const coast = [];
-for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
-  if (!isLand(c, r)) continue;
-  const cs = grid.corners(c, r);
-  for (const [i, n] of neighbours(c, r).entries()) {
-    if (inGrid(n.col, n.row) && isLand(n.col, n.row)) continue;
-    const e = EDGE_FOR_DIRECTION[i];
-    const a = cs[e], b = cs[(e + 1) % 6];
-    coast.push(`M${n2(a[0])} ${n2(a[1])}L${n2(b[0])} ${n2(b[1])}`);
+/* Chain a set of boundary edges into rings. A coastline drawn as loose segments
+   is a coastline and nothing more; chained, it can be walked outwards, and the
+   wave lines beside it are the single biggest thing separating a map from a
+   diagram. */
+function chainEdges(edges) {
+  const byPoint = new Map();
+  for (const e of edges) for (const p of [e.a, e.b]) {
+    const k = ptKey(p);
+    if (!byPoint.has(k)) byPoint.set(k, []);
+    byPoint.get(k).push(e);
+  }
+  const used = new Set();
+  const chains = [];
+  const walk = (start, from) => {
+    const pts = [from];
+    let e = start, at = from;
+    while (e && !used.has(e.i)) {
+      used.add(e.i);
+      at = ptKey(e.a) === ptKey(at) ? e.b : e.a;
+      pts.push(at);
+      e = (byPoint.get(ptKey(at)) ?? []).find((x) => !used.has(x.i));
+    }
+    return pts;
+  };
+  for (const e of edges) {
+    if (used.has(e.i)) continue;
+    const forward = walk(e, e.a);
+    const back = walk((byPoint.get(ptKey(e.a)) ?? []).find((x) => !used.has(x.i)), e.a);
+    const pts = back.length > 1 ? [...back.slice(1).reverse(), ...forward] : forward;
+    if (pts.length > 2) chains.push({ pts, seed: e });
+  }
+  return chains;
+}
+
+/** Boundary edges where `inside` holds on one side and not on the other. */
+function boundaryOf(inside) {
+  const edges = [];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    if (!inside(c, r)) continue;
+    const cs = grid.corners(c, r);
+    for (const [i, nb] of neighbours(c, r).entries()) {
+      if (inGrid(nb.col, nb.row) && inside(nb.col, nb.row)) continue;
+      const e = EDGE_FOR_DIRECTION[i];
+      edges.push({
+        i: edges.length,
+        a: { x: cs[e][0], y: cs[e][1] },
+        b: { x: cs[(e + 1) % 6][0], y: cs[(e + 1) % 6][1] },
+        inX: grid.centre(c, r).x, inY: grid.centre(c, r).y,
+      });
+    }
+  }
+  return edges;
+}
+
+/** +1 or -1: which way offsetPath has to push to end up OUTSIDE `inside`. */
+function outwardSign(chain) {
+  const { pts, seed } = chain;
+  const a = pts[0], b = pts[Math.min(3, pts.length - 1)];
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const L = Math.hypot(dx, dy) || 1;
+  const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  return (seed.inX - mid.x) * (dy / L) + (seed.inY - mid.y) * (-dx / L) > 0 ? -1 : 1;
+}
+
+const coastInk = { heavy: [], waves: STYLE.coastWaves.offsets.map(() => []) };
+const waveSeed = `${mapId}/coast`;
+
+function shoreline(inside, offsets, into) {
+  for (const chain of chainEdges(boundaryOf(inside))) {
+    const closed = ptKey(chain.pts[0]) === ptKey(chain.pts[chain.pts.length - 1]);
+    const line = smooth(chain.pts, 2, closed);
+    coastInk.heavy.push(curve(line, { closed }));
+    const sign = outwardSign(chain);
+    offsets.forEach((off, i) => {
+      const band = wobble(offsetPath(line, off * acrossFlats, sign, closed), acrossFlats * (0.004 + i * 0.002), waveSeed, `${chain.seed.i}:${i}`);
+      const runs = i === 0 ? [band] : dashify(band, { on: acrossFlats * (0.9 - i * 0.18), off: acrossFlats * (0.05 + i * 0.04), seed: waveSeed, key: `${chain.seed.i}:${i}` });
+      for (const run of runs) if (run.length > 3) into[i].push(curve(run, { closed: false }));
+    });
   }
 }
 
+shoreline((c, r) => isLand(c, r), STYLE.coastWaves.offsets, coastInk.waves);
+/* Fresh water gets its own, shorter, set: a lake is a shoreline too, and a
+   crater with no edge on it reads as a hole in the island rather than water. */
+const freshInk = { waves: STYLE.coastWaves.lakeOffsets.map(() => []) };
+const freshHeavy = coastInk.heavy.length;
+shoreline((c, r) => ['lake', 'river'].includes(idAt(c, r)), STYLE.coastWaves.lakeOffsets, freshInk.waves);
+
+/* ---- ground texture ------------------------------------------------------- */
+/* The local grain of the high ground, so a range reads as one piece of country.
+   Neighbours on opposite sides must reinforce rather than cancel, which is why
+   the angle is doubled before it is averaged and halved afterwards. */
+function rangeAxis(c, r) {
+  let ax = 0, ay = 0;
+  const here = grid.centre(c, r);
+  for (const nb of ring(c, r)) {
+    if (!['mountain', 'hills'].includes(idAt(nb.col, nb.row))) continue;
+    const p = grid.centre(nb.col, nb.row);
+    const a = Math.atan2(p.y - here.y, p.x - here.x) * 2;
+    ax += Math.cos(a); ay += Math.sin(a);
+  }
+  if (Math.hypot(ax, ay) < 1e-6) return { x: 1, y: 0 };
+  const a = Math.atan2(ay, ax) / 2;
+  return { x: Math.cos(a), y: Math.sin(a) };
+}
+
+const landPen = makePen(STYLE.line, acrossFlats);
+const waterPen = makePen(STYLE.line, acrossFlats);
+const landClip = [];
+const waterClip = [];
+const coldRow = ROWS * 0.22;
+
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+  const id = idAt(c, r);
+  const texture = TERRAIN_TEXTURE[id];
+  const water = isWaterId(id);
+  (water ? waterClip : landClip).push(hexPath(c, r));
+  if (!texture) continue;
+  const { x, y } = grid.centre(c, r);
+  texture(water ? waterPen : landPen, {
+    x, y, w: acrossFlats,
+    rand: mulberry32((form.seed ?? 1) + c * 7919 + r * 104729),
+    axis: rangeAxis(c, r),
+    cold: r < coldRow || r > ROWS - coldRow,
+    high: (inland.get(key(c, r)) ?? 0) >= 4,
+  });
+}
+
+/* ---- the watercourses ----------------------------------------------------- */
+const riverInk = [];
+const riverWash = [];
+const riverDefs = [];
+const riverLabels = [];
+for (const course of courses) {
+  const pts = course.hexes.map(([c, r]) => grid.centre(c, r));
+  const mouth = parseInt(course.to.slice(1, 3), 10);
+  void mouth;
+  const line = smooth(wobble(pts, acrossFlats * 0.05, `${mapId}/river`, course.id), 2, false);
+  /* Three width bands along the run, so the course thickens towards its mouth.
+     Drawn as separate strokes rather than one, because SVG has no tapering
+     stroke and a river of constant width is a canal. */
+  const bands = STYLE.river.widths;
+  for (let b = 0; b < bands.length; b++) {
+    const from = Math.floor((line.length - 1) * (b / bands.length));
+    const to = Math.ceil((line.length - 1) * ((b + 1) / bands.length));
+    const run = line.slice(from, to + 1);
+    if (run.length < 2) continue;
+    riverInk.push(`<path d="${curve(run)}" stroke-width="${n2(bands[b] * acrossFlats)}"/>`);
+  }
+  /* A river with no name is a blue shape. Set along the course itself rather
+     than beside it, because that is the one label on a map whose placement is
+     not a judgement call - the water says where it goes. */
+  if (course.name) {
+    const run = line[0].x > line[line.length - 1].x ? line.slice().reverse() : line;
+    riverDefs.push(`<path id="rv-${course.id}" d="${curve(run)}" fill="none"/>`);
+    riverLabels.push(`<text font-size="${n2(acrossFlats * 0.17)}" font-style="italic" fill="${TINT[70]}" ` +
+      `letter-spacing="${n2(acrossFlats * 0.012)}" ${HALO} dy="${n2(-acrossFlats * 0.05)}">` +
+      `<textPath href="#rv-${course.id}" startOffset="50%" text-anchor="middle">${esc(course.name)}</textPath></text>`);
+  }
+
+  /* The blue under it is a SHAPE, not a stroke: the wash plate is flat shapes
+     and nothing else, per docs/art/01-two-plate-system.md. */
+  const half = (STYLE.river.casing * acrossFlats) / 2;
+  const ribbon = [...offsetPath(line, half, 1, false), ...offsetPath(line, half, -1, false).reverse()];
+  riverWash.push(polyPath(ribbon, true));
+}
+
+/* ---- the play grid -------------------------------------------------------- */
+/* Printed, but quietly. Players have to see where one hex stops; a tint this
+   pale is gone at arm's length and unambiguous when you lean in. */
+const gridPath = [];
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) gridPath.push(hexPath(c, r));
+
 const RANK = { seat: 26, city: 21, town: 16, village: 12 };
-const LABEL = acrossFlats * 0.29;
+const LABEL = acrossFlats * 0.22;
+
+/* ---- the cartouche, and the compass --------------------------------------- */
+/* Both want open water, and both are placed by search rather than by a
+   coordinate somebody typed: score every candidate rectangle by how much
+   playable ground it would cover, and take the emptiest. Lapping the frame is
+   allowed and is period-correct - a plate nailed to the border - and it costs
+   the players no ground at all. */
+/* Where every settlement's name WANTS to go, worked out before any furniture is
+   placed. The two are mutually dependent - a name dodges the key, and the key
+   should not have been put on the name in the first place - so the loop is cut
+   here: names ask first, the key is placed around their answers, and then the
+   names are placed for real and almost always keep what they asked for. */
+const labelBoxes = settlements.map((st) => {
+  const { x, y } = grid.centre(st.col, st.row);
+  const rad = (RANK[st.rank] ?? 12) * (acrossFlats / 131);
+  const half = st.name.length * LABEL * 0.3;
+  const above = y - rad - LABEL * 0.45;
+  const ty = above < FRAME + LABEL ? y + rad + LABEL : above;
+  return { x: x - half, y: ty - LABEL, w: half * 2, h: LABEL * 1.4 };
+});
+
+function clearRect(w, h, taken) {
+  const step = acrossFlats * 0.3;
+  /* Kept a little off the paper's edge. Lapping the frame is wanted; hanging
+     half off the plate is not, and off-grid samples score as free, so without
+     this the corners always win. */
+  const edge = FRAME * 1.15;
+  let best = null;
+  for (let y = edge; y + h < plateHeight - edge; y += step) {
+    for (let x = edge; x + w < plateWidth - edge; x += step) {
+      if (taken.some((t) => !(x + w < t.x || x > t.x + t.w || y + h < t.y || y > t.y + t.h))) continue;
+      let free = 0, total = 0;
+      for (let j = 0; j < 7; j++) for (let i = 0; i < 9; i++) {
+        const hx = grid.at(x + (w * (i + 0.5)) / 9, y + (h * (j + 0.5)) / 7);
+        total++;
+        if (!hx) { free++; continue; }
+        const id = idAt(hx.col, hx.row);
+        if (id === 'deep-water' || id === 'shallow-water') free++;
+        else free -= 1;   /* land is not free: a key over a hex is a hex nobody can use */
+      }
+      /* A name is set BESIDE its mark, so a panel that merely abuts a town still
+         eats that town's name. The box, not the hex, is what has to be clear. */
+      if (labelBoxes.some((b) => !(x + w < b.x || x > b.x + b.w || y + h < b.y || y > b.y + b.h))) continue;
+      const score = free / total;
+      if (!best || score > best.score) best = { x, y, w, h, score };
+    }
+  }
+  return best;
+}
+
+const plateSpots = [];
+const roseR = plateWidth * (STYLE.frame.compassRadius ?? 0.055);
+const rosePlace = clearRect(roseR * 3, roseR * 3.2, plateSpots);
+let roseInk = '';
+if (rosePlace && rosePlace.score > 0.8) {
+  plateSpots.push(rosePlace);
+  roseInk = compassRose(rosePlace.x + rosePlace.w / 2, rosePlace.y + rosePlace.h / 2 + roseR * 0.18, roseR, STYLE.line, acrossFlats, SOOT, FONT);
+}
+
+const keyRows = terrainFile.terrains.filter((t) => (tallyOf(t.id) ?? 0) > 0);
+const cartW = plateWidth * STYLE.cartouche.widthFraction;
+const rowH = plateWidth * STYLE.cartouche.rowHeight;
+const cartPad = plateWidth * STYLE.cartouche.borderFraction;
+/* One type scale for the whole plate, set off the cartouche rather than off a
+   hex, so the key reads the same on a ten-column board and a thirty-column one. */
+const CT = cartW;
+const cartH = cartPad * 2 + CT * 0.3 + Math.ceil(keyRows.length / 2) * rowH + CT * 0.1;
+const cartPlace = clearRect(cartW, cartH, plateSpots);
+let cartWash = '', cartInk = '';
+if (cartPlace && cartPlace.score >= STYLE.cartouche.minWaterShare) {
+  plateSpots.push(cartPlace);
+  const { x, y } = cartPlace;
+  const pen = makePen(STYLE.line, CT * 0.5);
+  pen.coast(`M${n2(x)},${n2(y)}h${n2(cartW)}v${n2(cartH)}h${n2(-cartW)}Z`);
+  pen.structure(`M${n2(x + cartPad)},${n2(y + cartPad)}h${n2(cartW - cartPad * 2)}v${n2(cartH - cartPad * 2)}h${n2(-cartW + cartPad * 2)}Z`);
+  for (const [cx, cy, sx, sy] of [[x, y, 1, 1], [x + cartW, y, -1, 1], [x, y + cartH, 1, -1], [x + cartW, y + cartH, -1, -1]]) {
+    const arm = cartPad * 2.6, r = cartPad * 0.16;
+    pen.structure(`M${n2(cx)},${n2(cy + sy * arm)}L${n2(cx + sx * cartPad)},${n2(cy + sy * arm)}L${n2(cx + sx * cartPad)},${n2(cy + sy * cartPad)}` +
+                  `L${n2(cx + sx * arm)},${n2(cy + sy * cartPad)}L${n2(cx + sx * arm)},${n2(cy)}Z`);
+    for (const [px, py] of [[0.5, 1.8], [1.8, 0.5], [0.5, 0.5]]) {
+      pen.solid(`M${n2(cx + sx * cartPad * px - r)},${n2(cy + sy * cartPad * py - r)}h${n2(r * 2)}v${n2(r * 2)}h${n2(-r * 2)}Z`);
+    }
+  }
+
+  const texts = [];
+  const titleY = y + cartPad + CT * 0.13;
+  /* Set to fit rather than set and hoped: a long map name at a fixed size runs
+     off its own plate and over the ground beside it. */
+  const titleSize = Math.min(CT * 0.135, (cartW - cartPad * 4) / (map.name.length * 0.52));
+  texts.push(`<text x="${n2(x + cartW / 2)}" y="${n2(titleY)}" text-anchor="middle" font-size="${n2(titleSize)}" fill="${SOOT}" letter-spacing="${n2(CT * 0.005)}">${esc(map.name)}</text>`);
+  const sub = map.subtitle ?? `${COLS} × ${ROWS} hexes · ${courses.length} watercourses`;
+  const subSize = Math.min(CT * 0.048, (cartW - cartPad * 4) / (sub.length * 0.46));
+  texts.push(`<text x="${n2(x + cartW / 2)}" y="${n2(titleY + CT * 0.072)}" text-anchor="middle" font-size="${n2(subSize)}" font-style="italic" fill="${TINT[70]}">${esc(sub)}</text>`);
+  const ruleY = titleY + CT * 0.125;
+  pen.detail(`M${n2(x + cartPad * 2)},${n2(ruleY)}h${n2(cartW - cartPad * 4)}` +
+             `M${n2(x + cartW / 2 - CT * 0.017)},${n2(ruleY - CT * 0.017)}l${n2(CT * 0.017)},${n2(CT * 0.017)}l${n2(-CT * 0.017)},${n2(CT * 0.017)}l${n2(-CT * 0.017)},${n2(-CT * 0.017)}Z`);
+
+  /* The key is drawn with the plate's own textures, at a fraction of the size,
+     so it is a SAMPLE of the map rather than a table of swatches. */
+  const rows = Math.ceil(keyRows.length / 2);
+  const colW = (cartW - cartPad * 2) / 2;
+  const swatch = CT * 0.048;
+  keyRows.forEach((t, i) => {
+    const cx = x + cartPad + Math.floor(i / rows) * colW + swatch * 1.1;
+    const cy = ruleY + CT * 0.06 + (i % rows) * rowH + swatch;
+    const pts = [];
+    for (let k = 0; k < 6; k++) {
+      const a = ((60 * k - 90) * Math.PI) / 180;
+      pts.push(`${n2(cx + (swatch / Math.sqrt(3)) * 2 * 0.5 * Math.cos(a))},${n2(cy + (swatch / Math.sqrt(3)) * 2 * 0.5 * Math.sin(a))}`);
+    }
+    cartWash += `<polygon points="${pts.join(' ')}" fill="${wash(t.id)}"/>`;
+    const tp = makePen(STYLE.line, swatch * 2);
+    TERRAIN_TEXTURE[t.id]?.(tp, {
+      x: cx, y: cy, w: swatch * 2, rand: mulberry32(1337 + i),
+      axis: { x: 1, y: 0 }, cold: false, high: false,
+    });
+    texts.push(`<g stroke="${SOOT}" stroke-linecap="round" stroke-linejoin="round" opacity="${STYLE.texture.strength}">${tp.render(SOOT)}</g>`);
+    /* The name gets whatever is left after the swatch and the count column, and
+       is set to fit it. "Shallow Water" against a four-figure tally is what
+       decides this width, and it is the one pair that has to be measured. */
+    const countX = x + cartPad + Math.floor(i / rows) * colW + colW - cartPad * 0.5;
+    const room = colW - swatch * 1.6 - cartPad * 0.5 - CT * 0.1;
+    const nameSize = Math.min(CT * 0.046, room / (t.name.length * 0.5));
+    texts.push(`<text x="${n2(cx + swatch * 1.6)}" y="${n2(cy + swatch * 0.42)}" font-size="${n2(nameSize)}" fill="${TINT[85]}">${esc(t.name)}</text>`);
+    texts.push(`<text x="${n2(countX)}" y="${n2(cy + swatch * 0.42)}" text-anchor="end" font-size="${n2(CT * 0.043)}" fill="${TINT[55]}">${tallyOf(t.id)}</text>`);
+  });
+
+  texts.push(`<text x="${n2(x + cartW / 2)}" y="${n2(y + cartH - cartPad * 1.3)}" text-anchor="middle" font-size="${n2(CT * 0.038)}" fill="${TINT[55]}" letter-spacing="${n2(CT * 0.005)}">one hex across the flats · ${COLS} × ${ROWS} · game1</text>`);
+
+  cartWash = `<rect x="${n2(x)}" y="${n2(y)}" width="${n2(cartW)}" height="${n2(cartH)}" fill="${palette.paper.tallow.hex}"/>` + cartWash;
+  cartInk = `<g stroke="${SOOT}" stroke-linecap="round" stroke-linejoin="round">${pen.render(SOOT)}</g>${texts.join('')}`;
+}
+
 
 /* A name is no use printed off the paper. The anchor slides to the nearest end
    when a label would cross the frame, and the label drops under its own mark on
@@ -506,8 +930,20 @@ function place(x, y, name, rad) {
   let anchor = 'middle', tx = x;
   if (x - half < left) { anchor = 'start'; tx = Math.max(left, x - rad); }
   else if (x + half > right) { anchor = 'end'; tx = Math.min(right, x + rad); }
+  /* Above the mark by preference, below it at the top of the field - and below
+     it also when above would put the name under the key or the compass. The
+     furniture is placed before the names for exactly this reason: a name half
+     under a title plate is the one defect on a map that cannot be explained
+     away as a drawing decision. */
+  const clear = (at) => {
+    const x0 = anchor === 'start' ? tx : anchor === 'end' ? tx - half * 2 : tx - half;
+    const box = { x0, y0: at - LABEL, x1: x0 + half * 2, y1: at + LABEL * 0.3 };
+    return !plateSpots.some((t) => !(box.x1 < t.x || box.x0 > t.x + t.w || box.y1 < t.y || box.y0 > t.y + t.h));
+  };
   const above = y - rad - LABEL * 0.45;
-  const ty = above < FRAME + LABEL ? y + rad + LABEL : above;
+  const below = y + rad + LABEL;
+  let ty = above < FRAME + LABEL ? below : above;
+  if (!clear(ty)) { const other = ty === above ? below : above; if (clear(other)) ty = other; }
   return { tx, ty, anchor };
 }
 
@@ -518,7 +954,7 @@ const marks = settlements.map((s) => {
     ? `<rect x="${n2(x - rad)}" y="${n2(y - rad)}" width="${n2(rad * 2)}" height="${n2(rad * 2)}" fill="${SOOT}"/>`
     : `<circle cx="${n2(x)}" cy="${n2(y)}" r="${n2(rad)}" fill="${s.rank === 'town' ? SOOT : palette.paper.tallow.hex}" stroke="${SOOT}" stroke-width="${n2(rad * 0.35)}"/>`;
   const { tx, ty, anchor } = place(x, y, s.name, rad);
-  return `${shape}<text x="${n2(tx)}" y="${n2(ty)}" font-size="${n2(LABEL)}" text-anchor="${anchor}" fill="${SOOT}">${esc(s.name)}</text>`;
+  return `${shape}<text x="${n2(tx)}" y="${n2(ty)}" font-size="${n2(LABEL)}" text-anchor="${anchor}" fill="${SOOT}" ${HALO}>${esc(s.name)}</text>`;
 }).join('\n    ');
 
 /* Nine lanes thread the same few channels between the islands, so most of the
@@ -580,29 +1016,83 @@ const roads = (routes.road ?? []).map((l) => {
   const path = landPath(a, b);
   if (!path) return '';
   const pts = path.map(([c, r]) => { const p = grid.centre(c, r); return `${n2(p.x)},${n2(p.y)}`; }).join(' ');
-  return `<polyline points="${pts}" fill="none" stroke="${SOOT}" stroke-width="${n2(acrossFlats * 0.04)}" stroke-linejoin="round" stroke-linecap="round"/>`;
+  return `<polyline points="${pts}" fill="none" stroke="${TINT[70]}" stroke-width="${n2(acrossFlats * 0.014)}" stroke-linejoin="round" stroke-linecap="round"/>`;
 }).join('\n    ');
 
-const regionLabels = regions.map((g) => {
+/* A region whose name a settlement already carries is a name printed twice in
+   the same two hexes. The settlement wins: it is the thing players point at. */
+const regionLabels = regions.filter((g) => !settlements.some((s) => s.name === g.name)).map((g) => {
   const { x, y } = grid.centre(g.labelAt[0], g.labelAt[1]);
-  return `<text x="${n2(x)}" y="${n2(y)}" font-size="${n2(acrossFlats * 0.42)}" text-anchor="middle" fill="${TINT[70]}" letter-spacing="${n2(acrossFlats * 0.06)}">${esc(g.name.toUpperCase())}</text>`;
+  return `<text x="${n2(x)}" y="${n2(y)}" font-size="${n2(acrossFlats * 0.24)}" text-anchor="middle" fill="${TINT[55]}" letter-spacing="${n2(acrossFlats * 0.05)}" ${HALO}>${esc(g.name.toUpperCase())}</text>`;
 }).join('\n    ');
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${plateWidth} ${plateHeight}" width="${plateWidth}" height="${plateHeight}" font-family="Georgia, 'Iowan Old Style', 'Times New Roman', serif">
+/* ---- the frame, and the index around the inside of it --------------------- */
+const frameRand = mulberry32((form.seed ?? 1) ^ 0x5f3759df);
+const frameInk = plankFrame(0, 0, plateWidth, plateHeight, FRAME, STYLE.line, acrossFlats, SOOT, frameRand);
+
+/* I and O are skipped: at this size they read as 1 and 0. */
+const ROW_LETTERS = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+const indexSize = acrossFlats * STYLE.frame.indexSize;
+const indexInk = [];
+for (let c = 0; c < COLS; c++) {
+  const { x } = grid.centre(c, 0);
+  for (const y of [FRAME - indexSize * 0.45, plateHeight - FRAME + indexSize * 1.1]) {
+    indexInk.push(`<text x="${n2(x)}" y="${n2(y)}" text-anchor="middle" font-size="${n2(indexSize)}" fill="${TINT[70]}" letter-spacing="${n2(indexSize * 0.08)}">${c + 1}</text>`);
+  }
+}
+for (let r = 0; r < ROWS; r++) {
+  const { y } = grid.centre(0, r);
+  const letter = ROW_LETTERS[r] ?? String(r + 1);
+  for (const x of [FRAME - indexSize * 0.7, plateWidth - FRAME + indexSize * 0.7]) {
+    indexInk.push(`<text x="${n2(x)}" y="${n2(y + indexSize * 0.36)}" text-anchor="middle" font-size="${n2(indexSize)}" fill="${TINT[70]}" letter-spacing="${n2(indexSize * 0.08)}">${letter}</text>`);
+  }
+}
+
+/* The map's own linework stops short of the plates rather than being painted
+   over by them: the wash plate is below all ink, so an opaque panel there would
+   still have every coastline running through its type, and an opaque panel on
+   the ink plate would print as a pale rectangle in the black-and-white edition.
+   The engraver's answer is to leave the plate blank. */
+const cutouts = plateSpots.map((t) => `M${n2(t.x)},${n2(t.y)}h${n2(t.w)}v${n2(t.h)}h${n2(-t.w)}Z`).join('');
+const plateClip = `M0,0h${plateWidth}v${plateHeight}h${-plateWidth}Z${cutouts}`;
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${plateWidth} ${plateHeight}" width="${plateWidth}" height="${plateHeight}" font-family="${FONT}">
 <title>${esc(map.name)}</title>
-<desc>${esc(map.subtitle ?? '')} — generated by tools/draw-map.mjs from data/maps/${mapId}.json. A flat terrain colour per hex, a coastline, the settlements and the lanes between them. No hex grid: that is an overlay drawn at read time from the same rows, so it cannot disagree with this.</desc>
+<desc>${esc(map.subtitle ?? '')} — generated by tools/draw-map.mjs from data/maps/${mapId}.json. A terrain wash per hex, the ground texture that terrain prints in, a shoreline with wave lines beside it, the watercourses run downhill from the high ground, the settlements and the lanes between them, in a timber frame with a lettered index. The hex grid is a hairline here and an overlay at read time from the same rows, so the two cannot disagree.</desc>
+<defs>
+  <clipPath id="land"><path d="${landClip.join('')}"/></clipPath>
+  <clipPath id="water"><path d="${waterClip.join('')}"/></clipPath>
+  <clipPath id="plates"><path clip-rule="evenodd" d="${plateClip}"/></clipPath>
+  ${riverDefs.join('\n  ')}
+</defs>
 <g id="wash">
     <rect width="${plateWidth}" height="${plateHeight}" fill="${palette.paper.tallow.hex}"/>
     ${washCells.join('\n    ')}
+    <path d="${riverWash.join('')}" fill="${wash('river')}"/>
+    ${cartWash}
 </g>
 <g id="ink">
-    <path d="${coast.join('')}" fill="none" stroke="${SOOT}" stroke-width="${n2(acrossFlats * 0.045)}" stroke-linecap="round"/>
+  <g clip-path="url(#plates)">
+    <g stroke="${SOOT}" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#land)" opacity="${STYLE.texture.strength}">${landPen.render(SOOT)}</g>
+    <g stroke="${TINT[70]}" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#water)" opacity="${STYLE.texture.waterStrength}">${waterPen.render(TINT[70])}</g>
+    <path d="${gridPath.join('')}" fill="none" stroke="${TINT[STYLE.grid.tint]}" stroke-width="${n2(acrossFlats * STYLE.grid.weight)}"/>
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#water)">
+      ${coastInk.waves.map((set, i) => set.length ? `<g stroke="${i > 1 ? TINT[70] : SOOT}" stroke-width="${n2(acrossFlats * STYLE.coastWaves.weights[i])}">${set.map((d) => `<path d="${d}"/>`).join('')}</g>` : '').join('\n      ')}
+      ${freshInk.waves.map((set, i) => set.length ? `<g stroke="${TINT[70]}" stroke-width="${n2(acrossFlats * STYLE.coastWaves.weights[i])}">${set.map((d) => `<path d="${d}"/>`).join('')}</g>` : '').join('\n      ')}
+    </g>
+    <path d="${coastInk.heavy.slice(0, freshHeavy).join('')}" fill="none" stroke="${SOOT}" stroke-width="${n2(acrossFlats * STYLE.line.coast)}" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${coastInk.heavy.slice(freshHeavy).join('')}" fill="none" stroke="${SOOT}" stroke-width="${n2(acrossFlats * STYLE.line.structure)}" stroke-linecap="round" stroke-linejoin="round"/>
+      <g fill="none" stroke="${TINT[70]}" stroke-linecap="round" stroke-linejoin="round">${riverInk.join('')}</g>
+    ${riverLabels.join('\n    ')}
     ${regionLabels}
     ${laneGroup}
     ${roads}
     ${marks}
-    <rect x="${FRAME / 2}" y="${FRAME / 2}" width="${plateWidth - FRAME}" height="${plateHeight - FRAME}" fill="none" stroke="${SOOT}" stroke-width="6"/>
-    <rect x="${FRAME - 6}" y="${FRAME - 6}" width="${plateWidth - 2 * FRAME + 12}" height="${plateHeight - 2 * FRAME + 12}" fill="none" stroke="${SOOT}" stroke-width="2"/>
+  </g>
+  ${frameInk}
+  ${indexInk.join('\n  ')}
+  ${roseInk}
+  ${cartInk}
 </g>
 <g id="grime">
     <rect width="${plateWidth}" height="${plateHeight}" fill="${palette.paper.foxing.hex}" opacity="0.05"/>
@@ -614,27 +1104,27 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${plateWidth} 
 const svgPath = join(ROOT, 'docs', 'map', `${mapId}.svg`);
 
 const next = { ...map };
-delete next.plate; delete next.rows; delete next.regions; delete next.settlements; delete next.routes;
+delete next.plate; delete next.rows; delete next.regions; delete next.settlements; delete next.routes; delete next.rivers;
 const rebuilt = {};
 for (const k of Object.keys(map)) {
   if (k === 'commission') { rebuilt[k] = map[k]; rebuilt.plate = plate; continue; }
   if (k === 'plate') continue;
   if (k === 'rows') { rebuilt.rows = board; rebuilt.$rowsNote = 'GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.'; continue; }
   if (k === '$rowsNote') continue;
-  if (k === 'regions' || k === 'settlements' || k === 'routes') continue;
+  if (k === 'regions' || k === 'settlements' || k === 'routes' || k === 'rivers') continue;
   rebuilt[k] = map[k];
 }
 if (!rebuilt.plate) rebuilt.plate = plate;
 if (!rebuilt.rows) { rebuilt.rows = board; }
 rebuilt.regions = regions;
 rebuilt.settlements = settlements;
+rebuilt.rivers = courses;
+rebuilt.$riversNote = 'GENERATED. Each course is the chain of hexes the water runs through, spring first, and every one of those hexes is terrain `river` in rows. Run downhill by tools/draw-map.mjs from the terrain bands and the distance inland - never hand-placed, because a hand-placed river is how you get one that starts nowhere.';
 rebuilt.routes = routes;
 
 const nextJson = `${JSON.stringify(rebuilt, null, 2)}\n`;
 
 /* ---------------------------------------------------------------- report it */
-const tally = {};
-for (const line of board) for (const ch of line) { const id = map.legend[ch]; tally[id] = (tally[id] ?? 0) + 1; }
 const landHexes = Object.entries(tally).filter(([id]) => !isWaterId(id)).reduce((n, [, v]) => n + v, 0);
 
 if (flag('rows')) {
@@ -662,6 +1152,17 @@ console.log(`  data/maps/${mapId}.json   ${COLS} x ${ROWS} = ${CELLS} hexes, ${l
 console.log(`  docs/map/${mapId}.svg     ${plateWidth} x ${plateHeight}, vector — no long side to fall short of`);
 console.log(`  ${settlements.length} settlements, ${(routes.shipping ?? []).length} lanes, ${(routes.road ?? []).length} roads, ${regions.length} regions`);
 if (craterAt) console.log(`  crater lake at ${hexId(craterAt.col, craterAt.row)}`);
+if (courses.length) {
+  console.log(`  ${courses.length} watercourses, ${riverHexes.size} river hexes:`);
+  for (const c of courses) console.log(`    ${(c.name ?? c.id).padEnd(18)} ${c.from} -> ${c.to}, ${c.hexes.length} hexes`);
+} else if (riverBudget > 0) {
+  console.log('  no watercourses: no island has ground high enough and far enough inland to spring one.');
+}
+if (riverBudget > riverHexes.size) {
+  console.log(`  river budget unspent: asked ${riverBudget} hexes, ran ${riverHexes.size}.` +
+    ` ${riverReject.tried} springs walked, ${riverReject.tooShort} reached water in under three hexes.` +
+    ' A short run is a brook and is not drawn; if this number is large the massif is too close to the coast.');
+}
 
 /* Budget against outcome, because the budget is a wish and the grid is integers. */
 const drift = map.commission.terrainBudget

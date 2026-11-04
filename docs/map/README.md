@@ -30,6 +30,80 @@ checks and says out loud that it did. See [`../MINT.md`](../MINT.md), and
 
 ---
 
+## What a generated plate draws
+
+A generated plate began as a flat terrain colour and a coastline, on the argument
+`tools/build-minimaps.mjs` makes: **drawn ground competes with the pieces standing on it.**
+That argument is the same one the mini-maps themselves revisited and found half right — a
+*drawn* sheet competes, and a **mark** at a fraction of a cell, on the ink plate, at a
+fraction of full strength, does not. It does the job a flat wash fails to do on its own:
+say which ground this is from across the table, in the black-and-white edition too.
+
+`tools/lib/cartography.mjs` is that finding carried up to world scale. The style is
+declared once, in [`data/components.json` → `mapPlate`](../../data/components.json), and
+the technique lives in the library — the same split `draw-item.mjs` and `itemPlate` already
+use one storey down. No number in that block belongs to one map, and no map carries a
+number of its own.
+
+What it puts on the page, and why each one earns its place:
+
+| | |
+| --- | --- |
+| **Ground texture** | One mark per terrain, nothing shared: peaks, hummocks, tree stamps, tussocks, reed clumps, dune crests, frost ticks, ripple dashes, current chevrons. Drawn on the ink plate at `texture.strength`, so it survives the colour coming off. |
+| **A shoreline with wave lines** | A heavy coast and three or four progressively lighter lines running parallel to it out into the water. Engravers have done this since the 1500s; it is the one device that gives the sea a direction and the land an edge at arm's length across a table. |
+| **The watercourses** | Run downhill, not placed. See below. |
+| **A timber frame and an index** | Numbers across, letters down, I and O skipped because at this size they read as 1 and 0. A board printed in six pieces has to be talked about: "the coal seam in D7" needs a D7. |
+| **A key, and a compass** | Both placed by search over open water, both allowed to lap the frame, and both kept clear of a settlement's name as well as its mark. |
+
+Three rules are worth stating because each one was got wrong first:
+
+**Every weight is a fraction of a hex, and every piece of furniture is a fraction of the
+plate.** A key sized in hexes is a third of the board on an eleven-column map and a tenth of
+it on a thirty-column one. Ground belongs to the hex; furniture belongs to the page.
+
+**The key and the compass are cut OUT of the map rather than laid over it.** The wash plate
+sits below all ink, so an opaque panel there would still have every coastline running
+through its type; an opaque panel on the ink plate would print as a pale rectangle in the
+black-and-white edition. The engraver's answer is to leave the plate blank, so the map's own
+linework is clipped around both.
+
+**The furniture is placed before the names.** The two are mutually dependent — a name dodges
+the key, and the key should not have been put on the name in the first place — so the loop
+is cut by letting the names say where they want to go, placing the key around those answers,
+and then placing the names for real.
+
+## Rivers run downhill
+
+> Rivers flow from one point to another, typically from a mountain to an ocean. Lay hex
+> tiles out at random and that does not happen: you get a river here, a mountain there, and
+> flat land in between.
+
+So they are not placed. `tools/draw-map.mjs` reads a height off what the board already says
+— the terrain band, plus how far inland the hex is — and runs water down it. A course starts
+on the highest ground an island has, steps only to lower ground, leaves a basin by whichever
+neighbour is nearest the water, and stops when it reaches water or joins a course already
+running. It therefore **cannot** start in the middle of a plain or stop halfway.
+
+There is no second elevation field to keep in step with the board, which is the point: a
+height that is stored is a height that can disagree with the terrain above it.
+
+Each course is written back as `rivers[]` — the chain of hexes it runs through, spring first
+— and every one of those hexes is terrain `river` in `rows`. A river is a hex here, not an
+edge, because `data/terrain.json` calls it "a watercourse wide enough to be its own hex".
+`commission.terrainBudget` carries a `river` share, and it is a **ceiling** rather than a
+quota: it stops the vale turning into a delta. Because a river hex is water, every one of
+them comes out of the land total, which is why a commission's land shares add up to more
+than the land hexes it wants.
+
+A name is the one thing the tool may not invent, so `landform.riverNames` is a list a person
+wrote down, assigned longest course first — the name a player will trace with a finger is the
+one that got written.
+
+When the budget goes unspent the tool says so and says why, because there is exactly one
+usual cause: a massif in the middle of its own continent is three hexes from salt water in
+every direction, and a board full of brooks is what that produces. Anchoring the landmass
+off-centre is the fix, and the Vale's commission says as much.
+
 ## This document is the DRAWN kind
 
 A map plate is one of two kinds and the difference is one field, `plate.kind` on the
@@ -108,8 +182,28 @@ file off disk and a browser will not import a module from outside that directory
 
 `print.html` tiles the whole plate across a grid of A4 sheets, puts trim marks on the four
 corners of each sheet's window and stamps every sheet with its row and column. Print at
-**100%** — "fit to page" silently rescales and the pieces will not meet — then cut on the
-marks and butt the sheets edge to edge.
+**100%** — "fit to page" silently rescales and the pieces will not meet.
+
+How the pieces then go together depends on one number in the preset, `overlapMm`:
+
+- **`overlapMm: 0`** — cut on the marks and butt the sheets edge to edge. Every millimetre
+  of the map is printed exactly once, and the join is only as good as your blade.
+- **`overlapMm: 10`** — each sheet also prints the first 10 mm of its right-hand and lower
+  neighbour's ground. Trim the **left and top** edge of every sheet, lay `A1` down first,
+  and slide each trimmed edge over its neighbour's shaded band until the two registration
+  crosses sit on top of each other. Tape from behind.
+
+That band is a **duplicate**, and duplicating it is the whole point: it is the tolerance in
+the system. Trim two millimetres out, tape two millimetres over, and the artwork still runs
+continuously, because what is underneath the join is the same drawing. Butted sheets have
+no tolerance at all — a one-millimetre error is a one-millimetre white line through the
+map, and there are five joins on a six-sheet board.
+
+The crosses are drawn in **map** coordinates rather than sheet coordinates, so a cross that
+falls inside a duplicated band is printed by both of the sheets that meet there. Lining the
+two copies up aligns the board by construction rather than by eye. The band, the crosses
+and the trim rules all live in the margin or under the next sheet, so none of them survives
+onto the assembled board.
 
 | Preset | Sheets | Finished | Hex | Resolution |
 | --- | --- | --- | --- | --- |
@@ -132,12 +226,30 @@ any *n* and fills the paper — 98% of it, with the 6.6 mm that is left over goi
 right-hand margin. One, four and nine sheets are the same window repeated 1, 2 and 3 to a
 side; nothing about a sheet changes between presets except how many of them there are.
 
-Grids that are not square do not work, and six sheets has no square arrangement. A 3 × 2
-portrait block is 582 × 562 mm, aspect 1.036 — nothing like the plate — so the map is
-pinned by the width and only 73% of the paper carries any ink: 83 mm at the foot of all six
-pages is blank. The other six-sheet arrangements are worse (3 × 2 landscape 65%, 2 × 3
-landscape 68%, 2 × 3 portrait 33%). Six sheets did ship, printing 582 × 411 mm, and was
-replaced by `four-sheet`: 6% smaller, two fewer sheets, and the paper actually used.
+Grids that are not square do not work *for a root-two plate*, and six sheets has no square
+arrangement. A 3 × 2 portrait block is 582 × 562 mm, aspect 1.036 — nothing like the Reach's
+plate — so that map is pinned by its width and only 73% of the paper carries any ink: 83 mm
+at the foot of all six pages is blank. The other six-sheet arrangements are worse (3 × 2
+landscape 65%, 2 × 3 landscape 68%, 2 × 3 portrait 33%). Six sheets did ship for the Reach,
+printing 582 × 411 mm, and was replaced by `four-sheet`: 6% smaller, two fewer sheets, and
+the paper actually used.
+
+**The answer to that is not a better layout, it is a different plate.** Everything above
+takes the plate's shape as given and asks which sheet grid fits it. A *generated* plate has
+no shape of its own — it is whatever the grid makes it — so the question runs the other way,
+and that is what [`kelder-vale`](../../data/maps/kelder-vale.json) does: pick the sheet
+block first, then solve for the grid whose plate comes out at that aspect.
+
+Six A4 portrait at an 8 mm margin and a 10 mm overlap make a block of
+`194 × 3 − 10 × 2 = 562` by `281 × 2 − 10 = 552` mm, aspect 1.018. An 11 × 12 grid lands at
+1.026 — eight parts in a thousand out — so the Vale fills 562 × 547.5 mm of a 562 × 552 mm
+block, which is 99% of the paper, and its hexes come out at 45.9 mm across the flats.
+
+Six sheets is worth solving for because it is the size a table wants: a 562 mm square sits
+on a dining table with player boards round it, where `nine-sheet` does not and `four-sheet`
+is a map you lean over rather than a board you play on. For a **drawn** plate the Reach's
+argument stands unchanged — you cannot re-solve a painting's aspect ratio after the fact,
+which is one more reason the generated line exists.
 
 If four sheets is the size you want but you would rather have the extra 6%, eight sheets in
 a 4 × 2 *portrait* block is the other efficient shape — 776 × 549 mm at 98% — because 4/2

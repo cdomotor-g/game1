@@ -477,8 +477,9 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <blockquote><p><strong>Note.</strong> cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 41 of 41 are under the 1890 px this line would want for print — smallest is <code>CHR-12</code> at 1488 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> cards: every plate clears the 866 px floor (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi), and 65 of 65 are under the 1299 px this line would want for print — smallest is <code>TAL-01</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is <code>korvane-reach</code> at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.</p></blockquote>
-<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 797 px floor (a 67.5 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 4 of 4 are under the 1594 px this line would want for print — smallest is <code>manor</code> at 1536 px. That is an aspiration, not a fault.</p></blockquote>
-<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 8 of 11 are under the 1289 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 1084 px floor (a 91.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares), and 14 of 14 are under the 2169 px this line would want for print — smallest is <code>timber-house</code> at 1492 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 1355 px floor (a 114.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares), and 4 of 4 are under the 2711 px this line would want for print — smallest is <code>manor</code> at 1536 px. That is an aspiration, not a fault.</p></blockquote>
+<blockquote><p><strong>Note.</strong> buildingtiles: every plate clears the 1095 px floor (a 92.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares), and 11 of 11 are under the 2191 px this line would want for print — smallest is <code>lumber-camp</code> at 1254 px. That is an aspiration, not a fault.</p></blockquote>
 <blockquote><p><strong>Note.</strong> buildingtiles: 1 landed plate is drawn on a page the brief did not ask for — <code>tile-timber-house</code> asks for A4 landscape, 3:2 and is 1054x1492, an A4 portrait page. The card or tile window still cuts to the shape the brief names, so what the wrong page added is thrown away. Redrawing on the right page is the only fix; <code>node tools/aim-preview.mjs</code> shows what is being lost.</p></blockquote>
 <h2 id="cards">Cards</h2>
 <p>One card in one of the adventure decks. Briefs in <a href="../art/prompts/"><code>docs/art/prompts/</code></a>, one file per deck, plates in <code>docs/art/renders/</code>, aimed by <strong>FRAME</strong> in <code>docs/art/framing.json</code>.</p>
@@ -563,7 +564,8 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <p>Drawn by a tool from its own data, so there is no handover to track and no step anybody is waiting on. It is reported here every run rather than disappearing, the same way a shelved line is: a decision with a reason attached is not an absence. Run <code>node tools/draw-map.mjs &lt;id&gt;</code> to regrow one, and set <code>plate.kind</code> back to <code>&quot;drawn&quot;</code> to put it back in the worklist above.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Map</th><th>Grid</th><th>Plate</th></tr></thead>
-<tbody><tr><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles.svg</code></td></tr>
+<tbody><tr><td>The Kelder Vale</td><td>11 × 12</td><td><code>kelder-vale.svg</code></td></tr>
+<tr><td>The Sundering Isles</td><td>30 × 24</td><td><code>sundering-isles.svg</code></td></tr>
 <tr><td>The Wine-Dark Sea</td><td>32 × 24</td><td><code>wine-dark-sea.svg</code></td></tr></tbody></table></div>
 <hr>
 <h2 id="building-tiles">Building tiles</h2>
@@ -572,7 +574,7 @@ node tools/build-mint.mjs       # the mint page on the site</code></pre>
 <h3 id="1-write-the-designer-2">1 · WRITE — the designer</h3>
 <p>Nothing waiting.</p>
 <h3 id="2-draw-the-artist-10-tiles">2 · DRAW — the artist — 10 tiles</h3>
-<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 368–644 px on the long side depending on the subject's own footprint (736–1289 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
+<p>The brief is written and there is no plate. Generate it at <strong>the deck’s declared format</strong>, at least 626–1095 px on the long side depending on the subject's own footprint (1252–2191 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in <a href="../art/07-ai-agent-brief.md"><code>../07-ai-agent-brief.md</code></a>, and commit <code>docs/art/renders/&lt;plate&gt;.png</code>.</p>
 <div class="table-wrap"><table>
 <thead><tr><th>Code</th><th>Tile</th><th>Category</th><th>Plate</th><th>brief</th><th>plate</th><th>frame</th></tr></thead>
 <tbody><tr><td><code>brickworks</code></td><td>Brickworks</td><td>Production</td><td><code>tile-brickworks</code></td><td>✓</td><td>·</td><td>·</td></tr>

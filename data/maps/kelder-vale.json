@@ -1,0 +1,478 @@
+{
+  "$comment": "A GENERATED map: the board is the source and the plate is an output, so `rows`, `regions`, `settlements`, `rivers`, `routes` and `plate` below are all written by tools/draw-map.mjs and must never be hand-edited. Change the commission and run the tool. See docs/map/README.md.",
+  "version": "0.1.0",
+  "id": "kelder-vale",
+  "name": "The Kelder Vale",
+  "subtitle": "a survey of the vale, its fells, its waters and the roads between",
+  "summary": "One continent on a near-square frame, cut to print on six sheets of A4 and lie on a dining table. A massif in the middle, fells falling away from it on every side, and every watercourse on the board running off that high ground to salt water. Commissioned as the board that answers 'what does this game look like laid out', so the grid, the plate and the sheet layout are all chosen together rather than one after another.",
+  "commission": {
+    "$comment": "Written before anything was grown and kept afterwards, so the board can be read against what was asked for.",
+    "why": "The first board meant to be PRINTED and played on rather than read. Everything above is downstream of that: six sheets of A4 is the unit a home printer can actually deliver, a near-square frame is what six of them make, and a fifty-millimetre hex is what fits on that frame while still taking a standing figure.",
+    "landmass": "One continent held to the north-east of the frame, with a gulf of open water off the south-west and a shelf running off the north and east. One small island in the gulf and no second country. The high ground is a single massif, so the long drainage runs south-west: the vale is named for what falls away from it. The gulf is not spare room - it is where the key and the compass stand, and furniture standing on playable ground is ground nobody can use.",
+    "terrainBudget": [
+      {
+        "terrain": "deep-water",
+        "share": 0.14
+      },
+      {
+        "terrain": "shallow-water",
+        "share": 0.135
+      },
+      {
+        "terrain": "river",
+        "share": 0.06
+      },
+      {
+        "terrain": "lake",
+        "share": 0.02
+      },
+      {
+        "terrain": "grassland",
+        "share": 0.215
+      },
+      {
+        "terrain": "forest",
+        "share": 0.15
+      },
+      {
+        "terrain": "hills",
+        "share": 0.125
+      },
+      {
+        "terrain": "mountain",
+        "share": 0.072
+      },
+      {
+        "terrain": "marsh",
+        "share": 0.036
+      },
+      {
+        "terrain": "tundra",
+        "share": 0.024
+      },
+      {
+        "terrain": "desert",
+        "share": 0.023
+      }
+    ],
+    "$terrainBudgetNote": "A share of the WHOLE grid, water included, and an aim rather than a rule - a drawn continent is not a shuffled tile bag. Two of these do not behave like the rest. The RIVER share is not a quota: rivers are run downhill and the share is the ceiling that stops the vale turning into a delta - and because a river hex is water, every one of them comes out of the land total, which is why the land shares here add up to more than the 75 hexes a five-player game needs. The LAKE share is overruled by the commission's one crater.",
+    "settlements": {
+      "count": 9,
+      "seat": 1,
+      "city": 2,
+      "town": 3,
+      "village": 3,
+      "harbours": 4
+    },
+    "$settlementNote": "Ten is deliberately short of the Isles' fourteen on a board with three times the hex area. This one is meant to be built on rather than toured.",
+    "routes": {
+      "rail": false,
+      "shipping": true,
+      "road": true
+    },
+    "$routeNote": "No rail at commission: rail is a thing players lay, and a board that arrives with it has made the biggest capital decision in the game on their behalf.",
+    "mustHave": [
+      "one continent, not an archipelago — a player should be able to walk from any town to any other without a hull",
+      "a central massif, and every watercourse on the board springing from it and reaching salt water",
+      "open sea on two adjoining edges, so the coast has a corner in it rather than running straight down one side",
+      "a frame and a lettered index, because this board is printed in pieces and has to be talked about across a table",
+      "a plate whose aspect matches six sheets of A4 with a 10 mm overlap, so nothing is letterboxed"
+    ],
+    "mustNotHave": [
+      "rail, or any infrastructure a player is supposed to build",
+      "a river that starts in the middle of a plain or stops before the sea",
+      "a ring stain, a coffee mark or anything else that reads as something set down on the page"
+    ],
+    "landform": {
+      "seed": 20261104,
+      "$seedNote": "Same seed, same board, every run. That is what lets docs/map/ be a committed build output and --check mean something.",
+      "shareIsRelative": true,
+      "islands": [
+        {
+          "id": "kelder",
+          "name": "The Kelder Vale",
+          "chain": "main",
+          "at": [
+            7,
+            4
+          ],
+          "share": 0.9,
+          "relief": "volcanic"
+        },
+        {
+          "id": "hallow",
+          "name": "Hallowstrand",
+          "chain": "south",
+          "at": [
+            2,
+            10
+          ],
+          "share": 0.1
+        }
+      ],
+      "$islandNote": "A share is a WEIGHT, normalised onto the land total the terrain budget already asks for, so adding an island shrinks the others rather than quietly making the board more land. The continent is anchored NORTH-EAST of centre on purpose: the massif grows at whatever is furthest from the sea, and an anchor in the middle of the frame puts it three hexes from salt water in every direction, which is a board full of brooks. Off-centre, the long drainage runs south-west and the rivers are rivers.",
+      "links": [],
+      "edges": {
+        "north": "shelf",
+        "south": "deep",
+        "east": "shelf",
+        "west": "deep"
+      },
+      "shelfWidth": 1,
+      "riverNames": [
+        "The Kelder",
+        "Arrowwater",
+        "The Shale",
+        "Brackbourne",
+        "Nethergill",
+        "The Winnow"
+      ],
+      "$riverNameNote": "Names are the one thing a tool may not invent. These are assigned longest course first, so the name a player will actually trace with a finger is the one that got written down."
+    },
+    "places": [
+      {
+        "id": "kelderstead",
+        "name": "Kelderstead",
+        "rank": "seat",
+        "harbour": false,
+        "island": "kelder",
+        "note": "Where the two largest waters meet, inland, with a day's haul to either coast."
+      },
+      {
+        "id": "arrowmouth",
+        "name": "Arrowmouth",
+        "rank": "city",
+        "harbour": true,
+        "island": "kelder",
+        "note": "The west gate. Everything that leaves the vale by hull leaves here."
+      },
+      {
+        "id": "shalegate",
+        "name": "Shalegate",
+        "rank": "city",
+        "harbour": false,
+        "island": "kelder",
+        "note": "Under the fells, at the only pass worth driving a road through."
+      },
+      {
+        "id": "brackmire",
+        "name": "Brackmire",
+        "rank": "town",
+        "harbour": false,
+        "island": "kelder",
+        "note": "Peat, clay and patience."
+      },
+      {
+        "id": "winnowfield",
+        "name": "Winnowfield",
+        "rank": "town",
+        "harbour": false,
+        "island": "kelder",
+        "note": "The grain of the vale, on the flat ground east of the massif."
+      },
+      {
+        "id": "coldstrand",
+        "name": "Coldstrand",
+        "rank": "town",
+        "harbour": true,
+        "island": "kelder",
+        "note": "The north landfall, first off the shelf."
+      },
+      {
+        "id": "hallow",
+        "name": "Hallowstrand",
+        "rank": "village",
+        "harbour": true,
+        "island": "hallow",
+        "note": "A beach, a smokehouse and forty people."
+      },
+      {
+        "id": "nethergill",
+        "name": "Nethergill",
+        "rank": "village",
+        "harbour": false,
+        "island": "kelder",
+        "note": "The last steading before the ground stops being worth it."
+      }
+    ],
+    "$placesNote": "Who is where is a person's decision; WHICH HEX is the tool's. Every one of these is sited by tools/draw-map.mjs against its island, its rank and whether it needs a shore.",
+    "plate": {
+      "minWidthPx": 4000,
+      "wantWidthPx": 4000,
+      "aspect": "near-square, to match six A4 sheets with a 10 mm overlap",
+      "$note": "A generated plate is vector and has no long side to fall short of, so these are the drawing's own chosen pixels rather than a floor somebody has to meet."
+    }
+  },
+  "plate": {
+    "kind": "generated",
+    "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
+    "file": "kelder-vale.svg",
+    "width": 4000,
+    "height": 3897,
+    "field": {
+      "x": 203,
+      "y": 203,
+      "width": 3594,
+      "height": 3491
+    },
+    "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line."
+  },
+  "grid": {
+    "shape": "hex",
+    "orientation": "pointy",
+    "offset": "odd-r",
+    "cols": 11,
+    "rows": 12,
+    "fit": "sheet-block",
+    "$fitNote": "Solved, not chosen. Six A4 portrait at an 8 mm printer margin and a 10 mm overlap make a block 562 x 552 mm; 11 x 12 is the grid whose plate comes out at that aspect to within eight parts in a thousand, and it puts a hex at about 46 mm across the flats. Eleven columns rather than ten because ten could not carry both the 75 land hexes a five-player game asks for and a gulf big enough to stand the key in - and shrinking either of those to fit a rounder number is the wrong trade."
+  },
+  "print": {
+    "$comment": "Sheet layouts. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived from the plate by tools/build-map.mjs and are stored so the numbers are greppable and a change to the grid shows up as a diff.",
+    "default": "six-sheet",
+    "presets": [
+      {
+        "id": "six-sheet",
+        "name": "Six sheets, A4 portrait",
+        "sheet": "A4",
+        "orientation": "portrait",
+        "sheetCols": 3,
+        "sheetRows": 2,
+        "marginMm": 8,
+        "overlapMm": 10,
+        "note": "The board this map was commissioned for. Three across, two down, printed portrait. Trim the left and top edge of each sheet, lap it over its neighbour's 10 mm band and tape from behind.",
+        "mapWidthMm": 562,
+        "mapHeightMm": 547.5,
+        "hexAcrossFlatsMm": 45.9
+      },
+      {
+        "id": "four-sheet",
+        "name": "Four sheets, A2",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 2,
+        "sheetRows": 2,
+        "marginMm": 8,
+        "overlapMm": 10,
+        "note": "Smaller, and still a board. The vale loses about a fifth of its hex size.",
+        "mapWidthMm": 388,
+        "mapHeightMm": 378,
+        "hexAcrossFlatsMm": 31.7
+      },
+      {
+        "id": "one-sheet",
+        "name": "One sheet, reference",
+        "sheet": "A4",
+        "orientation": "landscape",
+        "sheetCols": 1,
+        "sheetRows": 1,
+        "marginMm": 8,
+        "overlapMm": 0,
+        "note": "The whole board on one page, for reading rather than playing.",
+        "mapWidthMm": 199.1,
+        "mapHeightMm": 194,
+        "hexAcrossFlatsMm": 16.3
+      }
+    ]
+  },
+  "legend": {
+    "$comment": "Character to terrain id, for the 'rows' block. Identical to the Reach's and the Isles', so a board from any of the three reads the same in a text editor.",
+    "~": "deep-water",
+    "-": "shallow-water",
+    "r": "river",
+    "l": "lake",
+    ".": "grassland",
+    "f": "forest",
+    "h": "hills",
+    "^": "mountain",
+    "m": "marsh",
+    "t": "tundra",
+    "d": "desert"
+  },
+  "rows": [
+    "----.d....-",
+    "~~-rhffffr.",
+    "~~-.rrhhhrm",
+    "~-.fhr^^rf.",
+    "~-.fh^r^hfd",
+    "~-dfh^^^hfm",
+    "~~-.fhh^hfm",
+    "---.ffhhh..",
+    "-.--..ffff.",
+    "-..--.....-",
+    "-.f.m------",
+    "-..--~~~~~-"
+  ],
+  "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+  "$riversNote": "GENERATED. Each course is the chain of hexes the water runs through, spring first, and every one of those hexes is terrain `river` in rows. Run downhill by tools/draw-map.mjs from the terrain bands and the distance inland - never hand-placed, because a hand-placed river is how you get one that starts nowhere.",
+  "regions": [
+    {
+      "id": "kelder",
+      "name": "The Kelder Vale",
+      "terrain": "grassland",
+      "labelAt": [
+        7,
+        4
+      ],
+      "summary": "77 hexes of the main chain, mostly grassland. Kelderstead, Arrowmouth, Shalegate, Brackmire, Winnowfield, Coldstrand, Nethergill."
+    },
+    {
+      "id": "hallow",
+      "name": "Hallowstrand",
+      "terrain": "grassland",
+      "labelAt": [
+        2,
+        10
+      ],
+      "summary": "9 hexes of the south chain, mostly grassland. Hallowstrand."
+    }
+  ],
+  "settlements": [
+    {
+      "id": "kelderstead",
+      "name": "Kelderstead",
+      "col": 4,
+      "row": 3,
+      "rank": "seat",
+      "note": "Where the two largest waters meet, inland, with a day's haul to either coast."
+    },
+    {
+      "id": "arrowmouth",
+      "name": "Arrowmouth",
+      "col": 9,
+      "row": 9,
+      "rank": "city",
+      "harbour": true,
+      "note": "The west gate. Everything that leaves the vale by hull leaves here."
+    },
+    {
+      "id": "shalegate",
+      "name": "Shalegate",
+      "col": 8,
+      "row": 4,
+      "rank": "city",
+      "note": "Under the fells, at the only pass worth driving a road through."
+    },
+    {
+      "id": "brackmire",
+      "name": "Brackmire",
+      "col": 7,
+      "row": 7,
+      "rank": "town",
+      "note": "Peat, clay and patience."
+    },
+    {
+      "id": "winnowfield",
+      "name": "Winnowfield",
+      "col": 5,
+      "row": 6,
+      "rank": "town",
+      "note": "The grain of the vale, on the flat ground east of the massif."
+    },
+    {
+      "id": "coldstrand",
+      "name": "Coldstrand",
+      "col": 9,
+      "row": 0,
+      "rank": "town",
+      "harbour": true,
+      "note": "The north landfall, first off the shelf."
+    },
+    {
+      "id": "hallow",
+      "name": "Hallowstrand",
+      "col": 1,
+      "row": 11,
+      "rank": "village",
+      "harbour": true,
+      "note": "A beach, a smokehouse and forty people."
+    },
+    {
+      "id": "nethergill",
+      "name": "Nethergill",
+      "col": 8,
+      "row": 2,
+      "rank": "village",
+      "note": "The last steading before the ground stops being worth it."
+    }
+  ],
+  "rivers": [
+    {
+      "id": "river-1",
+      "name": "The Kelder",
+      "from": "c05r04",
+      "to": "c03r00",
+      "hexes": [
+        [
+          6,
+          4
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "river-2",
+      "name": "Arrowwater",
+      "from": "c07r03",
+      "to": "c10r00",
+      "hexes": [
+        [
+          8,
+          3
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          9,
+          1
+        ]
+      ]
+    }
+  ],
+  "routes": {
+    "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.",
+    "shipping": [],
+    "road": [
+      {
+        "from": "kelderstead",
+        "to": "arrowmouth"
+      },
+      {
+        "from": "arrowmouth",
+        "to": "shalegate"
+      },
+      {
+        "from": "shalegate",
+        "to": "brackmire"
+      },
+      {
+        "from": "brackmire",
+        "to": "winnowfield"
+      },
+      {
+        "from": "winnowfield",
+        "to": "coldstrand"
+      },
+      {
+        "from": "coldstrand",
+        "to": "nethergill"
+      }
+    ]
+  }
+}

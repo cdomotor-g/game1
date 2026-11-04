@@ -23,9 +23,11 @@ catches that in CI.
 
 > **Note.** maps: 1 of 1 plates are under the 4857 px long side this line needs — a 822.5 mm sheet at 150 dpi — smallest is `korvane-reach` at 1491 px. They render fine on screen and they are the limit on how large the artefact can be printed.
 
-> **Note.** buildingtiles: every plate clears the 797 px floor (a 67.5 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 4 of 4 are under the 1594 px this line would want for print — smallest is `manor` at 1536 px. That is an aspiration, not a fault.
+> **Note.** buildingtiles: every plate clears the 1084 px floor (a 91.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares), and 14 of 14 are under the 2169 px this line would want for print — smallest is `timber-house` at 1492 px. That is an aspiration, not a fault.
 
-> **Note.** buildingtiles: every plate clears the 644 px floor (a 54.6 mm tile at 300 dpi - the sundering-isles nine-sheet hex, the largest any map declares), and 8 of 11 are under the 1289 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
+> **Note.** buildingtiles: every plate clears the 1355 px floor (a 114.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares), and 4 of 4 are under the 2711 px this line would want for print — smallest is `manor` at 1536 px. That is an aspiration, not a fault.
+
+> **Note.** buildingtiles: every plate clears the 1095 px floor (a 92.8 mm tile at 300 dpi - the kelder-vale six-sheet hex, the largest any map declares), and 11 of 11 are under the 2191 px this line would want for print — smallest is `lumber-camp` at 1254 px. That is an aspiration, not a fault.
 
 > **Note.** buildingtiles: 1 landed plate is drawn on a page the brief did not ask for — `tile-timber-house` asks for A4 landscape, 3:2 and is 1054x1492, an A4 portrait page. The card or tile window still cuts to the shape the brief names, so what the wrong page added is thrown away. Redrawing on the right page is the only fix; `node tools/aim-preview.mjs` shows what is being lost.
 
@@ -144,6 +146,7 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 | Map | Grid | Plate |
 | --- | --- | --- |
+| The Kelder Vale | 11 × 12 | `kelder-vale.svg` |
 | The Sundering Isles | 30 × 24 | `sundering-isles.svg` |
 | The Wine-Dark Sea | 32 × 24 | `wine-dark-sea.svg` |
 
@@ -161,7 +164,7 @@ Nothing waiting.
 
 ### 2 · DRAW — the artist — 10 tiles
 
-The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 368–644 px on the long side depending on the subject's own footprint (736–1289 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
+The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 626–1095 px on the long side depending on the subject's own footprint (1252–2191 px if it can be had) — the marker under each brief's heading says that subject's own figure, derived rather than typed, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Tile | Category | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |

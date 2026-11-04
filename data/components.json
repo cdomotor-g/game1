@@ -720,6 +720,72 @@
       "howMany": "One per hex of road or rail built. A player who runs out has run out of road, which is a real limit and a fair one."
     }
   },
+  "mapPlate": {
+    "$comment": "How a GENERATED campaign map is drawn. tools/draw-map.mjs reads it and tools/lib/cartography.mjs holds the technique, the same split draw-item.mjs and itemPlate already use: no number here belongs to one map, and no map names a number of its own.\n\nEvery length is a fraction of a hex's across-flats width, so the same figures hold whether a hex prints at 9 mm on the one-sheet reference or 27 mm on the nine-sheet layout. That is the only unit a map plate can safely have: it has no long side, and the grid is the one thing on it that is the same size on every preset.\n\nThe texture is the mini-map's reversal carried up to world scale. These plates were a flat terrain colour and a coastline, on the argument that drawn ground competes with the pieces standing on it; the mini-maps found that argument half right, and this is the same finding one storey up. A mark at a fifth of a hex, on the ink plate, at a third of full strength, says which ground this is from across the table and still leaves the hex clear enough to stand a figure on.",
+    "line": {
+      "$comment": "Four weights and no fifth, per docs/art/03-line-and-texture.md. The coast weight is doing most of the work: it is what makes an island sit on the page and what survives a photocopy.",
+      "coast": 0.034,
+      "structure": 0.019,
+      "detail": 0.013,
+      "hatch": 0.009
+    },
+    "coastWaves": {
+      "$comment": "A heavy shoreline with progressively lighter lines running parallel to it out into the water. Engravers have done this since the 1500s because it gives the sea a direction and the land an edge without either needing a colour - and because it is the one cartographic device that reads at arm's length across a table.",
+      "offsets": [
+        0.11,
+        0.24,
+        0.39,
+        0.57
+      ],
+      "weights": [
+        0.021,
+        0.017,
+        0.013,
+        0.011
+      ],
+      "lakeOffsets": [
+        0.1,
+        0.22
+      ],
+      "$lakeNote": "Two, not four. A pond should not announce itself like an ocean."
+    },
+    "texture": {
+      "$comment": "Ground texture on the ink plate. `strength` is its opacity: the number that decides whether this helps a player read the board or competes with the pieces on it.",
+      "strength": 0.38,
+      "waterStrength": 0.3,
+      "inset": 0.74
+    },
+    "grid": {
+      "$comment": "The play grid is printed, but quietly - it is an overlay everywhere else in this repository, and on the plate it is a hairline at a soot tint. Gone at arm's length, unambiguous when you lean in.",
+      "weight": 0.007,
+      "tint": "25"
+    },
+    "river": {
+      "$comment": "Width bands, narrow to broad, so a watercourse thickens as tributaries join it. A river that is the same width at its spring and its mouth is a canal.",
+      "widths": [
+        0.01,
+        0.016,
+        0.024
+      ],
+      "casing": 0.085,
+      "$casingNote": "The wash band under the ink line, as a filled ribbon rather than a stroke - the wash plate is flat shapes and nothing else.",
+      "$widthNote": "Narrow on purpose. A river here is already a hex wide and washed blue with a shoreline round it; the ink is the THREAD OF THE CURRENT down the middle of that channel, not the river itself. Drawn at road weight it reads as a road, which is the one thing on a map a river must never be confused with."
+    },
+    "frame": {
+      "$comment": "Plank and iron banding, and a lettered and numbered index around the inside of it so any hex on the table has a name you can say out loud. I and O are skipped: they read as 1 and 0.",
+      "bandFraction": 0.62,
+      "indexSize": 0.3,
+      "compassRadius": 0.055,
+      "$compassNote": "Also a fraction of the plate width, and for the same reason."
+    },
+    "cartouche": {
+      "$comment": "Title, scale and the terrain key, drawn with the plate's own ground textures so the key is a sample of the map rather than a table of swatches. Placed by search over open water, and allowed to lap the frame, which is period-correct and costs the players no ground.\n\nUnlike everything else in this block these are fractions of the PLATE WIDTH, not of a hex. Furniture belongs to the page: a key sized in hexes is a third of the board on a ten-column map and a tenth of it on a thirty-column one, which is the same mistake as sizing a card's title off its illustration.",
+      "widthFraction": 0.205,
+      "rowHeight": 0.0255,
+      "borderFraction": 0.009,
+      "minWaterShare": 0.6
+    }
+  },
   "minimap": {
     "$comment": "The zoom-in sheet: one hex of the world map, opened out. Play happens inside it and the result is written back to the big map.\n\nIt is a flat colour, a PATTERN and a grid. No render and no plate: the field is a hexagon of hexagons filled with the plain colour that terrain already prints in, with that terrain's own map mark scattered across the cells (marks.terrain) and the grid ruled on top. That is the whole sheet, and it is still generated rather than commissioned - it needs no artist and no framing entry, which is why it is not in the mint queue and why it is not waiting on anything.\n\nThe pattern is a reversal. These sheets were a flat colour and nothing else, on the argument that drawn ground competes with the pieces standing on it. The argument was half right: a DRAWN sheet competes, and a mark at a third of a cell, on the ink plate, at a third of full strength, does not. It does the job the wash was failing to do on its own - say which ground this is from across the table - and it does it in the black-and-white edition too, where the wash is not there at all. The marks are the world map's own, one set, from data/terrain.json.\n\nThe cell is the load-bearing decision: a mini-map cell is EXACTLY the size of a world-map hex. A figure standing on the big board picks up and stands on a mini-map cell without being re-based, a route token cut for the world map fits a mini-map lane, and one ruler measures both. The scale is a fiction - the ground inside one hex is not nine hexes of ground - and it is the right fiction, because everything physical about the two boards already agrees.",
     "sheet": {
