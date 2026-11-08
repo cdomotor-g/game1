@@ -22211,6 +22211,17 @@ window.GAME_DATA = {
           0.2
         ]
       },
+      "event-black-sails": {
+        "file": "art/renders/event-black-sails.png",
+        "width": 2112,
+        "height": 1408,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-blood-moon": {
         "file": "art/renders/event-blood-moon.png",
         "width": 1536,

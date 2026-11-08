@@ -9,7 +9,7 @@
 <g id="wash">
   <rect x="0" y="0" width="552" height="752" fill="#EDE4D1"/>
   <g clip-path="url(#portrait-window)">
-    <image href="../../art/renders/event-blood-moon.png" x="1.27" y="113.36" width="533.46" height="355.64" preserveAspectRatio="xMidYMid slice"/>
+    <image href="../../book/art/event-blood-moon-s.jpg" x="1.27" y="113.36" width="533.46" height="355.64" preserveAspectRatio="xMidYMid slice"/>
   </g>
   
   <rect x="24" y="648.5" width="504" height="81.5" fill="#D8CEBE" opacity="0.5"/>

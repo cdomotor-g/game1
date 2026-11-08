@@ -36,19 +36,18 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**160 of 205 minted.** 0 waiting on a brief, 45 waiting on art, 0 waiting on frame.
+**160 of 205 minted.** 0 waiting on a brief, 44 waiting on art, 1 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 45 cards
+### 2 · DRAW — the artist — 44 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi), 1299 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `EVT-38` | Black Sails on the Horizon | Events | `event-black-sails` | ✓ | · | · |
 | `EVT-39` | Letter of Marque | Events | `event-letter-of-marque` | ✓ | · | · |
 | `EVT-40` | Press Gang | Events | `event-press-gang` | ✓ | · | · |
 | `EVT-41` | The Dragon's Tithe | Events | `event-dragons-tithe` | ✓ | · | · |
@@ -94,9 +93,13 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `CAM-21` | The Bed of Olive-wood | Campaign | `campaign-odyssey-the-bed` | ✓ | · | · |
 | `CAM-22` | Laertes' Orchard and the Peace | Campaign | `campaign-odyssey-laertes` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate
+### 3 · FRAME — whoever accepts the plate — 1 card
 
-Nothing waiting.
+The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
+
+| Code | Card | Deck | Plate | brief | plate | frame |
+| --- | --- | --- | --- | :-: | :-: | :-: |
+| `EVT-38` | Black Sails on the Horizon | Events | `event-black-sails` | ✓ | ✓ | · |
 
 ### Minted
 
