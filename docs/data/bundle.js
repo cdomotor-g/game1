@@ -22594,6 +22594,17 @@ window.GAME_DATA = {
           0.48
         ]
       },
+      "event-quiet-season": {
+        "file": "art/renders/event-quiet-season.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-raiders": {
         "file": "art/renders/event-raiders.png",
         "width": 1536,

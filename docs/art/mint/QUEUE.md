@@ -36,19 +36,18 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**158 of 205 minted.** 0 waiting on a brief, 46 waiting on art, 1 waiting on frame.
+**158 of 205 minted.** 0 waiting on a brief, 45 waiting on art, 2 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 46 cards
+### 2 · DRAW — the artist — 45 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi), 1299 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
-| `EVT-37` | The Quiet Season | Events | `event-quiet-season` | ✓ | · | · |
 | `EVT-38` | Black Sails on the Horizon | Events | `event-black-sails` | ✓ | · | · |
 | `EVT-39` | Letter of Marque | Events | `event-letter-of-marque` | ✓ | · | · |
 | `EVT-40` | Press Gang | Events | `event-press-gang` | ✓ | · | · |
@@ -95,13 +94,14 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `CAM-21` | The Bed of Olive-wood | Campaign | `campaign-odyssey-the-bed` | ✓ | · | · |
 | `CAM-22` | Laertes' Orchard and the Peace | Campaign | `campaign-odyssey-laertes` | ✓ | · | · |
 
-### 3 · FRAME — whoever accepts the plate — 1 card
+### 3 · FRAME — whoever accepts the plate — 2 cards
 
 The plate is committed and `docs/art/framing.json` says nothing about it yet. A `subject` box, a `focal` point and a one-line `note` — the contract is [`docs/art/09-framing-and-composition.md`](../09-framing-and-composition.md).
 
 | Code | Card | Deck | Plate | brief | plate | frame |
 | --- | --- | --- | --- | :-: | :-: | :-: |
 | `EVT-36` | Blood Moon | Events | `event-blood-moon` | ✓ | ✓ | · |
+| `EVT-37` | The Quiet Season | Events | `event-quiet-season` | ✓ | ✓ | · |
 
 ### Minted
 
