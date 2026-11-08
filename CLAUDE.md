@@ -261,13 +261,15 @@ between lines — a card is **framed** (a subject box in `framing.json`), a map 
 **traced** (the board in `data/maps/<id>.json`).
 
 **The artist is OpenAI's image model, called by the designer — ChatGPT in a
-chat only when that cannot run.** With an OpenAI key — `OPENAI_API_KEY`, or a
-network secret for `api.openai.com` on a cloud environment — `/mint` draws with
+chat only when that cannot run.** It is reached through Codex signed in with
+the person's ChatGPT plan (first choice, no per-picture bill) or through the
+images API with a key — `OPENAI_API_KEY`, or a network secret for
+`api.openai.com` on a cloud environment. Either way `/mint` draws with
 `node tools/mint-draw.mjs <code> --strict`: it sends the `--render` prompt, saves
 the PNG outside the repository and prints the acceptance check. The designer
 looks at the picture, answers the check, records any rejection and draws again,
-and lands an accepted plate with `ship-art`. Nobody drives a chat window. With no
-key, or a refusal from the API, it prints the commission and the old route runs:
+and lands an accepted plate with `ship-art`. Nobody drives a chat window. With
+neither, or a refusal, it prints the commission and the old route runs:
 ChatGPT pointed at this repository reads the brief and the accepted plates itself
 and pushes the PNG to the inbox. Either way the name is the contract — nothing
 builds until the file is there under the brief's own heading.

@@ -89,13 +89,28 @@ sizes, it is reading the right things.
 
 ## 2 · Set up the artist
 
-### The unattended way: an OpenAI key
+### The unattended way: Codex on your ChatGPT plan, or an OpenAI key
 
-Give the designer an OpenAI API key and it draws for itself: `/mint MOD-01`
-writes the brief, calls OpenAI's image model (the same artist ChatGPT draws
-with) through `tools/mint-draw.mjs`, looks at the result, checks it against the
-brief's own list, redraws what fails, and lands what passes with `ship-art` —
-no chat window, no courier.
+The designer can draw for itself: `/mint MOD-01` writes the brief, calls
+OpenAI's image model (the same artist ChatGPT draws with) through
+`tools/mint-draw.mjs`, looks at the result, checks it against the brief's own
+list, redraws what fails, and lands what passes with `ship-art` — no chat
+window, no courier. It reaches the model one of two ways and picks for itself.
+
+**Codex — first choice, on your ChatGPT plan, no per-picture bill.** Codex is
+OpenAI's coding agent and has an image tool built in.
+
+1. Once, in ChatGPT's settings (under Security), allow device code sign-in for
+   Codex.
+2. Each cloud session: the designer installs Codex and, if it is not signed in,
+   gives you a link and a one-time code. Approve it on your phone. The sign-in
+   lives only in that session.
+3. Each picture uses some of your Codex allowance. The page size is whatever
+   Codex's tool makes for that shape — 1536 x 1024 for a landscape page so far,
+   which clears the card floors. A square building tile may come back under its
+   floor; `ship-art` refuses it if so, and the key route below can draw it.
+
+**An OpenAI API key — billed per picture, exact sizes.**
 
 1. Make a key at [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
    and put some credit on the account. It is billed per picture, separately from

@@ -38,18 +38,23 @@ pushed commit and a proof in the reply**, and stop in the middle only for the tw
 things below.
 
 Everything up to the drawing, and everything after it, is automated and none
-of it needs them. **The drawing is automated too, whenever there is an OpenAI
-key** — `OPENAI_API_KEY`, or in a cloud session a network secret for
-`api.openai.com` that the session never sees: the artist is OpenAI's image model — the one ChatGPT draws with — called
-by `tools/mint-draw.mjs`, and nobody sits in a chat window:
+of it needs them. **The drawing is automated too.** The artist is OpenAI's
+image model — the one ChatGPT draws with — called by `tools/mint-draw.mjs`, and
+nobody sits in a chat window. It reaches that model one of two ways, and picks
+for itself (`MINT_ARTIST=codex|api` forces one):
+
+- **Codex, on the person's ChatGPT plan** — first choice, no per-picture bill.
+  Needs the Codex command installed and signed in with ChatGPT.
+- **The images API with a key** — `OPENAI_API_KEY`, or in a cloud session a
+  network secret for `api.openai.com` that the session never sees. Billed per
+  picture.
 
 ```
 tile-envelope ─▶ brief ─▶ mint-draw ─▶ LOOK at it ─▶ check ─▶ ship-art
       (rejected: attempts.md, draw again) ─▶ aim ─▶ build ─▶ proof ─▶ push
 ```
 
-Only when the key is missing, or the API refuses, does it fall back to the
-two-agent handover — ChatGPT in a chat, pointed at this repository, pushing one
+Only when neither can draw does it fall back to the two-agent handover — ChatGPT in a chat, pointed at this repository, pushing one
 file to the inbox:
 
 ```
@@ -57,11 +62,23 @@ mint-request ─▶ the artist draws ─▶ ONE file to plate/<plate-id>
       ─▶ land-plate.yml ships it to main ─▶ git pull ─▶ aim ─▶ build ─▶ proof ─▶ push
 ```
 
-Check which route you are on before writing anything:
-`node tools/mint-draw.mjs <code> --dry-run`. A network secret cannot be seen
-from inside the session, so do not decide there is no key because
-`OPENAI_API_KEY` is empty — the first real draw finds out, and says so.
-Never print a key.
+**Get Codex ready before writing anything.** A cloud session starts without
+it, and a sign-in does not outlive the session:
+
+```bash
+command -v codex || npm install -g @openai/codex
+codex login status                       # "Logged in using ChatGPT" is ready
+node tools/mint-draw.mjs <code> --dry-run    # says which artist it will use
+```
+
+Not signed in and the person is here: run `codex login --device-auth` in the
+background, and give them the link and the one-time code it prints — they
+approve it on their phone (it needs "device code" sign-in allowed in ChatGPT's
+security settings, once). Never ask for a password and never print a key. Not
+signed in and nobody is here: carry on — mint-draw uses the API key if there is
+one, and hands over if not. A network secret cannot be seen from inside the
+session, so do not decide there is no key because `OPENAI_API_KEY` is empty —
+the first real draw finds out, and says so.
 
 **Drawing on Hugging Face is retired.** `tools/mint-job.mjs`, `tools/hf/` and
 `fetch-plate.yml` are intact and are not to be used: what they drew was not the
@@ -91,8 +108,8 @@ not shown its work.
    prompt, and a `FRAMING.` block. The FRAMING block is the one that gets left out
    and it is the one that decides whether the plate is usable — name the head, the
    hands and the gear the card actually names, and say what margin stays clear.
-2. **Draw it.** With an OpenAI key, this is the whole of step 2 and nobody
-   else is involved:
+2. **Draw it.** With Codex signed in or an OpenAI key, this is the whole of
+   step 2 and nobody else is involved:
 
    ```bash
    node tools/build-prompts.mjs                    # markers, WINDOW blocks, the derived size
