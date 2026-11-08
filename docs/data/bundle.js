@@ -22216,10 +22216,14 @@ window.GAME_DATA = {
         "width": 2112,
         "height": 1408,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.1,
+          0.04,
+          0.8,
+          0.92
+        ],
+        "focal": [
+          0.5,
+          0.32
         ]
       },
       "event-blood-moon": {

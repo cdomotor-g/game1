@@ -1949,6 +1949,11 @@
       "focal": [0.5, 0.52],
       "note": "Both boundary marks, and nothing else could have set this box: the old stone is at 12% across and the new post at 88%, so the pair spans 77% of the page against a thumbnail that keeps 83%. One mark alone is a picture of a boundary; two is a picture of a dispute. Focal is the trodden ground between them where the two sets of ruts stop short of each other."
     },
+    "event-black-sails": {
+      "subject": [0.1, 0.04, 0.8, 0.92],
+      "focal": [0.5, 0.32],
+      "note": "The chained boom across the river mouth with a capstan on each shore, the dozen merchantmen anchored inside it with their sails furled, and the three bare-staffed hulls in line on the horizon. The box is as wide as every hull and the whole run of boom spars, and runs nearly the full height on purpose: the brief asks the card to keep the full width, and a box of the subject's own height would zoom the card in and cut the capstans. So the card keeps the whole page. The thumbnail keeps 83% of the width, centred, and spends the outer part of each capstan and the shore beyond evenly - which the brief allows, letting shores and capstans run to the margins. Focal on the middle of the boom under the three distant sails, because the card is the harbour shut against them. Drawn through the paid images API; the ship's boats alongside and the distant hulls standing clear of the horizon rather than hull-down are the two small misses its attempts file records."
+    },
     "event-blood-moon": {
       "subject": [0.1, 0.36, 0.83, 0.62],
       "focal": [0.52, 0.56],
