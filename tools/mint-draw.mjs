@@ -64,6 +64,19 @@ import { assemble, briefFor, checkList, minLongSideFor, platePath, renderPrompt,
 import { envelopeNote } from './lib/tiles.mjs';
 import { verifyPngBuffer } from './lib/verify-png.mjs';
 
+/* Node's own fetch goes round HTTPS_PROXY unless NODE_USE_ENV_PROXY=1 (Node
+   22.21 and later). In a cloud session the OpenAI key is a network secret the
+   proxy adds on the way out, so a fetch that skips the proxy arrives with no key
+   and gets a 401 that reads exactly like "there is no secret" - which is what the
+   first paid draw here reported, while curl, through the proxy, was let straight
+   in. So the tool restarts itself with the proxy switched on rather than relying
+   on whoever runs it to know. */
+if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_USE_ENV_PROXY) {
+  const again = spawnSync(process.execPath, ['--disable-warning=UNDICI-EHPA', ...process.execArgv, ...process.argv.slice(1)],
+    { stdio: 'inherit', env: { ...process.env, NODE_USE_ENV_PROXY: '1' } });
+  process.exit(again.status ?? 1);
+}
+
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
 const valueOf = (n) => args.find((a) => a.startsWith(`--${n}=`))?.slice(n.length + 3) ?? null;
@@ -206,13 +219,18 @@ async function drawWithApi(line, row, commission, draw, { model, quality, size, 
   const also = note ? ` (${note})` : '';
   if (!key && !viaProxy) handOver(line, row, commission, `${draw.keyEnv} is not set in this environment${also}.`);
 
-  console.error(`mint-draw: ${row.code} — ${model} at ${size}, quality ${quality}. This takes a minute or three…`);
+  /* Streamed, with draw.partialImages rough previews on the way, so the line is
+     never silent: a cloud session's proxy closed a silent high-quality request at
+     about thirty seconds with a 502, twice, while a ten-second one went through.
+     The previews are thrown away; only the finished picture is kept. */
+  const partials = draw.partialImages ?? 0;
+  console.error(`mint-draw: ${row.code} — ${model} at ${size}, quality ${quality}, streamed with ${partials} preview(s). This takes a minute or three…`);
   let res;
   try {
     res = await fetch(draw.endpoint, {
       method: 'POST',
       headers: { 'content-type': 'application/json', ...(key ? { authorization: `Bearer ${key}` } : {}) },
-      body: JSON.stringify({ model, prompt, size, quality, n: 1 }),
+      body: JSON.stringify({ model, prompt, size, quality, n: 1, stream: true, partial_images: partials }),
       signal: AbortSignal.timeout(10 * 60 * 1000),
     });
   } catch (err) {
@@ -231,7 +249,39 @@ async function drawWithApi(line, row, commission, draw, { model, quality, size, 
     handOver(line, row, commission, `${draw.endpoint} answered ${res.status} ${res.statusText}${detail ? ` — ${detail.replace(/\.$/, '')}` : ''}${also}.`);
   }
 
-  const body = await res.json();
+  /* A streamed answer is server-sent events: blocks split by a blank line, each
+     with a `data:` line of JSON. The last one, image_generation.completed, carries
+     the picture and the usage. A plain JSON answer is still read, in case a model
+     or a gateway ignores `stream`. */
+  let body;
+  if (/event-stream/i.test(res.headers.get('content-type') ?? '')) {
+    const dec = new TextDecoder();
+    let buf = '';
+    let seen = 0;
+    const take = (block) => {
+      const data = block.split('\n').filter((l) => l.startsWith('data:')).map((l) => l.slice(5).trimStart()).join('\n');
+      if (!data || data === '[DONE]') return;
+      let ev;
+      try { ev = JSON.parse(data); } catch { return; }
+      if (ev.type === 'image_generation.partial_image') console.error(`mint-draw: preview ${++seen} of ${partials} arrived…`);
+      else if (ev.type === 'image_generation.completed') body = { data: [{ b64_json: ev.b64_json }], usage: ev.usage };
+      else if (ev.type === 'error' || ev.error) {
+        handOver(line, row, commission, `${draw.endpoint} stopped mid-stream — ${ev.error?.message ?? ev.message ?? JSON.stringify(ev).slice(0, 200)}${also}.`);
+      }
+    };
+    try {
+      for await (const chunk of res.body) {
+        buf += dec.decode(chunk, { stream: true }).replace(/\r\n/g, '\n');
+        let cut;
+        while ((cut = buf.indexOf('\n\n')) >= 0) { take(buf.slice(0, cut)); buf = buf.slice(cut + 2); }
+      }
+      if (buf.trim()) take(buf);
+    } catch (err) {
+      handOver(line, row, commission, `the stream from ${draw.endpoint} broke after ${seen} preview(s) — ${err.cause?.code ?? err.message}${also}.`);
+    }
+  } else {
+    body = await res.json();
+  }
   const b64 = body?.data?.[0]?.b64_json;
   if (!b64) handOver(line, row, commission, 'the response carried no image.');
   /* What the picture used, as the API counts it, so the cost of a plate can be

@@ -15021,6 +15021,8 @@ window.GAME_DATA = {
           "quality": "high",
           "endpoint": "https://api.openai.com/v1/images/generations",
           "keyEnv": "OPENAI_API_KEY",
+          "partialImages": 2,
+          "$streamNote": "The call STREAMS, and asks for this many rough previews on the way. Nothing in the repository keeps them: they are there so the line is never silent. A high-quality page takes a minute or two to draw, and a cloud session's proxy closed a silent request at about thirty seconds with a 502, twice, before this was added. Each preview is billed as 100 extra image tokens, about a third of a US cent at gpt-image-2's price; 0 turns them off and leaves the call silent until the picture is done.",
           "sizeByFormat": {
             "square": "1792x1792",
             "A4 portrait": "1280x1920",
@@ -15186,6 +15188,7 @@ window.GAME_DATA = {
           "quality": "high",
           "endpoint": "https://api.openai.com/v1/images/generations",
           "keyEnv": "OPENAI_API_KEY",
+          "partialImages": 2,
           "sizeByFormat": {
             "square": "1792x1792",
             "A4 portrait": "1280x1920",
