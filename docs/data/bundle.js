@@ -22213,10 +22213,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.1,
+          0.36,
+          0.83,
+          0.62
+        ],
+        "focal": [
+          0.52,
+          0.56
         ]
       },
       "event-boar-in-the-fields": {
@@ -22599,10 +22603,14 @@ window.GAME_DATA = {
         "width": 1536,
         "height": 1024,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.25,
+          0.2,
+          0.72,
+          0.78
+        ],
+        "focal": [
+          0.66,
+          0.5
         ]
       },
       "event-raiders": {

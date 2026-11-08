@@ -23,3 +23,7 @@ crowded into the corner of a walled field and, two sentences later, says "No
 creature is in the picture". The plate drew the cattle and sheep, which is a fair
 reading of the first sentence. One of those two sentences has to go before the
 next attempt; until then any plate fails one of them.
+
+**Accepted after all · 2026-11-08.** C looked at it and chose to keep it as drawn,
+misses and all; it shipped through `ship-art` that evening. The misses above stay
+written down because the next plate in this deck should not repeat them.

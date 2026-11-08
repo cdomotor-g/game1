@@ -1948,6 +1948,16 @@
       "subject": [0.1, 0.035, 0.8, 0.95],
       "focal": [0.5, 0.52],
       "note": "Both boundary marks, and nothing else could have set this box: the old stone is at 12% across and the new post at 88%, so the pair spans 77% of the page against a thumbnail that keeps 83%. One mark alone is a picture of a boundary; two is a picture of a dispute. Focal is the trodden ground between them where the two sets of ruts stop short of each other."
+    },
+    "event-blood-moon": {
+      "subject": [0.1, 0.36, 0.83, 0.62],
+      "focal": [0.52, 0.56],
+      "note": "The shut and lashed gate with the stock crowded behind the wall, the plank barring the byre door, the small rust moon low on the hill and the tracks crossing the road in the near ground. The thumbnail keeps 83% of the width, so it spends the leftmost cattle, which repeat, and keeps the whole byre door. Focal on the gate, between the moon and the barred door, because the card is the farm shutting itself in. Accepted by C on 2026-11-08 with the moon's faint rays and the mid-page horizon its attempts file records."
+    },
+    "event-quiet-season": {
+      "subject": [0.25, 0.2, 0.72, 0.78],
+      "focal": [0.66, 0.5],
+      "note": "The empty drying racks, the stretching frame with its slack lacing, the snares hung in a bunch on the nail, the full dog dish and the one line of boot prints coming in from the trees. The thumbnail spends the left of the page - the lean-to, barrel, chest and axe the brief never asked for - and keeps everything it named. Focal between the racks and the frame. Accepted by C on 2026-11-08 with the extra camp clutter its attempts file records."
     }
 }
 }
