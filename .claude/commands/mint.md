@@ -38,8 +38,9 @@ pushed commit and a proof in the reply**, and stop in the middle only for the tw
 things below.
 
 Everything up to the drawing, and everything after it, is automated and none
-of it needs them. **The drawing is automated too, whenever `OPENAI_API_KEY` is
-set:** the artist is OpenAI's image model — the one ChatGPT draws with — called
+of it needs them. **The drawing is automated too, whenever there is an OpenAI
+key** — `OPENAI_API_KEY`, or in a cloud session a network secret for
+`api.openai.com` that the session never sees: the artist is OpenAI's image model — the one ChatGPT draws with — called
 by `tools/mint-draw.mjs`, and nobody sits in a chat window:
 
 ```
@@ -57,8 +58,10 @@ mint-request ─▶ the artist draws ─▶ ONE file to plate/<plate-id>
 ```
 
 Check which route you are on before writing anything:
-`node tools/mint-draw.mjs <code> --dry-run`, and whether the key is set
-(`test -n "$OPENAI_API_KEY"` — never print it).
+`node tools/mint-draw.mjs <code> --dry-run`. A network secret cannot be seen
+from inside the session, so do not decide there is no key because
+`OPENAI_API_KEY` is empty — the first real draw finds out, and says so.
+Never print a key.
 
 **Drawing on Hugging Face is retired.** `tools/mint-job.mjs`, `tools/hf/` and
 `fetch-plate.yml` are intact and are not to be used: what they drew was not the
@@ -88,8 +91,8 @@ not shown its work.
    prompt, and a `FRAMING.` block. The FRAMING block is the one that gets left out
    and it is the one that decides whether the plate is usable — name the head, the
    hands and the gear the card actually names, and say what margin stays clear.
-2. **Draw it.** With `OPENAI_API_KEY` set, this is the whole of step 2 and
-   nobody else is involved:
+2. **Draw it.** With an OpenAI key, this is the whole of step 2 and nobody
+   else is involved:
 
    ```bash
    node tools/build-prompts.mjs                    # markers, WINDOW blocks, the derived size

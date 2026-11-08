@@ -261,7 +261,8 @@ between lines — a card is **framed** (a subject box in `framing.json`), a map 
 **traced** (the board in `data/maps/<id>.json`).
 
 **The artist is OpenAI's image model, called by the designer — ChatGPT in a
-chat only when that cannot run.** With `OPENAI_API_KEY` set, `/mint` draws with
+chat only when that cannot run.** With an OpenAI key — `OPENAI_API_KEY`, or a
+network secret for `api.openai.com` on a cloud environment — `/mint` draws with
 `node tools/mint-draw.mjs <code> --strict`: it sends the `--render` prompt, saves
 the PNG outside the repository and prints the acceptance check. The designer
 looks at the picture, answers the check, records any rejection and draws again,

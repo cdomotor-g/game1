@@ -101,10 +101,20 @@ no chat window, no courier.
    and put some credit on the account. It is billed per picture, separately from
    any ChatGPT subscription. Your organisation may have to be verified before
    the image models answer.
-2. Give it to Claude Code as an environment variable named `OPENAI_API_KEY` —
-   in the cloud environment's settings for Claude Code on the web, or your
-   shell profile on your own computer. **Never paste it into a chat, a file in
-   this repository, or a commit.**
+2. Give it to Claude Code. **In Claude Code on the web, add it as a network
+   secret** — the key then never enters a session, which an environment
+   variable does, readable by anything that runs there. At
+   [claude.ai/code](https://claude.ai/code), open the environment picker under
+   the message box on the new-session screen (or, inside a running session,
+   the arrow after its title → **Edit cloud environment**), select the gear
+   beside your environment, and under **Network secrets** choose
+   **Add secret**: type **Bearer**, allowed website `api.openai.com`, header
+   `Authorization` with prefix `Bearer`, and the key as the value. Claude
+   Code's own guide is
+   [Add network secrets](https://code.claude.com/docs/en/cloud-environments#add-network-secrets).
+   On your own computer, set an environment variable named `OPENAI_API_KEY`
+   in your shell profile instead. **Never paste the key into a chat, a file
+   in this repository, or a commit.**
 3. Check: `node tools/mint-draw.mjs EVT-36 --dry-run` says which model and
    size it would use; without `--dry-run` it draws one.
 

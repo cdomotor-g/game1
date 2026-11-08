@@ -48,7 +48,9 @@
  *   node tools/mint-draw.mjs MOD-01 --dry-run     say what it would do, call nothing
  *
  * Environment:
- *   OPENAI_API_KEY       the key (the name is data/mint.json draw.keyEnv)
+ *   OPENAI_API_KEY       the key (the name is data/mint.json draw.keyEnv). In a Claude
+ *                        Code cloud session it can instead be a network secret for
+ *                        api.openai.com, which this session never sees
  *   MINT_IMAGE_MODEL     try another model without editing data/mint.json
  *   MINT_IMAGE_QUALITY   low | medium | high (default: draw.quality, else high)
  */
@@ -144,15 +146,23 @@ for (const target of targets) {
     continue;
   }
 
+  /* Two places a key can be. An environment variable is one; the other is a
+     NETWORK SECRET on a Claude Code cloud environment, which the agent proxy
+     attaches to requests for api.openai.com after they leave the session - so
+     the key is never inside the session at all, which is the safer of the two
+     and the one Claude Code's docs recommend. In a cloud session with no
+     variable set, try anyway with no Authorization header and let the proxy
+     add it; a 401 back means there is no secret either, and that is said. */
   const key = process.env[draw.keyEnv];
-  if (!key) handOver(line, row, commission, `${draw.keyEnv} is not set in this environment.`);
+  const viaProxy = !key && process.env.CLAUDE_CODE_REMOTE === 'true';
+  if (!key && !viaProxy) handOver(line, row, commission, `${draw.keyEnv} is not set in this environment.`);
 
   console.error(`mint-draw: ${row.code} — ${model} at ${size}, quality ${quality}. This takes a minute or three…`);
   let res;
   try {
     res = await fetch(draw.endpoint, {
       method: 'POST',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
+      headers: { 'content-type': 'application/json', ...(key ? { authorization: `Bearer ${key}` } : {}) },
       body: JSON.stringify({ model, prompt, size, quality, n: 1 }),
       signal: AbortSignal.timeout(10 * 60 * 1000),
     });
@@ -166,6 +176,9 @@ for (const target of targets) {
        a prompt the moderation filter did not like. */
     let detail = '';
     try { detail = (await res.json())?.error?.message ?? ''; } catch { /* not JSON */ }
+    if (viaProxy && res.status === 401) {
+      handOver(line, row, commission, `there is no OpenAI key: ${draw.keyEnv} is not set, and no network secret for api.openai.com was attached. docs/MINT-SETUP.md §2 says where to add one.`);
+    }
     handOver(line, row, commission, `${draw.endpoint} answered ${res.status} ${res.statusText}${detail ? ` — ${detail.replace(/\.$/, '')}` : ''}.`);
   }
 
