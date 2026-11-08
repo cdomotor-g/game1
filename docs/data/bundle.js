@@ -22208,6 +22208,17 @@ window.GAME_DATA = {
           0.2
         ]
       },
+      "event-blood-moon": {
+        "file": "art/renders/event-blood-moon.png",
+        "width": 1536,
+        "height": 1024,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "event-boar-in-the-fields": {
         "file": "art/renders/event-boar-in-the-fields.png",
         "width": 1536,
