@@ -89,14 +89,16 @@
       "draw": {
         "$comment": "Where a plate on this line comes from when nobody is holding a pen. The mint's split - somebody who can write and cannot draw hands over to somebody who can draw and does not know the rules - does not say the second pair of hands has to be human, only that it has to be a different pair. An image model reached over the wire is the artist; tools/mint-draw.mjs is the courier that used to be a person with a clipboard.\n\nA card can be drawn this way because a card is small: 94 mm across the bleed wants 1110 px at 300 dpi and one call supplies more than that. The maps line has no draw block for the same reason in reverse - an A1 sheet wants 4857 px, one call cannot reach it, and a coastline generated in quadrants does not meet in the middle. See lines.maps.plate.kind.",
         "provider": "openai",
-        "model": "gpt-image-1",
+        "model": "gpt-image-2",
+        "quality": "high",
         "endpoint": "https://api.openai.com/v1/images/generations",
         "keyEnv": "OPENAI_API_KEY",
         "sizeByFormat": {
-          "square": "1024x1024",
-          "A4 portrait": "1024x1536",
-          "A4 landscape, 3:2": "1536x1024"
+          "square": "1792x1792",
+          "A4 portrait": "1280x1920",
+          "A4 landscape, 3:2": "2112x1408"
         },
+        "$modelNote": "gpt-image-2 (June 2026) takes any size whose sides are multiples of 16, so each page keeps the SAME proportion it always had - only the shape is read anywhere else (pageAspectOf, nearestFormat, formatFor) - and is drawn big enough to clear every floor. gpt-image-1's 1024 square was UNDER the 1084-1095 px building-tile floors and could never have landed a square tile. Each size stays under about 3.2 million pixels so a high-quality call comes back inside the five minutes a plain fetch waits for an answer. MINT_IMAGE_MODEL and MINT_IMAGE_QUALITY override model and quality for one run without editing this file.",
         "$sizeNote": "Keyed by the deck's own plateFormat in components.json, so a new deck picks up a size without this tool learning anything about it. A format with no entry here is not drawable and mint-draw says so rather than guessing a shape - the plate proportion is what the framing arithmetic is built on.",
         "$degradeNote": "No key, no route, or anything other than a 200 and mint-draw prints the commission and exits 0. The pipeline is not allowed to depend on this block working: docs/MINT.md's two-agent handover is the version that is definitely going to work, and this is a shortcut through it."
       },
@@ -234,13 +236,14 @@
       "draw": {
         "$comment": "Same courier as the cards line, and available for the same reason: a tile is small, one call supplies more pixels than a 31 mm piece can spend, and the handover in docs/MINT.md is still the version that definitely works. No key, no route or anything but a 200 and mint-draw prints the commission and exits 0.",
         "provider": "openai",
-        "model": "gpt-image-1",
+        "model": "gpt-image-2",
+        "quality": "high",
         "endpoint": "https://api.openai.com/v1/images/generations",
         "keyEnv": "OPENAI_API_KEY",
         "sizeByFormat": {
-          "square": "1024x1024",
-          "A4 portrait": "1024x1536",
-          "A4 landscape, 3:2": "1536x1024"
+          "square": "1792x1792",
+          "A4 portrait": "1280x1920",
+          "A4 landscape, 3:2": "2112x1408"
         }
       },
       "aim": {

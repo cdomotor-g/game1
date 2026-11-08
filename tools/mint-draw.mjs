@@ -6,34 +6,65 @@
  * hands over to somebody who can draw and does not know the rules. What this
  * changes is only who carries the paper. The designer still writes the brief and
  * still aims the plate afterwards; the artist is still a different pair of hands
- * with no idea what a summary strip is. It is the courier that stops being a
- * person copying an image out of one window and into another.
+ * with no idea what a summary strip is - OpenAI's image model, the same artist
+ * ChatGPT calls when it draws, reached over the wire instead of through a chat
+ * window somebody has to sit in front of.
  *
- * A CARD can be drawn this way because a card is small. 63 x 88 mm plus bleed is
- * 1110 px at 300 dpi and one call returns more than that (data/mint.json
- * lines.cards.plate.minLongSide, derived rather than typed). A MAP cannot: its
- * own largest sheet asks for 4857 px, and a coastline generated in quadrants
- * does not meet in the middle. That is why only the cards line has a `draw`
- * block, and why maps went the other way entirely - see tools/draw-map.mjs.
+ * This is what lets `/mint <subject>` run from one sentence to a pushed card with
+ * nobody driving ChatGPT: the designer calls this, LOOKS at what comes back,
+ * checks it against the list this prints, and lands it with ship-art - or writes
+ * the rejection into <plate>.attempts.md and calls this again.
+ *
+ * WHAT IT SENDS. The --render form of the brief (renderPrompt in lib/mint.mjs),
+ * never the commission. A commission carries FRAMING, WINDOW and LABEL BAND
+ * blocks written for a person, and an image model draws what it is told: the
+ * first warehouse plate came back with the brief lettered across the page. The
+ * images API has no negative-prompt field, so the deck's negative list goes in
+ * as one closing "Leave out:" sentence - the only place a model can be told it.
+ *
+ * WHERE IT WRITES. Outside the repository - the system temp folder, or --out.
+ * Never docs/art/renders/: a plate is only ever landed by tools/ship-art.mjs,
+ * which validates the bytes, refuses a plate under its floor or on the wrong
+ * page, builds, pushes and reads the blob back. A tool that wrote straight into
+ * renders would be a second, unchecked way in. The wording sent goes beside the
+ * PNG as <plate>.txt, ready for ship-art --wording.
+ *
+ * A MAP cannot be drawn this way: its largest sheet wants 4857 px and a
+ * coastline generated in quadrants does not meet in the middle. That is why only
+ * the cards and building-tile lines have a `draw` block - see tools/draw-map.mjs.
  *
  * IT DEGRADES, IT DOES NOT BLOCK. No key, no route, or any answer that is not a
- * 200, and it prints the commission and exits 0. docs/MINT.md's two-agent
- * handover is the version that is definitely going to work; this is a shortcut
- * through it and a shortcut is not allowed to become a dependency.
+ * 200, and it prints the commission and exits 0 - or 3 with --strict, so an
+ * unattended run can tell "drawn" from "handed over" by the exit code alone.
+ * docs/MINT.md's two-agent handover is the version that is definitely going to
+ * work; this is a shortcut through it and a shortcut is not allowed to become a
+ * dependency.
  *
  * Usage:
- *   node tools/mint-draw.mjs MOD-01           draw one subject
- *   node tools/mint-draw.mjs MOD-01 --force   redraw one that already has a plate
- *   node tools/mint-draw.mjs --dry-run        say what it would do, call nothing
+ *   node tools/mint-draw.mjs MOD-01               draw one subject
+ *   node tools/mint-draw.mjs MOD-01 --out=x.png   draw it to a named file
+ *   node tools/mint-draw.mjs MOD-01 --force       draw one that already has a plate
+ *   node tools/mint-draw.mjs MOD-01 --strict      exit 3, not 0, when it hands over
+ *   node tools/mint-draw.mjs MOD-01 --dry-run     say what it would do, call nothing
+ *
+ * Environment:
+ *   OPENAI_API_KEY       the key (the name is data/mint.json draw.keyEnv)
+ *   MINT_IMAGE_MODEL     try another model without editing data/mint.json
+ *   MINT_IMAGE_QUALITY   low | medium | high (default: draw.quality, else high)
  */
 import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { assemble, briefFor, minLongSideFor, platePath, survey, windowNote } from './lib/mint.mjs';
+import { join, dirname, resolve } from 'node:path';
+import { tmpdir } from 'node:os';
+import { assemble, briefFor, checkList, minLongSideFor, platePath, renderPrompt, survey, windowNote } from './lib/mint.mjs';
+import { envelopeNote } from './lib/tiles.mjs';
+import { verifyPngBuffer } from './lib/verify-png.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
+const valueOf = (n) => args.find((a) => a.startsWith(`--${n}=`))?.slice(n.length + 3) ?? null;
 const targets = args.filter((a) => !a.startsWith('--'));
 const ROOT = process.cwd();
+const HANDED_OVER = flag('strict') ? 3 : 0;
 
 const found = survey(ROOT);
 const all = found.lines.flatMap((e) => (e.shelved ? [] : e.rows.map((row) => ({ line: e.line, row }))));
@@ -42,16 +73,22 @@ if (!targets.length) {
   console.error('mint-draw: name a card code or a plate id. Run node tools/mint-queue.mjs to see what is waiting.');
   process.exit(1);
 }
+if (targets.length > 1 && valueOf('out')) {
+  console.error('mint-draw: --out names one file, so it takes one subject.');
+  process.exit(1);
+}
 
 /* The commission, printed where a person can pick it up. Every path out of this
-   tool that is not a written plate ends here, because the work still has to be
+   tool that is not a drawn plate ends here, because the work still has to be
    possible - it just has to be done the long way. */
-function handOver(line, row, prompt, why) {
+function handOver(line, row, commission, why) {
   console.error(`\nmint-draw: ${why}`);
-  console.error(`Falling back to the two-agent handover. Paste this into an image model, save the result as`);
-  console.error(`${platePath(line, row)}, and run node tools/mint-queue.mjs.\n`);
-  console.log(prompt);
-  process.exit(0);
+  console.error('Falling back to the two-agent handover. Hand this to the artist (or run');
+  console.error(`node tools/mint-request.mjs ${row.code} for the full commission with its check);`);
+  console.error(`the plate lands through the inbox branch plate/${row.plate} or node tools/ship-art.mjs.\n`);
+  console.log(commission);
+  console.error(`\nmint-draw: RESULT handed-over ${row.plate}`);
+  process.exit(HANDED_OVER);
 }
 
 for (const target of targets) {
@@ -72,66 +109,99 @@ for (const target of targets) {
     process.exit(1);
   }
 
-  /* The window is appended to every commission, computed, because no brief can
-     know what shape the card it feeds will be - build-cards decides that from
-     the deck's wordiest rule, and it moves. See windowNote in lib/mint.mjs. */
-  const prompt = assemble(brief, windowNote(ROOT, line, row));
-  const out = join(ROOT, platePath(line, row));
-
-  if (existsSync(out) && !flag('force')) {
-    console.error(`mint-draw: ${platePath(line, row)} already exists. --force to redraw it.`);
+  if (existsSync(join(ROOT, platePath(line, row))) && !flag('force')) {
+    console.error(`mint-draw: ${platePath(line, row)} already exists. --force to draw it again.`);
     continue;
   }
 
+  /* Two prompts off one brief, exactly as tools/mint-request.mjs builds them:
+     the commission for a person if this has to hand over, and the depiction for
+     the model if it does not. The tile's envelope is derived from its footprint
+     and is the one composition rule that can be said as a thing to draw. */
+  const carriesCut = /^(WINDOW|LABEL BAND)\./m.test(brief.subject);
+  const commission = assemble(brief, carriesCut ? null : windowNote(ROOT, line, row));
+  const corner = line.id === 'buildingtiles' && row.tile?.cells ? envelopeNote(row.tile.cells, 1, { figures: false }) : null;
+  const render = renderPrompt(brief, { cornerNote: corner });
+  const prompt = render.negative ? `${render.positive}\n\nLeave out: ${render.negative}.` : render.positive;
+
   const draw = line.draw;
-  if (!draw) handOver(line, row, prompt, `the ${line.id} line has no \`draw\` block — it is not drawn this way on purpose. See data/mint.json.`);
+  if (!draw) handOver(line, row, commission, `the ${line.id} line has no \`draw\` block — it is not drawn this way on purpose. See data/mint.json.`);
 
   const size = draw.sizeByFormat?.[row.format];
   if (!size) {
-    handOver(line, row, prompt,
+    handOver(line, row, commission,
       `no size is declared for the \`${row.format}\` format in data/mint.json lines.${line.id}.draw.sizeByFormat, and the plate's proportion is what the framing arithmetic is built on — it will not be guessed.`);
   }
 
-  const key = process.env[draw.keyEnv];
-  if (!key) handOver(line, row, prompt, `${draw.keyEnv} is not set in this environment.`);
-
+  const model = process.env.MINT_IMAGE_MODEL || draw.model;
+  const quality = process.env.MINT_IMAGE_QUALITY || draw.quality || 'high';
   const { min, want } = minLongSideFor(ROOT, line, row);
+  const out = resolve(valueOf('out') ?? join(tmpdir(), 'mint-draw', `${row.plate}.png`));
+  const wording = out.replace(/\.png$/i, '') + '.txt';
+
   if (flag('dry-run')) {
-    console.log(`${row.code}  ${row.plate}\n  ${draw.model} at ${size} -> ${platePath(line, row)}\n  floor ${min} px, print ${want} px\n  ${prompt.split('\n').length} lines of prompt`);
+    console.log(`${row.code}  ${row.plate}\n  ${model} at ${size}, quality ${quality} -> ${out}\n  floor ${min} px, print ${want} px\n  ${prompt.split('\n').length} lines of prompt; moved out of it: ${render.moved.length}`);
     continue;
   }
 
-  console.error(`mint-draw: ${row.code} — ${draw.model} at ${size}…`);
+  const key = process.env[draw.keyEnv];
+  if (!key) handOver(line, row, commission, `${draw.keyEnv} is not set in this environment.`);
+
+  console.error(`mint-draw: ${row.code} — ${model} at ${size}, quality ${quality}. This takes a minute or three…`);
   let res;
   try {
     res = await fetch(draw.endpoint, {
       method: 'POST',
       headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-      body: JSON.stringify({ model: draw.model, prompt, size, n: 1 }),
+      body: JSON.stringify({ model, prompt, size, quality, n: 1 }),
+      signal: AbortSignal.timeout(10 * 60 * 1000),
     });
   } catch (err) {
-    handOver(line, row, prompt, `could not reach ${draw.endpoint} — ${err.message}. If this is an egress policy denial, the host has to be allowed rather than worked around.`);
+    handOver(line, row, commission, `could not reach ${draw.endpoint} — ${err.cause?.code ?? err.message}. If this is an egress policy denial, the host has to be allowed rather than worked around.`);
   }
 
   if (!res.ok) {
-    handOver(line, row, prompt, `${draw.endpoint} answered ${res.status} ${res.statusText}.`);
+    /* Say what the API said. A bare "400" sent the last person to look at this
+       guessing between a size the model does not take, a key with no credit and
+       a prompt the moderation filter did not like. */
+    let detail = '';
+    try { detail = (await res.json())?.error?.message ?? ''; } catch { /* not JSON */ }
+    handOver(line, row, commission, `${draw.endpoint} answered ${res.status} ${res.statusText}${detail ? ` — ${detail.replace(/\.$/, '')}` : ''}.`);
   }
 
   const body = await res.json();
   const b64 = body?.data?.[0]?.b64_json;
-  if (!b64) handOver(line, row, prompt, 'the response carried no image.');
+  if (!b64) handOver(line, row, commission, 'the response carried no image.');
+
+  /* Checked here, from the bytes, rather than trusted from the size asked for:
+     a model is allowed to return a different size than requested, and the
+     floor is about what arrived. ship-art checks all of it again. */
+  const bytes = Buffer.from(b64, 'base64');
+  let png;
+  try { png = verifyPngBuffer(bytes, row.plate); } catch (err) {
+    handOver(line, row, commission, `the image that came back is not a whole PNG — ${err.message}.`);
+  }
 
   mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, Buffer.from(b64, 'base64'));
+  writeFileSync(out, bytes);
+  writeFileSync(wording, `${prompt}\n`);
 
-  /* The wording that produced an accepted render is worth more than the one that
-     was written — data/mint.json says so, and says where it goes. */
-  const frozen = join(ROOT, draw.frozenWording ?? line.plate.frozenWording.replace('{plate}', row.plate));
-  writeFileSync(frozen.replace('{plate}', row.plate), `${prompt}\n`);
+  const longSide = Math.max(png.width, png.height);
+  const sizeNote = longSide < min ? `UNDER the ${min} px floor - ship-art will refuse it`
+    : longSide < want ? `clears the ${min} px floor, under the ${want} px print want` : `clears the ${want} px print want`;
 
-  const [w, h] = size.split('x').map(Number);
-  const longSide = Math.max(w, h);
-  console.error(`mint-draw: wrote ${platePath(line, row)} at ${size}` +
-    (longSide < min ? ` — UNDER the ${min} px floor this line needs` : longSide < want ? ` — clears the ${min} px floor, under the ${want} px print target` : ''));
-  console.error(`Next: node tools/mint-queue.mjs — ${row.code} should be at ${line.aim.step}.`);
+  const checks = checkList(brief, { format: row.format ?? line.plate.format ?? null, minLongSide: min || 0, cornerNote: corner });
+  console.log(`DRAWN ${row.code} · ${row.plate}
+  file      ${out}
+  wording   ${wording}
+  size      ${png.width}x${png.height} (${sizeNote}), ${png.bytes} bytes, sha256 ${png.sha256}
+
+LOOK AT IT, then check it against every item. One failure is a rejection: write
+the wording and the one reason into docs/art/renders/${row.plate}.attempts.md and
+draw again. Fix the brief if two attempts fail the same way.
+
+${checks.map((c, n) => `${String(n + 1).padStart(2)}. ${c}`).join('\n')}
+
+Accepted:  node tools/ship-art.mjs ${row.plate} ${out} --wording=${wording}`);
+  console.error(`mint-draw: RESULT drawn ${row.plate}`);
 }

@@ -142,7 +142,7 @@ quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+card window, 340.5 x 341, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -168,7 +168,7 @@ line in the bottom third. Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+card window, 340.5 x 341, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -193,7 +193,7 @@ ground line in the bottom third with the butt on it. Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+card window, 340.5 x 341, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -219,7 +219,7 @@ the bottom third with the butt on it. Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+card window, 340.5 x 341, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -246,7 +246,7 @@ Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+card window, 340.5 x 341, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -282,6 +282,6 @@ Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 340.5 x 341, on the 1024 x 1024 page this deck is drawn at. It
+card window, 340.5 x 341, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```

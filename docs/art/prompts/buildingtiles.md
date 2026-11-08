@@ -254,7 +254,7 @@ in any corner.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -293,7 +293,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -332,7 +332,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -370,7 +370,7 @@ estate rather than a large cottage. Chimneys well inside the top margin.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 82% of its width - between 9% and 91% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
+this tile's own rhombus footprint, 4 cells, on the 2112 x 1408 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -415,7 +415,7 @@ trees taller than the shear legs - this is cleared ground, not forest.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -456,7 +456,7 @@ which is ground the band may cover.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -497,7 +497,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -538,7 +538,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -581,7 +581,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -625,7 +625,7 @@ which is ground the band may cover.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 82% of its width - between 9% and 91% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
+this tile's own rhombus footprint, 4 cells, on the 2112 x 1408 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -667,7 +667,7 @@ scenery to make it look busier.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -709,7 +709,7 @@ the stone one, and this must not be mistaken for it.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -752,7 +752,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -791,7 +791,7 @@ across the middle band. Nothing important in any corner.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 82% of its width - between 9% and 91% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
+this tile's own rhombus footprint, 4 cells, on the 2112 x 1408 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -831,7 +831,7 @@ horizon, no sky, no fence, no building.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -872,7 +872,7 @@ millimetres. No building.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -912,7 +912,7 @@ is ground the band may cover. No hollow log hives, no boxes - skeps.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -948,7 +948,7 @@ the pattern survives the hexagonal cut. No horizon, no sky, no building.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -984,7 +984,7 @@ No horizon, no sky, no building.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1020,7 +1020,7 @@ horizon, no sky, no building.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1057,7 +1057,7 @@ horizon, no sky, no building.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1094,7 +1094,7 @@ they are meant to be cut by it. Rows corner to corner.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1136,7 +1136,7 @@ piece must read across.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1180,7 +1180,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -1223,7 +1223,7 @@ may cover.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1266,7 +1266,7 @@ straight-lined - that is what separates it from the smelter.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 82% of its width - between 9% and 91% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own rhombus footprint, 4 cells, on the 1536 x 1024 page it is
+this tile's own rhombus footprint, 4 cells, on the 2112 x 1408 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1309,7 +1309,7 @@ bricks at seventeen millimetres - that is the whole tile.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1353,7 +1353,7 @@ may be drawn taller than the cone.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1398,7 +1398,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -1441,7 +1441,7 @@ is the sawmill, and these two must not be confused.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1484,7 +1484,7 @@ the band may cover.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1526,7 +1526,7 @@ read as pits in the ground and not as tubs standing on it.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1570,7 +1570,7 @@ cover. No dummy, no figure, no hanging garments over the street.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1614,7 +1614,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -1657,7 +1657,7 @@ third.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1699,7 +1699,7 @@ ground the band may cover.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1742,7 +1742,7 @@ and shut in - the opposite of the bakery, and it should read that way.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1785,7 +1785,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -1830,7 +1830,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -1872,7 +1872,7 @@ edge. Hoist beam well inside the top margin.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1914,7 +1914,7 @@ under the building, not out to the sides. Ground, not detail, in the lower-left.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -1962,7 +1962,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -2007,7 +2007,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -2050,7 +2050,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -2094,7 +2094,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -2139,7 +2139,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -2183,7 +2183,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -2253,7 +2253,7 @@ banners, no devices, no painted arms.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -2303,7 +2303,7 @@ wood run left and out of the lower left, which is ground the band may cover.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -2346,7 +2346,7 @@ No towers, no wall walk roofed over - a fence, seriously made.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -2396,7 +2396,7 @@ WINDOW. This plate is cut down to a tile, and the tile keeps the full width
 of the page but only the middle 87% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this tile's own
-pair footprint, 2 cells, on the 1536 x 1024 page it is drawn at. It is not
+pair footprint, 2 cells, on the 2112 x 1408 page it is drawn at. It is not
 a rule of thumb.) The cut piece reads ACROSS rather than up - the mass
 belongs in a wide band with ground running out to left and right; where the
 composition above says otherwise, this wins.
@@ -2439,7 +2439,7 @@ no carving, no symbol on the stone.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 87% of its width - between 7% and 93% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own single footprint, 1 cell, on the 1024 x 1024 page it is
+this tile's own single footprint, 1 cell, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -2489,7 +2489,7 @@ which is ground the band may cover.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.
@@ -2535,7 +2535,7 @@ wagon, no rolling stock of any kind.
 WINDOW. This plate is cut down to a tile, and the tile keeps only the
 middle 99% of its width - between 1% and 99% across. Outside that band
 nothing can be relied on, whatever else this brief says. (Worked out from
-this tile's own triad footprint, 3 cells, on the 1024 x 1024 page it is
+this tile's own triad footprint, 3 cells, on the 1792 x 1792 page it is
 drawn at. It is not a rule of thumb.) The cut piece reads square - no long
 axis to compose along; where the composition above says otherwise, this
 wins.

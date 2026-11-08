@@ -146,6 +146,13 @@ I have not made, ask me rather than inventing one.</code></pre>
 <p>Ask it: <strong>&quot;run <code>node tools/mint-queue.mjs</code> and paste the output&quot;</strong>. If it comes back with a per-line breakdown, a shelved line for tiles and a note about plate sizes, it is reading the right things.</p>
 <hr>
 <h2 id="2-set-up-the-artist">2 · Set up the artist</h2>
+<h3 id="the-unattended-way-an-openai-key">The unattended way: an OpenAI key</h3>
+<p>Give the designer an OpenAI API key and it draws for itself: <code>/mint MOD-01</code> writes the brief, calls OpenAI's image model (the same artist ChatGPT draws with) through <code>tools/mint-draw.mjs</code>, looks at the result, checks it against the brief's own list, redraws what fails, and lands what passes with <code>ship-art</code> — no chat window, no courier.</p>
+<ol><li>Make a key at <a href="https://platform.openai.com/api-keys">platform.openai.com/api-keys</a> and put some credit on the account. It is billed per picture, separately from any ChatGPT subscription. Your organisation may have to be verified before the image models answer.</li>
+<li>Give it to Claude Code as an environment variable named <code>OPENAI_API_KEY</code> — in the cloud environment's settings for Claude Code on the web, or your shell profile on your own computer. <strong>Never paste it into a chat, a file in this repository, or a commit.</strong></li>
+<li>Check: <code>node tools/mint-draw.mjs EVT-36 --dry-run</code> says which model and size it would use; without <code>--dry-run</code> it draws one.</li></ol>
+<p>Model, size and quality are <code>draw</code> in <a href="../../data/mint.json"><code>../data/mint.json</code></a>; <code>MINT_IMAGE_MODEL</code> and <code>MINT_IMAGE_QUALITY</code> override them for one run.</p>
+<h3 id="the-chat-way-when-there-is-no-key">The chat way, when there is no key</h3>
 <p><strong>The artist is ChatGPT, pointed at this repository.</strong> That is the route, and it is the route because it was tried the other ways: a machine artist on Hugging Face cost a quota to produce plates nobody shipped (§4a, retired), and a summary of the house style pasted into a chat is a copy that goes stale the day the style changes — which is exactly what happened, and cost a set of plates.</p>
 <p>So do not describe the style. Point at it:</p>
 <ul><li><a href="../art/07-ai-agent-brief.md"><code>art/07-ai-agent-brief.md</code></a> — the preamble, the negative prompt and the <strong>acceptance checklist</strong>. Both prompt blocks in it are generated from <a href="../../data/artstyle.json"><code>../data/artstyle.json</code></a>, so they cannot be out of date.</li>

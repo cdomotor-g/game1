@@ -89,6 +89,30 @@ sizes, it is reading the right things.
 
 ## 2 · Set up the artist
 
+### The unattended way: an OpenAI key
+
+Give the designer an OpenAI API key and it draws for itself: `/mint MOD-01`
+writes the brief, calls OpenAI's image model (the same artist ChatGPT draws
+with) through `tools/mint-draw.mjs`, looks at the result, checks it against the
+brief's own list, redraws what fails, and lands what passes with `ship-art` —
+no chat window, no courier.
+
+1. Make a key at [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+   and put some credit on the account. It is billed per picture, separately from
+   any ChatGPT subscription. Your organisation may have to be verified before
+   the image models answer.
+2. Give it to Claude Code as an environment variable named `OPENAI_API_KEY` —
+   in the cloud environment's settings for Claude Code on the web, or your
+   shell profile on your own computer. **Never paste it into a chat, a file in
+   this repository, or a commit.**
+3. Check: `node tools/mint-draw.mjs EVT-36 --dry-run` says which model and
+   size it would use; without `--dry-run` it draws one.
+
+Model, size and quality are `draw` in [`../data/mint.json`](../data/mint.json);
+`MINT_IMAGE_MODEL` and `MINT_IMAGE_QUALITY` override them for one run.
+
+### The chat way, when there is no key
+
 **The artist is ChatGPT, pointed at this repository.** That is the route, and it
 is the route because it was tried the other ways: a machine artist on Hugging
 Face cost a quota to produce plates nobody shipped (§4a, retired), and a summary

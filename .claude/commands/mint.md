@@ -38,14 +38,27 @@ pushed commit and a proof in the reply**, and stop in the middle only for the tw
 things below.
 
 Everything up to the drawing, and everything after it, is automated and none
-of it needs them. The drawing itself is the artist's — ChatGPT, pointed at this
-repository — and the plate comes back through the inbox:
+of it needs them. **The drawing is automated too, whenever `OPENAI_API_KEY` is
+set:** the artist is OpenAI's image model — the one ChatGPT draws with — called
+by `tools/mint-draw.mjs`, and nobody sits in a chat window:
 
 ```
-tile-envelope ─▶ brief ─▶ mint-request ─▶ the artist draws
-      ─▶ the artist pushes ONE file to plate/<plate-id> ─▶ land-plate.yml ships it to main
-      ─▶ git pull ─▶ aim ─▶ build ─▶ proof ─▶ push
+tile-envelope ─▶ brief ─▶ mint-draw ─▶ LOOK at it ─▶ check ─▶ ship-art
+      (rejected: attempts.md, draw again) ─▶ aim ─▶ build ─▶ proof ─▶ push
 ```
+
+Only when the key is missing, or the API refuses, does it fall back to the
+two-agent handover — ChatGPT in a chat, pointed at this repository, pushing one
+file to the inbox:
+
+```
+mint-request ─▶ the artist draws ─▶ ONE file to plate/<plate-id>
+      ─▶ land-plate.yml ships it to main ─▶ git pull ─▶ aim ─▶ build ─▶ proof ─▶ push
+```
+
+Check which route you are on before writing anything:
+`node tools/mint-draw.mjs <code> --dry-run`, and whether the key is set
+(`test -n "$OPENAI_API_KEY"` — never print it).
 
 **Drawing on Hugging Face is retired.** `tools/mint-job.mjs`, `tools/hf/` and
 `fetch-plate.yml` are intact and are not to be used: what they drew was not the
@@ -75,10 +88,36 @@ not shown its work.
    prompt, and a `FRAMING.` block. The FRAMING block is the one that gets left out
    and it is the one that decides whether the plate is usable — name the head, the
    hands and the gear the card actually names, and say what margin stays clear.
-2. **Commission it, and let the inbox carry it in.** The artist is ChatGPT,
-   pointed at this repository, and it reads the brief itself; `AGENTS.md` at the
-   root is its standing instruction and `docs/art/AGENTS.md` is its delivery
-   contract. Your part is three moves:
+2. **Draw it.** With `OPENAI_API_KEY` set, this is the whole of step 2 and
+   nobody else is involved:
+
+   ```bash
+   node tools/build-prompts.mjs                    # markers, WINDOW blocks, the derived size
+   node tools/mint-draw.mjs <code> --strict        # draws to a temp file, prints the check
+   ```
+
+   It sends the `--render` form of the brief (never the commission), saves the
+   PNG **outside** the repository and prints the file, its size against the
+   floor, the numbered acceptance check and the exact `ship-art` command.
+   Exit 0 is a drawing; exit 3 is a handover — carry on from **2a** below.
+
+   **Look at the PNG** with the Read tool and answer every numbered item. Any
+   failure is a rejection: append the wording and the one reason to
+   `docs/art/renders/<plate>.attempts.md` and run `mint-draw` again. Three
+   attempts per subject; if two fail the same way, fix the brief's wording
+   once (then `build-prompts`) rather than re-rolling a prompt that is wrong.
+   After three failures, keep the best attempt out of the repository, say why
+   in the reply, and move on to the next subject.
+
+   Accepted: run the `ship-art` command it printed. That validates, refuses a
+   plate under its floor, builds, commits, pushes and reads the blob back —
+   then go to step 3. A `--deck` run takes one subject at a time, all the way
+   through, before drawing the next.
+
+   **2a. The handover — only when mint-draw could not draw.** The artist is
+   ChatGPT, pointed at this repository, and it reads the brief itself;
+   `AGENTS.md` at the root is its standing instruction and `docs/art/AGENTS.md`
+   is its delivery contract. Your part is three moves:
 
    **a. Make sure the brief says everything, then print the commission.**
    ```bash

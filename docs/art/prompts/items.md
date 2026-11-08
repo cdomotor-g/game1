@@ -161,7 +161,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -191,7 +191,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -222,7 +222,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -252,7 +252,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -283,7 +283,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -314,7 +314,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -346,7 +346,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -380,7 +380,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -418,7 +418,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -453,7 +453,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -491,7 +491,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -526,7 +526,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -562,7 +562,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -598,7 +598,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -636,7 +636,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -675,7 +675,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 86% of its height - everything that matters
 must sit between 7% and 93% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 360 x 309, on the 1024 x 1024 page this deck is drawn at. It is not
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
@@ -703,7 +703,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters
 must sit between 9% and 91% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+window, 379.5 x 309, on the 1792 x 1792 page this deck is drawn at. It is
 not a rule of thumb.)
 ```
 
@@ -731,7 +731,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters
 must sit between 9% and 91% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+window, 379.5 x 309, on the 1792 x 1792 page this deck is drawn at. It is
 not a rule of thumb.)
 ```
 
@@ -759,7 +759,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters
 must sit between 9% and 91% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+window, 379.5 x 309, on the 1792 x 1792 page this deck is drawn at. It is
 not a rule of thumb.)
 ```
 
@@ -787,7 +787,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters
 must sit between 9% and 91% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+window, 379.5 x 309, on the 1792 x 1792 page this deck is drawn at. It is
 not a rule of thumb.)
 ```
 
@@ -815,7 +815,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters
 must sit between 9% and 91% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+window, 379.5 x 309, on the 1792 x 1792 page this deck is drawn at. It is
 not a rule of thumb.)
 ```
 
@@ -847,7 +847,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters
 must sit between 9% and 91% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+window, 379.5 x 309, on the 1792 x 1792 page this deck is drawn at. It is
 not a rule of thumb.)
 ```
 
@@ -880,7 +880,7 @@ WINDOW. This plate is cut down to a card, and the card keeps the full width
 of the page but only the middle 81% of its height - everything that matters
 must sit between 9% and 91% down the page. Outside that band nothing can be
 relied on, whatever else this brief says. (Worked out from this deck's card
-window, 379.5 x 309, on the 1024 x 1024 page this deck is drawn at. It is
+window, 379.5 x 309, on the 1792 x 1792 page this deck is drawn at. It is
 not a rule of thumb.)
 ```
 
@@ -905,7 +905,7 @@ line in the bottom third. Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+card window, 379.5 x 380, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -929,7 +929,7 @@ in the bottom third. Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+card window, 379.5 x 380, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -954,7 +954,7 @@ the bottom third. Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+card window, 379.5 x 380, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -980,7 +980,7 @@ third. Clear, quiet page above.
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+card window, 379.5 x 380, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -1005,6 +1005,6 @@ full breastplate, every fauld lame and the hanging straps inside the middle
 
 WINDOW. The card cut from this plate keeps very nearly the whole page, so
 the FRAMING band above is the only constraint. (Worked out from this deck's
-card window, 379.5 x 380, on the 1024 x 1024 page this deck is drawn at. It
+card window, 379.5 x 380, on the 1792 x 1792 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
