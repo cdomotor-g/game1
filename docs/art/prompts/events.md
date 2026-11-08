@@ -17,7 +17,7 @@ busy with the clearing up. Nobody is the subject, nobody looks out of the page,
 and nobody is heroic. The tone is the weather report, not the disaster painting.
 
 One clear silhouette dominates and has to read at a glance across a table;
-everything else is the ground it happened on. Low horizon in the bottom third,
+everything else is the ground it happened on. High horizon in the top third,
 ordinary daylight, ordinary weather unless the card IS the weather.
 
 **The five arcane cards do not get the violet.** `event-ley-surge`,
@@ -74,17 +74,21 @@ drawn the way a naturalist draws one - at a wary distance, doing what it
 ordinarily does - rather than the way a poster sells a fight.
 
 A wide landscape plate of ONE thing that has already happened, drawn at
-middle distance from a standing person's eye height, with a low horizon
-in the bottom third and the ground running out to both edges of the
-page. It is told through OBJECTS AND CONSEQUENCE, never through a face:
-an overturned cart and grain in the wheel ruts, not a frightened carter;
-a shuttered stall and a swept-clean trestle, not a haggling crowd. Any
-people are small, distant, incidental and busy with the clearing up -
-nobody is the subject and nobody is looking out of the page.
+middle distance and looked down on a little, so the horizon sits HIGH,
+in the top third of the page, and the ground fills the rest and runs out
+to both edges. It is told through OBJECTS AND CONSEQUENCE, never through
+a face: an overturned cart and grain in the wheel ruts, not a frightened
+carter; a shuttered stall and a swept-clean trestle, not a haggling
+crowd. Any people are small, distant, incidental and busy with the
+clearing up - nobody is the subject and nobody is looking out of the
+page.
 
 One clear silhouette dominates and reads at a glance across a table;
-everything else is the ground it happened on. The tone is dry, plain and
-after-the-fact - the weather report, not the disaster painting.
+everything else is the ground it happened on. Draw only the things named
+here, each on its own ground; anything not named - an extra prop, tool,
+barrel, crate or piece of furniture - stays out of the picture. The tone
+is dry, plain and after-the-fact - the weather report, not the disaster
+painting.
 
 Strictly no gradients, no glow, no drop shadows, no soft airbrushed
 shading, no lens effects. No text, no letters, no signage, no border
@@ -130,7 +134,7 @@ furrow with the share bitten into ground that has gone iron, the traces dropped
 and left. Frost stands white on every turned clod and along the hedge. The
 cabbage rows in the next land are blackened and slumped. A wooden water butt by
 the field gate has burst, its hoops sprung and a plug of ice standing proud of
-the staves. Low horizon in the bottom third, flat colourless daylight.
+the staves. High horizon in the top third, flat colourless daylight.
 Wash: cold slate blue over everything, one thin note of rust red on the plough
 irons, flat.
 
@@ -159,7 +163,7 @@ bucket lying on its side on cracked mud at the bottom of the shaft, drawn so
 you can see straight down to it. Around it the pasture is baked to pale stubble
 and cracked in a net of open seams. A stone sheep trough stands dry and
 scoured. A wooden sluice gate is shut on a stream bed with nothing in it but
-white stones. Low horizon in the bottom third, hard flat daylight.
+white stones. High horizon in the top third, hard flat daylight.
 Wash: warm ochre and bleached straw throughout, one cold slate note on the
 chain, flat.
 
@@ -188,7 +192,7 @@ stubble field with long low shadows, and beyond them a second crop already
 green and a hand's height up. A barn is stacked over the eaves, hay pressed out
 between the timbers. A wagon stands loaded higher than its own sides and roped
 down twice. Apples are heaped in an orchard on sacking with more still on the
-trees. Low horizon in the bottom third, warm late light with no sun in the
+trees. High horizon in the top third, warm late light with no sun in the
 picture.
 Wash: warm ochre on the stubble and stooks, dusty grey-green on the second
 crop, rust red on the wagon, flat.
@@ -219,7 +223,7 @@ bundles ashore. The sea wall is taking green water and throwing it clean over,
 the spray drawn as hatched sheets. At the near end of the quay a cargo net lies
 spread with the crates already stacked back off it, and one mooring bollard
 stands with no line on it at all - the berth of a ship that has not come in.
-Low horizon in the bottom third.
+High horizon in the top third.
 Wash: cold slate blue on sea and sky, rust red on the hulls, warm ochre on the
 quay stone, flat.
 
@@ -249,7 +253,7 @@ A five-bar gate stands half under with the current stacking rubbish against it.
 A haystack is islanded on its own staddle stones with the water at the thatch.
 A cart is in to the axles at the edge of the road with its load lifted onto the
 rail. On a barn wall behind, three old silt marks and one new one higher than
-all of them. Low horizon in the bottom third.
+all of them. High horizon in the top third.
 Wash: warm ochre-brown on the water, dusty grey-green on the hedge tops, cold
 slate on the sky, flat.
 
@@ -279,7 +283,7 @@ sound wall carrying on either end of it. The road across the slope has a clean
 step in it a foot high, the metalling broken along the line. A cottage chimney
 stack has gone through its own roof, slates fanned down the pitch. Low on the
 slope a new spring is running out of turf that has split, cutting its first
-channel through dry grass. Low horizon in the bottom third.
+channel through dry grass. High horizon in the top third.
 Wash: dusty grey-green on the turf, cold slate on the stone, rust red on the
 roof tiles, flat.
 
@@ -309,7 +313,7 @@ walked out through it, thin smoke still going up in threads from stump holes.
 The fire has stopped dead along a stream, and the far bank is untouched and
 green - the line between them hard. A stack of cut boards is burnt through at
 one end and sound at the other. Leather fire buckets lie where they were
-dropped. Low horizon in the bottom third.
+dropped. High horizon in the top third.
 Wash: warm ochre and grey ash throughout, one band of dusty grey-green across
 the far bank, rust red in the stump holes, flat.
 
@@ -338,7 +342,7 @@ splayed, and a fan of broken spoil run out across the path in front of it. The
 tram rails going in are buckled and stand bent up clear of their sleepers. A
 winding drum on the bank has its rope run slack and heaped. A row of miners'
 lamps is set out on a flat rock outside, counted and left. Nobody is in the
-picture. Low horizon in the bottom third.
+picture. High horizon in the top third.
 Wash: cold slate blue on the rock and rails, warm ochre on the timber, rust red
 on the spoil, flat.
 
@@ -367,7 +371,7 @@ the staple hanging, one leaf of the door standing wide. Inside, the floor is
 bare except for the clean rectangles in the dust where the stacks stood, and
 one split sack has spilled its grain across the threshold. A hand truck lies on
 its side. Fresh cart tracks turn out of the doorway and go away along the quay,
-loaded deep. Low horizon in the bottom third, grey early light.
+loaded deep. High horizon in the top third, grey early light.
 Wash: warm ochre on the timber, cold slate on the quay, rust red on the cut
 hasp, flat.
 
@@ -396,7 +400,7 @@ through at the traces and left hanging, crates prised open and their straw
 packing blowing along the verge in a long tail, a wagon down on one side with
 the wheel off and leaning against it. A scatter of goods too heavy to carry -
 millstones, a coil of chain - left in the road. Boot prints and hoof prints
-lead off into the scrub. Low horizon in the bottom third.
+lead off into the scrub. High horizon in the top third.
 Wash: warm ochre on the road and straw, rust red on the wagon, dusty grey-green
 on the scrub, flat.
 
@@ -425,8 +429,8 @@ sliding door run right back on its track and the inside is empty but for
 dunnage and a broken seal wire hanging from the hasp. A ladder is left leaning
 against the van side. The coupling chain of the van behind lies uncoupled on
 the ballast. Cart tracks come down the cutting side on a made path of laid
-sleepers and go away over the top. The locomotive stands cold at the head. Low
-horizon in the bottom third.
+sleepers and go away over the top. The locomotive stands cold at the head. High
+horizon in the top third.
 Wash: cold slate blue on the ironwork, rust red on the van, warm ochre on the
 ballast and cutting, flat.
 
@@ -454,7 +458,7 @@ A merchant hull run up into shallow water off a low shore and left there,
 listing, her yards braced round anyhow and both boats gone from the davits.
 Cargo bales float in a slow trail from her side towards the beach, and two are
 already grounded in the wash. Far out on the horizon, hull down and small, one
-low fast sail going away. Nothing on the ship moves. Low horizon in the bottom
+low fast sail going away. Nothing on the ship moves. High horizon in the top
 third.
 Wash: cold slate blue on the sea, rust red on the hull, warm ochre on the
 bales, flat.
@@ -484,7 +488,7 @@ bales stacked in a neat run above the tide line, a boat's keel mark dragged up
 the shingle and a second one going back down. A shuttered lantern stands on a
 rock with only a slit of light out of it. Cart tracks climb the lane between
 high banks and are lost. There is no customs post, no barrier and nobody in
-sight - the whole point of the place. Low horizon in the bottom third.
+sight - the whole point of the place. High horizon in the top third.
 Wash: cold slate blue over everything, one warm ochre note at the lantern slit,
 rust red on the kegs, flat.
 
@@ -514,7 +518,7 @@ split hazel. The fold is empty; the flock's trodden ground stops at the gap.
 Beyond it, a line of paw prints goes away across unbroken snow in a single file
 so straight it reads as one animal, and drag marks run beside it. A shepherd's
 crook is stood in the ground with a lantern hung on it, still burning. No
-animal is in the picture. Low horizon in the bottom third.
+animal is in the picture. High horizon in the top third.
 Wash: cold slate blue on the snow, warm ochre on the hurdles and the lantern,
 flat.
 
@@ -543,8 +547,8 @@ level, running in loops and doubling back on themselves - the ears trampled
 flat and the roots turned up in ridges either side. A hurdle in the field
 boundary is smashed out of its posts. Deep cloven slots are printed in soft
 ground where a drinking place has been churned to mud. A scarecrow leans over
-at a bad angle with its crossbar snapped. No animal is in the picture. Low
-horizon in the bottom third.
+at a bad angle with its crossbar snapped. No animal is in the picture. High
+horizon in the top third.
 Wash: warm ochre on the barley, rust red in the turned soil, dusty grey-green
 on the hedge, flat.
 
@@ -574,8 +578,8 @@ dust. The wayside inn has every shutter barred and its door shut with a bench
 dragged across. Stock has been driven off the road into a rock cleft and
 crowded there. Across the whole scene lies one enormous soft-edged band of
 shadow, drawn as hatching alone, running from one edge of the page to the
-other. Whatever casts it is not in the picture and is not to be drawn. Low
-horizon in the bottom third.
+other. Whatever casts it is not in the picture and is not to be drawn. High
+horizon in the top third.
 Wash: warm ochre on the road, cold slate blue in the shadow band and the rock,
 flat.
 
@@ -604,7 +608,7 @@ hinges and lying flat, the stock pens standing open and empty, the mud
 churned by many hooves in one direction. A stack of cut timber has been pulled
 half apart across the entrance - a barricade begun far too late. A spear stands
 driven into the ground by the gatepost, left. The house is sound and its door
-is open. Nothing is burning. Low horizon in the bottom third.
+is open. Nothing is burning. High horizon in the top third.
 Wash: warm ochre on the timber, rust red on the churned mud, cold slate on the
 ironwork, flat.
 
@@ -633,7 +637,7 @@ and both of them new: a squared stone with one freshly cut face, and a driven
 oak post with an iron plate nailed to it, the nail heads bright. Between the
 two the hay is trampled into a broad path and two sets of cart ruts come in
 from opposite ends of the field and stop short of each other. The old hedge
-line runs somewhere else entirely. Low horizon in the bottom third.
+line runs somewhere else entirely. High horizon in the top third.
 Wash: dusty grey-green on the meadow, warm ochre on the post, cold slate on the
 stone and the iron, flat.
 
@@ -662,7 +666,7 @@ billets in straight lines, spears stacked in tripods down the length of the
 camp, cooking fires in dug pits, a horse line with the picket rope run between
 two posts. Kit is laid out on groundsheets in front of each billet in the same
 order every time. The camp is orderly, well kept and plainly for sale. Any
-figures are small, distant and at their own work. Low horizon in the bottom
+figures are small, distant and at their own work. High horizon in the top
 third.
 Wash: warm ochre on the canvas, rust red on the leather and blankets, cold
 slate on the spear heads, flat.
@@ -692,7 +696,7 @@ front of it and a rope strung waist high a few paces out. On the door of the
 nearest house a painted cross is drawn in one stroke each way - a mark, not
 lettering. Inside the gate the market square stands with its trestles up and
 completely bare, and a laden barrow left in the middle of it with the goods
-still on. Every shutter on the square is closed. Low horizon in the bottom
+still on. Every shutter on the square is closed. High horizon in the top
 third.
 Wash: warm ochre on the straw and stone, rust red on the painted cross, cold
 slate in the shadow, flat.
@@ -722,8 +726,8 @@ is visible: hand carts and barrows loaded with bedding, cook pots and tools,
 bundles roped up and carried, a goat led on a string, a ladder and a door
 carried between two people. The column goes away from the viewer into the
 distance and does not end within the page. The road is a good one and the
-country either side is empty. Nothing is on fire and nobody is running. Low
-horizon in the bottom third.
+country either side is empty. Nothing is on fire and nobody is running. High
+horizon in the top third.
 Wash: warm ochre and rust red on the bundles and blankets, dusty grey-green on
 the verges, flat.
 
@@ -752,8 +756,8 @@ cold with its door open and grey ash raked out onto the floor, barrows tipped
 up on their noses in a row, and every tool in the place laid down in one
 straight line right across the gateway - hammers, shovels, tongs, set out
 deliberately and evenly, so it reads as a decision and not as a mess. A
-cooking pot hangs over a dead fire with nothing in it. Low horizon in the
-bottom third.
+cooking pot hangs over a dead fire with nothing in it. High horizon in the
+top third.
 Wash: cold slate blue on the iron, warm ochre on the yard timber, rust red on
 the cold furnace brick, flat.
 
@@ -782,8 +786,8 @@ of it: trestles down both sides loaded with food and goods, bunting lines of
 plain cut cloth strung between the upper windows, a carcase turning on a spit
 over embers, lanterns hung on poles at intervals. The ground is trodden to bare
 earth and littered with straw and spilled ale. The crowd is a distant hatched
-mass at the far end, small; nobody near the front of the page. Low horizon in
-the bottom third.
+mass at the far end, small; nobody near the front of the page. High horizon in
+the top third.
 Wash: warm ochre on the lanterns and timber, rust red on the bunting and awning
 stripes, dusty grey-green on the far trees, flat.
 
@@ -813,7 +817,7 @@ behind it with every tool in its own shaped place and none missing, a treadle
 lathe rigged off the axle, a half-turned piece still in the chuck with its
 shavings under it. On the near side of the bench a plain stool is set out for
 somebody, and it is empty. The work on the bench is finer than anything else in
-the market. Low horizon in the bottom third.
+the market. High horizon in the top third.
 Wash: warm ochre on the wagon timber, cold slate on the tools, rust red on the
 canvas tilt, flat.
 
@@ -842,8 +846,8 @@ hold bar and rod, and nothing on it but two short offcuts. What scrap there is
 has been swept into one small heap and picked over: broken shoes, bent nails, a
 cracked ploughshare. The forge is lit and drawing well, the fire bright, tongs
 to hand, and there is nothing at all to put in it. The order board by the door
-is a plain scored slate with tally cuts, no lettering. Low horizon in the
-bottom third.
+is a plain scored slate with tally cuts, no lettering. High horizon in the
+top third.
 Wash: cold slate blue on the iron and the rack, warm ochre on the yard, rust
 red at the forge mouth, flat.
 
@@ -872,7 +876,7 @@ in blocks right out to the edge of the water, tarpaulins roped over stacks
 standing in the open because there is nowhere else, and a barge still unloading
 onto a quay that is already full. The shed doors are open and packed to the
 lintel. One stack has been left long enough for the bottom course to have gone
-soft and slumped. Low horizon in the bottom third.
+soft and slumped. High horizon in the top third.
 Wash: warm ochre on the sacking, cold slate on the water and the shed roofs,
 rust red on the barge, flat.
 
@@ -901,8 +905,8 @@ for the berth, rigged differently from every other hull in the picture, her
 boats already down and pulled in to the steps. On the quay a space has been
 swept clear and roped off for a cargo that has not been chosen yet, and a rank
 of empty measuring baskets and a set of beam scales stand ready at the edge of
-it. The local boats are pushed along to the far end to make room. Low horizon
-in the bottom third.
+it. The local boats are pushed along to the far end to make room. High horizon
+in the top third.
 Wash: cold slate blue on the water and the strange hull, warm ochre on the quay
 and baskets, rust red on the local boats, flat.
 
@@ -931,7 +935,7 @@ the carriageway, an iron-bound strongbox chained to its leg, a second chest
 with a hasp and two locks on the ground behind, and a rope on posts running out
 either side so nothing can go round. Beam scales and a set of standard weights
 stand on the table with a ledger and an inkwell. Carts are backed up along the
-road behind, halted and roped, going out of the page. Low horizon in the bottom
+road behind, halted and roped, going out of the page. High horizon in the top
 third.
 Wash: warm ochre on the road and table, cold slate on the ironwork and locks,
 rust red on the waiting carts, flat.
@@ -963,7 +967,7 @@ have drawn themselves half out and point the same way. A cart tyre leans on
 nothing. The heather, the stones and the sky are all completely ordinary and
 completely still - there is no wind, no light and nothing to see but iron
 behaving wrongly. Drawn dead straight, with no violet and no glow of any kind.
-Low horizon in the bottom third.
+High horizon in the top third.
 Wash: dusty grey-green on the heather, cold slate blue on the iron, warm ochre
 on the plank, flat.
 
@@ -993,8 +997,8 @@ the contents crawled out over the bench edge and set hard in one glossy
 tongue that has stopped halfway to the floor. The rest of the glassware has
 been shoved back out of the way in a hurry. The slate underneath is scorched in
 an irregular patch. A shutter has been propped wide open to clear the air.
-Drawn dead straight, with no violet and no glow of any kind. Low horizon in the
-bottom third.
+Drawn dead straight, with no violet and no glow of any kind. High horizon in the
+top third.
 Wash: rust red on the copper, cold slate on the stone and glass, warm ochre on
 the bench timber, flat.
 
@@ -1024,8 +1028,8 @@ laid out on the ground with a row of small objects set on it in a deliberate
 order - a folding lens, a set of jeweller's scales, three sealed phials, a
 cased needle, a stone with a hole through it. One folding stool stands on the
 near side of the cloth and it is empty. Everything is worn, mended and well
-looked after. Drawn dead straight, with no violet and no glow of any kind. Low
-horizon in the bottom third.
+looked after. Drawn dead straight, with no violet and no glow of any kind. High
+horizon in the top third.
 Wash: warm ochre on the cloth and pack, cold slate on the instruments, dusty
 grey-green on the hedge, flat.
 
@@ -1054,8 +1058,8 @@ properly: bedrolls left open where they were slept in, a cooking pot upset with
 its contents gone into the grass, a water skin lying half in the stream mouth
 where it was filled from water with a green scum on it. The fire is dead and
 not raked. One pack has been repacked and roped and the rest have not. Cattle
-have plainly been standing in the stream just upstream of the camp. Low horizon
-in the bottom third.
+have plainly been standing in the stream just upstream of the camp. High horizon
+in the top third.
 Wash: dusty grey-green on the scum and the grass, warm ochre on the bedrolls,
 cold slate on the water, flat.
 
@@ -1084,8 +1088,8 @@ every lane, thick enough that the bottom of every wall and gatepost is lost in
 it and the tops are sharp. Every shutter in the village is closed and the doors
 are shut. A bell rope hangs down out of the open belfry of a small church and
 sways a little. Two barrows and a cart stand where they were left in the lane,
-loaded. Smoke goes straight up from three chimneys and nowhere else. Low
-horizon in the bottom third.
+loaded. Smoke goes straight up from three chimneys and nowhere else. High
+horizon in the top third.
 Wash: cold slate blue in the mist, warm ochre on the walls and thatch, dusty
 grey-green on the fen behind, flat.
 
@@ -1114,8 +1118,8 @@ shuttered and every trestle is stacked and roped against a wall. The ground has
 been swept clean, which is the wrong thing for a market square to be. One
 laden cart stands abandoned dead in the middle of the open ground with its load
 still roped down and its shafts on the cobbles. Every window on the square is
-closed. The town's water conduit runs on into its trough with nobody at it. Low
-horizon in the bottom third, hard flat light.
+closed. The town's water conduit runs on into its trough with nobody at it. High
+horizon in the top third, hard flat light.
 Wash: warm ochre on the stone, cold slate on the shutters and the water, one
 rust red note on the cart, flat.
 
@@ -1145,7 +1149,7 @@ flat, dull and slate-grey like broken stone rather than bright like broken
 metal. A stack of bars is set aside, several of them cracked through where they
 lie. On the bench sits the lump of flux stone that did it, split to show a bad
 grey seam running through the middle of it. The furnace is drawn down and cold.
-Low horizon in the bottom third.
+High horizon in the top third.
 Wash: cold slate blue on the metal and the fractures, warm ochre on the moulding
 sand, rust red on the furnace brick, flat.
 
@@ -1164,7 +1168,7 @@ a rule of thumb.)
 
 ## event-blood-moon — Blood Moon *(arcane, EVT-36)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-blood-moon.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-blood-moon.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1174,9 +1178,9 @@ moon low, small and rust-coloured just clear of the horizon line, with no rays
 and no halo. Stock has been crowded into the corner of a walled field and the
 gate is shut and staked with two hurdles lashed over it. Tracks of several
 different animals cross a road in the near ground, all going the same way and
-none of them stopping. A byre door is barred on the outside with a plank. No
-creature is in the picture. Drawn dead straight, with no violet and no glow of
-any kind. Low horizon in the bottom third.
+none of them stopping. A byre door is barred on the outside with a plank. The
+stock are the only animals drawn. Drawn dead straight, with no violet and no glow of
+any kind. High horizon in the top third.
 Wash: cold slate blue over the whole night, one rust red note low in the sky,
 warm ochre on the byre timber, flat.
 
@@ -1195,7 +1199,7 @@ a rule of thumb.)
 
 ## event-quiet-season — The Quiet Season *(wildlife, EVT-37)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-quiet-season.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-quiet-season.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
@@ -1206,7 +1210,7 @@ its lacing slack, snares coiled and hung up on a nail in a bunch rather than
 set out. A dog's dish sits full and untouched. Fresh snow lies over the ground
 and carries one set of human tracks coming in from the trees and none going
 out, and no animal tracks at all anywhere in the picture. The woodland behind
-is completely still. Low horizon in the bottom third.
+is completely still. High horizon in the top third.
 Wash: cold slate blue on the snow, warm ochre on the racks and frames, dusty
 grey-green on the trees, flat.
 
@@ -1235,7 +1239,7 @@ together well inside the bar with their sails furled and harbour gaskets on,
 and a boom of chained spars run right across the entrance behind them, made
 fast to a capstan on each shore. Nothing is loading. Out beyond the bar, three
 low hulls stand along under sail in line, small and hull-down, carrying no
-colours at all on bare staffs. Low horizon in the bottom third.
+colours at all on bare staffs. High horizon in the top third.
 Wash: cold slate blue on the sea and sky, rust red on the merchant hulls, warm
 ochre on the boom spars, flat.
 
@@ -1264,7 +1268,7 @@ four gun ports newly cut in her side with the fresh sawn edges pale against the
 weathered planking and the sawdust still lying on the deck below them, a gun
 swinging aboard in a sling off sheerlegs, powder barrels ranked on the quay
 under a wetted cloth. A plain table stands at the foot of the gangway with a
-strongbox and a seal press on it and nothing else. Low horizon in the bottom
+strongbox and a seal press on it and nothing else. High horizon in the top
 third.
 Wash: rust red on the hull, cold slate blue on the guns and water, warm ochre
 on the fresh-cut timber, flat.
@@ -1294,8 +1298,8 @@ top hinge, stools and one whole table out in the street where they were pushed,
 a broken jug in the gutter with the wine dried dark around it, a cap and one
 shoe left in the mud a few yards apart. The lane's other doors are shut fast. A
 ship's boat, low in the water and crowded, is pulling out into the harbour in
-the far distance, small enough that nobody in it is readable. Low horizon in
-the bottom third.
+the far distance, small enough that nobody in it is readable. High horizon in
+the top third.
 Wash: cold slate blue over the early light, warm ochre on the tavern timber,
 rust red on the spilled wine, flat.
 
@@ -1325,7 +1329,7 @@ bound chest - and the other two thirds of the platform swept, empty and plainly
 meant to be full. Pressed into the turf beside it is one enormous three-clawed
 footprint, deep enough that water has gathered in it, and nothing else in the
 picture is disturbed at all. The road up to the stand is well used. No creature
-is in the picture. Low horizon in the bottom third.
+is in the picture. High horizon in the top third.
 Wash: cold slate blue on the stone, warm ochre on the barrels and turf, rust
 red on the bales, flat.
 
@@ -1354,8 +1358,8 @@ tower with an iron mooring cone at the top, guy wires pegged out in six
 directions and freshly tensioned, a windsock of plain cloth streaming from a
 side arm. At the foot of it a handcart of locked mail chests waits under a
 roped tarpaulin with the corner turned back, and a set of steps is wheeled into
-position. Nothing is moored to the mast and there is nothing in the sky. Low
-horizon in the bottom third.
+position. Nothing is moored to the mast and there is nothing in the sky. High
+horizon in the top third.
 Wash: warm ochre on the timber tower, cold slate blue on the ironwork and sky,
 rust red on the mail chests, flat.
 
@@ -1384,8 +1388,8 @@ belt of trees permanently bent over and stripped bare down one side, hurdles
 cartwheeled off their line and jammed in a ditch, a thatched roof opened along
 one whole side of its ridge with the straw drawn out in a long streaming tail.
 A hay wagon lies on its side across the road with the load gone. Every loose
-thing in the picture leans, streams or lies down the same way. Low horizon in
-the bottom third.
+thing in the picture leans, streams or lies down the same way. High horizon in
+the top third.
 Wash: dusty grey-green on the trees, warm ochre on the flying straw, cold slate
 on the sky, flat.
 
@@ -1414,7 +1418,7 @@ bridge pier in a jam, brown water pushing through the gaps, and the whole
 surface downstream a broken mosaic moving away. On the bank a sledge road ends
 in slush, its runner marks running straight down to the water's edge and
 stopping; a fresh horse track turns off it and goes the long way round through
-mud. A hay sledge is left on the ice at a bad angle. Low horizon in the bottom
+mud. A hay sledge is left on the ice at a bad angle. High horizon in the top
 third.
 Wash: cold slate blue on the ice, warm ochre-brown on the flood water, rust red
 on the sledge, flat.
@@ -1445,7 +1449,7 @@ with every piece visibly out of true - flats filed on the edges, one clipped so
 far the device runs off the rim. A touchstone with streak marks on it lies to
 one side. A pair of shears and a fine file have been swept off the table into
 an open box underneath, in a hurry. The stalls either side are trading
-normally. Low horizon in the bottom third.
+normally. High horizon in the top third.
 Wash: warm ochre on the coin, cold slate blue on the shears and scales, rust
 red on the table cloth, flat.
 
@@ -1475,7 +1479,7 @@ the timber beside them - a simple branded device, a mark and not lettering.
 Through the window the shop is plainly intact and full, benches loaded with
 finished work. A delivery of stock stands on the step where it was left,
 unopened and rained on, with the carter's tally stick pushed under the cord.
-Low horizon in the bottom third.
+High horizon in the top third.
 Wash: warm ochre on the door timber, cold slate on the nails and window, rust
 red on the burnt mark, flat.
 
@@ -1504,7 +1508,7 @@ pale, the rope across still white and unfrayed, a small hut of new boards with
 a plank shelf out of its window carrying a ledger and a locked box. Beside all
 of it the road's own milestones are grey with lichen and the road surface is
 long-settled and well made - it was paid for by somebody else. Carts are halted
-back along it. Low horizon in the bottom third.
+back along it. High horizon in the top third.
 Wash: warm ochre on the new timber, cold slate blue on the old road stone, rust
 red on the waiting carts, flat.
 
@@ -1535,7 +1539,7 @@ over one end, a shutter is off and stood against the wall, and grass has grown
 up through the cobbles of the yard where wheels should be keeping it down. The
 sign bracket over the door is empty but for a blank weathered board hanging by
 one hook, with no device and no lettering on it at all. A stack of barrels by
-the door has one broken stave. Low horizon in the bottom third.
+the door has one broken stave. High horizon in the top third.
 Wash: warm ochre on the thatch and walls, dusty grey-green on the yard grass,
 rust red on the barrels, flat.
 
@@ -1564,8 +1568,8 @@ one of them plainly empty: bungs out and laid on top, taps drawn and hung on a
 nail in a bunch, one barrel tipped forward on its chine to prove the last of it
 out. The cellar hatch is thrown back and the steps down are dry and swept. A
 dray stands backed up to the door with an empty bed and its horse out of the
-shafts. Two more inns' carts wait in the lane behind, also empty. Low horizon
-in the bottom third.
+shafts. Two more inns' carts wait in the lane behind, also empty. High horizon
+in the top third.
 Wash: warm ochre on the barrel oak, cold slate on the hoops and taps, rust red
 on the dray, flat.
 
@@ -1596,7 +1600,7 @@ perfectly still. A compass bowl sits with its needle stopped across the marks
 at no direction in particular. Iron filings scattered on a slate lie in a flat
 even scatter with no pattern in them whatsoever. Everything is in working order
 and nothing is doing anything. Drawn dead straight, with no violet and no glow
-of any kind. Low horizon in the bottom third.
+of any kind. High horizon in the top third.
 Wash: cold slate blue on the stone and instruments, dusty grey-green on the
 ground, warm ochre on the tripod, flat.
 
@@ -1626,8 +1630,8 @@ in rows too straight to be old, a new road cut and already rutted deep, stacks
 of sawn boards and unrendered brick standing in the mud beside half-framed
 walls. A queue of laden carts is backed up on the new road. The old village -
 stone, thatch, a churchyard wall - sits in the middle of it, suddenly small,
-with the new streets running right up against the wall. Low horizon in the
-bottom third.
+with the new streets running right up against the wall. High horizon in the
+top third.
 Wash: warm ochre on the new timber and canvas, rust red on the brick, dusty
 grey-green on what is left of the fields, flat.
 
@@ -1662,7 +1666,7 @@ the two is the subject of the picture. A sledge and a smith's hammer are left
 lying on the flags where they were dropped. On the plank door at the back, one
 sheet of paper is nailed flat through its middle with a horseshoe nail, edges
 lifting. Grey morning light through a small high window; sawdust, snapped
-needles and a scatter of glass on the floor. Low horizon in the bottom third.
+needles and a scatter of glass on the floor. High horizon in the top third.
 Wash: cold slate blue on the ironwork of both frames, warm ochre on the timber
 and the floor, one thin rust red on the nailed paper, flat.
 

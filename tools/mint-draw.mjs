@@ -120,6 +120,7 @@ function codexStatus() {
 }
 
 let picked = null;
+let apiUsage = null;
 function pickArtist() {
   if (picked) return picked;
   const asked = (process.env.MINT_ARTIST ?? '').toLowerCase();
@@ -233,6 +234,15 @@ async function drawWithApi(line, row, commission, draw, { model, quality, size, 
   const body = await res.json();
   const b64 = body?.data?.[0]?.b64_json;
   if (!b64) handOver(line, row, commission, 'the response carried no image.');
+  /* What the picture used, as the API counts it, so the cost of a plate can be
+     read off the run rather than guessed. Tokens, not dollars: the price per
+     token is OpenAI's to change, and a figure typed here would go stale. */
+  const u = body.usage;
+  if (u) {
+    const img = u.input_tokens_details?.image_tokens ?? 0;
+    const txt = u.input_tokens_details?.text_tokens ?? (u.input_tokens ?? 0) - img;
+    apiUsage = `${u.output_tokens ?? '?'} image tokens out, ${txt} text${img ? ` + ${img} image` : ''} tokens in`;
+  }
   return Buffer.from(b64, 'base64');
 }
 
@@ -322,8 +332,8 @@ for (const target of targets) {
   console.log(`DRAWN ${row.code} · ${row.plate}
   file      ${out}
   wording   ${wording}
-  artist    ${artist.id === 'codex' ? 'Codex image tool, ChatGPT sign-in' : model}
-  size      ${png.width}x${png.height} (${sizeNote}), ${png.bytes} bytes, sha256 ${png.sha256}
+  artist    ${artist.id === 'codex' ? 'Codex image tool, ChatGPT sign-in' : `${model}, quality ${quality}`}
+${apiUsage ? `  usage     ${apiUsage}\n` : ''}  size      ${png.width}x${png.height} (${sizeNote}), ${png.bytes} bytes, sha256 ${png.sha256}
 
 LOOK AT IT, then check it against every item. One failure is a rejection: write
 the wording and the one reason into docs/art/renders/${row.plate}.attempts.md and

@@ -63,19 +63,22 @@ ordinarily does - rather than the way a poster sells a fight.
 
 A wide landscape plate of ONE place with something UNFINISHED in it,
 drawn at middle distance from the road - the approach to it, never the
-arrival - with a low horizon in the bottom third and the ground running
-out to both edges of the page. Where an event plate is the aftermath,
-this is the threshold: the errand is still to be run and the picture is
-the invitation. The unfinished thing is a plain object or a plain mark
-on the ground, drawn precisely - a hopper standing empty, a lantern hook
-with no lantern on it, a coppice rooted up, a track leading into the fen
-- and it sits where the eye lands.
+arrival - looked down on a little, so the horizon sits HIGH, in the top
+third of the page, and the ground fills the rest and runs out to both
+edges. Where an event plate is the aftermath, this is the threshold: the
+errand is still to be run and the picture is the invitation. The
+unfinished thing is a plain object or a plain mark on the ground, drawn
+precisely - a hopper standing empty, a lantern hook with no lantern on
+it, a coppice rooted up, a track leading into the fen - and it sits
+where the eye lands.
 
 Any people are small, distant and at their own work; nobody is the
-subject, nobody is heroic and nobody is looking out of the page.
-Ordinary daylight and ordinary weather. The tone is a note in a
-travelling ledger - here is the place, here is what is wanted - never an
-adventure poster.
+subject, nobody is heroic and nobody is looking out of the page. Draw
+only the things named here, each on its own ground; anything not named -
+an extra prop, tool, barrel, crate or piece of furniture - stays out of
+the picture. Ordinary daylight and ordinary weather. The tone is a note
+in a travelling ledger - here is the place, here is what is wanted -
+never an adventure poster.
 
 Strictly no gradients, no glow, no drop shadows, no soft airbrushed
 shading, no lens effects. No text, no letters, no signage, no map
@@ -123,7 +126,7 @@ nothing is being ground. The mill door stands open and the hopper inside is
 plainly empty - drawn so it reads as empty from across a table, a clean-swept
 timber funnel with the light going all the way down it. Three sound sacks are
 folded flat and stacked on the step, waiting for grain that has not come. A
-tally board hangs by the door, blank. Low horizon in the bottom third, ordinary
+tally board hangs by the door, blank. High horizon in the top third, ordinary
 overcast daylight.
 Wash: warm ochre on the mill timber, dusty grey-green on the bank, cold slate
 on the water, flat.
@@ -147,8 +150,8 @@ glazing frame open and NOTHING IN IT - the hook bare, the frame empty, the
 whole post drawn precisely and set where the eye lands. Below it the harbour
 ice is broken in one dark ragged hole with a boat's mast butt still standing up
 out of it at an angle. Two boats are hauled out on the hard, well kept, tarpaulins
-lashed. A window or two lit far back in the village, small. Low horizon in the
-bottom third.
+lashed. A window or two lit far back in the village, small. High horizon in the
+top third.
 Wash: cold slate blue on ice and water, warm ochre in the far windows, rust red
 on the boat hulls, flat.
 
@@ -171,7 +174,7 @@ the soil still on them, cut rods scattered off their stacks, the ground turned
 over in long troughs. The damage is fresh and the earth is dark. A woodcutter's
 faggot bond and a billhook are left standing in a stack that was being tied
 when the work stopped. Deep cloven slots in the mud lead away into the standing
-coppice. The animal is not in the picture. Low horizon in the bottom third.
+coppice. The animal is not in the picture. High horizon in the top third.
 Wash: dusty grey-green on the coppice, warm ochre on the cut rods, rust red in
 the turned soil, flat.
 
@@ -194,7 +197,7 @@ drifting over with sand, and the road losing itself in haze at the horizon.
 In the near foreground, on the flat top of the milepost, lies a single folded
 letter under a stone - drawn precisely, the wax seal on it unbroken and pressed
 with a plain device, the paper crisp and new against everything else in the
-picture, which is worn. Nobody has picked it up. Low horizon in the bottom
+picture, which is worn. Nobody has picked it up. High horizon in the top
 third, hard flat daylight.
 Wash: warm ochre and pale sand throughout, cold slate in the far haze, rust red
 on the wax, flat.
@@ -218,7 +221,7 @@ it at waist height, new rope on old posts, and beyond the bar the causeway runs
 two hundred paces into flat reed and standing water and stops being a path at
 all. Peat is stacked half-cut on the near side with the cutting spades still in
 the bank, left where the work was abandoned. Reflections in the water are drawn
-flat and quiet; there is nothing in them. Low horizon in the bottom third,
+flat and quiet; there is nothing in them. High horizon in the top third,
 still grey light.
 Wash: dusty grey-green on the reed, cold slate on the standing water, rust red
 on the cut peat, flat.
@@ -242,8 +245,8 @@ drying rail of clean folded sheets along the wall. Beside the porch stands a
 plain medicine shelf brought outside to be scrubbed, and it is EMPTY - every
 bottle stop and ring on it bare, one square of unfaded lime-wash on the wall
 where a full shelf used to stand. A written list is pinned to the porch post,
-drawn as a small pale rectangle with no legible lettering on it. Low horizon in
-the bottom third, thin morning light and mist off the fen.
+drawn as a small pale rectangle with no legible lettering on it. High horizon in
+the top third, thin morning light and mist off the fen.
 Wash: warm ochre on the lime-wash, dusty grey-green on the fen, cold slate in
 the mist, flat.
 
@@ -267,7 +270,7 @@ into a footpath and then into nothing. In the near foreground a surveyor's
 tripod stands set up and unattended on a levelled patch, its plumb bob hanging
 still over a driven peg, and a coil of chain lies beside it - the survey begun
 and not finished. Further up, a dark square of old tunnel mouth in the rock,
-boarded across. Low horizon in the bottom third, cold clear light.
+boarded across. High horizon in the top third, cold clear light.
 Wash: cold slate blue on the rock and snow, warm ochre on the road and the
 tripod timber, rust red on the boarding, flat.
 
@@ -291,7 +294,7 @@ gudgeons in it and no bell hanging from them, drawn precisely and set where the
 eye lands. On the water below, a line of channel withies leans out towards the
 Splinter Isles, and one of them is snapped off short. A rowing boat is drawn up
 on the shingle with a net and a grapnel folded into it. The bay is glassy and
-gives back the sky. Low horizon in the bottom third, still evening light, no
+gives back the sky. High horizon in the top third, still evening light, no
 sun in the picture.
 Wash: cold slate blue on the bay, warm ochre on the chapel stone, dusty
 grey-green on the headland, flat.

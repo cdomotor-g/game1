@@ -68,12 +68,13 @@ happens, seen from the sea or from the road at middle distance - the
 approach, never the event: the cave mouth with the boulder beside it and
 the goats on the slope, the cliff-walled harbour with a narrow mouth,
 the house in the clearing with the lions lying at the door, the hall
-with the axes set in a row. A low horizon in the bottom third and the
-ground or the water running out to both edges of the page. One plain
-object that belongs to the chapter is drawn precisely and set where the
-eye lands - an oxhide bag tied with a silver cord, a jar of wine, an oar
-planted in a mound, a great bow on a peg - and the rest is the ordinary
-place it sits in, in ordinary Aegean daylight.
+with the axes set in a row. The horizon sits HIGH, in the top third of
+the page, and the ground or the water fills the rest and runs out to
+both edges. One plain object that belongs to the chapter is drawn
+precisely and set where the eye lands - an oxhide bag tied with a silver
+cord, a jar of wine, an oar planted in a mound, a great bow on a peg -
+and the rest is the ordinary place it sits in, in ordinary Aegean
+daylight.
 
 A black ship with a single square sail and a row of oars is allowed,
 small, arriving or beached; people are allowed small, distant, at their
