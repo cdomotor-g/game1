@@ -710,6 +710,7 @@ ${bookHtml}
 <div class="print-panel" id="print-panel" hidden>
   <div class="panel" role="dialog" aria-labelledby="print-head">
     <h2 id="print-head">Print</h2>
+    <p class="law-note"><b>Keeping the rules in a binder?</b> Print from <a href="law.html"><i>The Law of the Land</i></a> instead: the same rules with every one numbered, one A4 page per sleeve, and its Print… button can print only the pages that changed since you last printed.</p>
     <p>Choose what to print; open a section to pick single chapters. The book then shows only that, loads its pictures and opens the print dialog. The pages are A4 portrait: print at 100% (not “fit to page”) with the default margins.</p>
     <div class="picks" id="picks"></div>
     <fieldset class="opts">

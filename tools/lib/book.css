@@ -302,6 +302,7 @@ h3.act { text-align: center; font-family: var(--grand) !important; font-weight: 
 .card-chapter .lesson { font: italic 350 8.6pt/1.38 var(--body); color: var(--t85); margin: 0; }
 
 /* -------------------------------------------------------- the print panel */
+.print-panel .law-note { margin: 0 0 10px; padding: 8px 10px; border: 1px solid var(--ochre); border-radius: 4px; background: #fff8; }
 .print-panel { position: fixed; inset: 0; z-index: 20; background: rgba(26,23,20,.45); display: grid; place-items: center; }
 /* An author `display` beats the browser's own [hidden] rule, so the panel above
    was on from the moment the page loaded and Close did nothing to it: the one
