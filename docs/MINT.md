@@ -487,6 +487,7 @@ node tools/build-annex.mjs      # the printed annex
 node tools/build-cards.mjs      # the cards themselves
 node tools/build-tiles.mjs      # the building tiles
 node tools/build-book.mjs       # the rulebook
+node tools/build-law.mjs        # the numbered rulebook - it shows the cards too
 node tools/mint-queue.mjs       # the worklist
 node tools/build-mint.mjs       # the mint page on the site
 ```

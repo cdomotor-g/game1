@@ -184,6 +184,9 @@ tools/
   build-book.mjs     docs/{rules,review}/*.md + data/*.json + docs/design/*.md → docs/book/,
                      the printed book, every section printable on its own
   book-proof.mjs     prints the book, or any section of it, to a PDF to look at
+  build-law.mjs      docs/rules/*.md → docs/book/law.html, The Law of the Land: every
+                     rule numbered, kept in loose leaves, with its register of amendments
+  law-proof.mjs      prints the Law, or chosen leaves, to a PDF and checks one leaf = one sheet
   build-mint.mjs     MINT-SETUP.md + MINT.md + QUEUE.md → docs/mint/index.html
   build-map.mjs      map proof sheets, and the derived print sizes
   mint-queue.mjs     which subjects are waiting on a brief, a plate or a tie-back
@@ -289,6 +292,7 @@ node tools/build-minimaps.mjs  # regenerate the mini-map sheets
 node tools/build-tiles.mjs     # regenerate the building tiles
 node tools/build-book-art.mjs  # JPEG copies of new or changed plates for the book
 node tools/build-book.mjs      # regenerate the printable design book
+node tools/build-law.mjs       # regenerate The Law of the Land, recording any amendment
 node tools/mint-queue.mjs      # regenerate the mint worklist
 node tools/build-mint.mjs      # regenerate the mint page on the site
 node tools/simulate.mjs        # see whether it still plays
@@ -390,6 +394,39 @@ catalogue is complete on the day the data is and fills in as the art lands. The 
 are OFL types committed under `docs/book/fonts/` so the page sets the same off disk;
 `node tools/book-proof.mjs [section…]` prints it to a PDF through a headless Chromium so
 it can be looked at before it is shipped.
+
+### The Law of the Land
+
+**[docs/book/law.html](https://cdomotor-g.github.io/game1/book/law.html)** — the same
+rules as Book I, set the other way: to be looked up rather than read, and kept in a
+binder. Built by `tools/build-law.mjs` from the same `docs/rules/*.md`; nothing in it is
+written by hand.
+
+- **Every rule has a number, and none is typed.** A chapter is a Part, a `##` head a
+  section (4.2), a `###` head a subsection, every paragraph, table, step or note under
+  them a clause (4.2.3), and a list straight after a paragraph its sub-clauses
+  (4.2.3.1). A link to another chapter prints where it goes — *(Part 5)*, *(§5.3)* — so
+  it still works on paper.
+- **It is kept in loose leaves.** A leaf is one A4 sheet, printed one side, coded in its
+  corner (4–3 is Part 4's third). Every Part starts on a new leaf.
+- **A change costs only the leaves it touches.** A number once printed stays: a new rule
+  between two others is 4.2.3A, a rule taken out stays as *[Repealed]*. A leaf keeps the
+  rules it was printed with; one too full for what was added gets a companion leaf, 4–3a,
+  filed after it. Running the tool after a chapter changes records an **amendment** (one
+  per day that something changed), dates and stamps the reissued leaves, and puts a bar in
+  the margin beside what changed.
+- **Its memory is `docs/book/law-register.json`** — every clause number, every leaf and
+  every amendment — written by the tool and committed beside the page. Never edit it by
+  hand. `--consolidate` starts a new edition: clean numbers, fresh leaves, reprint all.
+- **To bring a printed copy up to date**, open the page, press **Print…**, choose *What
+  changed since*, pick the amendment last filed, and print just those leaves. The stamp in
+  each footer is the leaf's fingerprint, to check a sheet in the binder against.
+- **Pictures are the pieces.** Where a chapter shows a card, a tile, a board or a flow,
+  the Law shows it too, in a fixed-size box so a redrawn picture never moves a line; a
+  painting that is on no piece is left to The Almanac.
+
+`node tools/law-proof.mjs [leaf…]` prints it, or chosen leaves, through a headless
+Chromium and fails if any leaf takes more than one sheet.
 
 ## Cards
 

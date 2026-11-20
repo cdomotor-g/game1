@@ -669,6 +669,45 @@ Merriweather, not a Fell type - `docs/book/fonts/README.md` says why. A catalogu
 entry is a fixed box that hides what overflows it, so a change to its type or its
 pieces is checked against every entry, not one.
 
+## The same rules are a second book, and it is kept in loose leaves
+
+`docs/book/law.html` is **The Law of the Land**: Book I again, every rule numbered
+like an Act, set one column to an A4 leaf for a ring binder. The Almanac is the rules
+to read; the Law is the rules to look up and to reprint a page of. `tools/build-law.mjs`
+builds it from the same `docs/rules/*.md`, `tools/lib/law.mjs` holds the logic, and
+`tools/lib/law.css` the look. Run it after `build-book` whenever a chapter, or a number
+in the data a chapter prints, has moved; CI fails on a stale one.
+
+**No number is typed, and no number once printed ever moves.** A chapter is a Part
+(its file prefix), `##` a section, `###` a subsection, every block under them a
+clause, and a list straight after a paragraph that paragraph's sub-clauses. Every
+build diffs the chapters against `docs/book/law-register.json` - the register of
+what was printed: every clause number, every leaf and every amendment - so a clause
+written between two others becomes 4.2.3A, and one deleted stays as a
+*[Repealed]* stub. **This is the design, not mess to tidy.** The reader keeps the
+book in a binder and reprints only changed leaves, and a renumbering is a reprint of
+everything after it. Never edit the register by hand, never delete it to "start
+clean", and never run `--consolidate` (renumber everything, new edition, reprint the
+whole book) or `--repaginate` (repack every leaf) unless the person asks for it.
+
+**A change costs the leaves it touches.** A leaf keeps the clauses it was printed
+with. One whose content changed is reissued under the same code; one too full for
+what was added keeps what it can and hands the rest to a companion leaf (4-3a) filed
+after it. Each build day with a change is one **amendment**, numbered and dated, and
+the build prints which leaves to reprint and which to take out. Leaves are packed by
+**measuring** every clause in a headless Chromium at the leaf's own width; without
+one it estimates and says so. Every leaf carries a stamp - a fingerprint of its rules
+text, its figures' refs and the clauses on it, never of its markup or pictures - so a
+redrawn plate or a restyled page reissues nothing. `node tools/law-proof.mjs [leaf...]`
+prints it and fails if any leaf takes more than one sheet.
+
+**Pictures are pieces.** The Law shows a chapter's `{{fig:}}` figures as the pieces a
+rule talks about - a plate as the card it is on, a tile plate as its tile; a plate on
+no piece is left out - each in a box of fixed size. Friezes and vignettes are the
+Almanac's alone.
+
+When reporting a rules change, say which leaves the build said to reprint.
+
 ## Nothing here draws the thing you are about to ship — so look at it
 
 Every check in this repository proves something about the numbers. None of them
@@ -772,6 +811,7 @@ node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap +
 node tools/build-tiles.mjs     # regenerate docs/tiles/ from buildingtiles + buildings + recipes
 node tools/build-book-art.mjs  # JPEG copies of new or changed plates -> docs/book/art/ (needs Chromium; --check does not)
 node tools/build-book.mjs      # regenerate docs/book/ from docs/rules/, docs/review/, data/ and docs/design/
+node tools/build-law.mjs       # The Law of the Land - records any change to a rule as an amendment
 node tools/validate-framing.mjs # every crop against its deck's current window
 node tools/mint-queue.mjs      # regenerate docs/art/mint/QUEUE.md
 node tools/build-mint.mjs      # regenerate docs/mint/ from MINT*.md + QUEUE.md

@@ -1,0 +1,242 @@
+/* The Law of the Land's stylesheet. Inlined by tools/build-law.mjs, which fills
+   the ${COLOUR} tokens from docs/art/palette.json and the ${LEAF_*} sizes from
+   the one table of leaf measurements in that tool - the same table it packs the
+   leaves with, so the page it measured is the page it prints.
+
+   A leaf is one A4 sheet, printed on one side, and it is drawn as one: on screen
+   too, so what you see is what goes in the binder. Everything that has a size on
+   paper is in millimetres.
+
+   The faces are The Almanac's (docs/book/fonts/README.md) and are used for the
+   same reasons: Merriweather for what is read, Alegreya Sans for a number or a
+   table, and the Fell kept to the title leaf. A clause number is the thing a
+   reader looks FOR, so it is the sans, in bold, with figures that line up. */
+:root {
+  color-scheme: light;
+  --tallow: ${TALLOW}; --foxing: ${FOXING}; --soot: ${SOOT};
+  --t85: ${T85}; --t70: ${T70}; --t55: ${T55}; --t40: ${T40}; --t25: ${T25}; --t12: ${T12};
+  --ochre: ${OCHRE}; --oxide: ${OXIDE}; --slate: ${SLATE}; --link: ${LINK};
+  --body: 'Book Serif', Georgia, 'Times New Roman', serif;
+  --display: 'Book Display', 'Iowan Old Style', Georgia, serif;
+  --grand: 'Book Grand', 'Book Display', Georgia, serif;
+  --sans: 'Alegreya Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --gutter: ${LEAF_GUTTER}mm;
+  --step: ${LEAF_STEP}mm;
+  --line: 13.3pt;
+}
+* { box-sizing: border-box; }
+html { background: var(--foxing); }
+body { margin: 0; color: var(--soot); font-family: var(--body); font-size: 9.3pt; line-height: var(--line); }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+em, i { font-style: italic; }
+strong, b { font-weight: 700; }
+
+/* ------------------------------------------------------------- the shell */
+.bar {
+  position: sticky; top: 0; z-index: 5; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; row-gap: 4px;
+  padding: 8px 16px; background: var(--tallow); border-bottom: 1px solid var(--t25);
+  font-family: var(--sans); font-size: 13.5px;
+}
+.bar strong { font-family: var(--grand); font-weight: 340; font-size: 21px; margin-right: auto; }
+.bar a, .bar button.link { color: var(--link); background: none; border: none; font: inherit; cursor: pointer; padding: 0; }
+.bar form { display: flex; gap: 6px; align-items: center; margin: 0; }
+.bar input { font: inherit; width: 7.5em; padding: 2px 6px; border: 1px solid var(--t40); border-radius: 3px; background: #fff; }
+.bar .msg { color: var(--oxide); font-size: 12.5px; }
+button { font: inherit; }
+button.primary { background: var(--soot); color: var(--tallow); border: 1px solid var(--soot); border-radius: 3px; padding: 3px 12px; cursor: pointer; }
+button.plain { background: none; border: 1px solid var(--t40); border-radius: 3px; padding: 3px 12px; cursor: pointer; color: var(--soot); }
+
+.leaves { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 20px 16px 80px; }
+
+/* ------------------------------------------------------------- the leaf */
+.leaf {
+  position: relative; display: flex; flex-direction: column; flex: none;
+  width: ${LEAF_W}mm; height: ${LEAF_H}mm;
+  padding: ${LEAF_TOP}mm ${LEAF_RIGHT}mm ${LEAF_BOTTOM}mm ${LEAF_LEFT}mm;
+  background: var(--tallow); box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+}
+.leaf:target, .leaf.hit { outline: 2px solid var(--ochre); outline-offset: 3px; }
+.lhead {
+  height: ${LEAF_HEAD}mm; flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 6mm;
+  font-family: var(--sans); font-size: 8pt; letter-spacing: .08em; text-transform: uppercase; color: var(--t70);
+}
+.lhead .lt { padding-top: 1.4mm; }
+.lhead .lc { font-size: 17pt; line-height: 1; font-weight: 700; letter-spacing: 0; color: var(--soot); text-transform: none; }
+.lbody { height: ${LEAF_BODY}mm; flex: none; position: relative; border-top: .35mm solid var(--soot); }
+.leaf.over .lbody { box-shadow: inset 0 -2mm 0 var(--oxide); }
+.leaf.over::after {
+  content: 'This leaf is fuller than its page. Run node tools/build-law.mjs.'; position: absolute; left: ${LEAF_LEFT}mm; bottom: 2mm;
+  font: 700 8pt var(--sans); color: var(--oxide);
+}
+.lfoot {
+  margin-top: auto; height: ${LEAF_FOOT}mm; flex: none; display: flex; align-items: flex-end; justify-content: space-between; gap: 5mm;
+  border-top: .2mm solid var(--t40); padding-bottom: .5mm;
+  font-family: var(--sans); font-size: 7.6pt; line-height: 1.25; color: var(--t70);
+}
+.lfoot .rng { color: var(--soot); }
+.lfoot .stamp { font-weight: 700; color: var(--soot); letter-spacing: .06em; }
+
+/* -------------------------------------------------------- a unit, any kind
+   Every unit is its own box with no margins - only padding, which does not
+   collapse into its neighbour's - so a leaf's height is the plain sum of what
+   is on it, which is what tools/build-law.mjs adds up. */
+.u { display: flow-root; position: relative; padding: ${UNIT_PAD}mm 0 0 var(--gutter); }
+.u > .no {
+  position: absolute; left: 0; top: ${UNIT_PAD}mm; width: calc(var(--gutter) - 1.5mm);
+  font: 700 8.4pt/var(--line) var(--sans); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap;
+}
+.u.d4 { padding-left: calc(var(--gutter) + var(--step)); }
+.u.d4 > .no { left: var(--step); }
+.u.d5 { padding-left: calc(var(--gutter) + 2 * var(--step)); }
+.u.d5 > .no { left: calc(2 * var(--step)); }
+.u.d4 > .no, .u.d5 > .no { font-weight: 400; }
+.u p { margin: 0; }
+.u p + p { margin-top: 1mm; }
+.u.lead { padding-bottom: .2mm; }
+
+/* the head of a Part, on its first leaf */
+.u.head { padding: 2mm 0 2.5mm; }
+.u.head .pno { font: 700 9pt var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--t70); }
+.u.head h2 { font: 340 22pt/1.1 var(--grand); margin: 1mm 0 2.5mm; }
+.u.head .purpose { font-style: italic; color: var(--t85); padding-left: var(--gutter); }
+.u.head .purpose b { font-style: normal; font: 700 7.4pt var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--t70); margin-left: calc(-1 * var(--gutter)); display: inline-block; width: var(--gutter); }
+
+/* section and subsection heads */
+.u.sec { padding-top: 5mm; }
+.u.sec > .no { top: 5mm; font-size: 10pt; }
+.u.sec h3 { margin: 0; font: 700 10pt/var(--line) var(--body); letter-spacing: .05em; text-transform: uppercase; }
+.u.sub { padding-top: 3.2mm; }
+.u.sub > .no { top: 3.2mm; }
+.u.sub h4 { margin: 0; font: 700 9.3pt/var(--line) var(--body); }
+
+/* the kinds of clause */
+.u.open .tx { border-left: .8mm solid var(--ochre); padding-left: 2.4mm; }
+.u.open .tx strong:first-child { font: 700 7.6pt var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ochre); }
+.u.quote .tx { font-style: italic; }
+.u.rep .tx { color: var(--t55); font-style: italic; }
+.u.rep > .no { color: var(--t55); }
+.u pre { margin: 0; font-size: 8pt; line-height: 1.3; white-space: pre-wrap; }
+.u.item .tx::before { content: none; }
+
+/* a cross-reference: the part or section a link points at */
+.xref { font: 700 7.8pt var(--sans); color: var(--t70); white-space: nowrap; }
+
+/* history: where a clause came from, printed with it for good */
+.hist { font: 7.2pt var(--sans); color: var(--t70); white-space: nowrap; }
+/* the change bar: what this issue of the leaf changed */
+.u.chg::before {
+  content: ''; position: absolute; left: -${BAR_OFF}mm; top: ${UNIT_PAD}mm; bottom: 0; border-left: .9mm solid var(--oxide);
+}
+.u.sec.chg::before { top: 5mm; }
+
+/* tables */
+.u table { border-collapse: collapse; width: 100%; font: 8.4pt/1.28 var(--sans); }
+.u th, .u td { border: .2mm solid var(--t40); padding: .6mm 1.4mm; text-align: left; vertical-align: top; }
+.u th { background: var(--t12); font-weight: 700; }
+.u td img, .u p img { height: 1.25em; width: auto; vertical-align: -.25em; }
+
+/* figures: a component in a box of a fixed size, so a picture redrawn never
+   moves a word */
+.lfig { margin: 0; font: italic 7.4pt/1.3 var(--body); color: var(--t85); }
+.lfig.side { float: right; margin: .6mm 0 1mm 4mm; }
+.lfig.block { margin-top: 1.6mm; }
+.lfig.after { margin-top: 1.6mm; }
+.lfig .row { display: flex; gap: 3mm; align-items: flex-end; }
+.lfig .bx { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.lfig .bx > img, .lfig .bx > svg { width: 100%; height: 100%; object-fit: contain; display: block; }
+.lfig .pc { display: flex; flex-direction: column; align-items: center; gap: .6mm; }
+.lfig .pn { font: 6.8pt/1.1 var(--sans); font-style: normal; color: var(--t70); text-align: center; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.lfig figcaption { margin-top: .8mm; }
+.lfig .swatch { display: inline-flex; align-items: center; gap: 1mm; padding: .8mm 1.4mm; background: var(--wash); border-radius: 1mm; font: 700 8pt var(--sans); font-style: normal; color: var(--soot); }
+.lfig .swatch svg { width: 5mm; height: 5mm; }
+
+/* the contents */
+.u.toc { display: flex; align-items: baseline; padding-top: 0; white-space: nowrap; overflow: hidden; height: ${TOC_ROW}mm; font-size: 9pt; }
+.u.toc > .no { top: 0; font-weight: 400; }
+.u.toc.part { height: ${TOC_PART}mm; align-items: flex-end; padding-bottom: 1mm; }
+.u.toc.part > .no { top: auto; bottom: 1mm; font-weight: 700; }
+.u.toc.part .t { font-weight: 700; }
+.u.toc .t { overflow: hidden; text-overflow: ellipsis; color: inherit; }
+.u.toc .dots { flex: 1; border-bottom: .3mm dotted var(--t40); margin: 0 1.6mm; min-width: 6mm; }
+.u.toc .lv { font: 700 8.6pt var(--sans); }
+.u.toc.rep .t { color: var(--t55); font-style: italic; }
+.u.tochead { padding: 2mm 0 3mm; height: ${TOC_HEAD}mm; }
+.u.tochead h2 { margin: 0; font: 340 20pt/1.1 var(--grand); }
+
+/* the title leaf and the record leaf */
+.u.title { padding: 0; height: ${LEAF_CAP}mm; display: flex; flex-direction: column; }
+.u.title .t1 { margin: 22mm 0 0; text-align: center; font: 340 34pt/1.05 var(--grand); }
+.u.title .t2 { margin: 3mm 0 0; text-align: center; font: italic 340 13pt/1.3 var(--display); color: var(--t85); }
+.u.title .longtitle { margin: 9mm 14mm 0; text-align: center; font: italic 9.3pt/1.5 var(--body); color: var(--t85); }
+.u.title .ed { margin: 7mm 0 0; text-align: center; font: 700 9pt var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+.u.title .how { margin-top: auto; border-top: .35mm solid var(--soot); padding-top: 3mm; columns: 2; column-gap: 7mm; font-size: 8.6pt; line-height: 1.42; }
+.u.title .how h3 { font: 700 8pt var(--sans); letter-spacing: .12em; text-transform: uppercase; margin: 0 0 1.4mm; break-after: avoid; }
+.u.title .how p { margin: 0 0 2.2mm; }
+.u.record { padding: 0; }
+.u.record h2 { margin: 2mm 0 2mm; font: 340 20pt/1.1 var(--grand); }
+.u.record p { margin: 0 0 4mm; }
+.u.record table { border-collapse: collapse; width: 100%; font: 8.6pt var(--sans); }
+.u.record th, .u.record td { border: .25mm solid var(--t40); padding: 0 2mm; height: ${RECORD_ROW}mm; text-align: left; }
+.u.record th { background: var(--t12); }
+
+/* ------------------------------------------------------------- the panel */
+.panel-wrap { position: fixed; inset: 0; z-index: 20; background: rgba(40, 30, 20, .45); display: flex; align-items: flex-start; justify-content: center; padding: 6vh 16px; overflow: auto; }
+.panel-wrap[hidden] { display: none; }
+.panel { background: var(--tallow); border-radius: 6px; max-width: 640px; width: 100%; padding: 18px 20px; font-family: var(--sans); font-size: 14px; line-height: 1.4; box-shadow: 0 6px 30px rgba(0, 0, 0, .35); }
+.panel h2 { margin: 0 0 6px; font: 340 22px var(--grand); }
+.panel p { margin: 6px 0; }
+.panel label { display: block; margin: 7px 0; }
+.panel select, .panel input[type=text] { font: inherit; padding: 2px 6px; max-width: 100%; }
+.panel .picked { margin: 10px 0; padding: 8px 10px; background: #fff8; border: 1px solid var(--t25); border-radius: 4px; }
+.panel .picked b { font-size: 15px; }
+.panel .codes { font-weight: 700; word-break: break-word; }
+.panel .out { color: var(--oxide); }
+.panel .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; flex-wrap: wrap; }
+.panel details { margin-top: 12px; }
+.panel summary { cursor: pointer; font-weight: 700; }
+.panel table { border-collapse: collapse; width: 100%; font-size: 12.5px; margin-top: 6px; }
+.panel td, .panel th { border-bottom: 1px solid var(--t25); padding: 2px 6px; text-align: left; vertical-align: top; }
+.panel .amd { margin: 8px 0; }
+.panel .amd ul { margin: 3px 0; padding-left: 18px; }
+.printbar { position: sticky; top: 0; z-index: 6; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 8px 16px; background: var(--soot); color: var(--tallow); font-family: var(--sans); font-size: 14px; }
+.printbar[hidden] { display: none; }
+.printbar .what { margin-right: auto; }
+.printbar button.plain { color: var(--tallow); border-color: var(--t55); }
+.printbar button.primary { background: var(--tallow); color: var(--soot); }
+
+/* A phone cannot show an A4 sheet; it gets the leaves as plain pages of text,
+   still in their leaves and still with their codes. Print is unaffected. */
+@media screen and (max-width: 860px) {
+  .leaves { padding: 12px 8px 60px; }
+  .leaf { width: 100%; height: auto; padding: 5mm 4mm 4mm; }
+  .lbody { height: auto; }
+  .lfoot { margin-top: 3mm; flex-wrap: wrap; }
+  .lfig.side { max-width: 40%; }
+  .lfig, .lfig .pc { max-width: 100%; }
+  .lfig .bx { max-width: 100%; height: auto !important; }
+  .lfig .row { flex-wrap: wrap; row-gap: 2mm; }
+  .table-wrap { overflow-x: auto; }
+  .u { padding-left: 13mm; }
+  .u > .no { width: 12mm; font-size: 7.6pt; }
+  .u.d4 { padding-left: calc(13mm + 3mm); } .u.d4 > .no { left: 3mm; }
+  .u.d5 { padding-left: calc(13mm + 6mm); } .u.d5 > .no { left: 6mm; }
+  .u.head .purpose { padding-left: 0; } .u.head .purpose b { display: block; margin: 0 0 1mm; width: auto; }
+  .lhead .lt { font-size: 7pt; }
+  .u.title { height: auto; }
+  .u.title .how { columns: 1; margin-top: 8mm; }
+  .u.title .t1 { margin-top: 6mm; font-size: 26pt; }
+}
+
+@page { size: A4 portrait; margin: 0; }
+@media print {
+  html, body { background: #fff; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bar, .printbar, .panel-wrap { display: none !important; }
+  .leaves { display: block; padding: 0; }
+  .leaf { box-shadow: none; background: #fff; margin: 0; outline: none !important; }
+  .leaf + .leaf { break-before: page; }
+  .leaf.over .lbody { box-shadow: none; }
+  .leaf.over::after { content: none; }
+  .u th, .u.record th { background: #eee; }
+}

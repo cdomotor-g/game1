@@ -166,6 +166,14 @@ jobs:
       - name: Fail if the committed rulebook is stale
         run: node tools/build-book.mjs --check
 
+      # The Law of the Land is the same chapters numbered and kept in loose
+      # leaves, with docs/book/law-register.json as its memory of what was
+      # printed. It fails when a chapter (or a number in the data a chapter
+      # prints) has moved since the Law was built: running the tool is what
+      # records the change as an amendment and says which leaves to reprint.
+      - name: Fail if the committed Law of the Land is stale
+        run: node tools/build-law.mjs --check
+
       # The mint queue is computed from the data, the briefs, the plates and the
       # tie-backs, across every line in data/mint.json - so it goes stale the
       # moment any of those move.

@@ -74,6 +74,29 @@ fenced code, blockquotes, images, links, bold, italic. Cross-reference another
 chapter by its filename — `[The round](04-the-round.md)` — and the book turns it
 into an anchor. An element mark is `![fire](../art/icons/element-fire.svg)`.
 
+**Every chapter is also a Part of *The Law of the Land*** (`docs/book/law.html`),
+which numbers every rule and is kept in loose leaves. Nothing in a chapter is
+numbered by hand, so write for the structure the numbers are read off:
+
+- the title (`#`), then **one opening paragraph** - the Part's purpose, printed
+  unnumbered under its head - then straight into the first `##`. Anything else
+  before the first `##` fails the build: it has no section to be numbered in;
+- a `##` head is a section (4.2) and a `###` head a subsection (4.2.3); every
+  paragraph, table, numbered step, bullet and `> **Open.**` note is a clause;
+- **a list straight after a paragraph is that paragraph's sub-clauses**
+  (4.2.3.1, 4.2.3.2), so put the sentence a list hangs from directly above it;
+- one rule to a paragraph is what makes a clause citable. A paragraph that says
+  three things is one number for three rules.
+
+Do not renumber files to move a chapter: the two-digit prefix is the Part's
+number, and changing it is a new edition. Do not put a clause number in the
+text either - cite a rule with a link to its heading, `[the labour roll](05-effort-and-jobs.md#the-labour-roll)`,
+and the Law prints its number beside the link.
+
 After editing, `node tools/build-book.mjs` and commit `docs/book/index.html` with
 the chapter; CI fails on a stale page. `node tools/book-proof.mjs rules` prints
-Book I to a PDF so it can be looked at.
+Book I to a PDF so it can be looked at. Then `node tools/build-law.mjs`, and commit
+`docs/book/law.html` and `docs/book/law-register.json`: that run records the change
+as an amendment and prints which leaves to reprint, and CI fails without it. Once a
+number is printed it stays, so a rule added between two others comes out as 4.2.3A
+and one deleted as *[Repealed]*; that is the point, not a fault to tidy.

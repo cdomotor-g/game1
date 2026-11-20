@@ -101,6 +101,23 @@ export function interpolate(text, data, where = 'text') {
   });
 }
 
+/* The faces, and what each is for, are docs/book/fonts/README.md. Three of the
+   families are built here out of two files each: the Fell types have only
+   old-style figures, in which a 1 is a small capital I and 10 reads IO, so every
+   head borrows its digits from Merriweather, scaled to the Fell's cap height
+   (the `adjust`) and drawn at the head's own light weight. A Fell face is
+   declared over every weight so that nothing is ever emboldened by the browser. */
+export const BOOK_FONTS = [
+  /* family, style, weight range, file, unicode-range, size-adjust */
+  ['Book Serif', 'normal', '300 900', 'merriweather-var'], ['Book Serif', 'italic', '300 900', 'merriweather-var-italic'],
+  ['Book Display', 'normal', '100 900', 'im-fell-english-400'], ['Book Display', 'italic', '100 900', 'im-fell-english-400-italic'],
+  ['Book Display', 'normal', '100 900', 'merriweather-var', 'U+0030-0039', '90%'], ['Book Display', 'italic', '100 900', 'merriweather-var-italic', 'U+0030-0039', '90%'],
+  ['Book Label', 'normal', '100 900', 'im-fell-english-sc-400'], ['Book Label', 'normal', '100 900', 'merriweather-var', 'U+0030-0039', '84%'],
+  ['Book Grand', 'normal', '100 900', 'im-fell-great-primer-400'], ['Book Grand', 'normal', '100 900', 'merriweather-var', 'U+0030-0039', '93%'],
+  ['Alegreya Sans', 'normal', '400', 'alegreya-sans-400'], ['Alegreya Sans', 'italic', '400', 'alegreya-sans-400-italic'], ['Alegreya Sans', 'normal', '700', 'alegreya-sans-700'],
+  ['Oswald', 'normal', '400 700', 'oswald-var'],
+].map(([f, st, w, file, range, adjust]) => `@font-face{font-family:'${f}';font-style:${st};font-weight:${w};font-display:swap;src:url(fonts/${file}.woff2) format('woff2')${range ? `;unicode-range:${range}` : ''}${adjust ? `;size-adjust:${adjust}` : ''}}`).join('\n');
+
 /* --------------------------------------------------------------- helpers */
 
 export const esc = (s) => String(s ?? '')
