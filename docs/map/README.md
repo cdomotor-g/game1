@@ -562,3 +562,35 @@ re-sized when `cols` changes, and will not line up with the one the tools draw.
 
 Go to step 2 and keep going. A plate is not finished when the picture looks right; it is
 finished when `validate-map.mjs` is clean and the proof sheet matches the drawing.
+
+---
+
+## A real-Earth map
+
+`earth-mediterranean` is the first map of a different kind: its land is not grown or painted,
+it is **the planet**. The map file's `commission.earth` block says where on Earth the board
+sits (a centre, and how many kilometres one hex is), and nothing in it is a hex: a city is a
+latitude and a longitude, a river is a name, and the board works out where each falls.
+
+| | |
+| --- | --- |
+| `tools/fetch-earth.mjs` | **Run once by a person**, never by CI. Samples real elevation and sea depth, climate, and river courses under every hex and writes `data/earth/<region>.samples.json` - a few kilobytes. |
+| `data/earth/classify.json` | The rules that turn a sampled hex into one of the game's terrains: how high is a hill, how deep is the shelf, which climate is grassland. Tune it, and every real-Earth board reclassifies. |
+| `tools/lib/earth.mjs` | The one place a latitude and longitude becomes a hex and back. Equal-area projection, so a hex stands for the same ground everywhere. |
+| `tools/draw-map.mjs earth-mediterranean` | Classifies, places the cities, finds the lanes and roads, writes the board and draws the plate. Same drawer as every other generated map. |
+
+**Scale.** One hex is 140 km flat to flat - about 17,000 km2. Sicily is a hex and a half and
+Crete half a hex, so islands too small to survive that are put back by name (`forceLand`).
+The board is the same 32 x 24 as every other, so a hex prints the same size and every token
+still fits. A finer view of any part of it is a second board of the same size, not smaller hexes.
+
+**Three honest departures from the planet**, each reported by the tool and none hidden:
+deep water beside land is laid down as shallow (the game's coast rule); a river is one hex wide
+and so only the great ones are kept; a spring in the mountains stays a mountain.
+
+**Teaching.** Every region carries a `learn` note and the board carries `lessons`, each a fact
+about a real place with the hex it fell in. They are written once in the commission and
+printed by whatever shows the map.
+
+**Sources** (credited in the samples file): Terrain Tiles for elevation and depth, Beck et al. 2018
+Koeppen-Geiger climate (CC BY 4.0), Natural Earth rivers (public domain).

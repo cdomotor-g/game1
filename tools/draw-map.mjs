@@ -39,6 +39,7 @@ import { spawnSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { layout, neighbours, distance, hexId } from './lib/hexgrid.mjs';
+import { earthGrid, classify as classifyEarth } from './lib/earth.mjs';
 import {
   n2, esc, makePen, curve, smooth, wobble, offsetPath, dashify, polyPath,
   TERRAIN_TEXTURE, compassRose, plankFrame, scatterInHex,
@@ -87,7 +88,12 @@ if (map.plate?.kind && map.plate.kind !== 'generated') {
   console.error(`draw-map: ${mapId} is a ${map.plate.kind} plate. This tool only grows generated ones — see data/mint.json lines.maps.plate.kind.`);
   process.exit(1);
 }
-const form = map.commission?.landform;
+/* A map with commission.earth is a REAL place: its land is classified from sampled
+   data instead of grown from anchors, and what is typed is a latitude and a
+   longitude, never a hex. Everything downstream of the land - the shoreline, the
+   texture, the frame, the key - is the same code either way. */
+const EARTH = map.commission?.earth ?? null;
+const form = EARTH ? { seed: EARTH.seed ?? 20261123, islands: [], links: [], edges: {}, shelfWidth: 2 } : map.commission?.landform;
 if (!form) {
   console.error(`draw-map: ${mapId} has no commission.landform. A generated map needs its anchors — the islands, the links and the edges. See data/maps/sundering-isles.json.`);
   process.exit(1);
@@ -124,7 +130,7 @@ const budget = new Map(map.commission.terrainBudget.map((b) => [b.terrain, b.sha
 const landShare = [...budget].filter(([id]) => !isWaterId(id)).reduce((n, [, s]) => n + s, 0);
 const landTarget = Math.round(landShare * CELLS);
 
-const islands = form.islands;
+const islands = EARTH ? [] : form.islands;
 const weightTotal = islands.reduce((n, i) => n + i.share, 0);
 const owner = new Map();          // "c,r" -> island id
 const landOf = new Map(islands.map((i) => [i.id, []]));
@@ -199,6 +205,69 @@ for (const g of growth.values()) {
   const got = landOf.get(g.island.id).length;
   if (got < g.target) {
     console.warn(`draw-map: ${g.island.id} reached ${got} of ${g.target} hexes — it ran out of open water. Move its anchor, lower its share, or accept a smaller island.`);
+  }
+}
+
+/* ---- the real Earth, if that is what this is ------------------------------- */
+const EARTH_T = new Map();          // "c,r" -> terrain id, land only
+const EARTH_SHALLOW = new Set();    // water hexes over the continental shelf
+const earthPlace = new Map();       // place id -> landmass id
+const earthLessons = [];
+let earthGridFn = null;
+if (EARTH) {
+  const rules = readJson(join(ROOT, 'data', 'earth', 'classify.json'));
+  const samples = readJson(join(ROOT, 'data', EARTH.samplesFile));
+  if (samples.window.cols !== COLS || samples.window.rows !== ROWS) {
+    console.error(`draw-map: ${mapId}'s samples are for a ${samples.window.cols} x ${samples.window.rows} board, not ${COLS} x ${ROWS}. Run tools/fetch-earth.mjs again.`);
+    process.exit(1);
+  }
+  earthGridFn = earthGrid({ cols: COLS, rows: ROWS, hexKm: EARTH.hexKm, centre: EARTH.centre });
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const id = classifyEarth(samples.cells[r * COLS + c], rules);
+    if (isWaterId(id)) { if (id === 'shallow-water') EARTH_SHALLOW.add(key(c, r)); }
+    else EARTH_T.set(key(c, r), id);
+  }
+  /* Islands too small for a 17,000 km2 hex to keep on their own are put back by name:
+     Crete is a place a player has heard of, and a board without it has a hole in it. */
+  for (const f of EARTH.forceLand ?? []) {
+    const h = earthGridFn.hexOf(f.lat, f.lon);
+    if (!h) { console.warn(`draw-map: ${f.name} is off the board`); continue; }
+    EARTH_SHALLOW.delete(key(h.col, h.row));
+    if (!EARTH_T.has(key(h.col, h.row))) EARTH_T.set(key(h.col, h.row), f.terrain ?? 'hills');
+  }
+  /* Wet ground that the climate map cannot see: a delta is where a river drops its silt. */
+  for (const m of EARTH.marsh ?? []) {
+    const h = earthGridFn.hexOf(m.lat, m.lon);
+    if (!h) { console.warn(`draw-map: ${m.name} is off the board`); continue; }
+    const k = key(h.col, h.row);
+    if (EARTH_T.has(k) && EARTH_T.get(k) !== 'mountain') EARTH_T.set(k, 'marsh');
+    else console.warn(`draw-map: ${m.name} falls on ${EARTH_T.get(k) ?? 'open water'}, not low land - no marsh made`);
+  }
+  /* The game's rule is that deep water never touches land: a hull needs a shelf to
+     come ashore on. The real sea does not always oblige - the Atlas coast and the
+     Atlantic side of Iberia drop away steeply - so any deep hex beside land is laid down
+     as shallow, and the number of them is reported rather than hidden. */
+  let apron = 0;
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const k = key(c, r);
+    if (EARTH_T.has(k) || EARTH_SHALLOW.has(k)) continue;
+    if (ring(c, r).some((nb) => EARTH_T.has(key(nb.col, nb.row)))) { EARTH_SHALLOW.add(k); apron++; }
+  }
+  if (apron) console.log(`  ${apron} deep-water hexes beside land laid down as shallow (the game's coast rule)`);
+  /* Landmasses: connected runs of land. Roads are drawn within one. */
+  let n = 0;
+  for (const k of EARTH_T.keys()) {
+    if (owner.has(k)) continue;
+    const id = `landmass-${++n}`;
+    const hexes = [], stack = [k];
+    owner.set(k, id);
+    while (stack.length) {
+      const here = stack.pop(); const [c, r] = here.split(',').map(Number);
+      hexes.push({ col: c, row: r });
+      for (const nb of ring(c, r)) { const nk = key(nb.col, nb.row); if (EARTH_T.has(nk) && !owner.has(nk)) { owner.set(nk, id); stack.push(nk); } }
+    }
+    landOf.set(id, hexes);
+    islands.push({ id, name: id, at: [hexes[0].col, hexes[0].row], share: hexes.length });
   }
 }
 
@@ -278,7 +347,8 @@ const landBudgetTotal = wanted.reduce((n, id) => n + budget.get(id), 0);
 const terrain = new Map();
 const volcanic = new Set(islands.filter((i) => i.relief === 'volcanic').map((i) => i.id));
 let cursor = 0;
-for (const [i, id] of wanted.entries()) {
+if (EARTH) for (const [k, id] of EARTH_T) terrain.set(k, id);
+for (const [i, id] of EARTH ? [] : wanted.entries()) {
   let n = i === wanted.length - 1 ? allLand.length - cursor : Math.round((budget.get(id) / landBudgetTotal) * allLand.length);
   while (n-- > 0 && cursor < allLand.length) {
     const hex = allLand[cursor++];
@@ -405,8 +475,25 @@ if (riverBudget > 0) {
 
 /* Named first, longest first: a name is a scarce thing a person wrote down, and
    it belongs on the course a player will actually trace with a finger. */
+if (EARTH) {
+  /* Real rivers: each was sampled as a chain of land hexes, spring first, from
+     Natural Earth's centre lines. They are run, not drawn: whatever the data says
+     the water does is what it does. */
+  const samples = readJson(join(ROOT, 'data', EARTH.samplesFile));
+  for (const rv of samples.rivers ?? []) {
+    /* A spring in the mountains stays a mountain: the board has no hex for a stream,
+       so the river starts where the high ground gives out. */
+    let body = rv.hexes.filter(([c, r]) => terrain.has(key(c, r)));
+    while (body.length && terrain.get(key(body[0][0], body[0][1])) === 'mountain') body = body.slice(1);
+    if (body.length < 3) continue;
+    for (const [c, r] of body) { riverHexes.add(key(c, r)); terrain.set(key(c, r), 'river'); }
+    const last = body[body.length - 1];
+    const mouth = ring(last[0], last[1]).find((nb) => !isLand(nb.col, nb.row)) ?? { col: last[0], row: last[1] };
+    courses.push({ id: '', name: rv.name, from: hexId(body[0][0], body[0][1]), to: hexId(mouth.col, mouth.row), hexes: body });
+  }
+}
 courses.sort((a, b) => b.hexes.length - a.hexes.length);
-courses.forEach((c, i) => { c.id = `river-${i + 1}`; c.name = riverNames[i] ?? null; });
+courses.forEach((c, i) => { c.id = `river-${i + 1}`; if (!EARTH) c.name = riverNames[i] ?? null; });
 
 /* ---------------------------------------------------------- 4 · the sea, laid */
 const board = [];
@@ -416,7 +503,7 @@ for (let r = 0; r < ROWS; r++) {
     const k = key(c, r);
     if (terrain.has(k)) { line.push(charFor[terrain.get(k)]); continue; }
     const d = toLand.get(k) ?? Infinity;
-    const shallow = d <= shelfWidth || reef.has(k) || onShelfEdge(c, r);
+    const shallow = EARTH ? EARTH_SHALLOW.has(k) : d <= shelfWidth || reef.has(k) || onShelfEdge(c, r);
     line.push(charFor[shallow ? 'shallow-water' : 'deep-water']);
   }
   board.push(line.join(''));
@@ -438,7 +525,37 @@ const habitable = (c, r) => { const t = terrainById.get(idAt(c, r)); return t &&
 
 const settlements = [];
 const taken = new Set();
-for (const place of map.commission.places ?? []) {
+if (EARTH) {
+  /* A real city stands where its latitude and longitude fall. If that hex is the sea,
+     or a river, or somebody else's, it moves to the nearest hex that will do - and the
+     note says how far, because a city a hex out of place is a thing a player should know. */
+  const usable = (c, r) => inGrid(c, r) && habitable(c, r) && !taken.has(key(c, r));
+  for (const place of EARTH.places ?? []) {
+    const h = earthGridFn.hexOf(place.lat, place.lon);
+    if (!h) { console.warn(`draw-map: ${place.name} (${place.lat}, ${place.lon}) is off the board`); continue; }
+    let spot = usable(h.col, h.row) ? h : null, moved = 0;
+    for (let d = 1; !spot && d <= 2; d++) {
+      const cand = [];
+      for (let r = h.row - d; r <= h.row + d; r++) for (let c = h.col - d * 2; c <= h.col + d * 2; c++) {
+        if (usable(c, r) && distance({ col: c, row: r }, h) === d) cand.push({ col: c, row: r });
+      }
+      /* Prefer one beside the sea if the city is a port, otherwise the closest on the ground. */
+      const gm = earthGridFn;
+      const dist = (x) => { const m = gm.centreKm(x.col, x.row), t = gm.forward(place.lat, place.lon); return Math.hypot(m.x - t.x, m.y - t.y); };
+      cand.sort((a, b) => dist(a) - dist(b));
+      if (cand.length) { spot = cand[0]; moved = d; }
+    }
+    if (!spot) { console.warn(`draw-map: nowhere to put ${place.name}`); continue; }
+    taken.add(key(spot.col, spot.row));
+    earthPlace.set(place.id, owner.get(key(spot.col, spot.row)));
+    settlements.push({
+      id: place.id, name: place.name, col: spot.col, row: spot.row, rank: place.rank,
+      ...(seaside(spot.col, spot.row) ? { harbour: true } : {}),
+      note: [place.note, moved ? `Stands ${moved} hex${moved > 1 ? 'es' : ''} from where it really is: the hex it falls in is ${idAt(h.col, h.row)?.replace('-', ' ') ?? 'off the board'}.` : null].filter(Boolean).join(' ') || undefined,
+    });
+  }
+}
+for (const place of EARTH ? [] : (map.commission.places ?? [])) {
   const pool = (landOf.get(place.island) ?? [])
     .filter((h) => habitable(h.col, h.row) && !taken.has(key(h.col, h.row)))
     .filter((h) => (place.harbour ? seaside(h.col, h.row) : true));
@@ -494,7 +611,37 @@ function seaPath(from, to) {
 
 const routes = { $comment: 'Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.' };
 
-if (map.commission.routes?.shipping) {
+/* Prim's tree: join every item to the nearest one already joined. On a real coast that
+   gives lanes that follow the shore from port to port, not a star drawn from the first. */
+function spanning(items, cost) {
+  const joined = [items[0]], links = [];
+  const rest = items.slice(1);
+  while (rest.length) {
+    let best = null;
+    for (const a of joined) for (const b of rest) {
+      const w = cost(a, b);
+      if (w != null && (!best || w < best.w)) best = { a, b, w };
+    }
+    if (!best) break;
+    links.push([best.a, best.b, best.w]);
+    joined.push(best.b);
+    rest.splice(rest.indexOf(best.b), 1);
+  }
+  return links;
+}
+
+if (EARTH && map.commission.routes?.shipping) {
+  const harbours = settlements.filter((s) => s.harbour);
+  const off = (s) => ring(s.col, s.row).find((n) => !isLand(n.col, n.row));
+  const paths = new Map();
+  const through = (a, b) => {
+    const k = `${a.id}|${b.id}`;
+    if (!paths.has(k)) { const fa = off(a), fb = off(b); paths.set(k, fa && fb ? seaPath(fa, fb) : null); }
+    return paths.get(k);
+  };
+  routes.shipping = spanning(harbours, (a, b) => through(a, b)?.length ?? null)
+    .map(([a, b]) => ({ id: `${a.id}-${b.id}`, name: `${a.name} to ${b.name}`, hexes: through(a, b) }));
+} else if (map.commission.routes?.shipping) {
   const harbours = settlements.filter((s) => s.harbour);
   const lanes = [];
   for (let i = 0; i < harbours.length - 1; i++) {
@@ -510,7 +657,14 @@ if (map.commission.routes?.shipping) {
   routes.shipping = lanes;
 }
 
-if (map.commission.routes?.road) {
+if (EARTH && map.commission.routes?.road) {
+  const byLand = new Map();
+  for (const s of settlements) { const m = earthPlace.get(s.id); if (!byLand.has(m)) byLand.set(m, []); byLand.get(m).push(s); }
+  routes.road = [];
+  for (const list of byLand.values()) {
+    for (const [a, b] of spanning(list, (x, y) => distance(x, y))) routes.road.push({ from: a.id, to: b.id });
+  }
+} else if (map.commission.routes?.road) {
   const byIsland = new Map();
   for (const place of map.commission.places ?? []) {
     if (!settlements.some((s) => s.id === place.id)) continue;
@@ -525,7 +679,51 @@ if (map.commission.routes?.road) {
 if (map.commission.routes?.rail) routes.rail = [];
 
 /* ------------------------------------------------------------ 7 · the regions */
-const regions = islands.map((island) => {
+const earthRegions = () => {
+  const g = earthGridFn;
+  const anchors = EARTH.regions.map((rg) => ({ ...rg, p: g.forward(rg.lat, rg.lon), hexes: [] }));
+  /* A hex belongs to the nearest region whose REACH it is inside. Plain nearest-centre
+     put the Libyan coast in Crete and the Algerian coast in Sardinia, because an
+     island's middle is closer to a far shore than the mainland's middle is - and a
+     landmass test cannot help, since Afro-Eurasia is one landmass. An island therefore
+     says how far its claim runs (`reachKm`); a hex out of every reach falls to the
+     nearest anywhere. */
+  for (const [k] of owner) {
+    const [c, r] = k.split(',').map(Number); const m = g.centreKm(c, r);
+    let best = null, any = null;
+    for (const a of anchors) {
+      const d = Math.hypot(a.p.x - m.x, a.p.y - m.y);
+      if (!any || d < any.d) any = { a, d };
+      if (d <= (a.reachKm ?? Infinity) && (!best || d < best.d)) best = { a, d };
+    }
+    (best ?? any).a.hexes.push({ col: c, row: r });
+  }
+  const out = [];
+  for (const a of anchors) {
+    if (!a.hexes.length) { console.warn(`draw-map: region ${a.name} owns no land on this board`); continue; }
+    const t = {};
+    for (const h of a.hexes) { const id = terrain.get(key(h.col, h.row)); t[id] = (t[id] ?? 0) + 1; }
+    const dominant = Object.entries(t).filter(([id]) => id !== 'river').sort((x, y) => y[1] - x[1])[0]?.[0] ?? 'grassland';
+    /* The label goes on one of the region's own hexes: near its middle, clear of every
+       city's name, and far enough in from the edge of the board that it is not cut off. */
+    const half = a.name.length * 0.1;
+    const score = (h) => {
+      const near = Math.min(2, ...settlements.map((s2) => distance(s2, h)));
+      const fits = h.col + 0.5 - half >= 0 && h.col + 0.5 + half <= COLS ? 0 : 50;
+      const m = g.centreKm(h.col, h.row);
+      return fits - near * 1.5 + Math.hypot(m.x - a.p.x, m.y - a.p.y) / EARTH.hexKm;
+    };
+    const mid = [...a.hexes].sort((p, q) => score(p) - score(q))[0];
+    out.push({ id: a.id, name: a.name, terrain: dominant, labelAt: [mid.col, mid.row], summary: `${a.hexes.length} hexes, mostly ${dominant.replace('-', ' ')}. ${a.learn}`, learn: a.learn });
+  }
+  for (const sea of EARTH.seas ?? []) {
+    const h = g.hexOf(sea.lat, sea.lon);
+    if (!h || isLand(h.col, h.row)) { console.warn(`draw-map: the label for ${sea.name} falls on land or off the board`); continue; }
+    out.push({ id: sea.id, name: sea.name, terrain: EARTH_SHALLOW.has(key(h.col, h.row)) ? 'shallow-water' : 'deep-water', labelAt: [h.col, h.row], summary: `Open water. ${sea.learn ?? ''}`.trim() });
+  }
+  return out;
+};
+const regions = EARTH ? earthRegions() : islands.map((island) => {
   const hexes = landOf.get(island.id) ?? [];
   const tally = {};
   for (const h of hexes) { const t = terrain.get(key(h.col, h.row)); if (t) tally[t] = (tally[t] ?? 0) + 1; }
@@ -1121,6 +1319,13 @@ rebuilt.settlements = settlements;
 rebuilt.rivers = courses;
 rebuilt.$riversNote = 'GENERATED. Each course is the chain of hexes the water runs through, spring first, and every one of those hexes is terrain `river` in rows. Run downhill by tools/draw-map.mjs from the terrain bands and the distance inland - never hand-placed, because a hand-placed river is how you get one that starts nowhere.';
 rebuilt.routes = routes;
+if (EARTH) {
+  rebuilt.lessons = (EARTH.lessons ?? []).map((l) => {
+    const h = earthGridFn.hexOf(l.lat, l.lon);
+    return { id: l.id, title: l.title, at: h ? [h.col, h.row] : null, hex: h ? hexId(h.col, h.row) : null, terrain: h ? (idAt(h.col, h.row) ?? null) : null, text: l.text };
+  });
+  rebuilt.$lessonsNote = 'GENERATED from commission.earth.lessons. A lesson is a fact about a real place: the tool says which hex it fell in and what that hex came out as, so a note about a desert is never printed on a sea.';
+}
 
 const nextJson = `${JSON.stringify(rebuilt, null, 2)}\n`;
 

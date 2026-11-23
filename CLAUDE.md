@@ -517,6 +517,22 @@ or thumbed corner, a crease, a soft fold, die marks, an edge worn pale. Anything
 that looks like the page was *used* rather than like something was *set down on
 it*.
 
+## A real-Earth map is sampled once, and then it is just data
+
+`data/maps/earth-*.json` are boards of the actual planet. They are the one place a latitude
+and a longitude is the input and a hex is the output, so **never type a hex for a real place**:
+write its latitude and longitude in `commission.earth` and let `tools/lib/earth.mjs` place it.
+The land comes from `data/earth/<region>.samples.json`, written once by
+`node tools/fetch-earth.mjs` (the only tool here that needs the network - CI never runs it) and
+classified by `data/earth/classify.json`. Change a rule, not a hex: if Anatolia comes out as
+mountain, move a threshold in `classify.json`. `draw-map.mjs` branches on `commission.earth` and
+nowhere else; the shoreline, texture, frame and key are the same code as every generated map.
+
+The scale scheme is **Atlas > Region > Mini-map**: an Earth region board (this kind) opens out
+into mini-maps exactly as a world hex always has, and a future Atlas sheet of the whole planet
+sits above it. Nothing about the Atlas exists yet. Teaching notes live on the map
+(`regions[].learn`, `lessons`) and are never typed into a rules chapter.
+
 ## The book is three sources, and only one of them is rules
 
 `docs/book/index.html` is the printed book — *The Almanac* — and it is generated

@@ -17385,6 +17385,2003 @@ window.GAME_DATA = {
   },
   "maps": [
     {
+      "$comment": "A GENERATED board of the REAL Earth: the Mediterranean. Like every generated map, `commission` is the only thing anybody writes by hand and `rows`, `settlements`, `regions`, `routes` and the `plate` block are grown from it by `node tools/draw-map.mjs earth-mediterranean`. Unlike the others its land is not invented: `commission.earth` points at sampled real data (data/earth/mediterranean.samples.json, from tools/fetch-earth.mjs) and the terrain is classified from it by data/earth/classify.json. Do not hand-edit the generated parts.",
+      "version": "0.1.0",
+      "id": "earth-mediterranean",
+      "name": "The Mediterranean",
+      "subtitle": "the sea at the middle of the world, from the Atlantic to the Euphrates, as it really is",
+      "summary": "The real Mediterranean, laid onto a hex board: Iberia to Anatolia, the Alps to the Sahara, with every coast, mountain range and river where the planet put it. Built to teach geography as much as to play on: each region and a handful of places carry a note about WHY the land is the way it is.",
+      "commission": {
+        "$comment": "The input contract for a real-Earth region. Nothing here is invented: where the land is comes from sampled data, and what is typed is the window, the names and the lessons.",
+        "why": "To start the Earth line of maps: a board whose geography the real world has already worked out, so a player learns what a rain shadow, a delta, a steppe and a strait look like by playing on them. It is also the first region of a three-level scheme - Atlas, Region, Mini-map - in which this board is one window onto the planet.",
+        "landmass": "The real Mediterranean basin and its shores: the Iberian peninsula in the west, the Alps and the Italian peninsula in the north, the Balkans and Greece, Anatolia and the Levant in the east, and the North African coast with the edge of the Sahara in the south. The sea is the middle of the board.",
+        "terrainBudget": [],
+        "$terrainBudgetNote": "Left empty on purpose: a real place has no budget. The tool writes the shares it measured here when it runs.",
+        "settlements": {
+          "count": 27,
+          "seat": 1,
+          "city": 17,
+          "town": 6,
+          "village": 2
+        },
+        "$settlementNote": "Real cities, placed at their real latitude and longitude. Rank is a game judgement about how much a table should make of the place, not a population count.",
+        "routes": {
+          "rail": false,
+          "shipping": true,
+          "road": true
+        },
+        "earth": {
+          "$comment": "The Earth block: what makes this map a real place and not an invented one. A map with this block has no landform anchors to grow: its land, its coasts, its mountains and its climate come from sampled real data (data/earth/*.samples.json), classified by data/earth/classify.json. Everything here is a fact about the planet - a latitude, a longitude, a river's name - and no hex is ever typed.",
+          "region": "mediterranean",
+          "centre": {
+            "lat": 37.5,
+            "lon": 14
+          },
+          "hexKm": 140,
+          "$hexKmNote": "Flat to flat, so a hex is about 17,000 square kilometres: Sicily is a hex and a half, Crete and Cyprus are about half a hex each. The board is the same 32 x 24 as every other, so its hexes print the same size and every token and sheet in the box still fits. That is the scale decision; a finer region is a second board, not smaller hexes here.",
+          "samplesFile": "earth/mediterranean.samples.json",
+          "tileZoom": 6,
+          "sampleAcross": 9,
+          "riverMinLandPct": 40,
+          "rivers": [
+            {
+              "name": "The Nile",
+              "match": [
+                "Nile"
+              ]
+            },
+            {
+              "name": "The Danube",
+              "match": [
+                "Danube",
+                "Donau"
+              ]
+            },
+            {
+              "name": "The Rhône",
+              "match": [
+                "Rhône"
+              ]
+            },
+            {
+              "name": "The Po",
+              "match": [
+                "Po"
+              ]
+            },
+            {
+              "name": "The Euphrates",
+              "match": [
+                "Euphrates",
+                "Al Furat",
+                "Firat"
+              ]
+            }
+          ],
+          "forceLand": [
+            {
+              "name": "Corsica",
+              "lat": 42.1,
+              "lon": 9.1,
+              "terrain": "mountain"
+            },
+            {
+              "name": "Crete",
+              "lat": 35.25,
+              "lon": 24.9,
+              "terrain": "hills"
+            },
+            {
+              "name": "Cyprus",
+              "lat": 35,
+              "lon": 33.2,
+              "terrain": "hills"
+            },
+            {
+              "name": "Mallorca",
+              "lat": 39.6,
+              "lon": 2.95,
+              "terrain": "grassland"
+            }
+          ],
+          "marsh": [
+            {
+              "name": "The Nile Delta",
+              "lat": 31.1,
+              "lon": 31
+            },
+            {
+              "name": "The Po Delta",
+              "lat": 44.95,
+              "lon": 12.3
+            },
+            {
+              "name": "The Camargue",
+              "lat": 43.7,
+              "lon": 4.55
+            },
+            {
+              "name": "The Marismas",
+              "lat": 37,
+              "lon": -6.3
+            },
+            {
+              "name": "The Danube Delta",
+              "lat": 45.15,
+              "lon": 29.4
+            }
+          ],
+          "regions": [
+            {
+              "id": "iberia",
+              "name": "Iberia",
+              "lat": 40,
+              "lon": -4,
+              "learn": "A high plateau, the Meseta, ringed by mountains and walled off from France by the Pyrenees. The north is cool and wet; the south is hot and dry."
+            },
+            {
+              "id": "france",
+              "name": "France",
+              "lat": 46,
+              "lon": 2.5,
+              "learn": "The Rhône runs from the Alps to the Mediterranean through a valley that has been a trade road since Roman times."
+            },
+            {
+              "id": "alps",
+              "name": "The Alps",
+              "lat": 46.5,
+              "lon": 9.5,
+              "learn": "Europe's mountain wall. Its snow-melt feeds the Rhône, the Po, the Rhine and the Danube, so one range waters four great river valleys."
+            },
+            {
+              "id": "italy",
+              "name": "Italy",
+              "lat": 42.8,
+              "lon": 12.8,
+              "learn": "A peninsula with the Apennines as its spine. The wide, fertile Po plain in the north is built from silt the Alpine rivers carried down."
+            },
+            {
+              "id": "balkans",
+              "name": "The Balkans",
+              "lat": 44.2,
+              "lon": 20.5,
+              "learn": "Mountains run close to the Adriatic coast, so the sea side is steep and narrow and the rivers turn away north to the Danube."
+            },
+            {
+              "id": "greece",
+              "name": "Greece",
+              "lat": 39.3,
+              "lon": 22,
+              "learn": "Mountains cover most of the land and the sea is never far away, which is why Greeks became sailors before they became farmers on a grand scale."
+            },
+            {
+              "id": "anatolia",
+              "name": "Anatolia",
+              "lat": 39.2,
+              "lon": 33.5,
+              "learn": "A high, dry plateau ringed by mountains: the Pontic range along the Black Sea and the Taurus along the Mediterranean. Rain stays on the rims and the middle is steppe."
+            },
+            {
+              "id": "levant",
+              "name": "The Levant",
+              "lat": 33.5,
+              "lon": 36.3,
+              "learn": "A narrow coastal plain, the Lebanon mountains, a rift valley, then desert. In four short steps the climate goes from sea to sand."
+            },
+            {
+              "id": "upper-mesopotamia",
+              "name": "Mesopotamia",
+              "lat": 36.8,
+              "lon": 41,
+              "learn": "The land between the Tigris and the Euphrates, where farming first grew into cities fed by river water."
+            },
+            {
+              "id": "pontic-steppe",
+              "name": "The Pontic Steppe",
+              "lat": 47.5,
+              "lon": 34,
+              "learn": "Flat, treeless grassland that runs on for thousands of kilometres. There is nothing to stop a horse, or an army, or the wind."
+            },
+            {
+              "id": "egypt",
+              "name": "Egypt",
+              "lat": 27,
+              "lon": 30.5,
+              "learn": "Almost no rain falls here. Nearly everyone lives on a green ribbon beside the Nile and in its delta, because the river is the only water."
+            },
+            {
+              "id": "libya",
+              "name": "Libya",
+              "lat": 29.5,
+              "lon": 17,
+              "learn": "A green strip on the coast, where winter rain falls, and then desert for a thousand kilometres inland."
+            },
+            {
+              "id": "maghreb",
+              "name": "The Maghreb",
+              "lat": 34.5,
+              "lon": 2,
+              "learn": "The Atlas mountains catch the sea rain on their northern slopes. Behind them the air is dry, and the Sahara begins."
+            },
+            {
+              "id": "sahara",
+              "name": "The Sahara",
+              "lat": 25.5,
+              "lon": 8,
+              "learn": "The largest hot desert on Earth. Life gathers where underground water reaches the surface: at oases."
+            },
+            {
+              "id": "sicily",
+              "name": "Sicily",
+              "lat": 37.6,
+              "lon": 14,
+              "learn": "The largest island in the Mediterranean, and home to Etna, Europe's tallest active volcano.",
+              "reachKm": 200
+            },
+            {
+              "id": "sardinia",
+              "name": "Sardinia",
+              "lat": 40,
+              "lon": 9,
+              "learn": "The second-largest island in the Mediterranean, old, worn-down granite rock and little rain.",
+              "reachKm": 170
+            },
+            {
+              "id": "corsica",
+              "name": "Corsica",
+              "lat": 42.1,
+              "lon": 9.1,
+              "learn": "Only half the size of a hex, but its peaks are among the highest in the western Mediterranean islands, over two thousand metres.",
+              "reachKm": 120
+            },
+            {
+              "id": "crete",
+              "name": "Crete",
+              "lat": 35.25,
+              "lon": 24.9,
+              "learn": "The largest Greek island, mountainous all along its length, with the sea on every side.",
+              "reachKm": 130
+            },
+            {
+              "id": "cyprus",
+              "name": "Cyprus",
+              "lat": 35,
+              "lon": 33.2,
+              "learn": "The easternmost island of the Mediterranean, closer to Syria and Turkey than to Greece.",
+              "reachKm": 130
+            },
+            {
+              "id": "balearics",
+              "name": "The Balearics",
+              "lat": 39.6,
+              "lon": 2.95,
+              "learn": "A small island group, easy to miss at this scale. A reminder that a map always leaves things out.",
+              "reachKm": 100
+            },
+            {
+              "id": "cyrenaica",
+              "name": "Cyrenaica",
+              "lat": 32,
+              "lon": 22,
+              "learn": "A green bulge of coast on the Libyan shore where winter rain is enough to farm, backed by hundreds of kilometres of desert."
+            }
+          ],
+          "seas": [
+            {
+              "id": "western-med",
+              "name": "Western Mediterranean",
+              "lat": 38,
+              "lon": 4
+            },
+            {
+              "id": "ionian",
+              "name": "Central Mediterranean",
+              "lat": 35,
+              "lon": 17.5
+            },
+            {
+              "id": "aegean",
+              "name": "Eastern Mediterranean",
+              "lat": 34,
+              "lon": 28
+            },
+            {
+              "id": "black-sea",
+              "name": "Black Sea",
+              "lat": 43.3,
+              "lon": 34.5
+            },
+            {
+              "id": "atlantic",
+              "name": "Atlantic Ocean",
+              "lat": 44.5,
+              "lon": -9
+            }
+          ],
+          "lessons": [
+            {
+              "id": "rain-shadow",
+              "title": "Rain shadow",
+              "lat": 33,
+              "lon": 0.5,
+              "text": "Wet air rises over the Atlas mountains and drops its rain on the sea side. The air that comes down the far side is dry. That is why a desert sits right behind green hills."
+            },
+            {
+              "id": "river-in-desert",
+              "title": "A river through a desert",
+              "lat": 27,
+              "lon": 31,
+              "text": "The Nile crosses a thousand kilometres of desert without a tributary. Everything green in Egypt is within reach of it."
+            },
+            {
+              "id": "plates",
+              "title": "Where two plates meet",
+              "lat": 38,
+              "lon": 15,
+              "text": "Africa is slowly pushing north into Europe. That squeeze raised the Alps, the Apennines and the Taurus, and it feeds the volcanoes of Etna and Vesuvius."
+            },
+            {
+              "id": "shelf",
+              "title": "A shallow sea",
+              "lat": 44.8,
+              "lon": 13,
+              "text": "The northern Adriatic is shallow: you could nearly wade a ship into it. The shelf shows as pale water on the board; the dark water is where the sea floor drops away."
+            },
+            {
+              "id": "strait",
+              "title": "Narrow straits",
+              "lat": 36,
+              "lon": -5.6,
+              "text": "The Strait of Gibraltar is under 15 km across at its narrowest, and the Bosphorus under one. At this scale they vanish, though a fleet has to pass through each one."
+            },
+            {
+              "id": "mediterranean-climate",
+              "title": "The Mediterranean climate",
+              "lat": 38.5,
+              "lon": 22.5,
+              "text": "Hot dry summers and mild wet winters. Olives, vines and wheat all suit it, and so did the first cities that traded them."
+            },
+            {
+              "id": "steppe",
+              "title": "Steppe",
+              "lat": 39,
+              "lon": 33,
+              "text": "Where there is not enough rain for forest and too much for desert, grass takes over. Steppe is good for herds and for armies on horseback."
+            },
+            {
+              "id": "delta",
+              "title": "Deltas",
+              "lat": 31.1,
+              "lon": 31,
+              "text": "A river slows as it meets the sea and drops the silt it carried. The land that grows from that silt is flat, fertile and often wet."
+            },
+            {
+              "id": "oasis",
+              "title": "Oases",
+              "lat": 29.2,
+              "lon": 25.5,
+              "text": "A spring in a desert makes a village possible. Siwa has been inhabited for thousands of years, and caravans plan their whole route from one oasis to the next."
+            },
+            {
+              "id": "rift",
+              "title": "The lowest land on Earth",
+              "lat": 31.5,
+              "lon": 35.5,
+              "text": "The shore of the Dead Sea lies more than 400 metres below sea level, at the bottom of a rift valley where two plates are pulling apart."
+            }
+          ],
+          "places": [
+            {
+              "id": "rome",
+              "name": "Rome",
+              "rank": "seat",
+              "lat": 41.9,
+              "lon": 12.5,
+              "note": "Capital of an empire that ruled the whole sea; its roads all began here."
+            },
+            {
+              "id": "athens",
+              "name": "Athens",
+              "rank": "city",
+              "lat": 37.98,
+              "lon": 23.73
+            },
+            {
+              "id": "istanbul",
+              "name": "Istanbul",
+              "rank": "city",
+              "lat": 41.01,
+              "lon": 28.98,
+              "note": "Straddles the Bosphorus, the strait that joins the Black Sea to the Mediterranean."
+            },
+            {
+              "id": "cairo",
+              "name": "Cairo",
+              "rank": "city",
+              "lat": 30.04,
+              "lon": 31.24,
+              "note": "At the point where the Nile fans out into its delta."
+            },
+            {
+              "id": "alexandria",
+              "name": "Alexandria",
+              "rank": "city",
+              "lat": 31.2,
+              "lon": 29.92
+            },
+            {
+              "id": "barcelona",
+              "name": "Barcelona",
+              "rank": "city",
+              "lat": 41.39,
+              "lon": 2.17
+            },
+            {
+              "id": "marseille",
+              "name": "Marseille",
+              "rank": "city",
+              "lat": 43.3,
+              "lon": 5.37
+            },
+            {
+              "id": "tunis",
+              "name": "Tunis",
+              "rank": "city",
+              "lat": 36.8,
+              "lon": 10.18,
+              "note": "Carthage stood a few kilometres away."
+            },
+            {
+              "id": "algiers",
+              "name": "Algiers",
+              "rank": "city",
+              "lat": 36.75,
+              "lon": 3.06
+            },
+            {
+              "id": "madrid",
+              "name": "Madrid",
+              "rank": "city",
+              "lat": 40.42,
+              "lon": -3.7,
+              "note": "On the Meseta, the highest capital city in the European Union."
+            },
+            {
+              "id": "lisbon",
+              "name": "Lisbon",
+              "rank": "city",
+              "lat": 38.72,
+              "lon": -9.14
+            },
+            {
+              "id": "naples",
+              "name": "Naples",
+              "rank": "city",
+              "lat": 40.85,
+              "lon": 14.27,
+              "note": "In the shadow of Vesuvius."
+            },
+            {
+              "id": "venice",
+              "name": "Venice",
+              "rank": "city",
+              "lat": 45.44,
+              "lon": 12.33,
+              "note": "Built on the silt flats of the northern Adriatic."
+            },
+            {
+              "id": "tripoli",
+              "name": "Tripoli",
+              "rank": "city",
+              "lat": 32.89,
+              "lon": 13.19
+            },
+            {
+              "id": "beirut",
+              "name": "Beirut",
+              "rank": "city",
+              "lat": 33.89,
+              "lon": 35.5
+            },
+            {
+              "id": "ankara",
+              "name": "Ankara",
+              "rank": "city",
+              "lat": 39.93,
+              "lon": 32.86,
+              "note": "On the dry Anatolian plateau."
+            },
+            {
+              "id": "damascus",
+              "name": "Damascus",
+              "rank": "city",
+              "lat": 33.51,
+              "lon": 36.29,
+              "note": "On a desert's edge, watered by one river."
+            },
+            {
+              "id": "seville",
+              "name": "Seville",
+              "rank": "city",
+              "lat": 37.39,
+              "lon": -5.99
+            },
+            {
+              "id": "milan",
+              "name": "Milan",
+              "rank": "town",
+              "lat": 45.46,
+              "lon": 9.19
+            },
+            {
+              "id": "thessaloniki",
+              "name": "Thessaloniki",
+              "rank": "town",
+              "lat": 40.64,
+              "lon": 22.94
+            },
+            {
+              "id": "belgrade",
+              "name": "Belgrade",
+              "rank": "town",
+              "lat": 44.8,
+              "lon": 20.46,
+              "note": "Where the Sava meets the Danube."
+            },
+            {
+              "id": "benghazi",
+              "name": "Benghazi",
+              "rank": "town",
+              "lat": 32.12,
+              "lon": 20.07
+            },
+            {
+              "id": "fez",
+              "name": "Fez",
+              "rank": "town",
+              "lat": 34.03,
+              "lon": -5
+            },
+            {
+              "id": "palermo",
+              "name": "Palermo",
+              "rank": "town",
+              "lat": 38.12,
+              "lon": 13.36
+            },
+            {
+              "id": "nicosia",
+              "name": "Nicosia",
+              "rank": "town",
+              "lat": 35.17,
+              "lon": 33.36
+            },
+            {
+              "id": "siwa",
+              "name": "Siwa Oasis",
+              "rank": "village",
+              "lat": 29.2,
+              "lon": 25.52,
+              "note": "A spring in the Libyan desert."
+            },
+            {
+              "id": "ghadames",
+              "name": "Ghadames",
+              "rank": "village",
+              "lat": 30.13,
+              "lon": 9.5,
+              "note": "An oasis town on the old caravan roads."
+            }
+          ],
+          "$riversNote": "Five rivers, not nine: the ones whose valleys carried a civilisation. At 140 km a hex, every river on the board is a hex wide and stops a cart, so a stream that would not stop one in life is left off. The Loire, Duero, Ebro and Guadalquivir were sampled and dropped; add them back to this list and run fetch-earth.mjs if the board wants them."
+        },
+        "plate": {
+          "minWidthPx": 4000,
+          "wantWidthPx": 7000,
+          "aspect": "root-two landscape",
+          "$note": "Vector, so no long side to fall short of."
+        }
+      },
+      "plate": {
+        "kind": "generated",
+        "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
+        "file": "earth-mediterranean.svg",
+        "width": 4000,
+        "height": 2686,
+        "field": {
+          "x": 75,
+          "y": 75,
+          "width": 3850,
+          "height": 2536
+        },
+        "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line."
+      },
+      "grid": {
+        "shape": "hex",
+        "orientation": "pointy",
+        "offset": "odd-r",
+        "cols": 32,
+        "rows": 24,
+        "fit": "field-width",
+        "$fitNote": "The same 32 x 24 as the other boards so a hex prints the same size. At the Earth scale in commission.earth.hexKm one hex is about 140 km across."
+      },
+      "print": {
+        "$comment": "Sheet layouts in the same three sizes as every other board. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived and written in by tools/build-map.mjs.",
+        "default": "four-sheet",
+        "presets": [
+          {
+            "id": "four-sheet",
+            "name": "Four sheets, A2",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 2,
+            "sheetRows": 2,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "Two by two, printed landscape. The working size for a table.",
+            "mapWidthMm": 562,
+            "mapHeightMm": 377.4,
+            "hexAcrossFlatsMm": 16.9
+          },
+          {
+            "id": "nine-sheet",
+            "name": "Nine sheets, A1",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 3,
+            "sheetRows": 3,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "Three by three. A vector plate prints at this size without asking.",
+            "mapWidthMm": 843,
+            "mapHeightMm": 566.1,
+            "hexAcrossFlatsMm": 25.4
+          },
+          {
+            "id": "one-sheet",
+            "name": "One sheet, reference",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 1,
+            "sheetRows": 1,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "The whole board on one page, for reading rather than playing.",
+            "mapWidthMm": 281,
+            "mapHeightMm": 188.7,
+            "hexAcrossFlatsMm": 8.6
+          }
+        ]
+      },
+      "legend": {
+        "$comment": "Character to terrain id, identical to the other two boards so a board from any map reads the same in a text editor.",
+        "~": "deep-water",
+        "-": "shallow-water",
+        "r": "river",
+        "l": "lake",
+        ".": "grassland",
+        "f": "forest",
+        "h": "hills",
+        "^": "mountain",
+        "m": "marsh",
+        "t": "tundra",
+        "d": "desert"
+      },
+      "rows": [
+        "~~~~~---fffffffhfhfffffffff.....",
+        "~~~~~-fffffffrrrrfhfhhfff.......",
+        "~~~~~~-fffffhrhhhrrffhhff...-...",
+        "~~~~~~-ffffh^^^^hfrfhhhr.-..-f^^",
+        "~~------fhhh^rrhhffrrhh.r-------",
+        "~-fhhhfffhm^hhr-hhffrrrr-~------",
+        "~~-hhhhh^h-.--.f-hhhhhhf-~-hhh-^",
+        "~-fhhhh.h---^-.h--hhh^h.--h^h^^^",
+        "~-..hhhh---~-.--h.-hhhh..hhhh^^^",
+        "~-.hhhh--.--.-~-h.-hh--.h^hh^^^r",
+        "~-.m.hh-~--~--~--h--hh--.h^^^hhr",
+        "~--.hh---------hh-~-h.--h^h^--.r",
+        "~~-.---.hhhh..--.-~~-.------h-hh",
+        "--.hhhhhhhhhh.---~~~--h-~~~---hh",
+        "-.h^^^^^^hdhhd--~~~~~~--~~~~~-hh",
+        "h^^^^^hhhddddd---~~----~~~---.hh",
+        "h^^hhhhhhdddddd..-~-..d----mddhh",
+        "hhhhhhhhdddddhhdd---dddddddrdhhh",
+        "dhhhhdddddddddhhddddddddd-drdhhh",
+        "dddddddhhdddhhhhdddddddddddrhd-h",
+        "dddhddddhhddhhhhhhddddddddddrdd-",
+        "dddddddddhhhhhhddhhdddddddddrdd-",
+        "ddddddddhhh^hhhhhhhddddddhdddrdd",
+        "dddddddhhh^^^hhhhhdddddhhhdddrdd"
+      ],
+      "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+      "$riversNote": "GENERATED. Each course is the chain of hexes the water runs through, spring first, and every one of those hexes is terrain `river` in rows. Run downhill by tools/draw-map.mjs from the terrain bands and the distance inland - never hand-placed, because a hand-placed river is how you get one that starts nowhere.",
+      "lessons": [
+        {
+          "id": "rain-shadow",
+          "title": "Rain shadow",
+          "at": [
+            6,
+            15
+          ],
+          "hex": "c06r15",
+          "terrain": "hills",
+          "text": "Wet air rises over the Atlas mountains and drops its rain on the sea side. The air that comes down the far side is dry. That is why a desert sits right behind green hills."
+        },
+        {
+          "id": "river-in-desert",
+          "title": "A river through a desert",
+          "at": [
+            28,
+            20
+          ],
+          "hex": "c28r20",
+          "terrain": "river",
+          "text": "The Nile crosses a thousand kilometres of desert without a tributary. Everything green in Egypt is within reach of it."
+        },
+        {
+          "id": "plates",
+          "title": "Where two plates meet",
+          "at": [
+            16,
+            11
+          ],
+          "hex": "c16r11",
+          "terrain": "hills",
+          "text": "Africa is slowly pushing north into Europe. That squeeze raised the Alps, the Apennines and the Taurus, and it feeds the volcanoes of Etna and Vesuvius."
+        },
+        {
+          "id": "shelf",
+          "title": "A shallow sea",
+          "at": [
+            15,
+            5
+          ],
+          "hex": "c15r05",
+          "terrain": "shallow-water",
+          "text": "The northern Adriatic is shallow: you could nearly wade a ship into it. The shelf shows as pale water on the board; the dark water is where the sea floor drops away."
+        },
+        {
+          "id": "strait",
+          "title": "Narrow straits",
+          "at": [
+            3,
+            11
+          ],
+          "hex": "c03r11",
+          "terrain": "grassland",
+          "text": "The Strait of Gibraltar is under 15 km across at its narrowest, and the Bosphorus under one. At this scale they vanish, though a fleet has to pass through each one."
+        },
+        {
+          "id": "mediterranean-climate",
+          "title": "The Mediterranean climate",
+          "at": [
+            21,
+            10
+          ],
+          "hex": "c21r10",
+          "terrain": "hills",
+          "text": "Hot dry summers and mild wet winters. Olives, vines and wheat all suit it, and so did the first cities that traded them."
+        },
+        {
+          "id": "steppe",
+          "title": "Steppe",
+          "at": [
+            27,
+            9
+          ],
+          "hex": "c27r09",
+          "terrain": "hills",
+          "text": "Where there is not enough rain for forest and too much for desert, grass takes over. Steppe is good for herds and for armies on horseback."
+        },
+        {
+          "id": "delta",
+          "title": "Deltas",
+          "at": [
+            27,
+            16
+          ],
+          "hex": "c27r16",
+          "terrain": "marsh",
+          "text": "A river slows as it meets the sea and drops the silt it carried. The land that grows from that silt is flat, fertile and often wet."
+        },
+        {
+          "id": "oasis",
+          "title": "Oases",
+          "at": [
+            23,
+            19
+          ],
+          "hex": "c23r19",
+          "terrain": "desert",
+          "text": "A spring in a desert makes a village possible. Siwa has been inhabited for thousands of years, and caravans plan their whole route from one oasis to the next."
+        },
+        {
+          "id": "rift",
+          "title": "The lowest land on Earth",
+          "at": [
+            30,
+            15
+          ],
+          "hex": "c30r15",
+          "terrain": "hills",
+          "text": "The shore of the Dead Sea lies more than 400 metres below sea level, at the bottom of a rift valley where two plates are pulling apart."
+        }
+      ],
+      "$lessonsNote": "GENERATED from commission.earth.lessons. A lesson is a fact about a real place: the tool says which hex it fell in and what that hex came out as, so a note about a desert is never printed on a sea.",
+      "regions": [
+        {
+          "id": "iberia",
+          "name": "Iberia",
+          "terrain": "hills",
+          "labelAt": [
+            3,
+            7
+          ],
+          "summary": "39 hexes, mostly hills. A high plateau, the Meseta, ringed by mountains and walled off from France by the Pyrenees. The north is cool and wet; the south is hot and dry.",
+          "learn": "A high plateau, the Meseta, ringed by mountains and walled off from France by the Pyrenees. The north is cool and wet; the south is hot and dry."
+        },
+        {
+          "id": "france",
+          "name": "France",
+          "terrain": "forest",
+          "labelAt": [
+            9,
+            3
+          ],
+          "summary": "30 hexes, mostly forest. The Rhône runs from the Alps to the Mediterranean through a valley that has been a trade road since Roman times.",
+          "learn": "The Rhône runs from the Alps to the Mediterranean through a valley that has been a trade road since Roman times."
+        },
+        {
+          "id": "alps",
+          "name": "The Alps",
+          "terrain": "hills",
+          "labelAt": [
+            13,
+            3
+          ],
+          "summary": "30 hexes, mostly hills. Europe's mountain wall. Its snow-melt feeds the Rhône, the Po, the Rhine and the Danube, so one range waters four great river valleys.",
+          "learn": "Europe's mountain wall. Its snow-melt feeds the Rhône, the Po, the Rhine and the Danube, so one range waters four great river valleys."
+        },
+        {
+          "id": "italy",
+          "name": "Italy",
+          "terrain": "hills",
+          "labelAt": [
+            17,
+            6
+          ],
+          "summary": "14 hexes, mostly hills. A peninsula with the Apennines as its spine. The wide, fertile Po plain in the north is built from silt the Alpine rivers carried down.",
+          "learn": "A peninsula with the Apennines as its spine. The wide, fertile Po plain in the north is built from silt the Alpine rivers carried down."
+        },
+        {
+          "id": "balkans",
+          "name": "The Balkans",
+          "terrain": "hills",
+          "labelAt": [
+            19,
+            7
+          ],
+          "summary": "44 hexes, mostly hills. Mountains run close to the Adriatic coast, so the sea side is steep and narrow and the rivers turn away north to the Danube.",
+          "learn": "Mountains run close to the Adriatic coast, so the sea side is steep and narrow and the rivers turn away north to the Danube."
+        },
+        {
+          "id": "greece",
+          "name": "Greece",
+          "terrain": "hills",
+          "labelAt": [
+            20,
+            10
+          ],
+          "summary": "18 hexes, mostly hills. Mountains cover most of the land and the sea is never far away, which is why Greeks became sailors before they became farmers on a grand scale.",
+          "learn": "Mountains cover most of the land and the sea is never far away, which is why Greeks became sailors before they became farmers on a grand scale."
+        },
+        {
+          "id": "anatolia",
+          "name": "Anatolia",
+          "terrain": "hills",
+          "labelAt": [
+            28,
+            9
+          ],
+          "summary": "28 hexes, mostly hills. A high, dry plateau ringed by mountains: the Pontic range along the Black Sea and the Taurus along the Mediterranean. Rain stays on the rims and the middle is steppe.",
+          "learn": "A high, dry plateau ringed by mountains: the Pontic range along the Black Sea and the Taurus along the Mediterranean. Rain stays on the rims and the middle is steppe."
+        },
+        {
+          "id": "levant",
+          "name": "The Levant",
+          "terrain": "hills",
+          "labelAt": [
+            30,
+            11
+          ],
+          "summary": "16 hexes, mostly hills. A narrow coastal plain, the Lebanon mountains, a rift valley, then desert. In four short steps the climate goes from sea to sand.",
+          "learn": "A narrow coastal plain, the Lebanon mountains, a rift valley, then desert. In four short steps the climate goes from sea to sand."
+        },
+        {
+          "id": "upper-mesopotamia",
+          "name": "Mesopotamia",
+          "terrain": "mountain",
+          "labelAt": [
+            30,
+            9
+          ],
+          "summary": "9 hexes, mostly mountain. The land between the Tigris and the Euphrates, where farming first grew into cities fed by river water.",
+          "learn": "The land between the Tigris and the Euphrates, where farming first grew into cities fed by river water."
+        },
+        {
+          "id": "pontic-steppe",
+          "name": "The Pontic Steppe",
+          "terrain": "grassland",
+          "labelAt": [
+            26,
+            1
+          ],
+          "summary": "36 hexes, mostly grassland. Flat, treeless grassland that runs on for thousands of kilometres. There is nothing to stop a horse, or an army, or the wind.",
+          "learn": "Flat, treeless grassland that runs on for thousands of kilometres. There is nothing to stop a horse, or an army, or the wind."
+        },
+        {
+          "id": "egypt",
+          "name": "Egypt",
+          "terrain": "desert",
+          "labelAt": [
+            27,
+            20
+          ],
+          "summary": "53 hexes, mostly desert. Almost no rain falls here. Nearly everyone lives on a green ribbon beside the Nile and in its delta, because the river is the only water.",
+          "learn": "Almost no rain falls here. Nearly everyone lives on a green ribbon beside the Nile and in its delta, because the river is the only water."
+        },
+        {
+          "id": "libya",
+          "name": "Libya",
+          "terrain": "desert",
+          "labelAt": [
+            17,
+            19
+          ],
+          "summary": "46 hexes, mostly desert. A green strip on the coast, where winter rain falls, and then desert for a thousand kilometres inland.",
+          "learn": "A green strip on the coast, where winter rain falls, and then desert for a thousand kilometres inland."
+        },
+        {
+          "id": "maghreb",
+          "name": "The Maghreb",
+          "terrain": "hills",
+          "labelAt": [
+            8,
+            14
+          ],
+          "summary": "97 hexes, mostly hills. The Atlas mountains catch the sea rain on their northern slopes. Behind them the air is dry, and the Sahara begins.",
+          "learn": "The Atlas mountains catch the sea rain on their northern slopes. Behind them the air is dry, and the Sahara begins."
+        },
+        {
+          "id": "sahara",
+          "name": "The Sahara",
+          "terrain": "desert",
+          "labelAt": [
+            11,
+            22
+          ],
+          "summary": "60 hexes, mostly desert. The largest hot desert on Earth. Life gathers where underground water reaches the surface: at oases.",
+          "learn": "The largest hot desert on Earth. Life gathers where underground water reaches the surface: at oases."
+        },
+        {
+          "id": "sicily",
+          "name": "Sicily",
+          "terrain": "hills",
+          "labelAt": [
+            16,
+            12
+          ],
+          "summary": "3 hexes, mostly hills. The largest island in the Mediterranean, and home to Etna, Europe's tallest active volcano.",
+          "learn": "The largest island in the Mediterranean, and home to Etna, Europe's tallest active volcano."
+        },
+        {
+          "id": "sardinia",
+          "name": "Sardinia",
+          "terrain": "grassland",
+          "labelAt": [
+            12,
+            9
+          ],
+          "summary": "1 hexes, mostly grassland. The second-largest island in the Mediterranean, old, worn-down granite rock and little rain.",
+          "learn": "The second-largest island in the Mediterranean, old, worn-down granite rock and little rain."
+        },
+        {
+          "id": "corsica",
+          "name": "Corsica",
+          "terrain": "grassland",
+          "labelAt": [
+            12,
+            7
+          ],
+          "summary": "2 hexes, mostly grassland. Only half the size of a hex, but its peaks are among the highest in the western Mediterranean islands, over two thousand metres.",
+          "learn": "Only half the size of a hex, but its peaks are among the highest in the western Mediterranean islands, over two thousand metres."
+        },
+        {
+          "id": "crete",
+          "name": "Crete",
+          "terrain": "hills",
+          "labelAt": [
+            22,
+            13
+          ],
+          "summary": "1 hexes, mostly hills. The largest Greek island, mountainous all along its length, with the sea on every side.",
+          "learn": "The largest Greek island, mountainous all along its length, with the sea on every side."
+        },
+        {
+          "id": "cyprus",
+          "name": "Cyprus",
+          "terrain": "hills",
+          "labelAt": [
+            28,
+            12
+          ],
+          "summary": "1 hexes, mostly hills. The easternmost island of the Mediterranean, closer to Syria and Turkey than to Greece.",
+          "learn": "The easternmost island of the Mediterranean, closer to Syria and Turkey than to Greece."
+        },
+        {
+          "id": "balearics",
+          "name": "The Balearics",
+          "terrain": "grassland",
+          "labelAt": [
+            9,
+            9
+          ],
+          "summary": "1 hexes, mostly grassland. A small island group, easy to miss at this scale. A reminder that a map always leaves things out.",
+          "learn": "A small island group, easy to miss at this scale. A reminder that a map always leaves things out."
+        },
+        {
+          "id": "cyrenaica",
+          "name": "Cyrenaica",
+          "terrain": "desert",
+          "labelAt": [
+            21,
+            17
+          ],
+          "summary": "22 hexes, mostly desert. A green bulge of coast on the Libyan shore where winter rain is enough to farm, backed by hundreds of kilometres of desert.",
+          "learn": "A green bulge of coast on the Libyan shore where winter rain is enough to farm, backed by hundreds of kilometres of desert."
+        },
+        {
+          "id": "western-med",
+          "name": "Western Mediterranean",
+          "terrain": "shallow-water",
+          "labelAt": [
+            9,
+            11
+          ],
+          "summary": "Open water."
+        },
+        {
+          "id": "ionian",
+          "name": "Central Mediterranean",
+          "terrain": "deep-water",
+          "labelAt": [
+            18,
+            14
+          ],
+          "summary": "Open water."
+        },
+        {
+          "id": "aegean",
+          "name": "Eastern Mediterranean",
+          "terrain": "deep-water",
+          "labelAt": [
+            25,
+            14
+          ],
+          "summary": "Open water."
+        },
+        {
+          "id": "black-sea",
+          "name": "Black Sea",
+          "terrain": "shallow-water",
+          "labelAt": [
+            27,
+            5
+          ],
+          "summary": "Open water."
+        },
+        {
+          "id": "atlantic",
+          "name": "Atlantic Ocean",
+          "terrain": "deep-water",
+          "labelAt": [
+            2,
+            3
+          ],
+          "summary": "Open water."
+        }
+      ],
+      "settlements": [
+        {
+          "id": "rome",
+          "name": "Rome",
+          "col": 14,
+          "row": 7,
+          "rank": "seat",
+          "harbour": true,
+          "note": "Capital of an empire that ruled the whole sea; its roads all began here. Stands 1 hex from where it really is: the hex it falls in is shallow water."
+        },
+        {
+          "id": "athens",
+          "name": "Athens",
+          "col": 21,
+          "row": 11,
+          "rank": "city",
+          "harbour": true
+        },
+        {
+          "id": "istanbul",
+          "name": "Istanbul",
+          "col": 25,
+          "row": 8,
+          "rank": "city",
+          "harbour": true,
+          "note": "Straddles the Bosphorus, the strait that joins the Black Sea to the Mediterranean. Stands 1 hex from where it really is: the hex it falls in is shallow water."
+        },
+        {
+          "id": "cairo",
+          "name": "Cairo",
+          "col": 28,
+          "row": 18,
+          "rank": "city",
+          "note": "At the point where the Nile fans out into its delta. Stands 1 hex from where it really is: the hex it falls in is river."
+        },
+        {
+          "id": "alexandria",
+          "name": "Alexandria",
+          "col": 27,
+          "row": 16,
+          "rank": "city",
+          "harbour": true
+        },
+        {
+          "id": "barcelona",
+          "name": "Barcelona",
+          "col": 8,
+          "row": 7,
+          "rank": "city",
+          "harbour": true
+        },
+        {
+          "id": "marseille",
+          "name": "Marseille",
+          "col": 11,
+          "row": 6,
+          "rank": "city",
+          "harbour": true
+        },
+        {
+          "id": "tunis",
+          "name": "Tunis",
+          "col": 13,
+          "row": 12,
+          "rank": "city",
+          "harbour": true,
+          "note": "Carthage stood a few kilometres away."
+        },
+        {
+          "id": "algiers",
+          "name": "Algiers",
+          "col": 9,
+          "row": 12,
+          "rank": "city",
+          "harbour": true
+        },
+        {
+          "id": "madrid",
+          "name": "Madrid",
+          "col": 5,
+          "row": 8,
+          "rank": "city",
+          "note": "On the Meseta, the highest capital city in the European Union."
+        },
+        {
+          "id": "lisbon",
+          "name": "Lisbon",
+          "col": 2,
+          "row": 8,
+          "rank": "city",
+          "harbour": true
+        },
+        {
+          "id": "naples",
+          "name": "Naples",
+          "col": 16,
+          "row": 8,
+          "rank": "city",
+          "harbour": true,
+          "note": "In the shadow of Vesuvius."
+        },
+        {
+          "id": "venice",
+          "name": "Venice",
+          "col": 15,
+          "row": 4,
+          "rank": "city",
+          "harbour": true,
+          "note": "Built on the silt flats of the northern Adriatic."
+        },
+        {
+          "id": "tripoli",
+          "name": "Tripoli",
+          "col": 15,
+          "row": 16,
+          "rank": "city",
+          "harbour": true
+        },
+        {
+          "id": "beirut",
+          "name": "Beirut",
+          "col": 30,
+          "row": 13,
+          "rank": "city",
+          "harbour": true,
+          "note": "Stands 1 hex from where it really is: the hex it falls in is shallow water."
+        },
+        {
+          "id": "ankara",
+          "name": "Ankara",
+          "col": 27,
+          "row": 8,
+          "rank": "city",
+          "note": "On the dry Anatolian plateau."
+        },
+        {
+          "id": "damascus",
+          "name": "Damascus",
+          "col": 30,
+          "row": 14,
+          "rank": "city",
+          "harbour": true,
+          "note": "On a desert's edge, watered by one river. Stands 1 hex from where it really is: the hex it falls in is hills."
+        },
+        {
+          "id": "seville",
+          "name": "Seville",
+          "col": 3,
+          "row": 10,
+          "rank": "city",
+          "harbour": true
+        },
+        {
+          "id": "milan",
+          "name": "Milan",
+          "col": 13,
+          "row": 5,
+          "rank": "town",
+          "harbour": true,
+          "note": "Stands 1 hex from where it really is: the hex it falls in is river."
+        },
+        {
+          "id": "thessaloniki",
+          "name": "Thessaloniki",
+          "col": 21,
+          "row": 8,
+          "rank": "town",
+          "harbour": true
+        },
+        {
+          "id": "belgrade",
+          "name": "Belgrade",
+          "col": 19,
+          "row": 5,
+          "rank": "town",
+          "note": "Where the Sava meets the Danube."
+        },
+        {
+          "id": "benghazi",
+          "name": "Benghazi",
+          "col": 20,
+          "row": 16,
+          "rank": "town",
+          "harbour": true
+        },
+        {
+          "id": "fez",
+          "name": "Fez",
+          "col": 3,
+          "row": 13,
+          "rank": "town",
+          "harbour": true
+        },
+        {
+          "id": "palermo",
+          "name": "Palermo",
+          "col": 15,
+          "row": 11,
+          "rank": "town",
+          "harbour": true
+        },
+        {
+          "id": "nicosia",
+          "name": "Nicosia",
+          "col": 28,
+          "row": 12,
+          "rank": "town",
+          "harbour": true
+        },
+        {
+          "id": "siwa",
+          "name": "Siwa Oasis",
+          "col": 23,
+          "row": 19,
+          "rank": "village",
+          "note": "A spring in the Libyan desert."
+        },
+        {
+          "id": "ghadames",
+          "name": "Ghadames",
+          "col": 13,
+          "row": 18,
+          "rank": "village",
+          "note": "An oasis town on the old caravan roads."
+        }
+      ],
+      "rivers": [
+        {
+          "id": "river-1",
+          "name": "The Danube",
+          "from": "c13r02",
+          "to": "c23r03",
+          "hexes": [
+            [
+              13,
+              2
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              14,
+              1
+            ],
+            [
+              15,
+              1
+            ],
+            [
+              16,
+              1
+            ],
+            [
+              17,
+              2
+            ],
+            [
+              18,
+              2
+            ],
+            [
+              18,
+              3
+            ],
+            [
+              19,
+              4
+            ],
+            [
+              20,
+              4
+            ],
+            [
+              20,
+              5
+            ],
+            [
+              21,
+              5
+            ],
+            [
+              22,
+              5
+            ],
+            [
+              23,
+              5
+            ],
+            [
+              24,
+              4
+            ],
+            [
+              23,
+              3
+            ]
+          ]
+        },
+        {
+          "id": "river-2",
+          "name": "The Nile",
+          "from": "c29r23",
+          "to": "c27r17",
+          "hexes": [
+            [
+              29,
+              23
+            ],
+            [
+              29,
+              22
+            ],
+            [
+              28,
+              21
+            ],
+            [
+              28,
+              20
+            ],
+            [
+              27,
+              19
+            ],
+            [
+              27,
+              18
+            ],
+            [
+              27,
+              17
+            ]
+          ]
+        },
+        {
+          "id": "river-3",
+          "name": "The Po",
+          "from": "c13r04",
+          "to": "c15r05",
+          "hexes": [
+            [
+              13,
+              4
+            ],
+            [
+              14,
+              4
+            ],
+            [
+              14,
+              5
+            ]
+          ]
+        },
+        {
+          "id": "river-4",
+          "name": "The Euphrates",
+          "from": "c31r09",
+          "to": "c31r11",
+          "hexes": [
+            [
+              31,
+              9
+            ],
+            [
+              31,
+              10
+            ],
+            [
+              31,
+              11
+            ]
+          ]
+        }
+      ],
+      "routes": {
+        "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island.",
+        "shipping": [
+          {
+            "id": "rome-milan",
+            "name": "Rome to Milan",
+            "hexes": [
+              [
+                13,
+                7
+              ],
+              [
+                13,
+                6
+              ]
+            ]
+          },
+          {
+            "id": "milan-marseille",
+            "name": "Milan to Marseille",
+            "hexes": [
+              [
+                13,
+                6
+              ],
+              [
+                12,
+                6
+              ]
+            ]
+          },
+          {
+            "id": "marseille-barcelona",
+            "name": "Marseille to Barcelona",
+            "hexes": [
+              [
+                12,
+                6
+              ],
+              [
+                11,
+                7
+              ],
+              [
+                10,
+                7
+              ],
+              [
+                9,
+                7
+              ]
+            ]
+          },
+          {
+            "id": "rome-palermo",
+            "name": "Rome to Palermo",
+            "hexes": [
+              [
+                13,
+                7
+              ],
+              [
+                14,
+                8
+              ],
+              [
+                15,
+                8
+              ],
+              [
+                15,
+                9
+              ],
+              [
+                16,
+                10
+              ]
+            ]
+          },
+          {
+            "id": "palermo-tunis",
+            "name": "Palermo to Tunis",
+            "hexes": [
+              [
+                16,
+                10
+              ],
+              [
+                15,
+                10
+              ],
+              [
+                14,
+                11
+              ],
+              [
+                14,
+                12
+              ]
+            ]
+          },
+          {
+            "id": "tunis-tripoli",
+            "name": "Tunis to Tripoli",
+            "hexes": [
+              [
+                14,
+                12
+              ],
+              [
+                14,
+                13
+              ],
+              [
+                15,
+                14
+              ],
+              [
+                15,
+                15
+              ]
+            ]
+          },
+          {
+            "id": "barcelona-algiers",
+            "name": "Barcelona to Algiers",
+            "hexes": [
+              [
+                9,
+                7
+              ],
+              [
+                9,
+                8
+              ],
+              [
+                8,
+                9
+              ],
+              [
+                9,
+                10
+              ],
+              [
+                9,
+                11
+              ]
+            ]
+          },
+          {
+            "id": "tripoli-benghazi",
+            "name": "Tripoli to Benghazi",
+            "hexes": [
+              [
+                15,
+                15
+              ],
+              [
+                16,
+                15
+              ],
+              [
+                17,
+                15
+              ],
+              [
+                18,
+                15
+              ],
+              [
+                19,
+                15
+              ],
+              [
+                20,
+                15
+              ]
+            ]
+          },
+          {
+            "id": "benghazi-athens",
+            "name": "Benghazi to Athens",
+            "hexes": [
+              [
+                20,
+                15
+              ],
+              [
+                21,
+                14
+              ],
+              [
+                21,
+                13
+              ],
+              [
+                22,
+                12
+              ],
+              [
+                22,
+                11
+              ]
+            ]
+          },
+          {
+            "id": "athens-thessaloniki",
+            "name": "Athens to Thessaloniki",
+            "hexes": [
+              [
+                22,
+                11
+              ],
+              [
+                22,
+                10
+              ],
+              [
+                21,
+                9
+              ]
+            ]
+          },
+          {
+            "id": "algiers-fez",
+            "name": "Algiers to Fez",
+            "hexes": [
+              [
+                9,
+                11
+              ],
+              [
+                8,
+                11
+              ],
+              [
+                7,
+                11
+              ],
+              [
+                6,
+                11
+              ],
+              [
+                6,
+                12
+              ],
+              [
+                5,
+                12
+              ],
+              [
+                4,
+                12
+              ]
+            ]
+          },
+          {
+            "id": "benghazi-alexandria",
+            "name": "Benghazi to Alexandria",
+            "hexes": [
+              [
+                20,
+                15
+              ],
+              [
+                21,
+                15
+              ],
+              [
+                22,
+                15
+              ],
+              [
+                23,
+                15
+              ],
+              [
+                24,
+                15
+              ],
+              [
+                25,
+                15
+              ],
+              [
+                26,
+                15
+              ],
+              [
+                27,
+                15
+              ]
+            ]
+          },
+          {
+            "id": "alexandria-beirut",
+            "name": "Alexandria to Beirut",
+            "hexes": [
+              [
+                27,
+                15
+              ],
+              [
+                28,
+                15
+              ],
+              [
+                29,
+                14
+              ],
+              [
+                29,
+                13
+              ]
+            ]
+          },
+          {
+            "id": "beirut-damascus",
+            "name": "Beirut to Damascus",
+            "hexes": [
+              [
+                29,
+                13
+              ]
+            ]
+          },
+          {
+            "id": "beirut-nicosia",
+            "name": "Beirut to Nicosia",
+            "hexes": [
+              [
+                29,
+                13
+              ],
+              [
+                29,
+                12
+              ]
+            ]
+          },
+          {
+            "id": "tripoli-naples",
+            "name": "Tripoli to Naples",
+            "hexes": [
+              [
+                15,
+                15
+              ],
+              [
+                16,
+                14
+              ],
+              [
+                16,
+                13
+              ],
+              [
+                17,
+                12
+              ],
+              [
+                17,
+                11
+              ],
+              [
+                18,
+                10
+              ],
+              [
+                18,
+                9
+              ],
+              [
+                18,
+                8
+              ],
+              [
+                17,
+                7
+              ],
+              [
+                16,
+                7
+              ]
+            ]
+          },
+          {
+            "id": "naples-venice",
+            "name": "Naples to Venice",
+            "hexes": [
+              [
+                16,
+                7
+              ],
+              [
+                16,
+                6
+              ],
+              [
+                15,
+                5
+              ]
+            ]
+          }
+        ],
+        "road": [
+          {
+            "from": "rome",
+            "to": "naples"
+          },
+          {
+            "from": "rome",
+            "to": "milan"
+          },
+          {
+            "from": "milan",
+            "to": "venice"
+          },
+          {
+            "from": "naples",
+            "to": "palermo"
+          },
+          {
+            "from": "milan",
+            "to": "marseille"
+          },
+          {
+            "from": "palermo",
+            "to": "tunis"
+          },
+          {
+            "from": "marseille",
+            "to": "barcelona"
+          },
+          {
+            "from": "tunis",
+            "to": "algiers"
+          },
+          {
+            "from": "tunis",
+            "to": "tripoli"
+          },
+          {
+            "from": "tripoli",
+            "to": "ghadames"
+          },
+          {
+            "from": "barcelona",
+            "to": "madrid"
+          },
+          {
+            "from": "madrid",
+            "to": "lisbon"
+          },
+          {
+            "from": "lisbon",
+            "to": "seville"
+          },
+          {
+            "from": "seville",
+            "to": "fez"
+          },
+          {
+            "from": "naples",
+            "to": "thessaloniki"
+          },
+          {
+            "from": "thessaloniki",
+            "to": "athens"
+          },
+          {
+            "from": "thessaloniki",
+            "to": "belgrade"
+          },
+          {
+            "from": "thessaloniki",
+            "to": "istanbul"
+          },
+          {
+            "from": "istanbul",
+            "to": "ankara"
+          },
+          {
+            "from": "ankara",
+            "to": "nicosia"
+          },
+          {
+            "from": "nicosia",
+            "to": "beirut"
+          },
+          {
+            "from": "beirut",
+            "to": "damascus"
+          },
+          {
+            "from": "nicosia",
+            "to": "alexandria"
+          },
+          {
+            "from": "alexandria",
+            "to": "cairo"
+          },
+          {
+            "from": "tripoli",
+            "to": "benghazi"
+          },
+          {
+            "from": "alexandria",
+            "to": "siwa"
+          }
+        ]
+      }
+    },
+    {
       "$comment": "A GENERATED map: the board is the source and the plate is an output, so `rows`, `regions`, `settlements`, `rivers`, `routes` and `plate` below are all written by tools/draw-map.mjs and must never be hand-edited. Change the commission and run the tool. See docs/map/README.md.",
       "version": "0.1.0",
       "id": "kelder-vale",

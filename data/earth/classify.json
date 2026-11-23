@@ -1,0 +1,26 @@
+{
+  "$comment": "How a sampled patch of the real Earth becomes one of this game's eleven terrains. This file holds the RULES and nothing about any region: a thing the sampler measured goes in a samples file; a thing a person knows about a place goes in the map's commission. Change a number here and every real-Earth board reclassifies on its next draw.\n\nA hex is about 17,000 square kilometres, so every rule is a rule about an average over that much ground. Elevation decides hills and mountains first, because relief beats climate; climate (the Koeppen-Geiger class of most of the hex's land) decides what grows on the rest.",
+  "version": "0.1.0",
+  "thresholds": {
+    "landPct": 40,
+    "$landPct": "A hex is land when at least this share of its sample points are above sea level. Lower keeps more small islands and fatter coasts; higher drowns them.",
+    "shelfDepthM": 200,
+    "$shelfDepthM": "Sea shallower than this (the continental shelf) is shallow water; deeper is deep water.",
+    "mountain": { "meanM": 1100, "p90M": 1800, "reliefM": 500 },
+    "hills": { "meanM": 450, "p90M": 900, "reliefM": 300 },
+    "$relief": "A hex is mountain if its average height is at least meanM, or its high ground (the 90th percentile) reaches p90M AND climbs reliefM above its average. Hills likewise."
+  },
+  "climate": {
+    "$comment": "Koeppen-Geiger class -> terrain, for ground that is neither hills nor mountain. Steppe and Mediterranean scrub are grassland because that is what the game's grassland means: open ground more grass than tree.",
+    "Af": "forest", "Am": "forest", "Aw": "grassland",
+    "BWh": "desert", "BWk": "desert", "BSh": "grassland", "BSk": "grassland",
+    "Csa": "grassland", "Csb": "forest", "Csc": "forest",
+    "Cwa": "forest", "Cwb": "forest", "Cwc": "forest",
+    "Cfa": "forest", "Cfb": "forest", "Cfc": "forest",
+    "Dsa": "grassland", "Dsb": "forest", "Dsc": "forest", "Dsd": "forest",
+    "Dwa": "grassland", "Dwb": "forest", "Dwc": "forest", "Dwd": "forest",
+    "Dfa": "grassland", "Dfb": "forest", "Dfc": "forest", "Dfd": "forest",
+    "ET": "tundra", "EF": "tundra",
+    "default": "grassland"
+  }
+}
