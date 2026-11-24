@@ -543,9 +543,35 @@ size or drawn for a different georeference.
 
 The scale scheme is **Atlas > Region > Mini-map**, all hexes with degrees over them: an Earth region board
 opens out into mini-maps exactly as a world hex always has, and an Atlas sheet of the whole planet (24
-columns of 15 degrees, one hex a ship-day at 1,350 km) sits above it. The Atlas does not exist as data yet;
-ships and airships will travel on it for several rounds while the players' towns carry on. Teaching notes live
-on the map (`regions[].learn`, `lessons`) and are never typed into a rules chapter.
+columns of 15 degrees, 14 rows of 11) sits above it. Ships and airships travel on it for several rounds while
+the players' towns carry on. Teaching notes live on the map (`regions[].learn`, `lessons`) and are never typed
+into a rules chapter.
+
+## The Atlas is the planet, and its winds are grown
+
+`data/maps/earth-atlas.json` is the whole Earth as a board: 24 columns of 15 degrees (on the even rows every
+column is centred on a time zone's meridian, column 12 on Greenwich) by 14 rows of 11 degrees, about 1,412 km a
+hex, and it **wraps** - `grid.wrap` - so column 23's east neighbour is column 0. Every tool that walks a board
+walks a wrapping one through its own `ring`/`neighbours`, and that is the one thing that knows.
+
+**A port stands in its true hex, whatever that hex is.** At 1,400 km most real harbours fall in a hex that is
+mostly sea; moving them ashore put San Francisco in Alaska. A port whose hex is water is an anchorage
+(`afloat`), the one settlement allowed on water. A ship may be in water or a port, and may not sail *through* a
+port on land - a voyage starts or ends there, or a port on an isthmus would be a canal. Whether a port opens
+onto a Region board or is an abstract harbour is worked out from the boards that exist, never typed.
+
+**The winds are a few numbers.** `data/earth/winds.json` is a latitude profile of the surface wind plus a coast
+taper, turned into a stream function so the belts close into loops round each ocean. `tools/build-atlas.mjs`
+grows that field over the Atlas's own land mask, writes one wind per hex into the map's generated `atlas`
+block, sails every lane in `commission.atlas.lanes` on it, flies every airship line on the great circle, and
+draws `winds.svg`, `lanes.svg`, `airships.svg`, `places.svg` and `boards.svg` beside the relief layers. Change
+a wind number, never a lane. The wind cost is `exampleRule` - **an example, not a rule** - until a chapter
+adopts it.
+
+**The rules of moving are `docs/js/atlas.js`, once.** The build sails the printed lanes with it (through
+`tools/lib/atlas.mjs`), and the viewer plans any voyage with it, so the board and a screen cannot disagree. It
+is the start of the digital game's Atlas: give it the board, ask it for a voyage. Order: `draw-map earth-atlas`,
+then `relief.py earth-atlas` (when the board moved), then `build-atlas`.
 
 ## The book is three sources, and only one of them is rules
 
@@ -824,6 +850,7 @@ below is for when `data/` has moved.
 node tools/validate-data.mjs   # referential integrity and design smells
 node tools/build-styleref.mjs  # redraw docs/art/style-reference.png - the artist's one picture
 node tools/draw-map.mjs <id>   # generated maps: regrow the board and redraw the plate
+node tools/build-atlas.mjs     # the Atlas: winds, lanes, airship lines and ports, after draw-map earth-atlas
 node tools/validate-map.mjs    # boards against terrain.json and against themselves
 node tools/build-map.mjs       # map proof sheets, and the derived print sizes
 node tools/build-icons.mjs     # element marks -> docs/art/icons/
@@ -852,7 +879,8 @@ node tools/validate-art.mjs    # palette and layer contract
 Order matters in six places: `build-icons` before `build-book`, because the book
 points at the icons; `mint-queue` before `build-mint`, because the queue is the
 mint page's third section; `draw-map` before `build-map` and `validate-map`,
-because a generated board is not there to be checked until it has been grown;
+because a generated board is not there to be checked until it has been grown (and
+`build-atlas` comes between them, because the Atlas's lanes are sailed over the grown board);
 `draw-item` before `build-cards`, for the same reason one storey down — a card is
 not built until its plate is there; `build-cards` and `build-tiles` before
 `validate-framing`, because the windows that check measures against are read off

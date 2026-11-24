@@ -38,7 +38,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { layout, neighbours, distance, hexId } from './lib/hexgrid.mjs';
+import { layout, neighbours, distance as flatDistance, hexId } from './lib/hexgrid.mjs';
 import { earthGrid, classify as classifyEarth } from './lib/earth.mjs';
 import {
   n2, esc, makePen, curve, smooth, wobble, offsetPath, dashify, polyPath,
@@ -118,7 +118,15 @@ const rand = mulberry32(form.seed ?? 1);
 
 /* --------------------------------------------------------------------- grid */
 const inGrid = (c, r) => c >= 0 && r >= 0 && c < COLS && r < ROWS;
-const ring = (c, r) => neighbours(c, r).filter((n) => inGrid(n.col, n.row));
+/* A board that goes all the way round the planet (grid.wrap, the Atlas) steps off its east edge onto
+   its west edge. Everything below that walks the board walks it through `ring` and `distance`, so this
+   is the one place that knows. */
+const WRAP = !!map.grid.wrap;
+const fold = (c) => (WRAP ? ((c % COLS) + COLS) % COLS : c);
+const ring = (c, r) => neighbours(c, r).map((n) => ({ col: fold(n.col), row: n.row })).filter((n) => inGrid(n.col, n.row));
+const distance = (a, b) => (WRAP
+  ? Math.min(flatDistance(a, b), flatDistance({ col: a.col + COLS, row: a.row }, b), flatDistance({ col: a.col - COLS, row: a.row }, b))
+  : flatDistance(a, b));
 const key = (c, r) => `${c},${r}`;
 
 /* ------------------------------------------------------- 1 · grow the islands */
@@ -236,6 +244,13 @@ if (EARTH) {
     if (!h) { console.warn(`draw-map: ${f.name} is off the board`); continue; }
     EARTH_SHALLOW.delete(key(h.col, h.row));
     if (!EARTH_T.has(key(h.col, h.row))) EARTH_T.set(key(h.col, h.row), f.terrain ?? 'hills');
+  }
+  /* The opposite: a strait a ship needs that the samples closed, made sea again by name. */
+  for (const f of EARTH.forceSea ?? []) {
+    const h = earthGridFn.hexOf(f.lat, f.lon);
+    if (!h) { console.warn(`draw-map: ${f.name} is off the board`); continue; }
+    if (EARTH_T.delete(key(h.col, h.row))) console.log(`  ${f.name}: ${hexId(h.col, h.row)} made sea`);
+    EARTH_SHALLOW.add(key(h.col, h.row));
   }
   /* Wet ground that the climate map cannot see: a delta is where a river drops its silt. */
   for (const m of EARTH.marsh ?? []) {
@@ -533,14 +548,32 @@ if (EARTH) {
   /* A real city stands where its latitude and longitude fall. If that hex is the sea,
      or a river, or somebody else's, it moves to the nearest hex that will do - and the
      note says how far, because a city a hex out of place is a thing a player should know. */
-  const usable = (c, r) => inGrid(c, r) && habitable(c, r) && !taken.has(key(c, r));
+  /* On the Atlas every place is a port - a ship's only way off the water - so a place must stand beside the sea. */
+  const portsOnly = !!map.commission.atlas;
+  const usable = (c, r) => inGrid(c, r) && habitable(c, r) && !taken.has(key(c, r)) && (!portsOnly || seaside(c, r));
   for (const place of EARTH.places ?? []) {
     const h = earthGridFn.hexOf(place.lat, place.lon);
     if (!h) { console.warn(`draw-map: ${place.name} (${place.lat}, ${place.lon}) is off the board`); continue; }
+    /* On the Atlas a port stands in the hex its latitude and longitude fall in, ALWAYS. A hex there is
+       1,400 km across, so most real harbours fall in a hex that is mostly sea; moving them ashore put
+       San Francisco in Alaska. A port whose hex is water is an ANCHORAGE (`afloat`): the hex stays
+       water, a ship sails into it, and the port is where it drops anchor. One whose hex is land is the
+       one land hex a ship may enter. Whatever the hex's terrain: at this scale a mountain hex has a coast
+       with a harbour on it (Aden, Callao), and the port is a point, not a building. Only two ports
+       wanting one hex moves anybody. */
+    const wetHex = !EARTH_T.has(key(h.col, h.row));
+    if (portsOnly && !taken.has(key(h.col, h.row))) {
+      taken.add(key(h.col, h.row));
+      const wet = wetHex;
+      if (!wet && !seaside(h.col, h.row)) console.warn(`draw-map: ${place.name} stands on ${hexId(h.col, h.row)}, which no sea reaches`);
+      settlements.push({ id: place.id, name: place.name, col: h.col, row: h.row, rank: place.rank, harbour: true, ...(wet ? { afloat: true } : {}), ...(place.note ? { note: place.note } : {}) });
+      continue;
+    }
     let spot = usable(h.col, h.row) ? h : null, moved = 0;
     for (let d = 1; !spot && d <= 2; d++) {
       const cand = [];
-      for (let r = h.row - d; r <= h.row + d; r++) for (let c = h.col - d * 2; c <= h.col + d * 2; c++) {
+      for (let r = h.row - d; r <= h.row + d; r++) for (let c0 = h.col - d * 2; c0 <= h.col + d * 2; c0++) {
+        const c = fold(c0);
         if (usable(c, r) && distance({ col: c, row: r }, h) === d) cand.push({ col: c, row: r });
       }
       /* Prefer one beside the sea if the city is a port, otherwise the closest on the ground. */
@@ -555,7 +588,7 @@ if (EARTH) {
     settlements.push({
       id: place.id, name: place.name, col: spot.col, row: spot.row, rank: place.rank,
       ...(seaside(spot.col, spot.row) ? { harbour: true } : {}),
-      note: [place.note, moved ? `Stands ${moved} hex${moved > 1 ? 'es' : ''} from where it really is: the hex it falls in is ${idAt(h.col, h.row)?.replace('-', ' ') ?? 'off the board'}.` : null].filter(Boolean).join(' ') || undefined,
+      note: [place.note, moved ? `Stands ${moved} hex${moved > 1 ? 'es' : ''} from where it really is: ${portsOnly && taken.has(key(h.col, h.row)) ? `the hex it falls in is already ${settlements.find((o) => o.col === h.col && o.row === h.row)?.name ?? 'taken'}'s` : `the hex it falls in is ${idAt(h.col, h.row)?.replace('-', ' ') ?? 'off the board'}`}.` : null].filter(Boolean).join(' ') || undefined,
     });
   }
 }
@@ -1321,7 +1354,7 @@ for (const k of Object.keys(map)) {
   if (k === 'plate') continue;
   if (k === 'rows') { rebuilt.rows = board; rebuilt.$rowsNote = 'GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.'; continue; }
   if (k === '$rowsNote') continue;
-  if (k === 'regions' || k === 'settlements' || k === 'routes' || k === 'rivers') continue;
+  if (k === 'regions' || k === 'settlements' || k === 'routes' || k === 'rivers' || k === 'atlas') continue;
   rebuilt[k] = map[k];
 }
 if (!rebuilt.plate) rebuilt.plate = plate;
@@ -1338,6 +1371,9 @@ if (EARTH) {
   });
   rebuilt.$lessonsNote = 'GENERATED from commission.earth.lessons. A lesson is a fact about a real place: the tool says which hex it fell in and what that hex came out as, so a note about a desert is never printed on a sea.';
 }
+
+/* The Atlas's winds, lanes and ports are tools/build-atlas.mjs's, grown from this board: kept, last. */
+if (map.atlas) rebuilt.atlas = map.atlas;
 
 const nextJson = `${JSON.stringify(rebuilt, null, 2)}\n`;
 

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4000 2163" width="4000" height="2163" >
+<title>Lines of longitude every 30 degrees and latitude every 15; the equator heavier; the tropics and the polar circles dashed</title>
+<g stroke="#182C54" fill="none">
+<line x1="137.6" y1="98" x2="137.6" y2="2065" stroke-opacity="0.75" stroke-width="5.28"/>
+<line x1="454.6" y1="98" x2="454.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="771.6" y1="98" x2="771.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="1088.6" y1="98" x2="1088.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="1405.6" y1="98" x2="1405.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="1722.6" y1="98" x2="1722.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="2039.6" y1="98" x2="2039.6" y2="2065" stroke-opacity="0.75" stroke-width="5.28"/>
+<line x1="2356.6" y1="98" x2="2356.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="2673.6" y1="98" x2="2673.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="2990.6" y1="98" x2="2990.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="3307.6" y1="98" x2="3307.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="3624.6" y1="98" x2="3624.6" y2="2065" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="1898.9" x2="3902" y2="1898.9" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="1711.7" x2="3902" y2="1711.7" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="1524.5" x2="3902" y2="1524.5" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="1337.3" x2="3902" y2="1337.3" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="1150.1" x2="3902" y2="1150.1" stroke-opacity="0.85" stroke-width="6.34"/>
+<line x1="98" y1="963.0" x2="3902" y2="963.0" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="775.8" x2="3902" y2="775.8" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="588.6" x2="3902" y2="588.6" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="401.4" x2="3902" y2="401.4" stroke-opacity="0.5" stroke-width="3.43"/>
+<line x1="98" y1="214.2" x2="3902" y2="214.2" stroke-opacity="0.5" stroke-width="3.43"/>
+</g>
+<line x1="98" y1="857.6" x2="3902" y2="857.6" stroke="#962820" stroke-opacity="0.9" stroke-width="4.75" stroke-dasharray="31.7 18.491666666666667"/>
+<text x="203.66666666666666" y="841.8" font-family="Merriweather, 'Liberation Serif', Georgia, serif" font-style="italic" font-size="26.4" fill="#78241C" stroke="#fff" stroke-width="5.283333333333333" paint-order="stroke">Tropic of Cancer 23.4°N</text>
+<line x1="98" y1="1442.6" x2="3902" y2="1442.6" stroke="#962820" stroke-opacity="0.9" stroke-width="4.75" stroke-dasharray="31.7 18.491666666666667"/>
+<text x="203.66666666666666" y="1426.8" font-family="Merriweather, 'Liberation Serif', Georgia, serif" font-style="italic" font-size="26.4" fill="#78241C" stroke="#fff" stroke-width="5.283333333333333" paint-order="stroke">Tropic of Capricorn 23.4°S</text>
+<line x1="98" y1="319.6" x2="3902" y2="319.6" stroke="#2B4F78" stroke-opacity="0.9" stroke-width="4.75" stroke-dasharray="31.7 18.491666666666667"/>
+<text x="203.66666666666666" y="303.7" font-family="Merriweather, 'Liberation Serif', Georgia, serif" font-style="italic" font-size="26.4" fill="#2B4F78" stroke="#fff" stroke-width="5.283333333333333" paint-order="stroke">Arctic Circle 66.6°N</text>
+<line x1="98" y1="1980.7" x2="3902" y2="1980.7" stroke="#2B4F78" stroke-opacity="0.9" stroke-width="4.75" stroke-dasharray="31.7 18.491666666666667"/>
+<text x="203.66666666666666" y="1964.9" font-family="Merriweather, 'Liberation Serif', Georgia, serif" font-style="italic" font-size="26.4" fill="#2B4F78" stroke="#fff" stroke-width="5.283333333333333" paint-order="stroke">Antarctic Circle 66.6°S</text>
+</svg>

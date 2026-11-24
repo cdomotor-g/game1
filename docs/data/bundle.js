@@ -17385,6 +17385,5374 @@ window.GAME_DATA = {
   },
   "maps": [
     {
+      "$comment": "A GENERATED board of the REAL Earth: the ATLAS, the whole planet, the top of the three levels (Atlas > Region > Mini-map). `commission` is the only thing anybody writes by hand; `rows`, `settlements`, `regions`, `lessons` and the `plate` block are grown from it by `node tools/draw-map.mjs earth-atlas`, and the `atlas` block (winds, lanes, airship lines, ports) by `node tools/build-atlas.mjs`. Its land is not invented: `commission.earth` points at sampled real data (data/earth/atlas.samples.json, from tools/fetch-earth.mjs). Do not hand-edit the generated parts.",
+      "version": "0.1.0",
+      "id": "earth-atlas",
+      "name": "The Atlas",
+      "subtitle": "the whole Earth, one time zone to a column, for ships and airships",
+      "summary": "The real planet laid onto 24 columns of 15 degrees (the 24 time zones) and 14 rows of 11 degrees, about 1,400 km a hex. Ships sail it one hex a round and airships two, between real ports, on winds generated from the planet's real wind belts. A port inside a Region board opens onto that board; one outside is an abstract harbour.",
+      "commission": {
+        "$comment": "The input contract for a real-Earth board. Nothing here is invented: where the land is comes from sampled data, and what is typed is the window, the ports, the names and the lessons.",
+        "why": "The top of the three levels - Atlas, Region, Mini-map. Ships and airships travel on it for several rounds while the players' towns carry on, and it is the board the digital game navigates the whole world on. It teaches how the planet's winds go round its oceans, which is why the old trade routes went where they did.",
+        "landmass": "The whole Earth from 84 north to 73 south: every continent, the oceans between them, and the edge of the Antarctic ice. The board wraps: its east edge is its west edge, on the 180th meridian.",
+        "terrainBudget": [],
+        "$terrainBudgetNote": "Left empty on purpose: a real place has no budget.",
+        "settlements": {
+          "count": 39,
+          "seat": 0,
+          "city": 14,
+          "town": 25,
+          "village": 0
+        },
+        "$settlementNote": "Real ports, placed at their real latitude and longitude. At 1,400 km a hex two ports a few hundred kilometres apart cannot both have a hex, which is why the list skips a few famous names.",
+        "routes": {
+          "rail": false,
+          "shipping": false,
+          "road": false,
+          "$note": "The Atlas does not grow lanes the way a Region board does: its lanes are sailed on the winds, by tools/build-atlas.mjs."
+        },
+        "earth": {
+          "$comment": "The Earth block. Everything here is a fact about the planet - a latitude, a longitude - and no hex is ever typed.",
+          "region": "atlas",
+          "grid": {
+            "kind": "rows-on-parallels",
+            "hexLon": 15,
+            "rowLat": 11,
+            "centre": {
+              "lat": 5.5,
+              "lon": -3.75
+            },
+            "wrap": true
+          },
+          "$gridNote": "Settled: 24 columns of 15 degrees (one time zone each, numbered across the top) by 14 rows of 11 degrees. The rows land on round numbers - row 7 is the equator, row 0 is 77 north, row 13 is 66 south - and the standard parallel, 32.1 degrees, is worked out from that by tools/lib/earth.mjs. One hex is about 1,412 km across at the standard parallel; at 77 degrees the same hex covers about a third of that east to west, and the sheet says so. On the even rows every column is centred on a time zone's own meridian - column 12 on Greenwich, column 0 on the 180th meridian, where the date changes - so the number across the top is the hours ahead of Greenwich. The odd rows sit half a hex east, as on every board, and straddle two zones.",
+          "samplesFile": "earth/atlas.samples.json",
+          "tileZoom": 4,
+          "sampleAcross": 9,
+          "reliefZoom": 5,
+          "riverRank": 3,
+          "$zoomNote": "Coarser than a Region board because a hex is a hundred times the area: zoom 4 is about 10 km a pixel for the sampler and zoom 5 about 5 km for the relief picture, which is finer than the plate can show.",
+          "riverMinLandPct": 40,
+          "rivers": [],
+          "$riversNote": "None on the board. At 1,400 km a hex a river would turn a hex the size of a country into a river; the relief picture still draws every big river, and a Region board puts them back.",
+          "forceLand": [
+            {
+              "name": "Great Britain",
+              "lat": 52.5,
+              "lon": -1.5,
+              "terrain": "forest"
+            },
+            {
+              "name": "Japan",
+              "lat": 36,
+              "lon": 138,
+              "terrain": "hills"
+            },
+            {
+              "name": "New Zealand",
+              "lat": -39,
+              "lon": 175.5,
+              "terrain": "hills"
+            },
+            {
+              "name": "Borneo",
+              "lat": 0.5,
+              "lon": 114,
+              "terrain": "forest"
+            },
+            {
+              "name": "New Guinea",
+              "lat": -5,
+              "lon": 142,
+              "terrain": "forest"
+            }
+          ],
+          "forceSea": [
+            {
+              "name": "The Baltic",
+              "lat": 58,
+              "lon": 20
+            }
+          ],
+          "$forceNote": "An island a player has heard of and a port needs, too small for a 1.7 million km2 hex to keep on its own. The tool reports what each one changed.",
+          "oceanSeeds": [
+            {
+              "lat": 30,
+              "lon": -40
+            },
+            {
+              "lat": -30,
+              "lon": -20
+            },
+            {
+              "lat": 20,
+              "lon": -150
+            },
+            {
+              "lat": 20,
+              "lon": 170
+            },
+            {
+              "lat": -30,
+              "lon": -120
+            },
+            {
+              "lat": -20,
+              "lon": 80
+            },
+            {
+              "lat": -60,
+              "lon": 0
+            },
+            {
+              "lat": 80,
+              "lon": 0
+            },
+            {
+              "lat": 35,
+              "lon": 18
+            },
+            {
+              "lat": 43.3,
+              "lon": 34.5
+            },
+            {
+              "lat": 42,
+              "lon": 50.5
+            },
+            {
+              "lat": 58,
+              "lon": 20
+            },
+            {
+              "lat": 20,
+              "lon": 38.5
+            },
+            {
+              "lat": 27,
+              "lon": 51
+            },
+            {
+              "lat": 40,
+              "lon": 135
+            },
+            {
+              "lat": 60,
+              "lon": 85.5
+            },
+            {
+              "lat": 25,
+              "lon": -90
+            },
+            {
+              "lat": 15,
+              "lon": -75
+            }
+          ],
+          "$oceanSeedsNote": "Points known to be open water: one in each ocean, and one in each sea a coarse sample might cut off at its strait (the Mediterranean, the Black Sea, the Baltic, the Red Sea, the Gulf). The Caspian is seeded as well: it is the world's biggest lake, salt, and below sea level.",
+          "places": [
+            {
+              "id": "london",
+              "name": "London",
+              "rank": "city",
+              "lat": 51.5,
+              "lon": -0.1,
+              "note": "The river port at the head of the North Sea, and the counting house of half the world's shipping."
+            },
+            {
+              "id": "lisbon",
+              "name": "Lisbon",
+              "rank": "city",
+              "lat": 38.72,
+              "lon": -9.14,
+              "note": "Where the ocean voyages of the 1400s set out: the first port on the trade winds south."
+            },
+            {
+              "id": "st-petersburg",
+              "name": "St Petersburg",
+              "rank": "town",
+              "lat": 59.93,
+              "lon": 30.3,
+              "note": "Built at the head of the Baltic to be a window onto the sea."
+            },
+            {
+              "id": "bergen",
+              "name": "Bergen",
+              "rank": "town",
+              "lat": 60.39,
+              "lon": 5.32,
+              "note": "The North Sea port of the fish trade: dried cod went south and grain came back."
+            },
+            {
+              "id": "dakar",
+              "name": "Dakar",
+              "rank": "town",
+              "lat": 14.69,
+              "lon": -17.44,
+              "note": "The westernmost point of Africa, where a ship bound south leaves the coast for the open trade winds."
+            },
+            {
+              "id": "lagos",
+              "name": "Lagos",
+              "rank": "town",
+              "lat": 6.45,
+              "lon": 3.39
+            },
+            {
+              "id": "luanda",
+              "name": "Luanda",
+              "rank": "town",
+              "lat": -8.84,
+              "lon": 13.23
+            },
+            {
+              "id": "cape-town",
+              "name": "Cape Town",
+              "rank": "city",
+              "lat": -33.92,
+              "lon": 18.42,
+              "note": "The tavern of the seas: every ship between Europe and the Indian Ocean took on water here."
+            },
+            {
+              "id": "zanzibar",
+              "name": "Zanzibar",
+              "rank": "town",
+              "lat": -6.16,
+              "lon": 39.19,
+              "island": true,
+              "note": "An island port of the monsoon trade: cloves, ivory and the dhows from Arabia and India."
+            },
+            {
+              "id": "aden",
+              "name": "Aden",
+              "rank": "town",
+              "lat": 12.8,
+              "lon": 45.03,
+              "note": "Guards the mouth of the Red Sea."
+            },
+            {
+              "id": "muscat",
+              "name": "Muscat",
+              "rank": "town",
+              "lat": 23.6,
+              "lon": 58.5,
+              "note": "The Gulf of Oman port the monsoon carried to India and back."
+            },
+            {
+              "id": "mumbai",
+              "name": "Mumbai",
+              "rank": "city",
+              "lat": 18.94,
+              "lon": 72.84,
+              "note": "India's great west-coast harbour, at the end of the monsoon crossing from Arabia."
+            },
+            {
+              "id": "colombo",
+              "name": "Colombo",
+              "rank": "town",
+              "lat": 6.93,
+              "lon": 79.85,
+              "note": "The cinnamon island at the turning point of every voyage round India."
+            },
+            {
+              "id": "kolkata",
+              "name": "Kolkata",
+              "rank": "town",
+              "lat": 22.57,
+              "lon": 88.36,
+              "note": "Up a river of the Ganges delta; the port of the whole Ganges plain."
+            },
+            {
+              "id": "singapore",
+              "name": "Singapore",
+              "rank": "city",
+              "lat": 1.29,
+              "lon": 103.85,
+              "note": "Sits on the Strait of Malacca, the narrow gate between the Indian Ocean and the China Sea."
+            },
+            {
+              "id": "manila",
+              "name": "Manila",
+              "rank": "city",
+              "lat": 14.6,
+              "lon": 120.98,
+              "note": "Where the galleons from Mexico unloaded silver for Chinese silk."
+            },
+            {
+              "id": "guangzhou",
+              "name": "Guangzhou",
+              "rank": "city",
+              "lat": 23.13,
+              "lon": 113.26,
+              "note": "Canton to the old traders: for a century the only Chinese port open to them."
+            },
+            {
+              "id": "shanghai",
+              "name": "Shanghai",
+              "rank": "city",
+              "lat": 31.23,
+              "lon": 121.47,
+              "note": "At the mouth of the Yangtze, the river that carries a third of China's people."
+            },
+            {
+              "id": "nagasaki",
+              "name": "Nagasaki",
+              "rank": "town",
+              "lat": 32.75,
+              "lon": 129.87,
+              "note": "For two hundred years Japan's one door to the outside world."
+            },
+            {
+              "id": "sydney",
+              "name": "Sydney",
+              "rank": "city",
+              "lat": -33.86,
+              "lon": 151.21,
+              "note": "The harbour at the end of the clipper route, fourteen thousand miles from London."
+            },
+            {
+              "id": "perth",
+              "name": "Perth",
+              "rank": "town",
+              "lat": -32.06,
+              "lon": 115.74,
+              "note": "Fremantle, the first landfall after the Roaring Forties carry a ship across the Indian Ocean."
+            },
+            {
+              "id": "auckland",
+              "name": "Auckland",
+              "rank": "town",
+              "lat": -36.85,
+              "lon": 174.76
+            },
+            {
+              "id": "honolulu",
+              "name": "Honolulu",
+              "rank": "town",
+              "lat": 21.31,
+              "lon": -157.86,
+              "island": true,
+              "note": "The only harbour in the middle of the North Pacific: every crossing stopped here for water."
+            },
+            {
+              "id": "papeete",
+              "name": "Papeete",
+              "rank": "town",
+              "lat": -17.53,
+              "lon": -149.57,
+              "island": true,
+              "note": "Tahiti: an island harbour of the South Pacific, three thousand miles from any continent."
+            },
+            {
+              "id": "san-francisco",
+              "name": "San Francisco",
+              "rank": "city",
+              "lat": 37.77,
+              "lon": -122.42,
+              "note": "A gold-rush harbour, reached from New York round Cape Horn in a hundred days."
+            },
+            {
+              "id": "acapulco",
+              "name": "Acapulco",
+              "rank": "town",
+              "lat": 16.85,
+              "lon": -99.88,
+              "note": "The Pacific end of New Spain, where the Manila galleon came home."
+            },
+            {
+              "id": "callao",
+              "name": "Callao",
+              "rank": "town",
+              "lat": -12.05,
+              "lon": -77.15,
+              "note": "The port of Lima, where the silver of Peru went to sea."
+            },
+            {
+              "id": "valparaiso",
+              "name": "Valparaíso",
+              "rank": "town",
+              "lat": -33.05,
+              "lon": -71.62,
+              "note": "The first harbour after Cape Horn, for a ship bound north."
+            },
+            {
+              "id": "buenos-aires",
+              "name": "Buenos Aires",
+              "rank": "city",
+              "lat": -34.6,
+              "lon": -58.4,
+              "note": "At the mouth of the River Plate, the outlet of half a continent."
+            },
+            {
+              "id": "rio",
+              "name": "Rio de Janeiro",
+              "rank": "city",
+              "lat": -22.9,
+              "lon": -43.17,
+              "note": "A bay so big a whole fleet could anchor in it out of the swell."
+            },
+            {
+              "id": "salvador",
+              "name": "Salvador",
+              "rank": "town",
+              "lat": -12.97,
+              "lon": -38.5,
+              "note": "Where the trade winds bring a ship from Africa straight to Brazil."
+            },
+            {
+              "id": "cartagena",
+              "name": "Cartagena",
+              "rank": "town",
+              "lat": 10.4,
+              "lon": -75.5,
+              "note": "The fortress port of the Spanish Main."
+            },
+            {
+              "id": "havana",
+              "name": "Havana",
+              "rank": "city",
+              "lat": 23.13,
+              "lon": -82.38,
+              "note": "Where the treasure fleets gathered to ride the Gulf Stream home."
+            },
+            {
+              "id": "new-orleans",
+              "name": "New Orleans",
+              "rank": "town",
+              "lat": 29.95,
+              "lon": -90.07,
+              "note": "At the mouth of the Mississippi; the outlet of the middle of North America."
+            },
+            {
+              "id": "new-york",
+              "name": "New York",
+              "rank": "city",
+              "lat": 40.7,
+              "lon": -74,
+              "note": "The deep harbour at the mouth of the Hudson, and the busiest port of the Americas."
+            },
+            {
+              "id": "reykjavik",
+              "name": "Reykjavík",
+              "rank": "town",
+              "lat": 64.15,
+              "lon": -21.94,
+              "note": "Iceland: a harbour on the ridge where the Atlantic floor is being pulled apart."
+            },
+            {
+              "id": "vladivostok",
+              "name": "Vladivostok",
+              "rank": "town",
+              "lat": 43.12,
+              "lon": 131.9,
+              "note": "Russia's Pacific port, at the far end of a railway nine thousand kilometres long."
+            },
+            {
+              "id": "darwin",
+              "name": "Darwin",
+              "rank": "town",
+              "lat": -12.46,
+              "lon": 130.84,
+              "note": "Australia's door to the Spice Islands, in the monsoon tropics."
+            },
+            {
+              "id": "anchorage",
+              "name": "Anchorage",
+              "rank": "town",
+              "lat": 61.22,
+              "lon": -149.9,
+              "note": "The far north of the Pacific, where the coast turns west towards Asia."
+            }
+          ],
+          "regions": [
+            {
+              "id": "europe",
+              "name": "Europe",
+              "lat": 50,
+              "lon": 15,
+              "learn": "A crinkled peninsula at the west end of Asia: so much coast for its size that almost nowhere in it is far from the sea."
+            },
+            {
+              "id": "siberia",
+              "name": "Siberia",
+              "lat": 62,
+              "lon": 100,
+              "learn": "A forest the width of a continent, frozen half the year. Its rivers run north into an ocean that is ice most of the year, so they carried little trade."
+            },
+            {
+              "id": "central-asia",
+              "name": "Central Asia",
+              "lat": 45,
+              "lon": 68,
+              "learn": "The middle of the biggest landmass on Earth, as far from any ocean as land gets: steppe, desert and the old Silk Road across them."
+            },
+            {
+              "id": "east-asia",
+              "name": "East Asia",
+              "lat": 40,
+              "lon": 112,
+              "learn": "Two great river valleys, the Yellow River and the Yangtze, and the most people of anywhere on Earth."
+            },
+            {
+              "id": "india",
+              "name": "India",
+              "lat": 22,
+              "lon": 78,
+              "learn": "A plate of the Earth's crust that drove into Asia and threw up the Himalaya. Its rains come all at once, on the monsoon."
+            },
+            {
+              "id": "arabia",
+              "name": "Arabia",
+              "lat": 23,
+              "lon": 45,
+              "learn": "Desert between two seas. Its ports lived on the trade that crossed from India to the Mediterranean."
+            },
+            {
+              "id": "southeast-asia",
+              "name": "The Spice Islands",
+              "lat": -5,
+              "lon": 135,
+              "learn": "Thousands of islands on the equator: nutmeg, cloves and pepper grew here and nowhere else, and that is why Europeans sailed half the world to get them."
+            },
+            {
+              "id": "north-africa",
+              "name": "The Sahara",
+              "lat": 22,
+              "lon": 10,
+              "learn": "The biggest hot desert on Earth, under the high pressure belt where dry air sinks."
+            },
+            {
+              "id": "africa",
+              "name": "Africa",
+              "lat": 2,
+              "lon": 22,
+              "learn": "The rainforest on the equator, savanna either side, and a coast with few deep harbours."
+            },
+            {
+              "id": "southern-africa",
+              "name": "Southern Africa",
+              "lat": -25,
+              "lon": 25,
+              "learn": "High plateau ending in the Cape, the corner every ship between Europe and India had to round."
+            },
+            {
+              "id": "north-america",
+              "name": "North America",
+              "lat": 45,
+              "lon": -100,
+              "learn": "A continent with mountains down its west side and its great rivers draining south and east into the Atlantic."
+            },
+            {
+              "id": "arctic-america",
+              "name": "The Canadian North",
+              "lat": 65,
+              "lon": -100,
+              "learn": "Tundra and ice. The Northwest Passage through it was searched for for three hundred years."
+            },
+            {
+              "id": "greenland",
+              "name": "Greenland",
+              "lat": 72,
+              "lon": -40,
+              "learn": "An island almost all ice: the ice sheet on it is three kilometres thick."
+            },
+            {
+              "id": "central-america",
+              "name": "Mexico",
+              "lat": 22,
+              "lon": -102,
+              "learn": "The narrow land between two oceans."
+            },
+            {
+              "id": "amazonia",
+              "name": "Amazonia",
+              "lat": -5,
+              "lon": -60,
+              "learn": "The largest rainforest on Earth, drained by the largest river."
+            },
+            {
+              "id": "andes",
+              "name": "The Andes",
+              "lat": -30,
+              "lon": -68,
+              "learn": "The longest mountain chain above the sea, on the edge where the Pacific floor dives under South America."
+            },
+            {
+              "id": "australia",
+              "name": "Australia",
+              "lat": -25,
+              "lon": 134,
+              "learn": "A continent mostly desert, under the same high pressure belt as the Sahara, with its people on the wetter coasts."
+            },
+            {
+              "id": "antarctica",
+              "name": "Antarctica",
+              "lat": -72,
+              "lon": 40,
+              "learn": "A continent under ice. Nothing on the board lives here."
+            }
+          ],
+          "seas": [
+            {
+              "id": "north-atlantic",
+              "name": "North Atlantic",
+              "lat": 35,
+              "lon": -42,
+              "learn": "Its winds go round it clockwise: trade winds south of thirty degrees, westerlies north of it."
+            },
+            {
+              "id": "south-atlantic",
+              "name": "South Atlantic",
+              "lat": -35,
+              "lon": -20,
+              "learn": "Its winds go round it anticlockwise, so a ship bound for the Cape swings out towards Brazil first."
+            },
+            {
+              "id": "north-pacific",
+              "name": "North Pacific",
+              "lat": 30,
+              "lon": -150,
+              "learn": "The widest ocean. A ship bound west rides the trade winds; bound east it goes north to find the westerlies."
+            },
+            {
+              "id": "south-pacific",
+              "name": "South Pacific",
+              "lat": -30,
+              "lon": -115
+            },
+            {
+              "id": "indian-ocean",
+              "name": "Indian Ocean",
+              "lat": -30,
+              "lon": 75,
+              "learn": "The ocean of the monsoon: the wind blows one way in summer and the other way in winter, so a trader went out and came back on schedule."
+            },
+            {
+              "id": "southern-ocean",
+              "name": "Southern Ocean",
+              "lat": -56,
+              "lon": 60,
+              "learn": "The only ocean that goes all the way round the world with no land in the way, so its westerlies never stop."
+            },
+            {
+              "id": "arctic-ocean",
+              "name": "Arctic Ocean",
+              "lat": 80,
+              "lon": -150
+            }
+          ],
+          "lessons": [
+            {
+              "id": "trade-winds",
+              "title": "Trade winds",
+              "lat": 15,
+              "lon": -40,
+              "text": "Air that sinks at thirty degrees flows back towards the equator along the surface, and the Earth's spin turns it to blow from the east. Sailors could count on it every day of the year."
+            },
+            {
+              "id": "doldrums",
+              "title": "The doldrums",
+              "lat": 2,
+              "lon": -25,
+              "text": "Where the trade winds of the two hemispheres meet, the air rises instead of blowing. A sailing ship could sit becalmed here for weeks."
+            },
+            {
+              "id": "horse-latitudes",
+              "title": "Horse latitudes",
+              "lat": 30,
+              "lon": -30,
+              "text": "Around thirty degrees the air sinks and the wind dies. The same sinking air makes the deserts on land at this latitude."
+            },
+            {
+              "id": "westerlies",
+              "title": "The westerlies",
+              "lat": 45,
+              "lon": -35,
+              "text": "North of the high-pressure belt the wind blows from the west. Ships bound home to Europe ran north to find it."
+            },
+            {
+              "id": "roaring-forties",
+              "title": "Roaring Forties",
+              "lat": -45,
+              "lon": 80,
+              "text": "In the far south no land stops the westerlies, so they blow harder than anywhere else. The clipper ships rode them from the Cape to Australia."
+            },
+            {
+              "id": "monsoon",
+              "title": "Monsoon",
+              "lat": 14,
+              "lon": 64,
+              "text": "Land heats faster than sea. In summer the hot land of Asia draws wet sea air in; in winter the wind turns round and blows out."
+            },
+            {
+              "id": "cape-horn",
+              "title": "Cape Horn",
+              "lat": -56,
+              "lon": -67,
+              "text": "The bottom of the Americas, where the westerlies are squeezed between South America and Antarctica: the most feared corner of the sailing world."
+            },
+            {
+              "id": "gulf-stream",
+              "title": "Gulf Stream",
+              "lat": 38,
+              "lon": -65,
+              "text": "A current of warm water from the Caribbean that runs up the American coast and across to Europe, which is why Britain is mild and Labrador, at the same latitude, is not."
+            },
+            {
+              "id": "size-of-a-hex",
+              "title": "How big an Atlas hex is",
+              "lat": -35,
+              "lon": -110,
+              "text": "Each hex is fifteen degrees of longitude, one time zone, about 1,400 kilometres at the latitude the map is true at. Towards the poles the map stretches: up there a hex covers much less ground than it looks."
+            }
+          ],
+          "relief": true
+        },
+        "atlas": {
+          "$comment": "What makes this board the ATLAS: the top of the three levels (Atlas > Region > Mini-map). Read by tools/build-atlas.mjs, which grows the winds, the trade lanes and the airship lines from this and data/earth/winds.json, and writes them into the generated `atlas` block below. Ports are the commission `places`; whether a port is on a Region board or is an abstract harbour is worked out from the boards that exist, never typed.",
+          "graticule": {
+            "lonStep": 30,
+            "latStep": 15,
+            "circles": true
+          },
+          "frame": {
+            "tickLon": 15,
+            "labelLon": 30,
+            "tickLat": 5,
+            "labelLat": 15,
+            "timeZones": true
+          },
+          "moves": {
+            "ship": 1,
+            "airship": 2,
+            "$note": "Atlas hexes a round. One clock: the game is still 24 rounds, and a voyage takes several of them while the towns carry on."
+          },
+          "lanes": [
+            {
+              "id": "cape-route",
+              "name": "The Cape Route",
+              "ports": [
+                "lisbon",
+                "cape-town",
+                "mumbai"
+              ],
+              "note": "Out of Europe with the trade winds, a long swing towards Brazil, then round the Cape for India."
+            },
+            {
+              "id": "manila-galleon-out",
+              "name": "Manila Galleon",
+              "ports": [
+                "acapulco",
+                "manila"
+              ],
+              "note": "West across the Pacific on the trade winds."
+            },
+            {
+              "id": "manila-galleon-home",
+              "name": "Galleon homeward",
+              "ports": [
+                "manila",
+                "acapulco"
+              ],
+              "note": "Home again: north to the westerlies first."
+            },
+            {
+              "id": "atlantic-run",
+              "name": "Atlantic Run",
+              "ports": [
+                "new-york",
+                "london"
+              ],
+              "note": "Downwind on the westerlies."
+            },
+            {
+              "id": "treasure-fleet",
+              "name": "The Treasure Fleet",
+              "ports": [
+                "cartagena",
+                "havana",
+                "lisbon"
+              ],
+              "note": "Gathered at Havana and rode the westerlies home."
+            },
+            {
+              "id": "clipper-route",
+              "name": "The Clipper Route",
+              "ports": [
+                "london",
+                "cape-town",
+                "sydney"
+              ],
+              "note": "South through the trades, then the Roaring Forties east."
+            },
+            {
+              "id": "cape-horn-run",
+              "name": "Round the Horn",
+              "ports": [
+                "new-york",
+                "rio",
+                "valparaiso",
+                "san-francisco"
+              ],
+              "note": "The gold-rush run round South America."
+            },
+            {
+              "id": "spice-route",
+              "name": "Spice Route",
+              "ports": [
+                "aden",
+                "colombo",
+                "singapore",
+                "guangzhou"
+              ],
+              "note": "The old sea road from Arabia to China."
+            }
+          ],
+          "airships": [
+            {
+              "id": "polar-line",
+              "name": "The Polar Line",
+              "from": "london",
+              "to": "san-francisco",
+              "note": "The shortest way from London to California is over Greenland - a straight line on a globe looks like an arch on a flat map."
+            },
+            {
+              "id": "meridian-line",
+              "name": "The Meridian Line",
+              "from": "london",
+              "to": "cape-town"
+            },
+            {
+              "id": "pacific-line",
+              "name": "The Pacific Line",
+              "from": "shanghai",
+              "to": "san-francisco"
+            }
+          ]
+        },
+        "plate": {
+          "minWidthPx": 4000,
+          "wantWidthPx": 7000,
+          "aspect": "root-two landscape",
+          "$note": "Vector, so no long side to fall short of."
+        },
+        "$portsNote": "The Mediterranean's own ports - Venice, Alexandria, Istanbul - are not on the Atlas: at 1,400 km a hex that sea is narrower than a hex and comes out as land. They are on the Mediterranean Region board, which opens off the Atlas at Lisbon. Jakarta shares Singapore's hex, and Halifax New York's, and both are left off for the same reason."
+      },
+      "plate": {
+        "kind": "generated",
+        "$kindNote": "Drawn by tools/draw-map.mjs from rows, not painted and traced. It is a build output: never hand-edited, regenerated by its tool, and safe to delete. A \"drawn\" plate is the opposite and the rules in docs/map/README.md are for that one.",
+        "file": "earth-atlas.svg",
+        "width": 4000,
+        "height": 2163,
+        "field": {
+          "x": 98,
+          "y": 98,
+          "width": 3804,
+          "height": 1967
+        },
+        "$fieldNote": "Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line.",
+        "geo": {
+          "kind": "rows-on-parallels",
+          "lon0": -180,
+          "lat0": 77.00000000000001,
+          "hexLon": 15,
+          "rowLat": 11.000000000000002,
+          "stdParallel": 32.13680480022872,
+          "wrap": true
+        },
+        "relief": {
+          "file": "layers/earth-atlas/ground.jpg",
+          "manifest": "layers/earth-atlas/layers.json",
+          "$note": "A raster relief picture of the real ground, on the same pixels as this plate, with its layers beside it. The viewer and print page prefer it to the flat plate; tools/validate-map.mjs checks the files are there and the same size."
+        }
+      },
+      "grid": {
+        "shape": "hex",
+        "orientation": "pointy",
+        "offset": "odd-r",
+        "cols": 24,
+        "rows": 14,
+        "wrap": true,
+        "fit": "field-width",
+        "$wrapNote": "The east edge is the west edge. Every tool that walks this board steps from column 23 to column 0 and back; on a board without the flag nothing wraps."
+      },
+      "print": {
+        "$comment": "Sheet layouts in the same three sizes as every other board. mapWidthMm, mapHeightMm and hexAcrossFlatsMm are derived and written in by tools/build-map.mjs.",
+        "default": "four-sheet",
+        "presets": [
+          {
+            "id": "four-sheet",
+            "name": "Four sheets, A2",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 2,
+            "sheetRows": 2,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "Two by two, printed landscape. The working size for a table.",
+            "mapWidthMm": 562,
+            "mapHeightMm": 377.4,
+            "hexAcrossFlatsMm": 16.9
+          },
+          {
+            "id": "nine-sheet",
+            "name": "Nine sheets, A1",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 3,
+            "sheetRows": 3,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "Three by three. A vector plate prints at this size without asking.",
+            "mapWidthMm": 843,
+            "mapHeightMm": 566.1,
+            "hexAcrossFlatsMm": 25.4
+          },
+          {
+            "id": "one-sheet",
+            "name": "One sheet, reference",
+            "sheet": "A4",
+            "orientation": "landscape",
+            "sheetCols": 1,
+            "sheetRows": 1,
+            "marginMm": 8,
+            "overlapMm": 0,
+            "note": "The whole board on one page, for reading rather than playing.",
+            "mapWidthMm": 281,
+            "mapHeightMm": 188.7,
+            "hexAcrossFlatsMm": 8.6
+          }
+        ]
+      },
+      "legend": {
+        "$comment": "Character to terrain id, identical to the other two boards so a board from any map reads the same in a text editor.",
+        "~": "deep-water",
+        "-": "shallow-water",
+        "r": "river",
+        "l": "lake",
+        ".": "grassland",
+        "f": "forest",
+        "h": "hills",
+        "^": "mountain",
+        "m": "marsh",
+        "t": "tundra",
+        "d": "desert"
+      },
+      "rows": [
+        "------th^^^-~-----tt----",
+        "-fhhfftt^^---fffffffhhff",
+        "----hhfff---f-ffff^hhh--",
+        "~~~-^hff-~~-hhhdh^^h.-~~",
+        "~~~~-^f--~~-hdh^^^^^fh-~",
+        "~~~~-^--~~-dhhhdhf^f--~~",
+        "~~~~~--h---..hh^---.---~",
+        "~~~~~~-ff----hh-~~-h-f-~",
+        "~~~~~~-^.h-~-hh-~~~----~",
+        "~~~~~~-^.-~~-^h-~~~-d.-~",
+        "-~~~~~~-f-~~~---~~~-dd.-",
+        "-~~~~~-h-~~~~~~~~~~----h",
+        "-~~~~~~--~~~~~~--~------",
+        "~~~~~~~~~~~~~~-^--^^^^-~"
+      ],
+      "$rowsNote": "GENERATED by tools/draw-map.mjs from commission.landform. Do not hand-edit: run the tool. On a drawn map this block is traced off the artwork instead, and hand-correcting it is expected.",
+      "$riversNote": "GENERATED. Each course is the chain of hexes the water runs through, spring first, and every one of those hexes is terrain `river` in rows. Run downhill by tools/draw-map.mjs from the terrain bands and the distance inland - never hand-placed, because a hand-placed river is how you get one that starts nowhere.",
+      "lessons": [
+        {
+          "id": "trade-winds",
+          "title": "Trade winds",
+          "at": [
+            9,
+            6
+          ],
+          "hex": "c09r06",
+          "terrain": "shallow-water",
+          "text": "Air that sinks at thirty degrees flows back towards the equator along the surface, and the Earth's spin turns it to blow from the east. Sailors could count on it every day of the year."
+        },
+        {
+          "id": "doldrums",
+          "title": "The doldrums",
+          "at": [
+            10,
+            7
+          ],
+          "hex": "c10r07",
+          "terrain": "shallow-water",
+          "text": "Where the trade winds of the two hemispheres meet, the air rises instead of blowing. A sailing ship could sit becalmed here for weeks."
+        },
+        {
+          "id": "horse-latitudes",
+          "title": "Horse latitudes",
+          "at": [
+            10,
+            4
+          ],
+          "hex": "c10r04",
+          "terrain": "deep-water",
+          "text": "Around thirty degrees the air sinks and the wind dies. The same sinking air makes the deserts on land at this latitude."
+        },
+        {
+          "id": "westerlies",
+          "title": "The westerlies",
+          "at": [
+            9,
+            3
+          ],
+          "hex": "c09r03",
+          "terrain": "deep-water",
+          "text": "North of the high-pressure belt the wind blows from the west. Ships bound home to Europe ran north to find it."
+        },
+        {
+          "id": "roaring-forties",
+          "title": "Roaring Forties",
+          "at": [
+            17,
+            11
+          ],
+          "hex": "c17r11",
+          "terrain": "deep-water",
+          "text": "In the far south no land stops the westerlies, so they blow harder than anywhere else. The clipper ships rode them from the Cape to Australia."
+        },
+        {
+          "id": "monsoon",
+          "title": "Monsoon",
+          "at": [
+            16,
+            6
+          ],
+          "hex": "c16r06",
+          "terrain": "shallow-water",
+          "text": "Land heats faster than sea. In summer the hot land of Asia draws wet sea air in; in winter the wind turns round and blows out."
+        },
+        {
+          "id": "cape-horn",
+          "title": "Cape Horn",
+          "at": [
+            8,
+            12
+          ],
+          "hex": "c08r12",
+          "terrain": "shallow-water",
+          "text": "The bottom of the Americas, where the westerlies are squeezed between South America and Antarctica: the most feared corner of the sailing world."
+        },
+        {
+          "id": "gulf-stream",
+          "title": "Gulf Stream",
+          "at": [
+            7,
+            3
+          ],
+          "hex": "c07r03",
+          "terrain": "forest",
+          "text": "A current of warm water from the Caribbean that runs up the American coast and across to Europe, which is why Britain is mild and Labrador, at the same latitude, is not."
+        },
+        {
+          "id": "size-of-a-hex",
+          "title": "How big an Atlas hex is",
+          "at": [
+            5,
+            10
+          ],
+          "hex": "c05r10",
+          "terrain": "deep-water",
+          "text": "Each hex is fifteen degrees of longitude, one time zone, about 1,400 kilometres at the latitude the map is true at. Towards the poles the map stretches: up there a hex covers much less ground than it looks."
+        }
+      ],
+      "$lessonsNote": "GENERATED from commission.earth.lessons. A lesson is a fact about a real place: the tool says which hex it fell in and what that hex came out as, so a note about a desert is never printed on a sea.",
+      "regions": [
+        {
+          "id": "europe",
+          "name": "Europe",
+          "terrain": "forest",
+          "labelAt": [
+            12,
+            3
+          ],
+          "summary": "7 hexes, mostly forest. A crinkled peninsula at the west end of Asia: so much coast for its size that almost nowhere in it is far from the sea.",
+          "learn": "A crinkled peninsula at the west end of Asia: so much coast for its size that almost nowhere in it is far from the sea."
+        },
+        {
+          "id": "siberia",
+          "name": "Siberia",
+          "terrain": "forest",
+          "labelAt": [
+            18,
+            1
+          ],
+          "summary": "9 hexes, mostly forest. A forest the width of a continent, frozen half the year. Its rivers run north into an ocean that is ice most of the year, so they carried little trade.",
+          "learn": "A forest the width of a continent, frozen half the year. Its rivers run north into an ocean that is ice most of the year, so they carried little trade."
+        },
+        {
+          "id": "central-asia",
+          "name": "Central Asia",
+          "terrain": "forest",
+          "labelAt": [
+            16,
+            3
+          ],
+          "summary": "9 hexes, mostly forest. The middle of the biggest landmass on Earth, as far from any ocean as land gets: steppe, desert and the old Silk Road across them.",
+          "learn": "The middle of the biggest landmass on Earth, as far from any ocean as land gets: steppe, desert and the old Silk Road across them."
+        },
+        {
+          "id": "east-asia",
+          "name": "East Asia",
+          "terrain": "hills",
+          "labelAt": [
+            18,
+            3
+          ],
+          "summary": "11 hexes, mostly hills. Two great river valleys, the Yellow River and the Yangtze, and the most people of anywhere on Earth.",
+          "learn": "Two great river valleys, the Yellow River and the Yangtze, and the most people of anywhere on Earth."
+        },
+        {
+          "id": "india",
+          "name": "India",
+          "terrain": "mountain",
+          "labelAt": [
+            17,
+            4
+          ],
+          "summary": "6 hexes, mostly mountain. A plate of the Earth's crust that drove into Asia and threw up the Himalaya. Its rains come all at once, on the monsoon.",
+          "learn": "A plate of the Earth's crust that drove into Asia and threw up the Himalaya. Its rains come all at once, on the monsoon."
+        },
+        {
+          "id": "arabia",
+          "name": "Arabia",
+          "terrain": "mountain",
+          "labelAt": [
+            14,
+            4
+          ],
+          "summary": "5 hexes, mostly mountain. Desert between two seas. Its ports lived on the trade that crossed from India to the Mediterranean.",
+          "learn": "Desert between two seas. Its ports lived on the trade that crossed from India to the Mediterranean."
+        },
+        {
+          "id": "southeast-asia",
+          "name": "The Spice Islands",
+          "terrain": "hills",
+          "labelAt": [
+            21,
+            7
+          ],
+          "summary": "2 hexes, mostly hills. Thousands of islands on the equator: nutmeg, cloves and pepper grew here and nowhere else, and that is why Europeans sailed half the world to get them.",
+          "learn": "Thousands of islands on the equator: nutmeg, cloves and pepper grew here and nowhere else, and that is why Europeans sailed half the world to get them."
+        },
+        {
+          "id": "north-africa",
+          "name": "The Sahara",
+          "terrain": "hills",
+          "labelAt": [
+            13,
+            5
+          ],
+          "summary": "7 hexes, mostly hills. The biggest hot desert on Earth, under the high pressure belt where dry air sinks.",
+          "learn": "The biggest hot desert on Earth, under the high pressure belt where dry air sinks."
+        },
+        {
+          "id": "africa",
+          "name": "Africa",
+          "terrain": "hills",
+          "labelAt": [
+            13,
+            7
+          ],
+          "summary": "5 hexes, mostly hills. The rainforest on the equator, savanna either side, and a coast with few deep harbours.",
+          "learn": "The rainforest on the equator, savanna either side, and a coast with few deep harbours."
+        },
+        {
+          "id": "southern-africa",
+          "name": "Southern Africa",
+          "terrain": "hills",
+          "labelAt": [
+            14,
+            9
+          ],
+          "summary": "3 hexes, mostly hills. High plateau ending in the Cape, the corner every ship between Europe and India had to round.",
+          "learn": "High plateau ending in the Cape, the corner every ship between Europe and India had to round."
+        },
+        {
+          "id": "north-america",
+          "name": "North America",
+          "terrain": "forest",
+          "labelAt": [
+            5,
+            3
+          ],
+          "summary": "5 hexes, mostly forest. A continent with mountains down its west side and its great rivers draining south and east into the Atlantic.",
+          "learn": "A continent with mountains down its west side and its great rivers draining south and east into the Atlantic."
+        },
+        {
+          "id": "arctic-america",
+          "name": "The Canadian North",
+          "terrain": "hills",
+          "labelAt": [
+            5,
+            1
+          ],
+          "summary": "12 hexes, mostly hills. Tundra and ice. The Northwest Passage through it was searched for for three hundred years.",
+          "learn": "Tundra and ice. The Northwest Passage through it was searched for for three hundred years."
+        },
+        {
+          "id": "greenland",
+          "name": "Greenland",
+          "terrain": "mountain",
+          "labelAt": [
+            9,
+            0
+          ],
+          "summary": "7 hexes, mostly mountain. An island almost all ice: the ice sheet on it is three kilometres thick.",
+          "learn": "An island almost all ice: the ice sheet on it is three kilometres thick."
+        },
+        {
+          "id": "central-america",
+          "name": "Mexico",
+          "terrain": "mountain",
+          "labelAt": [
+            5,
+            4
+          ],
+          "summary": "2 hexes, mostly mountain. The narrow land between two oceans.",
+          "learn": "The narrow land between two oceans."
+        },
+        {
+          "id": "amazonia",
+          "name": "Amazonia",
+          "terrain": "hills",
+          "labelAt": [
+            8,
+            8
+          ],
+          "summary": "6 hexes, mostly hills. The largest rainforest on Earth, drained by the largest river.",
+          "learn": "The largest rainforest on Earth, drained by the largest river."
+        },
+        {
+          "id": "andes",
+          "name": "The Andes",
+          "terrain": "mountain",
+          "labelAt": [
+            7,
+            9
+          ],
+          "summary": "4 hexes, mostly mountain. The longest mountain chain above the sea, on the edge where the Pacific floor dives under South America.",
+          "learn": "The longest mountain chain above the sea, on the edge where the Pacific floor dives under South America."
+        },
+        {
+          "id": "australia",
+          "name": "Australia",
+          "terrain": "desert",
+          "labelAt": [
+            20,
+            9
+          ],
+          "summary": "9 hexes, mostly desert. A continent mostly desert, under the same high pressure belt as the Sahara, with its people on the wetter coasts.",
+          "learn": "A continent mostly desert, under the same high pressure belt as the Sahara, with its people on the wetter coasts."
+        },
+        {
+          "id": "antarctica",
+          "name": "Antarctica",
+          "terrain": "mountain",
+          "labelAt": [
+            15,
+            13
+          ],
+          "summary": "2 hexes, mostly mountain. A continent under ice. Nothing on the board lives here.",
+          "learn": "A continent under ice. Nothing on the board lives here."
+        },
+        {
+          "id": "north-atlantic",
+          "name": "North Atlantic",
+          "terrain": "deep-water",
+          "labelAt": [
+            9,
+            4
+          ],
+          "summary": "Open water. Its winds go round it clockwise: trade winds south of thirty degrees, westerlies north of it."
+        },
+        {
+          "id": "south-atlantic",
+          "name": "South Atlantic",
+          "terrain": "deep-water",
+          "labelAt": [
+            11,
+            10
+          ],
+          "summary": "Open water. Its winds go round it anticlockwise, so a ship bound for the Cape swings out towards Brazil first."
+        },
+        {
+          "id": "north-pacific",
+          "name": "North Pacific",
+          "terrain": "deep-water",
+          "labelAt": [
+            2,
+            4
+          ],
+          "summary": "Open water. The widest ocean. A ship bound west rides the trade winds; bound east it goes north to find the westerlies."
+        },
+        {
+          "id": "south-pacific",
+          "name": "South Pacific",
+          "terrain": "deep-water",
+          "labelAt": [
+            4,
+            10
+          ],
+          "summary": "Open water."
+        },
+        {
+          "id": "indian-ocean",
+          "name": "Indian Ocean",
+          "terrain": "deep-water",
+          "labelAt": [
+            17,
+            10
+          ],
+          "summary": "Open water. The ocean of the monsoon: the wind blows one way in summer and the other way in winter, so a trader went out and came back on schedule."
+        },
+        {
+          "id": "southern-ocean",
+          "name": "Southern Ocean",
+          "terrain": "shallow-water",
+          "labelAt": [
+            16,
+            12
+          ],
+          "summary": "Open water. The only ocean that goes all the way round the world with no land in the way, so its westerlies never stop."
+        },
+        {
+          "id": "arctic-ocean",
+          "name": "Arctic Ocean",
+          "terrain": "shallow-water",
+          "labelAt": [
+            2,
+            0
+          ],
+          "summary": "Open water."
+        }
+      ],
+      "settlements": [
+        {
+          "id": "london",
+          "name": "London",
+          "col": 12,
+          "row": 2,
+          "rank": "city",
+          "harbour": true,
+          "note": "The river port at the head of the North Sea, and the counting house of half the world's shipping."
+        },
+        {
+          "id": "lisbon",
+          "name": "Lisbon",
+          "col": 11,
+          "row": 3,
+          "rank": "city",
+          "harbour": true,
+          "afloat": true,
+          "note": "Where the ocean voyages of the 1400s set out: the first port on the trade winds south."
+        },
+        {
+          "id": "st-petersburg",
+          "name": "St Petersburg",
+          "col": 14,
+          "row": 2,
+          "rank": "town",
+          "harbour": true,
+          "note": "Built at the head of the Baltic to be a window onto the sea."
+        },
+        {
+          "id": "bergen",
+          "name": "Bergen",
+          "col": 12,
+          "row": 1,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true,
+          "note": "The North Sea port of the fish trade: dried cod went south and grain came back."
+        },
+        {
+          "id": "dakar",
+          "name": "Dakar",
+          "col": 11,
+          "row": 6,
+          "rank": "town",
+          "harbour": true,
+          "note": "The westernmost point of Africa, where a ship bound south leaves the coast for the open trade winds."
+        },
+        {
+          "id": "lagos",
+          "name": "Lagos",
+          "col": 12,
+          "row": 6,
+          "rank": "town",
+          "harbour": true
+        },
+        {
+          "id": "luanda",
+          "name": "Luanda",
+          "col": 13,
+          "row": 8,
+          "rank": "town",
+          "harbour": true
+        },
+        {
+          "id": "cape-town",
+          "name": "Cape Town",
+          "col": 13,
+          "row": 10,
+          "rank": "city",
+          "harbour": true,
+          "afloat": true,
+          "note": "The tavern of the seas: every ship between Europe and the Indian Ocean took on water here."
+        },
+        {
+          "id": "zanzibar",
+          "name": "Zanzibar",
+          "col": 14,
+          "row": 7,
+          "rank": "town",
+          "harbour": true,
+          "note": "An island port of the monsoon trade: cloves, ivory and the dhows from Arabia and India."
+        },
+        {
+          "id": "aden",
+          "name": "Aden",
+          "col": 15,
+          "row": 6,
+          "rank": "town",
+          "harbour": true,
+          "note": "Guards the mouth of the Red Sea."
+        },
+        {
+          "id": "muscat",
+          "name": "Muscat",
+          "col": 15,
+          "row": 5,
+          "rank": "town",
+          "harbour": true,
+          "note": "The Gulf of Oman port the monsoon carried to India and back."
+        },
+        {
+          "id": "mumbai",
+          "name": "Mumbai",
+          "col": 16,
+          "row": 5,
+          "rank": "city",
+          "harbour": true,
+          "note": "India's great west-coast harbour, at the end of the monsoon crossing from Arabia."
+        },
+        {
+          "id": "colombo",
+          "name": "Colombo",
+          "col": 17,
+          "row": 6,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true,
+          "note": "The cinnamon island at the turning point of every voyage round India."
+        },
+        {
+          "id": "kolkata",
+          "name": "Kolkata",
+          "col": 17,
+          "row": 5,
+          "rank": "town",
+          "harbour": true,
+          "note": "Up a river of the Ganges delta; the port of the whole Ganges plain."
+        },
+        {
+          "id": "singapore",
+          "name": "Singapore",
+          "col": 18,
+          "row": 7,
+          "rank": "city",
+          "harbour": true,
+          "afloat": true,
+          "note": "Sits on the Strait of Malacca, the narrow gate between the Indian Ocean and the China Sea."
+        },
+        {
+          "id": "manila",
+          "name": "Manila",
+          "col": 20,
+          "row": 6,
+          "rank": "city",
+          "harbour": true,
+          "afloat": true,
+          "note": "Where the galleons from Mexico unloaded silver for Chinese silk."
+        },
+        {
+          "id": "guangzhou",
+          "name": "Guangzhou",
+          "col": 19,
+          "row": 5,
+          "rank": "city",
+          "harbour": true,
+          "note": "Canton to the old traders: for a century the only Chinese port open to them."
+        },
+        {
+          "id": "shanghai",
+          "name": "Shanghai",
+          "col": 20,
+          "row": 4,
+          "rank": "city",
+          "harbour": true,
+          "note": "At the mouth of the Yangtze, the river that carries a third of China's people."
+        },
+        {
+          "id": "nagasaki",
+          "name": "Nagasaki",
+          "col": 21,
+          "row": 4,
+          "rank": "town",
+          "harbour": true,
+          "note": "For two hundred years Japan's one door to the outside world."
+        },
+        {
+          "id": "sydney",
+          "name": "Sydney",
+          "col": 22,
+          "row": 10,
+          "rank": "city",
+          "harbour": true,
+          "note": "The harbour at the end of the clipper route, fourteen thousand miles from London."
+        },
+        {
+          "id": "perth",
+          "name": "Perth",
+          "col": 20,
+          "row": 10,
+          "rank": "town",
+          "harbour": true,
+          "note": "Fremantle, the first landfall after the Roaring Forties carry a ship across the Indian Ocean."
+        },
+        {
+          "id": "auckland",
+          "name": "Auckland",
+          "col": 0,
+          "row": 10,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true
+        },
+        {
+          "id": "honolulu",
+          "name": "Honolulu",
+          "col": 1,
+          "row": 5,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true,
+          "note": "The only harbour in the middle of the North Pacific: every crossing stopped here for water."
+        },
+        {
+          "id": "papeete",
+          "name": "Papeete",
+          "col": 2,
+          "row": 8,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true,
+          "note": "Tahiti: an island harbour of the South Pacific, three thousand miles from any continent."
+        },
+        {
+          "id": "san-francisco",
+          "name": "San Francisco",
+          "col": 4,
+          "row": 4,
+          "rank": "city",
+          "harbour": true,
+          "afloat": true,
+          "note": "A gold-rush harbour, reached from New York round Cape Horn in a hundred days."
+        },
+        {
+          "id": "acapulco",
+          "name": "Acapulco",
+          "col": 5,
+          "row": 5,
+          "rank": "town",
+          "harbour": true,
+          "note": "The Pacific end of New Spain, where the Manila galleon came home."
+        },
+        {
+          "id": "callao",
+          "name": "Callao",
+          "col": 7,
+          "row": 8,
+          "rank": "town",
+          "harbour": true,
+          "note": "The port of Lima, where the silver of Peru went to sea."
+        },
+        {
+          "id": "valparaiso",
+          "name": "Valparaíso",
+          "col": 7,
+          "row": 10,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true,
+          "note": "The first harbour after Cape Horn, for a ship bound north."
+        },
+        {
+          "id": "buenos-aires",
+          "name": "Buenos Aires",
+          "col": 8,
+          "row": 10,
+          "rank": "city",
+          "harbour": true,
+          "note": "At the mouth of the River Plate, the outlet of half a continent."
+        },
+        {
+          "id": "rio",
+          "name": "Rio de Janeiro",
+          "col": 9,
+          "row": 9,
+          "rank": "city",
+          "harbour": true,
+          "afloat": true,
+          "note": "A bay so big a whole fleet could anchor in it out of the swell."
+        },
+        {
+          "id": "salvador",
+          "name": "Salvador",
+          "col": 9,
+          "row": 8,
+          "rank": "town",
+          "harbour": true,
+          "note": "Where the trade winds bring a ship from Africa straight to Brazil."
+        },
+        {
+          "id": "cartagena",
+          "name": "Cartagena",
+          "col": 7,
+          "row": 6,
+          "rank": "town",
+          "harbour": true,
+          "note": "The fortress port of the Spanish Main."
+        },
+        {
+          "id": "havana",
+          "name": "Havana",
+          "col": 6,
+          "row": 5,
+          "rank": "city",
+          "harbour": true,
+          "afloat": true,
+          "note": "Where the treasure fleets gathered to ride the Gulf Stream home."
+        },
+        {
+          "id": "new-orleans",
+          "name": "New Orleans",
+          "col": 6,
+          "row": 4,
+          "rank": "town",
+          "harbour": true,
+          "note": "At the mouth of the Mississippi; the outlet of the middle of North America."
+        },
+        {
+          "id": "new-york",
+          "name": "New York",
+          "col": 7,
+          "row": 3,
+          "rank": "city",
+          "harbour": true,
+          "note": "The deep harbour at the mouth of the Hudson, and the busiest port of the Americas."
+        },
+        {
+          "id": "reykjavik",
+          "name": "Reykjavík",
+          "col": 10,
+          "row": 1,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true,
+          "note": "Iceland: a harbour on the ridge where the Atlantic floor is being pulled apart."
+        },
+        {
+          "id": "vladivostok",
+          "name": "Vladivostok",
+          "col": 20,
+          "row": 3,
+          "rank": "town",
+          "harbour": true,
+          "note": "Russia's Pacific port, at the far end of a railway nine thousand kilometres long."
+        },
+        {
+          "id": "darwin",
+          "name": "Darwin",
+          "col": 21,
+          "row": 8,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true,
+          "note": "Australia's door to the Spice Islands, in the monsoon tropics."
+        },
+        {
+          "id": "anchorage",
+          "name": "Anchorage",
+          "col": 2,
+          "row": 2,
+          "rank": "town",
+          "harbour": true,
+          "afloat": true,
+          "note": "The far north of the Pacific, where the coast turns west towards Asia."
+        }
+      ],
+      "rivers": [],
+      "routes": {
+        "$comment": "Generated by tools/draw-map.mjs from the settlements and the water between them. A lane is the shortest walk a hull can make; a road only exists where two settlements share an island."
+      },
+      "atlas": {
+        "$comment": "GENERATED by tools/build-atlas.mjs from commission.atlas, data/earth/winds.json and the land - do not hand-edit. What a game plays on the Atlas: every port and what it opens onto, the wind in every hex, every trade lane and airship line as a chain of hexes with its cost in rounds. The rules that turn these into moves are docs/js/atlas.js; the wind rule they use is the EXAMPLE in data/earth/winds.json, not an adopted rule.",
+        "moves": {
+          "ship": 1,
+          "airship": 2,
+          "$note": "Atlas hexes a round. One clock: the game is still 24 rounds, and a voyage takes several of them while the towns carry on."
+        },
+        "boards": [
+          {
+            "id": "earth-mediterranean",
+            "name": "The Mediterranean",
+            "bounds": {
+              "west": -11.4,
+              "east": 43.4,
+              "north": 50.6,
+              "south": 21.4
+            }
+          }
+        ],
+        "ports": [
+          {
+            "id": "london",
+            "name": "London",
+            "hex": [
+              12,
+              2
+            ],
+            "lat": 51.5,
+            "lon": -0.1,
+            "kind": "abstract"
+          },
+          {
+            "id": "lisbon",
+            "name": "Lisbon",
+            "hex": [
+              11,
+              3
+            ],
+            "lat": 38.72,
+            "lon": -9.14,
+            "kind": "board",
+            "board": "earth-mediterranean",
+            "afloat": true
+          },
+          {
+            "id": "st-petersburg",
+            "name": "St Petersburg",
+            "hex": [
+              14,
+              2
+            ],
+            "lat": 59.93,
+            "lon": 30.3,
+            "kind": "abstract"
+          },
+          {
+            "id": "bergen",
+            "name": "Bergen",
+            "hex": [
+              12,
+              1
+            ],
+            "lat": 60.39,
+            "lon": 5.32,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "dakar",
+            "name": "Dakar",
+            "hex": [
+              11,
+              6
+            ],
+            "lat": 14.69,
+            "lon": -17.44,
+            "kind": "abstract"
+          },
+          {
+            "id": "lagos",
+            "name": "Lagos",
+            "hex": [
+              12,
+              6
+            ],
+            "lat": 6.45,
+            "lon": 3.39,
+            "kind": "abstract"
+          },
+          {
+            "id": "luanda",
+            "name": "Luanda",
+            "hex": [
+              13,
+              8
+            ],
+            "lat": -8.84,
+            "lon": 13.23,
+            "kind": "abstract"
+          },
+          {
+            "id": "cape-town",
+            "name": "Cape Town",
+            "hex": [
+              13,
+              10
+            ],
+            "lat": -33.92,
+            "lon": 18.42,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "zanzibar",
+            "name": "Zanzibar",
+            "hex": [
+              14,
+              7
+            ],
+            "lat": -6.16,
+            "lon": 39.19,
+            "kind": "abstract"
+          },
+          {
+            "id": "aden",
+            "name": "Aden",
+            "hex": [
+              15,
+              6
+            ],
+            "lat": 12.8,
+            "lon": 45.03,
+            "kind": "abstract"
+          },
+          {
+            "id": "muscat",
+            "name": "Muscat",
+            "hex": [
+              15,
+              5
+            ],
+            "lat": 23.6,
+            "lon": 58.5,
+            "kind": "abstract"
+          },
+          {
+            "id": "mumbai",
+            "name": "Mumbai",
+            "hex": [
+              16,
+              5
+            ],
+            "lat": 18.94,
+            "lon": 72.84,
+            "kind": "abstract"
+          },
+          {
+            "id": "colombo",
+            "name": "Colombo",
+            "hex": [
+              17,
+              6
+            ],
+            "lat": 6.93,
+            "lon": 79.85,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "kolkata",
+            "name": "Kolkata",
+            "hex": [
+              17,
+              5
+            ],
+            "lat": 22.57,
+            "lon": 88.36,
+            "kind": "abstract"
+          },
+          {
+            "id": "singapore",
+            "name": "Singapore",
+            "hex": [
+              18,
+              7
+            ],
+            "lat": 1.29,
+            "lon": 103.85,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "manila",
+            "name": "Manila",
+            "hex": [
+              20,
+              6
+            ],
+            "lat": 14.6,
+            "lon": 120.98,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "guangzhou",
+            "name": "Guangzhou",
+            "hex": [
+              19,
+              5
+            ],
+            "lat": 23.13,
+            "lon": 113.26,
+            "kind": "abstract"
+          },
+          {
+            "id": "shanghai",
+            "name": "Shanghai",
+            "hex": [
+              20,
+              4
+            ],
+            "lat": 31.23,
+            "lon": 121.47,
+            "kind": "abstract"
+          },
+          {
+            "id": "nagasaki",
+            "name": "Nagasaki",
+            "hex": [
+              21,
+              4
+            ],
+            "lat": 32.75,
+            "lon": 129.87,
+            "kind": "abstract"
+          },
+          {
+            "id": "sydney",
+            "name": "Sydney",
+            "hex": [
+              22,
+              10
+            ],
+            "lat": -33.86,
+            "lon": 151.21,
+            "kind": "abstract"
+          },
+          {
+            "id": "perth",
+            "name": "Perth",
+            "hex": [
+              20,
+              10
+            ],
+            "lat": -32.06,
+            "lon": 115.74,
+            "kind": "abstract"
+          },
+          {
+            "id": "auckland",
+            "name": "Auckland",
+            "hex": [
+              0,
+              10
+            ],
+            "lat": -36.85,
+            "lon": 174.76,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "honolulu",
+            "name": "Honolulu",
+            "hex": [
+              1,
+              5
+            ],
+            "lat": 21.31,
+            "lon": -157.86,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "papeete",
+            "name": "Papeete",
+            "hex": [
+              2,
+              8
+            ],
+            "lat": -17.53,
+            "lon": -149.57,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "san-francisco",
+            "name": "San Francisco",
+            "hex": [
+              4,
+              4
+            ],
+            "lat": 37.77,
+            "lon": -122.42,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "acapulco",
+            "name": "Acapulco",
+            "hex": [
+              5,
+              5
+            ],
+            "lat": 16.85,
+            "lon": -99.88,
+            "kind": "abstract"
+          },
+          {
+            "id": "callao",
+            "name": "Callao",
+            "hex": [
+              7,
+              8
+            ],
+            "lat": -12.05,
+            "lon": -77.15,
+            "kind": "abstract"
+          },
+          {
+            "id": "valparaiso",
+            "name": "Valparaíso",
+            "hex": [
+              7,
+              10
+            ],
+            "lat": -33.05,
+            "lon": -71.62,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "buenos-aires",
+            "name": "Buenos Aires",
+            "hex": [
+              8,
+              10
+            ],
+            "lat": -34.6,
+            "lon": -58.4,
+            "kind": "abstract"
+          },
+          {
+            "id": "rio",
+            "name": "Rio de Janeiro",
+            "hex": [
+              9,
+              9
+            ],
+            "lat": -22.9,
+            "lon": -43.17,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "salvador",
+            "name": "Salvador",
+            "hex": [
+              9,
+              8
+            ],
+            "lat": -12.97,
+            "lon": -38.5,
+            "kind": "abstract"
+          },
+          {
+            "id": "cartagena",
+            "name": "Cartagena",
+            "hex": [
+              7,
+              6
+            ],
+            "lat": 10.4,
+            "lon": -75.5,
+            "kind": "abstract"
+          },
+          {
+            "id": "havana",
+            "name": "Havana",
+            "hex": [
+              6,
+              5
+            ],
+            "lat": 23.13,
+            "lon": -82.38,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "new-orleans",
+            "name": "New Orleans",
+            "hex": [
+              6,
+              4
+            ],
+            "lat": 29.95,
+            "lon": -90.07,
+            "kind": "abstract"
+          },
+          {
+            "id": "new-york",
+            "name": "New York",
+            "hex": [
+              7,
+              3
+            ],
+            "lat": 40.7,
+            "lon": -74,
+            "kind": "abstract"
+          },
+          {
+            "id": "reykjavik",
+            "name": "Reykjavík",
+            "hex": [
+              10,
+              1
+            ],
+            "lat": 64.15,
+            "lon": -21.94,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "vladivostok",
+            "name": "Vladivostok",
+            "hex": [
+              20,
+              3
+            ],
+            "lat": 43.12,
+            "lon": 131.9,
+            "kind": "abstract"
+          },
+          {
+            "id": "darwin",
+            "name": "Darwin",
+            "hex": [
+              21,
+              8
+            ],
+            "lat": -12.46,
+            "lon": 130.84,
+            "kind": "abstract",
+            "afloat": true
+          },
+          {
+            "id": "anchorage",
+            "name": "Anchorage",
+            "hex": [
+              2,
+              2
+            ],
+            "lat": 61.22,
+            "lon": -149.9,
+            "kind": "abstract",
+            "afloat": true
+          }
+        ],
+        "winds": {
+          "$comment": "One per hex: [col, row, bearing the wind blows TOWARD (compass degrees, north up the board), speed m/s, belt]. Averaged over the hex's sea; a hex with no sea takes the belt's own wind. Calm below data/earth/winds.json calmBelowMs.",
+          "model": "data/earth/winds.json",
+          "rule": {
+            "calmBelowMs": 2.5,
+            "fullStrengthMs": 7,
+            "exampleRule": {
+              "$comment": "AN EXAMPLE, NOT A RULE YET. What a step of one Atlas hex costs a sailing ship, in rounds, by the wind in the hex it leaves. It is here so the lanes can be sailed and the digital game can try it; no rules chapter prints it until it is adopted.",
+              "status": "example",
+              "withWind": 0.7,
+              "across": 1,
+              "againstWind": 1.5,
+              "calm": 1.4,
+              "how": "Take the angle between the way the ship steps and the way the wind blows. Straight downwind costs withWind, square across costs across, dead into it costs againstWind, smoothly between; a wind weaker than fullStrengthMs moves the cost only that share of the way from across. A calm hex costs calm whichever way the ship goes."
+            }
+          },
+          "hexes": [
+            [
+              0,
+              0,
+              275,
+              2.7,
+              "polar-easterlies-n"
+            ],
+            [
+              1,
+              0,
+              264,
+              2.5,
+              "polar-easterlies-n"
+            ],
+            [
+              2,
+              0,
+              251,
+              2.4,
+              "polar-easterlies-n"
+            ],
+            [
+              3,
+              0,
+              230,
+              2.6,
+              "polar-easterlies-n"
+            ],
+            [
+              4,
+              0,
+              225,
+              2.9,
+              "polar-easterlies-n"
+            ],
+            [
+              5,
+              0,
+              225,
+              2.2,
+              "polar-easterlies-n"
+            ],
+            [
+              6,
+              0,
+              223,
+              2.3,
+              "polar-easterlies-n"
+            ],
+            [
+              7,
+              0,
+              276,
+              0.9,
+              "polar-easterlies-n"
+            ],
+            [
+              8,
+              0,
+              265,
+              1.3,
+              "polar-easterlies-n"
+            ],
+            [
+              9,
+              0,
+              232,
+              5.4,
+              "polar-easterlies-n"
+            ],
+            [
+              10,
+              0,
+              296,
+              5.2,
+              "polar-easterlies-n"
+            ],
+            [
+              11,
+              0,
+              342,
+              2.6,
+              "polar-easterlies-n"
+            ],
+            [
+              12,
+              0,
+              294,
+              1.2,
+              "polar-easterlies-n"
+            ],
+            [
+              13,
+              0,
+              232,
+              1.9,
+              "polar-easterlies-n"
+            ],
+            [
+              14,
+              0,
+              320,
+              2.3,
+              "polar-easterlies-n"
+            ],
+            [
+              15,
+              0,
+              221,
+              2,
+              "polar-easterlies-n"
+            ],
+            [
+              16,
+              0,
+              264,
+              1.3,
+              "polar-easterlies-n"
+            ],
+            [
+              17,
+              0,
+              301,
+              1.7,
+              "polar-easterlies-n"
+            ],
+            [
+              18,
+              0,
+              223,
+              2.7,
+              "polar-easterlies-n"
+            ],
+            [
+              19,
+              0,
+              318,
+              3.7,
+              "polar-easterlies-n"
+            ],
+            [
+              20,
+              0,
+              315,
+              2.9,
+              "polar-easterlies-n"
+            ],
+            [
+              21,
+              0,
+              266,
+              2.2,
+              "polar-easterlies-n"
+            ],
+            [
+              22,
+              0,
+              295,
+              2.7,
+              "polar-easterlies-n"
+            ],
+            [
+              23,
+              0,
+              297,
+              2.8,
+              "polar-easterlies-n"
+            ],
+            [
+              0,
+              1,
+              288,
+              0.5,
+              "polar-easterlies-n"
+            ],
+            [
+              1,
+              1,
+              296,
+              0.4,
+              "polar-easterlies-n"
+            ],
+            [
+              2,
+              1,
+              275,
+              0.6,
+              "polar-easterlies-n"
+            ],
+            [
+              3,
+              1,
+              233,
+              0.2,
+              "polar-easterlies-n"
+            ],
+            [
+              4,
+              1,
+              321,
+              0.1,
+              "polar-easterlies-n"
+            ],
+            [
+              5,
+              1,
+              216,
+              0.4,
+              "polar-easterlies-n"
+            ],
+            [
+              6,
+              1,
+              288,
+              0.4,
+              "polar-easterlies-n"
+            ],
+            [
+              7,
+              1,
+              210,
+              0.5,
+              "polar-easterlies-n"
+            ],
+            [
+              8,
+              1,
+              321,
+              0.9,
+              "polar-easterlies-n"
+            ],
+            [
+              9,
+              1,
+              216,
+              1.4,
+              "polar-easterlies-n"
+            ],
+            [
+              10,
+              1,
+              296,
+              0.7,
+              "polar-easterlies-n"
+            ],
+            [
+              11,
+              1,
+              228,
+              0.5,
+              "polar-easterlies-n"
+            ],
+            [
+              12,
+              1,
+              343,
+              0.9,
+              "polar-easterlies-n"
+            ],
+            [
+              13,
+              1,
+              282,
+              0.3,
+              "polar-easterlies-n"
+            ],
+            [
+              14,
+              1,
+              267,
+              0.4,
+              "polar-easterlies-n"
+            ],
+            [
+              15,
+              1,
+              280,
+              0.1,
+              "polar-easterlies-n"
+            ],
+            [
+              16,
+              1,
+              239,
+              0.2,
+              "polar-easterlies-n"
+            ],
+            [
+              17,
+              1,
+              0,
+              0,
+              "polar-easterlies-n"
+            ],
+            [
+              18,
+              1,
+              270,
+              1.6,
+              "polar-easterlies-n"
+            ],
+            [
+              19,
+              1,
+              270,
+              1.6,
+              "polar-easterlies-n"
+            ],
+            [
+              20,
+              1,
+              307,
+              0.2,
+              "polar-easterlies-n"
+            ],
+            [
+              21,
+              1,
+              221,
+              0.8,
+              "polar-easterlies-n"
+            ],
+            [
+              22,
+              1,
+              264,
+              0.5,
+              "polar-easterlies-n"
+            ],
+            [
+              23,
+              1,
+              239,
+              0.8,
+              "polar-easterlies-n"
+            ],
+            [
+              0,
+              2,
+              99,
+              2.1,
+              "westerlies-n"
+            ],
+            [
+              1,
+              2,
+              78,
+              1.5,
+              "westerlies-n"
+            ],
+            [
+              2,
+              2,
+              90,
+              2,
+              "westerlies-n"
+            ],
+            [
+              3,
+              2,
+              102,
+              1.8,
+              "westerlies-n"
+            ],
+            [
+              4,
+              2,
+              90,
+              4.1,
+              "westerlies-n"
+            ],
+            [
+              5,
+              2,
+              90,
+              4.1,
+              "westerlies-n"
+            ],
+            [
+              6,
+              2,
+              133,
+              0.9,
+              "westerlies-n"
+            ],
+            [
+              7,
+              2,
+              29,
+              0.7,
+              "westerlies-n"
+            ],
+            [
+              8,
+              2,
+              120,
+              0.9,
+              "westerlies-n"
+            ],
+            [
+              9,
+              2,
+              78,
+              1.6,
+              "westerlies-n"
+            ],
+            [
+              10,
+              2,
+              92,
+              2.6,
+              "westerlies-n"
+            ],
+            [
+              11,
+              2,
+              98,
+              1.6,
+              "westerlies-n"
+            ],
+            [
+              12,
+              2,
+              93,
+              0.4,
+              "westerlies-n"
+            ],
+            [
+              13,
+              2,
+              109,
+              0.1,
+              "westerlies-n"
+            ],
+            [
+              14,
+              2,
+              5,
+              0.3,
+              "westerlies-n"
+            ],
+            [
+              15,
+              2,
+              90,
+              4.1,
+              "westerlies-n"
+            ],
+            [
+              16,
+              2,
+              90,
+              4.1,
+              "westerlies-n"
+            ],
+            [
+              17,
+              2,
+              90,
+              4.1,
+              "westerlies-n"
+            ],
+            [
+              18,
+              2,
+              90,
+              4.1,
+              "westerlies-n"
+            ],
+            [
+              19,
+              2,
+              90,
+              4.1,
+              "westerlies-n"
+            ],
+            [
+              20,
+              2,
+              90,
+              4.1,
+              "westerlies-n"
+            ],
+            [
+              21,
+              2,
+              162,
+              0.4,
+              "westerlies-n"
+            ],
+            [
+              22,
+              2,
+              86,
+              0.8,
+              "westerlies-n"
+            ],
+            [
+              23,
+              2,
+              77,
+              1.7,
+              "westerlies-n"
+            ],
+            [
+              0,
+              3,
+              95,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              1,
+              3,
+              85,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              2,
+              3,
+              102,
+              6.2,
+              "westerlies-n"
+            ],
+            [
+              3,
+              3,
+              146,
+              6.2,
+              "westerlies-n"
+            ],
+            [
+              4,
+              3,
+              90,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              5,
+              3,
+              90,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              6,
+              3,
+              90,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              7,
+              3,
+              66,
+              6.8,
+              "westerlies-n"
+            ],
+            [
+              8,
+              3,
+              70,
+              6.2,
+              "westerlies-n"
+            ],
+            [
+              9,
+              3,
+              76,
+              6,
+              "westerlies-n"
+            ],
+            [
+              10,
+              3,
+              116,
+              5.3,
+              "westerlies-n"
+            ],
+            [
+              11,
+              3,
+              168,
+              3.8,
+              "westerlies-n"
+            ],
+            [
+              12,
+              3,
+              86,
+              2.2,
+              "westerlies-n"
+            ],
+            [
+              13,
+              3,
+              71,
+              1.8,
+              "westerlies-n"
+            ],
+            [
+              14,
+              3,
+              168,
+              1,
+              "westerlies-n"
+            ],
+            [
+              15,
+              3,
+              102,
+              0.5,
+              "westerlies-n"
+            ],
+            [
+              16,
+              3,
+              90,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              17,
+              3,
+              90,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              18,
+              3,
+              90,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              19,
+              3,
+              90,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              20,
+              3,
+              51,
+              7,
+              "westerlies-n"
+            ],
+            [
+              21,
+              3,
+              50,
+              3.2,
+              "westerlies-n"
+            ],
+            [
+              22,
+              3,
+              70,
+              6.1,
+              "westerlies-n"
+            ],
+            [
+              23,
+              3,
+              83,
+              6.3,
+              "westerlies-n"
+            ],
+            [
+              0,
+              4,
+              99,
+              2.1,
+              "westerlies-n"
+            ],
+            [
+              1,
+              4,
+              177,
+              1.3,
+              "westerlies-n"
+            ],
+            [
+              2,
+              4,
+              326,
+              1.2,
+              "westerlies-n"
+            ],
+            [
+              3,
+              4,
+              136,
+              4.4,
+              "westerlies-n"
+            ],
+            [
+              4,
+              4,
+              141,
+              9.4,
+              "westerlies-n"
+            ],
+            [
+              5,
+              4,
+              90,
+              1.7,
+              "westerlies-n"
+            ],
+            [
+              6,
+              4,
+              87,
+              10.9,
+              "westerlies-n"
+            ],
+            [
+              7,
+              4,
+              24,
+              8.3,
+              "westerlies-n"
+            ],
+            [
+              8,
+              4,
+              61,
+              3.9,
+              "westerlies-n"
+            ],
+            [
+              9,
+              4,
+              76,
+              3.3,
+              "westerlies-n"
+            ],
+            [
+              10,
+              4,
+              165,
+              2.5,
+              "westerlies-n"
+            ],
+            [
+              11,
+              4,
+              199,
+              6.6,
+              "westerlies-n"
+            ],
+            [
+              12,
+              4,
+              270,
+              2.2,
+              "westerlies-n"
+            ],
+            [
+              13,
+              4,
+              291,
+              1.2,
+              "westerlies-n"
+            ],
+            [
+              14,
+              4,
+              179,
+              0.8,
+              "westerlies-n"
+            ],
+            [
+              15,
+              4,
+              345,
+              2.6,
+              "westerlies-n"
+            ],
+            [
+              16,
+              4,
+              232,
+              10.8,
+              "westerlies-n"
+            ],
+            [
+              17,
+              4,
+              90,
+              1.7,
+              "westerlies-n"
+            ],
+            [
+              18,
+              4,
+              90,
+              1.7,
+              "westerlies-n"
+            ],
+            [
+              19,
+              4,
+              90,
+              1.7,
+              "westerlies-n"
+            ],
+            [
+              20,
+              4,
+              39,
+              4.4,
+              "westerlies-n"
+            ],
+            [
+              21,
+              4,
+              67,
+              5.1,
+              "westerlies-n"
+            ],
+            [
+              22,
+              4,
+              42,
+              5.8,
+              "westerlies-n"
+            ],
+            [
+              23,
+              4,
+              71,
+              2.8,
+              "westerlies-n"
+            ],
+            [
+              0,
+              5,
+              248,
+              4.9,
+              "trades-ne"
+            ],
+            [
+              1,
+              5,
+              257,
+              4.3,
+              "trades-ne"
+            ],
+            [
+              2,
+              5,
+              299,
+              5.1,
+              "trades-ne"
+            ],
+            [
+              3,
+              5,
+              233,
+              3.3,
+              "trades-ne"
+            ],
+            [
+              4,
+              5,
+              154,
+              4.8,
+              "trades-ne"
+            ],
+            [
+              5,
+              5,
+              327,
+              2.9,
+              "trades-ne"
+            ],
+            [
+              6,
+              5,
+              273,
+              1.8,
+              "trades-ne"
+            ],
+            [
+              7,
+              5,
+              302,
+              6.2,
+              "trades-ne"
+            ],
+            [
+              8,
+              5,
+              285,
+              5.7,
+              "trades-ne"
+            ],
+            [
+              9,
+              5,
+              261,
+              4.9,
+              "trades-ne"
+            ],
+            [
+              10,
+              5,
+              207,
+              6.4,
+              "trades-ne"
+            ],
+            [
+              11,
+              5,
+              270,
+              5.2,
+              "trades-ne"
+            ],
+            [
+              12,
+              5,
+              270,
+              5.2,
+              "trades-ne"
+            ],
+            [
+              13,
+              5,
+              270,
+              5.2,
+              "trades-ne"
+            ],
+            [
+              14,
+              5,
+              50,
+              0.3,
+              "trades-ne"
+            ],
+            [
+              15,
+              5,
+              29,
+              3.1,
+              "trades-ne"
+            ],
+            [
+              16,
+              5,
+              117,
+              3.4,
+              "trades-ne"
+            ],
+            [
+              17,
+              5,
+              50,
+              6.1,
+              "trades-ne"
+            ],
+            [
+              18,
+              5,
+              146,
+              5.8,
+              "trades-ne"
+            ],
+            [
+              19,
+              5,
+              58,
+              2.5,
+              "trades-ne"
+            ],
+            [
+              20,
+              5,
+              340,
+              4.4,
+              "trades-ne"
+            ],
+            [
+              21,
+              5,
+              299,
+              2.4,
+              "trades-ne"
+            ],
+            [
+              22,
+              5,
+              280,
+              4.4,
+              "trades-ne"
+            ],
+            [
+              23,
+              5,
+              269,
+              5,
+              "trades-ne"
+            ],
+            [
+              0,
+              6,
+              268,
+              4.7,
+              "trades-ne"
+            ],
+            [
+              1,
+              6,
+              258,
+              3.3,
+              "trades-ne"
+            ],
+            [
+              2,
+              6,
+              285,
+              2.6,
+              "trades-ne"
+            ],
+            [
+              3,
+              6,
+              272,
+              4.4,
+              "trades-ne"
+            ],
+            [
+              4,
+              6,
+              263,
+              3.7,
+              "trades-ne"
+            ],
+            [
+              5,
+              6,
+              230,
+              1.4,
+              "trades-ne"
+            ],
+            [
+              6,
+              6,
+              165,
+              0.6,
+              "trades-ne"
+            ],
+            [
+              7,
+              6,
+              277,
+              1.7,
+              "trades-ne"
+            ],
+            [
+              8,
+              6,
+              283,
+              4.5,
+              "trades-ne"
+            ],
+            [
+              9,
+              6,
+              277,
+              4.4,
+              "trades-ne"
+            ],
+            [
+              10,
+              6,
+              260,
+              4,
+              "trades-ne"
+            ],
+            [
+              11,
+              6,
+              203,
+              2.1,
+              "trades-ne"
+            ],
+            [
+              12,
+              6,
+              73,
+              0.5,
+              "trades-ne"
+            ],
+            [
+              13,
+              6,
+              270,
+              5,
+              "trades-ne"
+            ],
+            [
+              14,
+              6,
+              270,
+              5,
+              "trades-ne"
+            ],
+            [
+              15,
+              6,
+              333,
+              0.8,
+              "trades-ne"
+            ],
+            [
+              16,
+              6,
+              303,
+              1.8,
+              "trades-ne"
+            ],
+            [
+              17,
+              6,
+              210,
+              1.2,
+              "trades-ne"
+            ],
+            [
+              18,
+              6,
+              248,
+              1.3,
+              "trades-ne"
+            ],
+            [
+              19,
+              6,
+              335,
+              1.1,
+              "trades-ne"
+            ],
+            [
+              20,
+              6,
+              253,
+              1.6,
+              "trades-ne"
+            ],
+            [
+              21,
+              6,
+              287,
+              3.9,
+              "trades-ne"
+            ],
+            [
+              22,
+              6,
+              271,
+              4.7,
+              "trades-ne"
+            ],
+            [
+              23,
+              6,
+              272,
+              4.8,
+              "trades-ne"
+            ],
+            [
+              0,
+              7,
+              269,
+              1.2,
+              "doldrums"
+            ],
+            [
+              1,
+              7,
+              270,
+              1.2,
+              "doldrums"
+            ],
+            [
+              2,
+              7,
+              270,
+              1.3,
+              "doldrums"
+            ],
+            [
+              3,
+              7,
+              270,
+              1.3,
+              "doldrums"
+            ],
+            [
+              4,
+              7,
+              270,
+              1.2,
+              "doldrums"
+            ],
+            [
+              5,
+              7,
+              270,
+              1.1,
+              "doldrums"
+            ],
+            [
+              6,
+              7,
+              274,
+              0.5,
+              "doldrums"
+            ],
+            [
+              7,
+              7,
+              270,
+              1.3,
+              "doldrums"
+            ],
+            [
+              8,
+              7,
+              292,
+              0.6,
+              "doldrums"
+            ],
+            [
+              9,
+              7,
+              268,
+              0.6,
+              "doldrums"
+            ],
+            [
+              10,
+              7,
+              266,
+              0.9,
+              "doldrums"
+            ],
+            [
+              11,
+              7,
+              268,
+              0.6,
+              "doldrums"
+            ],
+            [
+              12,
+              7,
+              281,
+              0.5,
+              "doldrums"
+            ],
+            [
+              13,
+              7,
+              270,
+              1.3,
+              "doldrums"
+            ],
+            [
+              14,
+              7,
+              239,
+              0.4,
+              "doldrums"
+            ],
+            [
+              15,
+              7,
+              275,
+              0.7,
+              "doldrums"
+            ],
+            [
+              16,
+              7,
+              268,
+              1,
+              "doldrums"
+            ],
+            [
+              17,
+              7,
+              273,
+              0.7,
+              "doldrums"
+            ],
+            [
+              18,
+              7,
+              275,
+              0.5,
+              "doldrums"
+            ],
+            [
+              19,
+              7,
+              262,
+              0.3,
+              "doldrums"
+            ],
+            [
+              20,
+              7,
+              278,
+              0.3,
+              "doldrums"
+            ],
+            [
+              21,
+              7,
+              270,
+              0.6,
+              "doldrums"
+            ],
+            [
+              22,
+              7,
+              266,
+              0.7,
+              "doldrums"
+            ],
+            [
+              23,
+              7,
+              270,
+              1.1,
+              "doldrums"
+            ],
+            [
+              0,
+              8,
+              252,
+              1.2,
+              "trades-se"
+            ],
+            [
+              1,
+              8,
+              262,
+              4,
+              "trades-se"
+            ],
+            [
+              2,
+              8,
+              269,
+              4.8,
+              "trades-se"
+            ],
+            [
+              3,
+              8,
+              270,
+              4.9,
+              "trades-se"
+            ],
+            [
+              4,
+              8,
+              270,
+              4.9,
+              "trades-se"
+            ],
+            [
+              5,
+              8,
+              272,
+              4.7,
+              "trades-se"
+            ],
+            [
+              6,
+              8,
+              282,
+              4.1,
+              "trades-se"
+            ],
+            [
+              7,
+              8,
+              310,
+              4.6,
+              "trades-se"
+            ],
+            [
+              8,
+              8,
+              270,
+              4.9,
+              "trades-se"
+            ],
+            [
+              9,
+              8,
+              203,
+              4.6,
+              "trades-se"
+            ],
+            [
+              10,
+              8,
+              245,
+              3.7,
+              "trades-se"
+            ],
+            [
+              11,
+              8,
+              269,
+              4.6,
+              "trades-se"
+            ],
+            [
+              12,
+              8,
+              283,
+              3.7,
+              "trades-se"
+            ],
+            [
+              13,
+              8,
+              342,
+              2.7,
+              "trades-se"
+            ],
+            [
+              14,
+              8,
+              270,
+              4.9,
+              "trades-se"
+            ],
+            [
+              15,
+              8,
+              195,
+              0.6,
+              "trades-se"
+            ],
+            [
+              16,
+              8,
+              247,
+              2.8,
+              "trades-se"
+            ],
+            [
+              17,
+              8,
+              268,
+              4.5,
+              "trades-se"
+            ],
+            [
+              18,
+              8,
+              275,
+              4.5,
+              "trades-se"
+            ],
+            [
+              19,
+              8,
+              280,
+              4.1,
+              "trades-se"
+            ],
+            [
+              20,
+              8,
+              304,
+              1.5,
+              "trades-se"
+            ],
+            [
+              21,
+              8,
+              336,
+              0.3,
+              "trades-se"
+            ],
+            [
+              22,
+              8,
+              240,
+              2.2,
+              "trades-se"
+            ],
+            [
+              23,
+              8,
+              260,
+              2.2,
+              "trades-se"
+            ],
+            [
+              0,
+              9,
+              242,
+              5.9,
+              "trades-se"
+            ],
+            [
+              1,
+              9,
+              262,
+              4.9,
+              "trades-se"
+            ],
+            [
+              2,
+              9,
+              269,
+              5,
+              "trades-se"
+            ],
+            [
+              3,
+              9,
+              270,
+              5,
+              "trades-se"
+            ],
+            [
+              4,
+              9,
+              272,
+              5,
+              "trades-se"
+            ],
+            [
+              5,
+              9,
+              278,
+              4.9,
+              "trades-se"
+            ],
+            [
+              6,
+              9,
+              308,
+              5.3,
+              "trades-se"
+            ],
+            [
+              7,
+              9,
+              349,
+              8.5,
+              "trades-se"
+            ],
+            [
+              8,
+              9,
+              223,
+              10.8,
+              "trades-se"
+            ],
+            [
+              9,
+              9,
+              228,
+              7.6,
+              "trades-se"
+            ],
+            [
+              10,
+              9,
+              253,
+              5.1,
+              "trades-se"
+            ],
+            [
+              11,
+              9,
+              283,
+              4.8,
+              "trades-se"
+            ],
+            [
+              12,
+              9,
+              325,
+              6.8,
+              "trades-se"
+            ],
+            [
+              13,
+              9,
+              270,
+              5,
+              "trades-se"
+            ],
+            [
+              14,
+              9,
+              258,
+              4.1,
+              "trades-se"
+            ],
+            [
+              15,
+              9,
+              226,
+              5.7,
+              "trades-se"
+            ],
+            [
+              16,
+              9,
+              237,
+              4.9,
+              "trades-se"
+            ],
+            [
+              17,
+              9,
+              269,
+              4.8,
+              "trades-se"
+            ],
+            [
+              18,
+              9,
+              293,
+              4.6,
+              "trades-se"
+            ],
+            [
+              19,
+              9,
+              4,
+              5.6,
+              "trades-se"
+            ],
+            [
+              20,
+              9,
+              35,
+              6.9,
+              "trades-se"
+            ],
+            [
+              21,
+              9,
+              137,
+              5.3,
+              "trades-se"
+            ],
+            [
+              22,
+              9,
+              207,
+              1.8,
+              "trades-se"
+            ],
+            [
+              23,
+              9,
+              255,
+              4.3,
+              "trades-se"
+            ],
+            [
+              0,
+              10,
+              128,
+              6.6,
+              "horse-latitudes-s"
+            ],
+            [
+              1,
+              10,
+              126,
+              3.5,
+              "horse-latitudes-s"
+            ],
+            [
+              2,
+              10,
+              101,
+              2.5,
+              "horse-latitudes-s"
+            ],
+            [
+              3,
+              10,
+              92,
+              2.4,
+              "horse-latitudes-s"
+            ],
+            [
+              4,
+              10,
+              88,
+              2.4,
+              "horse-latitudes-s"
+            ],
+            [
+              5,
+              10,
+              79,
+              2.5,
+              "horse-latitudes-s"
+            ],
+            [
+              6,
+              10,
+              49,
+              3.5,
+              "horse-latitudes-s"
+            ],
+            [
+              7,
+              10,
+              17,
+              8.8,
+              "horse-latitudes-s"
+            ],
+            [
+              8,
+              10,
+              223,
+              8.5,
+              "horse-latitudes-s"
+            ],
+            [
+              9,
+              10,
+              202,
+              6.4,
+              "horse-latitudes-s"
+            ],
+            [
+              10,
+              10,
+              149,
+              1.9,
+              "horse-latitudes-s"
+            ],
+            [
+              11,
+              10,
+              93,
+              2.3,
+              "horse-latitudes-s"
+            ],
+            [
+              12,
+              10,
+              30,
+              2.7,
+              "horse-latitudes-s"
+            ],
+            [
+              13,
+              10,
+              336,
+              7.2,
+              "horse-latitudes-s"
+            ],
+            [
+              14,
+              10,
+              219,
+              7.5,
+              "horse-latitudes-s"
+            ],
+            [
+              15,
+              10,
+              254,
+              3.2,
+              "horse-latitudes-s"
+            ],
+            [
+              16,
+              10,
+              162,
+              1.2,
+              "horse-latitudes-s"
+            ],
+            [
+              17,
+              10,
+              101,
+              3.4,
+              "horse-latitudes-s"
+            ],
+            [
+              18,
+              10,
+              80,
+              2.5,
+              "horse-latitudes-s"
+            ],
+            [
+              19,
+              10,
+              6,
+              5,
+              "horse-latitudes-s"
+            ],
+            [
+              20,
+              10,
+              281,
+              6.1,
+              "horse-latitudes-s"
+            ],
+            [
+              21,
+              10,
+              302,
+              7,
+              "horse-latitudes-s"
+            ],
+            [
+              22,
+              10,
+              195,
+              9.5,
+              "horse-latitudes-s"
+            ],
+            [
+              23,
+              10,
+              43,
+              2.2,
+              "horse-latitudes-s"
+            ],
+            [
+              0,
+              11,
+              107,
+              6.5,
+              "roaring-forties"
+            ],
+            [
+              1,
+              11,
+              93,
+              9.2,
+              "roaring-forties"
+            ],
+            [
+              2,
+              11,
+              91,
+              9.9,
+              "roaring-forties"
+            ],
+            [
+              3,
+              11,
+              90,
+              9.9,
+              "roaring-forties"
+            ],
+            [
+              4,
+              11,
+              89,
+              9.8,
+              "roaring-forties"
+            ],
+            [
+              5,
+              11,
+              86,
+              8.9,
+              "roaring-forties"
+            ],
+            [
+              6,
+              11,
+              65,
+              5.9,
+              "roaring-forties"
+            ],
+            [
+              7,
+              11,
+              146,
+              1.9,
+              "roaring-forties"
+            ],
+            [
+              8,
+              11,
+              116,
+              4.1,
+              "roaring-forties"
+            ],
+            [
+              9,
+              11,
+              93,
+              7.4,
+              "roaring-forties"
+            ],
+            [
+              10,
+              11,
+              93,
+              8.8,
+              "roaring-forties"
+            ],
+            [
+              11,
+              11,
+              89,
+              9.3,
+              "roaring-forties"
+            ],
+            [
+              12,
+              11,
+              82,
+              7.7,
+              "roaring-forties"
+            ],
+            [
+              13,
+              11,
+              92,
+              5.1,
+              "roaring-forties"
+            ],
+            [
+              14,
+              11,
+              97,
+              7.4,
+              "roaring-forties"
+            ],
+            [
+              15,
+              11,
+              86,
+              8.1,
+              "roaring-forties"
+            ],
+            [
+              16,
+              11,
+              88,
+              6.7,
+              "roaring-forties"
+            ],
+            [
+              17,
+              11,
+              97,
+              8,
+              "roaring-forties"
+            ],
+            [
+              18,
+              11,
+              87,
+              8.6,
+              "roaring-forties"
+            ],
+            [
+              19,
+              11,
+              81,
+              5.6,
+              "roaring-forties"
+            ],
+            [
+              20,
+              11,
+              88,
+              5.4,
+              "roaring-forties"
+            ],
+            [
+              21,
+              11,
+              59,
+              2.7,
+              "roaring-forties"
+            ],
+            [
+              22,
+              11,
+              99,
+              5.1,
+              "roaring-forties"
+            ],
+            [
+              23,
+              11,
+              79,
+              3.1,
+              "roaring-forties"
+            ],
+            [
+              0,
+              12,
+              79,
+              8,
+              "polar-easterlies-s"
+            ],
+            [
+              1,
+              12,
+              85,
+              8.6,
+              "polar-easterlies-s"
+            ],
+            [
+              2,
+              12,
+              88,
+              9.1,
+              "polar-easterlies-s"
+            ],
+            [
+              3,
+              12,
+              92,
+              8.9,
+              "polar-easterlies-s"
+            ],
+            [
+              4,
+              12,
+              94,
+              8.1,
+              "polar-easterlies-s"
+            ],
+            [
+              5,
+              12,
+              94,
+              7.4,
+              "polar-easterlies-s"
+            ],
+            [
+              6,
+              12,
+              108,
+              7.9,
+              "polar-easterlies-s"
+            ],
+            [
+              7,
+              12,
+              122,
+              8.8,
+              "polar-easterlies-s"
+            ],
+            [
+              8,
+              12,
+              54,
+              4.2,
+              "polar-easterlies-s"
+            ],
+            [
+              9,
+              12,
+              108,
+              5.7,
+              "polar-easterlies-s"
+            ],
+            [
+              10,
+              12,
+              58,
+              7.3,
+              "polar-easterlies-s"
+            ],
+            [
+              11,
+              12,
+              80,
+              7.5,
+              "polar-easterlies-s"
+            ],
+            [
+              12,
+              12,
+              91,
+              7,
+              "polar-easterlies-s"
+            ],
+            [
+              13,
+              12,
+              92,
+              6.9,
+              "polar-easterlies-s"
+            ],
+            [
+              14,
+              12,
+              94,
+              6.1,
+              "polar-easterlies-s"
+            ],
+            [
+              15,
+              12,
+              102,
+              5.2,
+              "polar-easterlies-s"
+            ],
+            [
+              16,
+              12,
+              100,
+              5.6,
+              "polar-easterlies-s"
+            ],
+            [
+              17,
+              12,
+              78,
+              7,
+              "polar-easterlies-s"
+            ],
+            [
+              18,
+              12,
+              92,
+              4.9,
+              "polar-easterlies-s"
+            ],
+            [
+              19,
+              12,
+              87,
+              4.1,
+              "polar-easterlies-s"
+            ],
+            [
+              20,
+              12,
+              86,
+              4.6,
+              "polar-easterlies-s"
+            ],
+            [
+              21,
+              12,
+              93,
+              4.8,
+              "polar-easterlies-s"
+            ],
+            [
+              22,
+              12,
+              85,
+              6,
+              "polar-easterlies-s"
+            ],
+            [
+              23,
+              12,
+              92,
+              7.2,
+              "polar-easterlies-s"
+            ],
+            [
+              0,
+              13,
+              320,
+              6.3,
+              "polar-easterlies-s"
+            ],
+            [
+              1,
+              13,
+              313,
+              4,
+              "polar-easterlies-s"
+            ],
+            [
+              2,
+              13,
+              248,
+              2.9,
+              "polar-easterlies-s"
+            ],
+            [
+              3,
+              13,
+              230,
+              5,
+              "polar-easterlies-s"
+            ],
+            [
+              4,
+              13,
+              229,
+              7.6,
+              "polar-easterlies-s"
+            ],
+            [
+              5,
+              13,
+              286,
+              6.6,
+              "polar-easterlies-s"
+            ],
+            [
+              6,
+              13,
+              221,
+              7.4,
+              "polar-easterlies-s"
+            ],
+            [
+              7,
+              13,
+              221,
+              6.3,
+              "polar-easterlies-s"
+            ],
+            [
+              8,
+              13,
+              348,
+              9.8,
+              "polar-easterlies-s"
+            ],
+            [
+              9,
+              13,
+              345,
+              2.9,
+              "polar-easterlies-s"
+            ],
+            [
+              10,
+              13,
+              226,
+              5.6,
+              "polar-easterlies-s"
+            ],
+            [
+              11,
+              13,
+              252,
+              8.2,
+              "polar-easterlies-s"
+            ],
+            [
+              12,
+              13,
+              264,
+              8.6,
+              "polar-easterlies-s"
+            ],
+            [
+              13,
+              13,
+              256,
+              8.2,
+              "polar-easterlies-s"
+            ],
+            [
+              14,
+              13,
+              251,
+              8.9,
+              "polar-easterlies-s"
+            ],
+            [
+              15,
+              13,
+              267,
+              9.5,
+              "polar-easterlies-s"
+            ],
+            [
+              16,
+              13,
+              289,
+              8.1,
+              "polar-easterlies-s"
+            ],
+            [
+              17,
+              13,
+              246,
+              9.3,
+              "polar-easterlies-s"
+            ],
+            [
+              18,
+              13,
+              263,
+              9.4,
+              "polar-easterlies-s"
+            ],
+            [
+              19,
+              13,
+              304,
+              6,
+              "polar-easterlies-s"
+            ],
+            [
+              20,
+              13,
+              238,
+              6.8,
+              "polar-easterlies-s"
+            ],
+            [
+              21,
+              13,
+              309,
+              6.7,
+              "polar-easterlies-s"
+            ],
+            [
+              22,
+              13,
+              272,
+              6.6,
+              "polar-easterlies-s"
+            ],
+            [
+              23,
+              13,
+              309,
+              8.5,
+              "polar-easterlies-s"
+            ]
+          ]
+        },
+        "lanes": [
+          {
+            "id": "cape-route",
+            "name": "The Cape Route",
+            "ports": [
+              "lisbon",
+              "cape-town",
+              "mumbai"
+            ],
+            "hexes": [
+              [
+                11,
+                3
+              ],
+              [
+                11,
+                4
+              ],
+              [
+                10,
+                5
+              ],
+              [
+                10,
+                6
+              ],
+              [
+                10,
+                7
+              ],
+              [
+                11,
+                8
+              ],
+              [
+                11,
+                9
+              ],
+              [
+                12,
+                10
+              ],
+              [
+                13,
+                10
+              ],
+              [
+                14,
+                10
+              ],
+              [
+                15,
+                10
+              ],
+              [
+                15,
+                9
+              ],
+              [
+                16,
+                8
+              ],
+              [
+                15,
+                7
+              ],
+              [
+                16,
+                6
+              ],
+              [
+                16,
+                5
+              ]
+            ],
+            "cost": 17.02,
+            "rounds": 18,
+            "legs": [
+              {
+                "from": "lisbon",
+                "to": "cape-town",
+                "hexes": 8,
+                "cost": 8.16,
+                "rounds": 9
+              },
+              {
+                "from": "cape-town",
+                "to": "mumbai",
+                "hexes": 7,
+                "cost": 8.86,
+                "rounds": 9
+              }
+            ],
+            "note": "Out of Europe with the trade winds, a long swing towards Brazil, then round the Cape for India."
+          },
+          {
+            "id": "manila-galleon-out",
+            "name": "Manila Galleon",
+            "ports": [
+              "acapulco",
+              "manila"
+            ],
+            "hexes": [
+              [
+                5,
+                5
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                23,
+                6
+              ],
+              [
+                22,
+                6
+              ],
+              [
+                21,
+                6
+              ],
+              [
+                20,
+                6
+              ]
+            ],
+            "cost": 8.46,
+            "rounds": 9,
+            "legs": [
+              {
+                "from": "acapulco",
+                "to": "manila",
+                "hexes": 10,
+                "cost": 8.46,
+                "rounds": 9
+              }
+            ],
+            "note": "West across the Pacific on the trade winds."
+          },
+          {
+            "id": "manila-galleon-home",
+            "name": "Galleon homeward",
+            "ports": [
+              "manila",
+              "acapulco"
+            ],
+            "hexes": [
+              [
+                20,
+                6
+              ],
+              [
+                21,
+                6
+              ],
+              [
+                21,
+                5
+              ],
+              [
+                22,
+                4
+              ],
+              [
+                22,
+                3
+              ],
+              [
+                23,
+                3
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                3
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                5
+              ]
+            ],
+            "cost": 10.63,
+            "rounds": 11,
+            "legs": [
+              {
+                "from": "manila",
+                "to": "acapulco",
+                "hexes": 12,
+                "cost": 10.63,
+                "rounds": 11
+              }
+            ],
+            "note": "Home again: north to the westerlies first."
+          },
+          {
+            "id": "atlantic-run",
+            "name": "Atlantic Run",
+            "ports": [
+              "new-york",
+              "london"
+            ],
+            "hexes": [
+              [
+                7,
+                3
+              ],
+              [
+                8,
+                3
+              ],
+              [
+                9,
+                3
+              ],
+              [
+                10,
+                3
+              ],
+              [
+                11,
+                3
+              ],
+              [
+                12,
+                2
+              ]
+            ],
+            "cost": 4.23,
+            "rounds": 5,
+            "legs": [
+              {
+                "from": "new-york",
+                "to": "london",
+                "hexes": 5,
+                "cost": 4.23,
+                "rounds": 5
+              }
+            ],
+            "note": "Downwind on the westerlies."
+          },
+          {
+            "id": "treasure-fleet",
+            "name": "The Treasure Fleet",
+            "ports": [
+              "cartagena",
+              "havana",
+              "lisbon"
+            ],
+            "hexes": [
+              [
+                7,
+                6
+              ],
+              [
+                6,
+                5
+              ],
+              [
+                7,
+                4
+              ],
+              [
+                8,
+                4
+              ],
+              [
+                8,
+                3
+              ],
+              [
+                9,
+                3
+              ],
+              [
+                10,
+                3
+              ],
+              [
+                11,
+                3
+              ]
+            ],
+            "cost": 6.83,
+            "rounds": 7,
+            "legs": [
+              {
+                "from": "cartagena",
+                "to": "havana",
+                "hexes": 1,
+                "cost": 1.4,
+                "rounds": 2
+              },
+              {
+                "from": "havana",
+                "to": "lisbon",
+                "hexes": 6,
+                "cost": 5.43,
+                "rounds": 6
+              }
+            ],
+            "note": "Gathered at Havana and rode the westerlies home."
+          },
+          {
+            "id": "clipper-route",
+            "name": "The Clipper Route",
+            "ports": [
+              "london",
+              "cape-town",
+              "sydney"
+            ],
+            "hexes": [
+              [
+                12,
+                2
+              ],
+              [
+                11,
+                3
+              ],
+              [
+                11,
+                4
+              ],
+              [
+                10,
+                5
+              ],
+              [
+                10,
+                6
+              ],
+              [
+                10,
+                7
+              ],
+              [
+                11,
+                8
+              ],
+              [
+                11,
+                9
+              ],
+              [
+                12,
+                10
+              ],
+              [
+                13,
+                10
+              ],
+              [
+                14,
+                10
+              ],
+              [
+                14,
+                11
+              ],
+              [
+                15,
+                11
+              ],
+              [
+                16,
+                11
+              ],
+              [
+                17,
+                11
+              ],
+              [
+                18,
+                11
+              ],
+              [
+                19,
+                11
+              ],
+              [
+                20,
+                11
+              ],
+              [
+                21,
+                11
+              ],
+              [
+                22,
+                10
+              ]
+            ],
+            "cost": 17.6,
+            "rounds": 18,
+            "legs": [
+              {
+                "from": "london",
+                "to": "cape-town",
+                "hexes": 9,
+                "cost": 9.56,
+                "rounds": 10
+              },
+              {
+                "from": "cape-town",
+                "to": "sydney",
+                "hexes": 10,
+                "cost": 8.04,
+                "rounds": 9
+              }
+            ],
+            "note": "South through the trades, then the Roaring Forties east."
+          },
+          {
+            "id": "cape-horn-run",
+            "name": "Round the Horn",
+            "ports": [
+              "new-york",
+              "rio",
+              "valparaiso",
+              "san-francisco"
+            ],
+            "hexes": [
+              [
+                7,
+                3
+              ],
+              [
+                8,
+                4
+              ],
+              [
+                8,
+                5
+              ],
+              [
+                9,
+                6
+              ],
+              [
+                9,
+                7
+              ],
+              [
+                10,
+                8
+              ],
+              [
+                9,
+                9
+              ],
+              [
+                9,
+                10
+              ],
+              [
+                8,
+                11
+              ],
+              [
+                8,
+                12
+              ],
+              [
+                7,
+                12
+              ],
+              [
+                6,
+                11
+              ],
+              [
+                7,
+                10
+              ],
+              [
+                6,
+                9
+              ],
+              [
+                6,
+                8
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                5,
+                6
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                4,
+                4
+              ]
+            ],
+            "cost": 19.26,
+            "rounds": 20,
+            "legs": [
+              {
+                "from": "new-york",
+                "to": "rio",
+                "hexes": 6,
+                "cost": 6.71,
+                "rounds": 7
+              },
+              {
+                "from": "rio",
+                "to": "valparaiso",
+                "hexes": 6,
+                "cost": 5.94,
+                "rounds": 6
+              },
+              {
+                "from": "valparaiso",
+                "to": "san-francisco",
+                "hexes": 6,
+                "cost": 6.61,
+                "rounds": 7
+              }
+            ],
+            "note": "The gold-rush run round South America."
+          },
+          {
+            "id": "spice-route",
+            "name": "Spice Route",
+            "ports": [
+              "aden",
+              "colombo",
+              "singapore",
+              "guangzhou"
+            ],
+            "hexes": [
+              [
+                15,
+                6
+              ],
+              [
+                16,
+                6
+              ],
+              [
+                17,
+                6
+              ],
+              [
+                18,
+                6
+              ],
+              [
+                18,
+                7
+              ],
+              [
+                19,
+                8
+              ],
+              [
+                20,
+                8
+              ],
+              [
+                20,
+                7
+              ],
+              [
+                20,
+                6
+              ],
+              [
+                19,
+                5
+              ]
+            ],
+            "cost": 12.49,
+            "rounds": 13,
+            "legs": [
+              {
+                "from": "aden",
+                "to": "colombo",
+                "hexes": 2,
+                "cost": 2.8,
+                "rounds": 3
+              },
+              {
+                "from": "colombo",
+                "to": "singapore",
+                "hexes": 2,
+                "cost": 2.8,
+                "rounds": 3
+              },
+              {
+                "from": "singapore",
+                "to": "guangzhou",
+                "hexes": 5,
+                "cost": 6.89,
+                "rounds": 7
+              }
+            ],
+            "note": "The old sea road from Arabia to China."
+          }
+        ],
+        "airships": [
+          {
+            "id": "polar-line",
+            "name": "The Polar Line",
+            "from": "london",
+            "to": "san-francisco",
+            "hexes": [
+              [
+                12,
+                2
+              ],
+              [
+                11,
+                2
+              ],
+              [
+                10,
+                1
+              ],
+              [
+                9,
+                1
+              ],
+              [
+                8,
+                1
+              ],
+              [
+                7,
+                1
+              ],
+              [
+                6,
+                1
+              ],
+              [
+                6,
+                2
+              ],
+              [
+                5,
+                2
+              ],
+              [
+                4,
+                3
+              ],
+              [
+                3,
+                3
+              ],
+              [
+                4,
+                4
+              ]
+            ],
+            "km": 8619,
+            "rounds": 6,
+            "note": "The shortest way from London to California is over Greenland - a straight line on a globe looks like an arch on a flat map."
+          },
+          {
+            "id": "meridian-line",
+            "name": "The Meridian Line",
+            "from": "london",
+            "to": "cape-town",
+            "hexes": [
+              [
+                12,
+                2
+              ],
+              [
+                12,
+                3
+              ],
+              [
+                12,
+                4
+              ],
+              [
+                12,
+                5
+              ],
+              [
+                13,
+                6
+              ],
+              [
+                12,
+                7
+              ],
+              [
+                13,
+                8
+              ],
+              [
+                13,
+                9
+              ],
+              [
+                13,
+                10
+              ]
+            ],
+            "km": 9669,
+            "rounds": 4
+          },
+          {
+            "id": "pacific-line",
+            "name": "The Pacific Line",
+            "from": "shanghai",
+            "to": "san-francisco",
+            "hexes": [
+              [
+                20,
+                4
+              ],
+              [
+                21,
+                4
+              ],
+              [
+                20,
+                3
+              ],
+              [
+                21,
+                3
+              ],
+              [
+                22,
+                3
+              ],
+              [
+                23,
+                2
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                3
+              ],
+              [
+                4,
+                4
+              ]
+            ],
+            "km": 9880,
+            "rounds": 6
+          }
+        ]
+      }
+    },
+    {
       "$comment": "A GENERATED board of the REAL Earth: the Mediterranean. Like every generated map, `commission` is the only thing anybody writes by hand and `rows`, `settlements`, `regions`, `routes` and the `plate` block are grown from it by `node tools/draw-map.mjs earth-mediterranean`. Unlike the others its land is not invented: `commission.earth` points at sampled real data (data/earth/mediterranean.samples.json, from tools/fetch-earth.mjs) and the terrain is classified from it by data/earth/classify.json. Do not hand-edit the generated parts.",
       "version": "0.1.0",
       "id": "earth-mediterranean",

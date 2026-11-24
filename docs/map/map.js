@@ -269,23 +269,29 @@
     const latOf = (py) => geo.lat0 - ((py - L.originY - L.radius) / L.rowPitch) * geo.rowLat;
     const west = Math.floor(lonOf(0)), east = Math.ceil(lonOf(map.plate.width));
     const south = Math.floor(latOf(map.plate.height)), north = Math.ceil(latOf(0));
-    const first = (v) => v - (((v % 5) + 5) % 5);
+    /* A Region board rules every 5 degrees, heavier every 10. The Atlas says its own steps
+       (commission.atlas: 30 of longitude, 15 of latitude), the same numbers tools/earth/relief.py reads. */
+    const atlas = (map.commission && map.commission.atlas) || {};
+    const gr = atlas.graticule || {}, fr = atlas.frame || {};
+    const lonStep = gr.lonStep || 5, latStep = gr.latStep || 5, heavy = gr.lonStep ? 180 : 10;
+    const first = (v, step) => v - (((v % step) + step) % step);
     const ink = '#2E2822';
 
-    for (let lon = first(west); lon <= east; lon += 5) {
+    for (let lon = first(west, lonStep); lon <= east; lon += lonStep) {
       const px = x(lon);
       if (px < F.x || px > F.x + F.width) continue;
       layers.graticule.appendChild(svg('line', {
         x1: px.toFixed(1), y1: F.y, x2: px.toFixed(1), y2: F.y + F.height, stroke: '#182C54',
-        'stroke-opacity': lon % 10 === 0 ? 0.5 : 0.3, 'stroke-width': (sc * (lon % 10 === 0 ? 1.8 : 1)).toFixed(2),
+        'stroke-opacity': lon % heavy === 0 ? 0.5 : 0.3, 'stroke-width': (sc * (lon % heavy === 0 ? 1.8 : 1)).toFixed(2),
       }));
     }
-    for (let lat = first(south); lat <= north; lat += 5) {
+    for (let lat = first(south, latStep); lat <= north; lat += latStep) {
       const py = y(lat);
       if (py < F.y || py > F.y + F.height) continue;
+      const strong = gr.latStep ? lat === 0 : lat % 10 === 0;
       layers.graticule.appendChild(svg('line', {
         x1: F.x, y1: py.toFixed(1), x2: F.x + F.width, y2: py.toFixed(1), stroke: '#182C54',
-        'stroke-opacity': lat % 10 === 0 ? 0.5 : 0.3, 'stroke-width': (sc * (lat % 10 === 0 ? 1.8 : 1)).toFixed(2),
+        'stroke-opacity': strong ? 0.5 : 0.3, 'stroke-width': (sc * (strong ? 1.8 : 1)).toFixed(2),
       }));
     }
     const tropic = y(23.44);
@@ -310,25 +316,30 @@
       t.textContent = str;
       layers.frame.appendChild(t);
     };
+    const tickLon = fr.tickLon || 1, labelLon = fr.labelLon || 5, tickLat = fr.tickLat || 1, labelLat = fr.labelLat || 5;
+    const fold = (lon) => (geo.wrap ? ((((lon + 180) % 360) + 360) % 360) - 180 : lon);
     for (let lon = west; lon <= east; lon++) {
+      if (lon % tickLon) continue;
       const px = x(lon);
       if (px <= F.x || px >= F.x + F.width) continue;
-      const len = sc * (lon % 5 === 0 ? 9 : 4);
+      const len = sc * (lon % labelLon === 0 ? 9 : 4);
       tick(px, F.y, px, F.y - len);
       tick(px, F.y + F.height, px, F.y + F.height + len);
-      if (lon % 5 === 0) {
-        const label = Math.abs(lon) + '°' + (lon > 0 ? 'E' : lon < 0 ? 'W' : '');
+      if (lon % labelLon === 0) {
+        const fl = fold(lon);
+        const label = Math.abs(fl) + '°' + (fl > 0 && fl < 180 ? 'E' : fl < 0 && fl > -180 ? 'W' : '');
         text(px, F.y - len - sc * 3, 'middle', label);
         text(px, F.y + F.height + len + sc * 3 + fs * 0.75, 'middle', label);
       }
     }
     for (let lat = south; lat <= north; lat++) {
+      if (lat % tickLat) continue;
       const py = y(lat);
       if (py <= F.y || py >= F.y + F.height) continue;
-      const len = sc * (lat % 5 === 0 ? 9 : 4);
+      const len = sc * (lat % labelLat === 0 ? 9 : 4);
       tick(F.x, py, F.x - len, py);
       tick(F.x + F.width, py, F.x + F.width + len, py);
-      if (lat % 5 === 0) {
+      if (lat % labelLat === 0) {
         const label = Math.abs(lat) + '°' + (lat > 0 ? 'N' : lat < 0 ? 'S' : '');
         text(F.x - len - sc * 3, py + fs * 0.35, 'end', label);
         text(F.x + F.width + len + sc * 3, py + fs * 0.35, 'start', label);

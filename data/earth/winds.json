@@ -1,0 +1,48 @@
+{
+  "$comment": "The planet's winds, as a FEW DECLARED NUMBERS. tools/build-atlas.mjs grows the whole wind field from this file and the Atlas's own land, writes one wind per hex into data/maps/earth-atlas.json, and draws the streamlines from the same field. Nothing here names a hex or an ocean: change a number and every wind, lane and streamline moves together.\n\nTHE MODEL, in one paragraph. Along the surface the planet's air moves in belts that depend only on latitude (`profile`). That alone would blow straight through continents, so the belts are turned into a stream function - a height whose contours are the wind's paths - and that height is pulled down to nothing at every coast over `coastTaperKm`. A coast is then itself a path the wind follows, and the belts close up into loops round each ocean: clockwise in the north, anticlockwise in the south, round the high-pressure belt at about thirty degrees. That is the real shape of the trade winds and westerlies, and it is why a sailing ship bound from Europe to the Cape swings out towards Brazil.",
+  "version": "0.1.0",
+  "profile": {
+    "$comment": "Eastward wind in m/s against latitude: negative blows from the east, positive from the west. Smooth between the points. Roughly the yearly average of the real surface wind over the oceans.",
+    "points": [
+      [-90, -3], [-75, -6], [-65, -1], [-58, 9], [-48, 13], [-38, 6], [-30, 0], [-22, -6], [-12, -6], [-5, -2], [0, -0.5],
+      [5, -2], [12, -6], [20, -7], [30, 0], [42, 7], [52, 6], [62, 0], [72, -4], [90, -2]
+    ]
+  },
+  "coastTaperKm": 900,
+  "$coastTaperKmNote": "How far out from a coast the wind is still bent along it. Shorter makes tight loops hugging every coast; longer lets the belts blow straight across a narrow sea.",
+  "calmBelowMs": 2.5,
+  "$calmBelowMsNote": "A hex whose wind is gentler than this is a CALM hex: the doldrums at the equator, the horse latitudes at thirty degrees.",
+  "fullStrengthMs": 7,
+  "$fullStrengthMsNote": "A wind this strong or stronger has its whole effect on a sailing ship; a weaker one has a share of it.",
+  "belts": {
+    "$comment": "Names for the bands of latitude, used to label each hex's wind and to put the names on the board. `side` says which hemisphere a label is for; a belt with `calm` is labelled where the wind dies, not on a streamline.",
+    "list": [
+      { "id": "polar-easterlies-n", "name": "Polar easterlies", "from": 62, "to": 90 },
+      { "id": "westerlies-n", "name": "Westerlies", "from": 33, "to": 62 },
+      { "id": "horse-latitudes-n", "name": "Horse latitudes", "from": 27, "to": 33, "calm": true, "label": false },
+      { "id": "trades-ne", "name": "Trade winds", "from": 5, "to": 27 },
+      { "id": "doldrums", "name": "Doldrums", "from": -5, "to": 5, "calm": true },
+      { "id": "trades-se", "name": "Trade winds", "from": -27, "to": -5 },
+      { "id": "horse-latitudes-s", "name": "Horse latitudes", "from": -33, "to": -27, "calm": true, "label": false },
+      { "id": "roaring-forties", "name": "Roaring Forties", "from": -55, "to": -33 },
+      { "id": "polar-easterlies-s", "name": "Polar easterlies", "from": -90, "to": -55 }
+    ]
+  },
+  "exampleRule": {
+    "$comment": "AN EXAMPLE, NOT A RULE YET. What a step of one Atlas hex costs a sailing ship, in rounds, by the wind in the hex it leaves. It is here so the lanes can be sailed and the digital game can try it; no rules chapter prints it until it is adopted.",
+    "status": "example",
+    "withWind": 0.7,
+    "across": 1.0,
+    "againstWind": 1.5,
+    "calm": 1.4,
+    "how": "Take the angle between the way the ship steps and the way the wind blows. Straight downwind costs withWind, square across costs across, dead into it costs againstWind, smoothly between; a wind weaker than fullStrengthMs moves the cost only that share of the way from across. A calm hex costs calm whichever way the ship goes."
+  },
+  "streamlines": {
+    "$comment": "How the picture is drawn, and nothing else: the field is the same whichever numbers are here.",
+    "gridDeg": 0.5,
+    "spacingDeg": 4.2,
+    "stepDeg": 0.3,
+    "minLengthDeg": 14,
+    "landClearKm": 120
+  }
+}

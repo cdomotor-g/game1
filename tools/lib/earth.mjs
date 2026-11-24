@@ -46,7 +46,13 @@ const KM_PER_DEG = (2 * Math.PI * R) / 360;
  * `centreKm` and `forward` without knowing which layout they have.
  */
 function parallelGrid(spec) {
-  const { cols, rows, centre, hexLon, stdParallel } = spec;
+  const { cols, rows, centre, hexLon, wrap } = spec;
+  /* A board may name its row height in degrees instead of its standard parallel (the Atlas does: 11
+     degrees a row, so the equator is a row and the rows fall on round numbers). The two are one fact -
+     a hex row is sqrt(3)/2 of a hex across - so the parallel is worked out from it, never typed twice. */
+  const stdParallel = spec.rowLat
+    ? Math.acos((2 * spec.rowLat) / (SQRT3 * hexLon)) / RAD
+    : spec.stdParallel;
   const kx = KM_PER_DEG * Math.cos(stdParallel * RAD);
   const hexKm = hexLon * kx;                          // flat to flat
   const radius = hexKm / SQRT3;
@@ -59,24 +65,30 @@ function parallelGrid(spec) {
   const heightKm = 2 * radius + (rows - 1) * rowKm;
 
   const forward = (lat, lon) => ({ x: (lon - centre.lon) * kx, y: (lat - centre.lat) * KM_PER_DEG });
-  const inverse = (x, y) => ({ lat: centre.lat + y / KM_PER_DEG, lon: centre.lon + x / kx });
+  /* A board that goes all the way round the planet (`wrap`) has a column count that is exactly 360
+     degrees, so the east edge is the west edge: a longitude is folded into -180..180 on the way out,
+     and on the way in a point is tried a turn east and a turn west as well. */
+  const fold = (lon) => (wrap ? ((((lon + 180) % 360) + 360) % 360) - 180 : lon);
+  const inverse = (x, y) => ({ lat: centre.lat + y / KM_PER_DEG, lon: fold(centre.lon + x / kx) });
   const centreKm = (col, row) => ({
     x: (col + 0.5 * (row & 1) - midCol) * hexKm,
     y: ((rows - 1) / 2 - row) * rowKm,
   });
   const latLonOf = (col, row) => { const { x, y } = centreKm(col, row); return inverse(x, y); };
   const hexOf = (lat, lon) => {
-    const { x, y } = forward(lat, lon);
     let best = null, bestD = Infinity;
-    const rowGuess = Math.round((rows - 1) / 2 - y / rowKm);
-    for (let r = rowGuess - 1; r <= rowGuess + 1; r++) {
-      if (r < 0 || r >= rows) continue;
-      const colGuess = Math.round(x / hexKm + midCol - 0.5 * (r & 1));
-      for (let c = colGuess - 1; c <= colGuess + 1; c++) {
-        if (c < 0 || c >= cols) continue;
-        const m = centreKm(c, r);
-        const d = Math.hypot(m.x - x, m.y - y);
-        if (d < bestD) { bestD = d; best = { col: c, row: r }; }
+    for (const turn of wrap ? [0, 360, -360] : [0]) {
+      const { x, y } = forward(lat, lon + turn);
+      const rowGuess = Math.round((rows - 1) / 2 - y / rowKm);
+      for (let r = rowGuess - 1; r <= rowGuess + 1; r++) {
+        if (r < 0 || r >= rows) continue;
+        const colGuess = Math.round(x / hexKm + midCol - 0.5 * (r & 1));
+        for (let c = colGuess - 1; c <= colGuess + 1; c++) {
+          if (c < 0 || c >= cols) continue;
+          const m = centreKm(c, r);
+          const d = Math.hypot(m.x - x, m.y - y);
+          if (d < bestD) { bestD = d; best = { col: c, row: r }; }
+        }
       }
     }
     return best && bestD <= hexKm * 0.62 ? best : null;
@@ -94,7 +106,7 @@ function parallelGrid(spec) {
     return out;
   };
   /** Everything a reader of the finished plate needs to turn a pixel into degrees. */
-  const geo = { kind: 'rows-on-parallels', lon0, lat0, hexLon, rowLat, stdParallel };
+  const geo = { kind: 'rows-on-parallels', lon0, lat0, hexLon, rowLat, stdParallel, ...(wrap ? { wrap: true } : {}) };
   return { centreKm, latLonOf, hexOf, samplePoints, forward, inverse, widthKm, heightKm, hexKm, geo };
 }
 

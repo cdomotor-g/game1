@@ -23,7 +23,7 @@ URL = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
 
 def tile_of(lat, lon):
     n = 2 ** Z
-    x = (lon + 180.0) / 360.0 * n
+    x = min(n - 1e-6, (((lon + 180.0) % 360.0) / 360.0) * n)   # a board that wraps hands in 180 as well as -180
     lat_r = math.radians(max(-85.0511, min(85.0511, lat)))
     y = (1.0 - math.log(math.tan(lat_r) + 1.0 / math.cos(lat_r)) / math.pi) / 2.0 * n
     return x, y
@@ -86,7 +86,7 @@ for lat, lon in job["points"]:
     px = min(255, int((fx - tx) * 256)); py = min(255, int((fy - ty) * 256))
     elev.append(round(float(t[py, px])))
     r = min(KH - 1, max(0, int((90.0 - lat) / (180.0 / KH))))
-    c = min(KW - 1, max(0, int((lon + 180.0) / (360.0 / KW))))
+    c = min(KW - 1, max(0, int(((lon + 180.0) % 360.0) / (360.0 / KW))))
     koppen.append(int(kg[r, c]))
 
 ocean = ocean_mask(job["points"], job.get("seeds", [])) if job.get("seeds") else [e <= 0 for e in elev]

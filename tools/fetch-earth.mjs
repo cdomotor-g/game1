@@ -14,7 +14,7 @@
  * elevation and climate class per point.
  *
  * Usage:
- *   node tools/fetch-earth.mjs <map-id> --koppen <Beck_KG_V1_present_0p083.tif> --rivers <ne_10m_rivers_lake_centerlines.geojson>
+ *   node tools/fetch-earth.mjs <map-id> --koppen <Beck_KG_V1_present_0p083.tif> --rivers <ne_10m_rivers_lake_centerlines.geojson> [--koppen-name <what that file is>]
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -29,6 +29,9 @@ const args = process.argv.slice(2);
 const arg = (n) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : null; };
 const mapId = args.find((a) => !a.startsWith('--') && args[args.indexOf(a) - 1]?.startsWith('--') !== true);
 const koppen = arg('koppen'), riversPath = arg('rivers');
+/* Which climate map the --koppen file is, for the samples' list of sources. The default is the one the
+   Mediterranean was sampled from; the Atlas was sampled from the 1991-2020 edition (same class numbers). */
+const koppenName = arg('koppen-name') ?? 'Beck et al. 2018, present-day Koeppen-Geiger, 0.083 degree';
 if (!mapId || !koppen || !riversPath) {
   console.error('usage: node tools/fetch-earth.mjs <map-id> --koppen <tif> --rivers <geojson>');
   process.exit(1);
@@ -154,7 +157,7 @@ writeFileSync(outFile, JSON.stringify({
   window: { cols: spec.cols, rows: spec.rows, hexKm: grid.hexKm, centre: spec.centre, projection: spec.kind === 'rows-on-parallels' ? 'rows-on-parallels' : 'lambert-azimuthal-equal-area', ...(grid.geo ? { geo: grid.geo } : {}) },
   sources: [
     { what: 'elevation on land, depth at sea', name: 'Terrain Tiles (terrarium), zoom ' + (earth.tileZoom ?? 6), via: 'elevation-tiles-prod on AWS', credit: 'SRTM, GEBCO, ETOPO1 and national datasets, as credited by Mapzen/Tilezen terrain tiles' },
-    { what: 'climate class', name: 'Beck et al. 2018, present-day Koeppen-Geiger, 0.083 degree', licence: 'CC BY 4.0' },
+    { what: 'climate class', name: koppenName, licence: 'CC BY 4.0' },
     { what: 'rivers', name: 'Natural Earth 1:10m rivers and lake centerlines', licence: 'public domain' },
   ],
   cells,

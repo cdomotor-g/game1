@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4000 2163" width="4000" height="2163" >
+<title>Region and sea names</title>
+<g font-family="Merriweather, 'Liberation Serif', Georgia, serif" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-opacity="0.75" stroke-linejoin="round">
+<text x="2118.9" y="616.9" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="europe">EUROPE</text>
+<text x="3069.9" y="342.4" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="siberia">SIBERIA</text>
+<text x="2752.9" y="616.9" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="central-asia">CENTRAL ASIA</text>
+<text x="2832.1" y="754.2" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="india">INDIA</text>
+<text x="2356.6" y="754.2" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="arabia">ARABIA</text>
+<text x="3545.4" y="1166.0" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="southeast-asia">THE SPICE ISLANDS</text>
+<text x="2277.4" y="891.5" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="north-africa">THE SAHARA</text>
+<text x="2277.4" y="1166.0" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="africa">AFRICA</text>
+<text x="2435.9" y="1440.5" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="southern-africa">SOUTHERN AFRICA</text>
+<text x="1009.4" y="616.9" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="north-america">NORTH AMERICA</text>
+<text x="1009.4" y="342.4" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="arctic-america">THE CANADIAN NORTH</text>
+<text x="1564.1" y="205.1" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="greenland">GREENLAND</text>
+<text x="930.1" y="754.2" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="central-america">MEXICO</text>
+<text x="1405.6" y="1303.2" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="amazonia">AMAZONIA</text>
+<text x="1326.4" y="1440.5" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="andes">THE ANDES</text>
+<text x="3386.9" y="1440.5" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="australia">AUSTRALIA</text>
+<text x="2594.4" y="1989.6" font-size="50.2" font-style="normal" font-weight="700" letter-spacing="8.5" stroke-width="5.3" fill="#241F1B" data-id="antarctica">ANTARCTICA</text>
+<text x="1564.1" y="754.2" font-size="44.9" font-style="italic" font-weight="400" letter-spacing="11.9" stroke-width="5.3" fill="#163454" data-id="north-atlantic">NORTH ATLANTIC</text>
+<text x="1881.1" y="1577.8" font-size="44.9" font-style="italic" font-weight="400" letter-spacing="11.9" stroke-width="5.3" fill="#163454" data-id="south-atlantic">SOUTH ATLANTIC</text>
+<text x="454.6" y="754.2" font-size="44.9" font-style="italic" font-weight="400" letter-spacing="11.9" stroke-width="5.3" fill="#163454" data-id="north-pacific">NORTH PACIFIC</text>
+<text x="771.6" y="1577.8" font-size="44.9" font-style="italic" font-weight="400" letter-spacing="11.9" stroke-width="5.3" fill="#163454" data-id="south-pacific">SOUTH PACIFIC</text>
+<text x="2832.1" y="1577.8" font-size="44.9" font-style="italic" font-weight="400" letter-spacing="11.9" stroke-width="5.3" fill="#163454" data-id="indian-ocean">INDIAN OCEAN</text>
+<text x="2673.6" y="1852.3" font-size="44.9" font-style="italic" font-weight="400" letter-spacing="11.9" stroke-width="5.3" fill="#163454" data-id="southern-ocean">SOUTHERN OCEAN</text>
+<text x="454.6" y="205.1" font-size="44.9" font-style="italic" font-weight="400" letter-spacing="11.9" stroke-width="5.3" fill="#163454" data-id="arctic-ocean">ARCTIC OCEAN</text>
+</g></svg>

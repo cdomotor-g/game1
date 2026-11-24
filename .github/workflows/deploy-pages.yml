@@ -56,6 +56,11 @@ jobs:
       - name: Check the generated maps
         run: node tools/draw-map.mjs --check
 
+      # The Atlas's winds, lanes and airship lines are grown from its board and
+      # data/earth/winds.json, so they go stale the moment either moves.
+      - name: Check the Atlas
+        run: node tools/build-atlas.mjs --check
+
       # Boards are checked against terrain.json and against themselves: a coastline
       # with deep water against the beach, or a harbour standing inland, fails here.
       - name: Validate maps

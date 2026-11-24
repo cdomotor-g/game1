@@ -619,3 +619,35 @@ the hex it fell in. They are written once in the commission and printed by whate
 
 **Sources** (credited in the samples file and `layers.json`): Terrain Tiles for elevation and depth, Beck et al. 2018
 Koeppen-Geiger climate (CC BY 4.0), Natural Earth rivers (public domain).
+
+## The Atlas
+
+[`index.html?map=earth-atlas`](index.html?map=earth-atlas) is the top of the three levels - **Atlas > Region >
+Mini-map** - and the whole planet on one board: 24 columns of 15 degrees, one time zone to a column and numbered
+across the top in hours from Greenwich, by 14 rows of 11 degrees (row 7 is the equator). A hex is about 1,412 km
+across at 32 degrees, the latitude the sheet is true at; towards the poles it covers much less ground than it looks,
+and the board says so. It wraps: sail off the east edge and you come in at the west.
+
+| Step | What it does |
+| --- | --- |
+| `tools/fetch-earth.mjs earth-atlas` | **Run once by a person.** Samples the planet under all 336 hexes (zoom 4, about 10 km a sample). |
+| `tools/draw-map.mjs earth-atlas` | Classifies the hexes and puts every port in its true hex. |
+| `tools/earth/relief.py earth-atlas` | **Run by a person.** The relief layers, as for a Region board, with the Atlas's own degree lines (30 of longitude, 15 of latitude, the equator, tropics and polar circles) and the time zones in the frame. |
+| `tools/build-atlas.mjs` | Grows the winds from `data/earth/winds.json`, sails the lanes, flies the airship lines, and draws them. `--check` in CI. |
+
+On top of the Region-board layers the Atlas adds `boards.svg` (each Region board's window, outlined), `winds.svg` (long
+white streamlines that thicken the way the wind blows, with the belts named: trade winds, westerlies, Roaring Forties,
+polar easterlies, doldrums), `lanes.svg` (dashed trade lanes with the way they run and their length in rounds),
+`airships.svg` (dotted great-circle arcs) and its own `places.svg` (a filled mark opens onto a Region board, a hollow one
+is an abstract harbour, a dashed ring is an anchorage). The recipes `sailing-board`, `atlas-full` and `winds-only` are
+in `layers.json`.
+
+**Moving on it** is `docs/js/atlas.js`: a ship goes one hex a round on water, may enter a port and nowhere else on land,
+and pays for each step by the wind in the hex it leaves (the EXAMPLE rule in `winds.json`: 0.7 with the wind, 1.5 into
+it, 1.4 in a calm). An airship flies the great circle, two hexes a round, over anything. Click a port in the viewer to
+sail or fly from it to any other.
+
+**Sources** for the Atlas: Terrain Tiles for elevation and depth; Beck et al. 2023 Koeppen-Geiger 1991-2020 (CC BY 4.0),
+read from a public PMTiles copy at about 0.09 degrees and resampled to 1/12 degree, because the figshare download of
+the 2018 file was refused from this machine; Natural Earth rivers. The class numbers are the same in both editions.
+

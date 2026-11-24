@@ -13,7 +13,7 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { neighbours, hexId } from './lib/hexgrid.mjs';
+import { neighbours as flatNeighbours, hexId } from './lib/hexgrid.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const MAPS = join(ROOT, 'data', 'maps');
@@ -35,6 +35,11 @@ if (!existsSync(MAPS)) {
   console.log('no data/maps/ directory; nothing to check.');
   process.exit(0);
 }
+
+/* A board that goes all the way round the planet (grid.wrap, the Atlas) steps off its east edge onto its
+   west edge, so every check below asks for neighbours through this. */
+let WRAP_COLS = 0;
+const neighbours = (c, r) => flatNeighbours(c, r).map((n) => (WRAP_COLS ? { col: ((n.col % WRAP_COLS) + WRAP_COLS) % WRAP_COLS, row: n.row } : n));
 
 const files = readdirSync(MAPS).filter((f) => f.endsWith('.json'));
 for (const file of files) checkMap(file);
@@ -123,6 +128,7 @@ function checkMap(file) {
     return;
   }
 
+  WRAP_COLS = map.grid.wrap ? cols : 0;
   const at = (col, row) => (row >= 0 && row < rowCount && col >= 0 && col < cols ? legend[map.rows[row][col]] : null);
 
   for (let row = 0; row < rowCount; row++) {
@@ -208,7 +214,9 @@ function checkMap(file) {
       errors.push(`${where}: settlement "${s.name}" at ${key} is off the grid`);
       continue;
     }
-    if (isWater(id)) errors.push(`${where}: settlement "${s.name}" at ${key} is standing in ${id}`);
+    /* An ANCHORAGE (`afloat`) is the one settlement allowed on water: an Atlas port whose hex is sea at
+       1,400 km a hex. Only a board with commission.atlas grows one. */
+    if (isWater(id) && !(s.afloat && map.commission?.atlas)) errors.push(`${where}: settlement "${s.name}" at ${key} is standing in ${id}`);
     if (occupied.has(key)) {
       errors.push(`${where}: "${s.name}" and "${occupied.get(key)}" are both on ${key}`);
     }
@@ -218,10 +226,11 @@ function checkMap(file) {
        it stands on. It used to be "this settlement is on a coast tile", which
        meant a harbour could only exist where the artist had painted a strip of
        beach - and meant a town on a lake could never have a dock at all. */
-    if (s.harbour && !isWater(id) && !around(s.col, s.row).some((n) => SEA.has(n))) {
+    if (s.harbour && !s.afloat && !isWater(id) && !around(s.col, s.row).some((n) => SEA.has(n))) {
       errors.push(`${where}: "${s.name}" has a harbour but no sea reaches it - a harbour is waterside on the sea (terrain.json siting.waterside)`);
     }
-    if (terrainById.get(id)?.housingAllowed === false) {
+    /* On the Atlas a port is a point in a 1,400 km hex, not a building on it: Aden's hex is mountain. */
+    if (terrainById.get(id)?.housingAllowed === false && !map.commission?.atlas) {
       errors.push(`${where}: "${s.name}" is on ${id}, which does not allow housing`);
     }
   }
@@ -267,6 +276,36 @@ function checkMap(file) {
         }
       }
     }
+  }
+
+  /* ------------------------------------------------------------- the Atlas */
+  /* A lane is sailed hex by hex: every step onto a neighbour (round the back of the board where it
+     wraps), every hex water but the ports it starts and ends at. An airship line only has to be a chain. */
+  if (map.atlas) {
+    const portHex = new Map((map.atlas.ports ?? []).map((p) => [p.id, p.hex]));
+    const known = new Set((map.settlements ?? []).map((s) => s.id));
+    for (const p of map.atlas.ports ?? []) {
+      if (!known.has(p.id)) errors.push(`${where}: atlas port "${p.id}" is not a settlement on the board`);
+      if (!['board', 'abstract'].includes(p.kind)) errors.push(`${where}: atlas port "${p.id}" is a "${p.kind}" - a port opens onto a Region board or is an abstract harbour`);
+    }
+    const chain = (kind, line, hexes) => {
+      for (let k = 1; k < hexes.length; k++) {
+        const [c, r] = hexes[k - 1];
+        if (!neighbours(c, r).some((n) => n.col === hexes[k][0] && n.row === hexes[k][1])) errors.push(`${where}: ${kind} "${line.id}" jumps ${hexes[k - 1]} -> ${hexes[k]}`);
+      }
+    };
+    for (const lane of map.atlas.lanes ?? []) {
+      chain('lane', lane, lane.hexes);
+      const stops = new Set(lane.ports.map((id) => String(portHex.get(id))));
+      for (const id of lane.ports) if (!portHex.has(id)) errors.push(`${where}: lane "${lane.id}" calls at "${id}", which is not a port`);
+      for (const [c, r] of lane.hexes) {
+        if (!isWater(at(c, r)) && !stops.has(String([c, r]))) errors.push(`${where}: lane "${lane.id}" sails over ${at(c, r)} at ${hexId(c, r)} - land is closed to a ship except at its ports`);
+      }
+    }
+    for (const air of map.atlas.airships ?? []) chain('airship line', air, air.hexes);
+    if ((map.atlas.winds?.hexes ?? []).length !== cols * rowCount) errors.push(`${where}: the atlas has winds for ${(map.atlas.winds?.hexes ?? []).length} hexes, not ${cols * rowCount} - run tools/build-atlas.mjs`);
+  } else if (map.commission?.atlas && (map.rows ?? []).length) {
+    errors.push(`${where}: an Atlas board with no atlas block - run tools/build-atlas.mjs`);
   }
 
   /* --------------------------------------------------------------- the mix */

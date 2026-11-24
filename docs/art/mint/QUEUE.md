@@ -143,6 +143,7 @@ Drawn by a tool from its own data, so there is no handover to track and no step 
 
 | Map | Grid | Plate |
 | --- | --- | --- |
+| The Atlas | 24 × 14 | `earth-atlas.svg` |
 | The Mediterranean | 32 × 24 | `earth-mediterranean.svg` |
 | The Kelder Vale | 11 × 12 | `kelder-vale.svg` |
 | The Sundering Isles | 30 × 24 | `sundering-isles.svg` |

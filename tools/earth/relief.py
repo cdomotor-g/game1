@@ -61,6 +61,10 @@ def lat_px(lat): return OY + RAD + (GEO['lat0'] - np.asarray(lat)) / GEO['rowLat
 
 YY, XX = np.mgrid[0:H, 0:W].astype(np.float32)
 LON = px_lon(XX + 0.5).astype(np.float32)
+if GEO.get('wrap'):
+    # A board that goes round the whole planet (the Atlas): its odd rows and its frame reach past 180,
+    # which is the same ground as the far west, so every lookup folds the longitude back.
+    LON = (((LON + 180) % 360) + 360) % 360 - 180
 LAT = px_lat(YY + 0.5).astype(np.float32)
 del XX, YY
 
@@ -113,7 +117,7 @@ def mix(col, ink, a):
 
 
 # ------------------------------------------------------- real elevation (z7)
-Z = 7
+Z = EARTH.get('reliefZoom', 7)   # 7 for a Region board; the Atlas asks for 5, which is still finer than its plate
 def dem():
     n = 2 ** Z
     fx = ((LON + 180) / 360 * n).astype(np.float32)
@@ -178,7 +182,7 @@ def koppen(seed=71, amt=0.2):
 
 def hillshade(e, exag=9.0, sigma=1.0):
     z = blur(np.maximum(e, 0), sigma)
-    dxm = (GEO['hexLon'] / HW) * 111320 * np.cos(np.radians(LAT))
+    dxm = (GEO['hexLon'] / HW) * 111320 * np.maximum(0.2, np.cos(np.radians(LAT)))
     dym = GEO['rowLat'] / PITCH * 111320
     gx, gy = np.gradient(z, axis=1) / dxm, np.gradient(z, axis=0) / dym
     nx, ny = -exag * gx, -exag * gy
@@ -220,7 +224,7 @@ geojson = json.load(open(RIVERS))
 river_lines = []
 for ft in geojson['features']:
     p = ft['properties']
-    if p.get('featurecla') != 'River' or (p.get('scalerank') or 99) > 5:
+    if p.get('featurecla') != 'River' or (p.get('scalerank') or 99) > EARTH.get('riverRank', 5):
         continue
     gm = ft['geometry']
     for ln in ([gm['coordinates']] if gm['type'] == 'LineString' else gm['coordinates']):
@@ -300,27 +304,50 @@ with open(f'{OUT}/hexes.svg', 'w') as fh:
         fh.write('</g>\n')
     fh.write('</svg>\n')
 
-# graticule
+# graticule. A Region board rules every 5 degrees, heavier every 10; the Atlas says its own steps in
+# commission.atlas.graticule (30 of longitude, 15 of latitude) and adds the circles the climate hangs on.
+ATLAS = M['commission'].get('atlas') or {}
+GR = ATLAS.get('graticule') or {}
 lon_lo, lon_hi = math.floor(px_lon(0)), math.ceil(px_lon(W))
 lat_lo, lat_hi = math.floor(px_lat(H)), math.ceil(px_lat(0))
+CIRCLES = [(23.44, 'Tropic of Cancer 23.4°N', '#962820'), (-23.44, 'Tropic of Capricorn 23.4°S', '#962820'),
+           (66.56, 'Arctic Circle 66.6°N', '#2B4F78'), (-66.56, 'Antarctic Circle 66.6°S', '#2B4F78')]
 with open(f'{OUT}/graticule.svg', 'w') as fh:
     fh.write(svg_head())
-    fh.write('<title>Lines of latitude and longitude every 5 degrees, heavier every 10; the Tropic of Cancer dashed</title>\n')
-    fh.write(f'<g stroke="#182C54" fill="none">\n')
-    for lon in range(lon_lo - lon_lo % 5, lon_hi + 1, 5):
-        x = float(lon_px(lon))
-        if F['x'] <= x <= F['x'] + F['width']:
-            fh.write(f'<line x1="{x:.1f}" y1="{F["y"]}" x2="{x:.1f}" y2="{F["y"] + F["height"]}" stroke-opacity="{0.6 if lon % 10 == 0 else 0.34}" stroke-width="{SC * (1.8 if lon % 10 == 0 else 1.0):.2f}"/>\n')
-    for lat in range(lat_lo - lat_lo % 5, lat_hi + 1, 5):
+    def vline(x, op, wd):
+        fh.write(f'<line x1="{x:.1f}" y1="{F["y"]}" x2="{x:.1f}" y2="{F["y"] + F["height"]}" stroke-opacity="{op}" stroke-width="{SC * wd:.2f}"/>\n')
+    def hline(y, op, wd):
+        fh.write(f'<line x1="{F["x"]}" y1="{y:.1f}" x2="{F["x"] + F["width"]}" y2="{y:.1f}" stroke-opacity="{op}" stroke-width="{SC * wd:.2f}"/>\n')
+    inside_x = lambda x: F['x'] <= x <= F['x'] + F['width']
+    inside_y = lambda y: F['y'] <= y <= F['y'] + F['height']
+    if GR:
+        ls, as_ = GR['lonStep'], GR['latStep']
+        fh.write(f'<title>Lines of longitude every {ls} degrees and latitude every {as_}; the equator heavier; the tropics and the polar circles dashed</title>\n')
+        fh.write('<g stroke="#182C54" fill="none">\n')
+        for lon in range(lon_lo - lon_lo % ls, lon_hi + 1, ls):
+            x = float(lon_px(lon))
+            if inside_x(x): vline(x, 0.5 if lon % 180 else 0.75, 1.3 if lon % 180 else 2.0)
+        for lat in range(lat_lo - lat_lo % as_, lat_hi + 1, as_):
+            y = float(lat_px(lat))
+            if inside_y(y): hline(y, 0.85 if lat == 0 else 0.5, 2.4 if lat == 0 else 1.3)
+        fh.write('</g>\n')
+        circles = CIRCLES if GR.get('circles') else []
+    else:
+        fh.write('<title>Lines of latitude and longitude every 5 degrees, heavier every 10; the Tropic of Cancer dashed</title>\n')
+        fh.write(f'<g stroke="#182C54" fill="none">\n')
+        for lon in range(lon_lo - lon_lo % 5, lon_hi + 1, 5):
+            x = float(lon_px(lon))
+            if inside_x(x): vline(x, 0.6 if lon % 10 == 0 else 0.34, 1.8 if lon % 10 == 0 else 1.0)
+        for lat in range(lat_lo - lat_lo % 5, lat_hi + 1, 5):
+            y = float(lat_px(lat))
+            if inside_y(y): hline(y, 0.6 if lat % 10 == 0 else 0.34, 1.8 if lat % 10 == 0 else 1.0)
+        fh.write('</g>\n')
+        circles = CIRCLES[:1]
+    for lat, label, colr in circles:
         y = float(lat_px(lat))
-        if F['y'] <= y <= F['y'] + F['height']:
-            fh.write(f'<line x1="{F["x"]}" y1="{y:.1f}" x2="{F["x"] + F["width"]}" y2="{y:.1f}" stroke-opacity="{0.6 if lat % 10 == 0 else 0.34}" stroke-width="{SC * (1.8 if lat % 10 == 0 else 1.0):.2f}"/>\n')
-    y = float(lat_px(23.44))
-    if F['y'] <= y <= F['y'] + F['height']:
-        fh.write(f'<line x1="{F["x"]}" y1="{y:.1f}" x2="{F["x"] + F["width"]}" y2="{y:.1f}" stroke="#962820" stroke-opacity="0.9" stroke-width="{SC * 1.8:.2f}" stroke-dasharray="{SC * 12} {SC * 7}"/>\n')
-    fh.write('</g>\n')
-    if F['y'] <= y <= F['y'] + F['height']:
-        fh.write(f'<text x="{F["x"] + 40 * SC}" y="{y - 6 * SC:.1f}" font-family="{FONT}" font-style="italic" font-size="{10 * SC:.1f}" fill="#78241C" stroke="#fff" stroke-width="{SC * 2}" paint-order="stroke">Tropic of Cancer 23.4°N</text>\n')
+        if not inside_y(y): continue
+        fh.write(f'<line x1="{F["x"]}" y1="{y:.1f}" x2="{F["x"] + F["width"]}" y2="{y:.1f}" stroke="{colr}" stroke-opacity="0.9" stroke-width="{SC * 1.8:.2f}" stroke-dasharray="{SC * 12} {SC * 7}"/>\n')
+        fh.write(f'<text x="{F["x"] + 40 * SC}" y="{y - 6 * SC:.1f}" font-family="{FONT}" font-style="italic" font-size="{10 * SC:.1f}" fill="{"#78241C" if colr == "#962820" else colr}" stroke="#fff" stroke-width="{SC * 2}" paint-order="stroke">{label}</text>\n')
     fh.write('</svg>\n')
 
 # frame: the paper band round the field, the neat line, and the degrees
@@ -332,26 +359,47 @@ with open(f'{OUT}/frame.svg', 'w') as fh:
     fh.write(f'<rect x="{F["x"]}" y="{F["y"]}" width="{F["width"]}" height="{F["height"]}" fill="none" stroke="{INK}" stroke-width="{SC * 1.4:.2f}"/>\n')
     fh.write(f'<rect x="{SC * 3:.0f}" y="{SC * 3:.0f}" width="{W - SC * 6:.0f}" height="{H - SC * 6:.0f}" fill="none" stroke="{INK}" stroke-width="{SC * 1.0:.2f}"/>\n')
     fs = 10.5 * SC
+    FR = ATLAS.get('frame') or {}
+    tick_lon, label_lon = FR.get('tickLon', 1), FR.get('labelLon', 5)
+    tick_lat, label_lat = FR.get('tickLat', 1), FR.get('labelLat', 5)
+    zones = FR.get('timeZones')
+    def wrap_lon(lon): return ((lon + 180) % 360 + 360) % 360 - 180 if GEO.get('wrap') else lon
     for lon in range(lon_lo, lon_hi + 1):
+        if lon % tick_lon: continue
         x = float(lon_px(lon))
         if F['x'] < x < F['x'] + F['width']:
-            L = SC * (9 if lon % 5 == 0 else 4)
+            L = SC * (9 if lon % label_lon == 0 else 4)
             for y0, sgn in ((F['y'], -1), (F['y'] + F['height'], 1)):
+                if zones and sgn < 0: continue   # the top band carries the time zones instead
                 fh.write(f'<line x1="{x:.1f}" y1="{y0}" x2="{x:.1f}" y2="{y0 + sgn * L}" stroke="{INK}" stroke-width="{SC * 0.9:.2f}"/>\n')
-            if lon % 5 == 0:
-                t = f"{abs(lon)}°{'E' if lon > 0 else 'W' if lon < 0 else ''}"
+            if lon % label_lon == 0:
+                wl = wrap_lon(lon)
+                t = f"{abs(wl)}°{'E' if 0 < wl < 180 else 'W' if -180 < wl < 0 else ''}"
                 for y0, sgn in ((F['y'], -1), (F['y'] + F['height'], 1)):
+                    if zones and sgn < 0: continue
                     fh.write(f'<text x="{x:.1f}" y="{y0 + sgn * (L + SC * 3) + (0 if sgn < 0 else fs * 0.75):.1f}" text-anchor="middle" font-family="{FONT}" font-size="{fs:.1f}" fill="{INK}">{t}</text>\n')
     for lat in range(lat_lo, lat_hi + 1):
+        if lat % tick_lat: continue
         y = float(lat_px(lat))
         if F['y'] < y < F['y'] + F['height']:
-            L = SC * (9 if lat % 5 == 0 else 4)
+            L = SC * (9 if lat % label_lat == 0 else 4)
             for x0, sgn in ((F['x'], -1), (F['x'] + F['width'], 1)):
                 fh.write(f'<line x1="{x0}" y1="{y:.1f}" x2="{x0 + sgn * L}" y2="{y:.1f}" stroke="{INK}" stroke-width="{SC * 0.9:.2f}"/>\n')
-            if lat % 5 == 0:
-                t = f'{lat}°N'
+            if lat % label_lat == 0:
+                t = f"{abs(lat)}°{'N' if lat > 0 else 'S' if lat < 0 else ''}"
                 for x0, sgn, anchor in ((F['x'], -1, 'end'), (F['x'] + F['width'], 1, 'start')):
                     fh.write(f'<text x="{x0 + sgn * (L + SC * 3):.1f}" y="{y + fs * 0.35:.1f}" text-anchor="{anchor}" font-family="{FONT}" font-size="{fs:.1f}" fill="{INK}">{t}</text>\n')
+    if zones:
+        # The time zones across the top: one per column of the even rows, each centred on its own meridian,
+        # numbered in hours ahead of Greenwich. Column 0 is the 180th meridian, where the date changes.
+        for c in range(COLS):
+            x, _ = hex_centre(c, 0)
+            hrs = round(wrap_lon(px_lon(x)) / 15)
+            t = '±12' if abs(hrs) == 12 else ('0' if hrs == 0 else f'{hrs:+d}'.replace('-', '−'))
+            for dx in (-HW / 2, HW / 2):
+                fh.write(f'<line x1="{x + dx:.1f}" y1="{F["y"]}" x2="{x + dx:.1f}" y2="{F["y"] - SC * 9}" stroke="{INK}" stroke-width="{SC * 0.9:.2f}"/>\n')
+            fh.write(f'<text x="{x:.1f}" y="{F["y"] - SC * 8:.1f}" text-anchor="middle" font-family="{FONT}" font-weight="700" font-size="{fs * 1.15:.1f}" fill="{INK}"><title>{t} hours from Greenwich</title>{t}</text>\n')
+        fh.write(f'<text x="{F["x"] - SC * 4:.1f}" y="{F["y"] - SC * 8:.1f}" text-anchor="end" font-family="{FONT}" font-style="italic" font-size="{fs * 0.8:.1f}" fill="{INK}">hours</text>\n')
     fh.write('</svg>\n')
 
 # places and region names. A label that would sit on another is moved (a place) or dropped (a region):
@@ -368,6 +416,7 @@ def text_w(text, size, style='Regular', spacing=0.0):
     return base + spacing * (len(text) - 1)
 
 
+ATLAS_PORTS = bool(ATLAS)
 taken = []
 def free(b):
     return not any(not (b[2] < o[0] or b[0] > o[2] or b[3] < o[1] or b[1] > o[3]) for o in taken)
@@ -389,16 +438,18 @@ for sx in sorted(M['settlements'], key=lambda q: ORDER.get(q['rank'], 4)):
         if free(bb) and bb[0] > F['x'] and bb[2] < F['x'] + F['width']:
             choice = (anchor, tx, ty, bb); break
     if not choice: choice = ('start', x + rad + SC * 3, y + SC * 5, (x, y - size, x + w, y + size * 0.3))
-    taken.append(dot); taken.append(choice[3])
+    if not ATLAS_PORTS: taken.append(dot); taken.append(choice[3])
     placed.append((sx, x, y, rad, size, big, choice))
 
-with open(f'{OUT}/places.svg', 'w') as fh:
-    fh.write(svg_head())
-    fh.write('<title>Settlements, at their hex</title>\n<g font-family="' + FONT + '" paint-order="stroke" stroke="#fff" stroke-opacity="0.8" stroke-linejoin="round">\n')
-    for sx, x, y, rad, size, big, (anchor, tx, ty, _bb) in placed:
-        fh.write(f'<g data-id="{sx["id"]}"><circle cx="{x:.1f}" cy="{y:.1f}" r="{rad:.1f}" fill="#241F1B" stroke="#fff" stroke-width="{SC:.1f}"/>'
-                 f'<text x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}" font-size="{size:.1f}" font-style="{"normal" if big else "italic"}" stroke-width="{SC * 2.2:.1f}" fill="#241F1B">{sx["name"]}</text></g>\n')
-    fh.write('</g></svg>\n')
+ATLAS_PORTS = bool(ATLAS)   # (set again here for the reader) the Atlas's ports layer is drawn by tools/build-atlas.mjs, which knows which board each opens onto
+if not ATLAS_PORTS:
+    with open(f'{OUT}/places.svg', 'w') as fh:
+        fh.write(svg_head())
+        fh.write('<title>Settlements, at their hex</title>\n<g font-family="' + FONT + '" paint-order="stroke" stroke="#fff" stroke-opacity="0.8" stroke-linejoin="round">\n')
+        for sx, x, y, rad, size, big, (anchor, tx, ty, _bb) in placed:
+            fh.write(f'<g data-id="{sx["id"]}"><circle cx="{x:.1f}" cy="{y:.1f}" r="{rad:.1f}" fill="#241F1B" stroke="#fff" stroke-width="{SC:.1f}"/>'
+                     f'<text x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}" font-size="{size:.1f}" font-style="{"normal" if big else "italic"}" stroke-width="{SC * 2.2:.1f}" fill="#241F1B">{sx["name"]}</text></g>\n')
+        fh.write('</g></svg>\n')
 
 with open(f'{OUT}/regions.svg', 'w') as fh:
     fh.write(svg_head())
@@ -427,13 +478,22 @@ layers = [
     dict(id='shade', file='shade.png', kind='raster', format='png-grey', order=2, role='relief shading on its own; multiply it over any colour. 8-bit grey: factor = value / 255 x 2, so 128 is no change', blend='multiply', scale=2.0, default=False),
     dict(id='land-mask', file='land-mask.png', kind='raster', format='png-grey', order=0, role='white is land, black is sea. Sea is water joined to the open ocean, so land below sea level is land', blend='mask', default=False),
     dict(id='coast', file='coast.png', kind='raster', format='png-rgba', order=11, role='the shoreline as a transparent line', blend='normal', default=False),
-    dict(id='rivers', file='rivers.svg', kind='vector', format='svg', order=12, role='river centre lines, Natural Earth scale rank 5 and above (more than the board keeps)', blend='normal', default=False),
+    dict(id='rivers', file='rivers.svg', kind='vector', format='svg', order=12, role=f"river centre lines, Natural Earth scale rank {EARTH.get('riverRank', 5)} and above (more than the board keeps)", blend='normal', default=False),
     dict(id='hexes', file='hexes.svg', kind='vector', format='svg', order=20, role='the game grid: a three-tone shift, then a pale line with a dark one beside it. Groups: tone, keyline-pale, keyline-dark', blend='normal', default=True),
-    dict(id='graticule', file='graticule.svg', kind='vector', format='svg', order=30, role='latitude and longitude every 5 degrees, heavier every 10, and the Tropic of Cancer', blend='normal', default=True),
+    dict(id='graticule', file='graticule.svg', kind='vector', format='svg', order=30, role=(f"longitude every {GR['lonStep']} degrees, latitude every {GR['latStep']}, the equator heavier, the tropics and polar circles dashed" if GR else 'latitude and longitude every 5 degrees, heavier every 10, and the Tropic of Cancer'), blend='normal', default=True),
     dict(id='places', file='places.svg', kind='vector', format='svg', order=40, role='settlements at their hex, with names', blend='normal', default=True),
     dict(id='regions', file='regions.svg', kind='vector', format='svg', order=41, role='region and sea names', blend='normal', default=True),
-    dict(id='frame', file='frame.svg', kind='vector', format='svg', order=50, role='paper band, neat line and degree labels', blend='normal', default=True),
+    dict(id='frame', file='frame.svg', kind='vector', format='svg', order=50, role='paper band, neat line and degree labels' + (', with the time zones across the top' if (ATLAS.get('frame') or {}).get('timeZones') else ''), blend='normal', default=True),
 ]
+if ATLAS_PORTS:
+    layers = [l for l in layers if l['id'] != 'places']
+# Layers another tool adds to this set (tools/build-atlas.mjs: winds, lanes, ports...) are kept when this runs again.
+try:
+    _old = json.load(open(f'{OUT}/layers.json'))
+    layers += [l for l in _old.get('layers', []) if l.get('by') and os.path.exists(f'{OUT}/{l["file"]}')]
+    _old_recipes = _old.get('recipesBy', {})
+except Exception:
+    _old_recipes = {}
 for l in layers:
     l['bytes'] = os.path.getsize(f'{OUT}/{l["file"]}')
 manifest = {
@@ -454,11 +514,13 @@ manifest = {
         'learning-board': ['ground', 'hexes', 'graticule', 'places', 'regions', 'frame'],
         'recolour-it-yourself': ['ground-flat', 'shade', 'land-mask'],
         'overlay-on-something-else': ['hexes', 'graticule', 'places', 'regions'],
+        **_old_recipes,
     },
+    **({'recipesBy': _old_recipes} if _old_recipes else {}),
     'data': {'board': f'data/maps/{map_id}.json', 'samples': EARTH['samplesFile'] and 'data/' + EARTH['samplesFile'], 'rules': 'data/earth/classify.json'},
     'sources': [
-        {'what': 'elevation and sea depth', 'name': 'Terrain Tiles (terrarium), zoom 7', 'credit': 'SRTM, GEBCO, ETOPO1 and national datasets, as credited by Mapzen/Tilezen terrain tiles'},
-        {'what': 'climate class (arid ground)', 'name': 'Beck et al. 2018, present-day Koeppen-Geiger', 'licence': 'CC BY 4.0'},
+        {'what': 'elevation and sea depth', 'name': f'Terrain Tiles (terrarium), zoom {Z}', 'credit': 'SRTM, GEBCO, ETOPO1 and national datasets, as credited by Mapzen/Tilezen terrain tiles'},
+        {'what': 'climate class (arid ground)', 'name': arg('koppen-name') or 'Beck et al. 2018, present-day Koeppen-Geiger', 'licence': 'CC BY 4.0'},
         {'what': 'rivers', 'name': 'Natural Earth 1:10m rivers and lake centerlines', 'licence': 'public domain'},
     ],
 }

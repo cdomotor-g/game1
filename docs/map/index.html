@@ -118,6 +118,7 @@
 
 <script src="../data/bundle.js"></script>
 <script src="map.js"></script>
+<script src="../js/atlas.js"></script>
 <script src="export.js"></script>
 <script>
 (function () {
@@ -167,13 +168,28 @@
     /* tone, graticule and frame only exist for a board that has a relief plate and a georeference. */
     return built.layers[k] && (built.layers[k].childNodes.length || k === 'legend');
   });
+  /* The Atlas brings its own layers - winds, lanes, airship lines, ports, the Region boards - drawn by
+     tools/build-atlas.mjs on the plate's own pixels. They ride as pictures over the overlay, and the
+     overlay's own place marks stand down for the Atlas's ports. */
+  var ATLAS = map.atlas ? [['boards', 'boards'], ['winds', 'winds'], ['lanes', 'lanes'], ['airships', 'airships'], ['ports', 'places']] : [];
+  ATLAS.forEach(function (pair) {
+    var g = MapKit.svg('g', { class: 'layer-' + pair[0] });
+    g.appendChild(MapKit.svg('image', { href: 'layers/' + map.id + '/' + pair[1] + '.svg', x: 0, y: 0, width: map.plate.width, height: map.plate.height }));
+    built.layers[pair[0]] = g;
+    order.splice(order.indexOf('graticule') + 1, 0, pair[0]);
+  });
+  if (ATLAS.length) order = order.filter(function (k) { return k !== 'places'; });
+  var plan = MapKit.svg('g', { class: 'layer-plan' });
   order.forEach(function (k) { overlay.appendChild(built.layers[k]); });
+  overlay.appendChild(plan);
 
   /* ------------------------------------------------------------- layers */
 
   /* Over a relief picture the flat terrain colours and the letter codes would only hide it, so they start off. */
-  var state = { wash: !relief, tone: true, grid: true, codes: !relief, routes: true, labels: false, places: true, graticule: true, legend: true, frame: true };
-  var LABELS = { wash: 'terrain', tone: 'tone', grid: 'grid', codes: 'letters', routes: 'routes', labels: 'coords', places: 'places', graticule: 'degrees', legend: 'key', frame: 'frame' };
+  var state = { wash: !relief, tone: true, grid: true, codes: !relief, routes: true, labels: false, places: true, graticule: true, legend: true, frame: true,
+                boards: true, winds: true, lanes: true, airships: true, ports: true };
+  var LABELS = { wash: 'terrain', tone: 'tone', grid: 'grid', codes: 'letters', routes: 'routes', labels: 'coords', places: 'places', graticule: 'degrees', legend: 'key', frame: 'frame',
+                 boards: 'region boards', winds: 'winds', lanes: 'trade lanes', airships: 'airships', ports: 'ports' };
   order.forEach(function (k) { built.layers[k].style.display = state[k] ? '' : 'none'; });
   var toggles = document.getElementById('toggles');
   order.forEach(function (key) {
@@ -335,7 +351,61 @@
     if (t.features && t.features.length) html += '<dt>features</dt><dd>' + t.features.join(', ') + '</dd>';
     if (t.deposits && t.deposits.length) html += '<dt>deposits</dt><dd>' + t.deposits.join(', ') + '</dd>';
     html += '</dl>';
+    if (map.atlas) html += atlasInfo(hex);
     info.innerHTML = html;
+    if (map.atlas) wireVoyage(hex);
+  }
+
+  /* ------------------------------------------------------------ the Atlas */
+  /* What a hex of the Atlas means at sea, and a voyage from any port to any other - worked out by
+     docs/js/atlas.js, the same code that sailed the lanes printed on the board. */
+  var atlas = map.atlas ? Atlas.create(map) : null;
+  var COMPASS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  function atlasInfo(hex) {
+    var w = atlas.windAt(hex.col, hex.row);
+    var port = (map.atlas.ports || []).filter(function (p) { return p.hex[0] === hex.col && p.hex[1] === hex.row; })[0];
+    var h = '<h2>At sea</h2><dl>';
+    var ll = atlas.latLonOf(hex.col, hex.row);
+    h += '<dt>middle</dt><dd>' + Math.abs(ll.lat).toFixed(0) + '°' + (ll.lat >= 0 ? 'N' : 'S') + ' ' + Math.abs(ll.lon).toFixed(1) + '°' + (ll.lon >= 0 ? 'E' : 'W') + '</dd>';
+    if (w) {
+      var calm = w.speed < map.atlas.winds.rule.calmBelowMs;
+      h += '<dt>wind</dt><dd>' + (calm ? 'calm' : 'blowing ' + COMPASS[Math.round(w.bearing / 45) % 8] + ', ' + w.speed + ' m/s') + '</dd>';
+      h += '<dt>belt</dt><dd>' + w.belt.replace(/-/g, ' ') + '</dd>';
+      h += '<dt>a step costs</dt><dd>' + [0, 1, 2, 3, 4, 5].map(function (d) { return ['E', 'NE', 'NW', 'W', 'SW', 'SE'][d] + ' ' + atlas.stepCost(hex.col, hex.row, d).toFixed(2); }).join(' · ') + ' <span class="coord">(example rule)</span></dd>';
+    }
+    h += '</dl>';
+    if (port) {
+      h += '<p>' + (port.kind === 'board' ? 'Opens onto a Region board: <b>' + port.board + '</b>.' : 'An abstract harbour: trade here is a market card.') + (port.afloat ? ' An anchorage - its hex is water at this scale.' : '') + '</p>';
+      h += '<p>Sail to <select id="voyage-to"><option value="">a port…</option>' + map.atlas.ports.filter(function (p) { return p.id !== port.id; }).map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') + '</select> <span id="voyage-out" class="coord"></span></p>';
+      h += '<p>Fly to <select id="flight-to"><option value="">a port…</option>' + map.atlas.ports.filter(function (p) { return p.id !== port.id; }).map(function (p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') + '</select> <span id="flight-out" class="coord"></span></p>';
+      selectedPort = port;
+    } else selectedPort = null;
+    return h;
+  }
+  var selectedPort = null;
+  function drawPlan(hexes, colour) {
+    while (plan.firstChild) plan.removeChild(plan.firstChild);
+    hexes.forEach(function (h) {
+      plan.appendChild(MapKit.svg('polygon', { points: L.corners(h[0], h[1]).map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '), fill: colour, 'fill-opacity': 0.28, stroke: colour, 'stroke-width': L.width * 0.03 }));
+    });
+  }
+  function wireVoyage() {
+    var to = document.getElementById('voyage-to'), fly = document.getElementById('flight-to');
+    if (!to || !selectedPort) return;
+    var from = selectedPort;
+    to.onchange = function () {
+      var b = map.atlas.ports.filter(function (p) { return p.id === to.value; })[0];
+      if (!b) return;
+      var v = atlas.voyage({ col: from.hex[0], row: from.hex[1] }, { col: b.hex[0], row: b.hex[1] });
+      document.getElementById('voyage-out').textContent = v ? (v.hexes.length - 1) + ' hexes, ' + v.rounds + ' rounds by ship' : 'no sea way';
+      drawPlan(v ? v.hexes : [], '#A33B26');
+    };
+    fly.onchange = function () {
+      if (!fly.value) return;
+      var a = atlas.airship(from.id, fly.value);
+      document.getElementById('flight-out').textContent = (a.hexes.length - 1) + ' hexes, ' + a.km + ' km, ' + a.rounds + ' rounds by airship';
+      drawPlan(a.hexes, '#6B4C7D');
+    };
   }
 
   /* ----------------------------------------------------------------- key */

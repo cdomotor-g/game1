@@ -1229,7 +1229,7 @@ a rule of thumb.)
 
 ## event-black-sails — Black Sails on the Horizon *(crime, EVT-38)*
 
-> ✅ **WAITING — THIS ONE IS YOURS.** Page: A4 landscape, 3:2. At least **866 px on the long side** (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/event-black-sails.png` — see `docs/art/AGENTS.md` for how.
+> ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/event-black-sails.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.
 
 ```text
 [PREAMBLE]
