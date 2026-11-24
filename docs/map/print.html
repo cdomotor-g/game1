@@ -149,7 +149,12 @@
      long as there was one board. A picker rather than a default, because a board
      you cannot reach is a board you cannot print. */
   var boards = (D.maps || []).filter(function (m) { return (m.rows || []).length; });
-  var map = boards[0];
+  var wantedMap = new URLSearchParams(location.search).get('map');
+  var map = boards.filter(function (m) { return m.id === wantedMap; })[0] || boards[0];
+  /* Over a relief picture the letter codes and the coordinates would only clutter it, so they start off. */
+  if (map.plate && map.plate.relief) {
+    ['opt-codes', 'opt-labels'].forEach(function (id) { var el = document.getElementById(id); if (el) el.checked = false; });
+  }
 
   var palette = {
     ink: { soot: { hex: '#1A1714' } },
@@ -337,7 +342,7 @@
         plate.style.top = (padY - r * stepY) + 'mm';
 
         var img = document.createElement('img');
-        img.src = map.plate.file;
+        img.src = MapKit.plateFile(map);
         img.alt = '';
         plate.appendChild(img);
 
@@ -358,13 +363,16 @@
         svg.setAttribute('viewBox', '0 0 ' + map.plate.width + ' ' + map.plate.height);
         svg.setAttribute('preserveAspectRatio', 'none');
         if (wantWash) svg.appendChild(built.layers.wash.cloneNode(true));
+        if (built.layers.tone.childNodes.length) svg.appendChild(built.layers.tone.cloneNode(true));
         if (wantGrid) svg.appendChild(built.layers.grid.cloneNode(true));
         if (wantCodes) svg.appendChild(built.layers.codes.cloneNode(true));
         if (wantRoutes) svg.appendChild(built.layers.routes.cloneNode(true));
         if (wantLabels) svg.appendChild(built.layers.labels.cloneNode(true));
+        if (built.layers.graticule.childNodes.length) svg.appendChild(built.layers.graticule.cloneNode(true));
         /* The replacement key always prints: the plate's own names four terrains
            this game does not have. */
         if (built.layers.legend) svg.appendChild(built.layers.legend.cloneNode(true));
+        if (built.layers.frame.childNodes.length) svg.appendChild(built.layers.frame.cloneNode(true));
         plate.appendChild(svg);
 
         win.appendChild(plate);
@@ -482,11 +490,14 @@
     var preset = presetNow();
     var layers = [];
     if (document.getElementById('opt-wash').checked) layers.push(built.layers.wash);
+    if (built.layers.tone.childNodes.length) layers.push(built.layers.tone);
     if (document.getElementById('opt-grid').checked) layers.push(built.layers.grid);
     if (document.getElementById('opt-codes').checked) layers.push(built.layers.codes);
     if (document.getElementById('opt-routes').checked) layers.push(built.layers.routes);
     if (document.getElementById('opt-labels').checked) layers.push(built.layers.labels);
+    if (built.layers.graticule.childNodes.length) layers.push(built.layers.graticule);
     if (built.layers.legend) layers.push(built.layers.legend);
+    if (built.layers.frame.childNodes.length) layers.push(built.layers.frame);
 
     var name = MapExport.slug(map.name) + '-' +
       Math.round(preset.mapWidthMm) + 'x' + Math.round(preset.mapHeightMm) + 'mm.png';

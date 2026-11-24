@@ -528,10 +528,24 @@ classified by `data/earth/classify.json`. Change a rule, not a hex: if Anatolia 
 mountain, move a threshold in `classify.json`. `draw-map.mjs` branches on `commission.earth` and
 nowhere else; the shoreline, texture, frame and key are the same code as every generated map.
 
-The scale scheme is **Atlas > Region > Mini-map**: an Earth region board (this kind) opens out
-into mini-maps exactly as a world hex always has, and a future Atlas sheet of the whole planet
-sits above it. Nothing about the Atlas exists yet. Teaching notes live on the map
-(`regions[].learn`, `lessons`) and are never typed into a rules chapter.
+**Rows follow the parallels** (`earth.grid.kind` `rows-on-parallels`): a hex row is a band of latitude and
+a column a band of longitude, so a hex can be read off the degrees round the frame. `plate.geo` says how to
+turn a plate pixel into degrees and back - use it, never guess.
+
+**The relief picture is layers, and a layer is never merged away.** `python3 tools/earth/relief.py <id>`
+(a person runs it, like fetch-earth: it needs the network) writes `docs/map/layers/<id>/` - ground, shade,
+land mask, coast, rivers, hexes, graticule, places, regions, frame - with a `layers.json` that says what each
+is, what blends how, and which recipes make which board. Every layer is on the same plate pixels, so anything
+downstream (another tool, another repository) takes only the layers it needs and stacks them without
+registering by eye. The hex grid is still an overlay the viewer draws from `rows` at read time; `hexes.svg`
+exists for the downstream tool that has no viewer. `validate-map.mjs` fails a layer set that is the wrong
+size or drawn for a different georeference.
+
+The scale scheme is **Atlas > Region > Mini-map**, all hexes with degrees over them: an Earth region board
+opens out into mini-maps exactly as a world hex always has, and an Atlas sheet of the whole planet (24
+columns of 15 degrees, one hex a ship-day at 1,350 km) sits above it. The Atlas does not exist as data yet;
+ships and airships will travel on it for several rounds while the players' towns carry on. Teaching notes live
+on the map (`regions[].learn`, `lessons`) and are never typed into a rules chapter.
 
 ## The book is three sources, and only one of them is rules
 

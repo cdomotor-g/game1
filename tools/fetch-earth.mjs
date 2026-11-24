@@ -38,7 +38,9 @@ const map = JSON.parse(readFileSync(join(ROOT, 'data', 'maps', `${mapId}.json`),
 const earth = map.commission?.earth;
 if (!earth) { console.error(`fetch-earth: ${mapId} has no commission.earth`); process.exit(1); }
 
-const spec = { cols: map.grid.cols, rows: map.grid.rows, hexKm: earth.hexKm, centre: earth.centre };
+const spec = earth.grid
+  ? { cols: map.grid.cols, rows: map.grid.rows, ...earth.grid }
+  : { cols: map.grid.cols, rows: map.grid.rows, hexKm: earth.hexKm, centre: earth.centre };
 const grid = earthGrid(spec);
 
 /* ---- every sample point, hex by hex ------------------------------------- */
@@ -53,18 +55,19 @@ console.log(`fetch-earth: ${spec.cols * spec.rows} hexes, ${points.length} sampl
 const work = join(tmpdir(), `earth-${mapId}`);
 mkdirSync(work, { recursive: true });
 const jobPath = join(work, 'job.json'), outPath = join(work, 'out.json');
-writeFileSync(jobPath, JSON.stringify({ points, koppen, zoom: earth.tileZoom ?? 6 }));
+writeFileSync(jobPath, JSON.stringify({ points, koppen, zoom: earth.tileZoom ?? 6, seeds: (earth.oceanSeeds ?? []).map((o) => [o.lat, o.lon]) }));
 const py = spawnSync('python3', ['-I', join(ROOT, 'tools', 'earth', 'lookup.py'), jobPath, join(work, 'tiles'), outPath], { stdio: 'inherit' });
 if (py.status !== 0) { console.error('fetch-earth: the raster lookup failed'); process.exit(1); }
-const { elev, koppen: kop } = JSON.parse(readFileSync(outPath, 'utf8'));
+const { elev, koppen: kop, ocean } = JSON.parse(readFileSync(outPath, 'utf8'));
 
 /* ---- one row of numbers per hex ----------------------------------------- */
-const per = Array.from({ length: spec.cols * spec.rows }, () => ({ e: [], k: [] }));
-owner.forEach((h, i) => { per[h].e.push(elev[i]); per[h].k.push(kop[i]); });
+const per = Array.from({ length: spec.cols * spec.rows }, () => ({ e: [], k: [], o: [] }));
+owner.forEach((h, i) => { per[h].e.push(elev[i]); per[h].k.push(kop[i]); per[h].o.push(ocean[i]); });
 const pct = (a, p) => { const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
-const cells = per.map(({ e, k }) => {
-  const land = e.map((v, i) => ({ v, k: k[i] })).filter((x) => x.v > 0);
-  const sea = e.filter((v) => v <= 0);
+const cells = per.map(({ e, k, o }) => {
+  /* Sea is water joined to the ocean (see lookup.py); everything else is land, even below sea level. */
+  const land = e.map((v, i) => ({ v, k: k[i] })).filter((x, i) => !o[i]);
+  const sea = e.filter((v, i) => o[i]);
   const landPct = Math.round((100 * land.length) / e.length);
   if (!land.length) return [0, 0, 0, 0, Math.round(pct(sea, 0.5)), 0];
   const lv = land.map((x) => x.v);
@@ -148,7 +151,7 @@ mkdirSync(dirname(outFile), { recursive: true });
 writeFileSync(outFile, JSON.stringify({
   $comment: 'SAMPLED, never edited. One row per hex, row-major (col fastest), from tools/fetch-earth.mjs. Each cell is [landPercent, meanLandElevationM, p90LandElevationM, maxElevationM, medianSeaDepthM, koppenClass]. The board is classified from this by tools/lib/earth.mjs and data/earth/classify.json; change the numbers there, not here.',
   map: mapId,
-  window: { cols: spec.cols, rows: spec.rows, hexKm: spec.hexKm, centre: spec.centre, projection: 'lambert-azimuthal-equal-area' },
+  window: { cols: spec.cols, rows: spec.rows, hexKm: grid.hexKm, centre: spec.centre, projection: spec.kind === 'rows-on-parallels' ? 'rows-on-parallels' : 'lambert-azimuthal-equal-area', ...(grid.geo ? { geo: grid.geo } : {}) },
   sources: [
     { what: 'elevation on land, depth at sea', name: 'Terrain Tiles (terrarium), zoom ' + (earth.tileZoom ?? 6), via: 'elevation-tiles-prod on AWS', credit: 'SRTM, GEBCO, ETOPO1 and national datasets, as credited by Mapzen/Tilezen terrain tiles' },
     { what: 'climate class', name: 'Beck et al. 2018, present-day Koeppen-Geiger, 0.083 degree', licence: 'CC BY 4.0' },

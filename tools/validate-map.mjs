@@ -65,6 +65,31 @@ function checkMap(file) {
     warnings.push(`${where}: terrain types with no character in the legend: ${unused.join(', ')}`);
   }
 
+  /* ----------------------------------------------------------- the relief plate */
+  /* A real-Earth board may carry a raster relief plate and its layers (tools/earth/relief.py). It is a
+     committed build output a person runs, so CI cannot redraw it - but it can check the files are there,
+     the same size as the plate, and drawn for the same georeference, which is what goes wrong when the
+     board changes and nobody re-runs the tool. */
+  if (map.plate?.relief) {
+    const dir = join(ROOT, 'docs', 'map');
+    const manifestPath = join(dir, map.plate.relief.manifest);
+    if (!existsSync(join(dir, map.plate.relief.file))) errors.push(`${where}: plate.relief.file ${map.plate.relief.file} is missing - run tools/earth/relief.py`);
+    if (!existsSync(manifestPath)) errors.push(`${where}: plate.relief.manifest ${map.plate.relief.manifest} is missing - run tools/earth/relief.py`);
+    else {
+      const man = JSON.parse(readFileSync(manifestPath, 'utf8'));
+      const g = map.plate.geo ?? {};
+      if (man.plate?.width !== map.plate.width || man.plate?.height !== map.plate.height) {
+        errors.push(`${where}: the relief layers are ${man.plate?.width} x ${man.plate?.height} but the plate is ${map.plate.width} x ${map.plate.height} - re-run tools/earth/relief.py`);
+      }
+      for (const k of ['lon0', 'lat0', 'hexLon', 'rowLat']) {
+        if (Math.abs((man.georeference?.[k] ?? NaN) - g[k]) > 1e-9) errors.push(`${where}: the relief layers were drawn for a different ${k} (${man.georeference?.[k]} against ${g[k]}) - re-run tools/earth/relief.py`);
+      }
+      for (const layer of man.layers ?? []) {
+        if (!existsSync(join(dir, 'layers', map.id, layer.file))) errors.push(`${where}: relief layer "${layer.id}" lists ${layer.file}, which is not there`);
+      }
+    }
+  }
+
   /* ---------------------------------------------------------------- the grid */
   const { cols, rows: rowCount } = map.grid ?? {};
   if (!cols || !rowCount) {

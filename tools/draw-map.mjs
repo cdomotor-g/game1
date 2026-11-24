@@ -221,7 +221,9 @@ if (EARTH) {
     console.error(`draw-map: ${mapId}'s samples are for a ${samples.window.cols} x ${samples.window.rows} board, not ${COLS} x ${ROWS}. Run tools/fetch-earth.mjs again.`);
     process.exit(1);
   }
-  earthGridFn = earthGrid({ cols: COLS, rows: ROWS, hexKm: EARTH.hexKm, centre: EARTH.centre });
+  earthGridFn = earthGrid(EARTH.grid
+    ? { cols: COLS, rows: ROWS, ...EARTH.grid }
+    : { cols: COLS, rows: ROWS, hexKm: EARTH.hexKm, centre: EARTH.centre });
   for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
     const id = classifyEarth(samples.cells[r * COLS + c], rules);
     if (isWaterId(id)) { if (id === 'shallow-water') EARTH_SHALLOW.add(key(c, r)); }
@@ -239,9 +241,11 @@ if (EARTH) {
   for (const m of EARTH.marsh ?? []) {
     const h = earthGridFn.hexOf(m.lat, m.lon);
     if (!h) { console.warn(`draw-map: ${m.name} is off the board`); continue; }
-    const k = key(h.col, h.row);
-    if (EARTH_T.has(k) && EARTH_T.get(k) !== 'mountain') EARTH_T.set(k, 'marsh');
-    else console.warn(`draw-map: ${m.name} falls on ${EARTH_T.get(k) ?? 'open water'}, not low land - no marsh made`);
+    /* A delta is where the land meets the sea, so the hex it falls in is often the sea's.
+       Take the nearest hex that is land and not mountain, within one step. */
+    const pick = [h, ...ring(h.col, h.row)].find((c) => EARTH_T.has(key(c.col, c.row)) && EARTH_T.get(key(c.col, c.row)) !== 'mountain');
+    if (pick) EARTH_T.set(key(pick.col, pick.row), 'marsh');
+    else console.warn(`draw-map: ${m.name} has no low land within a hex of (${m.lat}, ${m.lon}) - no marsh made`);
   }
   /* The game's rule is that deep water never touches land: a hull needs a shelf to
      come ashore on. The real sea does not always oblige - the Atlas coast and the
@@ -711,7 +715,7 @@ const earthRegions = () => {
       const near = Math.min(2, ...settlements.map((s2) => distance(s2, h)));
       const fits = h.col + 0.5 - half >= 0 && h.col + 0.5 + half <= COLS ? 0 : 50;
       const m = g.centreKm(h.col, h.row);
-      return fits - near * 1.5 + Math.hypot(m.x - a.p.x, m.y - a.p.y) / EARTH.hexKm;
+      return fits - near * 1.5 + Math.hypot(m.x - a.p.x, m.y - a.p.y) / earthGridFn.hexKm;
     };
     const mid = [...a.hexes].sort((p, q) => score(p) - score(q))[0];
     out.push({ id: a.id, name: a.name, terrain: dominant, labelAt: [mid.col, mid.row], summary: `${a.hexes.length} hexes, mostly ${dominant.replace('-', ' ')}. ${a.learn}`, learn: a.learn });
@@ -764,6 +768,14 @@ const plate = {
   height: plateHeight,
   field: { x: FRAME, y: FRAME, width: plateWidth - 2 * FRAME, height: fieldH },
   $fieldNote: 'Exact, because the tool chose it. On a drawn plate this is measured off the inner frame rule by eye and is the fiddliest step in the whole line.',
+  /* A real-Earth board says how to turn a plate pixel into degrees, so a reader or a downstream tool
+     never has to guess: hex (0,0) is at lon0, lat0; each column adds hexLon (odd rows half a column
+     more) and each row takes rowLat off the latitude. */
+  ...(EARTH && earthGridFn?.geo ? { geo: earthGridFn.geo } : {}),
+  /* The relief plate and its layers are drawn by tools/earth/relief.py (a person runs it; it needs the
+     network). Here we only say where they are, so the viewer and every other tool can find them. */
+  ...(EARTH?.relief ? { relief: { file: `layers/${mapId}/ground.jpg`, manifest: `layers/${mapId}/layers.json`,
+    $note: 'A raster relief picture of the real ground, on the same pixels as this plate, with its layers beside it. The viewer and print page prefer it to the flat plate; tools/validate-map.mjs checks the files are there and the same size.' } } : {}),
 };
 
 /* --------------------------------------------------------------- 9 · draw it */

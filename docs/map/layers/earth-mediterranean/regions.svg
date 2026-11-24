@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4000 2686" width="4000" height="2686" >
+<title>Region and sea names</title>
+<g font-family="Merriweather, 'Liberation Serif', Georgia, serif" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-opacity="0.75" stroke-linejoin="round">
+<text x="766.8" y="1094.5" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="iberia">IBERIA</text>
+<text x="1007.4" y="469.4" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="france">FRANCE</text>
+<text x="1488.7" y="469.4" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="alps">THE ALPS</text>
+<text x="1969.9" y="677.8" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="italy">ITALY</text>
+<text x="2330.9" y="469.4" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="balkans">THE BALKANS</text>
+<text x="2330.9" y="1094.5" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="greece">GREECE</text>
+<text x="3233.2" y="1198.7" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="anatolia">ANATOLIA</text>
+<text x="3233.2" y="365.2" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="pontic-steppe">THE PONTIC STEPPE</text>
+<text x="3052.7" y="2136.5" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="egypt">EGYPT</text>
+<text x="2090.2" y="1928.1" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="libya">LIBYA</text>
+<text x="1007.4" y="1511.3" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="maghreb">THE MAGHREB</text>
+<text x="1428.5" y="2240.7" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="sahara">THE SAHARA</text>
+<text x="1548.8" y="990.4" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="sardinia">SARDINIA</text>
+<text x="1548.8" y="782.0" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="corsica">CORSICA</text>
+<text x="2631.6" y="1407.1" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="crete">CRETE</text>
+<text x="1067.6" y="990.4" font-size="38.1" font-style="normal" font-weight="700" letter-spacing="6.4" stroke-width="4.0" fill="#241F1B" data-id="balearics">THE BALEARICS</text>
+<text x="1187.9" y="1198.7" font-size="34.1" font-style="italic" font-weight="400" letter-spacing="9.0" stroke-width="4.0" fill="#163454" data-id="western-med">WESTERN MEDITERRANEAN</text>
+<text x="2150.4" y="1407.1" font-size="34.1" font-style="italic" font-weight="400" letter-spacing="9.0" stroke-width="4.0" fill="#163454" data-id="ionian">CENTRAL MEDITERRANEAN</text>
+<text x="2812.1" y="1511.3" font-size="34.1" font-style="italic" font-weight="400" letter-spacing="9.0" stroke-width="4.0" fill="#163454" data-id="aegean">EASTERN MEDITERRANEAN</text>
+<text x="3293.4" y="677.8" font-size="34.1" font-style="italic" font-weight="400" letter-spacing="9.0" stroke-width="4.0" fill="#163454" data-id="black-sea">BLACK SEA</text>
+<text x="405.9" y="677.8" font-size="34.1" font-style="italic" font-weight="400" letter-spacing="9.0" stroke-width="4.0" fill="#163454" data-id="atlantic">ATLANTIC OCEAN</text>
+</g></svg>

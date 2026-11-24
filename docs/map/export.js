@@ -94,7 +94,7 @@
       var img = new Image();
       img.onload = function () { resolve(img); };
       img.onerror = function () { reject(new Error('the plate ' + map.plate.file + ' could not be read')); };
-      img.src = map.plate.file;
+      img.src = MapKit.plateFile(map);
     });
   }
 

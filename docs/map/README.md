@@ -567,30 +567,55 @@ finished when `validate-map.mjs` is clean and the proof sheet matches the drawin
 
 ## A real-Earth map
 
-`earth-mediterranean` is the first map of a different kind: its land is not grown or painted,
-it is **the planet**. The map file's `commission.earth` block says where on Earth the board
-sits (a centre, and how many kilometres one hex is), and nothing in it is a hex: a city is a
-latitude and a longitude, a river is a name, and the board works out where each falls.
+`earth-mediterranean` is the first map of a different kind: its land is not grown or painted, it is **the planet**.
+Its `commission.earth` block says where on Earth the board sits, and nothing in it is a hex: a city is a latitude and
+a longitude, a river is a name, and the board works out where each falls. Open it with
+[`index.html?map=earth-mediterranean`](index.html?map=earth-mediterranean).
+
+**Rows follow the parallels.** Every hex row is one band of latitude (1.198 degrees) and every column a band of
+longitude (1.71 degrees, about 154 km at the 36th parallel). The ground is drawn true at that parallel, so each
+meridian is a straight vertical line and each parallel a straight horizontal one, and a hex can be found by the
+degrees marked round the frame. The price: ground sizes drift from true away from the 36th parallel (about 14% at
+the top and bottom edges). The older equal-area layout (`grid.kind` `equal-area`, centre and `hexKm`) is still in
+`tools/lib/earth.mjs`; nothing uses it now.
 
 | | |
 | --- | --- |
-| `tools/fetch-earth.mjs` | **Run once by a person**, never by CI. Samples real elevation and sea depth, climate, and river courses under every hex and writes `data/earth/<region>.samples.json` - a few kilobytes. |
-| `data/earth/classify.json` | The rules that turn a sampled hex into one of the game's terrains: how high is a hill, how deep is the shelf, which climate is grassland. Tune it, and every real-Earth board reclassifies. |
-| `tools/lib/earth.mjs` | The one place a latitude and longitude becomes a hex and back. Equal-area projection, so a hex stands for the same ground everywhere. |
-| `tools/draw-map.mjs earth-mediterranean` | Classifies, places the cities, finds the lanes and roads, writes the board and draws the plate. Same drawer as every other generated map. |
+| `tools/fetch-earth.mjs` | **Run once by a person**, never by CI. Samples real elevation and sea depth, climate and river courses under every hex and writes `data/earth/<region>.samples.json` - a few kilobytes. Sea is water joined to the open ocean (`oceanSeeds`), so land below sea level, like the Qattara depression, is land. |
+| `data/earth/classify.json` | The rules that turn a sampled hex into one of the game's terrains. Tune it, and every real-Earth board reclassifies. |
+| `tools/lib/earth.mjs` | The one place a latitude and longitude becomes a hex and back. |
+| `tools/draw-map.mjs earth-mediterranean` | Classifies, places the cities, finds the lanes and roads, writes the board, the flat vector plate and `plate.geo`. |
+| `tools/earth/relief.py` | **Run by a person** (needs the network). Draws the relief plate and its layers, below. |
 
-**Scale.** One hex is 140 km flat to flat - about 17,000 km2. Sicily is a hex and a half and
-Crete half a hex, so islands too small to survive that are put back by name (`forceLand`).
-The board is the same 32 x 24 as every other, so a hex prints the same size and every token
-still fits. A finer view of any part of it is a second board of the same size, not smaller hexes.
+**The relief plate is layers, so anything downstream can take just the bit it wants.** Everything is under
+[`layers/earth-mediterranean/`](layers/earth-mediterranean/), described by `layers.json`, and every layer is on the
+same 4000 x 2686 plate pixels as the map's own plate, so any set of them stacks as it is:
 
-**Three honest departures from the planet**, each reported by the tool and none hidden:
-deep water beside land is laid down as shallow (the game's coast rule); a river is one hex wide
-and so only the great ones are kept; a spring in the mountains stays a mountain.
+| Layer | What it is |
+| --- | --- |
+| `ground.jpg` | The finished relief: `ground-flat` x `shade`, with the coast and rivers on. What the viewer shows. |
+| `ground-flat.jpg` | Height and depth colours only (dry colours where the climate is arid). No shading. |
+| `shade.png` | Relief shading alone, to multiply over any colour. 128 means no change. |
+| `land-mask.png` | White is land, black is sea. |
+| `coast.png` | The shoreline, transparent. |
+| `rivers.svg` | River centre lines (more than the board keeps). |
+| `hexes.svg` | The game grid: a three-tone shift, then a pale line with a dark one beside it. |
+| `graticule.svg` | Latitude and longitude every 5 degrees, heavier every 10, and the Tropic of Cancer. |
+| `places.svg`, `regions.svg` | Settlements and the region and sea names. Labels that would collide are moved or left off. |
+| `frame.svg` | The paper band, neat line and degree labels. |
 
-**Teaching.** Every region carries a `learn` note and the board carries `lessons`, each a fact
-about a real place with the hex it fell in. They are written once in the commission and
-printed by whatever shows the map.
+`layers.json` also carries the georeference (how to turn a pixel into degrees and back), the data files the board
+comes from, the sources and their licences, and a few ready-made **recipes**: `just-the-ground`, `play-board`,
+`learning-board`, `recolour-it-yourself`, `overlay-on-something-else`. A layer file is never edited by hand; change
+the commission or `classify.json`, run `draw-map.mjs`, then `relief.py`. `validate-map.mjs` checks the layers are
+there, the size of the plate and drawn for the same georeference, which is what goes stale when a board changes.
 
-**Sources** (credited in the samples file): Terrain Tiles for elevation and depth, Beck et al. 2018
+**Three honest departures from the planet**, each reported by the tool and none hidden: deep water beside land is laid
+down as shallow (the game's coast rule); a river is one hex wide, so only the great ones are kept; a spring in the
+mountains stays a mountain.
+
+**Teaching.** Every region carries a `learn` note and the board carries `lessons`, each a fact about a real place with
+the hex it fell in. They are written once in the commission and printed by whatever shows the map.
+
+**Sources** (credited in the samples file and `layers.json`): Terrain Tiles for elevation and depth, Beck et al. 2018
 Koeppen-Geiger climate (CC BY 4.0), Natural Earth rivers (public domain).

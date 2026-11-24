@@ -5,7 +5,7 @@ points and answers with the numbers under them.
   lookup.py <job.json> <cache-dir> <out.json>
 
 job.json: {"points": [[lat, lon], ...], "koppen": "<path to Beck_KG_V1_present_0p083.tif>", "zoom": 6}
-out.json: {"elev": [metres...], "koppen": [class...]}
+out.json: {"elev": [metres...], "koppen": [class...], "ocean": [bool...]}
 
 Elevation and sea depth are one raster: the AWS "terrarium" tiles (land from SRTM and its
 neighbours, sea from GEBCO/ETOPO), where metres = R*256 + G + B/256 - 32768.
@@ -44,6 +44,40 @@ def tile(x, y):
 kg = np.array(Image.open(job["koppen"]))
 KH, KW = kg.shape
 
+def ocean_mask(points, seeds):
+    """Which points are SEA: water joined to the open ocean. Land that happens to lie below sea level
+    (the Qattara depression, the Dead Sea shore) is land, so "elevation <= 0" is not the test - a flood
+    fill from known open water is."""
+    xs, ys = zip(*[tile_of(la, lo) for la, lo in points])
+    x0, x1, y0, y1 = int(min(xs)), int(max(xs)), int(min(ys)), int(max(ys))
+    mos = np.zeros(((y1 - y0 + 1) * 256, (x1 - x0 + 1) * 256), np.float32)
+    for tx in range(x0, x1 + 1):
+        for ty in range(y0, y1 + 1):
+            mos[(ty - y0) * 256:(ty - y0 + 1) * 256, (tx - x0) * 256:(tx - x0 + 1) * 256] = tile(tx, ty)
+    k = 4
+    lo = mos[::k, ::k] <= 0
+    fl = np.zeros_like(lo)
+    for la, lo_ in seeds:
+        fx, fy = tile_of(la, lo_)
+        i, j = int((fy - y0) * 256 / k), int((fx - x0) * 256 / k)
+        if 0 <= i < lo.shape[0] and 0 <= j < lo.shape[1] and lo[i, j]:
+            fl[i, j] = True
+    while True:
+        n = fl.copy()
+        n[1:] |= fl[:-1]; n[:-1] |= fl[1:]; n[:, 1:] |= fl[:, :-1]; n[:, :-1] |= fl[:, 1:]
+        n &= lo
+        if (n == fl).all():
+            break
+        fl = n
+    d = fl.copy()                       # one cell of slack so a shoreline point is not missed
+    d[1:] |= fl[:-1]; d[:-1] |= fl[1:]; d[:, 1:] |= fl[:, :-1]; d[:, :-1] |= fl[:, 1:]
+    out = []
+    for (la, lo_), fx, fy in zip(points, xs, ys):
+        i = min(d.shape[0] - 1, max(0, int((fy - y0) * 256 / k))); j = min(d.shape[1] - 1, max(0, int((fx - x0) * 256 / k)))
+        out.append(bool(d[i, j]))
+    return out
+
+
 elev, koppen = [], []
 for lat, lon in job["points"]:
     fx, fy = tile_of(lat, lon)
@@ -55,4 +89,6 @@ for lat, lon in job["points"]:
     c = min(KW - 1, max(0, int((lon + 180.0) / (360.0 / KW))))
     koppen.append(int(kg[r, c]))
 
-json.dump({"elev": elev, "koppen": koppen}, open(sys.argv[3], "w"))
+ocean = ocean_mask(job["points"], job.get("seeds", [])) if job.get("seeds") else [e <= 0 for e in elev]
+ocean = [o and e <= 0 for o, e in zip(ocean, elev)]
+json.dump({"elev": elev, "koppen": koppen, "ocean": ocean}, open(sys.argv[3], "w"))

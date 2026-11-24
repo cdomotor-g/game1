@@ -22,8 +22,83 @@ const R = 6371.0088;          // km, mean Earth radius
 const RAD = Math.PI / 180;
 const SQRT3 = Math.sqrt(3);
 
-/** @param {{cols:number, rows:number, hexKm:number, centre:{lat:number, lon:number}}} spec */
+/**
+ * Which layout a region uses is `commission.earth.grid.kind`:
+ *   'rows-on-parallels'  every hex row is one band of latitude and every column a band of longitude,
+ *                        so a hex can be read off the degrees round the frame (the default for new maps)
+ *   'equal-area'         the older Lambert azimuthal layout, kept so nothing already built moves
+ * @param {{cols:number, rows:number, kind?:string, hexLon?:number, stdParallel?:number, hexKm?:number, centre:{lat:number, lon:number}}} spec
+ */
 export function earthGrid(spec) {
+  return spec.kind === 'rows-on-parallels' ? parallelGrid(spec) : areaGrid(spec);
+}
+
+const KM_PER_DEG = (2 * Math.PI * R) / 360;
+
+/**
+ * Rows follow the parallels. The ground is drawn on the plain rectangular ("equirectangular")
+ * layout scaled true at one standard parallel, so every meridian is a straight vertical line and
+ * every parallel a straight horizontal one, which is what lets a reader find a hex by its degrees.
+ * The price is that ground sizes drift away from that parallel (about 14% at the board's top and
+ * bottom edges for the Mediterranean); the sheet says so rather than hiding it.
+ *
+ * Everything here is in "kilometres" in that plane, so the rest of the tools can keep asking
+ * `centreKm` and `forward` without knowing which layout they have.
+ */
+function parallelGrid(spec) {
+  const { cols, rows, centre, hexLon, stdParallel } = spec;
+  const kx = KM_PER_DEG * Math.cos(stdParallel * RAD);
+  const hexKm = hexLon * kx;                          // flat to flat
+  const radius = hexKm / SQRT3;
+  const rowKm = 1.5 * radius;                         // one row, in km
+  const rowLat = rowKm / KM_PER_DEG;                  // ...and in degrees of latitude
+  const midCol = (cols - 1) / 2 + 0.25;               // the odd rows sit half a hex right
+  const lon0 = centre.lon - midCol * hexLon;          // longitude of hex (0,0)
+  const lat0 = centre.lat + ((rows - 1) / 2) * rowLat; // latitude of row 0
+  const widthKm = (cols + 0.5) * hexKm;
+  const heightKm = 2 * radius + (rows - 1) * rowKm;
+
+  const forward = (lat, lon) => ({ x: (lon - centre.lon) * kx, y: (lat - centre.lat) * KM_PER_DEG });
+  const inverse = (x, y) => ({ lat: centre.lat + y / KM_PER_DEG, lon: centre.lon + x / kx });
+  const centreKm = (col, row) => ({
+    x: (col + 0.5 * (row & 1) - midCol) * hexKm,
+    y: ((rows - 1) / 2 - row) * rowKm,
+  });
+  const latLonOf = (col, row) => { const { x, y } = centreKm(col, row); return inverse(x, y); };
+  const hexOf = (lat, lon) => {
+    const { x, y } = forward(lat, lon);
+    let best = null, bestD = Infinity;
+    const rowGuess = Math.round((rows - 1) / 2 - y / rowKm);
+    for (let r = rowGuess - 1; r <= rowGuess + 1; r++) {
+      if (r < 0 || r >= rows) continue;
+      const colGuess = Math.round(x / hexKm + midCol - 0.5 * (r & 1));
+      for (let c = colGuess - 1; c <= colGuess + 1; c++) {
+        if (c < 0 || c >= cols) continue;
+        const m = centreKm(c, r);
+        const d = Math.hypot(m.x - x, m.y - y);
+        if (d < bestD) { bestD = d; best = { col: c, row: r }; }
+      }
+    }
+    return best && bestD <= hexKm * 0.62 ? best : null;
+  };
+  const samplePoints = (col, row, across = 9) => {
+    const m = centreKm(col, row);
+    const out = [];
+    const step = hexKm / across;
+    for (let i = -across; i <= across; i++) for (let j = -across; j <= across; j++) {
+      const dx = i * step, dy = j * step * 0.866;
+      const ax = Math.abs(dx), ay = Math.abs(dy);
+      if (ax > hexKm / 2 || ay > radius || ay > radius - ax / SQRT3) continue;
+      out.push(inverse(m.x + dx, m.y + dy));
+    }
+    return out;
+  };
+  /** Everything a reader of the finished plate needs to turn a pixel into degrees. */
+  const geo = { kind: 'rows-on-parallels', lon0, lat0, hexLon, rowLat, stdParallel };
+  return { centreKm, latLonOf, hexOf, samplePoints, forward, inverse, widthKm, heightKm, hexKm, geo };
+}
+
+function areaGrid(spec) {
   const { cols, rows, hexKm, centre } = spec;
   const w = hexKm;
   const radius = w / SQRT3;
@@ -91,7 +166,7 @@ export function earthGrid(spec) {
     return out;
   };
 
-  return { centreKm, latLonOf, hexOf, samplePoints, forward, inverse, widthKm, heightKm };
+  return { centreKm, latLonOf, hexOf, samplePoints, forward, inverse, widthKm, heightKm, hexKm, geo: null };
 }
 
 /* ------------------------------------------------------------- classification */

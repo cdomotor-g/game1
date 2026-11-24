@@ -126,7 +126,11 @@
   /* The first map that is actually a BOARD. data/maps/ also holds commissions -
      a map whose plate has not been drawn yet, with an empty `rows` - and there is
      nothing here to draw for one. See docs/MINT.md. */
-  var map = (D.maps || []).filter(function (m) { return (m.rows || []).length; })[0];
+  var boards = (D.maps || []).filter(function (m) { return (m.rows || []).length; });
+  /* ?map=earth-mediterranean picks a board by id; with none it is the first, as it always was. */
+  var wanted = new URLSearchParams(location.search).get('map');
+  var map = boards.filter(function (m) { return m.id === wanted; })[0] || boards[0];
+  var relief = !!(map.plate && map.plate.relief);
   var palette = null;
 
   /* The palette is a doc file rather than a dataset, so its colours are inlined
@@ -151,22 +155,28 @@
   document.title = map.name + ' — game1';
 
   var plate = document.getElementById('plate');
-  plate.src = map.plate.file;
+  plate.src = MapKit.plateFile(map);
 
   var overlay = document.getElementById('overlay');
   overlay.setAttribute('viewBox', '0 0 ' + map.plate.width + ' ' + map.plate.height);
 
   var built = MapKit.buildOverlay(map, palette, { terrains: terrains });
   var L = built.layout;
-  var order = ['wash', 'grid', 'codes', 'routes', 'labels', 'places', 'legend'];
+  var order = ['wash', 'tone', 'grid', 'codes', 'routes', 'labels', 'places', 'graticule', 'legend', 'frame'];
+  order = order.filter(function (k) {
+    /* tone, graticule and frame only exist for a board that has a relief plate and a georeference. */
+    return built.layers[k] && (built.layers[k].childNodes.length || k === 'legend');
+  });
   order.forEach(function (k) { overlay.appendChild(built.layers[k]); });
 
   /* ------------------------------------------------------------- layers */
 
-  var state = { wash: true, grid: true, codes: true, routes: true, labels: false, places: true, legend: true };
-  var LABELS = { wash: 'terrain', grid: 'grid', codes: 'letters', routes: 'routes', labels: 'coords', places: 'places', legend: 'key' };
+  /* Over a relief picture the flat terrain colours and the letter codes would only hide it, so they start off. */
+  var state = { wash: !relief, tone: true, grid: true, codes: !relief, routes: true, labels: false, places: true, graticule: true, legend: true, frame: true };
+  var LABELS = { wash: 'terrain', tone: 'tone', grid: 'grid', codes: 'letters', routes: 'routes', labels: 'coords', places: 'places', graticule: 'degrees', legend: 'key', frame: 'frame' };
+  order.forEach(function (k) { built.layers[k].style.display = state[k] ? '' : 'none'; });
   var toggles = document.getElementById('toggles');
-  Object.keys(state).forEach(function (key) {
+  order.forEach(function (key) {
     var b = document.createElement('button');
     b.type = 'button';
     b.textContent = LABELS[key];
@@ -178,7 +188,6 @@
     };
     toggles.appendChild(b);
   });
-  built.layers.labels.style.display = 'none';
 
   /* ---------------------------------------------------------- taking it away */
 
@@ -194,7 +203,7 @@
   }
   say('The PNG is the whole plate at ' + map.plate.width + ' × ' + map.plate.height +
       ' px, with the layers you have switched on.' +
-      (map.plate.kind === 'generated'
+      (map.plate.kind === 'generated' && !relief
         ? ' The plate itself is vector, so it prints at any size — the pixel figure is only what this download rasterises to.'
         : ''));
 
