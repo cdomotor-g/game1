@@ -1,0 +1,22 @@
+{
+  "$comment": "The items board: a second A4 sheet for a player who carries more than the two kit cards their player board holds. It is not a new kind of furniture - it is the player board's own kit bay (a ladder pair, two staggered cards, a ladder pair) printed twice, so a card counts its damage and its capacity the same way wherever it is lying. What the ladders COUNT is the kit tracks in data/playerboard.json and is not restated here; how the sheet is DRAWN is components.json board. This file says only what the sheet is and how many cards it takes.",
+  "version": "0.1.0",
+  "board": {
+    "id": "items-board",
+    "name": "Items Board",
+    "sheet": "A4 landscape",
+    "summary": "Five more kit cards, each with its own damage and capacity ladders, for a figure carrying more than its player board holds.",
+    "tracksFrom": "playerboard"
+  },
+  "slots": [
+    { "id": "kit", "name": "Kit slots", "label": "ITEM", "count": 5,
+      "takes": ["items", "tools", "modifications", "quests", "commodities"],
+      "note": "The same four things a kit slot on the player board takes, counted on the same two ladders." }
+  ],
+  "key": {
+    "title": "THE ITEMS BOARD",
+    "lines": [
+      "Each card is counted on the pair of ladders its arrow points from."
+    ]
+  }
+}

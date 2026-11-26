@@ -66,6 +66,7 @@ const read = (f) => JSON.parse(readFileSync(join(DATA, f), 'utf8'));
 const palette = JSON.parse(readFileSync(join(ROOT, 'docs/art/palette.json'), 'utf8'));
 const components = read('components.json');
 const spec = read('playerboard.json');
+const itemSpec = read('itemboard.json');
 
 /* Datasets a track may point a dotted path at, rather than restating a number
    that already exists somewhere. `stepFrom` is the one in use: the burden track
@@ -152,38 +153,53 @@ const SLOT = {
   r: mm(B.slot.cornerRadiusMm),
 };
 
-const KIT_COLS = 2;
-const KIT_ROWS = 2;
-
-/* TWO KINDS OF TRACK, and only one of them is in the middle.
- *
- * A COLUMN track counts something about the FIGURE in the recess - its health,
- * its strength, how far it has left to walk, what it is holding - and there is
- * one figure, so there is one of each. A KIT track counts something about a CARD
- * in a slot, and there are four slots, so there are four of it. That is the
- * whole of the distinction and it is declared in the data (playerboard.json
- * `place`), never inferred from a track's name here.
- *
- * The kit track is the wear ladder, and it is drawn against its recess rather
- * than up the middle for a reason a column could not have satisfied: one W
- * column could only ever have counted one item's wear, and a player carries
- * four. Putting it where the card lies is what makes it unambiguous which axe
- * is blunt without anybody labelling anything. */
+/* THE KIT IS LAID OUT IN BAYS. A bay is a column of two card recesses with a
+   ladder pair either side of it: the top card belongs to the pair on its left,
+   the bottom card to the pair on its right, and the two cards are staggered
+   towards their own pair (components.json board.kitTrack.staggerMm) so nobody
+   has to be told which ladder is whose. Every ladder pair runs the full height
+   of the sheet - the head, then one rung per step from kitTrack.from to .to -
+   which is what lets twenty rungs stand beside a card that is only 88 mm tall.
+   The player board has one bay; the items board (data/itemboard.json) has two.
+   Same module, same arithmetic, and no coordinate typed for either. */
 const TRACKS = spec.tracks;
 const COLUMN_TRACKS = TRACKS.filter((t) => (t.place ?? 'column') === 'column');
-const KIT_TRACK = TRACKS.find((t) => t.place === 'kit') ?? null;
+const KIT_TRACKS = TRACKS.filter((t) => t.place === 'kit');
 
-/* A wear ladder is as wide as the piece that walks it plus its clearance - the
- * same arithmetic a market strip cell used, and for the same reason. It is a PIP
- * and not a bar because fifteen rungs down an 88 mm recess is under six
- * millimetres a rung: a 7 mm bar overhangs, a 4.5 mm pip leaves a millimetre and
- * a half to get a fingernail under. */
 const KT = B.kitTrack;
+const FR = B.frame;
 const PIP = mm(components.tokens.pip.diameterMm);
-const LADDER_W = KIT_TRACK ? PIP + 2 * mm(KT.clearanceMm) : 0;
-const LADDER_GAP = KIT_TRACK ? mm(KT.gapMm) : 0;
-const KIT_UNIT = LADDER_W + LADDER_GAP + SLOT.w;
-const KIT_W = KIT_COLS * KIT_UNIT + (KIT_COLS - 1) * GUT;
+/* THE FRAME DECIDES THE SHAPE OF A TRACK. Every track is a slot cut through
+   the frame (components.json board.frame): an open LANE the marker slides up and
+   down, and a NOTCH beside every rung that the marker is pushed sideways into and
+   sits in. One marker size serves every track on both sheets - the pip - so a
+   notch and a lane are each a pip plus the frame's clearance wide. */
+const MARK = PIP + mm(FR.clearanceMm);
+const WALL = mm(FR.minWallMm);
+/* A column track is a lane with its notches on the left. A kit pair shares ONE
+   lane between its two tracks - the first track's notches on the left of it, the
+   second's on the right - so the numbers in the middle serve both, and a pair
+   costs three marker-widths rather than four. */
+if (KIT_TRACKS.length > 2) throw new Error('a kit ladder shares one lane between at most two tracks');
+const PAIR_W = (KIT_TRACKS.length + 1) * MARK;
+const LADDER_GAP = Math.max(mm(KT.gapMm), WALL);
+const STAGGER = mm(KT.staggerMm);
+const BAY_W = 2 * PAIR_W + 2 * LADDER_GAP + SLOT.w + STAGGER;
+const SLOTS_PER_BAY = 2;
+const KIT_HEAD = mm(KT.headMm);
+const KIT_RUNGS = KT.to - KT.from + 1;
+const KIT_CELL_H = (CONTENT.h - KIT_HEAD) / KIT_RUNGS;
+
+if (KIT_TRACKS.length && KIT_CELL_H < MARK + WALL) {
+  throw new Error(
+    `a kit ladder is ${KIT_RUNGS} rungs down the ${num(CONTENT.h / U)}mm sheet, ${num(KIT_CELL_H / U)}mm a rung, ` +
+    `and a notch (${num(MARK / U)}mm) plus the frame's thinnest wall (${FR.minWallMm}mm) needs more - the teeth would snap.`
+  );
+}
+
+const kitSlot = spec.slots.find((s) => s.id === 'kit');
+const PLAYER_BAYS = Math.ceil(kitSlot.count / SLOTS_PER_BAY);
+const KIT_W = PLAYER_BAYS * BAY_W + (PLAYER_BAYS - 1) * GUT;
 
 /* Everything the cards and their ladders do not want is the columns'. */
 const TRACK_BLOCK = {
@@ -196,36 +212,15 @@ const CELL_W = TRACK_BLOCK.w / COLUMN_TRACKS.length;
 const HEAD = mm(B.track.headMm);
 const RUNGS = B.track.to - B.track.from + 1;
 const CELL_H = (TRACK_BLOCK.h - HEAD) / RUNGS;
-const WEAR_CELL_H = SLOT.h / RUNGS;
 
-/* The piece has to fit its own rung. Nothing else in this build checks that a
- * marker fits the thing it stands on, because until the wear ladders arrived
- * nothing on this board was narrower than the piece walking it. */
-if (KIT_TRACK && WEAR_CELL_H < PIP) {
+if (CELL_W < 2 * MARK + WALL || CELL_H < MARK + WALL) {
   throw new Error(
-    `a wear ladder is ${RUNGS} rungs down a ${num(SLOT.h / U)}mm recess, which is ` +
-    `${num(WEAR_CELL_H / U)}mm a rung, and the pip that walks it is ` +
-    `${components.tokens.pip.diameterMm}mm - the piece overhangs its own rung. ` +
-    `Either the ceiling (components.json board.track.to) comes down or the pip does.`
-  );
-}
-if (CELL_W < mm(components.tokens.bar.diameterMm + 2)) {
-  throw new Error(
-    `${COLUMN_TRACKS.length} column tracks and ${KIT_TRACK ? KIT_COLS * KIT_ROWS : 0} wear ladders ` +
-    `leave ${num(CELL_W / U)}mm a column, and the bar that walks one is ` +
-    `${components.tokens.bar.diameterMm}mm - the board has run out of middle.`
+    `${COLUMN_TRACKS.length} column tracks and ${PLAYER_BAYS} kit bay(s) leave ${num(CELL_W / U)}x${num(CELL_H / U)}mm a rung, ` +
+    `and a lane and a notch (${num(2 * MARK / U)}mm) with the frame's wall (${FR.minWallMm}mm) need more - the board has run out of middle.`
   );
 }
 
 const KIT_X = CONTENT.x + CONTENT.w - KIT_W;
-/** The x of one kit unit - the ladder's left edge, with the recess to its right. */
-const kitUnitX = (i) => KIT_X + (i % KIT_COLS) * (KIT_UNIT + GUT);
-/* Two card recesses come up short of the sheet by more than a gutter, so the kit
-   rows are spread rather than stacked: the top row lines up with the card in
-   play and the bottom row with the foot of the round panel. Three columns of
-   things, one top line and one bottom line - which is what stops the right-hand
-   half reading as a block that has slipped. */
-const KIT_ROW_GAP = (CONTENT.h - 2 * SLOT.h) / (KIT_ROWS - 1);
 const PANEL = { x: CONTENT.x, y: CONTENT.y + SLOT.h + GUT, w: SLOT.w, h: CONTENT.h - SLOT.h - GUT };
 
 /* ---------------------------------------------------------------- utilities */
@@ -280,7 +275,14 @@ function timber(seed) {
  * belongs in it set faintly in the middle — which a card covers up the moment
  * one is played, and which is exactly when it stops being needed.
  */
-function slot(x, y, label) {
+function slot(x, y, label, notchSide = 'bottom') {
+  /* the frame behind the notched edge: the margin if the pocket is against the
+     sheet's edge, otherwise half the gap between the two rows of pockets, so the
+     two notches facing each other across it can never meet */
+  const rowGap = CONTENT.h - 2 * SLOT.h;
+  const atEdge = notchSide === 'top' ? y <= CONTENT.y + 1 : y + SLOT.h >= CONTENT.y + CONTENT.h - 1;
+  const room = atEdge ? mm(B.marginMm) : (rowGap + WALL) / 2;
+  CUTS.push(pocketPath(x, y, SLOT.w, SLOT.h, SLOT.r, notchSide, room));
   const g = B.slot.grooveInset;
   const b = mm(B.slot.bracketMm);
   const brackets = [
@@ -309,70 +311,126 @@ function slot(x, y, label) {
  * and the reason a player can read 12 without counting to 12. The bottom rung
  * is zero, so the token has somewhere to be when the answer is nothing.
  */
+/* ------------------------------------------------------------- the frame */
+
+/* What the frame cuts and engraves for the sheet being drawn. Every function
+   that draws a piece of the board pushes the hole it needs here as it goes, so
+   the frame is cut from exactly the geometry that was printed. */
+let CUTS = [];
+let ENGRAVE = [];
+let POCKETS = [];
+let MARKERS = 0;
+
+/** A slot with a lane from laneX to laneX + MARK, and a notch MARK square
+    beside each rung centre, on the left, the right or both. */
+function castellated(laneX, yTop, yBot, centres, sides) {
+  const L = laneX;
+  const R = laneX + MARK;
+  const h = MARK / 2;
+  const down = [...centres].sort((a, b) => a - b);
+  let d = `M ${num(L)},${num(yTop)} H ${num(R)}`;
+  if (sides.includes('right')) for (const cy of down) d += ` V ${num(cy - h)} H ${num(R + MARK)} V ${num(cy + h)} H ${num(R)}`;
+  d += ` V ${num(yBot)} H ${num(L)}`;
+  if (sides.includes('left')) for (const cy of [...down].reverse()) d += ` V ${num(cy + h)} H ${num(L - MARK)} V ${num(cy - h)} H ${num(L)}`;
+  return d + ' Z';
+}
+
+const rectPath = (x, y, w, h, r = 0) =>
+  `M ${num(x + r)},${num(y)} H ${num(x + w - r)} A ${num(r)},${num(r)} 0 0 1 ${num(x + w)},${num(y + r)} ` +
+  `V ${num(y + h - r)} A ${num(r)},${num(r)} 0 0 1 ${num(x + w - r)},${num(y + h)} H ${num(x + r)} ` +
+  `A ${num(r)},${num(r)} 0 0 1 ${num(x)},${num(y + h - r)} V ${num(y + r)} A ${num(r)},${num(r)} 0 0 1 ${num(x + r)},${num(y)} Z`;
+
+/** A card pocket with a finger notch on one edge. The notch is a circular
+    segment cut OUTWARD from the pocket into the frame - on the top edge it bulges
+    up, on the bottom edge it bulges down - so it is a recess beside the card and
+    never a lip over it. `room` is how much frame stands behind that edge; the
+    notch takes no more of it than leaves the thinnest wall. */
+function pocketPath(x, y, w, h, r, notchSide, room = Infinity) {
+  const c = mm(FR.thumb.widthMm) / 2;
+  const d = Math.min(mm(FR.thumb.depthMm), room - WALL);
+  if (d < mm(2)) throw new Error(`a card pocket has ${num(room / U)}mm of frame behind its ${notchSide} edge - no room for a finger notch`);
+  const R = (c * c + d * d) / (2 * d);
+  const cx = x + w / 2;
+  /* travelling right along the top edge, sweep 1 bulges up; travelling left
+     along the bottom edge, sweep 1 bulges down - outward either way */
+  const top = notchSide === 'top'
+    ? `H ${num(cx - c)} A ${num(R)},${num(R)} 0 0 1 ${num(cx + c)},${num(y)} H ${num(x + w - r)}`
+    : `H ${num(x + w - r)}`;
+  const bottom = notchSide === 'bottom'
+    ? `H ${num(cx + c)} A ${num(R)},${num(R)} 0 0 1 ${num(cx - c)},${num(y + h)} H ${num(x + r)}`
+    : `H ${num(x + r)}`;
+  POCKETS.push({ x, y, w, h });
+  return `M ${num(x + r)},${num(y)} ${top} A ${num(r)},${num(r)} 0 0 1 ${num(x + w)},${num(y + r)} ` +
+    `V ${num(y + h - r)} A ${num(r)},${num(r)} 0 0 1 ${num(x + w - r)},${num(y + h)} ${bottom} ` +
+    `A ${num(r)},${num(r)} 0 0 1 ${num(x)},${num(y + h - r)} V ${num(y + r)} A ${num(r)},${num(r)} 0 0 1 ${num(x + r)},${num(y)} Z`;
+}
+
+/**
+ * A COLUMN TRACK: a lane, a notch beside every rung, and the numbers in the
+ * lane. The marker sits in the notch beside its number; to move it, push it into
+ * the lane, slide it up or down, and push it into the next notch. The board
+ * prints the slot's own outline, so a board used without its frame still shows
+ * where every notch is.
+ */
 function track(t, index) {
   const step = t.step ?? dotted(t.stepFrom);
   const x = TRACK_BLOCK.x + index * CELL_W;
-  const pad = mm(0.8);
-  const col = { x: x + pad, w: CELL_W - 2 * pad };
   const top = TRACK_BLOCK.y + HEAD;
   const bottom = top + RUNGS * CELL_H;
-  const cx = x + CELL_W / 2;
+  const laneX = x + (CELL_W - 2 * MARK) / 2 + MARK;
+  const centres = Array.from({ length: RUNGS }, (_, i) => bottom - (i + 0.5) * CELL_H);
+  const outline = castellated(laneX, top, bottom, centres, ['left']);
+  CUTS.push(outline);
+  MARKERS += 1;
 
-  const wash = `<rect x="${num(col.x)}" y="${num(top)}" width="${num(col.w)}" height="${num(bottom - top)}" fill="${inkHex(t.ink)}" opacity="0.26"/>`;
+  const wash = `<path d="${outline}" fill="${inkHex(t.ink)}" opacity="0.3"/>`;
+  const ink = [`<path d="${outline}" fill="none" stroke="${SOOT}" stroke-width="1.4" stroke-linejoin="round"/>`];
 
-  const ink = [];
-  ink.push(`<rect x="${num(col.x)}" y="${num(top)}" width="${num(col.w)}" height="${num(bottom - top)}" rx="${num(mm(1.2))}" fill="none" stroke="${SOOT}" stroke-width="2"/>`);
-
-  /* Plain figures, and nothing else in the column. Every rung used to carry a
-     little ink-plate glyph saying which KIND of number it was - a notch down for
-     harm, a pip for a rating - and at eleven millimetres a column it fought the
-     number for the same three millimetres and won often enough to matter. There
-     is no glyph now, and no sign either: no plus, no minus. Which way a token
-     walks is on the track's `walks` line in data/playerboard.json and in the
-     rulebook, where a sentence has room to say it properly. */
+  /* A LIMIT is a rung where something happens to the figure - hunger at the top
+     of its track costs health every round. It is marked where the marker sits:
+     the rung's notch filled in the track's own ink and the cost printed in the
+     head, under the letter, so it is read before the marker ever gets there. */
+  const limitAt = t.limit?.at;
+  const limitWash = [];
   const numbers = [];
-  for (let i = 0; i < RUNGS; i++) {
+  centres.forEach((cy, i) => {
     const value = (B.track.from + i) * step;
-    const yLine = bottom - (i + 1) * CELL_H;
     const major = value !== 0 && value % (B.track.ruleEvery * step) === 0;
-    if (i < RUNGS - 1) {
-      ink.push(`<path d="M ${num(col.x)},${num(yLine)} H ${num(col.x + col.w)}" stroke="${SOOT}" stroke-width="${major ? 1.8 : 0.9}" opacity="${major ? 1 : 0.75}"/>`);
+    if (value === limitAt) {
+      limitWash.push(`<rect x="${num(laneX - MARK)}" y="${num(cy - MARK / 2)}" width="${num(MARK)}" height="${num(MARK)}" fill="${inkHex(t.limit.ink ?? 'oxide')}" opacity="0.85"/>`);
     }
-    const midY = bottom - (i + 0.5) * CELL_H;
     numbers.push(
-      `<text x="${num(cx + mm(0.7))}" y="${num(midY + mm(1.1))}" font-size="${num(mm(3))}" text-anchor="middle" ` +
-      `font-family="${SANS}"${major ? ' font-weight="bold"' : ''}>${value}</text>`
+      `<text x="${num(laneX + MARK / 2)}" y="${num(cy + mm(1))}" font-size="${num(mm(value >= 10 ? 2.7 : 3))}" text-anchor="middle" ` +
+      `font-family="${SANS}"${major || value === limitAt ? ' font-weight="bold"' : ''}>${value}</text>`
     );
-  }
+  });
   ink.push(`<g fill="${SOOT}">${numbers.join('')}</g>`);
 
-  /* The head, boxed like the header row of the sketch this board was drawn
-     from. A column is a shade over 13 mm wide and STRENGTH is eight letters:
-     set flat, the word is wider than the track it names and runs into its
-     neighbour. So the letter takes the middle at full size, the word runs UP
-     the side of it, and the unit — never more than a few characters — sits
-     under the letter where a reader will look for it. Nothing here drops below
-     the 6 pt floor in palette.json printSafety. */
-  const headMid = TRACK_BLOCK.y + HEAD / 2;
-  const lx = cx + mm(0.8);
+  /* The head is a window in the frame, a wall's width short of the slot below
+     it so the frame keeps a bridge between the two. */
+  const hx = x + WALL / 2;
+  const hw = CELL_W - WALL;
+  const hh = HEAD - WALL;
+  CUTS.push(rectPath(hx, TRACK_BLOCK.y, hw, hh, mm(1)));
+  const cx = x + CELL_W / 2;
+  const headMid = TRACK_BLOCK.y + hh / 2;
+  const sub = t.limit?.mark ?? t.unit;
   ink.push(
-    `<rect x="${num(col.x)}" y="${num(TRACK_BLOCK.y)}" width="${num(col.w)}" height="${num(HEAD)}" rx="${num(mm(1.2))}" fill="none" stroke="${T55}" stroke-width="0.9"/>` +
-    `<text x="${num(lx)}" y="${num(TRACK_BLOCK.y + mm(9.8))}" font-size="${num(mm(6.8))}" text-anchor="middle" font-weight="bold">${esc(t.letter)}</text>` +
-    `<text transform="translate(${num(x + mm(1.9))} ${num(headMid)}) rotate(-90)" font-size="${num(mm(2.15))}" text-anchor="middle" ` +
-    `letter-spacing="${num(mm(0.2))}" font-family="${SANS}" fill="${T70}">${esc(t.label)}</text>` +
-    (t.unit
-      ? `<text x="${num(lx)}" y="${num(TRACK_BLOCK.y + mm(13.6))}" font-size="${num(mm(2.1))}" text-anchor="middle" ` +
-        `letter-spacing="${num(mm(0.2))}" font-family="${SANS}" fill="${T55}">${esc(t.unit)}</text>`
+    `<rect x="${num(hx)}" y="${num(TRACK_BLOCK.y)}" width="${num(hw)}" height="${num(hh)}" rx="${num(mm(1))}" fill="none" stroke="${T55}" stroke-width="0.9"/>` +
+    `<text x="${num(cx + mm(0.9))}" y="${num(TRACK_BLOCK.y + mm(8.2))}" font-size="${num(mm(6.2))}" text-anchor="middle" font-weight="bold">${esc(t.letter)}</text>` +
+    `<text transform="translate(${num(hx + mm(1.5))} ${num(headMid)}) rotate(-90)" font-size="${num(mm(1.85))}" text-anchor="middle" ` +
+    `textLength="${num(Math.min(t.label.length * mm(1.45), hh - mm(2)))}" lengthAdjust="spacingAndGlyphs" ` +
+    `font-family="${SANS}" fill="${T70}">${esc(t.label)}</text>` +
+    (sub
+      ? `<text x="${num(cx + mm(0.9))}" y="${num(TRACK_BLOCK.y + mm(11.6))}" font-size="${num(mm(2))}" text-anchor="middle" ` +
+        `font-family="${SANS}" font-weight="${t.limit ? 'bold' : 'normal'}" fill="${t.limit ? SOOT : T55}">${esc(sub)}</text>`
       : '')
   );
 
-  /* the arcane gets the slip and nothing else does: the wash struck a shade off
-     the line, past it on one side only */
   const slip = t.arcane
-    ? `<rect x="${num(col.x + mm(0.9))}" y="${num(top - mm(0.9))}" width="${num(col.w)}" height="${num(bottom - top)}" fill="${inkHex(t.ink)}" opacity="0.3"/>`
+    ? `<path d="${outline}" transform="translate(${num(mm(0.9))} ${num(-mm(0.9))})" fill="${inkHex(t.ink)}" opacity="0.3"/>`
     : '';
-
-  return { wash, ink: ink.join('\n    '), slip };
+  return { wash: [wash, ...limitWash].join('\n  '), ink: ink.join('\n    '), slip };
 }
 
 /**
@@ -390,38 +448,90 @@ function track(t, index) {
  * strip prints the same letter - and the whole point of the letter matching is
  * that setting a token is reading across from one to the other.
  */
-function wearLadder(x, y) {
-  const t = KIT_TRACK;
-  const step = t.step ?? dotted(t.stepFrom);
-  const wash = `<rect x="${num(x)}" y="${num(y)}" width="${num(LADDER_W)}" height="${num(SLOT.h)}" fill="${inkHex(t.ink)}" opacity="0.22"/>`;
-
+function kitPair(x, owner) {
+  const top = CONTENT.y + KIT_HEAD;
+  const bottom = CONTENT.y + CONTENT.h;
+  const laneX = x + MARK;
+  const centres = Array.from({ length: KIT_RUNGS }, (_, i) => bottom - (i + 0.5) * KIT_CELL_H);
+  const sides = KIT_TRACKS.length === 2 ? ['left', 'right'] : ['left'];
+  const outline = castellated(laneX, top, bottom, centres, sides);
+  CUTS.push(outline);
+  MARKERS += KIT_TRACKS.length;
+  const wash = [`<path d="${outline}" fill="${T12}" opacity="0.5"/>`];
   const ink = [];
-  ink.push(`<rect x="${num(x)}" y="${num(y)}" width="${num(LADDER_W)}" height="${num(SLOT.h)}" rx="${num(mm(1))}" fill="none" stroke="${SOOT}" stroke-width="${KT.strokeWidth}"/>`);
-
-  const bottom = y + SLOT.h;
-  const numbers = [];
-  for (let i = 0; i < RUNGS; i++) {
-    const value = (B.track.from + i) * step;
-    const yLine = bottom - (i + 1) * WEAR_CELL_H;
-    const major = value % (B.track.ruleEvery * step) === 0;
-    if (i < RUNGS - 1) {
-      ink.push(`<path d="M ${num(x)},${num(yLine)} H ${num(x + LADDER_W)}" stroke="${SOOT}" stroke-width="${major ? KT.strokeWidth : KT.cellStrokeWidth}" opacity="${major ? 1 : 0.7}"/>`);
-    }
-    if (major) {
-      const midY = bottom - (i + 0.5) * WEAR_CELL_H;
-      numbers.push(
-        `<text x="${num(x + LADDER_W / 2)}" y="${num(midY + mm(KT.labelMm * 0.36))}" font-size="${num(mm(KT.labelMm))}" ` +
-        `text-anchor="middle" font-family="${SANS}" font-weight="bold">${value}</text>`
-      );
-    }
-  }
+  /* each track's notches washed in its own ink, so a marker's colour of notch
+     says which of the two it is counting */
+  KIT_TRACKS.forEach((t, j) => {
+    const px = j === 0 ? laneX - MARK : laneX + MARK;
+    for (const cy of centres) wash.push(`<rect x="${num(px)}" y="${num(cy - MARK / 2)}" width="${num(MARK)}" height="${num(MARK)}" fill="${inkHex(t.ink)}" opacity="0.45"/>`);
+    /* the head, the way a column's is: the letter over its own notches and the
+       word running up the outside edge beside it, squeezed to fit the head */
+    const hh0 = KIT_HEAD - WALL;
+    const half = PAIR_W / 2;
+    const hx = x + j * half;
+    const wordX = j === 0 ? hx + mm(1.9) : hx + half - mm(1.9);
+    const letterX = j === 0 ? hx + (half + mm(1.9)) / 2 : hx + (half - mm(1.9)) / 2;
+    ink.push(
+      `<text x="${num(letterX)}" y="${num(CONTENT.y + mm(8.2))}" font-size="${num(mm(4.2))}" text-anchor="middle" font-weight="bold">${esc(t.letter)}</text>` +
+      `<text transform="translate(${num(wordX)} ${num(CONTENT.y + hh0 / 2)}) rotate(-90)" font-size="${num(mm(1.85))}" text-anchor="middle" dominant-baseline="${j === 0 ? 'auto' : 'hanging'}" ` +
+      `textLength="${num(Math.min(t.label.length * mm(1.45), hh0 - mm(2)))}" lengthAdjust="spacingAndGlyphs" ` +
+      `font-family="${SANS}" fill="${T70}">${esc(t.label)}</text>`
+    );
+  });
+  ink.push(`<path d="${outline}" fill="none" stroke="${SOOT}" stroke-width="1.2" stroke-linejoin="round"/>`);
+  const numbers = centres.map((cy, i) => {
+    const value = KT.from + i;
+    const major = value % B.track.ruleEvery === 0;
+    return `<text x="${num(laneX + MARK / 2)}" y="${num(cy + mm(0.85))}" font-size="${num(mm(2.5))}" text-anchor="middle" font-family="${SANS}"${major ? ' font-weight="bold"' : ''}>${value}</text>`;
+  });
   ink.push(`<g fill="${SOOT}">${numbers.join('')}</g>`);
-  ink.push(
-    `<text x="${num(x + LADDER_W / 2)}" y="${num(y - mm(1.2))}" font-size="${num(mm(3.2))}" text-anchor="middle" ` +
-    `font-family="${SANS}" font-weight="bold" fill="${T70}">${esc(t.letter)}</text>`
-  );
-  return { wash, ink: ink.join('\n    ') };
+  /* the head window: both letters, a bridge of frame under them */
+  const hh = KIT_HEAD - WALL;
+  CUTS.push(rectPath(x, CONTENT.y, PAIR_W, hh, mm(1)));
+  ink.push(`<rect x="${num(x)}" y="${num(CONTENT.y)}" width="${num(PAIR_W)}" height="${num(hh)}" rx="${num(mm(1))}" fill="none" stroke="${T55}" stroke-width="0.9"/>`);
+  /* an arrow from the pair to the card it counts. It is on the frame, engraved,
+     because the frame covers the gap the board would print it in. */
+  if (owner) {
+    /* on the TOOTH nearest the card's middle - the wood between two notches -
+       and no taller than the tooth, so an engraving never lands on a hole */
+    const mid = owner.y + SLOT.h / 2;
+    const k = Math.round((bottom - mid) / KIT_CELL_H);
+    const ty = bottom - k * KIT_CELL_H;
+    const ah = Math.min(mm(6), (KIT_CELL_H - MARK) / 2 - mm(0.4));
+    const fromX = owner.side === 'right' ? x + PAIR_W : x;
+    const toX = owner.side === 'right' ? fromX + LADDER_GAP : fromX - LADDER_GAP;
+    const back = owner.side === 'right' ? fromX - mm(1.5) : fromX + mm(1.5);
+    const arrow = `M ${num(back)},${num(ty - ah)} L ${num(toX)},${num(ty)} L ${num(back)},${num(ty + ah)} Z`;
+    ink.push(`<path d="${arrow}" fill="${SOOT}"/>`);
+    ENGRAVE.push(arrow);
+  }
+  return { wash: wash.join('\n  '), ink: ink.join('\n    ') };
 }
+
+/** A bay: ladder pair, two staggered recesses, ladder pair. The top card is the
+    left pair's, the bottom card the right pair's. */
+function bay(x, label, stagger = STAGGER, cards = SLOTS_PER_BAY) {
+  const topY = CONTENT.y;
+  const botY = CONTENT.y + CONTENT.h - SLOT.h;
+  /* A bay with one card left in it is half a bay: the card, and its pair on the
+     right - so a half bay closes the right-hand edge of a sheet rather than
+     leaving a ladder standing against nothing. */
+  if (cards === 1) {
+    const pairX = x + SLOT.w + LADDER_GAP;
+    return { ladders: [kitPair(pairX, { y: topY, side: 'left' })], slots: [slot(x, topY, label, 'bottom')], width: halfBayW() };
+  }
+  const leftX = x;
+  const rightX = x + bayW(stagger) - PAIR_W;
+  const topCardX = leftX + PAIR_W + LADDER_GAP;
+  const botCardX = rightX - LADDER_GAP - SLOT.w;
+  const ladders = [
+    kitPair(leftX, { y: topY, side: 'right' }),
+    kitPair(rightX, { y: botY, side: 'left' }),
+  ];
+  return { ladders, slots: [slot(topCardX, topY, label, 'bottom'), slot(botCardX, botY, label, 'top')], width: bayW(stagger) };
+}
+function bayW(stagger) { return 2 * PAIR_W + 2 * LADDER_GAP + SLOT.w + stagger; }
+function halfBayW() { return SLOT.w + LADDER_GAP + PAIR_W; }
 
 /**
  * The turn reference the bill of materials has always asked a player board for,
@@ -444,6 +554,7 @@ function panel() {
   const top = y + mm(11.4);
 
   const out = [];
+  CUTS.push(rectPath(x, y, PANEL.w, PANEL.h, mm(2.5)));
   out.push(`<rect x="${num(x)}" y="${num(y)}" width="${num(PANEL.w)}" height="${num(PANEL.h)}" rx="${num(mm(2.5))}" fill="none" stroke="${SOOT}" stroke-width="1.6"/>`);
   out.push(`<text x="${num(x + pad)}" y="${num(y + mm(7))}" font-size="${num(mm(2.9))}" letter-spacing="${num(mm(0.8))}" font-family="${SANS}" fill="${T70}">${esc(spec.panel.title)}</text>`);
   out.push(`<path d="M ${num(x + pad)},${num(y + mm(9.8))} H ${num(x + PANEL.w - pad)}" stroke="${SOOT}" stroke-width="1.2"/>`);
@@ -474,10 +585,12 @@ function panel() {
      way, where a target number only ever needed one. Take the first, because a
      65 mm panel is not a rulebook. */
   const workedFirst = Array.isArray(fight.worked) ? fight.worked[0] : fight.worked;
-  const lines = [
-    ...wrap(fight.rule, 40),
-    ...wrap(workedFirst, 40),
-  ];
+  const room = Math.floor((y + PANEL.h - mm(7.5) - (cursor + mm(4.2))) / mm(3.15)) + 1;
+  const ruleLines = wrap(fight.rule, 40);
+  const workedLines = wrap(workedFirst, 40);
+  /* the example goes when it would run into the board's own name - the rule is
+     what a player needs mid-fight, and the rulebook has room for the example */
+  const lines = ruleLines.length + workedLines.length <= room ? [...ruleLines, ...workedLines] : ruleLines.slice(0, room);
   lines.forEach((line, i) => {
     out.push(`<text x="${num(x + pad)}" y="${num(cursor + mm(4.2) + i * mm(3.15))}" font-size="${num(mm(2.5))}">${esc(line)}</text>`);
   });
@@ -521,22 +634,21 @@ function grime(seed) {
 /* --------------------------------------------------------------- the board */
 
 function board() {
+  CUTS = [];
+  ENGRAVE = [];
+  POCKETS = [];
+  MARKERS = 0;
   const cols = COLUMN_TRACKS.map((t, i) => track(t, i));
   const kit = spec.slots.find((s) => s.id === 'kit');
   const figure = spec.slots.find((s) => s.id === 'figure');
 
   const kitSlots = [];
   const ladders = [];
-  for (let i = 0; i < kit.count; i++) {
-    const ux = kitUnitX(i);
-    const cy = CONTENT.y + Math.floor(i / KIT_COLS) * (SLOT.h + KIT_ROW_GAP);
-    /* The ladder on the left, the recess to its right - so the ladder is read
-       before the card rather than after it, and so the two ladders in the
-       right-hand column are not jammed against the edge of the paper. */
-    if (KIT_TRACK) ladders.push(wearLadder(ux, cy));
-    kitSlots.push(slot(ux + LADDER_W + LADDER_GAP, cy, kit.label));
+  for (let i = 0; i < PLAYER_BAYS; i++) {
+    const bb = bay(KIT_X + i * (BAY_W + GUT), kit.label);
+    ladders.push(...bb.ladders);
+    kitSlots.push(...bb.slots);
   }
-
   const arcane = TRACKS.filter((t) => t.arcane).map((t) => t.label.toLowerCase()).join(', ');
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${num(W)} ${num(H)}" width="${num(W)}" height="${num(H)}" font-family="${SERIF}">
@@ -571,7 +683,7 @@ function board() {
 
   <!-- whatever is in play here - a hero, a monster, a wagon - and the round it
        is playing -->
-  ${slot(CONTENT.x, CONTENT.y, figure.label)}
+  ${slot(CONTENT.x, CONTENT.y, figure.label, 'top')}
   ${panel()}
 
   <!-- the tracks: numbered from the bottom, walked by a token, exactly as a
@@ -594,10 +706,152 @@ function board() {
 `;
 }
 
+/* ------------------------------------------------------- the items board */
+
+/* The player board's kit bay, printed as many times as the items board has
+   cards for, and spread across the sheet with the board's key in what is left
+   between them. Nothing here is a coordinate either: the bays are as wide as the
+   bay module says, and the key takes the middle because it is what is left. */
+function itemsBoard() {
+  CUTS = [];
+  ENGRAVE = [];
+  POCKETS = [];
+  MARKERS = 0;
+  const kit = itemSpec.slots.find((s) => s.id === 'kit');
+  const full = Math.floor(kit.count / SLOTS_PER_BAY);
+  const half = kit.count % SLOTS_PER_BAY;
+  const units = full + half;
+  /* The bays are packed from the left with a gutter between them. What the
+     sheet has left over goes first to the stagger, up to the player board's own,
+     because the stagger is what says which card a pair counts; anything after
+     that widens the gutters. Too little for even an unstaggered bay fails. */
+  const bare = full * bayW(0) + half * halfBayW() + (units - 1) * GUT;
+  const spare = CONTENT.w - bare;
+  if (spare < 0) {
+    throw new Error(`${kit.count} kit cards want ${num(bare / U)}mm and the sheet has ${num(CONTENT.w / U)}mm - the items board has run out of width`);
+  }
+  const stagger = full ? Math.min(STAGGER, spare / full) : 0;
+  const extraGut = units > 1 ? (spare - stagger * full) / (units - 1) : 0;
+  const ladders = [];
+  const slots = [];
+  let x = CONTENT.x;
+  let halfX = null;
+  for (let i = 0; i < units; i++) {
+    const cards = i < full ? SLOTS_PER_BAY : half;
+    if (cards === 1) halfX = x;
+    const bb = bay(x, kit.label, stagger, cards);
+    ladders.push(...bb.ladders);
+    slots.push(...bb.slots);
+    x += bb.width + GUT + extraGut;
+  }
+  /* The key takes the corner a half bay leaves empty under its one card; with
+     no half bay there is no corner, and the sheet goes without. */
+  const kx = halfX ?? 0;
+  const kw = halfX === null ? 0 : SLOT.w;
+  /* below the finger notch of the card above it, and a wall below that */
+  const keyTop = CONTENT.y + SLOT.h + mm(FR.thumb.depthMm) + WALL;
+  const key = [];
+  const keyWash = [];
+  if (kw > mm(30)) {
+    CUTS.push(rectPath(kx, keyTop, kw, CONTENT.y + CONTENT.h - keyTop, mm(2.5)));
+    const cx = kx + kw / 2;
+    let ky = keyTop + mm(14);
+    key.push(`<text x="${num(cx)}" y="${num(ky)}" font-size="${num(mm(3.2))}" text-anchor="middle" letter-spacing="${num(mm(0.8))}" font-family="${SANS}" fill="${T70}">${esc(itemSpec.key.title)}</text>`);
+    ky += mm(4);
+    key.push(`<path d="M ${num(kx + mm(4))},${num(ky)} H ${num(kx + kw - mm(4))}" stroke="${SOOT}" stroke-width="1.2"/>`);
+    ky += mm(9);
+    for (const t of KIT_TRACKS) {
+      keyWash.push(`<rect x="${num(kx + mm(4))}" y="${num(ky - mm(5))}" width="${num(mm(7))}" height="${num(mm(7))}" fill="${inkHex(t.ink)}" opacity="0.3"/>`);
+      key.push(
+        `<rect x="${num(kx + mm(4))}" y="${num(ky - mm(5))}" width="${num(mm(7))}" height="${num(mm(7))}" fill="none" stroke="${SOOT}" stroke-width="1"/>` +
+        `<text x="${num(kx + mm(7.5))}" y="${num(ky)}" font-size="${num(mm(3.6))}" text-anchor="middle" font-family="${SANS}" font-weight="bold">${esc(t.letter)}</text>` +
+        `<text x="${num(kx + mm(13))}" y="${num(ky)}" font-size="${num(mm(3.4))}">${esc(t.name)}</text>`
+      );
+      ky += mm(10);
+    }
+    for (const line of itemSpec.key.lines) {
+      for (const w of wrap(line, Math.floor(kw / mm(1.45)))) {
+        key.push(`<text x="${num(cx)}" y="${num(ky)}" font-size="${num(mm(2.7))}" text-anchor="middle" font-style="italic" fill="${T85}">${esc(w)}</text>`);
+        ky += mm(3.8);
+      }
+      ky += mm(1.5);
+    }
+    key.push(`<text x="${num(cx)}" y="${num(CONTENT.y + CONTENT.h - mm(3.4))}" font-size="${num(mm(2.3))}" text-anchor="middle" letter-spacing="${num(mm(0.8))}" font-family="${SANS}" fill="${T40}">game1 · ${esc(itemSpec.board.name.toUpperCase())}</text>`);
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${num(W)} ${num(H)}" width="${num(W)}" height="${num(H)}" font-family="${SERIF}">
+<title>${esc(itemSpec.board.name)}</title>
+<desc>${esc(itemSpec.board.summary)} Generated by tools/build-board.mjs from data/itemboard.json, data/playerboard.json and data/components.json — do not edit. ${B.sheet.widthMm} x ${B.sheet.heightMm} mm at ${U} units/mm, ${B.sheet.bleedMm} mm bleed.</desc>
+<defs>
+  <clipPath id="sheet">${rect(inset(0), '')}</clipPath>
+</defs>
+<g id="wash">
+  <rect x="0" y="0" width="${num(W)}" height="${num(H)}" fill="${TALLOW}"/>
+  ${ladders.map((l) => l.wash).join('\n  ')}
+  ${keyWash.join('\n  ')}
+</g>
+<g id="ink" fill="${SOOT}">
+  <g clip-path="url(#sheet)">
+    ${timber(itemSpec.board.id)}
+  </g>
+  ${ladders.map((l) => l.ink).join('\n  ')}
+  ${slots.join('\n  ')}
+  ${key.join('\n  ')}
+</g>
+<g id="grime">
+  ${grime(itemSpec.board.id)}
+</g>
+</svg>
+`;
+}
+
+/** The frame for whichever sheet was drawn last: its outline, and every hole
+    the drawing pushed. A machine file in millimetres - red hairline is cut,
+    black is engraved - so it is never printed and takes no colour from the
+    palette. */
+function markerCuts() {
+  /* One marker per track the frame holds, and the spares, in a grid inside the
+     first card pocket - the waste that drops out of it anyway. */
+  const n = MARKERS + FR.spareMarkers;
+  const p = POCKETS[0];
+  const pitch = PIP + mm(FR.minWallMm) + mm(2);
+  const inset = mm(6);
+  const cols = Math.floor((p.w - 2 * inset) / pitch);
+  const rows = Math.ceil(n / cols);
+  if (rows * pitch > p.h - 2 * inset) throw new Error(`${n} markers do not fit in the waste of one card pocket`);
+  const x0 = p.x + (p.w - cols * pitch) / 2 + pitch / 2;
+  const y0 = p.y + p.h / 2 - (rows * pitch) / 2 + pitch / 2;
+  return Array.from({ length: n }, (_, i) =>
+    `<circle cx="${num(x0 + (i % cols) * pitch)}" cy="${num(y0 + Math.floor(i / cols) * pitch)}" r="${num(PIP / 2)}"/>`);
+}
+
+function frameSvg(name) {
+  const cut = FR.cutStroke;
+  const markers = markerCuts();
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${num(TRIM.x)} ${num(TRIM.y)} ${num(TRIM.w)} ${num(TRIM.h)}" width="${B.sheet.widthMm}mm" height="${B.sheet.heightMm}mm">
+<title>${esc(name)} - frame</title>
+<desc>Laser-cut frame for the ${esc(name)}: ${FR.thicknessMm} mm sheet, ${B.sheet.widthMm} x ${B.sheet.heightMm} mm. Red hairline is cut, black is engraved. Generated by tools/build-board.mjs from the same geometry as the board - do not edit.</desc>
+<g id="engrave" fill="${FR.engraveFill}">
+  ${ENGRAVE.map((d) => `<path d="${d}"/>`).join('\n  ')}
+</g>
+<g id="cut" fill="none" stroke="${cut}" stroke-width="${num(mm(0.1))}">
+  <path id="outline" d="${rectPath(TRIM.x, TRIM.y, TRIM.w, TRIM.h, CORNER)}"/>
+  ${CUTS.map((d) => `<path d="${d}"/>`).join('\n  ')}
+</g>
+<!-- the markers: ${MARKERS} for the tracks and ${FR.spareMarkers} spare, cut from the waste inside a card pocket.
+     Cut these before the pocket around them, or they drop with it. -->
+<g id="markers" fill="none" stroke="${cut}" stroke-width="${num(mm(0.1))}">
+  ${markers.join('\n  ')}
+</g>
+</svg>
+`;
+}
+
 /* ------------------------------------------------------------------ output */
 
 const BOARD_FILE = `${spec.board.id}.svg`;
+const ITEMS_FILE = `${itemSpec.board.id}.svg`;
 const svg = board();
+const playerFrame = frameSvg(spec.board.name);
 
 const index = `<!doctype html>
 <html lang="en">
@@ -615,6 +869,7 @@ const index = `<!doctype html>
   .bar a.primary { color: ${SOOT}; font-weight: bold; }
   /* A4 landscape, corner and all: a preview with square corners is a preview of
      a board nobody is going to cut. */
+  .boards figure + figure { margin-top: 24px; }
   .boards img { display: block; width: 100%; aspect-ratio: ${num(W)} / ${num(H)}; border: 1px solid ${T25};
                 background: ${TALLOW}; border-radius: 10px; }
   figure { margin: 0; }
@@ -634,7 +889,8 @@ const index = `<!doctype html>
        how the market sheet came to print a second page carrying three stray
        <h3>s - so this names what to KEEP instead, and cannot rot. */
     .wrap > *:not(.boards) { display: none; }
-    .boards figure { position: relative; width: ${B.sheet.widthMm}mm; height: ${B.sheet.heightMm}mm; overflow: hidden; }
+    .boards figure { position: relative; width: ${B.sheet.widthMm}mm; height: ${B.sheet.heightMm}mm; overflow: hidden; break-after: page; }
+    .boards figure + figure { margin-top: 0; }
     .boards img { position: absolute; left: -${B.sheet.bleedMm}mm; top: -${B.sheet.bleedMm}mm;
                   width: ${num(B.sheet.widthMm + 2 * B.sheet.bleedMm)}mm; height: ${num(B.sheet.heightMm + 2 * B.sheet.bleedMm)}mm;
                   border: 0; border-radius: 0; aspect-ratio: auto; }
@@ -662,23 +918,32 @@ const index = `<!doctype html>
 set your printer to 100% and landscape and turn off "fit to page", and the ${B.sheet.bleedMm}&nbsp;mm of bleed the board is
 drawn with runs off the edge of the paper, which is the only place bleed is any use.</p>
 
-<h2>The ${COLUMN_TRACKS.length} columns${KIT_TRACK ? `, and the ${KIT_TRACK.count} ladders` : ''}</h2>
-<p class="note">Four of them run up the middle of the sheet and are about the figure in the recess.
-The fifth is drawn ${KIT_TRACK ? KIT_TRACK.count : 0} times, once against each kit slot, and is about
-the card lying in that slot rather than about the player — which is why it is beside the card and not
-in the middle, and why it is walked by a ${components.tokens.pip.diameterMm}&nbsp;mm pip where a column
-takes a ${components.tokens.bar.diameterMm}&nbsp;mm bar.</p>
+<h2>The ${COLUMN_TRACKS.length} columns, and the ladders against the kit</h2>
+<p class="note">${COLUMN_TRACKS.length} columns run up the middle of the sheet and are about the figure in the recess.
+Against every kit card stands a pair of ladders - ${KIT_TRACKS.map((t) => esc(t.label.toLowerCase())).join(' and ')} - running
+${KT.from}&ndash;${KT.to} the full height of the sheet, about the card lying in that slot rather than about the player,
+walked by a ${components.tokens.pip.diameterMm}&nbsp;mm pip where a column takes a ${components.tokens.bar.diameterMm}&nbsp;mm bar.
+The top card in a bay is counted on the pair to its left, the bottom card on the pair to its right.</p>
 <table>
 <tr><th></th><th>Track</th><th>Where</th><th>Runs</th><th>What walks it</th></tr>
 ${TRACKS.map((t) => {
   const step = t.step ?? dotted(t.stepFrom);
   const unit = t.unit ? ' ' + esc(t.unit) : '';
-  const where = t.place === 'kit' ? `${t.count} ladders, one per kit slot` : 'a column up the middle';
+  const where = t.place === 'kit' ? 'a ladder against every kit card' : 'a column up the middle';
   return `<tr><td class="letter">${esc(t.letter)}</td><td>${esc(t.label)}${t.unit ? ` <small>(${esc(t.unit)})</small>` : ''}</td>` +
     `<td>${where}</td>` +
-    `<td>${B.track.from * step}–${B.track.to * step}${unit}</td><td>${esc(t.walks)}</td></tr>`;
+    `<td>${t.place === 'kit' ? `${KT.from * step}–${KT.to * step}` : `${B.track.from * step}–${B.track.to * step}`}${unit}</td><td>${esc(t.walks)}</td></tr>`;
 }).join('\n')}
 </table>
+
+<h2>Print it, and cut a frame if you have a laser</h2>
+<p class="note">There is one board, and it is the print. Print it and play on the paper, or print it and lay a
+laser-cut frame over it - the same print does both. The frame is ${FR.thicknessMm}&nbsp;mm ply: a pocket for every card
+and a notched slot for every track, so a bumped board moves nothing and boards stack. The markers are cut from the
+same sheet, ${FR.spareMarkers} spare. In the cutting files red is cut and black is engraved; cut the markers before the
+card pocket they sit in.</p>
+<p class="note"><a href="${spec.board.id}-frame.svg" download>Player board frame (SVG, for the laser)</a> ·
+<a href="${itemSpec.board.id}-frame.svg" download>Items board frame (SVG, for the laser)</a></p>
 
 <h2>The board</h2>
 <div class="boards">
@@ -690,13 +955,16 @@ ${TRACKS.map((t) => {
        draws, and the plate is the card - but this board draws every mark itself and
        fetches nothing, so it has nothing to buy with it. -->
   <figure><img src="${BOARD_FILE}" alt="The player board"></figure>
+  <figure><img src="${ITEMS_FILE}" alt="The items board"></figure>
 </div>
 </div>
 </body>
 </html>
 `;
 
-const outputs = [[BOARD_FILE, svg], ['index.html', index]];
+const itemsSvg = itemsBoard();
+const itemsFrame = frameSvg(itemSpec.board.name);
+const outputs = [[BOARD_FILE, svg], [`${spec.board.id}-frame.svg`, playerFrame], [ITEMS_FILE, itemsSvg], [`${itemSpec.board.id}-frame.svg`, itemsFrame], ['index.html', index]];
 const keep = new Set(outputs.map(([f]) => f));
 
 /* Boards that are no longer built - the five per-people sheets this replaced -
@@ -724,7 +992,7 @@ if (checkOnly) {
     `wrote docs/boards/${BOARD_FILE} — ${B.sheet.widthMm}x${B.sheet.heightMm}mm, ` +
     `${COLUMN_TRACKS.length} columns of ${B.track.from}-${B.track.to} ` +
     `(${num(CELL_W / U)}x${num(CELL_H / U)}mm cells)` +
-    (KIT_TRACK ? `, ${KIT_TRACK.count} wear ladders (${num(LADDER_W / U)}x${num(WEAR_CELL_H / U)}mm rungs)` : '') +
+    `, ${PLAYER_BAYS} kit bay(s) of ${KIT_TRACKS.length}-lane ${KT.from}-${KT.to} ladders (${num(MARK / U)}mm notches, ${num(KIT_CELL_H / U)}mm rungs); frames cut for both` +
     `, ${spec.slots.reduce((n, s) => n + s.count, 0)} card slots` +
     (stale.length ? `; removed ${stale.length} board(s) no longer built` : '')
   );

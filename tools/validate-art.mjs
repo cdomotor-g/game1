@@ -116,7 +116,11 @@ const ringStains = (svg) => new Set([
 const errors = [];
 const warnings = [];
 
-for (const file of files) {
+/* A laser frame (docs/boards/*-frame.svg) is a machine file, not artwork: red
+   hairline is cut and black is engraved, by the laser's convention rather than
+   the palette's, and it has no wash, ink or grime because nothing prints it.
+   It is held to its own contract in tools/build-board.mjs and skipped here. */
+for (const file of files.filter((f) => !/-frame\.svg$/.test(f))) {
   const name = relative(ROOT, file);
   const svg = readFileSync(file, 'utf8');
 

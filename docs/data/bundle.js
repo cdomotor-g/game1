@@ -170,7 +170,14 @@ window.GAME_DATA = {
         "file": "playerboard.json",
         "collection": "tracks",
         "idField": "id",
-        "summary": "The player board: four numbered tracks a figure walks a token along, a wear ladder against each of the four kit slots, the card recesses and the turn reference. The shapes it is drawn into are components.json board."
+        "summary": "The player board: eight numbered tracks a figure walks a marker along, a wear and capacity ladder against each of its two kit cards, the card recesses and the turn reference. The shapes it is drawn into are components.json board."
+      },
+      {
+        "key": "itemboard",
+        "file": "itemboard.json",
+        "collection": "slots",
+        "idField": "id",
+        "summary": "The items board: a second sheet of five kit cards, each counted on the player board's own wear and capacity ladders. The shapes it is drawn into are components.json board."
       },
       {
         "key": "marketboard",
@@ -13959,10 +13966,15 @@ window.GAME_DATA = {
         "pace": "P",
         "mana": "M",
         "wear": "W",
+        "burden": "B",
+        "charisma": "C",
+        "hunger": "F",
+        "thirst": "T",
+        "capacity": "K",
         "armour": "A",
         "gold": "¤",
         "carry": "KG",
-        "cargo": "C",
+        "cargo": "CG",
         "yield": "Y",
         "value": "¤",
         "mass": "KG",
@@ -13970,7 +13982,7 @@ window.GAME_DATA = {
         "$armourNote": "What a figure adds to its side of the battle roll besides its own strength, and it is CARD-ONLY: no token walks it, because it does not move. A monster prints it. A character does not - a character's armour is the gear in the kit slots and changes every time they put something down - so it is the one number on a monster card with no track under it, and the ceiling sweep leaves it alone for exactly that reason (playerboard.json ceiling.$notWalked).",
         "$defenceNote": "There is no D any more. Defence was a rating that shifted a to-hit roll, and there is no to-hit roll: a battle is one opposed total (rules.json conflict.battle), in which a number that makes you harder to hit and a number that soaks the hit are the same number. It is called armour and it is above.",
         "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so.",
-        "build": "B",
+        "build": "BP",
         "rounds": "R",
         "jobs": "J",
         "lodging": "L",
@@ -14003,9 +14015,32 @@ window.GAME_DATA = {
       "marginMm": 6,
       "gutterMm": 4,
       "$marginNote": "One margin, all four sides - with no border to clear, nothing needs a wider side than any other. Both came in by two when the board had to find room for four wear ladders it did not have before. 6 mm is still inside what a home printer can be trusted with, and 4 mm is still wider than a finger reaching between two cards needs, because the thing either side of a gutter is a recess a card sits IN rather than a card sitting proud of the paper.\n\nWhat the tightening bought, exactly: the four column tracks come out over 15 mm wide, against the 13.6 that five of them managed on the old margins. So the board gained four wear ladders AND wider columns in one change - which is not luck, it is what deriving the geometry is for. Take a column out of the middle, give two millimetres back at the edges, and the arithmetic hands the difference to whatever is left standing.",
+      "frame": {
+        "$comment": "The laser-cut frame that lies over a player board or an items board: one sheet of ply with a pocket for every card and a castellated slot for every track. A marker sits in a notch beside its number; to move it, slide it sideways out of the notch into the open lane, up or down, and back into the next notch. Seated, it cannot slide if the board is bumped, and the frame is thicker than anything lying in it, so boards can be stacked without moving a piece. Nothing here is a position: every slot is cut from the same geometry the board prints, so the frame and the board cannot disagree about where a rung is.",
+        "thicknessMm": 3,
+        "$thicknessNote": "3 mm ply. It has to be thicker than the marker standing in a notch, so another board can rest on the frame and not on the pieces.",
+        "clearanceMm": 0.3,
+        "$clearanceNote": "Added to the marker's width for every notch and lane, before the laser's own kerf, so a marker slides without rattling.",
+        "minWallMm": 2,
+        "$wallNote": "The thinnest bar of ply the build allows between two cuts. Thinner snaps; the build fails rather than draw one.",
+        "thumb": {
+          "widthMm": 18,
+          "depthMm": 6
+        },
+        "$thumbNote": "A finger notch on the edge of every card pocket, cut INTO the frame and never over the card, so a fingertip can get under a card lying in a pocket deeper than the card is thick. 18 mm across is an adult fingertip with room. Where the frame has less room than that behind a pocket - the card in play sits against the sheet's margin - the notch is cut shallower rather than through the rim: the depth is the room less the thinnest wall.",
+        "spareMarkers": 4,
+        "$markerNote": "The markers are cut from the frame's own sheet: one per track the frame holds, plus these spares, laid out in the waste inside the first card pocket, so they cost no material. They are as thick as the frame and sit flush in their notches.",
+        "cutStroke": "#FF0000",
+        "engraveFill": "#000000",
+        "$colourNote": "The laser's own convention, not the palette's: red hairline is cut, black fill is engraved. This is a machine file, never printed."
+      },
       "kitTrack": {
         "$comment": "The WEAR ladder against each kit recess: a narrow numbered strip, one per slot, walked by a pip (tokens.pip). What it counts is content and lives in data/playerboard.json as the track with place `kit`; this is only its shape.\n\nIt is the first thing on this board that is not about the figure in the big recess. The four columns up the middle belong to whoever is sitting there; these four belong to the CARDS - the axe, the sword, the lantern - and they are drawn against the card they count so nobody has to remember which ladder is which. That is also why there are four of them and not one: a player carries four things, and one W column could only ever have counted one of them.\n\nNothing below is a position. The ladder is as wide as the piece that stands on it plus its clearance, exactly as a market strip cell was; it is as TALL as the recess beside it, so its rungs are the card's height over the board's own rung count. Change the pip and the ladder widens and the columns narrow, in that order, and the build fails before a column gets too narrow for a bar.",
         "clearanceMm": 1.2,
+        "from": 0,
+        "to": 20,
+        "headMm": 15,
+        "staggerMm": 12,
         "gapMm": 1.5,
         "$gapNote": "Between the ladder and the recess it belongs to. Just enough that the ladder does not read as part of the card's own groove, and not so much that it could be mistaken for the neighbour's.",
         "side": "left",
@@ -14028,7 +14063,7 @@ window.GAME_DATA = {
       "track": {
         "$comment": "The numbered ladders. Every track on the board runs the same range, from the same floor to the same ceiling, walked by a bar token - so the columns are one grid and not five scales a player has to keep straight. The ceiling is the game's ceiling too: tools/validate-data.mjs recomputes every value a track carries and fails the build if anything in data/ has grown past it.",
         "from": 0,
-        "to": 14,
+        "to": 20,
         "headMm": 15,
         "ruleEvery": 5,
         "$fromNote": "The bottom rung is zero, which is where a token starts and where it ends up: health at nothing, an empty talisman, a leg not yet begun. It used to be a separate seat ring under the ladder; a numbered rung says the same thing, takes no extra paper, and cannot be mistaken for decoration.",
@@ -15907,6 +15942,90 @@ window.GAME_DATA = {
         "rule": "rules.json conflict.strength, rules.json carrying, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
       },
       {
+        "id": "burden",
+        "name": "Burden",
+        "letter": "B",
+        "label": "BURDEN",
+        "unit": null,
+        "kind": "capacity",
+        "ink": "slate",
+        "step": 1,
+        "covers": {
+          "value": 0,
+          "paths": [],
+          "note": "DRAFT - nothing in the data sets this yet."
+        },
+        "walks": "DRAFT - to be decided.",
+        "atZero": "DRAFT - to be decided.",
+        "rule": "DRAFT"
+      },
+      {
+        "id": "charisma",
+        "name": "Charisma",
+        "letter": "C",
+        "label": "CHARISMA",
+        "unit": null,
+        "kind": "rating",
+        "ink": "verdigris",
+        "step": 1,
+        "covers": {
+          "value": 0,
+          "paths": [],
+          "note": "DRAFT - nothing in the data sets this yet."
+        },
+        "walks": "DRAFT - to be decided.",
+        "atZero": "DRAFT - to be decided.",
+        "rule": "DRAFT"
+      },
+      {
+        "id": "hunger",
+        "name": "Hunger",
+        "letter": "F",
+        "label": "HUNGER",
+        "unit": null,
+        "kind": "harm",
+        "ink": "oxide",
+        "step": 1,
+        "covers": {
+          "value": 0,
+          "paths": [],
+          "note": "DRAFT - nothing in the data sets this yet."
+        },
+        "limit": {
+          "at": 20,
+          "mark": "20: -1 H",
+          "ink": "oxide",
+          "note": "At the top of the track the figure loses 1 health every round until it is brought down."
+        },
+        "walks": "DRAFT - to be decided.",
+        "atZero": "DRAFT - to be decided.",
+        "rule": "DRAFT"
+      },
+      {
+        "id": "thirst",
+        "name": "Thirst",
+        "letter": "T",
+        "label": "THIRST",
+        "unit": null,
+        "kind": "harm",
+        "ink": "slate",
+        "step": 1,
+        "covers": {
+          "value": 0,
+          "paths": [],
+          "note": "DRAFT - nothing in the data sets this yet."
+        },
+        "limit": {
+          "at": 20,
+          "mark": "20: -1 H",
+          "ink": "oxide",
+          "note": "At the top of the track the figure loses 1 health every round until it is brought down."
+        },
+        "walks": "DRAFT - to be decided.",
+        "atZero": "DRAFT - to be decided.",
+        "rule": "DRAFT"
+      },
+      {
         "id": "pace",
         "name": "Pace",
         "letter": "P",
@@ -15957,7 +16076,7 @@ window.GAME_DATA = {
         "label": "WEAR",
         "unit": null,
         "place": "kit",
-        "count": 4,
+        "count": 2,
         "kind": "harm",
         "ink": "slate",
         "step": 1,
@@ -15974,6 +16093,27 @@ window.GAME_DATA = {
         "reads": "Only its owner. A wear track is about a possession, not a person, and nobody else at the table has to know how blunt your axe is until you swing it.",
         "note": "FOUR OF THEM, one beside each kit slot rather than one column up the middle, because wear is the first number on this board that belongs to a CARD rather than to whoever is sitting behind it. A single W column could only ever have counted one item's wear, and a player carries four. So it is drawn where the thing it counts is lying, in a narrow ladder against the recess, walked by a pip rather than a bar (components.json tokens.pip) - which is what makes fifteen rungs fit down the side of an 88 mm card.\n\nIt is the track that paid for itself. The D column went out of the middle of the board the same day this arrived at the edge of it, and the four columns left are wider than the five ever were: 15.6 mm against 13.6.\n\nThe strip letter for wear already existed (components.json statStrip.letters) and its note said there would never be a track under it, because wear ran past twenty and the board stops at fourteen. There is a track under it now, and wear runs to fourteen - the number came down to meet the board, which is the way round this game has always settled that argument.",
         "rule": "rules.json wear, items.json wear, tools.json baseWear"
+      },
+      {
+        "id": "capacity",
+        "name": "Capacity",
+        "letter": "K",
+        "label": "CAPACITY",
+        "unit": null,
+        "place": "kit",
+        "count": 2,
+        "kind": "capacity",
+        "ink": "ochre",
+        "step": 1,
+        "covers": {
+          "value": 20,
+          "paths": [],
+          "note": "DRAFT"
+        },
+        "walks": "DRAFT - to be decided.",
+        "atZero": "DRAFT - to be decided.",
+        "reads": "Only its owner.",
+        "rule": "DRAFT"
       }
     ],
     "$placeNote": "A track's `place` says where on the sheet it is ruled. `column` is the grid up the middle - one column per track, all the same height, the shape this board has always had. `kit` is a short ladder against a card recess, drawn `count` times, once per slot. The distinction is not decoration: a column track counts something about the FIGURE in the recess, and there is one of those; a kit track counts something about a CARD in a slot, and there are four of those. tools/build-board.mjs partitions on it and never on a track's name.",
@@ -16013,7 +16153,7 @@ window.GAME_DATA = {
         "id": "kit",
         "name": "Kit slots",
         "label": "ITEM",
-        "count": 4,
+        "count": 2,
         "takes": [
           "items",
           "tools",
@@ -16036,6 +16176,39 @@ window.GAME_DATA = {
         "source": "rules.conflict.battle",
         "note": "Printed from the rule rather than restated, so the board and the rulebook cannot drift."
       }
+    }
+  },
+  "itemboard": {
+    "$comment": "The items board: a second A4 sheet for a player who carries more than the two kit cards their player board holds. It is not a new kind of furniture - it is the player board's own kit bay (a ladder pair, two staggered cards, a ladder pair) printed twice, so a card counts its damage and its capacity the same way wherever it is lying. What the ladders COUNT is the kit tracks in data/playerboard.json and is not restated here; how the sheet is DRAWN is components.json board. This file says only what the sheet is and how many cards it takes.",
+    "version": "0.1.0",
+    "board": {
+      "id": "items-board",
+      "name": "Items Board",
+      "sheet": "A4 landscape",
+      "summary": "Five more kit cards, each with its own damage and capacity ladders, for a figure carrying more than its player board holds.",
+      "tracksFrom": "playerboard"
+    },
+    "slots": [
+      {
+        "id": "kit",
+        "name": "Kit slots",
+        "label": "ITEM",
+        "count": 5,
+        "takes": [
+          "items",
+          "tools",
+          "modifications",
+          "quests",
+          "commodities"
+        ],
+        "note": "The same four things a kit slot on the player board takes, counted on the same two ladders."
+      }
+    ],
+    "key": {
+      "title": "THE ITEMS BOARD",
+      "lines": [
+        "Each card is counted on the pair of ladders its arrow points from."
+      ]
     }
   },
   "marketboard": {

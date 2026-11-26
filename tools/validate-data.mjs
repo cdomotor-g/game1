@@ -459,38 +459,47 @@ if (boardSpec && boardShape) {
      is also doing and the two must not be able to agree by sharing a bug. */
   const card = datasets.components.stock.card;
   const slotW = card.widthMm + 2 * boardShape.slot.clearanceMm;
-  const slotH = card.heightMm + 2 * boardShape.slot.clearanceMm;
   const contentW = boardShape.sheet.widthMm - 2 * boardShape.marginMm;
+  const contentH = boardShape.sheet.heightMm - 2 * boardShape.marginMm;
   const kitCount = (boardSpec.slots ?? []).find((s) => s.id === 'kit')?.count ?? 0;
   const tracks = boardSpec.tracks ?? [];
   const columnTracks = tracks.filter((t) => (t.place ?? 'column') === 'column');
   const kitTracks = tracks.filter((t) => t.place === 'kit');
   const pipMm = datasets.components.tokens?.pip?.diameterMm ?? 0;
   const KT = boardShape.kitTrack;
-  const ladderW = kitTracks.length && KT ? pipMm + 2 * KT.clearanceMm + KT.gapMm : 0;
-  const kitW = 2 * (slotW + ladderW) + boardShape.gutterMm;
+  const FR = boardShape.frame;
+  /* Every track is a slot in the laser-cut frame: a lane and a notch, each a pip
+     plus the frame's clearance wide, with at least the frame's thinnest wall
+     between any two cuts. Recomputed here from the data rather than trusted from
+     tools/build-board.mjs, so the two cannot agree by sharing a bug. */
+  const mark = pipMm + FR.clearanceMm;
+  const wall = FR.minWallMm;
+  if (kitTracks.length > 2) errors.push(`playerboard: ${kitTracks.length} kit tracks - a kit ladder shares one lane between at most two`);
+  const pairW = (kitTracks.length + 1) * mark;
+  const gap = Math.max(KT.gapMm, wall);
+  const bayW = 2 * pairW + 2 * gap + slotW + KT.staggerMm;
+  const bays = Math.ceil(kitCount / 2);
+  const kitW = bays * bayW + (bays - 1) * boardShape.gutterMm;
   const columnW = (contentW - slotW - kitW - 2 * boardShape.gutterMm) / (columnTracks.length || 1);
-  const tokenMm = datasets.components.tokens?.bar?.diameterMm ?? 7;
-  if (columnW < tokenMm + 2) {
-    errors.push(`playerboard: ${columnTracks.length} column tracks and ${kitTracks.length ? 'four wear ladders' : 'no wear ladders'} leave ${columnW.toFixed(1)}mm a column, and the bar that walks one is ${tokenMm}mm - the board has run out of middle`);
+  if (columnW < 2 * mark + wall) {
+    errors.push(`playerboard: ${columnTracks.length} column tracks and ${bays} kit bay(s) leave ${columnW.toFixed(1)}mm a column, and a lane, a notch and a wall need ${(2 * mark + wall).toFixed(1)}mm - the board has run out of middle`);
   }
-  if (kitCount % 2 !== 0) {
-    warnings.push(`playerboard: ${kitCount} kit slots do not fill the two columns the board draws them in`);
+  const colRung = (contentH - boardShape.track.headMm) / (boardShape.track.to - boardShape.track.from + 1);
+  const kitRung = (contentH - KT.headMm) / (KT.to - KT.from + 1);
+  for (const [what, rung] of [['column', colRung], ['kit ladder', kitRung]]) {
+    if (rung < mark + wall) {
+      errors.push(`playerboard: a ${what} rung is ${rung.toFixed(2)}mm, and a ${mark.toFixed(1)}mm notch with a ${wall}mm tooth between notches needs more - the teeth would snap`);
+    }
   }
-
-  /* A kit track runs the same 0-14 as everything else, down the side of a card
-     recess rather than the length of the sheet - so its rungs are a third the
-     height of a column's, and the piece that walks it had to shrink to match.
-     This is the check that says which piece: a bar overhangs, a pip does not. */
   for (const t of kitTracks) {
     if ((t.count ?? 1) !== kitCount) {
-      errors.push(`playerboard: the ${t.label} track says there are ${t.count ?? 1} of it and there are ${kitCount} kit slots - one ladder per slot or a player has a card whose wear nobody is counting`);
+      errors.push(`playerboard: the ${t.label} track says there are ${t.count ?? 1} of it and there are ${kitCount} kit slots - one ladder per slot or a player has a card whose ${t.name.toLowerCase()} nobody is counting`);
     }
-    const rungs = boardShape.track.to - boardShape.track.from + 1;
-    const rungH = slotH / rungs;
-    if (pipMm && rungH < pipMm) {
-      errors.push(`playerboard: the ${t.label} ladder is ${rungs} rungs down an ${slotH}mm recess, which is ${rungH.toFixed(2)}mm a rung, and the pip that walks it is ${pipMm}mm - the piece overhangs its own rung`);
-    }
+  }
+  /* the ceiling a kit track reaches is its own ladder's, not the columns' */
+  for (const t of kitTracks) {
+    const top = KT.to * (t.step ?? 1);
+    if ((t.covers?.value ?? 0) > top) errors.push(`playerboard: the ${t.label} ladder runs to ${top} and has to cover ${t.covers.value}`);
   }
 }
 

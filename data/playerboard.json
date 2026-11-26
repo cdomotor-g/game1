@@ -47,6 +47,40 @@
       "rule": "rules.json conflict.strength, rules.json carrying, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
     },
     {
+      "id": "burden", "name": "Burden", "letter": "B", "label": "BURDEN", "unit": null,
+      "kind": "capacity", "ink": "slate", "step": 1,
+      "covers": { "value": 0, "paths": [], "note": "DRAFT - nothing in the data sets this yet." },
+      "walks": "DRAFT - to be decided.",
+      "atZero": "DRAFT - to be decided.",
+      "rule": "DRAFT"
+    },
+    {
+      "id": "charisma", "name": "Charisma", "letter": "C", "label": "CHARISMA", "unit": null,
+      "kind": "rating", "ink": "verdigris", "step": 1,
+      "covers": { "value": 0, "paths": [], "note": "DRAFT - nothing in the data sets this yet." },
+      "walks": "DRAFT - to be decided.",
+      "atZero": "DRAFT - to be decided.",
+      "rule": "DRAFT"
+    },
+    {
+      "id": "hunger", "name": "Hunger", "letter": "F", "label": "HUNGER", "unit": null,
+      "kind": "harm", "ink": "oxide", "step": 1,
+      "covers": { "value": 0, "paths": [], "note": "DRAFT - nothing in the data sets this yet." },
+      "limit": { "at": 20, "mark": "20: -1 H", "ink": "oxide", "note": "At the top of the track the figure loses 1 health every round until it is brought down." },
+      "walks": "DRAFT - to be decided.",
+      "atZero": "DRAFT - to be decided.",
+      "rule": "DRAFT"
+    },
+    {
+      "id": "thirst", "name": "Thirst", "letter": "T", "label": "THIRST", "unit": null,
+      "kind": "harm", "ink": "slate", "step": 1,
+      "covers": { "value": 0, "paths": [], "note": "DRAFT - nothing in the data sets this yet." },
+      "limit": { "at": 20, "mark": "20: -1 H", "ink": "oxide", "note": "At the top of the track the figure loses 1 health every round until it is brought down." },
+      "walks": "DRAFT - to be decided.",
+      "atZero": "DRAFT - to be decided.",
+      "rule": "DRAFT"
+    },
+    {
       "id": "pace", "name": "Pace", "letter": "P", "label": "PACE", "unit": "hexes",
       "kind": "leg", "ink": "verdigris", "step": 1,
       "covers": { "value": 8, "paths": ["monsters.monsters[].pace"], "note": "Mounted on a road - the fastest anything crosses country in a day leg (travel.json speeds.overrides road) - and, on the same number, the storm roc, which is why nobody on foot has ever got away from one." },
@@ -66,7 +100,7 @@
     },
     {
       "id": "wear", "name": "Wear", "letter": "W", "label": "WEAR", "unit": null,
-      "place": "kit", "count": 4,
+      "place": "kit", "count": 2,
       "kind": "harm", "ink": "slate", "step": 1,
       "covers": { "value": 14, "paths": ["items.items[].wear", "tools.tools[].baseWear"], "note": "A large loom, the longest-lived thing anybody owns. The deepest a figure carries on its back is the plate harness at 12." },
       "walks": "Down. Set it from the W box on the card the moment the thing is put in the slot beside it, knock it down a rung every time the thing is used, and put it back up as a blacksmith mends it - three rungs a round, four coin a rung.",
@@ -74,6 +108,16 @@
       "reads": "Only its owner. A wear track is about a possession, not a person, and nobody else at the table has to know how blunt your axe is until you swing it.",
       "note": "FOUR OF THEM, one beside each kit slot rather than one column up the middle, because wear is the first number on this board that belongs to a CARD rather than to whoever is sitting behind it. A single W column could only ever have counted one item's wear, and a player carries four. So it is drawn where the thing it counts is lying, in a narrow ladder against the recess, walked by a pip rather than a bar (components.json tokens.pip) - which is what makes fifteen rungs fit down the side of an 88 mm card.\n\nIt is the track that paid for itself. The D column went out of the middle of the board the same day this arrived at the edge of it, and the four columns left are wider than the five ever were: 15.6 mm against 13.6.\n\nThe strip letter for wear already existed (components.json statStrip.letters) and its note said there would never be a track under it, because wear ran past twenty and the board stops at fourteen. There is a track under it now, and wear runs to fourteen - the number came down to meet the board, which is the way round this game has always settled that argument.",
       "rule": "rules.json wear, items.json wear, tools.json baseWear"
+    },
+    {
+      "id": "capacity", "name": "Capacity", "letter": "K", "label": "CAPACITY", "unit": null,
+      "place": "kit", "count": 2,
+      "kind": "capacity", "ink": "ochre", "step": 1,
+      "covers": { "value": 20, "paths": [], "note": "DRAFT" },
+      "walks": "DRAFT - to be decided.",
+      "atZero": "DRAFT - to be decided.",
+      "reads": "Only its owner.",
+      "rule": "DRAFT"
     }
   ],
   "$placeNote": "A track's `place` says where on the sheet it is ruled. `column` is the grid up the middle - one column per track, all the same height, the shape this board has always had. `kit` is a short ladder against a card recess, drawn `count` times, once per slot. The distinction is not decoration: a column track counts something about the FIGURE in the recess, and there is one of those; a kit track counts something about a CARD in a slot, and there are four of those. tools/build-board.mjs partitions on it and never on a track's name.",
@@ -105,7 +149,7 @@
       "note": "Whatever this board is being: a hero dealt or picked at setup, a monster or a stranger a discovery roll turned up, or a vehicle somebody is running. Its card is where everything particular lives - people, calling, health, strength, what it can shoulder, what its hull will take - which is exactly why the board underneath is the same for all three. The recess says IN PLAY rather than CHARACTER because it stopped being only a character's the day a wagon needed a pace track."
     },
     {
-      "id": "kit", "name": "Kit slots", "label": "ITEM", "count": 4,
+      "id": "kit", "name": "Kit slots", "label": "ITEM", "count": 2,
       "takes": ["items", "tools", "modifications", "quests", "commodities"],
       "wearTrack": true,
       "note": "Whatever the thing in the recess has in play and needs to see. On a character's board that is a weapon, a lantern, a talisman, the quest they have accepted; on a vehicle's board it is the same four slots holding its cargo and the modifications bolted to it. Four, because five cards on the table is a hand and four is a kit - and because anybody who wants a fifth thing has to put something down, which is the same argument the strength limit is making. A vehicle card no longer sits here: it has a board of its own.\n\nEVERY SLOT HAS A WEAR LADDER AGAINST IT, and that is what the four slots stopped being merely a hand limit and started being an accounting: the thing in the slot has a W on its card, a pip stands on the ladder beside it, and it walks down as the thing is used. A fifth thing in play would be a fifth thing whose wear nobody is counting. Tools joined the list of what a slot takes on the same day, because a tool is now the same kind of object as a sword - something you own, carry and use up."
