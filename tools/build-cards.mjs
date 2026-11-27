@@ -819,6 +819,7 @@ const eventCards = eventData.cards.filter((c) => c.cardCode);
 const eventCategory = new Map(eventData.categories.map((c) => [c.id, c.name.toLowerCase()]));
 const eventScope = new Map(eventData.scopes.map((s) => [s.id, s]));
 const quests = read('quests.json').quests.filter((q) => q.cardCode);
+const tasks = read('tasks.json').tasks.filter((t) => t.cardCode);
 const itemName = new Map(read('items.json').items.map((i) => [i.id, i.name]));
 /* The CAMPAIGN deck: a storyline read in order. The card prints the chapter's
    rule and its cost, and carries the story as its source tells it across the
@@ -887,20 +888,31 @@ const letterFor = (stat) => trackLetter.get(stat) ?? LETTER_OF[stat];
 const cell = (stat, value, tint) => ({ letter: letterFor(stat), value, tint });
 
 /* A figure's card prints a STARTING VALUE for every track on the player board,
-   in the board's own order (H S B C F T P M) and then its coin, so setting up is
-   reading along the strip and placing a marker for each. Strength is for battle
-   only; what a figure can carry is its Burden, a kilogram figure on the card
-   (rules.json carrying). Some boxes print 0 - hunger and thirst start at nothing
-   and a leg's pace is not set until the leg starts. */
-const startStrip = (s) => [
+   in the board's own order (H S B C T P M, then I L R) and then its coin, so
+   setting up is reading along the strip and placing a marker for each. Strength
+   is for battle only; what a figure can carry is its Burden, a kilogram figure on
+   the card (rules.json carrying). Some boxes print 0 - thirst starts at nothing,
+   a leg's pace is not set until the leg starts, and level and renown start at 0
+   for a hero on their first road (a returning hero reads them off the character
+   record sheet instead, rules.json career).
+
+   I, L and R are a CAREER's: wisdom, level and renown belong to a person who
+   carries them from game to game, so only a character prints them. A monster or
+   a vehicle has no box for them and no marker on them, which is also what keeps
+   their strips inside two rows. */
+const startStrip = (s, { career = false } = {}) => [
   cell('health', s.health, 'oxide'),
   cell('strength', s.strength, 'ochre'),
   cell('burden', s.burden, 'slate'),
   cell('charisma', s.charisma, 'verdigris'),
-  cell('hunger', s.hunger, 'oxide'),
   cell('thirst', s.thirst, 'slate'),
   cell('pace', s.pace, 'verdigris'),
   cell('mana', s.mana, 'bruise'),
+  ...(career ? [
+    cell('wisdom', s.wisdom, 'slate'),
+    cell('level', s.level, 'ochre'),
+    cell('renown', s.renown, 'verdigris'),
+  ] : []),
   cell('gold', s.coin, 'ochre'),
 ];
 
@@ -916,11 +928,10 @@ for (const c of characters) {
   specs.push({
     code: c.cardCode, name: c.name, portrait: render, campaignMark: campaignMarkOf(c.campaign),
     kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling}`,
-    desc: `Character card: ${c.name}, ${c.calling}. Health ${c.health}, strength ${c.strength}, burden ${start.burden}kg, charisma ${start.charisma}, ${c.startingGold} coin to start.`,
-    /* NINE boxes: a starting value for every board track, then coin. It was
-       five, and the kilograms were the one derived number on any card; Burden is
-       a printed figure now (see startStrip). */
-    stats: startStrip(start),
+    desc: `Character card: ${c.name}, ${c.calling}. Health ${c.health}, strength ${c.strength}, burden ${start.burden}kg, charisma ${start.charisma}, wisdom ${start.wisdom}, ${c.startingGold} coin to start.`,
+    /* ELEVEN boxes: a starting value for every board track, then coin. It was
+       nine until Hunger went and Wisdom, Level and Renown came (see startStrip). */
+    stats: startStrip(start, { career: true }),
     facts: c.traits,
     story: c.story,
   });
@@ -1399,6 +1410,24 @@ for (const q of quests) {
         q.notes,
       ]).filter(Boolean),
     story: q.hook,
+  });
+}
+
+/* A TASK prints no strip, for the quest deck's reason: its numbers are inside
+   the sentences that say what they are for. What it does print that a quest
+   does not is the TEST, because a test is a d6 plus a number from the player
+   board and the letter is the board's own (rules.json test). */
+const statLetter = (stat) => letterFor(stat) ?? stat;
+for (const t of tasks) {
+  const render = plateIdFor(deckByPrefix('TSK'), t);
+  if (!hasRender(render)) { skipped.push(t.cardCode); continue; }
+  specs.push({
+    code: t.cardCode, name: t.name, portrait: render,
+    kicker: `task · ${t.deeds} deed${t.deeds === 1 ? '' : 's'}${t.renown ? ` · ${t.renown} renown` : ''}`,
+    desc: `Task card: ${t.name}, worth ${t.deeds} deeds.`,
+    stats: [],
+    facts: [t.task, t.test ? `Test: d6 + ${statLetter(t.test.stat)}, ${t.test.at} or more.` : null].filter(Boolean),
+    story: t.hook,
   });
 }
 

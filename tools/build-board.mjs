@@ -77,6 +77,7 @@ const datasets = {
   vehicles: read('vehicles.json'),
   items: read('items.json'),
   monsters: read('monsters.json'),
+  terrain: read('terrain.json'),
 };
 
 /* Every colour below is declared in palette.json — validate-art.mjs checks. */
@@ -103,7 +104,11 @@ function inkHex(name) {
 function dotted(path) {
   const [key, ...rest] = path.split('.');
   let node = datasets[key];
-  for (const part of rest) node = node?.[part];
+  for (const part of rest) {
+    /* `terrains[id=desert]` picks a record out of an array by its id */
+    const pick = part.match(/^(.+)\[(\w+)=([^\]]+)\]$/);
+    node = pick ? node?.[pick[1]]?.find?.((r) => String(r[pick[2]]) === pick[3]) : node?.[part];
+  }
   if (node === undefined) throw new Error(`playerboard.json points at "${path}", which does not resolve`);
   return node;
 }
@@ -198,8 +203,13 @@ if (KIT_TRACKS.length && KIT_CELL_H < MARK + WALL) {
 }
 
 const kitSlot = spec.slots.find((s) => s.id === 'kit');
-const PLAYER_BAYS = Math.ceil(kitSlot.count / SLOTS_PER_BAY);
-const KIT_W = PLAYER_BAYS * BAY_W + (PLAYER_BAYS - 1) * GUT;
+/* Whole bays first, then a HALF bay for an odd card out - one card and the
+   pair on its right, closing the sheet's right-hand edge. The player board has
+   one kit card now, so its kit is a half bay and the columns get the rest. */
+const PLAYER_FULL = Math.floor(kitSlot.count / SLOTS_PER_BAY);
+const PLAYER_HALF = kitSlot.count % SLOTS_PER_BAY;
+const PLAYER_BAYS = PLAYER_FULL + PLAYER_HALF;
+const KIT_W = PLAYER_FULL * BAY_W + PLAYER_HALF * (SLOT.w + LADDER_GAP + PAIR_W) + (PLAYER_BAYS - 1) * GUT;
 
 /* Everything the cards and their ladders do not want is the columns'. */
 const TRACK_BLOCK = {
@@ -603,6 +613,43 @@ function panel() {
   return out.join('\n    ');
 }
 
+/** The panel under the kit card: a reference for the road and a career, every
+    figure in it resolved from the data (playerboard.json kitPanel). It takes the
+    room under the one kit card and is cut as a shallow pocket in the frame like
+    the round panel, so nothing about it is positioned by hand. */
+function kitPanel(x, y, w, h) {
+  const kp = spec.kitPanel;
+  if (!kp || h < mm(30)) return '';
+  const fill = (line) => line.replace(/\{([^}]+)\}/g, (_, path) => String(dotted(path)));
+  const pad = mm(4);
+  const out = [];
+  CUTS.push(rectPath(x, y, w, h, mm(2.5)));
+  out.push(`<rect x="${num(x)}" y="${num(y)}" width="${num(w)}" height="${num(h)}" rx="${num(mm(2.5))}" fill="none" stroke="${SOOT}" stroke-width="1.6"/>`);
+  const lineH = mm(3.15);
+  const maxChars = Math.floor((w - 2 * pad) / mm(1.27));
+  let cursor = y + mm(7);
+  for (const [si, sec] of kp.sections.entries()) {
+    if (si) {
+      cursor += mm(1.2);
+      out.push(`<path d="M ${num(x + pad)},${num(cursor - mm(3.6))} H ${num(x + w - pad)}" stroke="${SOOT}" stroke-width="1.2"/>`);
+      cursor += mm(1.2);
+    }
+    out.push(`<text x="${num(x + pad)}" y="${num(cursor)}" font-size="${num(mm(2.7))}" letter-spacing="${num(mm(0.7))}" font-family="${SANS}" fill="${T70}">${esc(sec.title)}</text>`);
+    cursor += mm(4.4);
+    for (const line of sec.lines) {
+      const rows = wrap(fill(line), maxChars);
+      rows.forEach((row, i) => {
+        out.push(`<text x="${num(x + pad + (i ? mm(2) : 0))}" y="${num(cursor)}" font-size="${num(mm(2.5))}">${i ? '' : '· '}${esc(row)}</text>`);
+        cursor += lineH;
+      });
+      cursor += mm(0.9);
+    }
+    cursor += mm(2);
+  }
+  if (cursor > y + h) throw new Error(`the kit panel wants ${num((cursor - y) / U)}mm and has ${num(h / U)}mm - say less in playerboard.json kitPanel`);
+  return out.join('\n    ');
+}
+
 /** Where the die goes, marked in the bleed and never on the board. */
 function dieMarks() {
   const g = 8;
@@ -644,10 +691,12 @@ function board() {
 
   const kitSlots = [];
   const ladders = [];
+  let bx = KIT_X;
   for (let i = 0; i < PLAYER_BAYS; i++) {
-    const bb = bay(KIT_X + i * (BAY_W + GUT), kit.label);
+    const bb = bay(bx, kit.label, STAGGER, i < PLAYER_FULL ? SLOTS_PER_BAY : 1);
     ladders.push(...bb.ladders);
     kitSlots.push(...bb.slots);
+    bx += bb.width + GUT;
   }
   const arcane = TRACKS.filter((t) => t.arcane).map((t) => t.label.toLowerCase()).join(', ');
 
@@ -696,6 +745,7 @@ function board() {
        reaches over it stays on top. -->
   ${ladders.map((l) => l.ink).join('\n  ')}
   ${kitSlots.join('\n  ')}
+  ${PLAYER_FULL === 0 && PLAYER_HALF ? kitPanel(KIT_X, CONTENT.y + SLOT.h + GUT, SLOT.w, CONTENT.h - SLOT.h - GUT) : ''}
 </g>
 
 <!-- ============================================================ GRIME -->

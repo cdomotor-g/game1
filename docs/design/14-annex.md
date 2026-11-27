@@ -875,6 +875,7 @@ Kit that is not for fighting, wearing or drinking: rope, a hook, a bag, a glass.
 | Binoculars (ITM-08) | glassworks | 1 glass + 1 ironware + 1 leather | 4 | 130 | 0.75 kg | 3 | Look before you walk: reveal the terrain of any one hex up to three away, without entering it. +1 on survey rolls. Re-roll one discovery roll per round, and keep the second. Wears 1 per use. Ground glass in a leather tube does not care for a road. |
 | Quiver of Arrows (ITM-09) | carpenter | 1 lumber + 1 leather | 2 | 30 | 1 kg | 6 | Holds 3 arrows (the K box). Each battle with a bow or a crossbow spends 1, and a refill from a sheaf puts them back. Capacity is what is left to shoot; wear is the leather, and is counted on its own ladder. |
 | Waterskin (ITM-10) | tailor | 1 leather | 1 | 20 | 1 kg | 6 | Holds 3 draughts (the K box). Filled in an hour at a well, a marsh or fresh water, with no barrel (recipes.json draw-water). Spend a draught to Forage on desert or tundra, which recipes.json forage otherwise forbids. Capacity is what is left to drink and wear is the hide, counted separately; it wears 1 each time it is drunk dry. |
+| Wineskin (ITM-17) | tailor | 1 leather | 1 | 20 | 1 kg | 6 | Holds 3 draughts of ale, wine or mead (the K box). Filled at any inn by the cup (rules.json drink.coinPerCup), or brim-full from one unit of drink in your own stock. Each draught eases Thirst as water does, and is drink: Charisma +1 and Wisdom -1 until you next sleep (rules.json drink). Capacity is what is left to drink and wear is the hide; it wears 1 each time it is drunk dry. |
 | Map (ITM-11) | trading-house | 1 parchment | 3 | 70 | 0.25 kg | 6 | +1 hex on a day leg between two settlements printed on it (travel.json legs.day). Once a round, learn the price band of one commodity family in any settlement it covers, without going there. Wears 1 for every round it is unfolded. |
 | Compass (ITM-12) | blacksmith | 1 copper + 1 glass | 4 | 95 | 0.25 kg | 8 | A night leg under a lantern runs at full day speed rather than half (travel.json night.lantern). Its extra discovery roll is made at the ordinary monster band (rules.json movement.legs.nightRisk). Wears 1 for every night leg it steers. |
 | Ten Arrows (ITM-15) | carpenter | 1 lumber | 1 | 14 | 0.25 kg | 5 | Shot from a quiver, and no use to anybody without one. Each battle with a bow or a crossbow spends 1, from the sheaf before the quiver. Its capacity is its arrows: an empty sheaf is a spent sheaf. |
@@ -882,12 +883,12 @@ Kit that is not for fighting, wearing or drinking: rope, a hook, a bag, a glass.
 
 ### Provision
 
-Food carried for the road. Its K ladder is the meals left in it: knock a rung down for every meal eaten, which eases Hunger - see rules.json upkeep.hunger. At 0 the pack is empty and the card is discarded.
+Food carried for the road. Its K ladder is the meals left in it: a figure off its own town eats one a round and knocks a rung down - see rules.json upkeep.food. At 0 the sack is empty; it is filled again at any inn or market, and its W ladder is the sack itself.
 
 | Item | Made at | Inputs | Hours | Value | Mass | W | Effects |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Three-Day Rations (ITM-13) | granary | 1 bread + 1 salted-meat + 1 sack | 2 | 48 | 2.5 kg | 3 | Three meals. Each one eaten takes a rung off the K ladder and eases Hunger (rules.json upkeep.hunger). Capacity is the meals left: an empty sack is a spent sack. Dried and salted, so it does not perish. |
-| Ten-Day Rations (ITM-14) | granary | 3 bread + 3 salted-meat + 1 sack | 4 | 150 | 8 kg | 10 | Ten meals, each one eaten a rung off the K ladder and a rung off Hunger (rules.json upkeep.hunger). Capacity is the meals left: an empty sack is a spent sack. Eight kilograms - most of what a 9 kg Burden can take (rules.json carrying). |
+| Three-Day Rations (ITM-13) | granary | 1 bread + 1 salted-meat + 1 sack | 2 | 48 | 2.5 kg | 3 | Three meals. Off your own town you eat one a round: a rung off the K ladder (rules.json upkeep.food). Filled again at any inn or market, a meal at a time, up to the K box (rules.json upkeep.food.refill). Dried and salted, so it does not perish. The sack wears 1 each time it is emptied. |
+| Ten-Day Rations (ITM-14) | granary | 3 bread + 3 salted-meat + 1 sack | 4 | 150 | 8 kg | 10 | Ten meals, one a round off your own town: a rung off the K ladder each (rules.json upkeep.food). Filled again at any inn or market, a meal at a time, up to the K box. Eight kilograms - most of what a 9 kg Burden can take (rules.json carrying). |
 
 ### Potion
 
@@ -1050,37 +1051,37 @@ living asset, and none of them pays any.
 
 The two rows of boxes across the top of every character card: a starting value for
 every track on the player board, in the board's own order, then coin. Setting up is
-reading along the strip and placing a marker for each. Hunger, Thirst and Pace start
-at 0 on every card and are left out of the table; Burden is kilograms, and the purse
-counts against it like everything else.
+reading along the strip and placing a marker for each. Thirst, Pace, Level and Renown
+start at 0 on every card and are left out of the table; Burden is kilograms, and the
+purse counts against it like everything else. I is Wisdom, which a task card tests.
 
-| Code | Character | People | Calling | H | S | B | C | M | ¤ | Traits |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| CHR-01 | Corin Vale | human | Wayfarer | 10 | 3 | 9 | 4 | — | 45 | Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere. |
-| CHR-02 | Berga Understone | dwarf | Prospector | 12 | 4 | 12 | 2 | — | 55 | Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1. |
-| CHR-03 | Sylvae of the Duskmere | elf | Herbalist | 8 | 2 | 6 | 4 | 3 | 70 | Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross. |
-| CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 8 | 2 | 6 | 5 | — | 80 | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
-| CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 13 | 6 | 18 | 1 | — | 50 | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
-| CHR-06 | Doctor Elspeth Marrow | human | Physician | 9 | 2 | 6 | 3 | — | 65 | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
-| CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 4 | 12 | 2 | — | 60 | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands. |
-| CHR-08 | Old Mother Keswick | human | Hedge-Witch | 7 | 2 | 6 | 3 | — | 35 | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
-| CHR-09 | Odysseus | human | King of Ithaca | 12 | 4 | 12 | 5 | — | 40 | Man of many turns: once per round, re-roll one of his blue dice and keep the second roll. Nobody: once per game, after a battle, he gives a false name - the monster does not pursue, whatever its pace. (Book IX.) |
-| CHR-10 | Eurylochus | human | Second in command | 11 | 4 | 12 | 3 | — | 25 | Will not go in: he never enters a hall, cave or wood the party has not seen someone come out of, and so is never the first to take a wound. Mutineer: when the crew is asked, his voice counts double. He talked them into the cattle of the Sun. |
-| CHR-11 | Polites | human | Dearest of the companions | 10 | 3 | 9 | 4 | — | 20 | First through the door: +1 on any roll to befriend. Steady at the oar: the fleet's pace never falls below 3 while he lives. |
-| CHR-12 | Perimedes | human | Companion | 10 | 3 | 9 | 2 | — | 20 | Steady hands: he ties the knots, and a bound figure cannot free itself while Perimedes holds the rope. Holds the victims: at any sacrifice, the party's offering counts as one more. |
-| CHR-13 | Elpenor | human | Youngest of the crew | 8 | 2 | 6 | 1 | — | 10 | Not the bravest in a fight nor the steadiest of head - Homer's words: -1 on his blue total, but nobody looks at him twice, and a monster that has a choice never picks him. Asked for a burial: his oar planted on his grave, and the party goes back for it. |
-| CHR-14 | Antiphus | human | Companion | 10 | 4 | 12 | 2 | — | 15 | Spearman: +1 on his blue total against anything of strength 5 or more. Egyptius's son: an old man in Ithaca is waiting for him, and he knows it - he never abandons a companion. |
-| CHR-15 | Telemachus | human | Prince of Ithaca | 10 | 3 | 9 | 3 | — | 60 | Athena's charge: +1 on any roll while a character with the Mentor trait stands in his hex. Coming of age: the first time he wounds an enemy, add 1 strength for the rest of the game - the board has the room. |
-| CHR-16 | Penelope | human | Queen of Ithaca | 9 | 2 | 6 | 5 | — | 90 | The loom: once per round, undo one thing made this round - a die, a market roll, a suitor's demand - and nobody may object. Three years the shroud was woven by day and unpicked by night. The house is hers: resting in Ithaca costs nothing and mends 1 health while she holds it. |
-| CHR-17 | Eumaeus | human | Swineherd | 11 | 3 | 9 | 3 | — | 15 | Guest-friendship: any character resting at his steading mends 2 health, free, and is not asked their name. Keeps the pigs: starts with 4 pig in the sty, and sows and herds count as his workers. |
-| CHR-18 | Nausicaa | human | Princess of the Phaeacians | 9 | 2 | 6 | 5 | — | 70 | Hospitality: a stranger she brings to a settlement is fed, clothed and given a bed at no cost. The washing: cloth and clothing in her party never take wear. |
-| CHR-19 | Circe | immortal | Enchantress of Aeaea | 12 | 3 | 9 | 4 | 6 | 30 | Wand and drug: once per round, spend 2 mana to turn one figure in her hex into a pig until the round ends - it cannot fight, carry or speak. A figure holding moly is proof against it. Knows the way: a party she counsels ignores one discovery roll on its next leg. |
-| CHR-20 | Calypso | immortal | Nymph of Ogygia | 12 | 2 | 6 | 4 | 5 | 20 | The cave on Ogygia: a character resting there mends 2 health a round - and may not leave the island while she wishes it, unless a god says otherwise. Raft-wright: she gives axe, adze and augur, and a character builds a raft - run as a barge, hull 4 - in one round. |
-| CHR-21 | Athena | immortal | Goddess, as Mentor | 14 | 4 | 12 | 6 | 8 | 10 | Mentor: one character in her hex adds 1 to every roll. Disguise: once per round she may make one character a beggar, a shepherd or a stranger - nobody can name them until she chooses. |
-| CHR-22 | Antinous | human | Chief of the suitors | 11 | 4 | 12 | 3 | — | 80 | The hall behind him: in Ithaca's hall he rolls a third red die and keeps the best two. There are a hundred and eight of them. Throws a stool: in the first exchange of any battle he is in, the other side counts no armour. |
+| Code | Character | People | Calling | H | S | B | C | M | I | ¤ | Traits |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CHR-01 | Corin Vale | human | Wayfarer | 10 | 3 | 9 | 4 | — | 3 | 45 | Wayfinder: +1 hex on any day leg that starts on a road. Knows the inns: resting costs Corin no coin, anywhere. |
+| CHR-02 | Berga Understone | dwarf | Prospector | 12 | 4 | 12 | 2 | — | 3 | 55 | Nose for Ore: +1 on survey rolls, and trace results widen by 1 for her party. Surefooted, like all her people: hills and mountain cost 1 less to cross, minimum 1. |
+| CHR-03 | Sylvae of the Duskmere | elf | Herbalist | 8 | 2 | 6 | 4 | 3 | 5 | 70 | Greenwise: +1 on forage rolls, and Sylvae harvests arcane herbs without a knife. The wood remembers her: forest costs her party 1 to cross. |
+| CHR-04 | Tilly Goodbarrel | halfling | Provisioner | 8 | 2 | 6 | 5 | — | 2 | 80 | Iron Stomach: Tilly and her party ignore illness event cards. Quartermaster: food carried by her party never perishes. |
+| CHR-05 | Ruk of the Red Road | orc | Caravan Guard | 13 | 6 | 18 | 1 | — | 1 | 50 | Scarred Escort: bandits never demand a toll of Ruk's party - they fight, or they leave. +1 combat die in any battle protecting cargo. |
+| CHR-06 | Doctor Elspeth Marrow | human | Physician | 9 | 2 | 6 | 3 | — | 5 | 65 | Physician: once per round, cure one illness marker or restore 2 health, anywhere she stands - no infirmary needed. Her party ignores Camp Fever. |
+| CHR-07 | Havik Coalbrand | dwarf | Engineer | 10 | 4 | 12 | 2 | — | 4 | 60 | Linesman: a train Havik rides spends 1 less coal per leg. Tinker: repairs 1 point of vehicle hull per round, free, wherever the vehicle stands. |
+| CHR-08 | Old Mother Keswick | human | Hedge-Witch | 7 | 2 | 6 | 3 | — | 6 | 35 | Hedge Magic: spells cost Keswick 1 less mana, minimum 1. Second Sight: once per round she may look at the top card of the event deck. |
+| CHR-09 | Odysseus | human | King of Ithaca | 12 | 4 | 12 | 5 | — | 6 | 40 | Man of many turns: once per round, re-roll one of his blue dice and keep the second roll. Nobody: once per game, after a battle, he gives a false name - the monster does not pursue, whatever its pace. (Book IX.) |
+| CHR-10 | Eurylochus | human | Second in command | 11 | 4 | 12 | 3 | — | 3 | 25 | Will not go in: he never enters a hall, cave or wood the party has not seen someone come out of, and so is never the first to take a wound. Mutineer: when the crew is asked, his voice counts double. He talked them into the cattle of the Sun. |
+| CHR-11 | Polites | human | Dearest of the companions | 10 | 3 | 9 | 4 | — | 3 | 20 | First through the door: +1 on any roll to befriend. Steady at the oar: the fleet's pace never falls below 3 while he lives. |
+| CHR-12 | Perimedes | human | Companion | 10 | 3 | 9 | 2 | — | 2 | 20 | Steady hands: he ties the knots, and a bound figure cannot free itself while Perimedes holds the rope. Holds the victims: at any sacrifice, the party's offering counts as one more. |
+| CHR-13 | Elpenor | human | Youngest of the crew | 8 | 2 | 6 | 1 | — | 1 | 10 | Not the bravest in a fight nor the steadiest of head - Homer's words: -1 on his blue total, but nobody looks at him twice, and a monster that has a choice never picks him. Asked for a burial: his oar planted on his grave, and the party goes back for it. |
+| CHR-14 | Antiphus | human | Companion | 10 | 4 | 12 | 2 | — | 2 | 15 | Spearman: +1 on his blue total against anything of strength 5 or more. Egyptius's son: an old man in Ithaca is waiting for him, and he knows it - he never abandons a companion. |
+| CHR-15 | Telemachus | human | Prince of Ithaca | 10 | 3 | 9 | 3 | — | 3 | 60 | Athena's charge: +1 on any roll while a character with the Mentor trait stands in his hex. Coming of age: the first time he wounds an enemy, add 1 strength for the rest of the game - the board has the room. |
+| CHR-16 | Penelope | human | Queen of Ithaca | 9 | 2 | 6 | 5 | — | 6 | 90 | The loom: once per round, undo one thing made this round - a die, a market roll, a suitor's demand - and nobody may object. Three years the shroud was woven by day and unpicked by night. The house is hers: resting in Ithaca costs nothing and mends 1 health while she holds it. |
+| CHR-17 | Eumaeus | human | Swineherd | 11 | 3 | 9 | 3 | — | 4 | 15 | Guest-friendship: any character resting at his steading mends 2 health, free, and is not asked their name. Keeps the pigs: starts with 4 pig in the sty, and sows and herds count as his workers. |
+| CHR-18 | Nausicaa | human | Princess of the Phaeacians | 9 | 2 | 6 | 5 | — | 4 | 70 | Hospitality: a stranger she brings to a settlement is fed, clothed and given a bed at no cost. The washing: cloth and clothing in her party never take wear. |
+| CHR-19 | Circe | immortal | Enchantress of Aeaea | 12 | 3 | 9 | 4 | 6 | 5 | 30 | Wand and drug: once per round, spend 2 mana to turn one figure in her hex into a pig until the round ends - it cannot fight, carry or speak. A figure holding moly is proof against it. Knows the way: a party she counsels ignores one discovery roll on its next leg. |
+| CHR-20 | Calypso | immortal | Nymph of Ogygia | 12 | 2 | 6 | 4 | 5 | 4 | 20 | The cave on Ogygia: a character resting there mends 2 health a round - and may not leave the island while she wishes it, unless a god says otherwise. Raft-wright: she gives axe, adze and augur, and a character builds a raft - run as a barge, hull 4 - in one round. |
+| CHR-21 | Athena | immortal | Goddess, as Mentor | 14 | 4 | 12 | 6 | 8 | 6 | 10 | Mentor: one character in her hex adds 1 to every roll. Disguise: once per round she may make one character a beggar, a shepherd or a stranger - nobody can name them until she chooses. |
+| CHR-22 | Antinous | human | Chief of the suitors | 11 | 4 | 12 | 3 | — | 1 | 80 | The hall behind him: in Ithaca's hall he rolls a third red die and keeps the best two. There are a hundred and eight of them. Throws a stool: in the first exchange of any battle he is in, the other side counts no armour. |
 
 There is no D box. What a character brings to a battle besides strength is the gear in
-their four kit slots, and that is a thing they can change.
+their kit slots, and that is a thing they can change.
 
 ## Quest deck
 
@@ -1111,6 +1112,54 @@ thing pays. The tasks are here. Stages are taken in order.
 
 **The Ironspine Road.** Stages in order. Abandoning this campaign discards it for every player - the pass stays shut.
 **The Drowned Bell of Taleowick.** Stages in order. If the Maw is slain by anyone else first, stage 3 completes at the Maw's hex with the clapper aboard - the bell falls silent either way.
+
+## Task deck
+
+Held 1 at a time, face down, and worth deeds toward a hero's next level. A test is
+a d6 plus the letter named, at the number or over.
+
+| Code | Task | Deeds | Renown | Test | Task |
+| --- | --- | --- | --- | --- | --- |
+| TSK-01 | Read the Old Stones | 1 | — | I 7 | End a leg on a hills or mountain hex and pass the test. |
+| TSK-02 | The Herbalist's Question | 2 | — | I 8 | In any settlement with a market, pass the test. |
+| TSK-03 | Three Countries | 1 | — | — | End legs on three different kinds of terrain, in three different rounds. |
+| TSK-04 | A Bed in Every Inn | 1 | 1 | — | Rest at three different inns. |
+| TSK-05 | Cross the Sand | 2 | — | — | End two legs in a row on desert hexes, and end the second with your Thirst below its limit. |
+| TSK-06 | Talk It Down | 2 | 1 | — | Befriend a monster (monsters.json encounterOptions.befriend). |
+| TSK-07 | Hold the Road | 3 | 1 | — | Win a battle against a monster whose strength is 5 or more. |
+| TSK-08 | Sober Counsel | 2 | — | I 8 | In any settlement, pass the test - with no drink since you last slept. |
+| TSK-09 | The Long Haul | 2 | — | — | Deliver a cargo to a settlement six or more hexes from where it was loaded, and sell it there. |
+| TSK-10 | A Round for the House | 1 | 2 | — | At any inn, buy a cup for every figure there - at least three - and drink one yourself. |
+| TSK-11 | The Hermit's Riddle | 3 | — | I 9 | End a leg on a forest hex and pass the test. Fail it, and your next leg starts a round late. |
+| TSK-12 | Keep Your Word | 2 | 1 | — | Complete a quest within three rounds of accepting it. |
+
+## A career, level by level
+
+What each level costs in deeds, and in all from level 0. A mini quest is worth its
+complexity, a campaign stage the campaign quest's, a task card what it prints.
+
+| Level | Deeds | In all | Milestone |
+| --- | --- | --- | --- |
+| 1 | 1 | 1 |  |
+| 2 | 2 | 3 |  |
+| 3 | 3 | 6 |  |
+| 4 | 4 | 10 |  |
+| 5 | 5 | 15 | a rise |
+| 6 | 6 | 21 |  |
+| 7 | 7 | 28 |  |
+| 8 | 8 | 36 |  |
+| 9 | 9 | 45 |  |
+| 10 | 10 | 55 | a rise |
+| 11 | 11 | 66 |  |
+| 12 | 12 | 78 |  |
+| 13 | 13 | 91 |  |
+| 14 | 14 | 105 |  |
+| 15 | 15 | 120 | a rise |
+| 16 | 16 | 136 |  |
+| 17 | 17 | 153 |  |
+| 18 | 18 | 171 |  |
+| 19 | 19 | 190 |  |
+| 20 | 20 | 210 | a rise |
 
 ## Campaign deck
 

@@ -293,6 +293,74 @@ const claim = (ok, what) => checks.push({ ok, what });
   claim(bad === 0, `no battle in ${D.monsters.length * 80} dealt a negative or unassigned wound (${ties} ties)`);
 }
 
+/* 5. A HUNDRED CAREERS. Levelling is meant to be slow - a few levels in a
+   first game, one or two in a tenth, and 20 only after a long run of games
+   (rules.json level). This plays careers out against the real decks: a hero
+   holds one task (data/tasks.json) and up to two quests (quests.json), meets
+   the conditions on a task or a quest some rounds and not others, and earns the
+   deeds and renown the rules say. The play is a model, not a strategy - a round
+   either gives a hero the chance a card wants or it does not - so the numbers
+   are a ruler for the CURVE, not a prediction of any one table. */
+{
+  const rng = (seed) => { let x = seed >>> 0; return () => ((x = (x * 1664525 + 1013904223) >>> 0) / 4294967296); };
+  const TASKS = D.tasks || [];
+  const QUESTS = D.quests || [];
+  const ROUNDS = R.victory.gameLengthRounds;
+  const CHANCE = { task: 0.25, questArrives: 0.2, questRoundsPer: 2, questFinished: 0.8 };
+  const shuffle = (r, a) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+  const hero = D.characters[0];
+  const careers = [];
+  let bestFirstGame = 0;
+  let bestGameDeeds = 0;
+  for (let c = 0; c < 100; c++) {
+    const r = rng(7000 + c);
+    let rec = { level: 0, deeds: 0, rises: [] };
+    let wisdom = hero.start.wisdom;
+    let gamesTo20 = null;
+    for (let g = 1; g <= 60 && gamesTo20 === null; g++) {
+      let tasks = shuffle(r, TASKS);
+      let quests = shuffle(r, QUESTS);
+      let task = tasks.shift();
+      const held = [];
+      let deedsThisGame = 0;
+      for (let round = 1; round <= ROUNDS; round++) {
+        let earned = 0;
+        if (task && r() < CHANCE.task) {
+          const ok = task.test ? Engine.test(r, wisdom, task.test.at).passed : true;
+          if (ok) { earned += task.deeds; tasks.push(task); task = tasks.shift(); }
+        }
+        if (held.length < 2 && quests.length && r() < CHANCE.questArrives) {
+          const q = quests.shift();
+          held.push({ q, due: round + q.complexity * CHANCE.questRoundsPer * Math.max(1, (q.stages || []).length) });
+        }
+        for (const h of held.slice()) {
+          if (round >= h.due) {
+            held.splice(held.indexOf(h), 1);
+            if (r() < CHANCE.questFinished) earned += Engine.questDeeds(h.q);
+          }
+        }
+        if (earned) {
+          deedsThisGame += earned;
+          const res = Engine.addDeeds(rec, earned);
+          rec = res.record;
+          for (const _ of res.milestones) { rec.rises = [...rec.rises, 'wisdom']; wisdom += 1; }
+        }
+      }
+      bestGameDeeds = Math.max(bestGameDeeds, deedsThisGame);
+      if (g === 1) bestFirstGame = Math.max(bestFirstGame, rec.level);
+      if (rec.level >= R.level.to) gamesTo20 = g;
+    }
+    careers.push(gamesTo20);
+  }
+  const done = careers.filter((g) => g !== null).sort((a, b) => a - b);
+  const median = done.length ? done[Math.floor(done.length / 2)] : null;
+  console.log(`\n  careers: a first game reaches level ${bestFirstGame} at best; the best single game earned ${bestGameDeeds} deeds of the ${R.level.toTop} to the top;`);
+  console.log(`  level ${R.level.to} took ${done[0] ?? '-'} games at the quickest, ${median ?? '-'} at the median, ${done[done.length - 1] ?? '-'} at the slowest (${done.length}/100 careers got there in 60 games).`);
+  claim(bestFirstGame < R.level.to && bestGameDeeds < R.level.toTop, `no single game takes a fresh hero to level ${R.level.to} (best first game: level ${bestFirstGame})`);
+  claim(done.length === careers.length, `every career reaches level ${R.level.to} - the top is a long road, not a wall`);
+  claim(median !== null && median >= 5 && median <= 20, `level ${R.level.to} takes a career of games, 5 to 20 at the median (median ${median})`);
+}
+
 const failed = checks.filter((c) => !c.ok);
 console.log('');
 for (const c of checks) console.log(`  ${c.ok ? 'ok  ' : 'FAIL'}  ${c.what}`);

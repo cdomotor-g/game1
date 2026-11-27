@@ -591,6 +591,13 @@
           el('div.card-meta', [elementPill(e.element), pill(`${e.cost} mana`, 'accent'), pill(e.boundTo)]),
         ])
       )),
+      ...section('Tasks', 'Dealt one at a time and kept face down: small deeds toward a hero\'s next level.', q(D.tasks || []).map((t) =>
+        el('button.card', { type: 'button', onclick: () => open('task', t.id) }, [
+          el('div.card-head', [el('span.card-title', t.name), el('span.card-code', t.cardCode)]),
+          el('div.card-sub', t.task),
+          el('div.card-meta', [pill(`${t.deeds} deed${t.deeds === 1 ? '' : 's'}`, 'accent'), t.renown ? pill(`+${t.renown} renown`) : null, t.test ? pill(`test ${t.test.stat} ${t.test.at}`) : null].filter(Boolean)),
+        ])
+      )),
       ...section('Quests', 'Arrive through omens and inn rumours; accepted or declined on the spot.', q(D.quests).map((qc) =>
         el('button.card', { type: 'button', onclick: () => open('quest', qc.id) }, [
           el('div.card-head', [el('span.card-title', qc.name), el('span.card-code', qc.cardCode)]),
@@ -1370,7 +1377,9 @@
           el('dt', `${R.currency.symbol} — gold`), el('dd', `${c.startingGold} to start.`),
           el('dt', 'B — burden'), el('dd', `${c.start.burden} kg still to take on, counting down as things are picked up.`),
           el('dt', 'C — charisma'), el('dd', `${c.start.charisma}. Added to a roll to befriend a monster.`),
-          el('dt', 'F, T, P'), el('dd', 'Hunger and thirst start at 0 and rise a rung a round; pace is set when a leg starts.'),
+          el('dt', 'T, P'), el('dd', 'Thirst starts at 0 and climbs where there is no water; pace is set when a leg starts. Food is a meal a round, off a ration card on the road.'),
+          el('dt', 'I — wisdom'), el('dd', `${c.start.wisdom}. What a task card tests; drink takes it down until the next sleep.`),
+          el('dt', 'L, R — level, renown'), el('dd', `0 on a first road. A returning hero starts where their character record sheet says: level ${R.level.from} to ${R.level.to}, ${R.level.toTop} deeds from bottom to top.`),
           ...(c.manaNote ? [el('dt', 'Note'), el('dd', c.manaNote)] : []),
         ]),
       ]),
@@ -1390,7 +1399,7 @@
       r.note,
     ].filter(Boolean).join(' · ');
     return [
-      el('span.kicker', `quest · ${q.type} · complexity ${q.complexity}`),
+      el('span.kicker', `quest · ${q.type} · complexity ${q.complexity} · worth ${q.complexity * Math.max(1, (q.stages || []).length)} deeds`),
       el('h2', [q.name, ' ', el('span.card-code', q.cardCode)]),
       q.hook ? el('p.prose', q.hook) : null,
       q.task ? el('section', [el('h4', 'Task'), el('p.prose', q.task)]) : null,
@@ -1401,6 +1410,16 @@
       ]) : null,
       q.reward ? el('section', [el('h4', 'Reward'), el('p.prose', reward(q.reward))]) : null,
       q.notes ? el('section', [el('h4', 'Notes'), el('p.prose', q.notes)]) : null,
+    ];
+  };
+
+  detail.task = function (t) {
+    return [
+      el('span.kicker', `task · ${t.deeds} deed${t.deeds === 1 ? '' : 's'}${t.renown ? ` · +${t.renown} renown` : ''}`),
+      el('h2', [t.name, ' ', el('span.card-code', t.cardCode)]),
+      t.hook ? el('p.prose', t.hook) : null,
+      el('section', [el('h4', 'Task'), el('p.prose', t.task)]),
+      t.test ? el('section', [el('h4', 'Test'), el('p.prose', `Roll a d6 and add ${t.test.stat}; ${t.test.at} or more passes. Drink lowers wisdom until the next sleep.`)]) : null,
     ];
   };
 

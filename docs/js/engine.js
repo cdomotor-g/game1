@@ -73,6 +73,10 @@
       coin: R.currency.startingAmount,
       workers: people.startingWorkers,
       specialists: [],
+      /* The hero is one more mouth whenever they are in their own town
+         (rules.json upkeep.food.atHome). The town engine does not move the hero
+         about, so it counts them at home every round, which is the dearer case. */
+      heroAtHome: true,
       unrest: 0,
       terrain: STARTING_TERRAIN.slice(),
       waters: STARTING_WATERS.slice(),
@@ -1051,6 +1055,7 @@
     const people = D.byId.people.get(state.peopleId);
     let need = state.workers * R.population.foodPerWorkerPerRound +
       state.specialists.length * R.population.specialistUpkeep +
+      (state.heroAtHome && R.upkeep && R.upkeep.food ? R.upkeep.food.perRound : 0) +
       (state.peopleId === 'halfling' ? 2 : 0); // Second Breakfast: a flat town surcharge
     const eaten = [];
 
@@ -1133,6 +1138,94 @@
       });
   }
 
+
+  /* ------------------------------------------------------------- a career
+   * A hero's lasting numbers, played off rules.json level, renown, drink and
+   * test - the same blocks the record sheet, the board's kit panel and the
+   * rulebook print, so nothing here is a second copy of a rule. A `record` is
+   * what the character record sheet holds: { level, deeds, rises: [stat...] }.
+   */
+  const deedsToReach = (level) => level * R.level.perLevel;
+
+  /** Add deeds to a record and take every level they pay for. Returns the new
+      record and the milestone levels reached on the way, each owed a rise. */
+  function addDeeds(record, n) {
+    let { level, deeds } = record;
+    deeds += n;
+    const milestones = [];
+    while (level < R.level.to && deeds >= deedsToReach(level + 1)) {
+      deeds -= deedsToReach(level + 1);
+      level += 1;
+      if (level % R.level.milestones.every === 0) milestones.push(level);
+    }
+    if (level >= R.level.to) deeds = 0;
+    return { record: { ...record, level, deeds }, milestones };
+  }
+
+  /** What a quest is worth in deeds: its complexity, once per stage for a campaign. */
+  function questDeeds(quest) {
+    const stages = (quest.stages || []).length;
+    return quest.complexity * (stages || 1);
+  }
+
+  /** What a finished quest is worth in renown. */
+  function questRenown(quest) {
+    const stages = (quest.stages || []).length;
+    return stages ? stages * R.renown.gain.perCampaignStage : R.renown.gain.perQuest;
+  }
+
+  /** The renown step the marker has reached, or none. */
+  function renownStep(renown) {
+    let step = { at: 0, tollOff: 0, hireOff: 0 };
+    for (const st of R.renown.steps) if (renown >= st.at) step = st;
+    return step;
+  }
+
+  /** A toll or a fee after renown has had its say. Never below 0. */
+  const tollFor = (toll, renown) => Math.max(0, toll - renownStep(renown).tollOff);
+  const hireFor = (fee, renown) => Math.max(0, fee - renownStep(renown).hireOff);
+
+  /** Renown a hero starts a game with: one per milestone passed. */
+  const startingRenown = (level) => Math.floor(level / R.level.milestones.every);
+
+  /** One draught of drink: Charisma up, Wisdom down, Thirst eased. `fig` holds
+      the live markers { charisma, wisdom, thirst, drunkDraughts }. */
+  function drink(fig) {
+    const pd = R.drink.perDraught;
+    const next = { ...fig };
+    next.charisma = Math.min(D.raw.components.board.track.to, fig.charisma + pd.charisma);
+    const fell = Math.min(fig.wisdom, -pd.wisdom);
+    next.wisdom = fig.wisdom - fell;
+    next.wisdomLost = (fig.wisdomLost || 0) + fell;
+    next.thirst = Math.max(0, (fig.thirst || 0) - R.upkeep.thirst.eased.perDraught);
+    next.drunk = next.wisdom === 0;
+    return next;
+  }
+
+  /** A night's sleep puts drink back: Charisma to the card, Wisdom up by what drink took. */
+  function sober(fig, cardCharisma) {
+    return { ...fig, charisma: cardCharisma, wisdom: fig.wisdom + (fig.wisdomLost || 0), wisdomLost: 0, drunk: false };
+  }
+
+  /** A test: d6 + the characteristic, against the card's number. */
+  function test(rng, value, at) {
+    const roll = 1 + Math.floor(rng() * 6);
+    return { roll, total: roll + value, passed: roll + value >= at };
+  }
+
+  /** Thirst at the end of a round on a hex of this terrain, with no water to hand. */
+  function thirstAfterRound(thirst, terrainId) {
+    const t = D.byId.terrain ? D.byId.terrain.get(terrainId) : null;
+    const extra = (t && t.upkeep && t.upkeep.thirst) || 0;
+    return Math.min(R.upkeep.thirst.limit, thirst + R.upkeep.thirst.risePerRound + extra);
+  }
+
+  /** Meals a round on a hex of this terrain. */
+  function mealsFor(terrainId) {
+    const t = D.byId.terrain ? D.byId.terrain.get(terrainId) : null;
+    return R.upkeep.food.perRound + ((t && t.upkeep && t.upkeep.meals) || 0);
+  }
+
   global.Engine = {
     newGame, startRound, endRound,
     jobs, runJob, foundSite, workSite, buildOptions, buildRateFor,
@@ -1140,5 +1233,7 @@
     battle, canFlee, manaFrom, depletionModifier,
     score, usedSlots, capacity, remainingEffort, findTool, ownedBuilding,
     toolMax,
+    deedsToReach, addDeeds, questDeeds, questRenown, renownStep, tollFor, hireFor, startingRenown,
+    drink, sober, test, thirstAfterRound, mealsFor,
   };
 })(window);

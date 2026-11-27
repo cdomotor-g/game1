@@ -138,6 +138,13 @@ window.GAME_DATA = {
         "summary": "The quest deck: mini-quests and campaigns, accept or decline."
       },
       {
+        "key": "tasks",
+        "file": "tasks.json",
+        "collection": "tasks",
+        "idField": "id",
+        "summary": "The task deck: small personal deeds dealt one at a time, kept face down, and worth deeds toward a hero's next level."
+      },
+      {
         "key": "modifications",
         "file": "modifications.json",
         "collection": "modifications",
@@ -178,6 +185,13 @@ window.GAME_DATA = {
         "collection": "slots",
         "idField": "id",
         "summary": "The items board: a second sheet of five kit cards, each counted on the player board's own wear and capacity ladders. The shapes it is drawn into are components.json board."
+      },
+      {
+        "key": "recordsheet",
+        "file": "recordsheet.json",
+        "collection": "boxes",
+        "idField": "id",
+        "summary": "The character record sheet: what a hero carries from one game to the next - level, deeds, the rises taken - and the log of the games they played."
       },
       {
         "key": "marketboard",
@@ -669,6 +683,16 @@ window.GAME_DATA = {
           "from": "campaigns",
           "path": "campaigns[].cast.adversaries[]",
           "to": "characters"
+        },
+        {
+          "from": "tasks",
+          "path": "tasks[].test.stat",
+          "to": "playerboard"
+        },
+        {
+          "from": "recordsheet",
+          "path": "boxes[].track",
+          "to": "playerboard"
         }
       ]
     }
@@ -934,34 +958,37 @@ window.GAME_DATA = {
       "notes": "Burden has had three lives: a bar up the right edge of every card, then nothing at all while strength swallowed it, and now a track again. It came back because a limit that is only a sum at the table is a sum nobody does, and a token that walks down as the pack fills is one everybody can see."
     },
     "upkeep": {
-      "$comment": "What a figure spends by being alive and on the road, and which of its two numbers it spends. Hunger and thirst are two clocks that climb a rung every round and are brought down by eating and drinking; at the top of either, a figure bleeds health. Sleep keeps STRENGTH up. None of the three is a substitute for another, which is the whole design: a party can be fed and exhausted, rested and parched, and those are different problems with different answers.\n\nThe town-scale version of this - workers eating in the Feeding phase - is `population`. This block is the party-scale one, and it applies to every figure on the map that is not sitting in a town being fed by it.",
-      "hunger": {
-        "track": "hunger",
-        "risePerRound": 1,
-        "eased": {
-          "perFood": 4,
-          "note": "One unit of food eaten takes this many rungs off Hunger. Food is what the party carries, forages or buys - a commodity, or a meal off a ration card (items.json rations-3-day). Hunger cannot go below 0."
+      "$comment": "What a figure spends by being alive, and which of its numbers it spends. FOOD and WATER are kept apart on purpose and cost different things: food is a meal every round, counted off a ration card on the road and off the town's stock at home, and going without it costs STRENGTH; water is a clock (Thirst) that only climbs where there is no water, and at the top of it a figure bleeds HEALTH. Hunger weakens; thirst kills. Sleep keeps strength up. None of the three stands in for another: a party can be fed and parched, watered and starving, or fed, watered and exhausted.\n\nThere used to be a Hunger clock beside Thirst, its twin on its own ladder. It went when every figure started eating every round the way a worker always has: a clock that a meal knocks four rungs off is a clock nobody ever watched, where a K ladder on a sack of bread going down a rung a day is a thing a player can see running out. The column it freed went to Wisdom.\n\nWhat makes the two different in play is WHERE they are got. Water is free wherever there is water - a town, a river, a lake, a marsh - and nowhere else, so it is a question of the map. Food is never free away from your own town, so it is a question of the purse. The desert asks the first question hard (terrain.json desert upkeep.thirst); the cold asks the second (terrain.json upkeep.meals).",
+      "food": {
+        "perRound": 1,
+        "atHome": "In a town of your own, your hero is one more mouth in the Feeding phase: counted with the workers and fed from the town's stock at population.foodPerWorkerPerRound. A worker and a hero eat alike.",
+        "onRoad": "Anywhere else, the figure eats one meal a round off a provision card in its kit (items.json, class provision): knock that card's K ladder down a rung in the Feeding phase.",
+        "terrain": "A round ended on a hex whose terrain prints upkeep.meals (terrain.json) costs that many meals more: cold is hungry work.",
+        "refill": {
+          "coinPerMeal": 3,
+          "where": "At any inn or any market, buy meals back onto a provision card, up to its K box, at this price each. In your own town a unit of food from stock fills one meal instead.",
+          "note": "A town's own market sells meals at the same price whoever owns it, and the coin goes to the board."
         },
-        "limit": 20,
-        "atLimit": {
-          "health": -1,
-          "note": "At 20 the figure loses 1 health every round it is still there, and being fed does not put the health back (rest.medicalAid) - it only stops the losing. This replaces the rule that a round with nothing to eat costs 1 health: the cost still exists, it just takes a long time to arrive and is easy to see coming."
-        },
-        "appliesTo": "Every figure on the road. A figure in a town being fed by it (population) is eating from the town's stock and its Hunger stays where it is."
+        "missed": {
+          "strength": -1,
+          "note": "A round with no meal costs the figure 1 strength. Sleep does not give back strength lost to an empty belly until the figure has eaten again: a fed figure that sleeps gets all of it back as usual. Hunger weakens; it does not wound. Thirst does that."
+        }
       },
       "thirst": {
         "track": "thirst",
         "risePerRound": 1,
+        "terrain": "A round ended on a hex whose terrain prints upkeep.thirst (terrain.json) raises Thirst by that much more. A desert is three rungs a round, not one.",
         "eased": {
           "perDraught": 4,
-          "note": "One draught of water drunk takes this many rungs off Thirst: from a waterskin (items.json waterskin), or at a well, a marsh or any fresh water, which is free. Thirst cannot go below 0."
+          "note": "One draught drunk takes this many rungs off Thirst: from a waterskin (items.json waterskin) or a wineskin, or a cup at an inn. Thirst cannot go below 0."
         },
+        "freeWater": "A figure that ends a round in a settlement, or on a river, lake or marsh hex, drinks for nothing: Thirst back to 0, and any waterskin it carries filled. Salt water is not drink - no sea hex waters anybody.",
         "limit": 20,
         "atLimit": {
           "health": -1,
-          "note": "As Hunger: at 20 the figure loses 1 health a round until it drinks."
+          "note": "At 20 the figure loses 1 health a round until it drinks, and drinking stops the losing without putting the health back (rest.medicalAid)."
         },
-        "appliesTo": "Every figure on the road, in a town or out of one - a town is a well. It is the same clock as Hunger on its own ladder, which is the point: a party can be fed and parched, or watered and starving."
+        "appliesTo": "Every figure, on the road or in a town - but a town is a well, so in a town it never climbs."
       },
       "night": {
         "camp": "A party that stops before dark and makes camp restores every figure's strength to the number printed on its card. A bed at an inn does the same and costs rest.cost.",
@@ -974,14 +1001,142 @@ window.GAME_DATA = {
       "notes": "This is the pressure that makes a lantern, a granary, an inn and a stretch of salted meat worth their coin - and the reason a shorter leg with a camp at the end of it often beats a longer one without."
     },
     "charisma": {
-      "$comment": "How well a figure is liked by things that could go either way. It is a rating, not a clock: nothing moves it in play, and the card prints what it starts at. For now it does one job; it is expected to grow more, and each one gets a line here rather than a new rule in a chapter.",
+      "$comment": "How well a figure is liked by things that could go either way. It is a rating, not a clock: only drink moves it in play, and only until the next sleep, and the card prints what it starts at. For now it does one job; it is expected to grow more, and each one gets a line here rather than a new rule in a chapter.",
       "track": "charisma",
       "befriend": {
         "adds": "Add the figure's Charisma to the d6 rolled to befriend a monster (monsters.json encounterOptions.befriend). The figure making the offer is the one whose Charisma counts.",
         "threshold": 4
       },
       "scale": "0 to the board's ceiling. Characters run 1 to 6; monsters and vehicles print 0.",
-      "growth": "Open. Haggling, hiring and a toll talked down are the obvious next places for it to add; none of them is a rule until a chapter adopts it."
+      "drink": "Raised for a while by drink (drink.perDraught) - the one thing in play that moves it.",
+      "growth": "Open. Haggling and hiring are the obvious next places for it to add; neither is a rule until a chapter adopts it. A toll talked down is Renown's job, not Charisma's."
+    },
+    "test": {
+      "$comment": "One way to ask whether a figure manages something, used everywhere a card asks: roll a d6 and add one of the figure's numbers. Befriending is a test of Charisma against charisma.befriend.threshold; a task card names its own characteristic and its own number. A test is never a battle - nothing on the other side rolls.",
+      "die": "d6",
+      "rule": "Roll the d6 and add the characteristic the card names. Equal to the card's number or over it passes."
+    },
+    "wisdom": {
+      "$comment": "What a figure knows and notices: the number a task card tests more than any other, and the one drink takes away. It is a rating like Charisma - set from the card at setup and left alone - but it is a LASTING number: it rises only at a level milestone, and what it has risen to is written on the character record sheet and carried into the next game.",
+      "track": "wisdom",
+      "tests": "Task cards (data/tasks.json) test it more than anything else: d6 + Wisdom against the card's number (test).",
+      "drink": "Knocked down for a while by drink (drink.perDraught), and put back at the next sleep.",
+      "scale": "Characters print 1 to 6. Monsters and vehicles have no Wisdom box and no Wisdom marker.",
+      "grows": "Only at a level milestone (level.milestones), and never past the board's ceiling."
+    },
+    "drink": {
+      "$comment": "Ale, wine and mead - everything in commodities.json category `drink` - make a figure better company and worse judgement. It is the cheapest way in the game to raise Charisma for a befriending roll or a hard bargain, and it is paid for in Wisdom, which is what a task card tests. Drunk, it also slakes thirst, so a wineskin is a waterskin that costs you something.",
+      "what": "A draught of anything in the drink category of commodities.json, from a wineskin (items.json wineskin) or by the cup at an inn.",
+      "perDraught": {
+        "charisma": 1,
+        "wisdom": -1
+      },
+      "thirst": "A draught of drink eases Thirst exactly as a draught of water does (upkeep.thirst.eased).",
+      "lasts": "Until the figure next sleeps, at a camp or in a bed. Then put its Charisma marker back to its card's box and its Wisdom marker back up by as many rungs as drink took off.",
+      "floor": "Wisdom cannot go below 0. A figure whose Wisdom reaches 0 by drinking is drunk: it does nothing else that round - no leg, no job, no task - fights only if something attacks it, and sleeps where it stands.",
+      "coinPerCup": 2,
+      "cupNote": "A cup at any inn. At an inn another player owns, the coin goes to them."
+    },
+    "level": {
+      "$comment": "How far a hero has come, 0 to 20, and the slowest number in the game on purpose. It rises on DEEDS - quests done and task cards done - and the deeds it wants grow with every level, so a hero gains several levels in a first game and one or two in a tenth. Reaching 20 is a career, not a game: tools/simulate.mjs plays careers out and fails if 20 ever comes inside one game, or never comes at all.\n\nIt is the one number that a hero takes home. The L marker shows it during a game; the character record sheet (data/recordsheet.json) keeps it, and the deeds counted toward the next one, between games.",
+      "track": "level",
+      "from": 0,
+      "to": 20,
+      "deeds": {
+        "quest": "A mini quest done is worth its complexity in deeds (quests.json complexity). Each stage of a campaign quest done is worth the campaign's complexity.",
+        "task": "A task card done is worth the deeds it prints (data/tasks.json deeds).",
+        "counted": "On the character record sheet, in pencil, never on the board."
+      },
+      "perLevel": 1,
+      "toNext": "To rise to a level costs perLevel deeds for every step of the level being reached: 1 deed to reach level 1, 2 more to reach level 2, 3 more for level 3. Strike the deeds off when the level is taken; what is left over counts toward the next.",
+      "toTop": 210,
+      "toTopNote": "The sum of every step from 1 to the top, at perLevel a step. Stated so a chapter can print it; tools/validate-data.mjs recomputes it and fails if it is wrong.",
+      "milestones": {
+        "every": 5,
+        "choose": [
+          {
+            "stat": "health",
+            "by": 1
+          },
+          {
+            "stat": "strength",
+            "by": 1
+          },
+          {
+            "stat": "wisdom",
+            "by": 1
+          },
+          {
+            "stat": "charisma",
+            "by": 1
+          },
+          {
+            "stat": "burden",
+            "by": 2
+          }
+        ],
+        "note": "On reaching a level that is a multiple of `every`, choose one rise and write it on the record sheet. It raises that number's box for this game and every game after. No rise may take a number past the board's ceiling; one that would is chosen again."
+      },
+      "carried": true
+    },
+    "renown": {
+      "$comment": "What people say about a hero. Quests raise it and giving them up lowers it, and it pays in coin a player never has to count: every toll they are asked for is smaller and every hireling cheaper. It is the world's opinion, so most of it stays in the world when the game ends - a hero starts the next game with one renown for every level milestone they have passed, and earns the rest again.",
+      "track": "renown",
+      "from": 0,
+      "to": 20,
+      "gain": {
+        "perQuest": 1,
+        "perCampaignStage": 1,
+        "note": "And whatever a task card prints."
+      },
+      "loss": {
+        "perQuestAbandoned": -1,
+        "note": "Giving up an accepted quest costs this. Renown cannot go below 0."
+      },
+      "steps": [
+        {
+          "at": 5,
+          "tollOff": 1,
+          "hireOff": 5
+        },
+        {
+          "at": 10,
+          "tollOff": 2,
+          "hireOff": 10
+        },
+        {
+          "at": 15,
+          "tollOff": 3,
+          "hireOff": 15
+        },
+        {
+          "at": 20,
+          "tollOff": 4,
+          "hireOff": 20
+        }
+      ],
+      "stepsNote": "Read the highest step the marker has reached. tollOff comes off every toll the figure's party is asked for - a road, a rail line, bandits, an event - and hireOff off every hireling's fee. Neither takes a price below 0.",
+      "startsAt": "At setup, one renown for every level milestone the hero has passed (level.milestones.every). Everything above that was this game's and is not carried."
+    },
+    "career": {
+      "$comment": "A hero is not dealt fresh every game. At the end of one a player copies the numbers that last onto the CHARACTER RECORD SHEET (data/recordsheet.json, printed by tools/build-record.mjs) and brings the sheet to the next game. What lasts is what the hero IS - how far they have come and what they know. What they OWN does not: coin, kit, wounds and the contents of a pack belong to one game's economy and start fresh in the next, so a veteran is never a rich man walking into a poor table.",
+      "carries": [
+        "level",
+        "deeds toward the next level",
+        "every milestone rise taken",
+        "renown, as milestones (renown.startsAt)"
+      ],
+      "doesNotCarry": [
+        "coin",
+        "kit and cards",
+        "health lost",
+        "strength lost",
+        "thirst",
+        "drink"
+      ],
+      "setUp": "Set the board from the card as usual, then from the sheet: the L marker at the recorded level, every box a rise has raised raised by it, and Renown at renown.startsAt.",
+      "endOfGame": "Write the level, the deeds left over, and any rise taken this game on the sheet's next row. Wisdom is written sober - as it stands after a night's sleep.",
+      "table": "A table may agree to start everybody at level 0 for a game. A recorded hero is still the same hero afterwards: their sheet is simply not written on."
     },
     "movement": {
       "landMoveCostDefault": 1,
@@ -1021,7 +1176,7 @@ window.GAME_DATA = {
     "rest": {
       "$comment": "Two different kinds of hurt, mended two different ways. Strength is spent, so sleep gives it back. Health is damage, so only a healer does. That split is what makes a night's camp a decision rather than a formality, and it is what makes a physician worth feeding.",
       "where": "Any settlement with an inn - every printed settlement has one; a player-built town needs the inn building. A camp made on open ground counts for strength and for nothing else.",
-      "restoresStrength": "All of it. One night's sleep sets the strength token back to the number printed on the card, wherever that night is taken.",
+      "restoresStrength": "All of it. One night's sleep sets the strength token back to the number printed on the card, wherever that night is taken - unless the figure went without a meal that round (upkeep.food.missed), when it gets nothing back until it has eaten.",
       "restoresHealth": "None. Sleeping through a wound does not close it - see medicalAid.",
       "medicalAid": {
         "$comment": "The only thing that puts health back. Everything on this list is a person, a building or a bottle: health is repaired by somebody, never by time.",
@@ -6739,6 +6894,9 @@ window.GAME_DATA = {
           "gem-vein",
           "mana-vein"
         ],
+        "upkeep": {
+          "meals": 1
+        },
         "mark": {
           "id": "peak",
           "path": "M2 19 9 7.6l4.4 6.8 3-4.4L22 19z"
@@ -6791,6 +6949,9 @@ window.GAME_DATA = {
           "peat-bog"
         ],
         "effortPenalty": -1,
+        "upkeep": {
+          "meals": 1
+        },
         "mark": {
           "id": "frost",
           "path": "M12 4v16M5.2 8l13.6 8M18.8 8 5.2 16"
@@ -6817,6 +6978,9 @@ window.GAME_DATA = {
           "gem-vein"
         ],
         "requiresWaterForFarming": true,
+        "upkeep": {
+          "thirst": 2
+        },
         "mark": {
           "id": "dune",
           "path": "M2 16.6q5.2-7.4 10.4-3.2M12.4 13.4q4 2.6 9.6 1.2M4.4 20.4q3.6-3 7.2-1.4"
@@ -9616,7 +9780,7 @@ window.GAME_DATA = {
       {
         "id": "provision",
         "name": "Provision",
-        "summary": "Food carried for the road. Its K ladder is the meals left in it: knock a rung down for every meal eaten, which eases Hunger - see rules.json upkeep.hunger. At 0 the pack is empty and the card is discarded."
+        "summary": "Food carried for the road. Its K ladder is the meals left in it: a figure off its own town eats one a round and knocks a rung down - see rules.json upkeep.food. At 0 the sack is empty; it is filled again at any inn or market, and its W ladder is the sack itself."
       },
       {
         "id": "potion",
@@ -10470,6 +10634,38 @@ window.GAME_DATA = {
         ]
       },
       {
+        "id": "wineskin",
+        "name": "Wineskin",
+        "class": "gear",
+        "cardCode": "ITM-17",
+        "slot": "belt",
+        "madeAt": "tailor",
+        "inputs": [
+          {
+            "commodity": "leather",
+            "qty": 1
+          }
+        ],
+        "effortHours": 1,
+        "baseValue": 20,
+        "massKg": 1,
+        "wear": 6,
+        "uses": 3,
+        "plateFrom": {
+          "plate": "item-waterskin",
+          "flip": "horizontal",
+          "rotateDeg": 8,
+          "tint": "wine",
+          "note": "The waterskin's own plate, mirrored, tipped the other way and stained the colour of what it holds. A wineskin is a waterskin that somebody filled at an inn."
+        },
+        "story": "The same hide and the same three seams as a waterskin, but the bung is waxed and the leather has drunk so much red it will never hold water clean again. Carried by people who would rather be liked than right.",
+        "effects": [
+          "Holds 3 draughts of ale, wine or mead (the K box). Filled at any inn by the cup (rules.json drink.coinPerCup), or brim-full from one unit of drink in your own stock.",
+          "Each draught eases Thirst as water does, and is drink: Charisma +1 and Wisdom -1 until you next sleep (rules.json drink).",
+          "Capacity is what is left to drink and wear is the hide; it wears 1 each time it is drunk dry."
+        ]
+      },
+      {
         "id": "map",
         "name": "Map",
         "class": "gear",
@@ -10551,9 +10747,9 @@ window.GAME_DATA = {
         "uses": 3,
         "story": "Hard bread, salt beef and a twist of salt, packed by somebody who counts for a living. Three days is what a party carries between two towns it knows the road between.",
         "effects": [
-          "Three meals. Each one eaten takes a rung off the K ladder and eases Hunger (rules.json upkeep.hunger).",
-          "Capacity is the meals left: an empty sack is a spent sack.",
-          "Dried and salted, so it does not perish."
+          "Three meals. Off your own town you eat one a round: a rung off the K ladder (rules.json upkeep.food).",
+          "Filled again at any inn or market, a meal at a time, up to the K box (rules.json upkeep.food.refill).",
+          "Dried and salted, so it does not perish. The sack wears 1 each time it is emptied."
         ]
       },
       {
@@ -10584,8 +10780,8 @@ window.GAME_DATA = {
         "uses": 10,
         "story": "The crossing pack: ten days in a bound sack with the seams doubled, sold at every granary within a week of the desert and nowhere else at all.",
         "effects": [
-          "Ten meals, each one eaten a rung off the K ladder and a rung off Hunger (rules.json upkeep.hunger).",
-          "Capacity is the meals left: an empty sack is a spent sack.",
+          "Ten meals, one a round off your own town: a rung off the K ladder each (rules.json upkeep.food).",
+          "Filled again at any inn or market, a meal at a time, up to the K box.",
           "Eight kilograms - most of what a 9 kg Burden can take (rules.json carrying)."
         ]
       },
@@ -12376,7 +12572,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12408,7 +12603,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12438,7 +12632,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12469,7 +12662,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12499,7 +12691,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12530,7 +12721,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12559,7 +12749,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12587,7 +12776,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12618,7 +12806,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12647,7 +12834,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12678,7 +12864,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12707,7 +12892,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12737,7 +12921,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12770,7 +12953,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12801,7 +12983,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12834,7 +13015,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12865,7 +13045,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12898,7 +13077,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12930,7 +13108,6 @@ window.GAME_DATA = {
         "start": {
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "mana": 0,
           "coin": 0
@@ -12985,7 +13162,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13005,7 +13181,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13025,7 +13200,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13045,7 +13219,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13065,7 +13238,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13085,7 +13257,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13105,7 +13276,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13125,7 +13295,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13145,7 +13314,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13165,7 +13333,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13185,7 +13352,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13205,7 +13371,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13225,7 +13390,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13245,7 +13409,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13265,7 +13428,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13285,7 +13447,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13305,7 +13466,6 @@ window.GAME_DATA = {
           "strength": 0,
           "burden": 0,
           "charisma": 0,
-          "hunger": 0,
           "thirst": 0,
           "pace": 0,
           "mana": 0,
@@ -13322,7 +13482,7 @@ window.GAME_DATA = {
     ]
   },
   "characters": {
-    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a summary of their numbers and a story.\n\nCard layout: name and card code at the top, then a SUMMARY STRIP across the card - one lettered box per number, the letter the same one the player board's track carries, so H 10 on the card and the H track on the board are obviously the same thing. The strip prints the MAXIMUM and nothing else: there is no bar to walk on a card any more, because the board took the walking over and a card in a recess is a card whose edges you cannot reach. Under the strip the portrait runs the full width the frame allows, and the story sits low.\n\nThe strip is two rows: a starting value for every track on the player board (health, strength, burden, charisma, hunger, thirst, pace, mana) and then coin. `start` holds the ones a character has no field of their own for; the rest are read off health, strength, manaCapacity and startingGold. Burden is a printed number of kilograms - not a sum - and the coin in the purse counts against it like everything else (rules.json carrying.coin). Hunger and thirst start at 0, and so does pace, which is set when a leg begins. DEFENCE has gone off the strip along with the to-hit roll it existed to shift: a battle is one opposed total now (rules.json conflict.battle), and what a character brings to it besides strength is the gear in their kit slots. A character at 0 health is carried to the nearest settlement and mends only under medical aid (rules.json rest); a character at 0 strength does not fight and carries nothing, and one night's sleep puts all of it back. Art prompts in docs/art/prompts/characters.md.",
+    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a summary of their numbers and a story.\n\nCard layout: name and card code at the top, then a SUMMARY STRIP across the card - one lettered box per number, the letter the same one the player board's track carries, so H 10 on the card and the H track on the board are obviously the same thing. The strip prints the MAXIMUM and nothing else: there is no bar to walk on a card any more, because the board took the walking over and a card in a recess is a card whose edges you cannot reach. Under the strip the portrait runs the full width the frame allows, and the story sits low.\n\nThe strip is two rows: a starting value for every track on the player board (health, strength, burden, charisma, thirst, pace, mana, wisdom, level, renown) and then coin. `start` holds the ones a character has no field of their own for; the rest are read off health, strength, manaCapacity and startingGold. Burden is a printed number of kilograms - not a sum - and the coin in the purse counts against it like everything else (rules.json carrying.coin). Thirst starts at 0, and so does pace; level and renown start at 0 on the card and at whatever the character record sheet says for a hero who has played before (rules.json career), which is set when a leg begins. DEFENCE has gone off the strip along with the to-hit roll it existed to shift: a battle is one opposed total now (rules.json conflict.battle), and what a character brings to it besides strength is the gear in their kit slots. A character at 0 health is carried to the nearest settlement and mends only under medical aid (rules.json rest); a character at 0 strength does not fight and carries nothing, and one night's sleep puts all of it back. Art prompts in docs/art/prompts/characters.md.",
     "version": "0.3.0",
     "characters": [
       {
@@ -13330,7 +13490,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 9,
           "charisma": 4,
-          "hunger": 0,
+          "wisdom": 3,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13356,7 +13518,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 12,
           "charisma": 2,
-          "hunger": 0,
+          "wisdom": 3,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13382,7 +13546,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 6,
           "charisma": 4,
-          "hunger": 0,
+          "wisdom": 5,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13407,7 +13573,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 6,
           "charisma": 5,
-          "hunger": 0,
+          "wisdom": 2,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13431,7 +13599,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 18,
           "charisma": 1,
-          "hunger": 0,
+          "wisdom": 1,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13457,7 +13627,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 6,
           "charisma": 3,
-          "hunger": 0,
+          "wisdom": 5,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13483,7 +13655,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 12,
           "charisma": 2,
-          "hunger": 0,
+          "wisdom": 4,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13507,7 +13681,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 6,
           "charisma": 3,
-          "hunger": 0,
+          "wisdom": 6,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13534,7 +13710,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 12,
           "charisma": 5,
-          "hunger": 0,
+          "wisdom": 6,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13561,7 +13739,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 12,
           "charisma": 3,
-          "hunger": 0,
+          "wisdom": 3,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13589,7 +13769,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 9,
           "charisma": 4,
-          "hunger": 0,
+          "wisdom": 3,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13615,7 +13797,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 9,
           "charisma": 2,
-          "hunger": 0,
+          "wisdom": 2,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13643,7 +13827,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 6,
           "charisma": 1,
-          "hunger": 0,
+          "wisdom": 1,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13669,7 +13855,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 12,
           "charisma": 2,
-          "hunger": 0,
+          "wisdom": 2,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13697,7 +13885,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 9,
           "charisma": 3,
-          "hunger": 0,
+          "wisdom": 3,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13724,7 +13914,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 6,
           "charisma": 5,
-          "hunger": 0,
+          "wisdom": 6,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13751,7 +13943,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 9,
           "charisma": 3,
-          "hunger": 0,
+          "wisdom": 4,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13778,7 +13972,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 6,
           "charisma": 5,
-          "hunger": 0,
+          "wisdom": 4,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13805,7 +14001,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 9,
           "charisma": 4,
-          "hunger": 0,
+          "wisdom": 5,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13833,7 +14031,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 6,
           "charisma": 4,
-          "hunger": 0,
+          "wisdom": 4,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13859,7 +14059,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 12,
           "charisma": 6,
-          "hunger": 0,
+          "wisdom": 6,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -13887,7 +14089,9 @@ window.GAME_DATA = {
         "start": {
           "burden": 12,
           "charisma": 3,
-          "hunger": 0,
+          "wisdom": 1,
+          "level": 0,
+          "renown": 0,
           "thirst": 0,
           "pace": 0
         },
@@ -14069,6 +14273,135 @@ window.GAME_DATA = {
           }
         ],
         "notes": "Stages in order. If the Maw is slain by anyone else first, stage 3 completes at the Maw's hex with the clapper aboard - the bell falls silent either way."
+      }
+    ]
+  },
+  "tasks": {
+    "$comment": "The TASK deck: small personal deeds a hero does on the way to everything else, and the second of the two ways a hero earns DEEDS toward their next level (rules.json level.deeds) - the first is quests (quests.json). A quest is offered, read aloud and accepted or declined; a task is dealt to you, kept face down beside your board, and nobody else knows what you are trying to do. That is the whole difference, and it is why they are a deck of their own rather than a fourth kind of quest.\n\nEvery player holds `hand` task at a time. One is dealt at setup; when you do it, take its deeds and its renown, put it at the bottom of the deck and draw the next. A task you do not like can be swapped at any inn for `swap.coin`, which buys a rumour of something better and costs no renown, because nobody knew you had promised anything.\n\nA task that names a TEST is passed by a d6 plus the characteristic named against the number printed (rules.json test). Most of them test Wisdom, which is what drink takes away (rules.json drink) - so the inn that makes a hero good company is the same inn that makes them bad at their tasks, and that is the trade the wineskin is there to offer.\n\nThe deeds a task prints are 1 to 3. A mini quest is worth its complexity, 1 to 3, and a campaign stage 4 or 5: so a task is about a mini quest's worth, and the deck is there to keep a hero who drew no quests from standing still. Card codes TSK-nn. No plate is drawn for the deck yet (components.json decks tasks, minting false); the rulebook, the annex and the explorer print every card in full.",
+    "version": "0.1.0",
+    "hand": 1,
+    "swap": {
+      "coin": 5,
+      "where": "any inn",
+      "note": "Put your task at the bottom of the deck and draw another. It costs no renown - a task is a private promise."
+    },
+    "tasks": [
+      {
+        "id": "read-the-old-stones",
+        "cardCode": "TSK-01",
+        "name": "Read the Old Stones",
+        "hook": "Somebody cut letters into the hilltop stones before anybody here could read. Somebody else has been rubbing them out.",
+        "task": "End a leg on a hills or mountain hex and pass the test.",
+        "test": {
+          "stat": "wisdom",
+          "at": 7
+        },
+        "deeds": 1
+      },
+      {
+        "id": "herbalists-question",
+        "cardCode": "TSK-02",
+        "name": "The Herbalist's Question",
+        "hook": "Three remedies on the stall, one of them is chalk, and the woman selling them wants to know if you can tell which.",
+        "task": "In any settlement with a market, pass the test.",
+        "test": {
+          "stat": "wisdom",
+          "at": 8
+        },
+        "deeds": 2
+      },
+      {
+        "id": "three-countries",
+        "cardCode": "TSK-03",
+        "name": "Three Countries",
+        "hook": "A cartographer in Vossgard pays by the sketch, but only for ground you have stood on.",
+        "task": "End legs on three different kinds of terrain, in three different rounds.",
+        "deeds": 1
+      },
+      {
+        "id": "a-bed-in-every-inn",
+        "cardCode": "TSK-04",
+        "name": "A Bed in Every Inn",
+        "hook": "The innkeepers keep a book of the people who are worth a bed. You are not in it yet.",
+        "task": "Rest at three different inns.",
+        "deeds": 1,
+        "renown": 1
+      },
+      {
+        "id": "cross-the-sand",
+        "cardCode": "TSK-05",
+        "name": "Cross the Sand",
+        "hook": "Everybody says the short way is through the dunes. Nobody says it twice.",
+        "task": "End two legs in a row on desert hexes, and end the second with your Thirst below its limit.",
+        "deeds": 2
+      },
+      {
+        "id": "talk-it-down",
+        "cardCode": "TSK-06",
+        "name": "Talk It Down",
+        "hook": "Anything with teeth can be killed. The trick worth a song is the other one.",
+        "task": "Befriend a monster (monsters.json encounterOptions.befriend).",
+        "deeds": 2,
+        "renown": 1
+      },
+      {
+        "id": "hold-the-road",
+        "cardCode": "TSK-07",
+        "name": "Hold the Road",
+        "hook": "The carters have stopped using the east road, and the thing that stopped them is still on it.",
+        "task": "Win a battle against a monster whose strength is 5 or more.",
+        "deeds": 3,
+        "renown": 1
+      },
+      {
+        "id": "sober-counsel",
+        "cardCode": "TSK-08",
+        "name": "Sober Counsel",
+        "hook": "Two families, one well, and a magistrate who has sent for whoever is passing.",
+        "task": "In any settlement, pass the test - with no drink since you last slept.",
+        "test": {
+          "stat": "wisdom",
+          "at": 8
+        },
+        "deeds": 2
+      },
+      {
+        "id": "the-long-haul",
+        "cardCode": "TSK-09",
+        "name": "The Long Haul",
+        "hook": "The best price is always somewhere else. Today it is six days off.",
+        "task": "Deliver a cargo to a settlement six or more hexes from where it was loaded, and sell it there.",
+        "deeds": 2
+      },
+      {
+        "id": "a-round-for-the-house",
+        "cardCode": "TSK-10",
+        "name": "A Round for the House",
+        "hook": "Nobody remembers a hero. Everybody remembers who paid.",
+        "task": "At any inn, buy a cup for every figure there - at least three - and drink one yourself.",
+        "deeds": 1,
+        "renown": 2
+      },
+      {
+        "id": "the-hermits-riddle",
+        "cardCode": "TSK-11",
+        "name": "The Hermit's Riddle",
+        "hook": "He lives in the deep wood, he will answer one question, and he asks one first.",
+        "task": "End a leg on a forest hex and pass the test. Fail it, and your next leg starts a round late.",
+        "test": {
+          "stat": "wisdom",
+          "at": 9
+        },
+        "deeds": 3
+      },
+      {
+        "id": "keep-your-word",
+        "cardCode": "TSK-12",
+        "name": "Keep Your Word",
+        "hook": "Anybody can take a job. The ones people talk about are the ones who finish fast.",
+        "task": "Complete a quest within three rounds of accepting it.",
+        "deeds": 2,
+        "renown": 1
       }
     ]
   },
@@ -14456,7 +14789,7 @@ window.GAME_DATA = {
         "max": 6,
         "rows": 2,
         "rowGap": 0.8,
-        "$rowsNote": "`max` is the boxes in a ROW; `rows` is how many rows a strip may run to, and a row's boxes are the same width whatever the row holds. Three decks are the reason for the second row: a character, a monster and a vehicle each print a starting-value box for every track on the player board (H S B C F T P M) plus coin, which is nine boxes or more and does not fit one row at a legible size. Every other deck still prints one row, and a deck's picture window is cut under the tallest strip any card in it needs.",
+        "$rowsNote": "`max` is the boxes in a ROW; `rows` is how many rows a strip may run to, and a row's boxes are the same width whatever the row holds. Three decks are the reason for the second row: a character prints a starting-value box for every track on the player board (H S B C T P M I L R) plus coin, eleven boxes; a monster or a vehicle prints the seven tracks a figure without a career walks (H S B C T P M) plus its own card-only figures. None of that fits one row at a legible size. Every other deck still prints one row, and a deck's picture window is cut under the tallest strip any card in it needs.",
         "heightMm": 4.6,
         "gap": 5,
         "pad": 5,
@@ -14492,7 +14825,9 @@ window.GAME_DATA = {
         "wear": "W",
         "burden": "B",
         "charisma": "C",
-        "hunger": "F",
+        "wisdom": "I",
+        "level": "L",
+        "renown": "R",
         "thirst": "T",
         "capacity": "K",
         "armour": "A",
@@ -14507,12 +14842,12 @@ window.GAME_DATA = {
         "$defenceNote": "There is no D any more. Defence was a rating that shifted a to-hit roll, and there is no to-hit roll: a battle is one opposed total (rules.json conflict.battle), in which a number that makes you harder to hit and a number that soaks the hit are the same number. It is called armour and it is above.",
         "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so.",
         "build": "BP",
-        "rounds": "R",
+        "rounds": "RD",
         "jobs": "J",
-        "lodging": "L",
+        "lodging": "LG",
         "goods": "G",
         "victory": "V",
-        "$buildingNote": "The six a BUILDINGS card prints, and every one of them is card-only: a building does not walk anything. That is not the exception the armour note describes, it is the same rule read the other way - a token walks a number that CHANGES, and none of these does. A hut houses one worker on the round it is raised and on the last round of the game.\n\nB and R are on all fifty-two and are the pair a player actually spends: the effort to raise it, and the rounds it cannot be finished in however much effort is thrown at it. J, L, G and V are printed only where the building has them, which is why no card comes near the six-cell ceiling - the manor is the widest at four.\n\nThe letters were chosen against the board rather than for the word. Housing is L for lodging because H is the health track; storage is G for goods because S is strength. A card that printed H for housing would have a player looking for a health track to walk a building up, which is exactly the confusion statStrip.letters exists to prevent - and the check below fails the build on it rather than trusting this note."
+        "$buildingNote": "Rounds and lodging went from R and L to RD and LG when Renown and Level took those letters as tracks: a track letter outranks a card-only one, and BP already shows a building's letters may be two. The six a BUILDINGS card prints, and every one of them is card-only: a building does not walk anything. That is not the exception the armour note describes, it is the same rule read the other way - a token walks a number that CHANGES, and none of these does. A hut houses one worker on the round it is raised and on the last round of the game.\n\nB and R are on all fifty-two and are the pair a player actually spends: the effort to raise it, and the rounds it cannot be finished in however much effort is thrown at it. J, L, G and V are printed only where the building has them, which is why no card comes near the six-cell ceiling - the manor is the widest at four.\n\nThe letters were chosen against the board rather than for the word. Housing is L for lodging because H is the health track; storage is G for goods because S is strength. A card that printed H for housing would have a player looking for a health track to walk a building up, which is exactly the confusion statStrip.letters exists to prevent - and the check below fails the build on it rather than trusting this note."
       }
     },
     "storyRail": {
@@ -14600,6 +14935,29 @@ window.GAME_DATA = {
         "grainStrokeWidth": 0.7,
         "grainOpacity": 0.5,
         "knots": 3
+      }
+    },
+    "recordSheet": {
+      "$comment": "The character record sheet's shapes (content: data/recordsheet.json). A4 portrait, a form filled in pencil once a game. Nothing below is a position: tools/build-record.mjs stacks the sections down the page in the order the content gives them, and the log takes whatever height is left, cut into rows no shorter than log.minRowMm - so a longer ladder (a higher level.to) shortens the log rather than running off the page, and too short a log fails the build.",
+      "sheet": {
+        "widthMm": 210,
+        "heightMm": 297
+      },
+      "marginMm": 12,
+      "gutterMm": 5,
+      "titleMm": 9,
+      "fieldMm": 11,
+      "boxMm": 16,
+      "riseBoxMm": 13,
+      "ladderCellMm": 8,
+      "costsRowMm": 6,
+      "sectionHeadMm": 6,
+      "strokeWidth": 1.2,
+      "hairline": 0.6,
+      "log": {
+        "headMm": 7,
+        "minRowMm": 7.5,
+        "minRows": 12
       }
     },
     "marks": {
@@ -14911,6 +15269,22 @@ window.GAME_DATA = {
           "word": "QUESTS",
           "motif": "compass",
           "ink": "ochre"
+        }
+      },
+      {
+        "$comment": "The TASK deck (data/tasks.json): small personal deeds, dealt one at a time and kept face down. Declared now so the explorer, the annex and the mint queue all know the deck exists; minting is false because nobody is illustrating it yet - a deck nobody is drawing this month is a decision, not an absence (tools/lib/mint.mjs). Turning it on wants a brief in docs/art/prompts/tasks.md and nothing else.",
+        "prefix": "TSK",
+        "plateId": "task-{id}",
+        "promptFile": "tasks.md",
+        "plateFormat": "A4 landscape, 3:2",
+        "minting": false,
+        "id": "tasks",
+        "name": "Tasks",
+        "source": "tasks.json",
+        "back": {
+          "word": "TASKS",
+          "motif": "compass",
+          "ink": "verdigris"
         }
       },
       {
@@ -16394,13 +16768,13 @@ window.GAME_DATA = {
     }
   },
   "playerboard": {
-    "$comment": "The player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, four numbered tracks up the middle for the figure, and a narrow fifth against every kit slot for the thing lying in it.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the columns left over got wider.\n\nThen the fifth went the same way, for the opposite reason. DEFENCE was a rating a token barely ever moved, and when a battle became one opposed total (rules.json conflict.battle) there was nothing left for it to do that armour on a card was not already doing. Four columns up the middle now, at 15.6 mm apiece against the 13.6 that five of them managed - and what the paper bought is the thing the board never had room for: a WEAR ladder against every one of the four kit slots, so the axe, the sword and the lantern are each counted down beside their own card. The middle of the board is about the figure; the edge of it is about what the figure is carrying.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
-    "version": "0.4.0",
+    "$comment": "TEN COLUMNS AND ONE KIT CARD (0.5.0). Hunger went when every figure started eating a meal a round (rules.json upkeep.food), and its column and a second kit slot paid for three new tracks: WISDOM, LEVEL and RENOWN, the numbers a hero carries from one game to the next on the character record sheet (data/recordsheet.json). Anything a figure carries past its one kit card goes on the items board (data/itemboard.json). What follows is the board's history, kept because it says why each piece is where it is.\n\nThe player board: the sheet of A4 a player keeps in front of them. It holds one card of whatever is in play, four cards of that thing's kit, four numbered tracks up the middle for the figure, and a narrow fifth against every kit slot for the thing lying in it.\n\nOne board, not one per people, not one per SPECIES, and not one per KIND OF THING either. Everything that differs between an orc and a halfling is printed on the card that lies in the recess - strength, health, what they can shoulder - so the board underneath has no business knowing which of them is sitting there. That is also why a monster met on the road is dealt onto a spare one of these and run like a player who is not a person (rules.json exploration.discovery.encounter), and why a VEHICLE in play gets one too: a wagon has a hull that takes damage, a load it can shoulder, a pace along the road and a hold that its cargo and its modifications sit in, and every one of those is a track or a slot this board already has. The furniture does not care what is sitting in it.\n\nThat is what retired the sixth track. There was a V for vehicle damage, printed on every board whether or not the player was running anything - a whole column, on everybody's sheet, about somebody else's wagon. A vehicle is a figure now: it is dealt its own board, its damage is its HEALTH, and the columns left over got wider.\n\nThen the fifth went the same way, for the opposite reason. DEFENCE was a rating a token barely ever moved, and when a battle became one opposed total (rules.json conflict.battle) there was nothing left for it to do that armour on a card was not already doing. Four columns up the middle now, at 15.6 mm apiece against the 13.6 that five of them managed - and what the paper bought is the thing the board never had room for: a WEAR ladder against every one of the four kit slots, so the axe, the sword and the lantern are each counted down beside their own card. The middle of the board is about the figure; the edge of it is about what the figure is carrying.\n\nWhy the board carries the tracks and the cards do not: a card in a recess is a card whose edges you cannot reach. Cards used to hang harm off the left edge and capacity off the right, which works beautifully for a card held in the hand and not at all for one lying in a slot with five others. So the board took the walking over and the cards took a summary strip across the top instead - the maximum, in a lettered box, and nothing that moves. One place to look, one place to knock the tokens off, and the cards stay flat.\n\nThis file is content: what the tracks are, what they count, what the slots take. How the board is DRAWN - sheet size, margins, how wide a recess is cut, how tall a rung is - is declared once in components.json under `board`, like every other component. Nothing in here is a number the build tool also knows.",
+    "version": "0.5.0",
     "board": {
       "id": "player-board",
       "name": "Player Board",
       "sheet": "A4 landscape",
-      "summary": "One per player, one per vehicle in play, and one spare for the table, and every one identical. The card in play top left, four tracks up the middle, four cards of kit on the right each with its own wear ladder against it, and the round's phases under it.",
+      "summary": "One per player, one per vehicle in play, and one spare for the table, and every one identical. The card in play top left, ten tracks up the middle, one kit card on the right with its wear and capacity ladders against it, and the round's phases under the card in play. Everything else a figure carries goes on the items board.",
       "spare": "Print more than there are players: one spare for the ENCOUNTER, and one for every vehicle anybody expects to have on the road at once. The encounter board is the one a monster or a stranger is dealt onto when a discovery roll turns one up - its tracks are set from the card's summary strip and it is played like any other seat at the table until the encounter is over (rules.json exploration.discovery.encounter). A vehicle board is the same board doing the same job for a hull instead of a body.",
       "note": "The board is a workbench (docs/art/06-components.md): sawn timber ground, the tracks routed into the surface. It carries no border - the sheet is working surface to its edges, and with four tracks rather than six each column is nearly two millimetres wider than it was even after the wear ladders have taken theirs.",
       "generic": "The board says nothing about who is playing it - or about whether who is playing it is a person, or alive. People, calling, health, strength, armour and what can be shouldered are all printed on the card in the recess, which is the thing that changes; the board is the furniture that card sits in. Being generic is what lets one design serve a player, a dealt monster, a stranger met on the road and the wagon they are all arguing about."
@@ -16437,10 +16811,10 @@ window.GAME_DATA = {
           ],
           "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met. The sturdiest hull in the vehicle deck reaches 12 on the same column."
         },
-        "walks": "Down as the figure takes hits - and down 1 a round for as long as its Hunger or its Thirst stands at the top of its track - and up under medical aid alone: 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A VEHICLE runs the same column and reads it as its hull: set it from the card, down as it is damaged, up as it is repaired - one rung a round in any settlement of town rank or better, at 5 coin a rung.",
+        "walks": "Down as the figure takes hits - and down 1 a round for as long as its Thirst stands at the top of its track - and up under medical aid alone: 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A VEHICLE runs the same column and reads it as its hull: set it from the card, down as it is damaged, up as it is repaired - one rung a round in any settlement of town rank or better, at 5 coin a rung.",
         "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way. A vehicle at zero is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
         "note": "This column swallowed the vehicle track. There used to be a V beside it counting damage on somebody's wagon, printed on every board in the game whether or not anybody was running one - and counting UP, which is the only number on the board that did. A hull is a body: it has a maximum on its card, it takes hits, it is mended in town, and at nothing it is carried off. One column, one direction, and the wagon gets a board of its own to walk it on.",
-        "rule": "rules.json rest, rules.json upkeep.hunger, rules.json upkeep.thirst, characters.json health, monsters.json health, vehicles.json hull"
+        "rule": "rules.json rest, rules.json upkeep.thirst, characters.json health, monsters.json health, vehicles.json hull"
       },
       {
         "id": "strength",
@@ -16507,30 +16881,6 @@ window.GAME_DATA = {
         "rule": "rules.json charisma, monsters.json encounterOptions.befriend, characters.json start.charisma"
       },
       {
-        "id": "hunger",
-        "name": "Hunger",
-        "letter": "F",
-        "label": "HUNGER",
-        "unit": null,
-        "kind": "harm",
-        "ink": "oxide",
-        "step": 1,
-        "covers": {
-          "value": 20,
-          "paths": [],
-          "note": "The top of the track is the limit itself (limit.at), not a number any card prints: every figure starts at 0 and the card's F box says so."
-        },
-        "limit": {
-          "at": 20,
-          "mark": "20: -1 H",
-          "ink": "oxide",
-          "note": "At the top of the track the figure loses 1 health every round until it is brought down."
-        },
-        "walks": "Up 1 every round the figure is on the road. Each unit of food eaten takes rules.upkeep.hunger.eased.perFood rungs off, and it cannot go below 0.",
-        "atZero": "Fed. Nothing happens, and nothing is owed.",
-        "rule": "rules.json upkeep.hunger, characters.json start.hunger"
-      },
-      {
         "id": "thirst",
         "name": "Thirst",
         "letter": "T",
@@ -16542,7 +16892,7 @@ window.GAME_DATA = {
         "covers": {
           "value": 20,
           "paths": [],
-          "note": "As Hunger: the limit is the top of the track and every card starts at 0."
+          "note": "The top of the track is the limit itself (limit.at), not a number any card prints: every figure starts at 0 and the card's T box says so."
         },
         "limit": {
           "at": 20,
@@ -16550,7 +16900,7 @@ window.GAME_DATA = {
           "ink": "oxide",
           "note": "At the top of the track the figure loses 1 health every round until it is brought down."
         },
-        "walks": "Up 1 every round. Each draught drunk takes rules.upkeep.thirst.eased.perDraught rungs off, and it cannot go below 0.",
+        "walks": "Up 1 every round with no water to hand, and more in a desert (rules.json upkeep.thirst.terrain). Back to 0 in a settlement or beside fresh water. Each draught drunk takes rules.upkeep.thirst.eased.perDraught rungs off, and it cannot go below 0.",
         "atZero": "Watered. Nothing happens, and nothing is owed.",
         "rule": "rules.json upkeep.thirst, items.json waterskin, characters.json start.thirst"
       },
@@ -16599,13 +16949,79 @@ window.GAME_DATA = {
         "rule": "arcana.json, items.json manaCapacity, peoples.json manaStorage"
       },
       {
+        "id": "wisdom",
+        "name": "Wisdom",
+        "letter": "I",
+        "label": "WISDOM",
+        "unit": null,
+        "kind": "rating",
+        "ink": "slate",
+        "step": 1,
+        "lasting": true,
+        "covers": {
+          "value": 10,
+          "paths": [
+            "characters.characters[].start.wisdom"
+          ],
+          "note": "Mother Keswick, Odysseus, Penelope and Athena print 6, and four milestone rises take any of them to 10. The board runs to 20."
+        },
+        "walks": "Set it from the I box on the card, raised by any rise on the hero's record sheet, and leave it. Drink knocks it down a rung a draught until the next sleep (rules.json drink); nothing else moves it in a game.",
+        "atZero": "Drunk, if drink took it there: the figure does nothing more that round and sleeps where it stands.",
+        "reads": "A task card's test: d6 + Wisdom against the card's number (rules.json test).",
+        "note": "The letter is I - for insight - because W is wear and has been since wear got its ladders. It took the column Hunger left.",
+        "rule": "rules.json wisdom, rules.json drink, rules.json test, characters.json start.wisdom"
+      },
+      {
+        "id": "level",
+        "name": "Level",
+        "letter": "L",
+        "label": "LEVEL",
+        "unit": null,
+        "kind": "rating",
+        "ink": "ochre",
+        "step": 1,
+        "lasting": true,
+        "covers": {
+          "value": 20,
+          "paths": [
+            "characters.characters[].start.level"
+          ],
+          "note": "The top of the track is the top of a career (rules.json level.to). Every card prints 0; a hero who has played before starts where their record sheet says."
+        },
+        "walks": "Up, one rung each time the hero has done enough deeds for the next level (rules.json level.toNext). It never comes down.",
+        "atZero": "A hero on their first road. Nothing is owed and nothing is lost.",
+        "reads": "Every milestone rung (rules.json level.milestones.every) is where the hero chooses a rise.",
+        "rule": "rules.json level, rules.json career, characters.json start.level"
+      },
+      {
+        "id": "renown",
+        "name": "Renown",
+        "letter": "R",
+        "label": "RENOWN",
+        "unit": null,
+        "kind": "rating",
+        "ink": "verdigris",
+        "step": 1,
+        "covers": {
+          "value": 20,
+          "paths": [
+            "characters.characters[].start.renown"
+          ],
+          "note": "The top of the track (rules.json renown.to). Every card prints 0, and a hero who has played before starts with one for each milestone passed."
+        },
+        "walks": "Up a rung for every quest and every campaign stage done, and for what a task card prints; down a rung for a quest given up (rules.json renown).",
+        "atZero": "Nobody has heard of you. You pay every toll in full.",
+        "reads": "Every fifth rung is a step: each takes a little more off every toll and every hireling's fee (rules.json renown.steps).",
+        "rule": "rules.json renown, characters.json start.renown"
+      },
+      {
         "id": "wear",
         "name": "Wear",
         "letter": "W",
         "label": "WEAR",
         "unit": null,
         "place": "kit",
-        "count": 2,
+        "count": 1,
         "kind": "harm",
         "ink": "slate",
         "step": 1,
@@ -16630,7 +17046,7 @@ window.GAME_DATA = {
         "label": "CAPACITY",
         "unit": null,
         "place": "kit",
-        "count": 2,
+        "count": 1,
         "kind": "capacity",
         "ink": "ochre",
         "step": 1,
@@ -16641,10 +17057,10 @@ window.GAME_DATA = {
           ],
           "note": "The ten-day rations and the twenty-arrow bag, the deepest containers in the game. A track runs to 20."
         },
-        "walks": "Counts down what a container still holds - arrows in a quiver, draughts in a waterskin, meals in a pack of rations. Set it from the K box on the card when it goes in the slot; knock it down a rung per use; put it back up by filling it, at no more than the K box. It is not wear: a full waterskin can be nearly worn out, and a new one can be empty.",
+        "walks": "Counts down what a container still holds - arrows in a quiver, draughts in a waterskin or a wineskin, meals in a pack of rations. Set it from the K box on the card when it goes in the slot; knock it down a rung per use; put it back up by filling it, at no more than the K box. It is not wear: a full waterskin can be nearly worn out, and a new one can be empty.",
         "atZero": "Empty. The container still sits in its slot and still wears on its own W ladder, and does nothing until it is filled; a spent sheaf or sack, which has no way of being refilled, is discarded.",
         "reads": "Only its owner.",
-        "rule": "items.json uses, rules.json upkeep.hunger, rules.json upkeep.thirst"
+        "rule": "items.json uses, rules.json upkeep.food, rules.json upkeep.thirst"
       }
     ],
     "$placeNote": "A track's `place` says where on the sheet it is ruled. `column` is the grid up the middle - one column per track, all the same height, the shape this board has always had. `kit` is a short ladder against a card recess, drawn `count` times, once per slot. The distinction is not decoration: a column track counts something about the FIGURE in the recess, and there is one of those; a kit track counts something about a CARD in a slot, and there are four of those. tools/build-board.mjs partitions on it and never on a track's name.",
@@ -16656,6 +17072,9 @@ window.GAME_DATA = {
         "characters.characters[].manaCapacity",
         "characters.characters[].start.burden",
         "characters.characters[].start.charisma",
+        "characters.characters[].start.wisdom",
+        "characters.characters[].start.level",
+        "characters.characters[].start.renown",
         "items.items[].uses",
         "peoples.peoples[].burden.base",
         "monsters.monsters[].health",
@@ -16686,9 +17105,9 @@ window.GAME_DATA = {
       },
       {
         "id": "kit",
-        "name": "Kit slots",
+        "name": "Kit slot",
         "label": "ITEM",
-        "count": 2,
+        "count": 1,
         "takes": [
           "items",
           "tools",
@@ -16700,6 +17119,30 @@ window.GAME_DATA = {
         "note": "Whatever the thing in the recess has in play and needs to see. On a character's board that is a weapon, a lantern, a talisman, the quest they have accepted; on a vehicle's board it is the same four slots holding its cargo and the modifications bolted to it. Four, because five cards on the table is a hand and four is a kit - and because anybody who wants a fifth thing has to put something down, which is the same argument the strength limit is making. A vehicle card no longer sits here: it has a board of its own.\n\nEVERY SLOT HAS A WEAR LADDER AGAINST IT, and that is what the four slots stopped being merely a hand limit and started being an accounting: the thing in the slot has a W on its card, a pip stands on the ladder beside it, and it walks down as the thing is used. A fifth thing in play would be a fifth thing whose wear nobody is counting. Tools joined the list of what a slot takes on the same day, because a tool is now the same kind of object as a sword - something you own, carry and use up."
       }
     ],
+    "kitPanel": {
+      "$comment": "The space under the one kit card, which used to be a second card's recess. It carries the rules a hero meets every round on the road and the ones that make a career, so nobody has to turn to the rulebook to remember what a meal or a draught of wine does. Every figure in it is a {dotted.path} the board tool resolves, never a number typed here - change the rule and the board follows.",
+      "id": "on-the-road",
+      "sections": [
+        {
+          "title": "ON THE ROAD",
+          "lines": [
+            "Eat {rules.upkeep.food.perRound} meal a round off a ration card: a rung off its K. In your own town you eat with the workers.",
+            "A round with no meal: {rules.upkeep.food.missed.strength} S, and sleep gives none back until you eat.",
+            "Thirst +{rules.upkeep.thirst.risePerRound} a round, +{terrain.terrains[id=desert].upkeep.thirst} more in desert. Back to 0 in a town or by fresh water. A draught: -{rules.upkeep.thirst.eased.perDraught}.",
+            "Cold country (tundra, mountain): +{terrain.terrains[id=tundra].upkeep.meals} meal a round.",
+            "Drink: C +{rules.drink.perDraught.charisma} and I {rules.drink.perDraught.wisdom} a draught, until you next sleep."
+          ]
+        },
+        {
+          "title": "A CAREER",
+          "lines": [
+            "A quest done is worth its complexity in deeds; a task card, the deeds it prints. Count them on your record sheet.",
+            "Reaching a level costs as many deeds as the level. Every {rules.level.milestones.every}th level: choose one rise.",
+            "Renown: every {rules.renown.steps.0.at} takes {rules.renown.steps.0.tollOff} off each toll and {rules.renown.steps.0.hireOff} off each hireling."
+          ]
+        }
+      ]
+    },
     "panel": {
       "$comment": "The turn reference the bill of materials has always asked a player board for. It prints the round's phases in order, straight out of rules.json - so the board cannot fall out of step with the rules the way a hand-lettered one would. Under it, the one line of combat arithmetic a player needs while a monster card is face up in front of them.",
       "id": "the-round",
@@ -16743,6 +17186,115 @@ window.GAME_DATA = {
       "title": "THE ITEMS BOARD",
       "lines": [
         "Each card is counted on the pair of ladders its arrow points from."
+      ]
+    }
+  },
+  "recordsheet": {
+    "$comment": "The CHARACTER RECORD SHEET: the one piece of paper that outlives a game. A hero is not dealt fresh every time (rules.json career) - at the end of a game a player writes on it what lasts, and at the start of the next sets their board from the card AND from it. It is pencil work on purpose: the numbers on it change once a game, not once a round, so it is a form, not a board, and nothing on it is walked by a token.\n\nWhat lasts is what the hero IS: their level, the deeds counted toward the next one, and every rise a milestone has given them. What they OWN does not last, so there is no box for coin, kit or wounds - a box for them would be an invitation.\n\nThis file is content: which boxes the sheet carries, what its log asks for. How it is DRAWN is components.json recordSheet, and tools/build-record.mjs computes every position: the deeds ladder is as long as the dearest level (rules.json level), the rise boxes are one per stat a milestone can raise (rules.json level.milestones.choose), and the log has as many rows as the page has room for at components.json recordSheet.log.minRowMm. Change a rule and the sheet follows; nothing here restates a number the rules already own.",
+    "version": "0.1.0",
+    "sheet": {
+      "id": "character-record",
+      "name": "Character Record",
+      "sheet": "A4 portrait",
+      "summary": "One per hero, kept between games. The numbers a hero carries from one game to the next, and a line for every game they have played."
+    },
+    "header": [
+      {
+        "id": "hero",
+        "label": "HERO",
+        "share": 3
+      },
+      {
+        "id": "card",
+        "label": "CARD",
+        "share": 1
+      },
+      {
+        "id": "player",
+        "label": "PLAYER",
+        "share": 2
+      }
+    ],
+    "boxes": [
+      {
+        "id": "level",
+        "name": "Level",
+        "label": "LEVEL",
+        "track": "level",
+        "note": "Set the L marker here at setup."
+      },
+      {
+        "id": "deeds",
+        "name": "Deeds toward the next level",
+        "label": "DEEDS TOWARD NEXT",
+        "track": null,
+        "note": "What is left over after the last level was taken. Tick it on the ladder below too."
+      },
+      {
+        "id": "milestones",
+        "name": "Milestones passed",
+        "label": "MILESTONES PASSED",
+        "track": null,
+        "note": "Your starting Renown (rules.json renown.startsAt)."
+      }
+    ],
+    "rises": {
+      "title": "RISES TAKEN",
+      "note": "One rise at every milestone level. Add these to the card's boxes at setup, every game."
+    },
+    "ladder": {
+      "title": "DEEDS TOWARD THE NEXT LEVEL",
+      "note": "Tick one box a deed. When the ticks reach the level you are rising to, take it, clear the ladder and carry what is over."
+    },
+    "costs": {
+      "title": "WHAT EACH LEVEL COSTS",
+      "note": "Deeds to reach the level, and in all since level 0."
+    },
+    "log": {
+      "title": "GAMES PLAYED",
+      "columns": [
+        {
+          "id": "game",
+          "label": "#",
+          "share": 0.7
+        },
+        {
+          "id": "date",
+          "label": "DATE",
+          "share": 1.8
+        },
+        {
+          "id": "table",
+          "label": "BOARD / TABLE",
+          "share": 3
+        },
+        {
+          "id": "deeds",
+          "name": "Deeds toward the next level",
+          "label": "DEEDS",
+          "share": 1.2
+        },
+        {
+          "id": "level",
+          "name": "Level",
+          "label": "LEVEL",
+          "share": 1.2
+        },
+        {
+          "id": "left",
+          "label": "LEFT",
+          "share": 1.2
+        },
+        {
+          "id": "rise",
+          "label": "RISE",
+          "share": 1.4
+        },
+        {
+          "id": "notes",
+          "label": "NOTES",
+          "share": 4
+        }
       ]
     }
   },
@@ -18072,6 +18624,11 @@ window.GAME_DATA = {
       {
         "id": "quests",
         "name": "Quest",
+        "wash": "bruise"
+      },
+      {
+        "id": "tasks",
+        "name": "Task",
         "wash": "bruise"
       },
       {

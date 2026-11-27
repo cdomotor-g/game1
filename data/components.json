@@ -43,7 +43,7 @@
       "max": 6,
       "rows": 2,
       "rowGap": 0.8,
-      "$rowsNote": "`max` is the boxes in a ROW; `rows` is how many rows a strip may run to, and a row's boxes are the same width whatever the row holds. Three decks are the reason for the second row: a character, a monster and a vehicle each print a starting-value box for every track on the player board (H S B C F T P M) plus coin, which is nine boxes or more and does not fit one row at a legible size. Every other deck still prints one row, and a deck's picture window is cut under the tallest strip any card in it needs.",
+      "$rowsNote": "`max` is the boxes in a ROW; `rows` is how many rows a strip may run to, and a row's boxes are the same width whatever the row holds. Three decks are the reason for the second row: a character prints a starting-value box for every track on the player board (H S B C T P M I L R) plus coin, eleven boxes; a monster or a vehicle prints the seven tracks a figure without a career walks (H S B C T P M) plus its own card-only figures. None of that fits one row at a legible size. Every other deck still prints one row, and a deck's picture window is cut under the tallest strip any card in it needs.",
       "heightMm": 4.6,
       "gap": 5,
       "pad": 5,
@@ -79,7 +79,9 @@
       "wear": "W",
       "burden": "B",
       "charisma": "C",
-      "hunger": "F",
+      "wisdom": "I",
+      "level": "L",
+      "renown": "R",
       "thirst": "T",
       "capacity": "K",
       "armour": "A",
@@ -94,12 +96,12 @@
       "$defenceNote": "There is no D any more. Defence was a rating that shifted a to-hit roll, and there is no to-hit roll: a battle is one opposed total (rules.json conflict.battle), in which a number that makes you harder to hit and a number that soaks the hit are the same number. It is called armour and it is above.",
       "$goldNote": "The currency's own symbol, from rules.json currency.symbol - a coin count is the one number on the strip that is not an abstract rating, and it says so.",
       "build": "BP",
-      "rounds": "R",
+      "rounds": "RD",
       "jobs": "J",
-      "lodging": "L",
+      "lodging": "LG",
       "goods": "G",
       "victory": "V",
-      "$buildingNote": "The six a BUILDINGS card prints, and every one of them is card-only: a building does not walk anything. That is not the exception the armour note describes, it is the same rule read the other way - a token walks a number that CHANGES, and none of these does. A hut houses one worker on the round it is raised and on the last round of the game.\n\nB and R are on all fifty-two and are the pair a player actually spends: the effort to raise it, and the rounds it cannot be finished in however much effort is thrown at it. J, L, G and V are printed only where the building has them, which is why no card comes near the six-cell ceiling - the manor is the widest at four.\n\nThe letters were chosen against the board rather than for the word. Housing is L for lodging because H is the health track; storage is G for goods because S is strength. A card that printed H for housing would have a player looking for a health track to walk a building up, which is exactly the confusion statStrip.letters exists to prevent - and the check below fails the build on it rather than trusting this note."
+      "$buildingNote": "Rounds and lodging went from R and L to RD and LG when Renown and Level took those letters as tracks: a track letter outranks a card-only one, and BP already shows a building's letters may be two. The six a BUILDINGS card prints, and every one of them is card-only: a building does not walk anything. That is not the exception the armour note describes, it is the same rule read the other way - a token walks a number that CHANGES, and none of these does. A hut houses one worker on the round it is raised and on the last round of the game.\n\nB and R are on all fifty-two and are the pair a player actually spends: the effort to raise it, and the rounds it cannot be finished in however much effort is thrown at it. J, L, G and V are printed only where the building has them, which is why no card comes near the six-cell ceiling - the manor is the widest at four.\n\nThe letters were chosen against the board rather than for the word. Housing is L for lodging because H is the health track; storage is G for goods because S is strength. A card that printed H for housing would have a player looking for a health track to walk a building up, which is exactly the confusion statStrip.letters exists to prevent - and the check below fails the build on it rather than trusting this note."
     }
   },
   "storyRail": {
@@ -186,6 +188,23 @@
       "knots": 3
     }
   },
+  "recordSheet": {
+    "$comment": "The character record sheet's shapes (content: data/recordsheet.json). A4 portrait, a form filled in pencil once a game. Nothing below is a position: tools/build-record.mjs stacks the sections down the page in the order the content gives them, and the log takes whatever height is left, cut into rows no shorter than log.minRowMm - so a longer ladder (a higher level.to) shortens the log rather than running off the page, and too short a log fails the build.",
+    "sheet": { "widthMm": 210, "heightMm": 297 },
+    "marginMm": 12,
+    "gutterMm": 5,
+    "titleMm": 9,
+    "fieldMm": 11,
+    "boxMm": 16,
+    "riseBoxMm": 13,
+    "ladderCellMm": 8,
+    "costsRowMm": 6,
+    "sectionHeadMm": 6,
+    "strokeWidth": 1.2,
+    "hairline": 0.6,
+    "log": { "headMm": 7, "minRowMm": 7.5, "minRows": 12 }
+  },
+
   "marks": {
     "$comment": "Drawn marks that are not pictures: they are read, like letters, and so they are held to one grid and one weight wherever they appear. The path data is not here - it belongs to the thing the mark is of, an element in data/arcana.json and a terrain in data/terrain.json. This says how to draw it.",
     "element": {
@@ -495,6 +514,22 @@
         "word": "QUESTS",
         "motif": "compass",
         "ink": "ochre"
+      }
+    },
+    {
+      "$comment": "The TASK deck (data/tasks.json): small personal deeds, dealt one at a time and kept face down. Declared now so the explorer, the annex and the mint queue all know the deck exists; minting is false because nobody is illustrating it yet - a deck nobody is drawing this month is a decision, not an absence (tools/lib/mint.mjs). Turning it on wants a brief in docs/art/prompts/tasks.md and nothing else.",
+      "prefix": "TSK",
+      "plateId": "task-{id}",
+      "promptFile": "tasks.md",
+      "plateFormat": "A4 landscape, 3:2",
+      "minting": false,
+      "id": "tasks",
+      "name": "Tasks",
+      "source": "tasks.json",
+      "back": {
+        "word": "TASKS",
+        "motif": "compass",
+        "ink": "verdigris"
       }
     },
     {

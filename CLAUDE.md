@@ -864,6 +864,7 @@ node tools/build-prompts.mjs   # write artstyle.json + every derived figure into
 node tools/build-board.mjs     # regenerate docs/boards/ from playerboard + components
 node tools/build-market.mjs    # regenerate docs/markets/ - the rules sheet AND the depletion sheet
 node tools/build-ledger.mjs    # regenerate docs/ledger/ from ledger + components
+node tools/build-record.mjs    # regenerate docs/records/ - the character record sheet, from recordsheet + rules.level
 node tools/build-minimaps.mjs  # regenerate docs/minimaps/sheets/ from minimap + terrain
 node tools/build-tiles.mjs     # regenerate docs/tiles/ from buildingtiles + buildings + recipes
 node tools/build-book-art.mjs  # JPEG copies of new or changed plates -> docs/book/art/ (needs Chromium; --check does not)

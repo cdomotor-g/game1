@@ -124,15 +124,19 @@ Cargo that starts or ends its journey in a settlement your own road or rail reac
 
 ## Food and sleep on the road
 
-{{fig:plate:item-bag|margin|The pack: rations in it count down a rung for every meal eaten.}}
+{{fig:plate:item-rations-3-day|margin|Three-day rations: a meal a round off the K ladder, filled again at any inn or market.}}
 
-A party out of town keeps itself. Two different things are spent, and they are mended two different ways:
+A party out of town keeps itself. Food and water are spent differently and cost you differently: food is a meal every round wherever you are, and going without it weakens you; water is only a worry where there is none, and going without it wounds you.
 
-- **Hunger and Thirst each rise {{rules.upkeep.hunger.risePerRound}} rung every round** a figure is on the road. Each unit of food eaten takes {{rules.upkeep.hunger.eased.perFood}} rungs off Hunger, from what the party carries, forages or buys; each draught of water drunk takes {{rules.upkeep.thirst.eased.perDraught}} rungs off Thirst, from a waterskin or at a well, a marsh or any fresh water. Neither goes below 0.
-- **At the top of Hunger or Thirst** (rung {{rules.upkeep.hunger.limit}}) the figure loses {{rules.upkeep.hunger.atLimit.health}} health every round it is still there, and being fed or watered again does not put the health back. A pack of rations is a container: knock its capacity ladder down a rung for every meal eaten from it. Other food a party carries is a commodity, and a perishable one rolls the spoil die every round it is in the pack.
+- **Eat {{rules.upkeep.food.perRound}} meal every round.** In a town of your own your hero eats with the workers, from the town's stock. Anywhere else, knock a ration card's capacity ladder down a rung in the Feeding phase. On tundra or a mountain the cold costs {{terrain.terrains[id=tundra].upkeep.meals}} meal more.
+- **Thirst rises {{rules.upkeep.thirst.risePerRound}} rung every round** you end away from water, and {{terrain.terrains[id=desert].upkeep.thirst}} more on a desert hex. End a round in a settlement or on a river, lake or marsh hex and you drink for nothing: Thirst back to 0 and your waterskin filled. Sea water is not drink.
 - **A night without a camp costs 1 strength** from every figure — a night leg, or a round ended without stopping. It stacks night on night, and at 0 strength a figure does not fight.
 - **One night's sleep gives all the strength back**, wherever it is taken: a camp on open ground, a spent cave, or a bed. A camp costs nothing.
 - **Sleep mends no health at all.** Health comes back only under medical aid: {{rules.rest.medicalAid.healerPerRound}} a round from a healer or at an infirmary, {{rules.rest.medicalAid.physicianPerRound}} a round from a physician character standing there, or a potion, drunk. Care costs {{rules.rest.medicalAid.cost.coin}} coin a round, waived in your own town. A resting figure does nothing else that round.
+- **A round with no meal costs {{abs:rules.upkeep.food.missed.strength}} strength,** and sleep gives none of it back until you have eaten again.
+- **Fill a ration card** at any inn or market, {{rules.upkeep.food.refill.coinPerMeal}} coin a meal, up to its K box. In your own town a unit of food from stock fills one meal. Other food a party carries is a commodity, and a perishable one rolls the spoil die every round it is in the pack.
+- **A draught takes {{rules.upkeep.thirst.eased.perDraught}} rungs off Thirst** — from a waterskin, a wineskin, or a cup at an inn. Thirst never goes below 0.
+- **At the top of Thirst** (rung {{rules.upkeep.thirst.limit}}) the figure loses {{abs:rules.upkeep.thirst.atLimit.health}} health every round it is still there, and drinking again stops the losing without putting the health back.
 
 A figure at 0 health is carried to the nearest settlement and stays there until healed to half, and everything it was carrying is lost on the way — see [Heroes, vehicles and gear](14-heroes-vehicles-and-gear.md).
 
@@ -147,7 +151,8 @@ The map prints settlements in four ranks — village, town, city and seat — an
 | A bed | {{rules.rest.cost.coin}} coin a night, free in your own town. Restores strength in full and mends nothing |
 | Hirelings | At any settlement of village rank or better: a thug, a militiaman or a hired blade escorts one journey — a party or a cargo — for a flat fee, eats nothing, and goes home. See [Monsters and battle](12-battle.md) |
 | Rumours | Pay 5 coin and draw a quest card; accept it or decline it. See [Quests and campaigns](15-quests-and-campaigns.md) |
-| Drinks | Serve ale or wine to clear the town's unrest. See [People, food and unrest](07-people.md) |
+| Drinks | Serve ale or wine to clear the town's unrest. See [People, food and unrest](07-people.md). Or buy a cup for yourself, {{rules.drink.coinPerCup}} coin, and drink it — see [A hero's career](16-a-heros-career.md) |
+| Meals | Fill a ration card, {{rules.upkeep.food.refill.coinPerMeal}} coin a meal |
 
 {{fig:plate:event-mercenaries-for-hire|margin|Hirelings escort one journey for a flat fee, eat nothing, and go home.}}
 

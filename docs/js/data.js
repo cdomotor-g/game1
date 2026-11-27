@@ -29,6 +29,9 @@
   const vehicles = D.vehicles.vehicles;
   const characters = D.characters.characters;
   const quests = D.quests.quests;
+  /* The task deck: small personal deeds toward a hero's next level. */
+  const tasks = (D.tasks && D.tasks.tasks) || [];
+  const recordsheet = D.recordsheet || null;
   /* The campaign system: the two modes, the campaigns, and the CAMPAIGN deck -
      one card per chapter, read in order. `chapter` is the kind a card is
      indexed under, because "campaign" is the storyline it belongs to. */
@@ -68,6 +71,7 @@
     vehicle: index(vehicles),
     character: index(characters),
     quest: index(quests),
+    task: index(tasks),
     campaign: index(campaigns),
     chapter: index(chapters),
     /* Boards and their settlements, so a campaign card can name where it happens
@@ -289,6 +293,7 @@
       ['vehicle', 'Vehicles', vehicles],
       ['character', 'Characters', characters],
       ['quest', 'Quests', quests],
+      ['task', 'Tasks', tasks],
       ['campaign', 'Campaigns', campaigns],
       ['chapter', 'Campaign cards', chapters],
       ['spell', 'Spells', spells],
@@ -308,7 +313,7 @@
     rules: D.rules,
     commodities, tools, buildings, recipes, terrains, deposits, siting,
     modes, figures, peoples, professions, cards, items,
-    monsters, vehicles, characters, quests, spells, talismans,
+    monsters, vehicles, characters, quests, tasks, recordsheet, spells, talismans,
     playModes, campaigns, chapters,
     elements, enchantments, modifications, playerboard, pricing,
     art, artPlacement, placeSheet, groundSheet, holdingSheets,

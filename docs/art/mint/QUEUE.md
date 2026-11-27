@@ -15,7 +15,7 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 161/205 · maps 1/1 · building tiles 44/54**
+**cards 161/206 · maps 1/1 · building tiles 44/54**
 
 > **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 41 of 41 are under the 1890 px this line would want for print — smallest is `CHR-12` at 1488 px. That is an aspiration, not a fault.
 
@@ -36,13 +36,13 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**161 of 205 minted.** 0 waiting on a brief, 44 waiting on art, 0 waiting on frame.
+**161 of 206 minted.** 0 waiting on a brief, 45 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
 Nothing waiting.
 
-### 2 · DRAW — the artist — 44 cards
+### 2 · DRAW — the artist — 45 cards
 
 The brief is written and there is no plate. Generate it at **the deck’s declared format**, at least 866 px on the long side (a landscape card window of 55 x 36.7 mm printed at 2 x card size, 200 dpi), 1299 px if it can be had, check it against the acceptance checklist in [`../07-ai-agent-brief.md`](../07-ai-agent-brief.md), and commit `docs/art/renders/<plate>.png`.
 
@@ -92,6 +92,7 @@ The brief is written and there is no plate. Generate it at **the deck’s declar
 | `CAM-20` | The Slaughter of the Suitors | Campaign | `campaign-odyssey-slaughter` | ✓ | · | · |
 | `CAM-21` | The Bed of Olive-wood | Campaign | `campaign-odyssey-the-bed` | ✓ | · | · |
 | `CAM-22` | Laertes' Orchard and the Peace | Campaign | `campaign-odyssey-laertes` | ✓ | · | · |
+| `ITM-17` | Wineskin | Items | `item-wineskin` | ✓ | · | · |
 
 ### 3 · FRAME — whoever accepts the plate
 
@@ -109,6 +110,7 @@ Declared, numbered, backed — and simply not being illustrated this round. Set 
 
 | Deck | Cards in the data | Plate format |
 | --- | --: | --- |
+| Tasks | 12 | A4 landscape, 3:2 |
 | Buildings | 49 | the tile's own, derived from its footprint |
 
 ---

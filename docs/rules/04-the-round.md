@@ -86,10 +86,10 @@ Nothing is chosen in this phase. Every progress track on the table advances one 
 
 ## 5. Feeding
 
-1. Every town pays {{rules.population.foodPerWorkerPerRound}} food per worker — specialists and soldiers included — from food held in that town, and nowhere else — see [People, food and unrest](07-people.md). You choose which food commodities to pay with.
+1. Every town pays {{rules.population.foodPerWorkerPerRound}} food per worker — specialists, soldiers and your hero, if they are at home, included — from food held in that town, and nowhere else — see [People, food and unrest](07-people.md). You choose which food commodities to pay with.
 2. Every worker who cannot be fed gives the town {{rules.population.starvation.unrestPerUnfedWorker}} unrest. At {{rules.population.starvation.unrestToRiot}} unrest the town riots.
 3. A town fed from {{rules.population.foodVarietyBonus.threshold}} or more different food commodities in the same Feeding phase earns the variety bonus: one extra hour for every worker there next round.
-4. Figures on the road eat too. Every figure that is not in a town being fed by it moves its Hunger and Thirst markers up {{rules.upkeep.hunger.risePerRound}} rung, then may eat and drink to bring them down; a figure at the top of either loses {{rules.upkeep.hunger.atLimit.health}} health. Sleep is the other half of a traveller's upkeep: a party that made camp has its strength back, and a party that did not has lost some. [The map and travel](08-the-map-and-travel.md)
+4. Figures on the road eat too. Every figure that is not in a town of its own eats {{rules.upkeep.food.perRound}} meal off a ration card — its K ladder down a rung — and one that cannot loses {{abs:rules.upkeep.food.missed.strength}} strength. Its Thirst rises unless it is in a settlement or by fresh water; at the top of Thirst a figure loses {{abs:rules.upkeep.thirst.atLimit.health}} health. Sleep is the other half of a traveller's upkeep: a party that made camp has its strength back, and a party that did not has lost some. [The map and travel](08-the-map-and-travel.md)
 
 {{fig:plate:tile-dock|margin|The dock's catch faces the ochre spoil die whoever is holding it.}}
 

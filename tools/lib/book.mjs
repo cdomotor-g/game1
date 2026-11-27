@@ -74,12 +74,14 @@ function walk(root, path) {
  *   {{rules.wear.perUse}}          a number or string, or a flat array joined with commas
  *   {{count:monsters.monsters}}    an array's length
  *   {{pct:rules.market.buySpread}} a fraction as a percentage, 0.15 -> 15%
+ *   {{abs:rules.drink.perDraught.wisdom}} a number without its sign, -1 -> 1, for
+ *                                  a cost the sentence already says is a loss
  * Throws, naming `where`, on a path that does not resolve - a rulebook that
  * printed "undefined" where a number should be would be worse than a build that
  * stopped.
  */
 export function interpolate(text, data, where = 'text') {
-  return text.replace(/\{\{\s*(?:(count|pct):)?([^}]+?)\s*\}\}/g, (_, fn, path) => {
+  return text.replace(/\{\{\s*(?:(count|pct|abs):)?([^}]+?)\s*\}\}/g, (_, fn, path) => {
     const [key, ...rest] = path.split('.');
     if (!(key in data)) throw new Error(`${where}: {{${path}}} - "${key}" is not a dataset in data/manifest.json`);
     const v = walk(data[key], rest.join('.'));
@@ -87,6 +89,10 @@ export function interpolate(text, data, where = 'text') {
     if (fn === 'count') {
       if (!Array.isArray(v)) throw new Error(`${where}: {{count:${path}}} is not an array`);
       return String(v.length);
+    }
+    if (fn === 'abs') {
+      if (typeof v !== 'number') throw new Error(`${where}: {{abs:${path}}} is not a number`);
+      return String(Math.abs(v));
     }
     if (fn === 'pct') {
       if (typeof v !== 'number') throw new Error(`${where}: {{pct:${path}}} is not a number`);
@@ -476,6 +482,19 @@ export function openCatalogue(root, { data }) {
     };
   }
 
+  function task(t) {
+    const deck = deckByPrefix('TSK');
+    const letter = (data.playerboard.tracks.find((x) => x.id === t.test?.stat) ?? {}).letter;
+    return {
+      id: `tsk-${t.id}`, size: 'quarter', layout: 'landscape',
+      html: plate(plateIdFor(deck, t), { format: 'landscape', deck, alt: t.name })
+        + `<div class="text">${head({
+          pre: `${code(t.cardCode)} · task · ${t.deeds} deed${t.deeds === 1 ? '' : 's'}${t.renown ? ` · ${t.renown} renown` : ''}`,
+          name: esc(t.name),
+        })}<p class="hook">${inline(t.hook)}</p>${facts([inline(t.task), t.test ? `<em>Test</em> d6 + ${esc(letter ?? t.test.stat)}, ${t.test.at} or more` : null])}</div>`,
+    };
+  }
+
   const eventCat = byId(data.events.categories);
   const eventScope = byId(data.events.scopes);
   const said = (fx) => (fx.type === 'choice' && fx.branches?.length
@@ -548,6 +567,7 @@ export function openCatalogue(root, { data }) {
     { id: 'spells', title: 'Spells', size: 'quarter', blurb: 'What mana is spent on. One spell per character per round, of the element the mana holds.', entries: rows('SPL', data.arcana.spells).map((s) => ({ ...spell(s), set: setOf(s) })) },
     { id: 'enchantments', title: 'Enchantments', size: 'quarter', blurb: 'Mana laid into a building, a tool, an item or a person and left there until it is broken.', entries: (data.arcana.enchantments?.cards ?? []).map((e) => ({ ...enchantment(e), set: setOf(e) })) },
     { id: 'quests', title: 'Quests', size: 'quarter', blurb: 'Read aloud when they arrive, accepted or declined on the spot. A staged quest is taken in order.', entries: rows('QST', data.quests.quests).map((q) => ({ ...quest(q), set: setOf(q) })) },
+    { id: 'tasks', title: 'Tasks', size: 'quarter', blurb: 'Dealt one at a time and kept face down. Small deeds toward a hero\'s next level; most of them test Wisdom.', entries: rows('TSK', data.tasks?.tasks ?? []).map((t) => ({ ...task(t), set: setOf(t) })) },
     { id: 'events', title: 'Events', size: 'quarter', blurb: 'The deck the round opens with. Every disaster in it has something you could have bought in advance.', entries: rows('EVT', data.events.cards).map((e) => ({ ...event(e), set: setOf(e) })) },
     { id: 'peoples', title: 'Peoples', size: 'quarter', blurb: 'Who does the work. A people sets the die, the starting workers and the shape of a whole game.', entries: data.peoples.peoples.map((p) => ({ ...people(p), set: setOf(p) })) },
     { id: 'terrain', title: 'Terrain', size: 'quarter', blurb: 'The eleven kinds of ground, by the letter printed in the corner of every hex.', entries: data.terrain.terrains.map((t) => ({ ...terrain(t), set: setOf(t) })) },

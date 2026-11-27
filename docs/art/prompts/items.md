@@ -457,6 +457,44 @@ window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
 a rule of thumb.)
 ```
 
+## item-wineskin — Wineskin *(ITEMS deck · gear, belt, ITM-17)*
+
+> ✅ **WAITING — THIS ONE IS YOURS.** Page: square. At least **866 px on the long side** (a square card window of 55 x 55 mm printed at 2 x card size, 200 dpi); 1299 px if the generator offers it. A plate under that floor is refused at the shipping step, and pixels never drawn cannot be added later. Deliver the finished page as `docs/art/renders/item-wineskin.png` — see `docs/art/AGENTS.md` for how.
+
+The plate for this card is DERIVED, not drawn: `python3 tools/derive-plate.py
+wineskin <out.png>` makes it from `item-waterskin`, mirrored, tipped and stained
+the colour of wine, as `data/items.json` wineskin `plateFrom` says, and it lands
+through `ship-art` like any other plate. This brief is kept for the day somebody
+wants it drawn properly - delete the `plateFrom` block, and this is what the
+artist is handed.
+
+```text
+[PREAMBLE]
+
+A leather wineskin hung by its strap from a peg at the end of a bench, the
+belly swinging a little because it is two-thirds full: a bottle made from a
+whole small hide, about two hands high, its three seams closed with a coarse
+waxed cross-stitch. The neck is bound over a short turned wooden collar with
+dark cord, and the bung is waxed red at the rim where it has been pushed home
+wet a hundred times. The hide has drunk so much red wine that the whole skin
+is stained through a deep dull purple-red, darker where it is folded, with a
+dried run of wine down one seam from the neck. A narrow strap runs between two
+stitched tabs, and a leather thong with a knot at the end hangs from the neck.
+Wash: a deep dull wine red across the hide, warm ochre on the collar, the bung
+and the strap, flat, the waxed stitching left as bare paper.
+
+FRAMING. Square plate, whole page drawn edge to edge. The whole body of the
+skin from bung to base, the bound neck and its collar, both stitched tabs and
+the full length of the strap inside the middle 86%. Clear, quiet page round it.
+
+WINDOW. This plate is cut down to a card, and the card keeps the full width
+of the page but only the middle 86% of its height - everything that matters
+must sit between 7% and 93% down the page. Outside that band nothing can be
+relied on, whatever else this brief says. (Worked out from this deck's card
+window, 360 x 309, on the 1792 x 1792 page this deck is drawn at. It is not
+a rule of thumb.)
+```
+
 ## item-map — Map *(ITEMS deck · gear, belt, ITM-11)*
 
 > ⛔ **ALREADY DRAWN — DO NOT DRAW THIS.** `docs/art/renders/item-map.png` is in the repository and accepted. Redrawing it wastes the run; take one marked WAITING instead.

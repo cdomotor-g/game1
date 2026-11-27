@@ -39,11 +39,11 @@
 
   <!-- the card's working text -->
   <g font-size="18">
-    <text x="50" y="504" font-size="18" >Ten meals, each one eaten a rung off the K</text>
-    <text x="50" y="526" font-size="18" >ladder and a rung off Hunger (rules.json</text>
-    <text x="50" y="548" font-size="18" >upkeep.hunger).</text>
-    <text x="50" y="570" font-size="18" >Capacity is the meals left: an empty sack</text>
-    <text x="50" y="592" font-size="18" >is a spent sack.</text>
+    <text x="50" y="504" font-size="18" >Ten meals, one a round off your own town:</text>
+    <text x="50" y="526" font-size="18" >a rung off the K ladder each (rules.json</text>
+    <text x="50" y="548" font-size="18" >upkeep.food).</text>
+    <text x="50" y="570" font-size="18" >Filled again at any inn or market, a meal</text>
+    <text x="50" y="592" font-size="18" >at a time, up to the K box.</text>
     <text x="50" y="614" font-size="18" >Eight kilograms - most of what a 9 kg</text>
     <text x="50" y="636" font-size="18" >Burden can take (rules.json carrying).</text>
     <text x="50" y="658" font-size="18" >Made at the granary: 3 bread, 3 salted</text>

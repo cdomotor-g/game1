@@ -174,22 +174,24 @@
   },
 
   "upkeep": {
-    "$comment": "What a figure spends by being alive and on the road, and which of its two numbers it spends. Hunger and thirst are two clocks that climb a rung every round and are brought down by eating and drinking; at the top of either, a figure bleeds health. Sleep keeps STRENGTH up. None of the three is a substitute for another, which is the whole design: a party can be fed and exhausted, rested and parched, and those are different problems with different answers.\n\nThe town-scale version of this - workers eating in the Feeding phase - is `population`. This block is the party-scale one, and it applies to every figure on the map that is not sitting in a town being fed by it.",
-    "hunger": {
-      "track": "hunger",
-      "risePerRound": 1,
-      "eased": { "perFood": 4, "note": "One unit of food eaten takes this many rungs off Hunger. Food is what the party carries, forages or buys - a commodity, or a meal off a ration card (items.json rations-3-day). Hunger cannot go below 0." },
-      "limit": 20,
-      "atLimit": { "health": -1, "note": "At 20 the figure loses 1 health every round it is still there, and being fed does not put the health back (rest.medicalAid) - it only stops the losing. This replaces the rule that a round with nothing to eat costs 1 health: the cost still exists, it just takes a long time to arrive and is easy to see coming." },
-      "appliesTo": "Every figure on the road. A figure in a town being fed by it (population) is eating from the town's stock and its Hunger stays where it is."
+    "$comment": "What a figure spends by being alive, and which of its numbers it spends. FOOD and WATER are kept apart on purpose and cost different things: food is a meal every round, counted off a ration card on the road and off the town's stock at home, and going without it costs STRENGTH; water is a clock (Thirst) that only climbs where there is no water, and at the top of it a figure bleeds HEALTH. Hunger weakens; thirst kills. Sleep keeps strength up. None of the three stands in for another: a party can be fed and parched, watered and starving, or fed, watered and exhausted.\n\nThere used to be a Hunger clock beside Thirst, its twin on its own ladder. It went when every figure started eating every round the way a worker always has: a clock that a meal knocks four rungs off is a clock nobody ever watched, where a K ladder on a sack of bread going down a rung a day is a thing a player can see running out. The column it freed went to Wisdom.\n\nWhat makes the two different in play is WHERE they are got. Water is free wherever there is water - a town, a river, a lake, a marsh - and nowhere else, so it is a question of the map. Food is never free away from your own town, so it is a question of the purse. The desert asks the first question hard (terrain.json desert upkeep.thirst); the cold asks the second (terrain.json upkeep.meals).",
+    "food": {
+      "perRound": 1,
+      "atHome": "In a town of your own, your hero is one more mouth in the Feeding phase: counted with the workers and fed from the town's stock at population.foodPerWorkerPerRound. A worker and a hero eat alike.",
+      "onRoad": "Anywhere else, the figure eats one meal a round off a provision card in its kit (items.json, class provision): knock that card's K ladder down a rung in the Feeding phase.",
+      "terrain": "A round ended on a hex whose terrain prints upkeep.meals (terrain.json) costs that many meals more: cold is hungry work.",
+      "refill": { "coinPerMeal": 3, "where": "At any inn or any market, buy meals back onto a provision card, up to its K box, at this price each. In your own town a unit of food from stock fills one meal instead.", "note": "A town's own market sells meals at the same price whoever owns it, and the coin goes to the board." },
+      "missed": { "strength": -1, "note": "A round with no meal costs the figure 1 strength. Sleep does not give back strength lost to an empty belly until the figure has eaten again: a fed figure that sleeps gets all of it back as usual. Hunger weakens; it does not wound. Thirst does that." }
     },
     "thirst": {
       "track": "thirst",
       "risePerRound": 1,
-      "eased": { "perDraught": 4, "note": "One draught of water drunk takes this many rungs off Thirst: from a waterskin (items.json waterskin), or at a well, a marsh or any fresh water, which is free. Thirst cannot go below 0." },
+      "terrain": "A round ended on a hex whose terrain prints upkeep.thirst (terrain.json) raises Thirst by that much more. A desert is three rungs a round, not one.",
+      "eased": { "perDraught": 4, "note": "One draught drunk takes this many rungs off Thirst: from a waterskin (items.json waterskin) or a wineskin, or a cup at an inn. Thirst cannot go below 0." },
+      "freeWater": "A figure that ends a round in a settlement, or on a river, lake or marsh hex, drinks for nothing: Thirst back to 0, and any waterskin it carries filled. Salt water is not drink - no sea hex waters anybody.",
       "limit": 20,
-      "atLimit": { "health": -1, "note": "As Hunger: at 20 the figure loses 1 health a round until it drinks." },
-      "appliesTo": "Every figure on the road, in a town or out of one - a town is a well. It is the same clock as Hunger on its own ladder, which is the point: a party can be fed and parched, or watered and starving."
+      "atLimit": { "health": -1, "note": "At 20 the figure loses 1 health a round until it drinks, and drinking stops the losing without putting the health back (rest.medicalAid)." },
+      "appliesTo": "Every figure, on the road or in a town - but a town is a well, so in a town it never climbs."
     },
     "night": {
       "camp": "A party that stops before dark and makes camp restores every figure's strength to the number printed on its card. A bed at an inn does the same and costs rest.cost.",
@@ -201,11 +203,92 @@
   },
 
   "charisma": {
-    "$comment": "How well a figure is liked by things that could go either way. It is a rating, not a clock: nothing moves it in play, and the card prints what it starts at. For now it does one job; it is expected to grow more, and each one gets a line here rather than a new rule in a chapter.",
+    "$comment": "How well a figure is liked by things that could go either way. It is a rating, not a clock: only drink moves it in play, and only until the next sleep, and the card prints what it starts at. For now it does one job; it is expected to grow more, and each one gets a line here rather than a new rule in a chapter.",
     "track": "charisma",
     "befriend": { "adds": "Add the figure's Charisma to the d6 rolled to befriend a monster (monsters.json encounterOptions.befriend). The figure making the offer is the one whose Charisma counts.", "threshold": 4 },
     "scale": "0 to the board's ceiling. Characters run 1 to 6; monsters and vehicles print 0.",
-    "growth": "Open. Haggling, hiring and a toll talked down are the obvious next places for it to add; none of them is a rule until a chapter adopts it."
+    "drink": "Raised for a while by drink (drink.perDraught) - the one thing in play that moves it.",
+    "growth": "Open. Haggling and hiring are the obvious next places for it to add; neither is a rule until a chapter adopts it. A toll talked down is Renown's job, not Charisma's."
+  },
+
+  "test": {
+    "$comment": "One way to ask whether a figure manages something, used everywhere a card asks: roll a d6 and add one of the figure's numbers. Befriending is a test of Charisma against charisma.befriend.threshold; a task card names its own characteristic and its own number. A test is never a battle - nothing on the other side rolls.",
+    "die": "d6",
+    "rule": "Roll the d6 and add the characteristic the card names. Equal to the card's number or over it passes."
+  },
+
+  "wisdom": {
+    "$comment": "What a figure knows and notices: the number a task card tests more than any other, and the one drink takes away. It is a rating like Charisma - set from the card at setup and left alone - but it is a LASTING number: it rises only at a level milestone, and what it has risen to is written on the character record sheet and carried into the next game.",
+    "track": "wisdom",
+    "tests": "Task cards (data/tasks.json) test it more than anything else: d6 + Wisdom against the card's number (test).",
+    "drink": "Knocked down for a while by drink (drink.perDraught), and put back at the next sleep.",
+    "scale": "Characters print 1 to 6. Monsters and vehicles have no Wisdom box and no Wisdom marker.",
+    "grows": "Only at a level milestone (level.milestones), and never past the board's ceiling."
+  },
+
+  "drink": {
+    "$comment": "Ale, wine and mead - everything in commodities.json category `drink` - make a figure better company and worse judgement. It is the cheapest way in the game to raise Charisma for a befriending roll or a hard bargain, and it is paid for in Wisdom, which is what a task card tests. Drunk, it also slakes thirst, so a wineskin is a waterskin that costs you something.",
+    "what": "A draught of anything in the drink category of commodities.json, from a wineskin (items.json wineskin) or by the cup at an inn.",
+    "perDraught": { "charisma": 1, "wisdom": -1 },
+    "thirst": "A draught of drink eases Thirst exactly as a draught of water does (upkeep.thirst.eased).",
+    "lasts": "Until the figure next sleeps, at a camp or in a bed. Then put its Charisma marker back to its card's box and its Wisdom marker back up by as many rungs as drink took off.",
+    "floor": "Wisdom cannot go below 0. A figure whose Wisdom reaches 0 by drinking is drunk: it does nothing else that round - no leg, no job, no task - fights only if something attacks it, and sleeps where it stands.",
+    "coinPerCup": 2,
+    "cupNote": "A cup at any inn. At an inn another player owns, the coin goes to them."
+  },
+
+  "level": {
+    "$comment": "How far a hero has come, 0 to 20, and the slowest number in the game on purpose. It rises on DEEDS - quests done and task cards done - and the deeds it wants grow with every level, so a hero gains several levels in a first game and one or two in a tenth. Reaching 20 is a career, not a game: tools/simulate.mjs plays careers out and fails if 20 ever comes inside one game, or never comes at all.\n\nIt is the one number that a hero takes home. The L marker shows it during a game; the character record sheet (data/recordsheet.json) keeps it, and the deeds counted toward the next one, between games.",
+    "track": "level",
+    "from": 0,
+    "to": 20,
+    "deeds": {
+      "quest": "A mini quest done is worth its complexity in deeds (quests.json complexity). Each stage of a campaign quest done is worth the campaign's complexity.",
+      "task": "A task card done is worth the deeds it prints (data/tasks.json deeds).",
+      "counted": "On the character record sheet, in pencil, never on the board."
+    },
+    "perLevel": 1,
+    "toNext": "To rise to a level costs perLevel deeds for every step of the level being reached: 1 deed to reach level 1, 2 more to reach level 2, 3 more for level 3. Strike the deeds off when the level is taken; what is left over counts toward the next.",
+    "toTop": 210,
+    "toTopNote": "The sum of every step from 1 to the top, at perLevel a step. Stated so a chapter can print it; tools/validate-data.mjs recomputes it and fails if it is wrong.",
+    "milestones": {
+      "every": 5,
+      "choose": [
+        { "stat": "health", "by": 1 },
+        { "stat": "strength", "by": 1 },
+        { "stat": "wisdom", "by": 1 },
+        { "stat": "charisma", "by": 1 },
+        { "stat": "burden", "by": 2 }
+      ],
+      "note": "On reaching a level that is a multiple of `every`, choose one rise and write it on the record sheet. It raises that number's box for this game and every game after. No rise may take a number past the board's ceiling; one that would is chosen again."
+    },
+    "carried": true
+  },
+
+  "renown": {
+    "$comment": "What people say about a hero. Quests raise it and giving them up lowers it, and it pays in coin a player never has to count: every toll they are asked for is smaller and every hireling cheaper. It is the world's opinion, so most of it stays in the world when the game ends - a hero starts the next game with one renown for every level milestone they have passed, and earns the rest again.",
+    "track": "renown",
+    "from": 0,
+    "to": 20,
+    "gain": { "perQuest": 1, "perCampaignStage": 1, "note": "And whatever a task card prints." },
+    "loss": { "perQuestAbandoned": -1, "note": "Giving up an accepted quest costs this. Renown cannot go below 0." },
+    "steps": [
+      { "at": 5, "tollOff": 1, "hireOff": 5 },
+      { "at": 10, "tollOff": 2, "hireOff": 10 },
+      { "at": 15, "tollOff": 3, "hireOff": 15 },
+      { "at": 20, "tollOff": 4, "hireOff": 20 }
+    ],
+    "stepsNote": "Read the highest step the marker has reached. tollOff comes off every toll the figure's party is asked for - a road, a rail line, bandits, an event - and hireOff off every hireling's fee. Neither takes a price below 0.",
+    "startsAt": "At setup, one renown for every level milestone the hero has passed (level.milestones.every). Everything above that was this game's and is not carried."
+  },
+
+  "career": {
+    "$comment": "A hero is not dealt fresh every game. At the end of one a player copies the numbers that last onto the CHARACTER RECORD SHEET (data/recordsheet.json, printed by tools/build-record.mjs) and brings the sheet to the next game. What lasts is what the hero IS - how far they have come and what they know. What they OWN does not: coin, kit, wounds and the contents of a pack belong to one game's economy and start fresh in the next, so a veteran is never a rich man walking into a poor table.",
+    "carries": ["level", "deeds toward the next level", "every milestone rise taken", "renown, as milestones (renown.startsAt)"],
+    "doesNotCarry": ["coin", "kit and cards", "health lost", "strength lost", "thirst", "drink"],
+    "setUp": "Set the board from the card as usual, then from the sheet: the L marker at the recorded level, every box a rise has raised raised by it, and Renown at renown.startsAt.",
+    "endOfGame": "Write the level, the deeds left over, and any rise taken this game on the sheet's next row. Wisdom is written sober - as it stands after a night's sleep.",
+    "table": "A table may agree to start everybody at level 0 for a game. A recorded hero is still the same hero afterwards: their sheet is simply not written on."
   },
 
   "movement": {
@@ -245,7 +328,7 @@
   "rest": {
     "$comment": "Two different kinds of hurt, mended two different ways. Strength is spent, so sleep gives it back. Health is damage, so only a healer does. That split is what makes a night's camp a decision rather than a formality, and it is what makes a physician worth feeding.",
     "where": "Any settlement with an inn - every printed settlement has one; a player-built town needs the inn building. A camp made on open ground counts for strength and for nothing else.",
-    "restoresStrength": "All of it. One night's sleep sets the strength token back to the number printed on the card, wherever that night is taken.",
+    "restoresStrength": "All of it. One night's sleep sets the strength token back to the number printed on the card, wherever that night is taken - unless the figure went without a meal that round (upkeep.food.missed), when it gets nothing back until it has eaten.",
     "restoresHealth": "None. Sleeping through a wound does not close it - see medicalAid.",
     "medicalAid": {
       "$comment": "The only thing that puts health back. Everything on this list is a person, a building or a bottle: health is repaired by somebody, never by time.",

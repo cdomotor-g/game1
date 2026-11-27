@@ -54,10 +54,12 @@ Across the top of a card is a row of lettered boxes, the letter first and the fi
 | S | Strength — what you swing with in a battle | the S track |
 | B | Burden — the kilograms a figure can still take on | the B track |
 | C | Charisma — added to a roll to befriend a monster | the C track; it does not walk |
-| F | Hunger — rises a rung a round | the F track |
-| T | Thirst — rises a rung a round | the T track |
+| T | Thirst — rises where there is no water | the T track |
 | P | Pace, in hexes | the P track |
 | M | Mana | the M track |
+| I | Wisdom — what a task card tests | the I track; drink lowers it until you sleep |
+| L | Level — how far a hero has come | the L track; the record sheet keeps it between games |
+| R | Renown — what people say about you | the R track |
 | W | Wear — how worn a thing is | the wear ladder beside its kit slot |
 | K | Capacity — what a container still holds: arrows, draughts, meals | the capacity ladder beside its kit slot |
 | A | Armour — a monster's hide, added to its battle total | nowhere; it does not change |
@@ -65,7 +67,7 @@ Across the top of a card is a row of lettered boxes, the letter first and the fi
 | CG | Cargo — the bulk a vehicle's hold takes | nowhere; the cargo itself sits in the kit slots |
 | {{rules.currency.symbol}} | Coin — a figure's starting purse, or what a thing is worth | nowhere; coin is counted in coin |
 | KG | Kilograms — what a thing weighs | nowhere; it comes off the B track when the thing is picked up |
-| BP, R, L, J, G, V | A building's build points, minimum rounds, lodging, jobs, goods stored, victory points | nowhere; a building walks nothing |
+| BP, RD, LG, J, G, V | A building's build points, minimum rounds, lodging, jobs, goods stored, victory points | nowhere; a building walks nothing |
 
 | Deck | Strip |
 | --- | --- |
@@ -77,12 +79,12 @@ Across the top of a card is a row of lettered boxes, the letter first and the fi
 | Tools | W, {{rules.currency.symbol}} |
 | Modifications | {{rules.currency.symbol}}, KG — an enchantment prints M, the mana to bind it, and its element's mark |
 | Spells | M, the mana to cast it, and its element's mark |
-| Buildings | BP and R, then L, J, G and V where the building has them |
-| Events, Quests, Campaign | No strip: everything the card does is in its text |
+| Buildings | BP and RD, then LG, J, G and V where the building has them |
+| Events, Quests, Tasks, Campaign | No strip: everything the card does is in its text |
 
 {{fig:card:CHR-04,card:VEH-02,card:TAL-03,card:TOL-01,card:BLD-36|Five decks, five strips: a character, a vehicle, a talisman, a tool, a building.}}
 
-A figure's strip is two rows, and every box in it but M is a starting value: set the board's markers left to right along it. M is the most the mana track may ever hold, and the marker itself starts at 0. Some boxes print 0 — Hunger and Thirst start at nothing, and a leg's Pace is not set until the leg starts. A monster or a vehicle prints Charisma 0, and a vehicle prints Strength 0. An element mark is one of four: ![fire](../art/icons/element-fire.svg) fire, ![earth](../art/icons/element-earth.svg) earth, ![water](../art/icons/element-water.svg) water, ![air](../art/icons/element-air.svg) air.
+A figure's strip is two rows, and every box in it but M is a starting value: set the board's markers left to right along it. M is the most the mana track may ever hold, and the marker itself starts at 0. Some boxes print 0 — Thirst starts at nothing, a leg's Pace is not set until the leg starts, and Level and Renown are 0 on a hero's first road. A monster or a vehicle prints Charisma 0, and a vehicle prints Strength 0. Only a character prints I, L and R: they are a career's, and a monster or a vehicle has none. An element mark is one of four: ![fire](../art/icons/element-fire.svg) fire, ![earth](../art/icons/element-earth.svg) earth, ![water](../art/icons/element-water.svg) water, ![air](../art/icons/element-air.svg) air.
 
 ### The decks and their backs
 
@@ -109,14 +111,15 @@ Talismans and spells share a back apart from the word; read the word. The campai
 
 ## The player board
 
-{{fig:board:player|wide|The player board: recess, kit slots with ladders, eight tracks, the round along the foot.}}
+{{fig:board:player|wide|The player board: the card in play, ten tracks, one kit card with its ladders, the round and the road.}}
 
 One A4 sheet per player, every one identical. Print one more than there are players — the spare is the **encounter board** — and one for every vehicle anyone expects to have on the road at once. On it:
 
 - **IN PLAY**, top left: a recess for the card this board is running — a character, a monster or a vehicle.
-- **{{playerboard.slots[id=kit].count}} kit slots**: whatever that card has in play — a weapon, a suit, a lantern, a tool, a talisman; on a vehicle's board, its cargo and modifications. That is the limit; one more thing in play means putting one down.
+- **A kit slot**, right of the tracks: whatever that card has in play — a weapon, a suit, a lantern, a tool, a talisman; on a vehicle's board, its cargo and modifications. Anything more in play goes on an **items board**, a second sheet of {{itemboard.slots[id=kit].count}} kit slots with the same ladders; print one per player.
 - **A wear ladder and a capacity ladder** against each kit slot, W and K, for the thing lying in it.
-- **Eight tracks** up the middle, H, S, B, C, F, T, P and M, about the card in the recess.
+- **Ten tracks** up the middle, H, S, B, C, T, P, M, I, L and R, about the card in the recess.
+- **ON THE ROAD** and **A CAREER**, under the kit card: what a meal, a draught and a deed are worth, printed from the rules.
 - **THE ROUND** along the foot — the six phases in order — and beside it **IN A FIGHT**, the battle sum. Turn order passes to the left.
 
 Every track and ladder runs from {{components.board.track.from}} to {{components.board.track.to}}, numbered from the bottom, every fifth rung ruled heavier. That is the game's ceiling: nothing a token walks ever runs past it. A {{components.tokens.bar.diameterMm}} mm **bar** walks each column; a {{components.tokens.pip.diameterMm}} mm **pip** walks each wear ladder.
@@ -127,10 +130,12 @@ Every track and ladder runs from {{components.board.track.from}} to {{components
 | S Strength | the S box | Down a rung for every night without a camp; all of it back after one night's sleep. It is for battle only | No fighting |
 | B Burden | the B box: kilograms | Down by the mass of everything picked up, worn or wielded and by the purse; up as things are put down or spent | Full: nothing more can be taken up |
 | C Charisma | the C box | It does not walk; it is added to a roll to befriend a monster | Nobody takes your side: nothing is added |
-| F Hunger | the F box, 0 | Up a rung every round on the road; down as food is eaten | At the top of the track, 1 health lost every round |
-| T Thirst | the T box, 0 | Up a rung every round; down as water is drunk | At the top of the track, 1 health lost every round |
+| T Thirst | the T box, 0 | Up {{rules.upkeep.thirst.risePerRound}} a round where there is no water, more in a desert; back to 0 in a settlement or by fresh water; down as a draught is drunk | At the top of the track, {{abs:rules.upkeep.thirst.atLimit.health}} health lost every round |
 | P Pace | the speed table, at the start of each leg | Down a rung for every hex entered | The leg is over: roll for discovery where you stopped |
 | M Mana | 0, the bottom rung | Up as a slain monster yields mana, down as spells are cast. The most it may hold is the M on the character plus the M of every talisman in a slot | Empty |
+| I Wisdom | the I box, plus any rise on your record sheet | It does not walk, except that each draught of drink takes a rung off until you next sleep | Drunk: you do nothing more that round |
+| L Level | 0, or the level on your record sheet | Up a rung when your deeds pay for the next level; never down | A first road |
+| R Renown | 0, or one for each milestone your record sheet shows | Up for every quest and campaign stage done; down for a quest given up | You pay every toll and fee in full |
 | W Wear, one per slot | the W box of the card in that slot, when the card goes in | Down a rung every time the thing is used; up as it is mended | Worn out: discard the card and clear the ladder |
 | K Capacity, one per slot | the K box of the card in that slot, when the card goes in | Down a rung every time something is taken out of it; up as it is filled again, never above the K box | Empty: it does nothing until it is filled |
 

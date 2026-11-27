@@ -1,0 +1,45 @@
+{
+  "$comment": "The CHARACTER RECORD SHEET: the one piece of paper that outlives a game. A hero is not dealt fresh every time (rules.json career) - at the end of a game a player writes on it what lasts, and at the start of the next sets their board from the card AND from it. It is pencil work on purpose: the numbers on it change once a game, not once a round, so it is a form, not a board, and nothing on it is walked by a token.\n\nWhat lasts is what the hero IS: their level, the deeds counted toward the next one, and every rise a milestone has given them. What they OWN does not last, so there is no box for coin, kit or wounds - a box for them would be an invitation.\n\nThis file is content: which boxes the sheet carries, what its log asks for. How it is DRAWN is components.json recordSheet, and tools/build-record.mjs computes every position: the deeds ladder is as long as the dearest level (rules.json level), the rise boxes are one per stat a milestone can raise (rules.json level.milestones.choose), and the log has as many rows as the page has room for at components.json recordSheet.log.minRowMm. Change a rule and the sheet follows; nothing here restates a number the rules already own.",
+  "version": "0.1.0",
+  "sheet": {
+    "id": "character-record",
+    "name": "Character Record",
+    "sheet": "A4 portrait",
+    "summary": "One per hero, kept between games. The numbers a hero carries from one game to the next, and a line for every game they have played."
+  },
+  "header": [
+    { "id": "hero", "label": "HERO", "share": 3 },
+    { "id": "card", "label": "CARD", "share": 1 },
+    { "id": "player", "label": "PLAYER", "share": 2 }
+  ],
+  "boxes": [
+    { "id": "level", "name": "Level", "label": "LEVEL", "track": "level", "note": "Set the L marker here at setup." },
+    { "id": "deeds", "name": "Deeds toward the next level", "label": "DEEDS TOWARD NEXT", "track": null, "note": "What is left over after the last level was taken. Tick it on the ladder below too." },
+    { "id": "milestones", "name": "Milestones passed", "label": "MILESTONES PASSED", "track": null, "note": "Your starting Renown (rules.json renown.startsAt)." }
+  ],
+  "rises": {
+    "title": "RISES TAKEN",
+    "note": "One rise at every milestone level. Add these to the card's boxes at setup, every game."
+  },
+  "ladder": {
+    "title": "DEEDS TOWARD THE NEXT LEVEL",
+    "note": "Tick one box a deed. When the ticks reach the level you are rising to, take it, clear the ladder and carry what is over."
+  },
+  "costs": {
+    "title": "WHAT EACH LEVEL COSTS",
+    "note": "Deeds to reach the level, and in all since level 0."
+  },
+  "log": {
+    "title": "GAMES PLAYED",
+    "columns": [
+      { "id": "game", "label": "#", "share": 0.7 },
+      { "id": "date", "label": "DATE", "share": 1.8 },
+      { "id": "table", "label": "BOARD / TABLE", "share": 3 },
+      { "id": "deeds", "name": "Deeds toward the next level", "label": "DEEDS", "share": 1.2 },
+      { "id": "level", "name": "Level", "label": "LEVEL", "share": 1.2 },
+      { "id": "left", "label": "LEFT", "share": 1.2 },
+      { "id": "rise", "label": "RISE", "share": 1.4 },
+      { "id": "notes", "label": "NOTES", "share": 4 }
+    ]
+  }
+}

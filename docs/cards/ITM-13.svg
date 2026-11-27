@@ -39,14 +39,16 @@
 
   <!-- the card's working text -->
   <g font-size="18">
-    <text x="50" y="504" font-size="18" >Three meals. Each one eaten takes a rung</text>
-    <text x="50" y="526" font-size="18" >off the K ladder and eases Hunger</text>
-    <text x="50" y="548" font-size="18" >(rules.json upkeep.hunger).</text>
-    <text x="50" y="570" font-size="18" >Capacity is the meals left: an empty sack</text>
-    <text x="50" y="592" font-size="18" >is a spent sack.</text>
-    <text x="50" y="614" font-size="18" >Dried and salted, so it does not perish.</text>
-    <text x="50" y="636" font-size="18" >Made at the granary: 1 bread, 1 salted</text>
-    <text x="50" y="658" font-size="18" >meat, 1 sack · 2 h.</text>
+    <text x="50" y="504" font-size="18" >Three meals. Off your own town you eat one</text>
+    <text x="50" y="526" font-size="18" >a round: a rung off the K ladder</text>
+    <text x="50" y="548" font-size="18" >(rules.json upkeep.food).</text>
+    <text x="50" y="570" font-size="18" >Filled again at any inn or market, a meal</text>
+    <text x="50" y="592" font-size="18" >at a time, up to the K box (rules.json</text>
+    <text x="50" y="614" font-size="18" >upkeep.food.refill).</text>
+    <text x="50" y="636" font-size="18" >Dried and salted, so it does not perish.</text>
+    <text x="50" y="658" font-size="18" >The sack wears 1 each time it is emptied.</text>
+    <text x="50" y="680" font-size="18" >Made at the granary: 1 bread, 1 salted</text>
+    <text x="50" y="702" font-size="18" >meat, 1 sack · 2 h.</text>
   </g>
   <path d="M 414,168.8 V 702" stroke="#1A1714" stroke-width="1.2"/>
   <g transform="translate(441.21 702) rotate(-90)" font-style="italic" fill="#3D3630">

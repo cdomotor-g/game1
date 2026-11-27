@@ -26,6 +26,7 @@ data, so the chapter cannot print a figure the data has moved on from:
 {{rules.wear.perUse}}                          -> 1
 {{count:monsters.monsters}}                    -> 19
 {{pct:rules.market.buySpread}}                 -> 15%
+{{abs:rules.upkeep.food.missed.strength}}      -> 1   (the sign dropped: the sentence says it is a loss)
 {{peoples.peoples[id=elf].manaStorage.innate}} -> 3
 {{rules.market.priceBands}}                    -> 0.5, 0.75, 1, 1.25, 1.5, 2
 ```

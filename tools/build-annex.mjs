@@ -915,20 +915,20 @@ say('## Character deck');
 say();
 say('The two rows of boxes across the top of every character card: a starting value for');
 say('every track on the player board, in the board\'s own order, then coin. Setting up is');
-say('reading along the strip and placing a marker for each. Hunger, Thirst and Pace start');
-say('at 0 on every card and are left out of the table; Burden is kilograms, and the purse');
-say('counts against it like everything else.');
+say('reading along the strip and placing a marker for each. Thirst, Pace, Level and Renown');
+say('start at 0 on every card and are left out of the table; Burden is kilograms, and the');
+say('purse counts against it like everything else. I is Wisdom, which a task card tests.');
 say();
 table(
-  ['Code', 'Character', 'People', 'Calling', 'H', 'S', 'B', 'C', 'M', rules.currency.symbol, 'Traits'],
+  ['Code', 'Character', 'People', 'Calling', 'H', 'S', 'B', 'C', 'M', 'I', rules.currency.symbol, 'Traits'],
   characters.characters.map((c) => [
     c.cardCode, c.name, c.people, c.calling,
-    c.health, c.strength, c.start.burden, c.start.charisma, c.manaCapacity || '—', c.startingGold,
+    c.health, c.strength, c.start.burden, c.start.charisma, c.manaCapacity || '—', c.start.wisdom, c.startingGold,
     (c.traits || []).join(' '),
   ])
 );
 say('There is no D box. What a character brings to a battle besides strength is the gear in');
-say('their four kit slots, and that is a thing they can change.');
+say('their kit slots, and that is a thing they can change.');
 say();
 
 /* ------------------------------------------------------------------- quests */
@@ -970,6 +970,35 @@ if (staged.length) {
   );
   for (const q of staged.filter((x) => x.notes)) say(`**${q.name}.** ${q.notes}`);
   say();
+}
+
+/* -------------------------------------------------------------------- tasks */
+const taskDeck = read('tasks.json');
+const trackLetterOf = new Map(read('playerboard.json').tracks.map((t) => [t.id, t.letter]));
+say('## Task deck');
+say();
+say(`Held ${taskDeck.hand} at a time, face down, and worth deeds toward a hero's next level. A test is`);
+say('a d6 plus the letter named, at the number or over.');
+say();
+table(
+  ['Code', 'Task', 'Deeds', 'Renown', 'Test', 'Task'],
+  taskDeck.tasks.map((t) => [
+    t.cardCode, t.name, t.deeds, t.renown ?? '—', t.test ? `${trackLetterOf.get(t.test.stat)} ${t.test.at}` : '—', t.task,
+  ])
+);
+
+/* ------------------------------------------------------------------ careers */
+{
+  const L = rules.level;
+  const rows = [];
+  let all = 0;
+  for (let n = L.from + 1; n <= L.to; n++) { all += n * L.perLevel; rows.push([n, n * L.perLevel, all, n % L.milestones.every === 0 ? 'a rise' : '']); }
+  say('## A career, level by level');
+  say();
+  say('What each level costs in deeds, and in all from level 0. A mini quest is worth its');
+  say('complexity, a campaign stage the campaign quest\'s, a task card what it prints.');
+  say();
+  table(['Level', 'Deeds', 'In all', 'Milestone'], rows);
 }
 
 /* ---------------------------------------------------------------- campaigns */

@@ -147,6 +147,11 @@ jobs:
       - name: Fail if the committed price ledger is stale
         run: node tools/build-ledger.mjs --check
 
+      # The character record sheet is drawn from rules.json level, so a change to
+      # how levels cost deeds redraws its ladder and its cost table.
+      - name: Fail if the committed character record sheet is stale
+        run: node tools/build-record.mjs --check
+
       # The mini-map sheets are a flat terrain colour and a hex grid whose cells are
       # world-map hexes, generated from data/minimap.json, data/terrain.json and the
       # map's own print preset. No art is involved, so nothing here waits on a plate -

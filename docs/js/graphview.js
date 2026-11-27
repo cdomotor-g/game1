@@ -24,7 +24,7 @@
     'deposits': 'deposit', 'transport': 'mode', 'transport.figures': 'figure',
     'peoples': 'people', 'peoples.professions': 'profession', 'items': 'item',
     'monsters': 'monster', 'vehicles': 'vehicle', 'characters': 'character',
-    'quests': 'quest', 'modifications': 'modification', 'arcana.elements': 'element',
+    'quests': 'quest', 'tasks': 'task', 'modifications': 'modification', 'arcana.elements': 'element',
   };
 
   global.Views.drawerKindOf = DRAWER_KIND;   // flowsview.js opens drawers by the same wiring

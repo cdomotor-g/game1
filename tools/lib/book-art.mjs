@@ -13,7 +13,7 @@
  *   tile:<building-id>   a building tile's face, docs/tiles/<id>.svg
  *   flow:<building-id>   the flow of work at a building, docs/art/flows/<id>.svg
  *   icon:<name>          a mark, docs/art/icons/<name>.svg
- *   board:<name>         a sheet - player, market, depletion, ledger, minimap-<terrain>
+ *   board:<name>         a sheet - player, items, record, market, depletion, ledger, minimap-<terrain>
  *   map:<map-id>         a map's plate, drawn or generated
  *   graph:dependencies   the web of the data
  *   terrain:<id>         a terrain swatch, drawn inline from its mark
@@ -117,10 +117,11 @@ export function artIndex(root, data) {
   const sheets = [
     ['player', 'docs/boards/player-board.svg', 'The player board'], ['market', 'docs/markets/market-board.svg', 'The market board'],
     ['depletion', 'docs/markets/depletion-sheet.svg', 'The depletion sheet'], ['ledger', 'docs/ledger/price-ledger.svg', 'The price ledger'],
+    ['items', 'docs/boards/items-board.svg', 'The items board'], ['record', 'docs/records/character-record.svg', 'The character record sheet'],
   ];
   const MM = join(root, 'docs', 'minimaps', 'sheets');
   if (existsSync(MM)) for (const f of readdirSync(MM).filter((f) => f.startsWith('field-') && f.endsWith('.svg'))) sheets.push([`minimap-${f.slice(6, -4)}`, `docs/minimaps/sheets/${f}`, `A mini-map sheet: ${f.slice(6, -4).replace(/-/g, ' ')}`]);
-  const BOARD_NAMES = { player: ['player board', 'encounter board', 'spare board'], market: ['market board', 'swing ruler'], depletion: ['depletion sheet', 'depletion grid'], ledger: ['price ledger', 'ledger'] };
+  const BOARD_NAMES = { player: ['player board', 'encounter board', 'spare board'], market: ['market board', 'swing ruler'], depletion: ['depletion sheet', 'depletion grid'], ledger: ['price ledger', 'ledger'], items: ['items board'], record: ['record sheet', 'character record sheet'] };
   for (const [id, rel, name] of sheets) {
     const abs = join(root, rel);
     if (!existsSync(abs)) continue;
