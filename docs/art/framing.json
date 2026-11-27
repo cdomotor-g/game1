@@ -542,6 +542,11 @@
       "focal": [0.63, 0.17],
       "note": "The bung, the bound neck and its turned collar, the ring and both stitched tabs, the full loop of the shoulder strap, the waxed cross-stitch down the seam, and the base on its ground line. The top edge is the bung at 10%, not the shoulder of the skin at 14% - that 4% is the whole reason both windows hold this plate with nothing spent. Focal on the bound neck."
     },
+    "item-wineskin": {
+      "subject": [0.2, 0.1095, 0.73, 0.7775],
+      "focal": [0.3, 0.27],
+      "note": "Derived from item-waterskin (tools/derive-plate.py, data/items.json wineskin plateFrom): mirrored and tipped, so the bung is top left. The box holds the bung, the dangling thong, the ring and its tab, the full loop of the strap and the base of the skin. The card window cannot hold all of it; what it spends is the ground shadow and the last of the base, off the bottom, because the bung and the bound neck are what says this is a bottle. Focal on the bound neck."
+    },
     "modification-compound-boiler": {
       "subject": [
         0.06,

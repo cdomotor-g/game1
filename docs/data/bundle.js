@@ -10660,9 +10660,9 @@ window.GAME_DATA = {
         },
         "story": "The same hide and the same three seams as a waterskin, but the bung is waxed and the leather has drunk so much red it will never hold water clean again. Carried by people who would rather be liked than right.",
         "effects": [
-          "Holds 3 draughts of ale, wine or mead (the K box). Filled at any inn by the cup (rules.json drink.coinPerCup), or brim-full from one unit of drink in your own stock.",
-          "Each draught eases Thirst as water does, and is drink: Charisma +1 and Wisdom -1 until you next sleep (rules.json drink).",
-          "Capacity is what is left to drink and wear is the hide; it wears 1 each time it is drunk dry."
+          "Holds 3 draughts of ale, wine or mead. Filled by the cup at any inn, or brim-full from one unit of drink in your stock (rules.json drink).",
+          "Each draught eases Thirst like water, and is drink: Charisma +1, Wisdom -1 until you next sleep.",
+          "Wears 1 each time it is drunk dry."
         ]
       },
       {
@@ -31905,10 +31905,14 @@ window.GAME_DATA = {
         "width": 1254,
         "height": 1254,
         "subject": [
-          0,
-          0,
-          1,
-          1
+          0.2,
+          0.1095,
+          0.73,
+          0.7775
+        ],
+        "focal": [
+          0.3,
+          0.27
         ]
       },
       "modification-compound-boiler": {
