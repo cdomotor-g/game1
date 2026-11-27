@@ -8,7 +8,7 @@
  * picture is the output - and it is also why nothing here is ever hand-edited:
  * run it again and the files come back.
  *
- *   docs/art/renders/port-<id>.png   the window, rasterised from the plate SVG
+ *   docs/art/renders/port-<id>.png   the window, rasterised from the relief layers
  *   docs/art/framing.json            one entry per plate, written by this tool
  *
  * The framing is not measured off the picture, it is where the tool PUT it: the
@@ -67,8 +67,8 @@ function windowOf(port) {
   return { x, y, cx: (c.x - x) / winW, cy: (c.y - y) / winH };
 }
 
-const SUBJECT = [0.3, 0.25, 0.4, 0.5];
-const noteFor = (port) => `${port.name} on the ${map.name} plate, a ${HEXES_ACROSS}-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back.`;
+const SUBJECT = [0.02, 0.02, 0.96, 0.96];
+const noteFor = (port) => `${port.name} on the ${map.name} plate, a ${HEXES_ACROSS}-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back.`;
 
 const framing = json('docs/art/framing.json');
 const subjects = ports.filter((p) => !wanted.length || wanted.includes(p.id) || wanted.includes(p.cardCode));
@@ -91,9 +91,14 @@ if (check) {
 }
 
 const chromium = findChromium();
-if (!chromium) { console.error(noBrowser('draw-port', 'The port plates are rasterised from the map SVG and cannot be made without one.')); process.exit(1); }
+if (!chromium) { console.error(noBrowser('draw-port', 'The port plates are rasterised from the map relief layers and cannot be made without one.')); process.exit(1); }
 mkdirSync(RENDERS, { recursive: true });
-const svgUrl = pathToFileURL(join(ROOT, 'docs/map', map.plate.file)).href;
+/* The picture is the relief a player sees in the map viewer, not the flat plate: the
+   finished ground (colour x shade, coast and rivers on it), the game grid, and the
+   settlements with their names. Every layer is on the plate's own pixels
+   (docs/map/layers/<id>/layers.json), so they stack without registering by eye. */
+const layerUrl = (f) => pathToFileURL(join(ROOT, 'docs/map/layers', map.id, f)).href;
+const stack = ['ground.jpg', 'hexes.svg', 'places.svg'];
 
 for (const p of subjects) {
   const id = plateIdFor(deck, p);
@@ -102,11 +107,11 @@ for (const p of subjects) {
      scaled so the window fills the page: a vector, so it is sharp at any scale. */
   const k = SIZE.w / winW;
   shoot(chromium, {
-    html: `<!doctype html><meta charset="utf-8"><style>html,body{margin:0}#w{width:${SIZE.w}px;height:${SIZE.h}px;overflow:hidden;position:relative}img{position:absolute;left:${-w.x * k}px;top:${-w.y * k}px;width:${PLATE_W * k}px;height:${map.plate.height * k}px}</style><div id="w"><img src="${svgUrl}"></div>`,
+    html: `<!doctype html><meta charset="utf-8"><style>html,body{margin:0}#w{width:${SIZE.w}px;height:${SIZE.h}px;overflow:hidden;position:relative}img{position:absolute;left:${-w.x * k}px;top:${-w.y * k}px;width:${PLATE_W * k}px;height:${map.plate.height * k}px}</style><div id="w">${stack.map((f) => `<img src="${layerUrl(f)}">`).join('')}</div>`,
     out: join(RENDERS, `${id}.png`), width: SIZE.w, height: SIZE.h, scratchName: id,
   });
   framing.plates[id] = { subject: SUBJECT, focal: [Number(w.cx.toFixed(3)), Number(w.cy.toFixed(3))], note: noteFor(p) };
   console.log(`  ${p.cardCode}  ${id}  ${SIZE.w} x ${SIZE.h}`);
 }
 writeFileSync(FRAMING, JSON.stringify(framing, null, 2) + '\n');
-console.log(`\n${subjects.length} port plates cut from ${map.plate.file}.`);
+console.log(`\n${subjects.length} port plates cut from the ${map.id} relief layers.`);

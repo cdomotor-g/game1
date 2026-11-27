@@ -2579,250 +2579,250 @@
     },
     "port-rome": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Rome on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Rome on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-athens": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Athens on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Athens on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-istanbul": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Istanbul on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Istanbul on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-cairo": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Cairo on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Cairo on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-alexandria": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Alexandria on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Alexandria on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-barcelona": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Barcelona on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Barcelona on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-marseille": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Marseille on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Marseille on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-tunis": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Tunis on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Tunis on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-algiers": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Algiers on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Algiers on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-lisbon": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.328,
         0.5
       ],
-      "note": "Lisbon on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Lisbon on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-naples": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Naples on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Naples on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-venice": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Venice on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Venice on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-tripoli": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Tripoli on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Tripoli on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-beirut": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Beirut on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Beirut on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-seville": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Seville on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Seville on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-thessaloniki": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Thessaloniki on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Thessaloniki on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-benghazi": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Benghazi on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Benghazi on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-palermo": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Palermo on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Palermo on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     },
     "port-nicosia": {
       "subject": [
-        0.3,
-        0.25,
-        0.4,
-        0.5
+        0.02,
+        0.02,
+        0.96,
+        0.96
       ],
       "focal": [
         0.5,
         0.5
       ],
-      "note": "Nicosia on the The Mediterranean plate, a 8-hex window cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the middle of the window, so every port card is framed alike. Safe to delete; it comes back."
+      "note": "Nicosia on the The Mediterranean plate, a 8-hex window of the relief picture (ground, grid and places) cut by tools/draw-port.mjs. Generated: the tool put the port at the focal point and the subject is the whole window, so the cards show all of it and are framed alike. Safe to delete; it comes back."
     }
   }
 }

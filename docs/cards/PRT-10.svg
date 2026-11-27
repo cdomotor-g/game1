@@ -9,7 +9,7 @@
 <g id="wash">
   <rect x="0" y="0" width="552" height="752" fill="#EDE4D1"/>
   <g clip-path="url(#portrait-window)">
-    <image href="../art/renders/port-lisbon.png" x="-147.06" y="25.34" width="916.98" height="611.32" preserveAspectRatio="xMidYMid slice"/>
+    <image href="../art/renders/port-lisbon.png" x="47.61" y="169" width="486" height="324" preserveAspectRatio="xMidYMid slice"/>
   </g>
   
   <rect x="24" y="629" width="504" height="101" fill="#D8CEBE" opacity="0.5"/>

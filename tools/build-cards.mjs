@@ -1437,7 +1437,7 @@ for (const t of tasks) {
    fee and the cheap and dear goods are steps along printed rows (tools/lib/ports.mjs),
    the lanes are the board's own shipping routes, and the story is one true fact
    about the place. */
-const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+const plural = (n, w) => `${n} ${n === 1 ? w : w === 'hex' ? 'hexes' : w + 's'}`;
 const cur = read('rules.json').currency?.symbol ?? '';
 for (const p of ports) {
   const render = plateIdFor(deckByPrefix('PRT'), p);
