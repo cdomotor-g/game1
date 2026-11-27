@@ -12,7 +12,6 @@
   /* Strength is the carrying limit as well as the swinging one, so kilograms are
      derived here rather than stored anywhere: rules.json owns the factor and
      every card, table and drawer in the game multiplies by the same one. */
-  const carryKg = (strength) => (strength || 0) * R.carrying.kgPerStrength;
 
   let open = () => {};           // set by app.js — opens the detail drawer
   const setOpener = (fn) => { open = fn; };
@@ -539,12 +538,12 @@
         el('a.btn.small', { href: 'book/index.html' }, 'Read the rulebook'),
       ]),
       boardPanel(),
-      ...section('Characters', 'Each player’s hero figure takes one at setup. Strength is both halves of what an arm does: what they swing with, and what they can shoulder.', q(D.characters).map((c) =>
+      ...section('Characters', 'Each player’s hero figure takes one at setup. Strength is for battle; what they can carry is their burden.', q(D.characters).map((c) =>
         deckCard('character', c, `${D.name('people', c.people)} · ${c.calling}`, [
           campaignPill(c),
           pill(`health ${c.health}`, 'bad'),
           pill(`strength ${c.strength}`),
-          pill(`carries ${carryKg(c.strength)} kg`),
+          pill(`burden ${c.start.burden} kg`),
           pill(`${c.startingGold}${R.currency.symbol} to start`),
           c.manaCapacity ? pill(`mana ${c.manaCapacity}`, 'accent') : null,
         ])
@@ -1365,11 +1364,13 @@
         el('h4', 'The summary strip'),
         el('div.deflist', [
           el('dt', 'H — health'), el('dd', `${c.health}. Only medical aid puts it back; sleeping does not.`),
-          el('dt', 'S — strength'), el('dd', `${c.strength}. What ${c.name.split(' ')[0]} swings with, and ${carryKg(c.strength)} kg of what they can shoulder.`),
+          el('dt', 'S — strength'), el('dd', `${c.strength}. What ${c.name.split(' ')[0]} swings with in a battle - and nothing else.`),
           
           el('dt', 'M — mana'), el('dd', c.manaCapacity ? `${c.manaCapacity} held in the body.` : 'none held in the body — talismans only.'),
           el('dt', `${R.currency.symbol} — gold`), el('dd', `${c.startingGold} to start.`),
-          el('dt', 'KG — carries'), el('dd', `${carryKg(c.strength)} kg. Derived, not designed: strength × ${R.carrying.kgPerStrength}.`),
+          el('dt', 'B — burden'), el('dd', `${c.start.burden} kg still to take on, counting down as things are picked up.`),
+          el('dt', 'C — charisma'), el('dd', `${c.start.charisma}. Added to a roll to befriend a monster.`),
+          el('dt', 'F, T, P'), el('dd', 'Hunger and thirst start at 0 and rise a rung a round; pace is set when a leg starts.'),
           ...(c.manaNote ? [el('dt', 'Note'), el('dd', c.manaNote)] : []),
         ]),
       ]),

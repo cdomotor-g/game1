@@ -41,7 +41,7 @@ Take that many worker pieces in your colour, your route tokens, and four bars an
 
 {{fig:plate:character-chr-01,plate:item-travelling-cloak,plate:character-chr-05,plate:item-war-axe,plate:character-chr-08|Corin Vale with his cloak, Ruk with his war axe, Old Mother Keswick.}}
 
-Deal one card from the character deck, or pick one; the table decides which way before anyone looks. Every card in the deck is playable in free play, including the cast a campaign brought with it. The card gives your hero a name, a face, a calling, their traits and a summary strip across the top: **H** health, **S** strength, **M** mana held in the body, **{{rules.currency.symbol}}** coin, and **KG**, the most your hero can carry.
+Deal one card from the character deck, or pick one; the table decides which way before anyone looks. Every card in the deck is playable in free play, including the cast a campaign brought with it. The card gives your hero a name, a face, a calling, their traits and a summary strip across the top: **H** health, **S** strength, **B** the kilograms your hero can take on, **C** charisma, **F** hunger, **T** thirst, **P** pace, **M** mana held in the body and **{{rules.currency.symbol}}** coin. Set a marker on each track to the figure in its box, left to right.
 
 Some characters are dealt an item with the card — Corin Vale's travelling cloak, Ruk's war axe, Old Mother Keswick's bone charm. Find it in the items, weapons or talismans deck and take it now. Then shuffle the rest of the character deck and set it aside face down: strangers met on the road are dealt from it.
 
@@ -53,16 +53,19 @@ Take coin equal to the **{{rules.currency.symbol}}** box on your card. Corin Val
 
 ### Set your player board
 
-{{fig:board:player|wide|The board set: card in the recess, H and S from the strip, P and M at nought.}}
+{{fig:board:player|wide|The board set: card in the recess, every marker set from the strip, mana at nought.}}
 
 Take a player board. Every board is identical; who is sitting behind it is printed on the card in the recess.
 
 1. Lay the character card in the IN PLAY recess.
 2. **H** — put a bar on the health track at the figure in the H box.
 3. **S** — put a bar on the strength track at the figure in the S box.
-4. **P** — put a bar on the pace track at 0. Pace is set when a leg begins and walked down as hexes are entered.
-5. **M** — put a bar on the mana track at 0. Nobody starts holding mana; it is won from slain monsters and from some quests. The M box on your card, plus the M box of every talisman in a kit slot, is the most the track may ever climb to.
-6. Lay any card dealt with your character in a kit slot. If it has a **W** box, put a pip on the wear ladder beside that slot at the W figure — the travelling cloak's is {{items.items[id=travelling-cloak].wear}}, the war axe's {{items.items[id=war-axe].wear}}. A potion has no W box and takes no pip; a talisman never wears.
+4. **B** — put a bar on the burden track at the kilograms in the B box. It walks down as you pick things up.
+5. **C** — put a bar on the charisma track at the figure in the C box. It stays there.
+6. **F** and **T** — put a bar on each of the hunger and thirst tracks at the figure in its box, which is 0 on every card. Each rises a rung every round on the road.
+7. **P** — put a bar on the pace track at the figure in the P box, 0. Pace is set when a leg begins and walked down as hexes are entered.
+8. **M** — put a bar on the mana track at 0. Nobody starts holding mana; it is won from slain monsters and from some quests. The M box on your card, plus the M box of every talisman in a kit slot, is the most the track may ever climb to.
+9. Lay any card dealt with your character in a kit slot. If it has a **W** box, put a pip on the wear ladder beside that slot at the W figure — the travelling cloak's is {{items.items[id=travelling-cloak].wear}}, the war axe's {{items.items[id=war-axe].wear}}. A potion has no W box and takes no pip; a talisman never wears.
 
 Print one board more than there are players and leave it empty. That is the encounter board: a monster or a stranger turned up by a discovery roll is dealt onto it and run like a player, as [Discovery and encounters](11-discovery.md) describes. A vehicle in play is dealt a board of its own too; nobody starts with one.
 

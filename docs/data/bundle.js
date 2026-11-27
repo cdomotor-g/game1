@@ -912,15 +912,15 @@ window.GAME_DATA = {
       "notes": "None of this makes a road a private road. Anyone may walk it, and paying the toll is the price of the walk - which is exactly the relationship a turnpike had with the people who used it."
     },
     "carrying": {
-      "$comment": "What a figure carries on its own back, in kilograms - and there is no longer a second number for it. Strength IS the carrying limit: one rating does the lifting and the swinging, because they are the same arm. A character card prints the kilograms so nobody does arithmetic at the table, but the kilograms are derived, not designed - change a figure's strength and what they can shoulder changes with it.\n\nMass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
+      "$comment": "What a figure carries on its own back, in kilograms, and the number that counts it down. It is BURDEN: the kilograms a figure can still take on. Its card prints the figure it starts with, the player board has a track for it, and a token walks DOWN it as things are picked up and back UP as they are put down. Strength has nothing to do with it any more - strength is for battle only (conflict.strength) - so a strong figure is not a strong porter unless its card says so.\n\nMass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
       "unit": "kg",
-      "kgPerStrength": 3,
-      "$scaleNote": "Three kilograms to the point. It is the factor that leaves the deck where it already was - a strength-2 hedge-witch shoulders 6 kg and a strength-6 caravan guard 18, which is roughly what their old burden bars said - and it puts the plate harness (12.5 kg) out of reach of anyone under strength 5, which is the right sentence for a suit of plate to be in.",
-      "limit": "strength x kgPerStrength, in kilograms. Characters use the strength on their card; any other figure uses its people's strength.base (peoples.json).",
-      "marker": "None. There is no burden track any more and no token to walk: total what the figure is wearing, wielding and stowing, and it either fits under the limit printed on the card or it does not.",
-      "limitRule": "A figure may not take up an item that would put its load over the limit. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
+      "track": "burden",
+      "$scaleNote": "Burden is a printed kilogram figure on every card, 0 to the board's ceiling of 20 (playerboard.json), and the figures on the cards that existed before burden had a track were each a strength times three, which is where a character's number started from. A figure with no card of its own - a worker, a soldier, a hireling - starts with the burden of its people (peoples.json burden.base).",
+      "limit": "the Burden the card prints, in kilograms, which is what the figure has left to take. A figure with no card of its own uses its people's burden.base (peoples.json).",
+      "marker": "The B track on the player board. Set it from the B box on the card at setup, knock it down by the mass of everything picked up and by the purse at perKg, and put it back up by what is put down or spent. It cannot go below 0: a figure may not take up what it has no kilograms left for.",
+      "limitRule": "A figure may not take up an item, or a purse, that would take its Burden below 0. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
       "coin": {
-        "$comment": "Coin was on the list below - weightless, an abstraction, the one thing a figure could hold an unlimited quantity of. It is not any more. A gold coin weighs 25 grams (currency.massKgEach), forty to the kilogram, and it goes on the scales with the sword and the rope.\n\nWhat that buys is a real decision at the top of the game. A strength-3 figure shoulders 9 kg; a strength-6 one, 18. Spend that on plate and a greatsword and there is nothing left for a fortune, and a party that has just sold a hold of jewellery has to work out how it is getting the money home. Coin is not a number in a corner of the sheet any more, it is cargo.",
+        "$comment": "Coin was on the list below - weightless, an abstraction, the one thing a figure could hold an unlimited quantity of. It is not any more. A gold coin weighs 25 grams (currency.massKgEach), forty to the kilogram, and it goes on the scales with the sword and the rope.\n\nWhat that buys is a real decision at the top of the game. A figure starting at 9 kg of burden is carrying a fortune at 360 coin; one starting at 18, twice that. Spend that on plate and a greatsword and there is nothing left for a fortune, and a party that has just sold a hold of jewellery has to work out how it is getting the money home. Coin is not a number in a corner of the sheet any more, it is cargo.",
         "massKgEach": "rules.currency.massKgEach",
         "perKg": 40,
         "counts": "Against the same limit as everything else. Total what the figure is wearing, wielding, stowing and carrying in its purse.",
@@ -931,17 +931,37 @@ window.GAME_DATA = {
         "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."
       ],
       "onZeroHealth": "A figure carried to a settlement at 0 health loses everything it was carrying on the way.",
-      "notes": "Burden used to be a bar up the right edge of every character card and a track on the player board. Both are gone: the bar went when the cards took a summary strip across the top instead, and the track went when strength swallowed it."
+      "notes": "Burden has had three lives: a bar up the right edge of every card, then nothing at all while strength swallowed it, and now a track again. It came back because a limit that is only a sum at the table is a sum nobody does, and a token that walks down as the pack fills is one everybody can see."
     },
     "upkeep": {
-      "$comment": "What a figure spends by being alive and on the road, and which of its two numbers it spends. Food keeps HEALTH up; sleep keeps STRENGTH up. They are not interchangeable and neither is a substitute for the other, which is the whole design: a party can be well fed and exhausted, or rested and starving, and those are different problems with different answers.\n\nThe town-scale version of this - workers eating in the Feeding phase - is `population`. This block is the party-scale one, and it applies to every figure on the map that is not sitting in a town being fed by it.",
-      "food": {
-        "perFigurePerRound": 1,
-        "from": "What the party carries, or what it forages or buys that round.",
-        "shortfall": {
-          "health": -1
+      "$comment": "What a figure spends by being alive and on the road, and which of its two numbers it spends. Hunger and thirst are two clocks that climb a rung every round and are brought down by eating and drinking; at the top of either, a figure bleeds health. Sleep keeps STRENGTH up. None of the three is a substitute for another, which is the whole design: a party can be fed and exhausted, rested and parched, and those are different problems with different answers.\n\nThe town-scale version of this - workers eating in the Feeding phase - is `population`. This block is the party-scale one, and it applies to every figure on the map that is not sitting in a town being fed by it.",
+      "hunger": {
+        "track": "hunger",
+        "risePerRound": 1,
+        "eased": {
+          "perFood": 4,
+          "note": "One unit of food eaten takes this many rungs off Hunger. Food is what the party carries, forages or buys - a commodity, or a meal off a ration card (items.json rations-3-day). Hunger cannot go below 0."
         },
-        "shortfallNote": "A round that ends with a figure unfed costs that figure 1 health, every round it goes on. Nothing about being fed again puts the health back - see rest.medicalAid. Going hungry is a wound like any other."
+        "limit": 20,
+        "atLimit": {
+          "health": -1,
+          "note": "At 20 the figure loses 1 health every round it is still there, and being fed does not put the health back (rest.medicalAid) - it only stops the losing. This replaces the rule that a round with nothing to eat costs 1 health: the cost still exists, it just takes a long time to arrive and is easy to see coming."
+        },
+        "appliesTo": "Every figure on the road. A figure in a town being fed by it (population) is eating from the town's stock and its Hunger stays where it is."
+      },
+      "thirst": {
+        "track": "thirst",
+        "risePerRound": 1,
+        "eased": {
+          "perDraught": 4,
+          "note": "One draught of water drunk takes this many rungs off Thirst: from a waterskin (items.json waterskin), or at a well, a marsh or any fresh water, which is free. Thirst cannot go below 0."
+        },
+        "limit": 20,
+        "atLimit": {
+          "health": -1,
+          "note": "As Hunger: at 20 the figure loses 1 health a round until it drinks."
+        },
+        "appliesTo": "Every figure on the road, in a town or out of one - a town is a well. It is the same clock as Hunger on its own ladder, which is the point: a party can be fed and parched, or watered and starving."
       },
       "night": {
         "camp": "A party that stops before dark and makes camp restores every figure's strength to the number printed on its card. A bed at an inn does the same and costs rest.cost.",
@@ -949,9 +969,19 @@ window.GAME_DATA = {
           "strength": -1
         },
         "noCampNote": "A party that travels a night leg, or ends the round without stopping, loses 1 strength from every figure in it. That is on top of the extra discovery roll a night leg already draws (movement.legs.nightRisk).",
-        "cumulative": "Strength lost this way stacks night after night, and at 0 strength a figure does not fight and carries nothing (playerboard.json strength.atZero). Two hard nights turn a caravan guard into a passenger."
+        "cumulative": "Strength lost this way stacks night after night, and at 0 strength a figure does not fight (playerboard.json strength.atZero). Two hard nights turn a caravan guard into a passenger."
       },
       "notes": "This is the pressure that makes a lantern, a granary, an inn and a stretch of salted meat worth their coin - and the reason a shorter leg with a camp at the end of it often beats a longer one without."
+    },
+    "charisma": {
+      "$comment": "How well a figure is liked by things that could go either way. It is a rating, not a clock: nothing moves it in play, and the card prints what it starts at. For now it does one job; it is expected to grow more, and each one gets a line here rather than a new rule in a chapter.",
+      "track": "charisma",
+      "befriend": {
+        "adds": "Add the figure's Charisma to the d6 rolled to befriend a monster (monsters.json encounterOptions.befriend). The figure making the offer is the one whose Charisma counts.",
+        "threshold": 4
+      },
+      "scale": "0 to the board's ceiling. Characters run 1 to 6; monsters and vehicles print 0.",
+      "growth": "Open. Haggling, hiring and a toll talked down are the obvious next places for it to add; none of them is a rule until a chapter adopts it."
     },
     "movement": {
       "landMoveCostDefault": 1,
@@ -1074,12 +1104,12 @@ window.GAME_DATA = {
         "appliesTo": "Any figure with a strength: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the numbers printed on the inn's board."
       },
       "strength": {
-        "$comment": "One number, three jobs, and it is the only number a figure brings to a fight of its own. Strength is what you SWING WITH - it is the base of your side of the battle roll. It is what you CARRY WITH - see carrying.kgPerStrength. And it is still the threat threshold some rules read off a monster card. It is also the number a hard night takes off you (upkeep.night), which is what ties the three together: an exhausted figure fights worse and carries less, and that is one token moving down one track.",
+        "$comment": "One number, one job: strength is what you SWING WITH, the base of your side of the battle roll, and it is still the threat threshold some rules read off a monster card. It no longer carries anything - that is Burden (carrying) - so strength is for battle only. It is also the number a hard night takes off you (upkeep.night): an exhausted figure fights worse, and that is one token moving down one track.",
         "scale": "0 to the board's ceiling (components.json board.track). Characters run 2 to 6, monsters 2 to 7.",
-        "carries": "strength x carrying.kgPerStrength kilograms. The card prints the kilograms; the track holds the strength.",
+        "carries": "Nothing. Strength is for battle only; what a figure can carry is its Burden (rules.json carrying).",
         "inABattle": "It is added to your total, straight, once. It never adds dice - everyone rolls two, and the very few things that grant a third say so on their own card.",
         "threshold": "Unchanged and read off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges.",
-        "atZero": "A figure at 0 strength does not fight and carries nothing."
+        "atZero": "A figure at 0 strength does not fight."
       },
       "armour": {
         "$comment": "What is between you and the blow, and the only piece of gear a monster has. It used to be two things - DEFENCE, which stopped a hit landing, and ARMOUR, which cancelled it after it had. In an opposed total there is no difference between those two sentences: both of them are a number that makes the other side's roll less likely to hurt you. So there is one number, it is called armour, and a monster's hide is on the same field as a suit of plate.",
@@ -7570,11 +7600,14 @@ window.GAME_DATA = {
     ]
   },
   "peoples": {
-    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with AND what it carries with: kilograms are strength x rules.carrying.kgPerStrength, so a people's carrying is not a second number and never was. There is no defence.base any more - defence went when the to-hit roll it shifted went, and what stands between a figure and a blow is the armour it is wearing (rules.json conflict.armour), which is a thing a people is not born with. A character card prints its own strength, that base adjusted for build and calling, in the summary strip across the top.",
+    "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with, and nothing else; burden.base is the kilograms it can take on, which is the Burden a figure with no card of its own starts with (rules.json carrying). There is no defence.base any more - defence went when the to-hit roll it shifted went, and what stands between a figure and a blow is the armour it is wearing (rules.json conflict.armour), which is a thing a people is not born with. A character card prints its own strength, that base adjusted for build and calling, in the summary strip across the top.",
     "version": "0.3.0",
     "peoples": [
       {
         "id": "human",
+        "burden": {
+          "base": 9
+        },
         "name": "Humans",
         "effortDie": "d6",
         "startingWorkers": 2,
@@ -7606,6 +7639,9 @@ window.GAME_DATA = {
       },
       {
         "id": "dwarf",
+        "burden": {
+          "base": 12
+        },
         "name": "Dwarves",
         "effortDie": "d6",
         "startingWorkers": 2,
@@ -7653,6 +7689,9 @@ window.GAME_DATA = {
       },
       {
         "id": "elf",
+        "burden": {
+          "base": 6
+        },
         "name": "Elves",
         "effortDie": "d6",
         "startingWorkers": 2,
@@ -7696,6 +7735,9 @@ window.GAME_DATA = {
       },
       {
         "id": "halfling",
+        "burden": {
+          "base": 6
+        },
         "name": "Halflings",
         "effortDie": "d6",
         "startingWorkers": 3,
@@ -7739,6 +7781,9 @@ window.GAME_DATA = {
       },
       {
         "id": "orc",
+        "burden": {
+          "base": 15
+        },
         "name": "Orcs",
         "effortDie": "d8",
         "startingWorkers": 2,
@@ -9175,7 +9220,7 @@ window.GAME_DATA = {
           }
         ],
         "mitigations": [
-          "A player who has befriended Vhalrik pays nothing and may not be attacked by him.",
+          "A player who has befriended Vhalrik pays nothing and may not be attacked by him. Charisma adds to the befriending roll (rules.json charisma).",
           "Paying is always allowed and always ends it. That is the lesson."
         ]
       },
@@ -9545,7 +9590,7 @@ window.GAME_DATA = {
     }
   },
   "items": {
-    "$comment": "Equipment carried by workers, figures and soldiers. EVERYTHING HERE WEARS OUT except the things that are drunk and the things that hold mana. `wear` is the most wear a thing will take: printed as the W box on its card, set on the W track beside that card's own slot on the player board, and knocked down a rung every time the thing is used (rules.json wear). It used to be tools alone that wore, which made a sword immortal, a rope eternal and buying an axe the only equipment decision anybody ever made twice.\n\nA weapon adds its `battle` number to your side of the battle roll and a piece of armour adds its `armour` number. Both are straight additions to one opposed total (rules.json conflict.battle). They were `combatDice` and `armourValue` - dice granted and hits cancelled - which were two different currencies for the same job in a system that no longer counts hits at all, and the effects that used to say 'ignore the first two hits' now say what they are worth.\n\nEvery item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, where the limit is strength x kgPerStrength and a character card prints the kilograms in its summary strip. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. A talisman card prints its capacity as an M box in the strip like everything else; the mana itself is walked on the player board's M track, because that is where every track in the game lives now (data/playerboard.json).",
+    "$comment": "Equipment carried by workers, figures and soldiers. EVERYTHING HERE WEARS OUT except the things that are drunk and the things that hold mana. `wear` is the most wear a thing will take: printed as the W box on its card, set on the W track beside that card's own slot on the player board, and knocked down a rung every time the thing is used (rules.json wear). It used to be tools alone that wore, which made a sword immortal, a rope eternal and buying an axe the only equipment decision anybody ever made twice.\n\nA weapon adds its `battle` number to your side of the battle roll and a piece of armour adds its `armour` number. Both are straight additions to one opposed total (rules.json conflict.battle). They were `combatDice` and `armourValue` - dice granted and hits cancelled - which were two different currencies for the same job in a system that no longer counts hits at all, and the effects that used to say 'ignore the first two hits' now say what they are worth.\n\nEvery item has a massKg - what it weighs, in kilograms - because a figure's carrying capacity is measured the same way: see rules.json carrying, where the limit is the Burden a character card prints in its summary strip. Mass is not bulk; bulk is the storage and shipping cost of a commodity (commodities.json), and no item has one. A talisman card prints its capacity as an M box in the strip like everything else; the mana itself is walked on the player board's M track, because that is where every track in the game lives now (data/playerboard.json).",
     "version": "0.3.0",
     "classes": [
       {
@@ -9571,7 +9616,7 @@ window.GAME_DATA = {
       {
         "id": "provision",
         "name": "Provision",
-        "summary": "Food carried for the road. Its W track is the days left in it: knock a rung down for every figure it feeds at the end of a round - see rules.json upkeep.food. At 0 the pack is empty and the card is discarded."
+        "summary": "Food carried for the road. Its K ladder is the meals left in it: knock a rung down for every meal eaten, which eases Hunger - see rules.json upkeep.hunger. At 0 the pack is empty and the card is discarded."
       },
       {
         "id": "potion",
@@ -10393,11 +10438,11 @@ window.GAME_DATA = {
         "massKg": 1,
         "story": "Stiffened hide over a light wooden former, worn on the belt where the hand falls without looking. The arrows are the cheap part and always were: any village can fletch them, and every archer still counts them twice before a fight and once after it.",
         "effects": [
-          "Holds 3 uses. Each battle with a bow or a crossbow spends 1.",
-          "The uses ARE the wear: an empty quiver is a spent quiver."
+          "Holds 3 arrows (the K box). Each battle with a bow or a crossbow spends 1, and a refill from a sheaf puts them back.",
+          "Capacity is what is left to shoot; wear is the leather, and is counted on its own ladder."
         ],
         "uses": 3,
-        "wear": 3
+        "wear": 6
       },
       {
         "id": "waterskin",
@@ -10419,9 +10464,9 @@ window.GAME_DATA = {
         "uses": 3,
         "story": "A whole hide turned inside out, stitched at three seams and stopped with a turned bung on a thong. It tastes of the animal for a month and of the road ever after.",
         "effects": [
-          "Holds 3 draughts. Filled in an hour at a well, a marsh or fresh water, with no barrel (recipes.json draw-water).",
+          "Holds 3 draughts (the K box). Filled in an hour at a well, a marsh or fresh water, with no barrel (recipes.json draw-water).",
           "Spend a draught to Forage on desert or tundra, which recipes.json forage otherwise forbids.",
-          "Wears 1 each time it is drunk dry."
+          "Capacity is what is left to drink and wear is the hide, counted separately; it wears 1 each time it is drunk dry."
         ]
       },
       {
@@ -10506,8 +10551,8 @@ window.GAME_DATA = {
         "uses": 3,
         "story": "Hard bread, salt beef and a twist of salt, packed by somebody who counts for a living. Three days is what a party carries between two towns it knows the road between.",
         "effects": [
-          "Three days' food. Feed one figure at the end of a round and knock the W track down a rung (rules.json upkeep.food).",
-          "The uses ARE the wear: an empty sack is a spent sack.",
+          "Three meals. Each one eaten takes a rung off the K ladder and eases Hunger (rules.json upkeep.hunger).",
+          "Capacity is the meals left: an empty sack is a spent sack.",
           "Dried and salted, so it does not perish."
         ]
       },
@@ -10539,9 +10584,9 @@ window.GAME_DATA = {
         "uses": 10,
         "story": "The crossing pack: ten days in a bound sack with the seams doubled, sold at every granary within a week of the desert and nowhere else at all.",
         "effects": [
-          "Ten days' food: one rung of the W track for every figure fed at the end of a round (rules.json upkeep.food).",
-          "The uses ARE the wear: an empty sack is a spent sack.",
-          "Eight kilograms - most of what strength 3 can shoulder (rules.json carrying)."
+          "Ten meals, each one eaten a rung off the K ladder and a rung off Hunger (rules.json upkeep.hunger).",
+          "Capacity is the meals left: an empty sack is a spent sack.",
+          "Eight kilograms - most of what a 9 kg Burden can take (rules.json carrying)."
         ]
       },
       {
@@ -10566,7 +10611,7 @@ window.GAME_DATA = {
         "effects": [
           "Shot from a quiver, and no use to anybody without one.",
           "Each battle with a bow or a crossbow spends 1, from the sheaf before the quiver.",
-          "The uses ARE the wear: an empty sheaf is a spent sheaf."
+          "Its capacity is its arrows: an empty sheaf is a spent sheaf."
         ]
       },
       {
@@ -10591,7 +10636,7 @@ window.GAME_DATA = {
         "effects": [
           "Shot from a quiver, and no use to anybody without one.",
           "Each battle with a bow or a crossbow spends 1, from the bag before the quiver.",
-          "The uses ARE the wear: an empty bag is a spent bag."
+          "Its capacity is its arrows: an empty bag is a spent bag."
         ]
       },
       {
@@ -12320,7 +12365,7 @@ window.GAME_DATA = {
       "$comment": "Meeting a monster is a choice, and the choice is the player's unless the card says otherwise. The card lists which of the four options it allows; slay is always allowed. Running away is not on the card, because whether you can run away is not the monster's decision - it is a footrace, and the card only prints one side of it.",
       "slay": "Fight it, per rules.json conflict.battle: total strength, gear and dice on both sides, and the lower total loses health equal to the difference. Slaying yields mana of the monster's element - the LESSER of the number in its Y box and a roll of the purple mana die (arcana.json manaDie), split among the characters who fought. The yield is a ceiling, never a payment.",
       "enslave": "Beat it by 2 or more on the battle roll WITHOUT taking it to 0 health (declare before rolling). An enslaved monster works as a d4 worker in one of your towns, eats 1 food per round, and adds 1 unrest to that town while it lives there. It yields no mana.",
-      "befriend": "Offer the gift named on its card and roll d6: on 4+ it is befriended - it guards its hex for you, or travels with your party as a strength-equal escort. It leaves the first round you cannot feed it. No mana.",
+      "befriend": "Offer the gift named on its card and roll d6 and add your Charisma (rules.json charisma): on 4+ it is befriended - it guards its hex for you, or travels with your party as a strength-equal escort. It leaves the first round you cannot feed it. No mana.",
       "domesticate": "Befriend it first, or win without killing, then spend 2 consecutive rounds with it at a pasture. A domesticated monster is livestock with the benefit on its card. No mana.",
       "flee": "Run, and you have to be faster than it: your party's pace must be GREATER than the P on its card. Succeed and you withdraw the way you came, ending your movement, with no discovery roll this leg and nothing looted. Fail the comparison and you may not run at all - the option is not offered. Monsters of strength 4 or more get one free round of the battle roll against a fleeing cargo vehicle whatever its pace. See rules.json conflict.flee.",
       "lair": "An unresolved monster stays on its hex as a figure. It attacks any party that ends a leg there, and event cards may move it."
@@ -12328,6 +12373,14 @@ window.GAME_DATA = {
     "monsters": [
       {
         "id": "cinder-wolf",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-01",
         "name": "Cinder Wolf",
         "element": "fire",
@@ -12352,6 +12405,14 @@ window.GAME_DATA = {
       },
       {
         "id": "ash-drake",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-02",
         "name": "Ash Drake",
         "element": "fire",
@@ -12374,6 +12435,14 @@ window.GAME_DATA = {
       },
       {
         "id": "forge-wight",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-03",
         "name": "Forge Wight",
         "element": "fire",
@@ -12397,6 +12466,14 @@ window.GAME_DATA = {
       },
       {
         "id": "barrow-troll",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-04",
         "name": "Barrow Troll",
         "element": "earth",
@@ -12419,6 +12496,14 @@ window.GAME_DATA = {
       },
       {
         "id": "stone-boar",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-05",
         "name": "Stone Boar",
         "element": "earth",
@@ -12442,6 +12527,14 @@ window.GAME_DATA = {
       },
       {
         "id": "gravel-wyrm",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-06",
         "name": "Gravel Wyrm",
         "element": "earth",
@@ -12463,6 +12556,14 @@ window.GAME_DATA = {
       },
       {
         "id": "mire-strangler",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-07",
         "name": "Mire Strangler",
         "element": "water",
@@ -12483,6 +12584,14 @@ window.GAME_DATA = {
       },
       {
         "id": "reef-serpent",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-08",
         "name": "Reef Serpent",
         "element": "water",
@@ -12506,6 +12615,14 @@ window.GAME_DATA = {
       },
       {
         "id": "deepwater-maw",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-09",
         "name": "The Deepwater Maw",
         "element": "water",
@@ -12527,6 +12644,14 @@ window.GAME_DATA = {
       },
       {
         "id": "rime-harpy",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-10",
         "name": "Rime Harpy",
         "element": "air",
@@ -12550,6 +12675,14 @@ window.GAME_DATA = {
       },
       {
         "id": "dust-devil",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-11",
         "name": "Dust Devil",
         "element": "air",
@@ -12571,6 +12704,14 @@ window.GAME_DATA = {
       },
       {
         "id": "storm-roc",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-12",
         "name": "Storm Roc",
         "element": "air",
@@ -12593,6 +12734,14 @@ window.GAME_DATA = {
       },
       {
         "id": "vhalrik-the-cinder-crowned",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-13",
         "name": "Vhalrik, the Cinder-Crowned",
         "element": "fire",
@@ -12618,6 +12767,14 @@ window.GAME_DATA = {
       },
       {
         "id": "hoarwyrm",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-14",
         "name": "The Hoarwyrm",
         "element": "air",
@@ -12641,6 +12798,14 @@ window.GAME_DATA = {
       },
       {
         "id": "polyphemus",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-15",
         "name": "Polyphemus the Cyclops",
         "element": "earth",
@@ -12666,6 +12831,14 @@ window.GAME_DATA = {
       },
       {
         "id": "laestrygonian",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-16",
         "name": "Laestrygonian",
         "element": "earth",
@@ -12689,6 +12862,14 @@ window.GAME_DATA = {
       },
       {
         "id": "scylla",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-17",
         "name": "Scylla",
         "element": "water",
@@ -12714,6 +12895,14 @@ window.GAME_DATA = {
       },
       {
         "id": "charybdis",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-18",
         "name": "Charybdis",
         "element": "water",
@@ -12738,6 +12927,14 @@ window.GAME_DATA = {
       },
       {
         "id": "sirens",
+        "start": {
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "MON-19",
         "name": "The Sirens",
         "element": "air",
@@ -12784,6 +12981,16 @@ window.GAME_DATA = {
     "vehicles": [
       {
         "id": "reach-flyer",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-01",
         "name": "The Reach Flyer",
         "mode": "train",
@@ -12794,6 +13001,16 @@ window.GAME_DATA = {
       },
       {
         "id": "steppe-hauler",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-02",
         "name": "Steppe Hauler",
         "mode": "train",
@@ -12804,6 +13021,16 @@ window.GAME_DATA = {
       },
       {
         "id": "old-smoke",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-03",
         "name": "Old Smoke",
         "mode": "train",
@@ -12814,6 +13041,16 @@ window.GAME_DATA = {
       },
       {
         "id": "gullwing",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-04",
         "name": "Gullwing",
         "mode": "ship",
@@ -12824,6 +13061,16 @@ window.GAME_DATA = {
       },
       {
         "id": "saltreach-pride",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-05",
         "name": "Saltreach Pride",
         "mode": "ship",
@@ -12834,6 +13081,16 @@ window.GAME_DATA = {
       },
       {
         "id": "ember-coast-trader",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-06",
         "name": "Ember Coast Trader",
         "mode": "ship",
@@ -12844,6 +13101,16 @@ window.GAME_DATA = {
       },
       {
         "id": "dunhaven-column",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-07",
         "name": "The Dunhaven Column",
         "mode": "caravan",
@@ -12854,6 +13121,16 @@ window.GAME_DATA = {
       },
       {
         "id": "fenway-wagons",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-08",
         "name": "The Fenway Wagons",
         "mode": "caravan",
@@ -12864,6 +13141,16 @@ window.GAME_DATA = {
       },
       {
         "id": "varl-wagonrow",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-09",
         "name": "The Varl Wagonrow",
         "mode": "caravan",
@@ -12874,6 +13161,16 @@ window.GAME_DATA = {
       },
       {
         "id": "bay-courser",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-10",
         "name": "Bay Courser",
         "mode": "mounted",
@@ -12884,6 +13181,16 @@ window.GAME_DATA = {
       },
       {
         "id": "steppe-pony",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-11",
         "name": "Steppe Pony",
         "mode": "mounted",
@@ -12894,6 +13201,16 @@ window.GAME_DATA = {
       },
       {
         "id": "black-malchior",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-12",
         "name": "Black Malchior",
         "mode": "mounted",
@@ -12904,6 +13221,16 @@ window.GAME_DATA = {
       },
       {
         "id": "nine-and-the-drum",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-13",
         "name": "Nine and the Drum",
         "mode": "sled",
@@ -12914,6 +13241,16 @@ window.GAME_DATA = {
       },
       {
         "id": "red-lantern",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-14",
         "name": "The Red Lantern",
         "mode": "ship",
@@ -12924,6 +13261,16 @@ window.GAME_DATA = {
       },
       {
         "id": "carrion-queen",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-15",
         "name": "The Carrion Queen",
         "mode": "ship",
@@ -12934,6 +13281,16 @@ window.GAME_DATA = {
       },
       {
         "id": "pilgrims-patience",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-16",
         "name": "The Pilgrim's Patience",
         "mode": "airship",
@@ -12944,6 +13301,16 @@ window.GAME_DATA = {
       },
       {
         "id": "sweep-of-vossgard",
+        "start": {
+          "strength": 0,
+          "burden": 0,
+          "charisma": 0,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0,
+          "mana": 0,
+          "coin": 0
+        },
         "cardCode": "VEH-17",
         "name": "The Sweep of Vossgard",
         "mode": "airship",
@@ -12955,11 +13322,18 @@ window.GAME_DATA = {
     ]
   },
   "characters": {
-    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a summary of their numbers and a story.\n\nCard layout: name and card code at the top, then a SUMMARY STRIP across the card - one lettered box per number, the letter the same one the player board's track carries, so H 10 on the card and the H track on the board are obviously the same thing. The strip prints the MAXIMUM and nothing else: there is no bar to walk on a card any more, because the board took the walking over and a card in a recess is a card whose edges you cannot reach. Under the strip the portrait runs the full width the frame allows, and the story sits low.\n\nThe numbers on the strip are health, strength, mana, starting gold, and the kilograms the hero can shoulder - which is derived, not designed: strength x rules.carrying.kgPerStrength. Burden was a bar and then a track and is now neither; strength does that job, and the coin in the purse counts against it like everything else (rules.json carrying.coin). DEFENCE has gone off the strip along with the to-hit roll it existed to shift: a battle is one opposed total now (rules.json conflict.battle), and what a character brings to it besides strength is the gear in their kit slots. A character at 0 health is carried to the nearest settlement and mends only under medical aid (rules.json rest); a character at 0 strength does not fight and carries nothing, and one night's sleep puts all of it back. Art prompts in docs/art/prompts/characters.md.",
+    "$comment": "The character deck: named adventurers a player's hero figure can be. Each player deals or picks one at setup; the card gives the hero a face, a summary of their numbers and a story.\n\nCard layout: name and card code at the top, then a SUMMARY STRIP across the card - one lettered box per number, the letter the same one the player board's track carries, so H 10 on the card and the H track on the board are obviously the same thing. The strip prints the MAXIMUM and nothing else: there is no bar to walk on a card any more, because the board took the walking over and a card in a recess is a card whose edges you cannot reach. Under the strip the portrait runs the full width the frame allows, and the story sits low.\n\nThe strip is two rows: a starting value for every track on the player board (health, strength, burden, charisma, hunger, thirst, pace, mana) and then coin. `start` holds the ones a character has no field of their own for; the rest are read off health, strength, manaCapacity and startingGold. Burden is a printed number of kilograms - not a sum - and the coin in the purse counts against it like everything else (rules.json carrying.coin). Hunger and thirst start at 0, and so does pace, which is set when a leg begins. DEFENCE has gone off the strip along with the to-hit roll it existed to shift: a battle is one opposed total now (rules.json conflict.battle), and what a character brings to it besides strength is the gear in their kit slots. A character at 0 health is carried to the nearest settlement and mends only under medical aid (rules.json rest); a character at 0 strength does not fight and carries nothing, and one night's sleep puts all of it back. Art prompts in docs/art/prompts/characters.md.",
     "version": "0.3.0",
     "characters": [
       {
         "id": "corin-vale",
+        "start": {
+          "burden": 9,
+          "charisma": 4,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-01",
         "name": "Corin Vale",
         "people": "human",
@@ -12979,6 +13353,13 @@ window.GAME_DATA = {
       },
       {
         "id": "berga-understone",
+        "start": {
+          "burden": 12,
+          "charisma": 2,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-02",
         "name": "Berga Understone",
         "people": "dwarf",
@@ -12998,6 +13379,13 @@ window.GAME_DATA = {
       },
       {
         "id": "sylvae-of-the-duskmere",
+        "start": {
+          "burden": 6,
+          "charisma": 4,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-03",
         "name": "Sylvae of the Duskmere",
         "people": "elf",
@@ -13016,6 +13404,13 @@ window.GAME_DATA = {
       },
       {
         "id": "tilly-goodbarrel",
+        "start": {
+          "burden": 6,
+          "charisma": 5,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-04",
         "name": "Tilly Goodbarrel",
         "people": "halfling",
@@ -13033,6 +13428,13 @@ window.GAME_DATA = {
       },
       {
         "id": "ruk-of-the-red-road",
+        "start": {
+          "burden": 18,
+          "charisma": 1,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-05",
         "name": "Ruk of the Red Road",
         "people": "orc",
@@ -13052,6 +13454,13 @@ window.GAME_DATA = {
       },
       {
         "id": "elspeth-marrow",
+        "start": {
+          "burden": 6,
+          "charisma": 3,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-06",
         "name": "Doctor Elspeth Marrow",
         "people": "human",
@@ -13071,6 +13480,13 @@ window.GAME_DATA = {
       },
       {
         "id": "havik-coalbrand",
+        "start": {
+          "burden": 12,
+          "charisma": 2,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-07",
         "name": "Havik Coalbrand",
         "people": "dwarf",
@@ -13088,6 +13504,13 @@ window.GAME_DATA = {
       },
       {
         "id": "mother-keswick",
+        "start": {
+          "burden": 6,
+          "charisma": 3,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-08",
         "name": "Old Mother Keswick",
         "people": "human",
@@ -13108,6 +13531,13 @@ window.GAME_DATA = {
       },
       {
         "id": "odysseus",
+        "start": {
+          "burden": 12,
+          "charisma": 5,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-09",
         "name": "Odysseus",
         "people": "human",
@@ -13128,6 +13558,13 @@ window.GAME_DATA = {
       },
       {
         "id": "eurylochus",
+        "start": {
+          "burden": 12,
+          "charisma": 3,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-10",
         "name": "Eurylochus",
         "people": "human",
@@ -13149,6 +13586,13 @@ window.GAME_DATA = {
       },
       {
         "id": "polites",
+        "start": {
+          "burden": 9,
+          "charisma": 4,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-11",
         "name": "Polites",
         "people": "human",
@@ -13168,6 +13612,13 @@ window.GAME_DATA = {
       },
       {
         "id": "perimedes",
+        "start": {
+          "burden": 9,
+          "charisma": 2,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-12",
         "name": "Perimedes",
         "people": "human",
@@ -13189,6 +13640,13 @@ window.GAME_DATA = {
       },
       {
         "id": "elpenor",
+        "start": {
+          "burden": 6,
+          "charisma": 1,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-13",
         "name": "Elpenor",
         "people": "human",
@@ -13208,6 +13666,13 @@ window.GAME_DATA = {
       },
       {
         "id": "antiphus",
+        "start": {
+          "burden": 12,
+          "charisma": 2,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-14",
         "name": "Antiphus",
         "people": "human",
@@ -13229,6 +13694,13 @@ window.GAME_DATA = {
       },
       {
         "id": "telemachus",
+        "start": {
+          "burden": 9,
+          "charisma": 3,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-15",
         "name": "Telemachus",
         "people": "human",
@@ -13249,6 +13721,13 @@ window.GAME_DATA = {
       },
       {
         "id": "penelope",
+        "start": {
+          "burden": 6,
+          "charisma": 5,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-16",
         "name": "Penelope",
         "people": "human",
@@ -13269,6 +13748,13 @@ window.GAME_DATA = {
       },
       {
         "id": "eumaeus",
+        "start": {
+          "burden": 9,
+          "charisma": 3,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-17",
         "name": "Eumaeus",
         "people": "human",
@@ -13289,6 +13775,13 @@ window.GAME_DATA = {
       },
       {
         "id": "nausicaa",
+        "start": {
+          "burden": 6,
+          "charisma": 5,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-18",
         "name": "Nausicaa",
         "people": "human",
@@ -13309,6 +13802,13 @@ window.GAME_DATA = {
       },
       {
         "id": "circe",
+        "start": {
+          "burden": 9,
+          "charisma": 4,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-19",
         "name": "Circe",
         "people": "immortal",
@@ -13330,6 +13830,13 @@ window.GAME_DATA = {
       },
       {
         "id": "calypso",
+        "start": {
+          "burden": 6,
+          "charisma": 4,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-20",
         "name": "Calypso",
         "people": "immortal",
@@ -13349,6 +13856,13 @@ window.GAME_DATA = {
       },
       {
         "id": "athena",
+        "start": {
+          "burden": 12,
+          "charisma": 6,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-21",
         "name": "Athena",
         "people": "immortal",
@@ -13370,6 +13884,13 @@ window.GAME_DATA = {
       },
       {
         "id": "antinous",
+        "start": {
+          "burden": 12,
+          "charisma": 3,
+          "hunger": 0,
+          "thirst": 0,
+          "pace": 0
+        },
         "cardCode": "CHR-22",
         "name": "Antinous",
         "people": "human",
@@ -13933,6 +14454,9 @@ window.GAME_DATA = {
       "$comment": "The row of lettered boxes across the top of every card, and what replaced the bars.\n\nA card used to hang a numbered ladder off each edge - harm left, capacity right - and a token walked it. That worked while a card was held in the hand. It stopped working the day the player board arrived, because a card in a recess is a card whose edges are under the board: the tracks moved to the board (playerboard.json) and the ladders on the cards became decoration that ate two columns of picture.\n\nSo a card now prints the MAXIMUM and nothing else. One box per number, the letter first and the figure after it - H 10, S 6, D 5 - and the letter is the same letter the board's track carries, so a player setting up reads across the strip and sets the tokens left to right. Nothing on a card moves any more; everything that moves is on the board.\n\nONE BOX PER PAIR. Each cell used to hold a second, smaller box with the letter in it - a box inside a box, six times across the top of every card, and at nine millimetres a cell the inner rule was doing nothing the tint underneath was not already doing. Taking it out took a millimetre and a bit off the height of the whole strip, and the picture got it.",
       "cells": {
         "max": 6,
+        "rows": 2,
+        "rowGap": 0.8,
+        "$rowsNote": "`max` is the boxes in a ROW; `rows` is how many rows a strip may run to, and a row's boxes are the same width whatever the row holds. Three decks are the reason for the second row: a character, a monster and a vehicle each print a starting-value box for every track on the player board (H S B C F T P M) plus coin, which is nine boxes or more and does not fit one row at a legible size. Every other deck still prints one row, and a deck's picture window is cut under the tallest strip any card in it needs.",
         "heightMm": 4.6,
         "gap": 5,
         "pad": 5,
@@ -15913,10 +16437,10 @@ window.GAME_DATA = {
           ],
           "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met. The sturdiest hull in the vehicle deck reaches 12 on the same column."
         },
-        "walks": "Down as the figure takes hits, and up under medical aid alone - 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A round that ends with nothing to eat costs 1. A VEHICLE runs the same column and reads it as its hull: set it from the card, down as it is damaged, up as it is repaired - one rung a round in any settlement of town rank or better, at 5 coin a rung.",
+        "walks": "Down as the figure takes hits - and down 1 a round for as long as its Hunger or its Thirst stands at the top of its track - and up under medical aid alone: 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A VEHICLE runs the same column and reads it as its hull: set it from the card, down as it is damaged, up as it is repaired - one rung a round in any settlement of town rank or better, at 5 coin a rung.",
         "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way. A vehicle at zero is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
         "note": "This column swallowed the vehicle track. There used to be a V beside it counting damage on somebody's wagon, printed on every board in the game whether or not anybody was running one - and counting UP, which is the only number on the board that did. A hull is a body: it has a maximum on its card, it takes hits, it is mended in town, and at nothing it is carried off. One column, one direction, and the wagon gets a board of its own to walk it on.",
-        "rule": "rules.json rest, rules.json upkeep.food, characters.json health, monsters.json health, vehicles.json hull"
+        "rule": "rules.json rest, rules.json upkeep.hunger, rules.json upkeep.thirst, characters.json health, monsters.json health, vehicles.json hull"
       },
       {
         "id": "strength",
@@ -15936,10 +16460,10 @@ window.GAME_DATA = {
           "note": "Vhalrik. No character reaches it - Ruk, the strongest, is 6."
         },
         "walks": "Set it from the card at setup and knock it down a rung for every night the party does not make camp. One night's sleep puts all of it back, wherever that night is taken.",
-        "atZero": "Nothing left to swing with, and nothing left to shoulder. A figure at 0 strength does not fight and carries nothing.",
-        "reads": "Both ways at once. Your strength is on this track and the thing you are fighting has its defence printed in front of you; the roll is the difference. It is also what you can carry: strength x rules.carrying.kgPerStrength kilograms, and the character card prints the kilograms so nobody multiplies at the table.",
-        "note": "Strength swallowed burden. They were the same arm doing the same job with two numbers and two tracks, and one of them was a track a player moved every time they picked up a rope.",
-        "rule": "rules.json conflict.strength, rules.json carrying, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
+        "atZero": "Nothing left to swing with. A figure at 0 strength does not fight.",
+        "reads": "Both ways at once. Your strength is on this track and the thing you are fighting has its own printed in front of you; the roll is the difference. It is for battle only - what a figure can carry is its Burden.",
+        "note": "Strength once swallowed burden, because they were the same arm doing the same job. They are two tracks again, because a limit that is only a sum at the table is a sum nobody does - and a token that walks down as the pack fills is one everybody can see.",
+        "rule": "rules.json conflict.strength, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
       },
       {
         "id": "burden",
@@ -15951,13 +16475,16 @@ window.GAME_DATA = {
         "ink": "slate",
         "step": 1,
         "covers": {
-          "value": 0,
-          "paths": [],
-          "note": "DRAFT - nothing in the data sets this yet."
+          "value": 18,
+          "paths": [
+            "characters.characters[].start.burden",
+            "peoples.peoples[].burden.base"
+          ],
+          "note": "Ruk, who starts with 18 kg of room. The board stops at 20, and no card prints more."
         },
-        "walks": "DRAFT - to be decided.",
-        "atZero": "DRAFT - to be decided.",
-        "rule": "DRAFT"
+        "walks": "Set it from the B box on the card at setup - the kilograms the figure can still take. Knock it down by the mass of everything it picks up, wears or wields, and by its purse at rules.carrying.coin.perKg; put it back up by whatever is put down, spent or sold.",
+        "atZero": "Full. The figure takes up nothing more - an item or a purse - until it puts something down. It is not hurt, and it still fights.",
+        "rule": "rules.json carrying, characters.json start.burden, peoples.json burden.base"
       },
       {
         "id": "charisma",
@@ -15969,13 +16496,15 @@ window.GAME_DATA = {
         "ink": "verdigris",
         "step": 1,
         "covers": {
-          "value": 0,
-          "paths": [],
-          "note": "DRAFT - nothing in the data sets this yet."
+          "value": 6,
+          "paths": [
+            "characters.characters[].start.charisma"
+          ],
+          "note": "Athena, the most persuasive card in the deck. Monsters and vehicles print 0."
         },
-        "walks": "DRAFT - to be decided.",
-        "atZero": "DRAFT - to be decided.",
-        "rule": "DRAFT"
+        "walks": "It does not walk. Set it from the C box on the card at setup and leave the marker there; it is a rating a player reads, like strength before a night without camp.",
+        "atZero": "Nobody takes the figure's side. A figure at 0 adds nothing to a befriending roll, which is where every monster and every vehicle stands.",
+        "rule": "rules.json charisma, monsters.json encounterOptions.befriend, characters.json start.charisma"
       },
       {
         "id": "hunger",
@@ -15987,9 +16516,9 @@ window.GAME_DATA = {
         "ink": "oxide",
         "step": 1,
         "covers": {
-          "value": 0,
+          "value": 20,
           "paths": [],
-          "note": "DRAFT - nothing in the data sets this yet."
+          "note": "The top of the track is the limit itself (limit.at), not a number any card prints: every figure starts at 0 and the card's F box says so."
         },
         "limit": {
           "at": 20,
@@ -15997,9 +16526,9 @@ window.GAME_DATA = {
           "ink": "oxide",
           "note": "At the top of the track the figure loses 1 health every round until it is brought down."
         },
-        "walks": "DRAFT - to be decided.",
-        "atZero": "DRAFT - to be decided.",
-        "rule": "DRAFT"
+        "walks": "Up 1 every round the figure is on the road. Each unit of food eaten takes rules.upkeep.hunger.eased.perFood rungs off, and it cannot go below 0.",
+        "atZero": "Fed. Nothing happens, and nothing is owed.",
+        "rule": "rules.json upkeep.hunger, characters.json start.hunger"
       },
       {
         "id": "thirst",
@@ -16011,9 +16540,9 @@ window.GAME_DATA = {
         "ink": "slate",
         "step": 1,
         "covers": {
-          "value": 0,
+          "value": 20,
           "paths": [],
-          "note": "DRAFT - nothing in the data sets this yet."
+          "note": "As Hunger: the limit is the top of the track and every card starts at 0."
         },
         "limit": {
           "at": 20,
@@ -16021,9 +16550,9 @@ window.GAME_DATA = {
           "ink": "oxide",
           "note": "At the top of the track the figure loses 1 health every round until it is brought down."
         },
-        "walks": "DRAFT - to be decided.",
-        "atZero": "DRAFT - to be decided.",
-        "rule": "DRAFT"
+        "walks": "Up 1 every round. Each draught drunk takes rules.upkeep.thirst.eased.perDraught rungs off, and it cannot go below 0.",
+        "atZero": "Watered. Nothing happens, and nothing is owed.",
+        "rule": "rules.json upkeep.thirst, items.json waterskin, characters.json start.thirst"
       },
       {
         "id": "pace",
@@ -16106,14 +16635,16 @@ window.GAME_DATA = {
         "ink": "ochre",
         "step": 1,
         "covers": {
-          "value": 20,
-          "paths": [],
-          "note": "DRAFT"
+          "value": 10,
+          "paths": [
+            "items.items[].uses"
+          ],
+          "note": "The ten-day rations and the twenty-arrow bag, the deepest containers in the game. A track runs to 20."
         },
-        "walks": "DRAFT - to be decided.",
-        "atZero": "DRAFT - to be decided.",
+        "walks": "Counts down what a container still holds - arrows in a quiver, draughts in a waterskin, meals in a pack of rations. Set it from the K box on the card when it goes in the slot; knock it down a rung per use; put it back up by filling it, at no more than the K box. It is not wear: a full waterskin can be nearly worn out, and a new one can be empty.",
+        "atZero": "Empty. The container still sits in its slot and still wears on its own W ladder, and does nothing until it is filled; a spent sheaf or sack, which has no way of being refilled, is discarded.",
         "reads": "Only its owner.",
-        "rule": "DRAFT"
+        "rule": "items.json uses, rules.json upkeep.hunger, rules.json upkeep.thirst"
       }
     ],
     "$placeNote": "A track's `place` says where on the sheet it is ruled. `column` is the grid up the middle - one column per track, all the same height, the shape this board has always had. `kit` is a short ladder against a card recess, drawn `count` times, once per slot. The distinction is not decoration: a column track counts something about the FIGURE in the recess, and there is one of those; a kit track counts something about a CARD in a slot, and there are four of those. tools/build-board.mjs partitions on it and never on a track's name.",
@@ -16123,6 +16654,10 @@ window.GAME_DATA = {
         "characters.characters[].health",
         "characters.characters[].strength",
         "characters.characters[].manaCapacity",
+        "characters.characters[].start.burden",
+        "characters.characters[].start.charisma",
+        "items.items[].uses",
+        "peoples.peoples[].burden.base",
         "monsters.monsters[].health",
         "monsters.monsters[].strength",
         "monsters.monsters[].pace",

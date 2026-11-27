@@ -228,32 +228,40 @@ const carrying = datasets.rules?.carrying;
 const peoples = datasets.peoples?.peoples ?? [];
 const characters = datasets.characters?.characters ?? [];
 const itemList = datasets.items?.items ?? [];
-const kgPerStrength = carrying?.kgPerStrength;
 
 if (!carrying) errors.push('rules: no "carrying" block - items have mass and nothing says what it is for');
-if (typeof kgPerStrength !== 'number' || kgPerStrength <= 0) {
-  errors.push('rules: carrying.kgPerStrength is what turns a strength into kilograms - without it no card can print a limit');
+for (const c of characters) {
+  if (typeof c.start?.burden !== 'number') errors.push(`characters: "${c.id}" has no start.burden - the B box prints the kilograms a hero can take on`);
+  if (typeof c.start?.charisma !== 'number') errors.push(`characters: "${c.id}" has no start.charisma`);
+  for (const k of ['hunger', 'thirst', 'pace']) if (c.start?.[k] !== 0) errors.push(`characters: "${c.id}" start.${k} is not 0 - a figure starts fed, watered and with no leg set`);
 }
+for (const [set, list] of [['monsters', datasets.monsters?.monsters ?? []], ['vehicles', datasets.vehicles?.vehicles ?? []]]) {
+  for (const m of list) {
+    for (const k of ['burden', 'charisma', 'hunger', 'thirst']) if (typeof m.start?.[k] !== 'number') errors.push(`${set}: "${m.id}" has no start.${k} - every card prints a starting value for every track`);
+  }
+}
+for (const p of peoples) if (typeof p.burden?.base !== 'number') errors.push(`peoples: "${p.id}" has no burden.base - a figure with no card of its own needs a Burden to start from`);
+for (const i of itemList) if (i.uses !== undefined && !(i.uses > 0)) errors.push(`items: "${i.id}" has uses ${i.uses} - capacity is what a container holds when full`);
 for (const i of itemList) {
   if (typeof i.massKg !== 'number') errors.push(`items: "${i.id}" has no massKg`);
   else if (i.massKg <= 0) errors.push(`items: "${i.id}" has massKg ${i.massKg} - an item weighs something`);
 }
 
 const massOf = new Map(itemList.map((i) => [i.id, i.massKg]));
-const carryOf = (strength) => (strength ?? 0) * (kgPerStrength ?? 0);
+const carryOf = (burden) => burden ?? 0;
 const biggestCarry = Math.max(
   0,
-  ...characters.map((c) => carryOf(c.strength)),
-  ...peoples.map((p) => carryOf(p.strength?.base)),
+  ...characters.map((c) => carryOf(c.start?.burden)),
+  ...peoples.map((p) => carryOf(p.burden?.base)),
 );
 
 for (const c of characters) {
   /* A character who cannot pick up the kit they are printed as starting with is
      a character whose first turn is a rules argument. */
   const kit = (c.startsWith ?? []).reduce((sum, id) => sum + (massOf.get(id) ?? 0), 0);
-  const limit = carryOf(c.strength);
+  const limit = carryOf(c.start?.burden);
   if (kit > limit) {
-    errors.push(`characters: "${c.id}" starts with ${kit}kg of gear and strength ${c.strength} carries ${limit}kg`);
+    errors.push(`characters: "${c.id}" starts with ${kit}kg of gear and Burden ${limit}kg`);
   }
 }
 

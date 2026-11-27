@@ -204,6 +204,10 @@ const FOOT = TRIM.y + TRIM.h - FRAME.inner.inset - 10;
 const STRIP = components.statStrip;
 const STRIP_H = STRIP.cells.heightMm * U;
 const STRIP_Y = 106;
+/* How many rows of boxes a deck's strip runs to - the most any card in it needs.
+   Every card in one deck shares one window, so the deck's tallest strip sets it. */
+const stripRows = (deck) => Math.max(1, ...deck.map((s) => Math.ceil(s.stats.length / STRIP.cells.max)));
+const stripHeight = (rows) => rows * STRIP_H + (rows - 1) * STRIP.cells.rowGap * U;
 const LETTER_OF = STRIP.letters;
 /* One line of type below the name, then the strip, then everything else. The
    head is set ten units higher than it was and the strip is nine units shorter,
@@ -370,7 +374,7 @@ function letterSize(letter) {
  */
 function statStrip(cells) {
   const C = STRIP.cells;
-  if (cells.length > C.max) throw new Error(`a card is asking for ${cells.length} stat cells; components.json allows ${C.max}`);
+  if (cells.length > C.max * C.rows) throw new Error(`a card is asking for ${cells.length} stat cells; components.json allows ${C.max} a row in at most ${C.rows} rows`);
   /* Every box in the game is the width a FULL strip's box would be, whatever
      this card happens to carry - so a vehicle with two numbers gets two boxes
      the size of a character's six and the right end of its strip is simply
@@ -378,7 +382,11 @@ function statStrip(cells) {
      three times the size of a six-stat card's, and the eye would read that as
      three times as important. */
   const w = (PORTRAIT.w - (C.max - 1) * C.gap) / C.max;
-  const drawn = cells.map((cell, i) => statCell(cell, PORTRAIT.x + i * (w + C.gap), STRIP_Y, w));
+  /* More than one row's worth wraps to a second row of the same box width, so a
+     card that prints every board track is two rows and the boxes stay the size
+     of a character's six. */
+  const drawn = cells.map((cell, i) => statCell(
+    cell, PORTRAIT.x + (i % C.max) * (w + C.gap), STRIP_Y + Math.floor(i / C.max) * (STRIP_H + C.rowGap * U), w));
   return { wash: drawn.map((d) => d.wash).join(''), ink: drawn.map((d) => d.ink).join('') };
 }
 
@@ -450,7 +458,7 @@ function deckGeometry(deck, deckDef) {
   /* Under the strip, which is the same height on every card in every deck —
      which is why there is no longer a deck that starts its picture lower than
      its neighbour because it happens to carry an element. */
-  const top = STRIP_Y + STRIP_H + GAP;
+  const top = STRIP_Y + stripHeight(stripRows(deck)) + GAP;
   const plate = plateSize(deck[0].portrait);
 
   /* A deck whose story stands up the side (components.json storyRail) pays for
@@ -878,9 +886,23 @@ const trackLetter = new Map(boardTracks.map((t) => [t.id, t.letter]));
 const letterFor = (stat) => trackLetter.get(stat) ?? LETTER_OF[stat];
 const cell = (stat, value, tint) => ({ letter: letterFor(stat), value, tint });
 
-/* Strength is the carrying limit as well as the swinging one — the card prints
-   the kilograms so nobody multiplies at the table (rules.json carrying). */
-const carryKg = (strength) => strength * rules.carrying.kgPerStrength;
+/* A figure's card prints a STARTING VALUE for every track on the player board,
+   in the board's own order (H S B C F T P M) and then its coin, so setting up is
+   reading along the strip and placing a marker for each. Strength is for battle
+   only; what a figure can carry is its Burden, a kilogram figure on the card
+   (rules.json carrying). Some boxes print 0 - hunger and thirst start at nothing
+   and a leg's pace is not set until the leg starts. */
+const startStrip = (s) => [
+  cell('health', s.health, 'oxide'),
+  cell('strength', s.strength, 'ochre'),
+  cell('burden', s.burden, 'slate'),
+  cell('charisma', s.charisma, 'verdigris'),
+  cell('hunger', s.hunger, 'oxide'),
+  cell('thirst', s.thirst, 'slate'),
+  cell('pace', s.pace, 'verdigris'),
+  cell('mana', s.mana, 'bruise'),
+  cell('gold', s.coin, 'ochre'),
+];
 
 const hasRender = (id) => existsSync(join(RENDERS, `${id}.png`));
 
@@ -890,25 +912,15 @@ const skipped = [];
 for (const c of characters) {
   const render = plateIdFor(deckByPrefix('CHR'), c);
   if (!hasRender(render)) { skipped.push(c.cardCode); continue; }
-  const kg = carryKg(c.strength);
+  const start = { health: c.health, strength: c.strength, mana: c.manaCapacity, coin: c.startingGold, ...c.start };
   specs.push({
     code: c.cardCode, name: c.name, portrait: render, campaignMark: campaignMarkOf(c.campaign),
     kicker: `${peoplesById.get(c.people)?.name || c.people} · ${c.calling}`,
-    desc: `Character card: ${c.name}, ${c.calling}. Health ${c.health}, strength ${c.strength}, ${kg}kg carried, ${c.startingGold} coin to start.`,
-    /* FIVE boxes now, and it was six. DEFENCE went with the to-hit roll it
-       existed to shift: a battle is one opposed total, and what a character
-       brings to it besides strength is the gear in their kit slots, which
-       changes every time they put something down and so cannot be printed.
-       The kilograms are still the only derived number on any card in the game -
-       and they mean more than they did, because the coin in the purse is now
-       counted against them like everything else (rules.json carrying.coin). */
-    stats: [
-      cell('health', c.health, 'oxide'),
-      cell('strength', c.strength, 'ochre'),
-      cell('mana', c.manaCapacity, 'bruise'),
-      cell('gold', c.startingGold, 'ochre'),
-      cell('carry', kg, 'slate'),
-    ],
+    desc: `Character card: ${c.name}, ${c.calling}. Health ${c.health}, strength ${c.strength}, burden ${start.burden}kg, charisma ${start.charisma}, ${c.startingGold} coin to start.`,
+    /* NINE boxes: a starting value for every board track, then coin. It was
+       five, and the kilograms were the one derived number on any card; Burden is
+       a printed figure now (see startStrip). */
+    stats: startStrip(start),
     facts: c.traits,
     story: c.story,
   });
@@ -924,10 +936,7 @@ for (const v of vehicles) {
     /* A hull's damage is its HEALTH, on the same letter and the same column a
        character's is: a vehicle in play is dealt a player board of its own and
        run like anybody else (data/playerboard.json). There is no V any more. */
-    stats: [
-      cell('health', v.hull, 'oxide'),
-      cell('cargo', v.cargoCapacity, 'slate'),
-    ],
+    stats: [...startStrip({ ...v.start, health: v.hull }), cell('cargo', v.cargoCapacity, 'slate')],
     facts: [v.quirk],
     story: v.story,
   });
@@ -957,10 +966,8 @@ for (const m of monsters) {
        beat to run away, and it is the reason half this deck cannot be run away
        from. The element keeps the last box, as a mark rather than a figure. */
     stats: [
-      cell('health', m.health, 'oxide'),
-      cell('strength', m.strength, 'ochre'),
+      ...startStrip({ ...m.start, health: m.health, strength: m.strength, pace: m.pace }),
       cell('armour', m.armour, 'slate'),
-      cell('pace', m.pace, 'verdigris'),
       cell('yield', m.manaYield, 'bruise'),
       { element: m.element, tint: 'soot-tint-12' },
     ],
@@ -1099,6 +1106,7 @@ for (const i of gear) {
     desc: `Item card: ${i.name}, ${kind}. Worth ${i.baseValue}, weighs ${i.massKg}kg, ${i.wear} of wear in it${i.slot ? `, carried in the ${i.slot} slot` : ''}.`,
     stats: [
       cell('wear', i.wear, 'slate'),
+      ...(i.uses ? [cell('capacity', i.uses, 'ochre')] : []),
       cell('value', i.baseValue, 'ochre'),
       cell('mass', i.massKg, 'slate'),
     ],

@@ -284,7 +284,7 @@
         "people": { "$ref": "#/$defs/id" },
         "calling": { "type": "string" },
         "health": { "type": "integer", "description": "The H box of the card's summary strip, and the H track on the player board." },
-        "strength": { "type": "integer", "description": "The S box. What they swing with AND what they carry with - kilograms are strength x rules.carrying.kgPerStrength and are never stored." },
+        "strength": { "type": "integer", "description": "The S box. What they swing with in a battle, and nothing else - carrying is the Burden in `start`." },
         "defence": { "type": "integer", "description": "The D box. What makes a blow miss; read by whoever is attacking them." },
         "startingGold": { "type": "integer", "description": "The coin box. What this character has in hand at setup, instead of rules.currency.startingAmount." },
         "manaCapacity": { "type": "integer", "description": "The M box: mana held in the body. 0 or absent = talisman only." },

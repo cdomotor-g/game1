@@ -114,9 +114,9 @@ Places where two careful tables would rule two ways. None of these stops a game;
 
 ### R-31 · What a figure carries
 
-**Severity** unclear · **Where** Heroes, vehicles and gear, *Strength and what it carries* · **Status** Proposed
+**Severity** unclear · **Where** Heroes, vehicles and gear, *Burden: what a figure carries* · **Status** Proposed
 
-**As printed.** A figure shoulders strength × {{rules.carrying.kgPerStrength}} kilograms of items and coin. The figure table also gives every figure a *carries* number — a hero {{transport.figures[id=hero].carries}}, a merchant {{transport.figures[id=merchant].carries}} — in units of nothing the chapter names. It is bulk, the measure of cargo, but no rule says a figure may carry cargo at all.
+**As printed.** A figure's Burden, printed on its card, is the kilograms of items and coin it can take on. The figure table also gives every figure a *carries* number — a hero {{transport.figures[id=hero].carries}}, a merchant {{transport.figures[id=merchant].carries}} — in units of nothing the chapter names. It is bulk, the measure of cargo, but no rule says a figure may carry cargo at all.
 
 **Fix.** A figure may shoulder that much bulk of goods as cargo, beside its kit — P-16.
 

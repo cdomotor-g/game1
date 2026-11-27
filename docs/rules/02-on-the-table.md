@@ -51,33 +51,38 @@ Across the top of a card is a row of lettered boxes, the letter first and the fi
 | Letter | Means | Counted on |
 | --- | --- | --- |
 | H | Health — a vehicle's hull | the H track |
-| S | Strength | the S track |
+| S | Strength — what you swing with in a battle | the S track |
+| B | Burden — the kilograms a figure can still take on | the B track |
+| C | Charisma — added to a roll to befriend a monster | the C track; it does not walk |
+| F | Hunger — rises a rung a round | the F track |
+| T | Thirst — rises a rung a round | the T track |
 | P | Pace, in hexes | the P track |
 | M | Mana | the M track |
-| W | Wear — the uses left in a thing | the wear ladder beside its kit slot |
+| W | Wear — how worn a thing is | the wear ladder beside its kit slot |
+| K | Capacity — what a container still holds: arrows, draughts, meals | the capacity ladder beside its kit slot |
 | A | Armour — a monster's hide, added to its battle total | nowhere; it does not change |
 | Y | Mana yield — the most a slain monster gives up | nowhere; a ceiling on the purple die |
-| C | Cargo — the bulk a vehicle's hold takes | nowhere; the cargo itself sits in the kit slots |
-| {{rules.currency.symbol}} | Coin — a character's starting purse, or what a thing is worth | nowhere; coin is counted in coin |
-| KG | Kilograms — what a figure can shoulder, or what a thing weighs | nowhere; total the load and compare |
-| B, R, L, J, G, V | A building's build points, minimum rounds, lodging, jobs, goods stored, victory points | nowhere; a building walks nothing |
+| CG | Cargo — the bulk a vehicle's hold takes | nowhere; the cargo itself sits in the kit slots |
+| {{rules.currency.symbol}} | Coin — a figure's starting purse, or what a thing is worth | nowhere; coin is counted in coin |
+| KG | Kilograms — what a thing weighs | nowhere; it comes off the B track when the thing is picked up |
+| BP, R, L, J, G, V | A building's build points, minimum rounds, lodging, jobs, goods stored, victory points | nowhere; a building walks nothing |
 
 | Deck | Strip |
 | --- | --- |
-| Characters | H, S, M, {{rules.currency.symbol}}, KG |
-| Monsters | H, S, A, P, Y, then the element's mark |
-| Vehicles | H, C |
+| Characters | H, S, B, C, F, T, P, M, {{rules.currency.symbol}} — a starting value for every track, then coin |
+| Monsters | the same nine, then A, Y and the element's mark |
+| Vehicles | the same nine, then CG |
 | Talismans | M, {{rules.currency.symbol}}, KG |
-| Items, Weapons, Armour | W, {{rules.currency.symbol}}, KG |
+| Items, Weapons, Armour | W, then K where the thing holds something, {{rules.currency.symbol}}, KG |
 | Tools | W, {{rules.currency.symbol}} |
 | Modifications | {{rules.currency.symbol}}, KG — an enchantment prints M, the mana to bind it, and its element's mark |
 | Spells | M, the mana to cast it, and its element's mark |
-| Buildings | B and R, then L, J, G and V where the building has them |
+| Buildings | BP and R, then L, J, G and V where the building has them |
 | Events, Quests, Campaign | No strip: everything the card does is in its text |
 
 {{fig:card:CHR-04,card:VEH-02,card:TAL-03,card:TOL-01,card:BLD-36|Five decks, five strips: a character, a vehicle, a talisman, a tool, a building.}}
 
-A character's KG is its strength × {{rules.carrying.kgPerStrength}}, printed so nobody multiplies at the table. An element mark is one of four: ![fire](../art/icons/element-fire.svg) fire, ![earth](../art/icons/element-earth.svg) earth, ![water](../art/icons/element-water.svg) water, ![air](../art/icons/element-air.svg) air.
+A figure's strip is two rows, and every box in it but M is a starting value: set the board's markers left to right along it. M is the most the mana track may ever hold, and the marker itself starts at 0. Some boxes print 0 — Hunger and Thirst start at nothing, and a leg's Pace is not set until the leg starts. A monster or a vehicle prints Charisma 0, and a vehicle prints Strength 0. An element mark is one of four: ![fire](../art/icons/element-fire.svg) fire, ![earth](../art/icons/element-earth.svg) earth, ![water](../art/icons/element-water.svg) water, ![air](../art/icons/element-air.svg) air.
 
 ### The decks and their backs
 
@@ -104,14 +109,14 @@ Talismans and spells share a back apart from the word; read the word. The campai
 
 ## The player board
 
-{{fig:board:player|wide|The player board: recess, four kit slots with ladders, four tracks, the round along the foot.}}
+{{fig:board:player|wide|The player board: recess, kit slots with ladders, eight tracks, the round along the foot.}}
 
 One A4 sheet per player, every one identical. Print one more than there are players — the spare is the **encounter board** — and one for every vehicle anyone expects to have on the road at once. On it:
 
 - **IN PLAY**, top left: a recess for the card this board is running — a character, a monster or a vehicle.
-- **Four kit slots**: whatever that card has in play — a weapon, a suit, a lantern, a tool, a talisman; on a vehicle's board, its cargo and modifications. Four is the limit; a fifth thing in play means putting one down.
-- **A wear ladder** against each kit slot, for the thing lying in it.
-- **Four tracks** up the middle, H, S, P and M, about the card in the recess.
+- **{{playerboard.slots[id=kit].count}} kit slots**: whatever that card has in play — a weapon, a suit, a lantern, a tool, a talisman; on a vehicle's board, its cargo and modifications. That is the limit; one more thing in play means putting one down.
+- **A wear ladder and a capacity ladder** against each kit slot, W and K, for the thing lying in it.
+- **Eight tracks** up the middle, H, S, B, C, F, T, P and M, about the card in the recess.
 - **THE ROUND** along the foot — the six phases in order — and beside it **IN A FIGHT**, the battle sum. Turn order passes to the left.
 
 Every track and ladder runs from {{components.board.track.from}} to {{components.board.track.to}}, numbered from the bottom, every fifth rung ruled heavier. That is the game's ceiling: nothing a token walks ever runs past it. A {{components.tokens.bar.diameterMm}} mm **bar** walks each column; a {{components.tokens.pip.diameterMm}} mm **pip** walks each wear ladder.
@@ -119,14 +124,19 @@ Every track and ladder runs from {{components.board.track.from}} to {{components
 | Track | Set from | Walks | At zero |
 | --- | --- | --- | --- |
 | H Health | the H box | Down as the figure is hurt; up under medical aid only — sleep mends nothing. A hull walks the same column, down as damaged and up as repaired | Carried to the nearest settlement, everything it carried lost. A vehicle is wrecked and spills its cargo on the hex |
-| S Strength | the S box | Down a rung for every night without a camp; all of it back after one night's sleep | No fighting and no carrying |
+| S Strength | the S box | Down a rung for every night without a camp; all of it back after one night's sleep. It is for battle only | No fighting |
+| B Burden | the B box: kilograms | Down by the mass of everything picked up, worn or wielded and by the purse; up as things are put down or spent | Full: nothing more can be taken up |
+| C Charisma | the C box | It does not walk; it is added to a roll to befriend a monster | Nobody takes your side: nothing is added |
+| F Hunger | the F box, 0 | Up a rung every round on the road; down as food is eaten | At the top of the track, 1 health lost every round |
+| T Thirst | the T box, 0 | Up a rung every round; down as water is drunk | At the top of the track, 1 health lost every round |
 | P Pace | the speed table, at the start of each leg | Down a rung for every hex entered | The leg is over: roll for discovery where you stopped |
 | M Mana | 0, the bottom rung | Up as a slain monster yields mana, down as spells are cast. The most it may hold is the M on the character plus the M of every talisman in a slot | Empty |
-| W Wear, four of them | the W box of the card in that slot, when the card goes in | Down a rung every time the thing is used; up as it is mended | Worn out: discard the card and clear the ladder |
+| W Wear, one per slot | the W box of the card in that slot, when the card goes in | Down a rung every time the thing is used; up as it is mended | Worn out: discard the card and clear the ladder |
+| K Capacity, one per slot | the K box of the card in that slot, when the card goes in | Down a rung every time something is taken out of it; up as it is filled again, never above the K box | Empty: it does nothing until it is filled |
 
 Which uses cost wear, and what mends health, strength and gear, are in [Effort and jobs](05-effort-and-jobs.md), [The map and travel](08-the-map-and-travel.md), [Monsters and battle](12-battle.md) and [Heroes, vehicles and gear](14-heroes-vehicles-and-gear.md).
 
-Two numbers deliberately have no track. **Kilograms**: total what a figure wears, wields, stows and carries in its purse, and it either fits under the KG on the card or it does not — coin counts, at {{rules.carrying.coin.perKg}} to the kilogram. **Armour**: a monster prints its own in the A box; a character's is whatever gear is in the kit slots. Either way it is added to a battle total and never walked.
+One number deliberately has no track. **Armour**: a monster prints its own in the A box; a character's is whatever gear is in the kit slots. Either way it is added to a battle total and never walked.
 
 ### The encounter board
 
@@ -145,7 +155,7 @@ How an encounter plays out is in [Discovery and encounters](11-discovery.md) and
 
 {{fig:plate:vehicle-veh-03,plate:modification-compound-boiler|Old Smoke on a board of its own; the boiler lies in a kit slot.}}
 
-A vehicle in play is dealt a board of its own and run the same way: its card in the recess, its hull on the H track, its cargo and modifications in the four kit slots. C on the card is how much bulk the hold takes, and there is no token for it — the cargo is what is in the slots. At zero hull the vehicle is wrecked. See [Heroes, vehicles and gear](14-heroes-vehicles-and-gear.md).
+A vehicle in play is dealt a board of its own and run the same way: its card in the recess, its hull on the H track, its cargo and modifications in the {{playerboard.slots[id=kit].count}} kit slots. CG on the card is how much bulk the hold takes, and there is no token for it — the cargo is what is in the slots. At zero hull the vehicle is wrecked. See [Heroes, vehicles and gear](14-heroes-vehicles-and-gear.md).
 
 ## Dice
 

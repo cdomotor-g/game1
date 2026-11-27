@@ -18,7 +18,7 @@ Meeting one is a choice, and the choice is yours unless the card says otherwise.
 | --- | --- | --- |
 | **Slay** | Fight it to 0 health | Mana of its element: the lesser of its Y and a roll of the purple die |
 | **Enslave** | Beat it by 2 or more without taking it to 0 — say so before you roll | A worker that rolls a d4 in one of your towns, eats 1 food a round, and adds 1 unrest while it lives there. No mana |
-| **Befriend** | Give the gift its card names, then roll a d6: 4 or more | It guards its hex for you, or travels with your party as an escort of its own strength. It leaves the first round you cannot feed it. No mana |
+| **Befriend** | Give the gift its card names, then roll a d6 and add your Charisma (the C track): {{rules.charisma.befriend.threshold}} or more | It guards its hex for you, or travels with your party as an escort of its own strength. It leaves the first round you cannot feed it. No mana |
 | **Domesticate** | Befriend it, or win without killing it; then spend two rounds in a row with it at a pasture | Livestock, with the benefit its card names. No mana |
 | **Flee** | Only if your pace is greater than its P | Nothing — and no discovery roll this leg |
 

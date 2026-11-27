@@ -41,6 +41,9 @@
     "$comment": "The row of lettered boxes across the top of every card, and what replaced the bars.\n\nA card used to hang a numbered ladder off each edge - harm left, capacity right - and a token walked it. That worked while a card was held in the hand. It stopped working the day the player board arrived, because a card in a recess is a card whose edges are under the board: the tracks moved to the board (playerboard.json) and the ladders on the cards became decoration that ate two columns of picture.\n\nSo a card now prints the MAXIMUM and nothing else. One box per number, the letter first and the figure after it - H 10, S 6, D 5 - and the letter is the same letter the board's track carries, so a player setting up reads across the strip and sets the tokens left to right. Nothing on a card moves any more; everything that moves is on the board.\n\nONE BOX PER PAIR. Each cell used to hold a second, smaller box with the letter in it - a box inside a box, six times across the top of every card, and at nine millimetres a cell the inner rule was doing nothing the tint underneath was not already doing. Taking it out took a millimetre and a bit off the height of the whole strip, and the picture got it.",
     "cells": {
       "max": 6,
+      "rows": 2,
+      "rowGap": 0.8,
+      "$rowsNote": "`max` is the boxes in a ROW; `rows` is how many rows a strip may run to, and a row's boxes are the same width whatever the row holds. Three decks are the reason for the second row: a character, a monster and a vehicle each print a starting-value box for every track on the player board (H S B C F T P M) plus coin, which is nine boxes or more and does not fit one row at a legible size. Every other deck still prints one row, and a deck's picture window is cut under the tallest strip any card in it needs.",
       "heightMm": 4.6,
       "gap": 5,
       "pad": 5,

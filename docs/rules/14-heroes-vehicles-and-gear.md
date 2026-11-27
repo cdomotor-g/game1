@@ -1,43 +1,45 @@
 # Heroes, vehicles and gear
 
-Your hero is a card in a recess, four things in kit slots, and four tokens on tracks; a vehicle is exactly the same, on a board of its own. This chapter is what a character carries and how much, what happens at nothing, what wears when, and how a vehicle and its fittings are run.
+Your hero is a card in a recess, {{playerboard.slots[id=kit].count}} things in kit slots, and eight tokens on tracks; a vehicle is exactly the same, on a board of its own. This chapter is what a character carries and how much, what happens at nothing, what wears when, and how a vehicle and its fittings are run.
 
 {{fig:plate:character-chr-05,plate:vehicle-veh-03,plate:item-sword,plate:item-chain-mail,plate:modification-spinnaker|frieze}}
 
 ## The hero
 
-{{fig:card:CHR-01|margin|A character card: name, calling, two traits and the strip H, S, M, coin and KG}}
+{{fig:card:CHR-01|margin|A character card: name, calling, two traits and the strip H, S, B, C, F, T, P, M and coin}}
 
-Every player has one hero figure, and the character card in the IN PLAY recess is who it is. The card prints a name, a calling, two traits, and a summary strip — **H** health, **S** strength, **M** mana held in the body, **{{rules.currency.symbol}}** the coin it starts with, **KG** the most it can shoulder — and the board is set from the strip at setup ([Setting up](03-setting-up.md)). The traits apply for the whole game. Every character is in Annex II, *Characters*.
+Every player has one hero figure, and the character card in the IN PLAY recess is who it is. The card prints a name, a calling, two traits, and a summary strip — **H** health, **S** strength, **B** burden, **C** charisma, **F** hunger, **T** thirst, **P** pace, **M** mana held in the body and **{{rules.currency.symbol}}** the coin it starts with — and the board is set from the strip at setup ([Setting up](03-setting-up.md)). The traits apply for the whole game. Every character is in Annex II, *Characters*.
 
 A hero moves as a figure and travels as a party with whoever goes with it ([The map and travel](08-the-map-and-travel.md)). It rolls no effort: heroes are figures, not workers.
 
-## Strength and what it carries
+## Burden: what a figure carries
 
-{{fig:plate:item-bag,plate:item-satchel|A bag adds 2 kg to the limit and a satchel 4; the satchel keeps one named thing}}
+{{fig:plate:item-bag,plate:item-satchel|A bag adds 2 kg to the Burden and a satchel 4; the satchel keeps one named thing}}
 
-Strength is one number doing three jobs. It is what you swing with in a battle, it is what a hard night takes a point off, and it is what you carry with: a figure shoulders **strength × {{rules.carrying.kgPerStrength}} kilograms**, and a character card prints the kilograms so nobody multiplies at the table.
+Strength is for battle only. What a figure carries is its **Burden**: the kilograms it can still take on, printed in the B box of its card and counted down on the B track.
 
-1. Total the mass of everything the figure is wearing, wielding and stowing — every item card in its slots prints its KG — and add its purse at {{rules.carrying.coin.perKg}} coin to the kilogram.
-2. That total must fit under the KG on the card. A figure may not take up an item that would put it over: load the thing onto a vehicle, hand it to someone with room, or leave it where it lies.
-3. A bag adds 2 kg to the limit and a satchel 4; a Weightless Hand enchantment adds 10.
+1. At setup, set the B marker to the B box.
+2. Whenever the figure wears, wields or stows something, move the marker down by the item's KG. Whenever it puts something down, move it back up. Its purse counts too, at {{rules.carrying.coin.perKg}} coin to the kilogram.
+3. A figure may not take up an item that would take its Burden below 0: load the thing onto a vehicle, hand it to someone with room, or leave it where it lies.
+4. A bag adds 2 kg to the Burden and a satchel 4; a Weightless Hand enchantment adds 10.
 
-Nothing walks a token for this. Commodities in transit are cargo and measured in bulk, not mass; mana weighs nothing, though the talisman holding it does. A figure with no card carries strength × {{rules.carrying.kgPerStrength}} on its people's strength ([People, food and unrest](07-people.md)).
+Commodities in transit are cargo and measured in bulk, not mass; mana weighs nothing, though the talisman holding it does. A figure with no card starts with its people's Burden ([People, food and unrest](07-people.md)).
 
 ## Health and strength at nothing
 
 {{fig:plate:item-dagger|margin|A dirk is never lost, whatever else a fallen character drops on the road}}
 
 - **At 0 health** a character falls. It is carried to the nearest settlement, stays there until healed to half its H under medical aid, and loses everything it was carrying on the way — except what a card keeps: a dirk is never lost, and one item named when a satchel was packed stays in it.
-- **At 0 strength** a figure neither fights nor carries. One night's sleep puts all of it back.
+- **At 0 strength** a figure does not fight. One night's sleep puts all of it back.
+- **At the top of Hunger or Thirst** a figure loses {{rules.upkeep.hunger.atLimit.health}} health every round — see [The map and travel](08-the-map-and-travel.md).
 
 What mends each is in [The map and travel](08-the-map-and-travel.md).
 
 ## Kit
 
-{{fig:board:player|wide|The player board: four kit slots, each with its wear ladder beside it}}
+{{fig:board:player|wide|The player board: the kit slots, each with its wear and capacity ladders beside it}}
 
-A hero carries at most **four things in play**, one per kit slot on the board, and a fifth means putting one down. A thing in a slot is a card: a weapon, a piece of armour, clothing, gear, a light, a pack of rations, a potion, a talisman, a tool. Anything else the hero owns is left in a town's stockpile or on a vehicle. Some cards share a slot by their own rule — a dagger sits in a slot with another weapon — and some refuse company: a two-handed weapon cannot be used with a shield.
+A hero carries at most **{{playerboard.slots[id=kit].count}} things in play**, one per kit slot on the board, and one more means putting one down. A thing in a slot is a card: a weapon, a piece of armour, clothing, gear, a light, a pack of rations, a potion, a talisman, a tool. Anything else the hero owns is left in a town's stockpile or on a vehicle. Some cards share a slot by their own rule — a dagger sits in a slot with another weapon — and some refuse company: a two-handed weapon cannot be used with a shield.
 
 {{fig:plate:item-bow,plate:item-helm,plate:item-travelling-cloak,plate:item-grappling-hook,plate:item-lantern,plate:talisman-tal-01|Six of the eight classes: weapon, armour, clothing, gear, light and talisman}}
 
@@ -77,7 +79,7 @@ A vehicle is built at the building its mode names — a cart or a sled at a carp
 {{fig:plate:event-storms|third|Storms at sea; damage walks the hull down, and at 0 the cargo spills on the hex}}
 
 1. **Deal it a player board of its own.** The card goes in the IN PLAY recess and the hull on the H track, set from the H box.
-2. **Its cargo and its modifications lie in the four kit slots.** C is how much bulk the hold takes; there is no token for it — the cargo is what is in the slots.
+2. **Its cargo and its modifications lie in the {{playerboard.slots[id=kit].count}} kit slots.** C is how much bulk the hold takes; there is no token for it — the cargo is what is in the slots.
 3. **It moves as its mode**, one leg a round, rolling for discovery where it stops, and it may carry figures where its card says.
 4. **Damage** from a fight, a hazard or an event walks the hull down. It is repaired at any settlement of town rank or better, 1 rung a round for 5 coin a rung; an engineer character mends one free.
 5. **At 0 hull it is wrecked.** It spills its cargo on the hex, and salvage belongs to whoever reaches it first. Its fittings are salvaged on a d6 of 5 or more, one roll each; an enchantment never survives.

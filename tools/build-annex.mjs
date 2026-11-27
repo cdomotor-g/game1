@@ -748,14 +748,13 @@ table(
   peoples.peoples.map((p) => [
     p.name, p.effortDie, p.startingWorkers, list(p.terrainComfort),
     p.strength?.base,
-    `${(p.strength?.base ?? 0) * rules.carrying.kgPerStrength} kg`,
+    `${p.burden?.base ?? 0} kg`,
     p.manaStorage?.innate ? `${p.manaStorage.innate} innate` : 'talisman only',
   ])
 );
 say();
-say('Carrying is not a separate number and has not been since strength swallowed');
-say(`burden: a figure lifts strength × ${rules.carrying.kgPerStrength} ${rules.carrying.unit}, and the column above is that`);
-say('sum rather than a value anybody chose.');
+say('Carrying is its own track, Burden: the kilograms a figure of that people can still take on,');
+say('counted down as things are picked up. Strength is for battle only.');
 say();
 say('**There is no defence column, here or anywhere else.** It was the half of the old strength');
 say('that made a strong thing hard to hurt, which was a good fix for a to-hit roll and has');
@@ -781,10 +780,10 @@ table(
 say('## Items');
 say();
 say('Mass is what the thing weighs. It counts against what the carrier can lift —');
-say(`strength × ${rules.carrying.kgPerStrength} ${rules.carrying.unit}, printed on every character card — and it is not`);
+say(`its Burden in ${rules.carrying.unit}, printed on every character card — and it is not`);
 say('bulk: bulk is a commodity\'s storage and shipping cost, and no item has one.');
 say();
-say(`No figure in the game shoulders more than ${Math.max(...peoples.peoples.map((p) => (p.strength?.base ?? 0) * rules.carrying.kgPerStrength), ...characters.characters.map((c) => c.strength * rules.carrying.kgPerStrength))} ${rules.carrying.unit} unaided, and`);
+say(`No figure in the game shoulders more than ${Math.max(...peoples.peoples.map((p) => p.burden?.base ?? 0), ...characters.characters.map((c) => c.start.burden))} ${rules.carrying.unit} unaided, and`);
 say('nothing walks a token for it: a load either fits under the printed limit or');
 say(`it does not. **Coin counts too** — ${rules.currency.massKgEach * 1000} grams a coin, ${rules.carrying.coin.perKg} to the kilogram — which is what`);
 say('turns a hold of jewellery sold into a question about how the money gets home.');
@@ -914,18 +913,17 @@ say();
 /* --------------------------------------------------------------- characters */
 say('## Character deck');
 say();
-say('The five boxes of the summary strip across the top of every character card,');
-say('in the order they are printed in — and the same letters the player board');
-say('calls its tracks, so setting up is reading across the strip and placing');
-say('tokens left to right. The kilograms are derived rather than designed:');
-say(`strength × ${rules.carrying.kgPerStrength}, and the purse counts against them like everything else.`);
+say('The two rows of boxes across the top of every character card: a starting value for');
+say('every track on the player board, in the board\'s own order, then coin. Setting up is');
+say('reading along the strip and placing a marker for each. Hunger, Thirst and Pace start');
+say('at 0 on every card and are left out of the table; Burden is kilograms, and the purse');
+say('counts against it like everything else.');
 say();
 table(
-  ['Code', 'Character', 'People', 'Calling', 'H', 'S', 'M', rules.currency.symbol, 'KG', 'Traits'],
+  ['Code', 'Character', 'People', 'Calling', 'H', 'S', 'B', 'C', 'M', rules.currency.symbol, 'Traits'],
   characters.characters.map((c) => [
     c.cardCode, c.name, c.people, c.calling,
-    c.health, c.strength, c.manaCapacity || '—', c.startingGold,
-    c.strength * rules.carrying.kgPerStrength,
+    c.health, c.strength, c.start.burden, c.start.charisma, c.manaCapacity || '—', c.startingGold,
     (c.traits || []).join(' '),
   ])
 );

@@ -154,15 +154,15 @@
   },
 
   "carrying": {
-    "$comment": "What a figure carries on its own back, in kilograms - and there is no longer a second number for it. Strength IS the carrying limit: one rating does the lifting and the swinging, because they are the same arm. A character card prints the kilograms so nobody does arithmetic at the table, but the kilograms are derived, not designed - change a figure's strength and what they can shoulder changes with it.\n\nMass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
+    "$comment": "What a figure carries on its own back, in kilograms, and the number that counts it down. It is BURDEN: the kilograms a figure can still take on. Its card prints the figure it starts with, the player board has a track for it, and a token walks DOWN it as things are picked up and back UP as they are put down. Strength has nothing to do with it any more - strength is for battle only (conflict.strength) - so a strong figure is not a strong porter unless its card says so.\n\nMass and bulk are two different measures and never mix: bulk is a commodity's storage-slot and shipping cost (commodities.json, transport.json), mass is what one item weighs (items.json massKg). Cargo in a cart is bulk; the axe on your shoulder is mass.",
     "unit": "kg",
-    "kgPerStrength": 3,
-    "$scaleNote": "Three kilograms to the point. It is the factor that leaves the deck where it already was - a strength-2 hedge-witch shoulders 6 kg and a strength-6 caravan guard 18, which is roughly what their old burden bars said - and it puts the plate harness (12.5 kg) out of reach of anyone under strength 5, which is the right sentence for a suit of plate to be in.",
-    "limit": "strength x kgPerStrength, in kilograms. Characters use the strength on their card; any other figure uses its people's strength.base (peoples.json).",
-    "marker": "None. There is no burden track any more and no token to walk: total what the figure is wearing, wielding and stowing, and it either fits under the limit printed on the card or it does not.",
-    "limitRule": "A figure may not take up an item that would put its load over the limit. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
+    "track": "burden",
+    "$scaleNote": "Burden is a printed kilogram figure on every card, 0 to the board's ceiling of 20 (playerboard.json), and the figures on the cards that existed before burden had a track were each a strength times three, which is where a character's number started from. A figure with no card of its own - a worker, a soldier, a hireling - starts with the burden of its people (peoples.json burden.base).",
+    "limit": "the Burden the card prints, in kilograms, which is what the figure has left to take. A figure with no card of its own uses its people's burden.base (peoples.json).",
+    "marker": "The B track on the player board. Set it from the B box on the card at setup, knock it down by the mass of everything picked up and by the purse at perKg, and put it back up by what is put down or spent. It cannot go below 0: a figure may not take up what it has no kilograms left for.",
+    "limitRule": "A figure may not take up an item, or a purse, that would take its Burden below 0. Load it onto a vehicle, hand it to someone with room, or leave it where it lies.",
     "coin": {
-      "$comment": "Coin was on the list below - weightless, an abstraction, the one thing a figure could hold an unlimited quantity of. It is not any more. A gold coin weighs 25 grams (currency.massKgEach), forty to the kilogram, and it goes on the scales with the sword and the rope.\n\nWhat that buys is a real decision at the top of the game. A strength-3 figure shoulders 9 kg; a strength-6 one, 18. Spend that on plate and a greatsword and there is nothing left for a fortune, and a party that has just sold a hold of jewellery has to work out how it is getting the money home. Coin is not a number in a corner of the sheet any more, it is cargo.",
+      "$comment": "Coin was on the list below - weightless, an abstraction, the one thing a figure could hold an unlimited quantity of. It is not any more. A gold coin weighs 25 grams (currency.massKgEach), forty to the kilogram, and it goes on the scales with the sword and the rope.\n\nWhat that buys is a real decision at the top of the game. A figure starting at 9 kg of burden is carrying a fortune at 360 coin; one starting at 18, twice that. Spend that on plate and a greatsword and there is nothing left for a fortune, and a party that has just sold a hold of jewellery has to work out how it is getting the money home. Coin is not a number in a corner of the sheet any more, it is cargo.",
       "massKgEach": "rules.currency.massKgEach",
       "perKg": 40,
       "counts": "Against the same limit as everything else. Total what the figure is wearing, wielding, stowing and carrying in its purse.",
@@ -170,24 +170,42 @@
     },
     "notCarried": ["Commodities in transit, which travel by transport mode and are measured in bulk.", "Mana, in the body or in a talisman - the talisman itself has mass, its charge does not."],
     "onZeroHealth": "A figure carried to a settlement at 0 health loses everything it was carrying on the way.",
-    "notes": "Burden used to be a bar up the right edge of every character card and a track on the player board. Both are gone: the bar went when the cards took a summary strip across the top instead, and the track went when strength swallowed it."
+    "notes": "Burden has had three lives: a bar up the right edge of every card, then nothing at all while strength swallowed it, and now a track again. It came back because a limit that is only a sum at the table is a sum nobody does, and a token that walks down as the pack fills is one everybody can see."
   },
 
   "upkeep": {
-    "$comment": "What a figure spends by being alive and on the road, and which of its two numbers it spends. Food keeps HEALTH up; sleep keeps STRENGTH up. They are not interchangeable and neither is a substitute for the other, which is the whole design: a party can be well fed and exhausted, or rested and starving, and those are different problems with different answers.\n\nThe town-scale version of this - workers eating in the Feeding phase - is `population`. This block is the party-scale one, and it applies to every figure on the map that is not sitting in a town being fed by it.",
-    "food": {
-      "perFigurePerRound": 1,
-      "from": "What the party carries, or what it forages or buys that round.",
-      "shortfall": { "health": -1 },
-      "shortfallNote": "A round that ends with a figure unfed costs that figure 1 health, every round it goes on. Nothing about being fed again puts the health back - see rest.medicalAid. Going hungry is a wound like any other."
+    "$comment": "What a figure spends by being alive and on the road, and which of its two numbers it spends. Hunger and thirst are two clocks that climb a rung every round and are brought down by eating and drinking; at the top of either, a figure bleeds health. Sleep keeps STRENGTH up. None of the three is a substitute for another, which is the whole design: a party can be fed and exhausted, rested and parched, and those are different problems with different answers.\n\nThe town-scale version of this - workers eating in the Feeding phase - is `population`. This block is the party-scale one, and it applies to every figure on the map that is not sitting in a town being fed by it.",
+    "hunger": {
+      "track": "hunger",
+      "risePerRound": 1,
+      "eased": { "perFood": 4, "note": "One unit of food eaten takes this many rungs off Hunger. Food is what the party carries, forages or buys - a commodity, or a meal off a ration card (items.json rations-3-day). Hunger cannot go below 0." },
+      "limit": 20,
+      "atLimit": { "health": -1, "note": "At 20 the figure loses 1 health every round it is still there, and being fed does not put the health back (rest.medicalAid) - it only stops the losing. This replaces the rule that a round with nothing to eat costs 1 health: the cost still exists, it just takes a long time to arrive and is easy to see coming." },
+      "appliesTo": "Every figure on the road. A figure in a town being fed by it (population) is eating from the town's stock and its Hunger stays where it is."
+    },
+    "thirst": {
+      "track": "thirst",
+      "risePerRound": 1,
+      "eased": { "perDraught": 4, "note": "One draught of water drunk takes this many rungs off Thirst: from a waterskin (items.json waterskin), or at a well, a marsh or any fresh water, which is free. Thirst cannot go below 0." },
+      "limit": 20,
+      "atLimit": { "health": -1, "note": "As Hunger: at 20 the figure loses 1 health a round until it drinks." },
+      "appliesTo": "Every figure on the road, in a town or out of one - a town is a well. It is the same clock as Hunger on its own ladder, which is the point: a party can be fed and parched, or watered and starving."
     },
     "night": {
       "camp": "A party that stops before dark and makes camp restores every figure's strength to the number printed on its card. A bed at an inn does the same and costs rest.cost.",
       "noCamp": { "strength": -1 },
       "noCampNote": "A party that travels a night leg, or ends the round without stopping, loses 1 strength from every figure in it. That is on top of the extra discovery roll a night leg already draws (movement.legs.nightRisk).",
-      "cumulative": "Strength lost this way stacks night after night, and at 0 strength a figure does not fight and carries nothing (playerboard.json strength.atZero). Two hard nights turn a caravan guard into a passenger."
+      "cumulative": "Strength lost this way stacks night after night, and at 0 strength a figure does not fight (playerboard.json strength.atZero). Two hard nights turn a caravan guard into a passenger."
     },
     "notes": "This is the pressure that makes a lantern, a granary, an inn and a stretch of salted meat worth their coin - and the reason a shorter leg with a camp at the end of it often beats a longer one without."
+  },
+
+  "charisma": {
+    "$comment": "How well a figure is liked by things that could go either way. It is a rating, not a clock: nothing moves it in play, and the card prints what it starts at. For now it does one job; it is expected to grow more, and each one gets a line here rather than a new rule in a chapter.",
+    "track": "charisma",
+    "befriend": { "adds": "Add the figure's Charisma to the d6 rolled to befriend a monster (monsters.json encounterOptions.befriend). The figure making the offer is the one whose Charisma counts.", "threshold": 4 },
+    "scale": "0 to the board's ceiling. Characters run 1 to 6; monsters and vehicles print 0.",
+    "growth": "Open. Haggling, hiring and a toll talked down are the obvious next places for it to add; none of them is a rule until a chapter adopts it."
   },
 
   "movement": {
@@ -276,12 +294,12 @@
       "appliesTo": "Any figure with a strength: characters (characters.json), monsters (monsters.json), and hirelings, which fight at the numbers printed on the inn's board."
     },
     "strength": {
-      "$comment": "One number, three jobs, and it is the only number a figure brings to a fight of its own. Strength is what you SWING WITH - it is the base of your side of the battle roll. It is what you CARRY WITH - see carrying.kgPerStrength. And it is still the threat threshold some rules read off a monster card. It is also the number a hard night takes off you (upkeep.night), which is what ties the three together: an exhausted figure fights worse and carries less, and that is one token moving down one track.",
+      "$comment": "One number, one job: strength is what you SWING WITH, the base of your side of the battle roll, and it is still the threat threshold some rules read off a monster card. It no longer carries anything - that is Burden (carrying) - so strength is for battle only. It is also the number a hard night takes off you (upkeep.night): an exhausted figure fights worse, and that is one token moving down one track.",
       "scale": "0 to the board's ceiling (components.json board.track). Characters run 2 to 6, monsters 2 to 7.",
-      "carries": "strength x carrying.kgPerStrength kilograms. The card prints the kilograms; the track holds the strength.",
+      "carries": "Nothing. Strength is for battle only; what a figure can carry is its Burden (rules.json carrying).",
       "inABattle": "It is added to your total, straight, once. It never adds dice - everyone rolls two, and the very few things that grant a third say so on their own card.",
       "threshold": "Unchanged and read off the same number: a thug refuses a monster of strength 4 or more, monsters of strength 4+ get a free round against a fleeing cargo vehicle, and a boar spear earns its +3 against anything of strength 4 or more that charges.",
-      "atZero": "A figure at 0 strength does not fight and carries nothing."
+      "atZero": "A figure at 0 strength does not fight."
     },
     "armour": {
       "$comment": "What is between you and the blow, and the only piece of gear a monster has. It used to be two things - DEFENCE, which stopped a hit landing, and ARMOUR, which cancelled it after it had. In an opposed total there is no difference between those two sentences: both of them are a number that makes the other side's roll less likely to hurt you. So there is one number, it is called armour, and a monster's hide is on the same field as a suit of plate.",

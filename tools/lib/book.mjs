@@ -250,7 +250,6 @@ export function openCatalogue(root, { data }) {
   /* --- one entry per kind ------------------------------------------------ */
 
   function character(c) {
-    const kg = c.strength * rules.carrying.kgPerStrength;
     const kit = (c.startsWith ?? []).map((id) => name(items, id));
     return {
       id: `chr-${c.id}`, size: 'half', layout: 'portrait',
@@ -260,8 +259,8 @@ export function openCatalogue(root, { data }) {
           name: esc(c.name), sub: esc(c.calling),
         })}${strip([
           { letter: L.health, value: c.health, tint: 'oxide' }, { letter: L.strength, value: c.strength, tint: 'ochre' },
+          { letter: L.burden, value: c.start.burden, tint: 'slate' }, { letter: L.charisma, value: c.start.charisma, tint: 'verdigris' },
           { letter: L.mana, value: c.manaCapacity ?? 0, tint: 'bruise' }, { letter: L.gold, value: c.startingGold, tint: 'ochre' },
-          { letter: L.carry, value: kg, tint: 'slate' },
         ])}${cardInset(c.cardCode)}${facts([
           ...(c.traits ?? []).map(inline),
           kit.length ? `<em>Starts with</em> ${esc(andList(kit))}.` : null,
@@ -504,7 +503,7 @@ export function openCatalogue(root, { data }) {
       html: plate(`people-${p.id}`, { format: 'portrait', alt: p.name })
         + `<div class="text">${head({ pre: `people · ${esc(p.effortDie)} · ${p.startingWorkers} workers to start`, name: esc(p.name), plain: esc(p.summary) })}${strip([
           { letter: L.strength, value: p.strength?.base ?? '—', tint: 'ochre' },
-          { letter: L.carry, value: (p.strength?.base ?? 0) * rules.carrying.kgPerStrength, tint: 'slate' },
+          { letter: L.burden, value: p.burden?.base ?? 0, tint: 'slate' },
           { letter: L.mana, value: p.manaStorage?.innate ?? 0, tint: 'bruise' },
         ])}${facts([
           ...(p.traits ?? []).map((t) => `<em>${esc(t.name)}.</em> ${inline(t.effect)}`),

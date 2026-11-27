@@ -124,12 +124,13 @@ Cargo that starts or ends its journey in a settlement your own road or rail reac
 
 ## Food and sleep on the road
 
-{{fig:plate:item-bag|margin|The pack: rations in it wear down a rung for every figure they feed.}}
+{{fig:plate:item-bag|margin|The pack: rations in it count down a rung for every meal eaten.}}
 
 A party out of town keeps itself. Two different things are spent, and they are mended two different ways:
 
-- **Every figure eats {{rules.upkeep.food.perFigurePerRound}} food a round**, from what the party carries, forages or buys. A figure that ends the round unfed loses 1 health, and being fed again does not put it back. A pack of rations is an item whose wear is the days left in it: knock its ladder down a rung for every figure it feeds. Other food a party carries is a commodity, and a perishable one rolls the spoil die every round it is in the pack.
-- **A night without a camp costs 1 strength** from every figure — a night leg, or a round ended without stopping. It stacks night on night, and at 0 strength a figure neither fights nor carries.
+- **Hunger and Thirst each rise {{rules.upkeep.hunger.risePerRound}} rung every round** a figure is on the road. Each unit of food eaten takes {{rules.upkeep.hunger.eased.perFood}} rungs off Hunger, from what the party carries, forages or buys; each draught of water drunk takes {{rules.upkeep.thirst.eased.perDraught}} rungs off Thirst, from a waterskin or at a well, a marsh or any fresh water. Neither goes below 0.
+- **At the top of Hunger or Thirst** (rung {{rules.upkeep.hunger.limit}}) the figure loses {{rules.upkeep.hunger.atLimit.health}} health every round it is still there, and being fed or watered again does not put the health back. A pack of rations is a container: knock its capacity ladder down a rung for every meal eaten from it. Other food a party carries is a commodity, and a perishable one rolls the spoil die every round it is in the pack.
+- **A night without a camp costs 1 strength** from every figure — a night leg, or a round ended without stopping. It stacks night on night, and at 0 strength a figure does not fight.
 - **One night's sleep gives all the strength back**, wherever it is taken: a camp on open ground, a spent cave, or a bed. A camp costs nothing.
 - **Sleep mends no health at all.** Health comes back only under medical aid: {{rules.rest.medicalAid.healerPerRound}} a round from a healer or at an infirmary, {{rules.rest.medicalAid.physicianPerRound}} a round from a physician character standing there, or a potion, drunk. Care costs {{rules.rest.medicalAid.cost.coin}} coin a round, waived in your own town. A resting figure does nothing else that round.
 

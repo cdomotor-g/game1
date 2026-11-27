@@ -31,54 +31,54 @@
       "id": "health", "name": "Health", "letter": "H", "label": "HEALTH", "unit": null,
       "kind": "harm", "ink": "oxide", "step": 1,
       "covers": { "value": 14, "paths": ["characters.characters[].health", "monsters.monsters[].health", "vehicles.vehicles[].hull"], "note": "Vhalrik, who is dealt onto one of these boards like anybody else the moment he is met. The sturdiest hull in the vehicle deck reaches 12 on the same column." },
-      "walks": "Down as the figure takes hits, and up under medical aid alone - 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A round that ends with nothing to eat costs 1. A VEHICLE runs the same column and reads it as its hull: set it from the card, down as it is damaged, up as it is repaired - one rung a round in any settlement of town rank or better, at 5 coin a rung.",
+      "walks": "Down as the figure takes hits - and down 1 a round for as long as its Hunger or its Thirst stands at the top of its track - and up under medical aid alone: 3 a round with a healer or in an infirmary, 2 from a physician who happens to be standing there. Sleeping does not mend it. A VEHICLE runs the same column and reads it as its hull: set it from the card, down as it is damaged, up as it is repaired - one rung a round in any settlement of town rank or better, at 5 coin a rung.",
       "atZero": "The figure is carried to the nearest settlement and stays there until healed to half. Everything it was carrying is lost on the way. A vehicle at zero is wrecked: it spills its cargo on the hex, and salvage belongs to whoever reaches it first.",
       "note": "This column swallowed the vehicle track. There used to be a V beside it counting damage on somebody's wagon, printed on every board in the game whether or not anybody was running one - and counting UP, which is the only number on the board that did. A hull is a body: it has a maximum on its card, it takes hits, it is mended in town, and at nothing it is carried off. One column, one direction, and the wagon gets a board of its own to walk it on.",
-      "rule": "rules.json rest, rules.json upkeep.food, characters.json health, monsters.json health, vehicles.json hull"
+      "rule": "rules.json rest, rules.json upkeep.hunger, rules.json upkeep.thirst, characters.json health, monsters.json health, vehicles.json hull"
     },
     {
       "id": "strength", "name": "Strength", "letter": "S", "label": "STRENGTH", "unit": null,
       "kind": "rating", "ink": "ochre", "step": 1,
       "covers": { "value": 7, "paths": ["monsters.monsters[].strength", "characters.characters[].strength"], "note": "Vhalrik. No character reaches it - Ruk, the strongest, is 6." },
       "walks": "Set it from the card at setup and knock it down a rung for every night the party does not make camp. One night's sleep puts all of it back, wherever that night is taken.",
-      "atZero": "Nothing left to swing with, and nothing left to shoulder. A figure at 0 strength does not fight and carries nothing.",
-      "reads": "Both ways at once. Your strength is on this track and the thing you are fighting has its defence printed in front of you; the roll is the difference. It is also what you can carry: strength x rules.carrying.kgPerStrength kilograms, and the character card prints the kilograms so nobody multiplies at the table.",
-      "note": "Strength swallowed burden. They were the same arm doing the same job with two numbers and two tracks, and one of them was a track a player moved every time they picked up a rope.",
-      "rule": "rules.json conflict.strength, rules.json carrying, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
+      "atZero": "Nothing left to swing with. A figure at 0 strength does not fight.",
+      "reads": "Both ways at once. Your strength is on this track and the thing you are fighting has its own printed in front of you; the roll is the difference. It is for battle only - what a figure can carry is its Burden.",
+      "note": "Strength once swallowed burden, because they were the same arm doing the same job. They are two tracks again, because a limit that is only a sum at the table is a sum nobody does - and a token that walks down as the pack fills is one everybody can see.",
+      "rule": "rules.json conflict.strength, rules.json upkeep.night, monsters.json strength, characters.json strength, peoples.json strength.base"
     },
     {
       "id": "burden", "name": "Burden", "letter": "B", "label": "BURDEN", "unit": null,
       "kind": "capacity", "ink": "slate", "step": 1,
-      "covers": { "value": 0, "paths": [], "note": "DRAFT - nothing in the data sets this yet." },
-      "walks": "DRAFT - to be decided.",
-      "atZero": "DRAFT - to be decided.",
-      "rule": "DRAFT"
+      "covers": {"value": 18, "paths": ["characters.characters[].start.burden", "peoples.peoples[].burden.base"], "note": "Ruk, who starts with 18 kg of room. The board stops at 20, and no card prints more."},
+      "walks": "Set it from the B box on the card at setup - the kilograms the figure can still take. Knock it down by the mass of everything it picks up, wears or wields, and by its purse at rules.carrying.coin.perKg; put it back up by whatever is put down, spent or sold.",
+      "atZero": "Full. The figure takes up nothing more - an item or a purse - until it puts something down. It is not hurt, and it still fights.",
+      "rule": "rules.json carrying, characters.json start.burden, peoples.json burden.base"
     },
     {
       "id": "charisma", "name": "Charisma", "letter": "C", "label": "CHARISMA", "unit": null,
       "kind": "rating", "ink": "verdigris", "step": 1,
-      "covers": { "value": 0, "paths": [], "note": "DRAFT - nothing in the data sets this yet." },
-      "walks": "DRAFT - to be decided.",
-      "atZero": "DRAFT - to be decided.",
-      "rule": "DRAFT"
+      "covers": {"value": 6, "paths": ["characters.characters[].start.charisma"], "note": "Athena, the most persuasive card in the deck. Monsters and vehicles print 0."},
+      "walks": "It does not walk. Set it from the C box on the card at setup and leave the marker there; it is a rating a player reads, like strength before a night without camp.",
+      "atZero": "Nobody takes the figure's side. A figure at 0 adds nothing to a befriending roll, which is where every monster and every vehicle stands.",
+      "rule": "rules.json charisma, monsters.json encounterOptions.befriend, characters.json start.charisma"
     },
     {
       "id": "hunger", "name": "Hunger", "letter": "F", "label": "HUNGER", "unit": null,
       "kind": "harm", "ink": "oxide", "step": 1,
-      "covers": { "value": 0, "paths": [], "note": "DRAFT - nothing in the data sets this yet." },
+      "covers": {"value": 20, "paths": [], "note": "The top of the track is the limit itself (limit.at), not a number any card prints: every figure starts at 0 and the card's F box says so."},
       "limit": { "at": 20, "mark": "20: -1 H", "ink": "oxide", "note": "At the top of the track the figure loses 1 health every round until it is brought down." },
-      "walks": "DRAFT - to be decided.",
-      "atZero": "DRAFT - to be decided.",
-      "rule": "DRAFT"
+      "walks": "Up 1 every round the figure is on the road. Each unit of food eaten takes rules.upkeep.hunger.eased.perFood rungs off, and it cannot go below 0.",
+      "atZero": "Fed. Nothing happens, and nothing is owed.",
+      "rule": "rules.json upkeep.hunger, characters.json start.hunger"
     },
     {
       "id": "thirst", "name": "Thirst", "letter": "T", "label": "THIRST", "unit": null,
       "kind": "harm", "ink": "slate", "step": 1,
-      "covers": { "value": 0, "paths": [], "note": "DRAFT - nothing in the data sets this yet." },
+      "covers": {"value": 20, "paths": [], "note": "As Hunger: the limit is the top of the track and every card starts at 0."},
       "limit": { "at": 20, "mark": "20: -1 H", "ink": "oxide", "note": "At the top of the track the figure loses 1 health every round until it is brought down." },
-      "walks": "DRAFT - to be decided.",
-      "atZero": "DRAFT - to be decided.",
-      "rule": "DRAFT"
+      "walks": "Up 1 every round. Each draught drunk takes rules.upkeep.thirst.eased.perDraught rungs off, and it cannot go below 0.",
+      "atZero": "Watered. Nothing happens, and nothing is owed.",
+      "rule": "rules.json upkeep.thirst, items.json waterskin, characters.json start.thirst"
     },
     {
       "id": "pace", "name": "Pace", "letter": "P", "label": "PACE", "unit": "hexes",
@@ -113,11 +113,11 @@
       "id": "capacity", "name": "Capacity", "letter": "K", "label": "CAPACITY", "unit": null,
       "place": "kit", "count": 2,
       "kind": "capacity", "ink": "ochre", "step": 1,
-      "covers": { "value": 20, "paths": [], "note": "DRAFT" },
-      "walks": "DRAFT - to be decided.",
-      "atZero": "DRAFT - to be decided.",
+      "covers": {"value": 10, "paths": ["items.items[].uses"], "note": "The ten-day rations and the twenty-arrow bag, the deepest containers in the game. A track runs to 20."},
+      "walks": "Counts down what a container still holds - arrows in a quiver, draughts in a waterskin, meals in a pack of rations. Set it from the K box on the card when it goes in the slot; knock it down a rung per use; put it back up by filling it, at no more than the K box. It is not wear: a full waterskin can be nearly worn out, and a new one can be empty.",
+      "atZero": "Empty. The container still sits in its slot and still wears on its own W ladder, and does nothing until it is filled; a spent sheaf or sack, which has no way of being refilled, is discarded.",
       "reads": "Only its owner.",
-      "rule": "DRAFT"
+      "rule": "items.json uses, rules.json upkeep.hunger, rules.json upkeep.thirst"
     }
   ],
   "$placeNote": "A track's `place` says where on the sheet it is ruled. `column` is the grid up the middle - one column per track, all the same height, the shape this board has always had. `kit` is a short ladder against a card recess, drawn `count` times, once per slot. The distinction is not decoration: a column track counts something about the FIGURE in the recess, and there is one of those; a kit track counts something about a CARD in a slot, and there are four of those. tools/build-board.mjs partitions on it and never on a track's name.",
@@ -128,6 +128,10 @@
       "characters.characters[].health",
       "characters.characters[].strength",
       "characters.characters[].manaCapacity",
+      "characters.characters[].start.burden",
+      "characters.characters[].start.charisma",
+      "items.items[].uses",
+      "peoples.peoples[].burden.base",
       "monsters.monsters[].health",
       "monsters.monsters[].strength",
       "monsters.monsters[].pace",

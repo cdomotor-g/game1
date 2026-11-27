@@ -305,7 +305,7 @@
         { "type": "commodity-loss", "op": "choice", "text": "Every player hands over 1 gold, 1 gems or 2 jewellery, their choice, from any one town. A player with none of those loses their highest-value commodity stack instead." },
         { "type": "combat", "op": "spawn", "monster": "vhalrik-the-cinder-crowned", "text": "Any player who refuses places Vhalrik on their richest town. He attacks it at the start of the next round." }
       ],
-      "mitigations": ["A player who has befriended Vhalrik pays nothing and may not be attacked by him.", "Paying is always allowed and always ends it. That is the lesson."] },
+      "mitigations": ["A player who has befriended Vhalrik pays nothing and may not be attacked by him. Charisma adds to the befriending roll (rules.json charisma).", "Paying is always allowed and always ends it. That is the lesson."] },
     { "id": "aerial-post", "cardCode": "EVT-42", "name": "The Aerial Post", "category": "industry", "scope": "offer", "copies": 1,
       "text": "A postal contract, offered to whoever can actually fly it.",
       "effects": [

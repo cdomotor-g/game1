@@ -1,9 +1,9 @@
 {
-  "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with AND what it carries with: kilograms are strength x rules.carrying.kgPerStrength, so a people's carrying is not a second number and never was. There is no defence.base any more - defence went when the to-hit roll it shifted went, and what stands between a figure and a blow is the armour it is wearing (rules.json conflict.armour), which is a thing a people is not born with. A character card prints its own strength, that base adjusted for build and calling, in the summary strip across the top.",
+  "$comment": "Who does the work. Peoples set a player's baseline (die size, terrain comfort, food quirks, how they hold mana). Professions are individual workers upgraded at a guildhall - they unlock recipes that plain workers cannot run. manaStorage.innate is how much mana a body of that people can hold with no talisman; everyone can hold more in a talisman (items.json, class talisman). strength.base is what a figure of that people swings with, and nothing else; burden.base is the kilograms it can take on, which is the Burden a figure with no card of its own starts with (rules.json carrying). There is no defence.base any more - defence went when the to-hit roll it shifted went, and what stands between a figure and a blow is the armour it is wearing (rules.json conflict.armour), which is a thing a people is not born with. A character card prints its own strength, that base adjusted for build and calling, in the summary strip across the top.",
   "version": "0.3.0",
   "peoples": [
     {
-      "id": "human", "name": "Humans", "effortDie": "d6", "startingWorkers": 2,
+      "id": "human", "burden": { "base": 9 }, "name": "Humans", "effortDie": "d6", "startingWorkers": 2,
       "summary": "No edges and no gaps. Cheapest buildings, widest recipe access.",
       "traits": [
         { "name": "Adaptable", "effect": "Ignore the first terrain effort penalty each round." },
@@ -14,7 +14,7 @@
       "manaStorage": { "innate": 0, "note": "A human body holds no mana. Every drop lives in a talisman." }
     },
     {
-      "id": "dwarf", "name": "Dwarves", "effortDie": "d6", "startingWorkers": 2,
+      "id": "dwarf", "burden": { "base": 12 }, "name": "Dwarves", "effortDie": "d6", "startingWorkers": 2,
       "summary": "Underground and metallurgy. Slow above ground, unmatched below it.",
       "traits": [
         { "name": "Deep Delvers", "effect": "Roll d8 instead of d6 for any worker allocated to a mine or quarry." },
@@ -28,7 +28,7 @@
       "manaStorage": { "innate": 0, "note": "Dwarves distrust mana in the flesh and keep it in worked metal, where it belongs." }
     },
     {
-      "id": "elf", "name": "Elves", "effortDie": "d6", "startingWorkers": 2,
+      "id": "elf", "burden": { "base": 6 }, "name": "Elves", "effortDie": "d6", "startingWorkers": 2,
       "summary": "Forest, textiles and the arcane. Terrible miners, superb weavers.",
       "traits": [
         { "name": "Woodwise", "effect": "Forage and Harvest Arcane Herbs yield double." },
@@ -41,7 +41,7 @@
       "manaStorage": { "innate": 3, "note": "An elf may hold up to 3 mana in the body; anything beyond that needs a talisman like everyone else." }
     },
     {
-      "id": "halfling", "name": "Halflings", "effortDie": "d6", "startingWorkers": 3,
+      "id": "halfling", "burden": { "base": 6 }, "name": "Halflings", "effortDie": "d6", "startingWorkers": 3,
       "summary": "Numerous, agricultural, and permanently hungry.",
       "traits": [
         { "name": "Many Hands", "effect": "Start with one extra worker, and huts cost 1 log." },
@@ -54,7 +54,7 @@
       "manaStorage": { "innate": 0, "note": "Halflings hold no mana and are privately relieved about it." }
     },
     {
-      "id": "orc", "name": "Orcs", "effortDie": "d8", "startingWorkers": 2,
+      "id": "orc", "burden": { "base": 15 }, "name": "Orcs", "effortDie": "d8", "startingWorkers": 2,
       "summary": "Enormous output, no patience. Built for a short, aggressive game.",
       "traits": [
         { "name": "Brutal Labour", "effect": "Roll d8 for every worker." },

@@ -101,10 +101,10 @@ the way an innkeeper's is: professionally. Wash: dusty grey-green on the
 cloak, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -122,10 +122,10 @@ with a copper spike; a hand lamp hooked to her shoulder strap. Wash: cold
 slate blue on her coat, ochre in the stream gravel, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -143,10 +143,10 @@ open, one drawer glinting with three faceted shards. Practical field clothes,
 hem mud-stained and neatly darned. Wash: dusty grey-green throughout, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -164,10 +164,10 @@ spoon of office worn like a badge. The expression says the count is wrong and
 she knows whose fault it is. Wash: warm ochre on apron and provisions, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -185,10 +185,10 @@ company's brass token on a thong at the throat. One ear cocked to the road.
 Wash: rust red on the harness and axe wrap, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -207,10 +207,10 @@ one knee to keep it off the mud. Wash: cold slate blue on the coat, one rust
 red note on the bag's cross, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -229,10 +229,10 @@ stands on the footplate like a patient dog. Wash: rust red on the engine
 plates, ochre lamplight tone on the cab wood, flat.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -252,10 +252,10 @@ the eave; a cat declines to be drawn well. Wash: dusty grey-green on shawl
 and herbs; the charm's violet slip #6B4C7D, offset, no glow.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -275,15 +275,15 @@ clay wine jar with a wax seal and a scatter of oarblades. Wash: cold slate on
 the hull and the sea behind, warm ochre on the sand, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -302,15 +302,15 @@ bronze cup. Wash: dusty grey-green on the wall and the shadow, rust on the belt,
 flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -328,15 +328,15 @@ its head on its paws like a dog, drawn calmly and without menace. Wash: warm
 ochre on the cloak and the flags, grey-green on the trees, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -354,15 +354,15 @@ Beside him on the deck a wax comb and a ram's fleece. Wash: cold slate on the
 planking, ochre on the rope, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -381,15 +381,15 @@ page, the tops of trees and a glimpse of a beached ship. Wash: pale ochre on
 the roof, grey-green on the trees, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -408,15 +408,15 @@ a hillside with a great flat stone leaning beside it. Wash: warm ochre on the
 basket and the shingle, grey-green on the hill, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -435,15 +435,15 @@ a lamp still burning in it. Wash: cold slate on the harbour, ochre on the bag,
 flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -462,15 +462,15 @@ beside her a lamp, a basket of wool and a cup. Wash: pale ochre on the cloth,
 grey-green on the wall, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -488,15 +488,15 @@ gatepost; behind him, small, a thatched hut and a hillside of oak. Wash: ochre
 on the hide and the thatch, grey-green on the oak, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -515,15 +515,15 @@ left edge of the page under an olive bush. Wash: cold slate on the river, pale
 ochre on the linen, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -543,15 +543,15 @@ No glow, no smoke, no sparks. Wash: ochre on the cloth on the loom, grey-green
 on the wolf and the stone, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -571,15 +571,15 @@ the sea. Wash: grey-green on the vines and the trees, cold slate on the sea,
 flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -599,15 +599,15 @@ helmet, no owl, no light. Wash: dusty grey-green on the cloak, ochre on the
 door, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
 
@@ -626,14 +626,14 @@ feast: bones, bread, spilled wine. Nobody else is in the picture. Wash: rust
 red on the wine and the cloth, ochre on the cup, flat.
 
 FRAMING. A4 portrait, whole page drawn edge to edge.
-Head, both hands and the named gear inside the middle 69% of the page height;
+Head, both hands and the named gear inside the middle 61% of the page height;
 the full width survives the crop. The ground line and anything at the feet may
 run into the lower margin.
 
 WINDOW. This plate is cut down to a card, and the card keeps the full width
-of the page but only the middle 69% of its height - everything that matters
-must sit between 15% and 85% down the page. Outside that band nothing can
+of the page but only the middle 61% of its height - everything that matters
+must sit between 20% and 80% down the page. Outside that band nothing can
 be relied on, whatever else this brief says. (Worked out from this deck's
-card window, 340.5 x 353, on the 1280 x 1920 page this deck is drawn at. It
+card window, 340.5 x 310, on the 1280 x 1920 page this deck is drawn at. It
 is not a rule of thumb.)
 ```
