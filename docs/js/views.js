@@ -602,7 +602,7 @@
         el('button.card', { type: 'button', onclick: () => open('quest', qc.id) }, [
           el('div.card-head', [el('span.card-title', qc.name), el('span.card-code', qc.cardCode)]),
           el('div.card-sub', qc.task || (qc.stages ? `${qc.stages.length} stages: ${qc.stages.map((s) => s.name).join(' → ')}` : '')),
-          el('div.card-meta', [pill(qc.type), pill(`complexity ${qc.complexity}`)]),
+          el('div.card-meta', [pill(qc.type), pill(`complexity ${qc.complexity}`), qc.minLevel ? pill(`level ${qc.minLevel}`) : null]),
         ])
       )),
     ]);
@@ -1399,7 +1399,7 @@
       r.note,
     ].filter(Boolean).join(' · ');
     return [
-      el('span.kicker', `quest · ${q.type} · complexity ${q.complexity} · worth ${q.complexity * Math.max(1, (q.stages || []).length)} deeds`),
+      el('span.kicker', `quest · ${q.type} · complexity ${q.complexity} · worth ${q.complexity * Math.max(1, (q.stages || []).length)} deeds${q.minLevel ? ` · needs level ${q.minLevel}` : ''}`),
       el('h2', [q.name, ' ', el('span.card-code', q.cardCode)]),
       q.hook ? el('p.prose', q.hook) : null,
       q.task ? el('section', [el('h4', 'Task'), el('p.prose', q.task)]) : null,

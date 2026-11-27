@@ -517,12 +517,12 @@
       }
     },
     {
-      "$comment": "The TASK deck (data/tasks.json): small personal deeds, dealt one at a time and kept face down. Declared now so the explorer, the annex and the mint queue all know the deck exists; minting is false because nobody is illustrating it yet - a deck nobody is drawing this month is a decision, not an absence (tools/lib/mint.mjs). Turning it on wants a brief in docs/art/prompts/tasks.md and nothing else.",
+      "$comment": "The TASK deck (data/tasks.json): small personal deeds, dealt one at a time and kept face down. Declared now so the explorer, the annex and the mint queue all know the deck exists; minting is true: the briefs are in docs/art/prompts/tasks.md and the artist is working them. Until a plate lands the deck builds no cards (a card with a hole in it is not a card), and the rulebook, annex and explorer print every task in full.",
       "prefix": "TSK",
       "plateId": "task-{id}",
       "promptFile": "tasks.md",
       "plateFormat": "A4 landscape, 3:2",
-      "minting": false,
+      "minting": true,
       "id": "tasks",
       "name": "Tasks",
       "source": "tasks.json",

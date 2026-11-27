@@ -330,8 +330,11 @@ const claim = (ok, what) => checks.push({ ok, what });
           if (ok) { earned += task.deeds; tasks.push(task); task = tasks.shift(); }
         }
         if (held.length < 2 && quests.length && r() < CHANCE.questArrives) {
-          const q = quests.shift();
-          held.push({ q, due: round + q.complexity * CHANCE.questRoundsPer * Math.max(1, (q.stages || []).length) });
+          let q = quests.shift();
+          /* A quest above the hero's level goes to the bottom, as a declined card does. */
+          for (let k = 0; k < quests.length && !Engine.canAccept(rec.level, q); k++) { quests.push(q); q = quests.shift(); }
+          if (Engine.canAccept(rec.level, q)) held.push({ q, due: round + q.complexity * CHANCE.questRoundsPer * Math.max(1, (q.stages || []).length) });
+          else quests.push(q);
         }
         for (const h of held.slice()) {
           if (round >= h.due) {

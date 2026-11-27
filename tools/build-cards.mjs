@@ -1394,7 +1394,7 @@ for (const q of quests) {
   const paid = stages.length ? stages.flatMap((st) => questPaid(st.reward)) : questPaid(q.reward);
   specs.push({
     code: q.cardCode, name: q.name, portrait: render,
-    kicker: stages.length ? `campaign quest · ${stages.length} stages` : 'mini quest',
+    kicker: `${stages.length ? `campaign quest · ${stages.length} stages` : 'mini quest'}${q.minLevel ? ` · level ${q.minLevel}` : ''}`,
     desc: `Quest card: ${q.name}, ${stages.length ? `a campaign in ${stages.length} stages` : 'a mini quest'}.`,
     stats: [],
     facts: (stages.length

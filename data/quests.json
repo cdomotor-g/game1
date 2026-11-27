@@ -1,5 +1,5 @@
 {
-  "$comment": "The quest deck: mini-quests and campaigns. A quest reaches a player through a quest-omen discovery result, or by paying 5 coin at any inn to hear a rumour (draw one). The player reads it and ACCEPTS or DECLINES on the spot; declined cards go to the bottom of the deck for someone else. An accepted quest sits face up by the player's board until completed or abandoned - abandoning is free but the card is discarded from the game, and some campaigns say otherwise. Complexity runs 1 (an errand) to 5 (a campaign that shapes a whole game); the deck is meant to grow at every complexity. Settlement names refer to the Korvane Reach board; a future map brings its own quest cards. Card codes QST-nn.",
+  "$comment": "The quest deck: mini-quests and campaigns. A quest reaches a player through a quest-omen discovery result, or by paying 5 coin at any inn to hear a rumour (draw one). The player reads it and ACCEPTS or DECLINES on the spot; declined cards go to the bottom of the deck for someone else. An accepted quest sits face up by the player's board until completed or abandoned - abandoning is free but the card is discarded from the game, and some campaigns say otherwise. Complexity runs 1 (an errand) to 5 (a campaign that shapes a whole game); the deck is meant to grow at every complexity. Settlement names refer to the Korvane Reach board; a future map brings its own quest cards. Card codes QST-nn. A quest may name a `minLevel` (0 when it does not): a hero whose L marker is below it may not accept the card, and it goes to the bottom of the deck for somebody else (rules.json level.questGate). It is a gate on ACCEPTING, never on finishing, and the card prints it in its kicker.",
   "version": "0.1.0",
   "quests": [
     { "id": "millers-debt", "cardCode": "QST-01", "type": "mini", "complexity": 1,
@@ -22,18 +22,18 @@
       "hook": "A sealed letter, a worried clerk, and a settlement three days into the sand. Nobody says what is in the letter. The seal is the Seat's.",
       "task": "Carry the letter from Vossgard to Dry Wells within 4 rounds of accepting.",
       "reward": { "coin": 60, "note": "And the well-keeper's gratitude: one free automatic survey success on any desert hex, once." } },
-    { "id": "strangler-in-the-mire", "cardCode": "QST-05", "type": "mini", "complexity": 3,
+    { "id": "strangler-in-the-mire", "cardCode": "QST-05", "minLevel": 2, "type": "mini", "complexity": 3,
       "name": "The Strangler in the Mire",
       "hook": "Umber Hollow has stopped counting its missing in ones. The fen path is closed, the peat is cut short, and the inn is full of people who will not walk home.",
       "task": "Slay the Mire Strangler within 2 hexes of Umber Hollow. If no Strangler is on the board, travelling those marsh hexes finds it on any discovery monster result, automatically.",
       "reward": { "coin": 80, "mana": { "element": "water", "qty": 2 }, "note": "And Umber Hollow's freedom of the house: its inn is free to you, all game." } },
-    { "id": "draught-for-fens-end", "cardCode": "QST-06", "type": "mini", "complexity": 3,
+    { "id": "draught-for-fens-end", "cardCode": "QST-06", "minLevel": 2, "type": "mini", "complexity": 3,
       "name": "A Draught for Fen's End",
       "hook": "The sisters who keep the Fen's End sickhouse sent a list: one draught, properly brewed, before the ague season. The list is dated. The date is close.",
       "task": "Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count.",
       "reward": { "coin": 70, "note": "And word spreads of it: score 1 victory point." } },
 
-    { "id": "ironspine-road", "cardCode": "QST-07", "type": "campaign", "complexity": 4,
+    { "id": "ironspine-road", "cardCode": "QST-07", "minLevel": 3, "type": "campaign", "complexity": 4,
       "name": "The Ironspine Road",
       "hook": "There is one pass over the Ironspine worth a rail bed, and three interests that would rather there were none. The Seat wants a road first, to prove the line can live.",
       "stages": [
@@ -45,7 +45,7 @@
           "reward": { "vp": 2, "note": "And the pass is yours by use and custom: rail you lay on mountain hexes costs half build-points, all game." } }
       ],
       "notes": "Stages in order. Abandoning this campaign discards it for every player - the pass stays shut." },
-    { "id": "drowned-bell", "cardCode": "QST-08", "type": "campaign", "complexity": 5,
+    { "id": "drowned-bell", "cardCode": "QST-08", "minLevel": 4, "type": "campaign", "complexity": 5,
       "name": "The Drowned Bell of Taleowick",
       "hook": "Taleowick's chapel bell went into the bay a lifetime ago, boat and bellringer with it, and on flat calm nights the village swears it still rings the hour. Lately it has been ringing the wrong one.",
       "stages": [

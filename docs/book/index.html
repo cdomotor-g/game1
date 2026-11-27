@@ -5261,7 +5261,7 @@ svg.inl { display: block; }
 <span class="pname">Inn</span></div><figcaption>The miller's debt, the boar of Bramblehold, Dry Wells, and the inn where a rumour costs 5 coin</figcaption></figure><!--/fig-->
 <ul><li>an <strong>omen</strong> on a discovery roll, which draws the top card of the quest deck (<a href="#rules-11-discovery">Discovery and encounters</a>);</li>
 <li>a <strong>rumour</strong> at any inn: pay 5 coin and draw the top card (<a href="#rules-08-the-map-and-travel">The map and travel</a>).</li></ul>
-<ol><li><strong>Read the card aloud</strong>, and accept or decline it on the spot. A declined card goes to the bottom of the deck for somebody else.</li>
+<ol><li><strong>Read the card aloud</strong>, and accept or decline it on the spot. A declined card goes to the bottom of the deck for somebody else. A card that prints a level (<em>level 2</em> in its top line) may not be accepted below it: it goes to the bottom as a declined card does (<a href="#rules-16-a-heros-career">A hero's career</a>).</li>
 <li><strong>An accepted quest sits face up beside your board</strong> until it is done or given up. It takes no kit slot. A party carrying a quest the road's owner accepted pays that owner no toll.</li>
 <li><strong>Do what the task says.</strong> A delivery is done when the goods change hands at the place named; a fight is done when the thing named is resolved; a task with a limit is done inside the rounds it names, counted from the round you accepted it.</li>
 <li><strong>Take the reward</strong> printed on the card: coin, victory points, mana, an item, or a standing favour — free beds at one inn, a cheaper survey, a discount — that lasts as the card says.</li>
@@ -5840,7 +5840,7 @@ svg.inl { display: block; }
 <li><strong>Count deeds on your record sheet,</strong> never on the board: tick a box on the deeds ladder for each one.</li>
 <li><strong>To reach a level costs as many deeds as the level.</strong> Level 1 costs 1 deed, level 2 two more, level 3 three more. When the ticks reach the level you are rising to, move the L marker up a rung, clear the ladder and carry anything left over. From 0 to 20 is 210 deeds.</li>
 <li><strong>Every 5th level is a milestone.</strong> Choose one rise and write it on your record sheet: health +1, strength +1, wisdom +1, charisma +1 or burden +2. Raise that track now, and that box in every game after. A rise that would take a number past 20 is chosen again.</li></ul>
-<blockquote class="open"><p><strong>Open.</strong> What a level does beyond its milestones — whether a quest may ask for a level, or a level adds to a test — is not decided. Until it is, a level is the road to the next rise and nothing else.</p></blockquote>
+<ul><li><strong>A level opens quests.</strong> A quest card may print a minimum level (quests.json minLevel). A hero whose L marker is below it may read the card but not accept it: it goes to the bottom of the deck, as a declined card does, and costs nothing. The gate is on accepting only; a quest already held is never taken away by anything. A level adds nothing to a test.</li></ul>
 <h2 id="rules-16-a-heros-career--renown">Renown</h2>
 <ul><li><strong>Gain</strong> 1 renown for every quest done and 1 for every campaign stage done, and whatever a task card prints.<!--fig--><figure class="fig float margin" style="--fw:32.0mm"><div class="fp" style="width:32.0mm"><img src="art/event-mercenaries-for-hire-s.jpg" alt="Mercenaries for Hire" loading="lazy"></div><figcaption>Renown makes every hireling cheaper.</figcaption></figure><!--/fig--></li>
 <li><strong>Lose</strong> 1 for every quest you give up. Renown never goes below 0.</li>
@@ -6917,15 +6917,15 @@ svg.inl { display: block; }
 </g>
 </svg>
 <span class="pname">Inn</span></div></figure></header><div class="table-wrap"><table>
-<thead><tr><th>Code</th><th>Quest</th><th>Type</th><th>Cx</th><th>Task</th></tr></thead>
-<tbody><tr><td>QST-01</td><td>The Miller's Debt</td><td>mini</td><td>1</td><td>Deliver 3 grain to Grist.</td></tr>
-<tr><td>QST-02</td><td>Lanterns for Coldwater</td><td>mini</td><td>1</td><td>Deliver a lantern (the item) to Coldwater.</td></tr>
-<tr><td>QST-03</td><td>The Boar of Bramblehold</td><td>mini</td><td>2</td><td>Travel to any Bramblehold Wood hex and resolve a Stone Boar encounter there - slay it, or better, keep it.</td></tr>
-<tr><td>QST-04</td><td>Word to Dry Wells</td><td>mini</td><td>2</td><td>Carry the letter from Vossgard to Dry Wells within 4 rounds of accepting.</td></tr>
-<tr><td>QST-05</td><td>The Strangler in the Mire</td><td>mini</td><td>3</td><td>Slay the Mire Strangler within 2 hexes of Umber Hollow. If no Strangler is on the board, travelling those marsh hexes finds it on any discovery monster result, automatically.</td></tr>
-<tr><td>QST-06</td><td>A Draught for Fen's End</td><td>mini</td><td>3</td><td>Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count.</td></tr>
-<tr><td>QST-07</td><td>The Ironspine Road</td><td>campaign</td><td>4</td><td>3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel</td></tr>
-<tr><td>QST-08</td><td>The Drowned Bell of Taleowick</td><td>campaign</td><td>5</td><td>3 stages: The Tale at the Inn → The Sounding → What Rings It</td></tr></tbody></table></div>
+<thead><tr><th>Code</th><th>Quest</th><th>Type</th><th>Cx</th><th>Lvl</th><th>Task</th></tr></thead>
+<tbody><tr><td>QST-01</td><td>The Miller's Debt</td><td>mini</td><td>1</td><td></td><td>Deliver 3 grain to Grist.</td></tr>
+<tr><td>QST-02</td><td>Lanterns for Coldwater</td><td>mini</td><td>1</td><td></td><td>Deliver a lantern (the item) to Coldwater.</td></tr>
+<tr><td>QST-03</td><td>The Boar of Bramblehold</td><td>mini</td><td>2</td><td></td><td>Travel to any Bramblehold Wood hex and resolve a Stone Boar encounter there - slay it, or better, keep it.</td></tr>
+<tr><td>QST-04</td><td>Word to Dry Wells</td><td>mini</td><td>2</td><td></td><td>Carry the letter from Vossgard to Dry Wells within 4 rounds of accepting.</td></tr>
+<tr><td>QST-05</td><td>The Strangler in the Mire</td><td>mini</td><td>3</td><td>2</td><td>Slay the Mire Strangler within 2 hexes of Umber Hollow. If no Strangler is on the board, travelling those marsh hexes finds it on any discovery monster result, automatically.</td></tr>
+<tr><td>QST-06</td><td>A Draught for Fen's End</td><td>mini</td><td>3</td><td>2</td><td>Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count.</td></tr>
+<tr><td>QST-07</td><td>The Ironspine Road</td><td>campaign</td><td>4</td><td>3</td><td>3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel</td></tr>
+<tr><td>QST-08</td><td>The Drowned Bell of Taleowick</td><td>campaign</td><td>5</td><td>4</td><td>3 stages: The Tale at the Inn → The Sounding → What Rings It</td></tr></tbody></table></div>
 <h3 id="annex-1-quest-deck--the-campaigns-stage-by-stage">The campaigns, stage by stage</h3>
 <p>A campaign is one card and prints its stage names, their order and what the whole thing pays. The tasks are here. Stages are taken in order.</p>
 <div class="table-wrap"><table>

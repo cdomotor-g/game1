@@ -13,7 +13,7 @@ There are {{count:quests.quests}} quests in the deck, from an errand with a wage
 - an **omen** on a discovery roll, which draws the top card of the quest deck ([Discovery and encounters](11-discovery.md));
 - a **rumour** at any inn: pay 5 coin and draw the top card ([The map and travel](08-the-map-and-travel.md)).
 
-1. **Read the card aloud**, and accept or decline it on the spot. A declined card goes to the bottom of the deck for somebody else.
+1. **Read the card aloud**, and accept or decline it on the spot. A declined card goes to the bottom of the deck for somebody else. A card that prints a level (*level 2* in its top line) may not be accepted below it: it goes to the bottom as a declined card does ([A hero's career](16-a-heros-career.md)).
 2. **An accepted quest sits face up beside your board** until it is done or given up. It takes no kit slot. A party carrying a quest the road's owner accepted pays that owner no toll.
 3. **Do what the task says.** A delivery is done when the goods change hands at the place named; a fight is done when the thing named is resolved; a task with a limit is done inside the rounds it names, counted from the round you accepted it.
 4. **Take the reward** printed on the card: coin, victory points, mana, an item, or a standing favour — free beds at one inn, a cheaper survey, a discount — that lasts as the card says.

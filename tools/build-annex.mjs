@@ -935,9 +935,9 @@ say();
 say('## Quest deck');
 say();
 table(
-  ['Code', 'Quest', 'Type', 'Cx', 'Task'],
+  ['Code', 'Quest', 'Type', 'Cx', 'Lvl', 'Task'],
   quests.quests.map((q) => [
-    q.cardCode, q.name, q.type, q.complexity,
+    q.cardCode, q.name, q.type, q.complexity, q.minLevel || '',
     q.task || `${q.stages.length} stages: ${q.stages.map((s) => s.name).join(' → ')}`,
   ])
 );

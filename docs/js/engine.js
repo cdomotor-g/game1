@@ -1168,6 +1168,9 @@
     return quest.complexity * (stages || 1);
   }
 
+  /** May a hero at this level accept this quest? (rules.json level.questGate) */
+  function canAccept(level, quest) { return level >= (quest.minLevel || 0); }
+
   /** What a finished quest is worth in renown. */
   function questRenown(quest) {
     const stages = (quest.stages || []).length;
@@ -1233,7 +1236,7 @@
     battle, canFlee, manaFrom, depletionModifier,
     score, usedSlots, capacity, remainingEffort, findTool, ownedBuilding,
     toolMax,
-    deedsToReach, addDeeds, questDeeds, questRenown, renownStep, tollFor, hireFor, startingRenown,
+    deedsToReach, addDeeds, questDeeds, canAccept, questRenown, renownStep, tollFor, hireFor, startingRenown,
     drink, sober, test, thirstAfterRound, mealsFor,
   };
 })(window);

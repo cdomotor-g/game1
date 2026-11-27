@@ -1221,6 +1221,8 @@ for (const s of datasets.arcana?.spells ?? []) {
 for (const q of datasets.quests?.quests ?? []) {
   if (!q.hook?.trim()) errors.push(`quests: ${q.cardCode} has no "hook" - the card would print a blank panel`);
   const stages = q.stages ?? [];
+  if (q.minLevel !== undefined && !(Number.isInteger(q.minLevel) && q.minLevel >= 0 && q.minLevel <= (datasets.rules?.level?.to ?? 20)))
+    errors.push(`quests: ${q.cardCode} minLevel ${q.minLevel} is not a whole level from 0 to rules.level.to`);
   if (!q.task?.trim() && !stages.length) errors.push(`quests: ${q.cardCode} has neither a "task" nor "stages" - nothing to do`);
   stages.forEach((st, i) => {
     if (!st.name?.trim()) errors.push(`quests: ${q.cardCode} stage ${i + 1} has no name`);

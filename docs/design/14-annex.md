@@ -1085,16 +1085,16 @@ their kit slots, and that is a thing they can change.
 
 ## Quest deck
 
-| Code | Quest | Type | Cx | Task |
-| --- | --- | --- | --- | --- |
-| QST-01 | The Miller's Debt | mini | 1 | Deliver 3 grain to Grist. |
-| QST-02 | Lanterns for Coldwater | mini | 1 | Deliver a lantern (the item) to Coldwater. |
-| QST-03 | The Boar of Bramblehold | mini | 2 | Travel to any Bramblehold Wood hex and resolve a Stone Boar encounter there - slay it, or better, keep it. |
-| QST-04 | Word to Dry Wells | mini | 2 | Carry the letter from Vossgard to Dry Wells within 4 rounds of accepting. |
-| QST-05 | The Strangler in the Mire | mini | 3 | Slay the Mire Strangler within 2 hexes of Umber Hollow. If no Strangler is on the board, travelling those marsh hexes finds it on any discovery monster result, automatically. |
-| QST-06 | A Draught for Fen's End | mini | 3 | Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count. |
-| QST-07 | The Ironspine Road | campaign | 4 | 3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel |
-| QST-08 | The Drowned Bell of Taleowick | campaign | 5 | 3 stages: The Tale at the Inn → The Sounding → What Rings It |
+| Code | Quest | Type | Cx | Lvl | Task |
+| --- | --- | --- | --- | --- | --- |
+| QST-01 | The Miller's Debt | mini | 1 |  | Deliver 3 grain to Grist. |
+| QST-02 | Lanterns for Coldwater | mini | 1 |  | Deliver a lantern (the item) to Coldwater. |
+| QST-03 | The Boar of Bramblehold | mini | 2 |  | Travel to any Bramblehold Wood hex and resolve a Stone Boar encounter there - slay it, or better, keep it. |
+| QST-04 | Word to Dry Wells | mini | 2 |  | Carry the letter from Vossgard to Dry Wells within 4 rounds of accepting. |
+| QST-05 | The Strangler in the Mire | mini | 3 | 2 | Slay the Mire Strangler within 2 hexes of Umber Hollow. If no Strangler is on the board, travelling those marsh hexes finds it on any discovery monster result, automatically. |
+| QST-06 | A Draught for Fen's End | mini | 3 | 2 | Deliver a Healing Draught or Physic Tonic to Fen's End within 5 rounds of accepting. Brewing it yourself or buying it both count. |
+| QST-07 | The Ironspine Road | campaign | 4 | 3 | 3 stages: Survey the Pass → Prove the Road → The Thing in the Tunnel |
+| QST-08 | The Drowned Bell of Taleowick | campaign | 5 | 4 | 3 stages: The Tale at the Inn → The Sounding → What Rings It |
 
 ### The campaigns, stage by stage
 

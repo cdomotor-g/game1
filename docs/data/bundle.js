@@ -1047,6 +1047,7 @@ window.GAME_DATA = {
         "task": "A task card done is worth the deeds it prints (data/tasks.json deeds).",
         "counted": "On the character record sheet, in pencil, never on the board."
       },
+      "questGate": "A quest card may print a minimum level (quests.json minLevel). A hero whose L marker is below it may read the card but not accept it: it goes to the bottom of the deck, as a declined card does, and costs nothing. The gate is on accepting only; a quest already held is never taken away by anything.",
       "perLevel": 1,
       "toNext": "To rise to a level costs perLevel deeds for every step of the level being reached: 1 deed to reach level 1, 2 more to reach level 2, 3 more for level 3. Strike the deeds off when the level is taken; what is left over counts toward the next.",
       "toTop": 210,
@@ -14117,7 +14118,7 @@ window.GAME_DATA = {
     ]
   },
   "quests": {
-    "$comment": "The quest deck: mini-quests and campaigns. A quest reaches a player through a quest-omen discovery result, or by paying 5 coin at any inn to hear a rumour (draw one). The player reads it and ACCEPTS or DECLINES on the spot; declined cards go to the bottom of the deck for someone else. An accepted quest sits face up by the player's board until completed or abandoned - abandoning is free but the card is discarded from the game, and some campaigns say otherwise. Complexity runs 1 (an errand) to 5 (a campaign that shapes a whole game); the deck is meant to grow at every complexity. Settlement names refer to the Korvane Reach board; a future map brings its own quest cards. Card codes QST-nn.",
+    "$comment": "The quest deck: mini-quests and campaigns. A quest reaches a player through a quest-omen discovery result, or by paying 5 coin at any inn to hear a rumour (draw one). The player reads it and ACCEPTS or DECLINES on the spot; declined cards go to the bottom of the deck for someone else. An accepted quest sits face up by the player's board until completed or abandoned - abandoning is free but the card is discarded from the game, and some campaigns say otherwise. Complexity runs 1 (an errand) to 5 (a campaign that shapes a whole game); the deck is meant to grow at every complexity. Settlement names refer to the Korvane Reach board; a future map brings its own quest cards. Card codes QST-nn. A quest may name a `minLevel` (0 when it does not): a hero whose L marker is below it may not accept the card, and it goes to the bottom of the deck for somebody else (rules.json level.questGate). It is a gate on ACCEPTING, never on finishing, and the card prints it in its kicker.",
     "version": "0.1.0",
     "quests": [
       {
@@ -14174,6 +14175,7 @@ window.GAME_DATA = {
       {
         "id": "strangler-in-the-mire",
         "cardCode": "QST-05",
+        "minLevel": 2,
         "type": "mini",
         "complexity": 3,
         "name": "The Strangler in the Mire",
@@ -14191,6 +14193,7 @@ window.GAME_DATA = {
       {
         "id": "draught-for-fens-end",
         "cardCode": "QST-06",
+        "minLevel": 2,
         "type": "mini",
         "complexity": 3,
         "name": "A Draught for Fen's End",
@@ -14204,6 +14207,7 @@ window.GAME_DATA = {
       {
         "id": "ironspine-road",
         "cardCode": "QST-07",
+        "minLevel": 3,
         "type": "campaign",
         "complexity": 4,
         "name": "The Ironspine Road",
@@ -14237,6 +14241,7 @@ window.GAME_DATA = {
       {
         "id": "drowned-bell",
         "cardCode": "QST-08",
+        "minLevel": 4,
         "type": "campaign",
         "complexity": 5,
         "name": "The Drowned Bell of Taleowick",
@@ -14277,7 +14282,7 @@ window.GAME_DATA = {
     ]
   },
   "tasks": {
-    "$comment": "The TASK deck: small personal deeds a hero does on the way to everything else, and the second of the two ways a hero earns DEEDS toward their next level (rules.json level.deeds) - the first is quests (quests.json). A quest is offered, read aloud and accepted or declined; a task is dealt to you, kept face down beside your board, and nobody else knows what you are trying to do. That is the whole difference, and it is why they are a deck of their own rather than a fourth kind of quest.\n\nEvery player holds `hand` task at a time. One is dealt at setup; when you do it, take its deeds and its renown, put it at the bottom of the deck and draw the next. A task you do not like can be swapped at any inn for `swap.coin`, which buys a rumour of something better and costs no renown, because nobody knew you had promised anything.\n\nA task that names a TEST is passed by a d6 plus the characteristic named against the number printed (rules.json test). Most of them test Wisdom, which is what drink takes away (rules.json drink) - so the inn that makes a hero good company is the same inn that makes them bad at their tasks, and that is the trade the wineskin is there to offer.\n\nThe deeds a task prints are 1 to 3. A mini quest is worth its complexity, 1 to 3, and a campaign stage 4 or 5: so a task is about a mini quest's worth, and the deck is there to keep a hero who drew no quests from standing still. Card codes TSK-nn. No plate is drawn for the deck yet (components.json decks tasks, minting false); the rulebook, the annex and the explorer print every card in full.",
+    "$comment": "The TASK deck: small personal deeds a hero does on the way to everything else, and the second of the two ways a hero earns DEEDS toward their next level (rules.json level.deeds) - the first is quests (quests.json). A quest is offered, read aloud and accepted or declined; a task is dealt to you, kept face down beside your board, and nobody else knows what you are trying to do. That is the whole difference, and it is why they are a deck of their own rather than a fourth kind of quest.\n\nEvery player holds `hand` task at a time. One is dealt at setup; when you do it, take its deeds and its renown, put it at the bottom of the deck and draw the next. A task you do not like can be swapped at any inn for `swap.coin`, which buys a rumour of something better and costs no renown, because nobody knew you had promised anything.\n\nA task that names a TEST is passed by a d6 plus the characteristic named against the number printed (rules.json test). Most of them test Wisdom, which is what drink takes away (rules.json drink) - so the inn that makes a hero good company is the same inn that makes them bad at their tasks, and that is the trade the wineskin is there to offer.\n\nThe deeds a task prints are 1 to 3. A mini quest is worth its complexity, 1 to 3, and a campaign stage 4 or 5: so a task is about a mini quest's worth, and the deck is there to keep a hero who drew no quests from standing still. Card codes TSK-nn. The deck is in the mint queue and its briefs are in docs/art/prompts/tasks.md; the rulebook, the annex and the explorer print every card in full.",
     "version": "0.1.0",
     "hand": 1,
     "swap": {
@@ -15272,12 +15277,12 @@ window.GAME_DATA = {
         }
       },
       {
-        "$comment": "The TASK deck (data/tasks.json): small personal deeds, dealt one at a time and kept face down. Declared now so the explorer, the annex and the mint queue all know the deck exists; minting is false because nobody is illustrating it yet - a deck nobody is drawing this month is a decision, not an absence (tools/lib/mint.mjs). Turning it on wants a brief in docs/art/prompts/tasks.md and nothing else.",
+        "$comment": "The TASK deck (data/tasks.json): small personal deeds, dealt one at a time and kept face down. Declared now so the explorer, the annex and the mint queue all know the deck exists; minting is true: the briefs are in docs/art/prompts/tasks.md and the artist is working them. Until a plate lands the deck builds no cards (a card with a hole in it is not a card), and the rulebook, annex and explorer print every task in full.",
         "prefix": "TSK",
         "plateId": "task-{id}",
         "promptFile": "tasks.md",
         "plateFormat": "A4 landscape, 3:2",
-        "minting": false,
+        "minting": true,
         "id": "tasks",
         "name": "Tasks",
         "source": "tasks.json",
@@ -16606,6 +16611,46 @@ window.GAME_DATA = {
           "storyboard panels",
           "multiple vignettes",
           "split scene"
+        ]
+      },
+      {
+        "id": "tasks",
+        "name": "Tasks",
+        "plate": "a plate from an illustrated traveller's notebook",
+        "palette": "warm ochre, rust red, dusty grey-green, cold slate blue",
+        "composition": [
+          "A wide landscape plate of ONE small thing a traveller has stopped to look at, drawn close and low: eye level with the thing, at the distance of a few paces, so it fills the middle of the page and the ground behind it falls away softly into plain country. It is the object or the spot a private promise is about - a face of cut letters, a stall of three jars, a fork where the track divides - drawn precisely, with the one detail that makes it a puzzle or a favour left plainly in view.",
+          "Nobody is the subject. If a person is in the picture they are small, at their own work and facing away, and there is at most one. Draw only the things named here, each on its own ground; anything not named - an extra prop, tool, barrel, crate or piece of furniture - stays out of the picture. Ordinary daylight, ordinary weather, the horizon in the top third. The tone is a line in a private notebook - what was seen, and what it was wanted for - never an adventure poster."
+        ],
+        "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no signage, no map lettering, no border rule.",
+        "negative": [
+          "close-up portrait",
+          "face",
+          "facing the viewer",
+          "quest giver",
+          "pointing figure",
+          "adventuring party",
+          "heroic pose",
+          "silhouetted hero",
+          "sunset",
+          "sunburst",
+          "god rays",
+          "epic vista",
+          "castle on a hill",
+          "glowing objective",
+          "waypoint marker",
+          "map",
+          "cartouche",
+          "compass rose",
+          "signage",
+          "scroll",
+          "wax seal",
+          "magic particles",
+          "storyboard panels",
+          "multiple vignettes",
+          "split scene",
+          "group of figures",
+          "crowd"
         ]
       },
       {

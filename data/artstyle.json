@@ -434,6 +434,46 @@
       ]
     },
     {
+      "id": "tasks",
+      "name": "Tasks",
+      "plate": "a plate from an illustrated traveller's notebook",
+      "palette": "warm ochre, rust red, dusty grey-green, cold slate blue",
+      "composition": [
+        "A wide landscape plate of ONE small thing a traveller has stopped to look at, drawn close and low: eye level with the thing, at the distance of a few paces, so it fills the middle of the page and the ground behind it falls away softly into plain country. It is the object or the spot a private promise is about - a face of cut letters, a stall of three jars, a fork where the track divides - drawn precisely, with the one detail that makes it a puzzle or a favour left plainly in view.",
+        "Nobody is the subject. If a person is in the picture they are small, at their own work and facing away, and there is at most one. Draw only the things named here, each on its own ground; anything not named - an extra prop, tool, barrel, crate or piece of furniture - stays out of the picture. Ordinary daylight, ordinary weather, the horizon in the top third. The tone is a line in a private notebook - what was seen, and what it was wanted for - never an adventure poster."
+      ],
+      "closing": "Strictly no gradients, no glow, no drop shadows, no soft airbrushed shading, no lens effects. No text, no letters, no signage, no map lettering, no border rule.",
+      "negative": [
+        "close-up portrait",
+        "face",
+        "facing the viewer",
+        "quest giver",
+        "pointing figure",
+        "adventuring party",
+        "heroic pose",
+        "silhouetted hero",
+        "sunset",
+        "sunburst",
+        "god rays",
+        "epic vista",
+        "castle on a hill",
+        "glowing objective",
+        "waypoint marker",
+        "map",
+        "cartouche",
+        "compass rose",
+        "signage",
+        "scroll",
+        "wax seal",
+        "magic particles",
+        "storyboard panels",
+        "multiple vignettes",
+        "split scene",
+        "group of figures",
+        "crowd"
+      ]
+    },
+    {
      "id": "campaigns",
      "name": "Campaign",
      "plate": "a plate from an illustrated edition of a voyage",

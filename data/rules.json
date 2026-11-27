@@ -247,6 +247,7 @@
       "task": "A task card done is worth the deeds it prints (data/tasks.json deeds).",
       "counted": "On the character record sheet, in pencil, never on the board."
     },
+    "questGate": "A quest card may print a minimum level (quests.json minLevel). A hero whose L marker is below it may read the card but not accept it: it goes to the bottom of the deck, as a declined card does, and costs nothing. The gate is on accepting only; a quest already held is never taken away by anything.",
     "perLevel": 1,
     "toNext": "To rise to a level costs perLevel deeds for every step of the level being reached: 1 deed to reach level 1, 2 more to reach level 2, 3 more for level 3. Strike the deeds off when the level is taken; what is left over counts toward the next.",
     "toTop": 210,

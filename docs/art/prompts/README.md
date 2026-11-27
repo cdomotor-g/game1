@@ -38,6 +38,7 @@ in `data/maps/` and it appears there the moment the tool is run — see
 | [`spells.md`](spells.md) | The 14 spell cards | Square plate, one ordinary thing mid-working |
 | [`events.md`](events.md) | The 51 event cards | A4 landscape plate, the aftermath |
 | [`quests.md`](quests.md) | The 8 quest cards | A4 landscape plate, the threshold |
+| [`tasks.md`](tasks.md) | The 12 task cards | A4 landscape plate, the thing the promise is about |
 | [`campaigns.md`](campaigns.md) | The 22 campaign cards — the Odyssey, place by place | A4 landscape plate, the approach |
 | [`items.md`](items.md) | The 10 item cards — the armour and the weapons | Single object study |
 | [`tools.md`](tools.md) | The 5 tool cards | Single object study |

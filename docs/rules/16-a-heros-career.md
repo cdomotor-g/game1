@@ -43,7 +43,7 @@ There are {{count:tasks.tasks}} task cards, all in Annex II.
 - **To reach a level costs as many deeds as the level.** Level 1 costs 1 deed, level 2 two more, level 3 three more. When the ticks reach the level you are rising to, move the L marker up a rung, clear the ladder and carry anything left over. From {{rules.level.from}} to {{rules.level.to}} is {{rules.level.toTop}} deeds.
 - **Every {{rules.level.milestones.every}}th level is a milestone.** Choose one rise and write it on your record sheet: health +1, strength +1, wisdom +1, charisma +1 or burden +2. Raise that track now, and that box in every game after. A rise that would take a number past {{components.board.track.to}} is chosen again.
 
-> **Open.** What a level does beyond its milestones — whether a quest may ask for a level, or a level adds to a test — is not decided. Until it is, a level is the road to the next rise and nothing else.
+- **A level opens quests.** {{rules.level.questGate}} A level adds nothing to a test.
 
 ## Renown
 
