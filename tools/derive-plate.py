@@ -73,14 +73,15 @@ def main():
 
     deg = pf.get('rotateDeg', 0)
     if deg:
-        # Tip it about the middle, then grow it back over its own corners so no
-        # blank wedge is left: the page is cropped, never padded.
-        rot = img.rotate(deg, resample=Image.BICUBIC, expand=False)
-        import math
-        k = abs(math.cos(math.radians(deg))) + abs(math.sin(math.radians(deg)))
-        cw, ch = int(w / k), int(h / k)
-        rot = rot.crop(((w - cw) // 2, (h - ch) // 2, (w - cw) // 2 + cw, (h - ch) // 2 + ch))
-        img = rot.resize((w, h), Image.LANCZOS)
+        # Tip it about the middle at its own scale. The corners the turn uncovers
+        # are filled with the page's own paper, mirrored outward from its edges,
+        # so nothing is enlarged and the drawing keeps the size its framing was
+        # measured at - cropping and growing it back made the thing too big for
+        # the card window to hold.
+        pad = int(max(w, h) * 0.25)
+        a = np.pad(np.asarray(img), ((pad, pad), (pad, pad), (0, 0)), mode='reflect')
+        big = Image.fromarray(a).rotate(deg, resample=Image.BICUBIC, expand=False)
+        img = big.crop((pad, pad, pad + w, pad + h))
 
     img.save(out, 'PNG')
     print(f'wrote {out} - {w}x{h}, from {pf["plate"]}: flip {pf.get("flip")}, tip {deg} deg, tint {pf.get("tint")}')
