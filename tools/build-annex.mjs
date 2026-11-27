@@ -11,6 +11,7 @@
  *
  * Usage: node tools/build-annex.mjs [--check]
  */
+import { loadPorts } from './lib/ports.mjs';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -986,6 +987,39 @@ table(
     t.cardCode, t.name, t.deeds, t.renown ?? '—', t.test ? `${trackLetterOf.get(t.test.stat)} ${t.test.at}` : '—', t.task,
   ])
 );
+
+/* -------------------------------------------------------------------- ports */
+{
+  const P = read('ports.json');
+  const portCards = loadPorts(ROOT);
+  const sym = rules.currency.symbol;
+  say('## Port deck');
+  say();
+  say(`One reference card for each real harbour on the ${read(`maps/${P.map}.json`).name}. A port card is not dealt or played; it sits beside the board.`);
+  say(`Every price is a place along the commodity's own printed row (the table of six prices earlier in this annex), and the figure is what that place lands on.`);
+  say(`The berth is the rank's base value stepped along the same six places; the quay's character says which place it starts on.`);
+  say();
+  table(
+    ['Code', 'Port', 'Rank', 'Quay', 'Berth', 'Cheap here', 'Dear here', 'Lanes'],
+    portCards.map((p) => [
+      p.cardCode, p.name, p.rank, p.trait.name, `${p.fee}${sym}`,
+      p.cheap.map((g) => `${g.name} ${g.price}${sym}`).join(', '),
+      p.dear.map((g) => `${g.name} ${g.price}${sym}`).join(', '),
+      [...p.sails.map((l) => `${l.to} ${l.hexes}`), ...p.voyages].join(', ') || '—',
+    ])
+  );
+  say();
+  say('### How a berth fee might move');
+  say();
+  say('None of these is a rule yet. The card prints the fee as fixed.');
+  say();
+  table(['Option', 'Status', 'What it would do'], P.roadmap.map((o) => [o.name, o.status, o.says]));
+  say();
+  say('### Quays');
+  say();
+  table(['Quay', 'Starts on place', 'What it says'], P.traits.map((t) => [t.name, t.step + 1, t.says]));
+  say();
+}
 
 /* ------------------------------------------------------------------ careers */
 {

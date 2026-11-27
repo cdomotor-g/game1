@@ -23,6 +23,7 @@
     { "key": "characters", "file": "characters.json", "collection": "characters", "idField": "id", "summary": "The character deck: named heroes with health, strength, mana and the gold they start with." },
     { "key": "quests", "file": "quests.json", "collection": "quests", "idField": "id", "summary": "The quest deck: mini-quests and campaigns, accept or decline." },
     { "key": "tasks", "file": "tasks.json", "collection": "tasks", "idField": "id", "summary": "The task deck: small personal deeds dealt one at a time, kept face down, and worth deeds toward a hero's next level." },
+    { "key": "ports", "file": "ports.json", "collection": "ports", "idField": "id", "summary": "The port deck: a reference card for each real harbour on the Mediterranean board - berth fee, cheap and dear goods, one true fact." },
     { "key": "modifications", "file": "modifications.json", "collection": "modifications", "idField": "id", "summary": "The modification deck: fittings and enchantments bolted onto a vehicle." },
     { "key": "components", "file": "components.json", "collection": "decks", "idField": "id", "summary": "How a physical game element is built - card stock, frame, bars, marks, deck backs and tokens. Content-free: the shapes everything else is drawn into." },
     { "key": "mint", "file": "mint.json", "collection": "lines", "idField": "id", "summary": "The mint: one line per kind of thing that goes designer -> artist -> build. Cards, maps, building tiles, and terrain tiles while they are shelved. Content-free, like components.json: it says what a line is, never what a card says." },
@@ -133,6 +134,9 @@
       { "from": "campaigns", "path": "campaigns[].cast.hosts[]", "to": "characters" },
       { "from": "campaigns", "path": "campaigns[].cast.adversaries[]", "to": "characters" },
       { "from": "tasks", "path": "tasks[].test.stat", "to": "playerboard" },
+      { "from": "ports", "path": "ports[].cheap[].commodity", "to": "commodities" },
+      { "from": "ports", "path": "ports[].dear[].commodity", "to": "commodities" },
+      { "from": "ports", "path": "ports[].trait", "to": "ports.traits" },
       { "from": "recordsheet", "path": "boxes[].track", "to": "playerboard" }
     ]
   }

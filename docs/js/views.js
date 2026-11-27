@@ -591,6 +591,13 @@
           el('div.card-meta', [elementPill(e.element), pill(`${e.cost} mana`, 'accent'), pill(e.boundTo)]),
         ])
       )),
+      ...section('Ports', 'A reference card for each real harbour on the Mediterranean board: what a berth costs, what is cheap and dear, and a true fact about the place.', q(D.ports || []).map((p) =>
+        el('button.card', { type: 'button', onclick: () => open('port', p.id) }, [
+          el('div.card-head', [el('span.card-title', p.name), el('span.card-code', p.cardCode)]),
+          el('div.card-sub', p.teach),
+          el('div.card-meta', [pill(`berth ${p.fee}`, 'accent'), pill(p.rank), pill(p.trait.name)]),
+        ])
+      )),
       ...section('Tasks', 'Dealt one at a time and kept face down: small deeds toward a hero\'s next level.', q(D.tasks || []).map((t) =>
         el('button.card', { type: 'button', onclick: () => open('task', t.id) }, [
           el('div.card-head', [el('span.card-title', t.name), el('span.card-code', t.cardCode)]),
@@ -1410,6 +1417,20 @@
       ]) : null,
       q.reward ? el('section', [el('h4', 'Reward'), el('p.prose', reward(q.reward))]) : null,
       q.notes ? el('section', [el('h4', 'Notes'), el('p.prose', q.notes)]) : null,
+    ];
+  };
+
+  detail.port = function (p) {
+    const goods = (g) => g.map((x) => `${x.name} ${x.price} (step ${x.step + 1} of ${D.rules.market.priceBands.length})`).join(' · ');
+    return [
+      el('span.kicker', `port · ${p.rank} · ${p.trait.name.toLowerCase()}`),
+      el('h2', [p.name, ' ', el('span.card-code', p.cardCode)]),
+      plateFull(D.art('port', p), p.name),
+      el('p.prose', p.teach),
+      el('section', [el('h4', 'Berth'), el('p.prose', `${p.fee} coin on arrival. ${p.trait.says} The fee's six places along its row: ${p.feeRow.join(' · ')}.`)]),
+      el('section', [el('h4', 'Cheap here'), el('p.prose', goods(p.cheap))]),
+      el('section', [el('h4', 'Dear here'), el('p.prose', goods(p.dear))]),
+      p.sails.length ? el('section', [el('h4', 'Lanes'), el('p.prose', p.sails.map((l) => `${l.to}, ${l.hexes} hex${l.hexes === 1 ? '' : 'es'}`).join(' · '))]) : null,
     ];
   };
 

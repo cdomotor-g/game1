@@ -15,7 +15,9 @@ the repository — the brief, the plate, the entry that ties the two to the data
 so this file cannot disagree with the truth, only be out of date, and `--check`
 catches that in CI.
 
-**cards 162/218 · maps 1/1 · building tiles 44/54**
+**cards 181/237 · maps 1/1 · building tiles 44/54**
+
+> **Note.** cards: 19 of 237 plates are GENERATED, not commissioned - Ports, drawn by `node tools/draw-port.mjs` from the card's own data. They go through the same four steps as anything else and they are nobody's turn to draw: delete one and the tool puts it back.
 
 > **Note.** cards: every plate clears the 1260 px floor (a portrait card window of 53.3 x 80 mm printed at 2 x card size, 200 dpi), and 41 of 41 are under the 1890 px this line would want for print — smallest is `CHR-12` at 1488 px. That is an aspiration, not a fault.
 
@@ -36,7 +38,7 @@ catches that in CI.
 
 One card in one of the adventure decks. Briefs in [`docs/art/prompts/`](../prompts/), one file per deck, plates in `docs/art/renders/`, aimed by **FRAME** in `docs/art/framing.json`.
 
-**162 of 218 minted.** 0 waiting on a brief, 56 waiting on art, 0 waiting on frame.
+**181 of 237 minted.** 0 waiting on a brief, 56 waiting on art, 0 waiting on frame.
 
 ### 1 · WRITE — the designer
 
@@ -111,7 +113,7 @@ Nothing waiting.
 
 ### Minted
 
-162 cards complete: `CHR-01`, `CHR-02`, `CHR-03`, `CHR-04`, `CHR-05`, `CHR-06`, `CHR-07`, `CHR-08`, `CHR-09`, `CHR-10`, `CHR-11`, `CHR-12`, `CHR-13`, `CHR-14`, `CHR-15`, `CHR-16`, `CHR-17`, `CHR-18`, `CHR-19`, `CHR-20`, `CHR-21`, `CHR-22`, `VEH-01`, `VEH-02`, `VEH-03`, `VEH-04`, `VEH-05`, `VEH-06`, `VEH-07`, `VEH-08`, `VEH-09`, `VEH-10`, `VEH-11`, `VEH-12`, `VEH-13`, `VEH-14`, `VEH-15`, `VEH-16`, `VEH-17`, `MON-01`, `MON-02`, `MON-03`, `MON-04`, `MON-05`, `MON-06`, `MON-07`, `MON-08`, `MON-09`, `MON-10`, `MON-11`, `MON-12`, `MON-13`, `MON-14`, `MON-15`, `MON-16`, `MON-17`, `MON-18`, `MON-19`, `TAL-01`, `TAL-02`, `TAL-03`, `TAL-04`, `TAL-05`, `TAL-06`, `MOD-01`, `MOD-02`, `MOD-03`, `MOD-04`, `MOD-05`, `MOD-06`, `MOD-07`, `MOD-08`, `MOD-09`, `MOD-10`, `MOD-11`, `SPL-01`, `SPL-02`, `SPL-03`, `SPL-04`, `SPL-05`, `SPL-06`, `SPL-07`, `SPL-08`, `SPL-09`, `SPL-10`, `SPL-11`, `SPL-12`, `SPL-13`, `SPL-14`, `EVT-01`, `EVT-02`, `EVT-03`, `EVT-04`, `EVT-05`, `EVT-06`, `EVT-07`, `EVT-08`, `EVT-09`, `EVT-10`, `EVT-11`, `EVT-12`, `EVT-13`, `EVT-14`, `EVT-15`, `EVT-16`, `EVT-17`, `EVT-18`, `EVT-19`, `EVT-20`, `EVT-21`, `EVT-22`, `EVT-23`, `EVT-24`, `EVT-25`, `EVT-26`, `EVT-27`, `EVT-28`, `EVT-29`, `EVT-30`, `EVT-31`, `EVT-32`, `EVT-33`, `EVT-34`, `EVT-35`, `EVT-36`, `EVT-37`, `EVT-38`, `ITM-07`, `ITM-01`, `ITM-04`, `ITM-05`, `ITM-06`, `ITM-08`, `ITM-09`, `ITM-10`, `ITM-17`, `ITM-11`, `ITM-12`, `ITM-13`, `ITM-14`, `ITM-15`, `ITM-16`, `ITM-03`, `ITM-02`, `WPN-01`, `WPN-02`, `WPN-04`, `WPN-03`, `WPN-05`, `WPN-06`, `WPN-07`, `ARM-01`, `ARM-04`, `ARM-05`, `ARM-02`, `ARM-03`, `TOL-01`, `TOL-02`, `TOL-03`, `TOL-04`, `TOL-05`, `TOL-06`.
+181 cards complete: `CHR-01`, `CHR-02`, `CHR-03`, `CHR-04`, `CHR-05`, `CHR-06`, `CHR-07`, `CHR-08`, `CHR-09`, `CHR-10`, `CHR-11`, `CHR-12`, `CHR-13`, `CHR-14`, `CHR-15`, `CHR-16`, `CHR-17`, `CHR-18`, `CHR-19`, `CHR-20`, `CHR-21`, `CHR-22`, `VEH-01`, `VEH-02`, `VEH-03`, `VEH-04`, `VEH-05`, `VEH-06`, `VEH-07`, `VEH-08`, `VEH-09`, `VEH-10`, `VEH-11`, `VEH-12`, `VEH-13`, `VEH-14`, `VEH-15`, `VEH-16`, `VEH-17`, `MON-01`, `MON-02`, `MON-03`, `MON-04`, `MON-05`, `MON-06`, `MON-07`, `MON-08`, `MON-09`, `MON-10`, `MON-11`, `MON-12`, `MON-13`, `MON-14`, `MON-15`, `MON-16`, `MON-17`, `MON-18`, `MON-19`, `TAL-01`, `TAL-02`, `TAL-03`, `TAL-04`, `TAL-05`, `TAL-06`, `MOD-01`, `MOD-02`, `MOD-03`, `MOD-04`, `MOD-05`, `MOD-06`, `MOD-07`, `MOD-08`, `MOD-09`, `MOD-10`, `MOD-11`, `SPL-01`, `SPL-02`, `SPL-03`, `SPL-04`, `SPL-05`, `SPL-06`, `SPL-07`, `SPL-08`, `SPL-09`, `SPL-10`, `SPL-11`, `SPL-12`, `SPL-13`, `SPL-14`, `EVT-01`, `EVT-02`, `EVT-03`, `EVT-04`, `EVT-05`, `EVT-06`, `EVT-07`, `EVT-08`, `EVT-09`, `EVT-10`, `EVT-11`, `EVT-12`, `EVT-13`, `EVT-14`, `EVT-15`, `EVT-16`, `EVT-17`, `EVT-18`, `EVT-19`, `EVT-20`, `EVT-21`, `EVT-22`, `EVT-23`, `EVT-24`, `EVT-25`, `EVT-26`, `EVT-27`, `EVT-28`, `EVT-29`, `EVT-30`, `EVT-31`, `EVT-32`, `EVT-33`, `EVT-34`, `EVT-35`, `EVT-36`, `EVT-37`, `EVT-38`, `PRT-01`, `PRT-02`, `PRT-03`, `PRT-04`, `PRT-05`, `PRT-06`, `PRT-07`, `PRT-08`, `PRT-09`, `PRT-10`, `PRT-11`, `PRT-12`, `PRT-13`, `PRT-14`, `PRT-15`, `PRT-16`, `PRT-17`, `PRT-18`, `PRT-19`, `ITM-07`, `ITM-01`, `ITM-04`, `ITM-05`, `ITM-06`, `ITM-08`, `ITM-09`, `ITM-10`, `ITM-17`, `ITM-11`, `ITM-12`, `ITM-13`, `ITM-14`, `ITM-15`, `ITM-16`, `ITM-03`, `ITM-02`, `WPN-01`, `WPN-02`, `WPN-04`, `WPN-03`, `WPN-05`, `WPN-06`, `WPN-07`, `ARM-01`, `ARM-04`, `ARM-05`, `ARM-02`, `ARM-03`, `TOL-01`, `TOL-02`, `TOL-03`, `TOL-04`, `TOL-05`, `TOL-06`.
 
 38 of them are framed but have no `focal` point — they predate it and are not broken, they are just aimed at the middle of their subject box. Adding one is a two-number improvement: `character-chr-01`, `character-chr-02`, `character-chr-03`, `character-chr-04`, `character-chr-05`, `character-chr-06`, `character-chr-07`, `character-chr-08`, `vehicle-veh-01`, `vehicle-veh-02`, `vehicle-veh-03`, `vehicle-veh-04`, `vehicle-veh-05`, `vehicle-veh-06`, `vehicle-veh-07`, `vehicle-veh-08`, `vehicle-veh-09`, `vehicle-veh-10`, `vehicle-veh-11`, `vehicle-veh-12`, `vehicle-veh-13`, `vehicle-veh-14`, `vehicle-veh-15`, `vehicle-veh-16`, `vehicle-veh-17`, `monster-gravel-wyrm`, `monster-mire-strangler`, `monster-reef-serpent`, `monster-deepwater-maw`, `monster-rime-harpy`, `monster-dust-devil`, `monster-storm-roc`, `talisman-tal-01`, `talisman-tal-02`, `talisman-tal-03`, `talisman-tal-04`, `talisman-tal-05`, `talisman-tal-06`.
 

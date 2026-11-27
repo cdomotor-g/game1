@@ -400,6 +400,7 @@ export function cardsOfDeck(root, deck) {
     events: () => file.cards,
     quests: () => file.quests,
     tasks: () => file.tasks,
+    ports: () => file.ports,
     campaign: () => file.cards,
     tools: () => file.tools,
     items: () => file.items,
@@ -453,7 +454,7 @@ function subjectsOf(root, line) {
              plate block, and a card with no parts to draw from is an artist's
              again - tools/draw-item.mjs will not touch it, so nothing else may
              call it generated either. */
-          drawnBy: deck.plateKind === 'generated' && card.plate?.parts?.length ? deck.drawnBy : null,
+          drawnBy: deck.plateKind === 'generated' && (card.plate?.parts?.length || deck.plateSource === 'map') ? deck.drawnBy : null,
           subject: card,
         });
       }
@@ -817,7 +818,12 @@ export function survey(root = HERE) {
           );
         }
 
-        const hasBrief = briefedIn(root, line.brief.dir, row.briefFile ?? line.brief.file).has(row.plate);
+        /* A plate a tool cuts from something that already exists (a port card's
+           window onto the map) has no artist to brief, so it has no brief to
+           miss. A deck says so by declaring no promptFile. */
+        const hasBrief = row.drawnBy && !row.briefFile
+          ? true
+          : briefedIn(root, line.brief.dir, row.briefFile ?? line.brief.file).has(row.plate);
         const file = join(root, platePath(line, row));
         const hasPlate = existsSync(file);
         const aim = aimOf(root, line, row);

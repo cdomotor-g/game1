@@ -1322,5 +1322,48 @@ console.log(`\n${counts}`);
   }
 }
 
+
+/* ---------------------------------------------------------------- ports
+   A port card is a reference card for a real harbour, and every figure on it is
+   a STEP along a row somebody else owns. So the checks are the ones that stop a
+   card going stale or lying: the settlement must be on the board and a harbour,
+   a step must be a place on the six-figure row, a cheap good must start low and
+   a dear one high, and no good may be both. */
+{
+  const P = datasets.ports;
+  if (P) {
+    const top = datasets.rules.market.priceBands.length - 1;
+    let map = null;
+    try { map = JSON.parse(readFileSync(join(DATA, 'maps', `${P.map}.json`), 'utf8')); } catch { errors.push(`ports: map "${P.map}" is not in data/maps/`); }
+    const places = new Map((map?.settlements ?? []).map((x) => [x.id, x]));
+    const traits = new Map(P.traits.map((t) => [t.id, t]));
+    const codes = new Set();
+    for (const t of P.traits) if (!Number.isInteger(t.step) || t.step < 0 || t.step > top) errors.push(`ports: trait "${t.id}" starts on step ${t.step}, and a row has steps 0 to ${top}`);
+    for (const rank of Object.keys(P.berth.baseByRank)) if (!(P.berth.baseByRank[rank] > 0)) errors.push(`ports: berth base for "${rank}" must be a positive number of coin`);
+    for (const p of P.ports) {
+      if (codes.has(p.cardCode)) errors.push(`ports: ${p.cardCode} is on two cards`);
+      codes.add(p.cardCode);
+      const place = places.get(p.settlement);
+      if (map && !place) errors.push(`ports: ${p.cardCode} names settlement "${p.settlement}", which is not on ${P.map}`);
+      else if (place) {
+        if (!place.harbour) errors.push(`ports: ${p.cardCode} is "${p.settlement}", which the board does not mark as a harbour`);
+        if (!(place.rank in P.berth.baseByRank)) errors.push(`ports: ${p.cardCode} is a ${place.rank}, and berth.baseByRank has no figure for that rank`);
+      }
+      if (!traits.has(p.trait)) errors.push(`ports: ${p.cardCode} has trait "${p.trait}", which is not in ports.traits`);
+      const seen = new Set();
+      for (const [kind, rule] of [['cheap', P.goodsRule.cheap], ['dear', P.goodsRule.dear]]) {
+        if (!p[kind]?.length) errors.push(`ports: ${p.cardCode} lists no ${kind} goods`);
+        for (const g of p[kind] ?? []) {
+          if (seen.has(g.commodity)) errors.push(`ports: ${p.cardCode} lists ${g.commodity} twice - a good is cheap here or dear here, not both`);
+          seen.add(g.commodity);
+          if (!Number.isInteger(g.step) || g.step < 0 || g.step > top) errors.push(`ports: ${p.cardCode} ${g.commodity} is on step ${g.step}, and a row has steps 0 to ${top}`);
+          if (rule.maxStep !== undefined && g.step > rule.maxStep) errors.push(`ports: ${p.cardCode} calls ${g.commodity} cheap but starts it on step ${g.step} (cheap is step ${rule.maxStep} or lower)`);
+          if (rule.minStep !== undefined && g.step < rule.minStep) errors.push(`ports: ${p.cardCode} calls ${g.commodity} dear but starts it on step ${g.step} (dear is step ${rule.minStep} or higher)`);
+        }
+      }
+    }
+  }
+}
+
 console.log(`${errors.length} error(s), ${warnings.length} warning(s)`);
 process.exit(errors.length ? 1 : 0);

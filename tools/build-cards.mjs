@@ -55,6 +55,7 @@ import { fileURLToPath } from 'node:url';
 import { pngSize, pngProblem } from './lib/png.mjs';
 import { crop, readFraming, WHOLE_PLATE } from './lib/framing.mjs';
 import { plateIdFor } from './lib/plates.mjs';
+import { loadPorts } from './lib/ports.mjs';
 import { cardsOfDeck } from './lib/decks.mjs';
 import { tileSubjects } from './lib/tiles.mjs';
 import { cardsOfDeck as mintCardsOfDeck } from './lib/mint.mjs';
@@ -820,6 +821,7 @@ const eventCategory = new Map(eventData.categories.map((c) => [c.id, c.name.toLo
 const eventScope = new Map(eventData.scopes.map((s) => [s.id, s]));
 const quests = read('quests.json').quests.filter((q) => q.cardCode);
 const tasks = read('tasks.json').tasks.filter((t) => t.cardCode);
+const ports = loadPorts(ROOT);
 const itemName = new Map(read('items.json').items.map((i) => [i.id, i.name]));
 /* The CAMPAIGN deck: a storyline read in order. The card prints the chapter's
    rule and its cost, and carries the story as its source tells it across the
@@ -1428,6 +1430,32 @@ for (const t of tasks) {
     stats: [],
     facts: [t.task, t.test ? `Test: d6 + ${statLetter(t.test.stat)}, ${t.test.at} or more.` : null].filter(Boolean),
     story: t.hook,
+  });
+}
+
+/* A PORT prints no strip either. What it prints is read, never typed: the berth
+   fee and the cheap and dear goods are steps along printed rows (tools/lib/ports.mjs),
+   the lanes are the board's own shipping routes, and the story is one true fact
+   about the place. */
+const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+const cur = read('rules.json').currency?.symbol ?? '';
+for (const p of ports) {
+  const render = plateIdFor(deckByPrefix('PRT'), p);
+  if (!hasRender(render)) { skipped.push(p.cardCode); continue; }
+  const goods = (g) => g.map((x) => `${x.name} ${x.price}${cur}`).join(', ');
+  const lanes = [...p.sails.map((l) => `${l.to} ${plural(l.hexes, 'hex')}`), ...p.voyages];
+  specs.push({
+    code: p.cardCode, name: p.name, portrait: render,
+    kicker: `port · ${p.rank} · ${p.trait.name.toLowerCase()}`,
+    desc: `Port card: ${p.name}, a ${p.rank}. Berth ${p.fee} coin.`,
+    stats: [],
+    facts: [
+      `Berth ${p.fee}${cur} on arrival.`,
+      `Cheap here: ${goods(p.cheap)}.`,
+      `Dear here: ${goods(p.dear)}.`,
+      lanes.length ? `Lanes: ${lanes.join(', ')}.` : null,
+    ].filter(Boolean),
+    story: p.teach,
   });
 }
 

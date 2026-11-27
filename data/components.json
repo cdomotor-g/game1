@@ -533,6 +533,24 @@
       }
     },
     {
+      "$comment": "The PORT deck (data/ports.json): a reference card for each real harbour on the Mediterranean board, kept beside the map and never dealt. Its plates are GENERATED, and from the map rather than from parts: tools/draw-port.mjs cuts a window out of the map's own SVG, centred on the port's hex, so the picture is the place itself. That is a stand-in, and a deliberate one - a commissioned plate for a port is a new brief and a delete of the generated file away. Card codes PRT-nn.",
+      "prefix": "PRT",
+      "plateId": "port-{id}",
+      "plateFormat": "A4 landscape, 3:2",
+      "plateKind": "generated",
+      "plateSource": "map",
+      "drawnBy": "tools/draw-port.mjs",
+      "minting": true,
+      "id": "ports",
+      "name": "Ports",
+      "source": "ports.json",
+      "back": {
+        "word": "PORTS",
+        "motif": "compass",
+        "ink": "slate"
+      }
+    },
+    {
       "$comment": "The CAMPAIGN deck: a storyline read in ORDER, never shuffled, one card per chapter. It is dealt from data/campaigns.json `cards`, and every card there names the campaign it belongs to; the first campaign is Homer's Odyssey. The card prints the chapter's rule and its cost, with the story as its source tells it across the panel, and the book of the poem in the kicker - because the deck is there to teach the story as much as to play it. A campaign card is neither accepted nor declined, which is what makes it not a quest; and it is drawn on the same wide page the quests and the events are, because a chapter is a PLACE seen from the road - the approach to Circe's house, the cliff over the harbour of the Laestrygonians - and the player is the one arriving.",
       "id": "campaign",
       "name": "Campaign",

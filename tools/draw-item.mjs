@@ -254,7 +254,7 @@ const targets = args.filter((a, i) => !flagged.has(i) && !a.startsWith('--'));
 
 /* Every deck that says its plates are drawn here. A deck that says nothing is
    drawn by an artist, which is the default and stays the default. */
-const generatedDecks = components.decks.filter((d) => d.plateKind === 'generated');
+const generatedDecks = components.decks.filter((d) => d.plateKind === 'generated' && (!d.drawnBy || d.drawnBy === 'tools/draw-item.mjs'));
 if (!generatedDecks.length) {
   console.error('draw-item: no deck in data/components.json has plateKind "generated" — there is nothing here to draw.');
   process.exit(1);

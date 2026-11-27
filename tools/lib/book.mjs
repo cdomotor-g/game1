@@ -27,6 +27,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { cardsOfDeck } from './decks.mjs';
 import { plateIdFor } from './plates.mjs';
+import { loadPorts } from './ports.mjs';
 import { tileSubjects } from './tiles.mjs';
 import { inlineSvg } from './book-art.mjs';
 
@@ -482,6 +483,20 @@ export function openCatalogue(root, { data }) {
     };
   }
 
+  function port(p) {
+    const deck = deckByPrefix('PRT');
+    const sym = data.rules.currency?.symbol ?? '';
+    const goods = (g) => g.map((x) => `${esc(x.name)} ${x.price}${sym}`).join(', ');
+    return {
+      id: `prt-${p.id}`, size: 'quarter', layout: 'landscape',
+      html: plate(plateIdFor(deck, p), { format: 'landscape', deck, alt: p.name })
+        + `<div class="text">${head({
+          pre: `${code(p.cardCode)} · port · ${p.rank} · ${esc(p.trait.name.toLowerCase())}`,
+          name: esc(p.name),
+        })}<p class="hook">${esc(p.teach)}</p>${facts([`<em>Berth</em> ${p.fee}${sym} on arrival`, `<em>Cheap</em> ${goods(p.cheap)}`, `<em>Dear</em> ${goods(p.dear)}`])}</div>`,
+    };
+  }
+
   function task(t) {
     const deck = deckByPrefix('TSK');
     const letter = (data.playerboard.tracks.find((x) => x.id === t.test?.stat) ?? {}).letter;
@@ -551,6 +566,7 @@ export function openCatalogue(root, { data }) {
 
   const setOf = (r) => (r.campaign ? `campaign:${r.campaign}` : r.expansion ? `expansion:${r.expansion}` : 'base');
   const rows = (deckPrefix, source) => cardsOfDeck(deckByPrefix(deckPrefix), source);
+  const ports = loadPorts(root);
 
   /** Every chapter of the catalogue, each carrying its entries tagged with the set they belong to. */
   const chapters = [
@@ -567,6 +583,7 @@ export function openCatalogue(root, { data }) {
     { id: 'spells', title: 'Spells', size: 'quarter', blurb: 'What mana is spent on. One spell per character per round, of the element the mana holds.', entries: rows('SPL', data.arcana.spells).map((s) => ({ ...spell(s), set: setOf(s) })) },
     { id: 'enchantments', title: 'Enchantments', size: 'quarter', blurb: 'Mana laid into a building, a tool, an item or a person and left there until it is broken.', entries: (data.arcana.enchantments?.cards ?? []).map((e) => ({ ...enchantment(e), set: setOf(e) })) },
     { id: 'quests', title: 'Quests', size: 'quarter', blurb: 'Read aloud when they arrive, accepted or declined on the spot. A staged quest is taken in order.', entries: rows('QST', data.quests.quests).map((q) => ({ ...quest(q), set: setOf(q) })) },
+    { id: 'ports', title: 'Ports', size: 'quarter', blurb: 'A reference card for each real harbour on the Mediterranean board. What a berth costs, what is cheap and dear, and one true fact.', entries: rows('PRT', ports).map((p) => ({ ...port(p), set: setOf(p) })) },
     { id: 'tasks', title: 'Tasks', size: 'quarter', blurb: 'Dealt one at a time and kept face down. Small deeds toward a hero\'s next level; most of them test Wisdom.', entries: rows('TSK', data.tasks?.tasks ?? []).map((t) => ({ ...task(t), set: setOf(t) })) },
     { id: 'events', title: 'Events', size: 'quarter', blurb: 'The deck the round opens with. Every disaster in it has something you could have bought in advance.', entries: rows('EVT', data.events.cards).map((e) => ({ ...event(e), set: setOf(e) })) },
     { id: 'peoples', title: 'Peoples', size: 'quarter', blurb: 'Who does the work. A people sets the die, the starting workers and the shape of a whole game.', entries: data.peoples.peoples.map((p) => ({ ...people(p), set: setOf(p) })) },

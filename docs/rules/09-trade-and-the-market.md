@@ -92,6 +92,20 @@ Adds the move it made last round: the figure in the move box on the row above, f
 - **A trading house** removes the spread for its owner in that town for good, and reaches any other player's trading house or merchant along a built route, at any distance. Broker a Trade is the job that does it, one hour at the trading house.
 - **A merchant specialist**, trained at a trading house, may also broker a deal between two other players and take a tenth of the coin. A merchant wearing fine robes gets a tenth more on every sale.
 
+## Port cards
+
+{{fig:plate:port-venice|margin|A port card's picture is the map itself, cut around the harbour.}}
+
+The Mediterranean board has {{count:ports.ports}} port cards, one for each real harbour on it. They are not dealt or played: lay them beside the board and read them when a ship ties up. A port card says three things.
+
+- **The berth.** What the quay charges a ship that lies at it. A port's rank gives a base figure; the berth starts on one of the six places along that base's printed row, and the card prints the figure it lands on. A quiet quay starts low on its row and a chokepoint at the top.
+- **Cheap and dear.** The goods the place makes and sells for little, and the goods it lacks and pays well for. Each is a starting place along that commodity's own printed row, and the card prints the price at that place. They are where the price begins at this port; from the first Market phase the ledger owns it, and moves it as it moves any other.
+- **A true fact** about the place, and the lanes that start or end there.
+
+The berth is paid in coin, once, when a ship arrives.
+
+> **Open.** Whether the berth is charged once on arrival or again every round a ship lies in port is undecided, and so is what moves a berth after the game starts. The card prints it fixed. The options are listed with the port deck in the annex and none of them is a rule until a chapter adopts it.
+
 ## Shopping
 
 {{fig:card:ITM-04,card:ITM-01,card:ITM-06,card:ITM-08|A roadside merchant's stock: item cards dealt face up at base value plus a tenth.}}

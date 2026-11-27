@@ -32,6 +32,28 @@
   /* The task deck: small personal deeds toward a hero's next level. */
   const tasks = (D.tasks && D.tasks.tasks) || [];
   const recordsheet = D.recordsheet || null;
+  /* The port deck, worked out in the browser the way tools/lib/ports.mjs works it
+     out in the build: every price is a step along a commodity's printed row, the
+     berth is a rank's base stepped along the same six bands. */
+  const ports = (() => {
+    const P = D.ports; if (!P) return [];
+    const bands = D.rules.market.priceBands;
+    const row = (base) => bands.map((b) => Math.max(1, Math.round(base * b)));
+    const board = (D.maps || []).find((m) => m.id === P.map) || { settlements: [], routes: {} };
+    const byC = new Map(D.commodities.commodities.map((c) => [c.id, c]));
+    const trait = new Map(P.traits.map((t) => [t.id, t]));
+    const good = (g) => { const c = byC.get(g.commodity); return { id: c.id, name: c.name, step: g.step, price: row(c.baseValue)[g.step] }; };
+    return P.ports.map((p) => {
+      const place = board.settlements.find((x) => x.id === p.settlement) || {};
+      const t = trait.get(p.trait);
+      const feeRow = row(P.berth.baseByRank[place.rank] || 0);
+      const sails = ((board.routes || {}).shipping || [])
+        .filter((r) => r.id.startsWith(p.settlement + '-') || r.id.endsWith('-' + p.settlement))
+        .map((r) => { const [a, b] = r.name.split(' to '); return { to: a.toLowerCase() === p.name.toLowerCase() ? b : a, hexes: r.hexes.length }; })
+        .sort((x, y) => x.hexes - y.hexes || x.to.localeCompare(y.to));
+      return { ...p, rank: place.rank, trait: t, feeRow, fee: feeRow[t.step], cheap: p.cheap.map(good), dear: p.dear.map(good), sails };
+    });
+  })();
   /* The campaign system: the two modes, the campaigns, and the CAMPAIGN deck -
      one card per chapter, read in order. `chapter` is the kind a card is
      indexed under, because "campaign" is the storyline it belongs to. */
@@ -72,6 +94,7 @@
     character: index(characters),
     quest: index(quests),
     task: index(tasks),
+    port: index(ports),
     campaign: index(campaigns),
     chapter: index(chapters),
     /* Boards and their settlements, so a campaign card can name where it happens
@@ -98,6 +121,7 @@
       kind === 'vehicle' ? `vehicle-${entity.cardCode.toLowerCase()}` :
       kind === 'item' && entity.class === 'talisman' ? `talisman-${entity.cardCode.toLowerCase()}` :
       kind === 'chapter' ? `campaign-${entity.id}` :
+      kind === 'port' ? `port-${entity.id}` :
       null;
     return renderId ? artFiles.renders[renderId] || null : null;
   }
@@ -294,6 +318,7 @@
       ['character', 'Characters', characters],
       ['quest', 'Quests', quests],
       ['task', 'Tasks', tasks],
+      ['port', 'Ports', ports],
       ['campaign', 'Campaigns', campaigns],
       ['chapter', 'Campaign cards', chapters],
       ['spell', 'Spells', spells],
@@ -313,7 +338,7 @@
     rules: D.rules,
     commodities, tools, buildings, recipes, terrains, deposits, siting,
     modes, figures, peoples, professions, cards, items,
-    monsters, vehicles, characters, quests, tasks, recordsheet, spells, talismans,
+    monsters, vehicles, characters, quests, tasks, ports, recordsheet, spells, talismans,
     playModes, campaigns, chapters,
     elements, enchantments, modifications, playerboard, pricing,
     art, artPlacement, placeSheet, groundSheet, holdingSheets,

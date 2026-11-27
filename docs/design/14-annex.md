@@ -1133,6 +1133,59 @@ a d6 plus the letter named, at the number or over.
 | TSK-11 | The Hermit's Riddle | 3 | — | I 9 | End a leg on a forest hex and pass the test. Fail it, and your next leg starts a round late. |
 | TSK-12 | Keep Your Word | 2 | 1 | — | Complete a quest within three rounds of accepting it. |
 
+## Port deck
+
+One reference card for each real harbour on the The Mediterranean. A port card is not dealt or played; it sits beside the board.
+Every price is a place along the commodity's own printed row (the table of six prices earlier in this annex), and the figure is what that place lands on.
+The berth is the rank's base value stepped along the same six places; the quay's character says which place it starts on.
+
+| Code | Port | Rank | Quay | Berth | Cheap here | Dear here | Lanes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| PRT-01 | Rome | seat | Busy quay | 10¤ | Brick 9¤, Stone 4¤ | Grain 10¤, Spices 68¤ | Naples 1, Venice 3, Palermo 7 |
+| PRT-02 | Athens | city | Busy quay | 8¤ | Honey 9¤, Wine 30¤ | Grain 10¤, Lumber 14¤ | Thessaloniki 3, Benghazi 5 |
+| PRT-03 | Istanbul | city | Chokepoint | 12¤ | Fish 5¤, Grain 4¤ | Spices 90¤, Fine Cloth 57¤ | — |
+| PRT-04 | Cairo | city | Ordinary quay | 6¤ | Flax 4¤, Cotton 5¤ | Lumber 18¤, Wine 60¤ | Alexandria 2, Beirut 4 |
+| PRT-05 | Alexandria | city | Busy quay | 8¤ | Grain 3¤, Flax 4¤ | Lumber 14¤, Wine 60¤ | Cairo 2, Benghazi 6 |
+| PRT-06 | Barcelona | city | Ordinary quay | 6¤ | Wool 5¤, Wine 30¤ | Spices 68¤, Fine Cloth 57¤ | Marseille 2, Algiers 4 |
+| PRT-07 | Marseille | city | Ordinary quay | 6¤ | Salt 5¤, Fish 5¤ | Lumber 14¤, Glass 30¤ | Barcelona 2, Milan 4 |
+| PRT-08 | Tunis | city | Customs house | 9¤ | Grain 4¤, Wool 5¤ | Lumber 18¤, Glass 30¤ | Palermo 4, Tripoli 5, Algiers 6 |
+| PRT-09 | Algiers | city | Customs house | 9¤ | Hide 5¤, Wool 5¤ | Grain 8¤, Ironware 33¤ | Barcelona 4, Tunis 6, Fez 7 |
+| PRT-10 | Lisbon | city | Busy quay | 8¤ | Salt 5¤, Fish 5¤ | Spices 90¤, Gems 90¤ | The Cape Route, The Treasure Fleet |
+| PRT-11 | Naples | city | Ordinary quay | 6¤ | Wine 30¤, Fish 5¤ | Lumber 14¤, Iron Ore 9¤ | Rome 1 |
+| PRT-12 | Venice | city | Busy quay | 8¤ | Salt 5¤, Glass 15¤ | Grain 10¤, Spices 68¤ | Rome 3 |
+| PRT-13 | Tripoli | city | Customs house | 9¤ | Salt 5¤, Hide 5¤ | Cloth 30¤, Glass 30¤ | Benghazi 5, Tunis 5 |
+| PRT-14 | Beirut | city | Ordinary quay | 6¤ | Lumber 7¤, Glass 15¤ | Grain 8¤, Ironware 33¤ | Nicosia 2, Cairo 4 |
+| PRT-15 | Seville | city | Ordinary quay | 6¤ | Wool 5¤, Grain 4¤ | Spices 68¤, Ironware 33¤ | — |
+| PRT-16 | Thessaloniki | town | Quiet quay | 3¤ | Lumber 7¤, Wool 5¤ | Glass 30¤, Salt 9¤ | Athens 3 |
+| PRT-17 | Benghazi | town | Quiet quay | 3¤ | Hide 5¤, Honey 9¤ | Cloth 30¤, Lumber 14¤ | Athens 5, Tripoli 5, Alexandria 6 |
+| PRT-18 | Palermo | town | Ordinary quay | 4¤ | Grain 4¤, Salt 5¤ | Cloth 30¤, Ironware 33¤ | Tunis 4, Rome 7 |
+| PRT-19 | Nicosia | town | Quiet quay | 3¤ | Copper Ore 5¤, Wine 30¤ | Lumber 18¤, Grain 8¤ | Beirut 2 |
+
+
+### How a berth fee might move
+
+None of these is a rule yet. The card prints the fee as fixed.
+
+| Option | Status | What it would do |
+| --- | --- | --- |
+| Fixed | in use | The fee on the card never moves. This is how the card prints it today. |
+| Same dice as the market | proposed | Each round the port rolls the market's own dice: blue for ships queuing, red for free berths, green for the season. The fee steps along its row by what the swing ruler says. A player who knows the market already knows this. |
+| Events move it | proposed | A blockade, a plague or a festival shifts one port's fee a step or two for some rounds. The event card says which. |
+| Renown buys a discount | proposed | A hero with enough renown may step the fee down a place. rules.json already says a toll talked down is renown's job and not charisma's. |
+| Ship size adds to it | proposed | A bigger hull pays more places along the row. Needs a hull size on the vehicle cards, which they do not carry yet. |
+
+
+### Quays
+
+| Quay | Starts on place | What it says |
+| --- | --- | --- |
+| Quiet quay | 2 | Few ships call, and the harbourmaster is glad of any. The berth begins cheap. |
+| Ordinary quay | 3 | A working harbour with nothing unusual about it. The berth begins on the rule's own starting step. |
+| Busy quay | 4 | Ships queue for the quay and the berth begins dear. |
+| Customs house | 5 | A ruler who taxes every hull that ties up. The berth begins very dear. |
+| Chokepoint | 6 | The only way through, and everyone knows it. The berth begins at the top of its row. |
+
+
 ## A career, level by level
 
 What each level costs in deeds, and in all from level 0. A mini quest is worth its

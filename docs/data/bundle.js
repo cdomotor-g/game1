@@ -145,6 +145,13 @@ window.GAME_DATA = {
         "summary": "The task deck: small personal deeds dealt one at a time, kept face down, and worth deeds toward a hero's next level."
       },
       {
+        "key": "ports",
+        "file": "ports.json",
+        "collection": "ports",
+        "idField": "id",
+        "summary": "The port deck: a reference card for each real harbour on the Mediterranean board - berth fee, cheap and dear goods, one true fact."
+      },
+      {
         "key": "modifications",
         "file": "modifications.json",
         "collection": "modifications",
@@ -688,6 +695,21 @@ window.GAME_DATA = {
           "from": "tasks",
           "path": "tasks[].test.stat",
           "to": "playerboard"
+        },
+        {
+          "from": "ports",
+          "path": "ports[].cheap[].commodity",
+          "to": "commodities"
+        },
+        {
+          "from": "ports",
+          "path": "ports[].dear[].commodity",
+          "to": "commodities"
+        },
+        {
+          "from": "ports",
+          "path": "ports[].trait",
+          "to": "ports.traits"
         },
         {
           "from": "recordsheet",
@@ -14410,6 +14432,631 @@ window.GAME_DATA = {
       }
     ]
   },
+  "ports": {
+    "$comment": "The PORT deck: one reference card for each real harbour on the Mediterranean board (data/maps/earth-mediterranean.json). A port card is not dealt and not played; it sits beside the board and says three things about its place - what a berth costs, what is cheap and dear there, and one true fact. Everything else on the card is READ, never typed: name, rank and hex from the settlement, lanes from the shipping routes that start or end there, and every price from the commodity's own six-figure row (pricing: data/pricing.json, rules.json market.priceBands).\n\nA price on a port card is a STEP, 0 to 5, along that commodity's printed row - the same row the ledger steps along - and the card prints the figure that step lands on. Nobody types a coin number here, so a change to a commodity's base value moves every card that names it. `startsAt` on the ledger is the rule's own starting step (rules.json market.startingBandIndex); a port card says where THIS port begins instead.\n\nThe BERTH FEE is the same idea one storey down: a port's rank gives a base value (berth.baseByRank), the base is stepped along the same six bands as any good, and the port's trait says which step it starts on. A quiet port begins low on its row, a chokepoint high. What the fee does after the game starts is NOT decided: see roadmap.\n\nPorts are the harbours of the board with no cards of their own beyond these 19. Milan and Fez are flagged harbour on the board but stand inland on a river and a plain, so they are not here; if the board's flag is wrong, that is the board's to fix.",
+    "version": "0.1.0",
+    "map": "earth-mediterranean",
+    "berth": {
+      "$comment": "A berth is what a ship pays to lie at a quay. It is priced like everything else here: a base value, stepped along the six bands. baseByRank is the base for a settlement of that rank; a village is listed so a port of that size can be added without touching this file again.",
+      "baseByRank": {
+        "village": 2,
+        "town": 4,
+        "city": 6,
+        "seat": 8
+      },
+      "unit": "coin",
+      "per": "arrival",
+      "perNote": "Open. One payment on arrival is the simplest reading, and the one the card prints. Whether it is instead charged each round in port is undecided - see roadmap."
+    },
+    "traits": [
+      {
+        "id": "quiet",
+        "name": "Quiet quay",
+        "step": 1,
+        "says": "Few ships call, and the harbourmaster is glad of any. The berth begins cheap."
+      },
+      {
+        "id": "ordinary",
+        "name": "Ordinary quay",
+        "step": 2,
+        "says": "A working harbour with nothing unusual about it. The berth begins on the rule's own starting step."
+      },
+      {
+        "id": "busy",
+        "name": "Busy quay",
+        "step": 3,
+        "says": "Ships queue for the quay and the berth begins dear."
+      },
+      {
+        "id": "customs",
+        "name": "Customs house",
+        "step": 4,
+        "says": "A ruler who taxes every hull that ties up. The berth begins very dear."
+      },
+      {
+        "id": "chokepoint",
+        "name": "Chokepoint",
+        "step": 5,
+        "says": "The only way through, and everyone knows it. The berth begins at the top of its row."
+      }
+    ],
+    "goodsRule": {
+      "cheap": {
+        "maxStep": 1,
+        "says": "What the place makes or grows, and will sell for little."
+      },
+      "dear": {
+        "minStep": 4,
+        "says": "What the place lacks, and will pay well for."
+      }
+    },
+    "roadmap": [
+      {
+        "id": "fixed",
+        "name": "Fixed",
+        "status": "in use",
+        "says": "The fee on the card never moves. This is how the card prints it today."
+      },
+      {
+        "id": "market-dice",
+        "name": "Same dice as the market",
+        "status": "proposed",
+        "says": "Each round the port rolls the market's own dice: blue for ships queuing, red for free berths, green for the season. The fee steps along its row by what the swing ruler says. A player who knows the market already knows this."
+      },
+      {
+        "id": "events",
+        "name": "Events move it",
+        "status": "proposed",
+        "says": "A blockade, a plague or a festival shifts one port's fee a step or two for some rounds. The event card says which."
+      },
+      {
+        "id": "renown",
+        "name": "Renown buys a discount",
+        "status": "proposed",
+        "says": "A hero with enough renown may step the fee down a place. rules.json already says a toll talked down is renown's job and not charisma's."
+      },
+      {
+        "id": "size",
+        "name": "Ship size adds to it",
+        "status": "proposed",
+        "says": "A bigger hull pays more places along the row. Needs a hull size on the vehicle cards, which they do not carry yet."
+      }
+    ],
+    "ports": [
+      {
+        "id": "rome",
+        "cardCode": "PRT-01",
+        "name": "Rome",
+        "settlement": "rome",
+        "trait": "busy",
+        "teach": "Imperial Rome ate Egyptian grain; the fleets that fed it were the biggest ships on the sea.",
+        "cheap": [
+          {
+            "commodity": "brick",
+            "step": 1
+          },
+          {
+            "commodity": "stone",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "grain",
+            "step": 5
+          },
+          {
+            "commodity": "spices",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "athens",
+        "cardCode": "PRT-02",
+        "name": "Athens",
+        "settlement": "athens",
+        "trait": "busy",
+        "teach": "Athens could not feed itself. Its grain came through the Black Sea straits, which is why it cared so much who held them.",
+        "cheap": [
+          {
+            "commodity": "honey",
+            "step": 1
+          },
+          {
+            "commodity": "wine",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "grain",
+            "step": 5
+          },
+          {
+            "commodity": "lumber",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "istanbul",
+        "cardCode": "PRT-03",
+        "name": "Istanbul",
+        "settlement": "istanbul",
+        "trait": "chokepoint",
+        "teach": "Every ship between the Black Sea and the Mediterranean passed through one narrow strait, and every ruler of it charged for the passing.",
+        "cheap": [
+          {
+            "commodity": "fish",
+            "step": 1
+          },
+          {
+            "commodity": "grain",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "spices",
+            "step": 5
+          },
+          {
+            "commodity": "fine-cloth",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "cairo",
+        "cardCode": "PRT-04",
+        "name": "Cairo",
+        "settlement": "cairo",
+        "trait": "ordinary",
+        "teach": "Egypt has almost no timber, so its ships and its houses were built of wood brought in from abroad.",
+        "cheap": [
+          {
+            "commodity": "flax",
+            "step": 1
+          },
+          {
+            "commodity": "cotton",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "lumber",
+            "step": 5
+          },
+          {
+            "commodity": "wine",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "alexandria",
+        "cardCode": "PRT-05",
+        "name": "Alexandria",
+        "settlement": "alexandria",
+        "trait": "busy",
+        "teach": "Its lighthouse, the Pharos, was one of the first, and the Nile grain fleet that fed Rome sailed from here.",
+        "cheap": [
+          {
+            "commodity": "grain",
+            "step": 0
+          },
+          {
+            "commodity": "flax",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "lumber",
+            "step": 4
+          },
+          {
+            "commodity": "wine",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "barcelona",
+        "cardCode": "PRT-06",
+        "name": "Barcelona",
+        "settlement": "barcelona",
+        "trait": "ordinary",
+        "teach": "Catalan merchants kept the Consolat de Mar, a book of sea law that ports across the Mediterranean came to follow.",
+        "cheap": [
+          {
+            "commodity": "wool",
+            "step": 1
+          },
+          {
+            "commodity": "wine",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "spices",
+            "step": 4
+          },
+          {
+            "commodity": "fine-cloth",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "marseille",
+        "cardCode": "PRT-07",
+        "name": "Marseille",
+        "settlement": "marseille",
+        "trait": "ordinary",
+        "teach": "Settled by Greek sailors from Phocaea about 600 BC, it is the oldest city in France.",
+        "cheap": [
+          {
+            "commodity": "salt",
+            "step": 1
+          },
+          {
+            "commodity": "fish",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "lumber",
+            "step": 4
+          },
+          {
+            "commodity": "glass",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "tunis",
+        "cardCode": "PRT-08",
+        "name": "Tunis",
+        "settlement": "tunis",
+        "trait": "customs",
+        "teach": "It stands beside the ruins of Carthage, which Rome destroyed in 146 BC and later rebuilt as a granary.",
+        "cheap": [
+          {
+            "commodity": "grain",
+            "step": 1
+          },
+          {
+            "commodity": "wool",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "lumber",
+            "step": 5
+          },
+          {
+            "commodity": "glass",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "algiers",
+        "cardCode": "PRT-09",
+        "name": "Algiers",
+        "settlement": "algiers",
+        "trait": "customs",
+        "teach": "Its name means 'the islands': a chain of rocks off the coast was joined to the mainland with a mole to make the harbour.",
+        "cheap": [
+          {
+            "commodity": "hide",
+            "step": 1
+          },
+          {
+            "commodity": "wool",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "grain",
+            "step": 4
+          },
+          {
+            "commodity": "ironware",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "lisbon",
+        "cardCode": "PRT-10",
+        "name": "Lisbon",
+        "settlement": "lisbon",
+        "trait": "busy",
+        "teach": "The ships that rounded Africa for spices came home here, where Europe's Atlantic lanes begin.",
+        "cheap": [
+          {
+            "commodity": "salt",
+            "step": 1
+          },
+          {
+            "commodity": "fish",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "spices",
+            "step": 5
+          },
+          {
+            "commodity": "gems",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "naples",
+        "cardCode": "PRT-11",
+        "name": "Naples",
+        "settlement": "naples",
+        "trait": "ordinary",
+        "teach": "Built under a volcano whose ash grows vines and makes a cement that sets under water.",
+        "cheap": [
+          {
+            "commodity": "wine",
+            "step": 1
+          },
+          {
+            "commodity": "fish",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "lumber",
+            "step": 4
+          },
+          {
+            "commodity": "iron-ore",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "venice",
+        "cardCode": "PRT-12",
+        "name": "Venice",
+        "settlement": "venice",
+        "trait": "busy",
+        "teach": "Built on mud flats and timber piles, it grew rich on salt, glass and the spice trade.",
+        "cheap": [
+          {
+            "commodity": "salt",
+            "step": 1
+          },
+          {
+            "commodity": "glass",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "grain",
+            "step": 5
+          },
+          {
+            "commodity": "spices",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "tripoli",
+        "cardCode": "PRT-13",
+        "name": "Tripoli",
+        "settlement": "tripoli",
+        "trait": "customs",
+        "teach": "The sea end of the caravan roads across the Sahara, which carried gold and salt north.",
+        "cheap": [
+          {
+            "commodity": "salt",
+            "step": 1
+          },
+          {
+            "commodity": "hide",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "cloth",
+            "step": 4
+          },
+          {
+            "commodity": "glass",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "beirut",
+        "cardCode": "PRT-14",
+        "name": "Beirut",
+        "settlement": "beirut",
+        "trait": "ordinary",
+        "teach": "The mountains behind it grew the cedars the Phoenicians built their ships from.",
+        "cheap": [
+          {
+            "commodity": "lumber",
+            "step": 1
+          },
+          {
+            "commodity": "glass",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "grain",
+            "step": 4
+          },
+          {
+            "commodity": "ironware",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "seville",
+        "cardCode": "PRT-15",
+        "name": "Seville",
+        "settlement": "seville",
+        "trait": "ordinary",
+        "teach": "Sixty miles up the Guadalquivir river, it held Spain's trade with the Americas for two centuries.",
+        "cheap": [
+          {
+            "commodity": "wool",
+            "step": 1
+          },
+          {
+            "commodity": "grain",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "spices",
+            "step": 4
+          },
+          {
+            "commodity": "ironware",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "thessaloniki",
+        "cardCode": "PRT-16",
+        "name": "Thessaloniki",
+        "settlement": "thessaloniki",
+        "trait": "quiet",
+        "teach": "The Roman road called the Via Egnatia ran through it, linking the Adriatic to Constantinople.",
+        "cheap": [
+          {
+            "commodity": "lumber",
+            "step": 1
+          },
+          {
+            "commodity": "wool",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "glass",
+            "step": 4
+          },
+          {
+            "commodity": "salt",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "benghazi",
+        "cardCode": "PRT-17",
+        "name": "Benghazi",
+        "settlement": "benghazi",
+        "trait": "quiet",
+        "teach": "It grew from the Greek port of Euesperides, which served the rich farms of the hills behind.",
+        "cheap": [
+          {
+            "commodity": "hide",
+            "step": 1
+          },
+          {
+            "commodity": "honey",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "cloth",
+            "step": 4
+          },
+          {
+            "commodity": "lumber",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "palermo",
+        "cardCode": "PRT-18",
+        "name": "Palermo",
+        "settlement": "palermo",
+        "trait": "ordinary",
+        "teach": "Sicily was Rome's granary, and Arab, Norman and Spanish rulers each held the island for its harvest.",
+        "cheap": [
+          {
+            "commodity": "grain",
+            "step": 1
+          },
+          {
+            "commodity": "salt",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "cloth",
+            "step": 4
+          },
+          {
+            "commodity": "ironware",
+            "step": 4
+          }
+        ]
+      },
+      {
+        "id": "nicosia",
+        "cardCode": "PRT-19",
+        "name": "Nicosia",
+        "settlement": "nicosia",
+        "trait": "quiet",
+        "teach": "The word 'copper' comes from Cyprus, where the metal was mined for thousands of years.",
+        "cheap": [
+          {
+            "commodity": "copper-ore",
+            "step": 1
+          },
+          {
+            "commodity": "wine",
+            "step": 1
+          }
+        ],
+        "dear": [
+          {
+            "commodity": "lumber",
+            "step": 5
+          },
+          {
+            "commodity": "grain",
+            "step": 4
+          }
+        ]
+      }
+    ]
+  },
   "modifications": {
     "$comment": "The modification deck: things bolted, stitched or bound onto a vehicle after it is built. A vehicle card (vehicles.json) is a specific machine; a transport mode (transport.json) is the rules it runs on; a modification is what its owner did to it afterwards, and it is the only one of the three a player creates during a game. Fittings and enchantments are in the same file and compete for the same slots on purpose - a shipwright and a hedge-witch are both trying to make the same hull go faster, and the player has to choose which. The general enchantments, the ones laid on buildings, tools and people, are in arcana.json. Card layout: the fitting drawn across the middle, name and code at the top, what it fits as the kicker, story low. A modification card carries no bars - it has neither harm nor capacity of its own; what it does is change the bars on the card it is tucked under. Art prompts in docs/art/prompts/modifications.md.",
     "version": "0.1.0",
@@ -15290,6 +15937,24 @@ window.GAME_DATA = {
           "word": "TASKS",
           "motif": "compass",
           "ink": "verdigris"
+        }
+      },
+      {
+        "$comment": "The PORT deck (data/ports.json): a reference card for each real harbour on the Mediterranean board, kept beside the map and never dealt. Its plates are GENERATED, and from the map rather than from parts: tools/draw-port.mjs cuts a window out of the map's own SVG, centred on the port's hex, so the picture is the place itself. That is a stand-in, and a deliberate one - a commissioned plate for a port is a new brief and a delete of the generated file away. Card codes PRT-nn.",
+        "prefix": "PRT",
+        "plateId": "port-{id}",
+        "plateFormat": "A4 landscape, 3:2",
+        "plateKind": "generated",
+        "plateSource": "map",
+        "drawnBy": "tools/draw-port.mjs",
+        "minting": true,
+        "id": "ports",
+        "name": "Ports",
+        "source": "ports.json",
+        "back": {
+          "word": "PORTS",
+          "motif": "compass",
+          "ink": "slate"
         }
       },
       {
@@ -32424,6 +33089,291 @@ window.GAME_DATA = {
           0.1,
           0.74,
           0.62
+        ]
+      },
+      "port-alexandria": {
+        "file": "art/renders/port-alexandria.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-algiers": {
+        "file": "art/renders/port-algiers.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-athens": {
+        "file": "art/renders/port-athens.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-barcelona": {
+        "file": "art/renders/port-barcelona.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-beirut": {
+        "file": "art/renders/port-beirut.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-benghazi": {
+        "file": "art/renders/port-benghazi.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-cairo": {
+        "file": "art/renders/port-cairo.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-istanbul": {
+        "file": "art/renders/port-istanbul.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-lisbon": {
+        "file": "art/renders/port-lisbon.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.328,
+          0.5
+        ]
+      },
+      "port-marseille": {
+        "file": "art/renders/port-marseille.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-naples": {
+        "file": "art/renders/port-naples.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-nicosia": {
+        "file": "art/renders/port-nicosia.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-palermo": {
+        "file": "art/renders/port-palermo.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-rome": {
+        "file": "art/renders/port-rome.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-seville": {
+        "file": "art/renders/port-seville.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-thessaloniki": {
+        "file": "art/renders/port-thessaloniki.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-tripoli": {
+        "file": "art/renders/port-tripoli.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-tunis": {
+        "file": "art/renders/port-tunis.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
+        ]
+      },
+      "port-venice": {
+        "file": "art/renders/port-venice.png",
+        "width": 1299,
+        "height": 866,
+        "subject": [
+          0.3,
+          0.25,
+          0.4,
+          0.5
+        ],
+        "focal": [
+          0.5,
+          0.5
         ]
       },
       "spell-bulwark": {
