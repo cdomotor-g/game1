@@ -31900,6 +31900,17 @@ window.GAME_DATA = {
           0.17
         ]
       },
+      "item-wineskin": {
+        "file": "art/renders/item-wineskin.png",
+        "width": 1254,
+        "height": 1254,
+        "subject": [
+          0,
+          0,
+          1,
+          1
+        ]
+      },
       "modification-compound-boiler": {
         "file": "art/renders/modification-compound-boiler.png",
         "width": 1254,
