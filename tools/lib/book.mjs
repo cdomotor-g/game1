@@ -504,7 +504,7 @@ export function openCatalogue(root, { data }) {
       id: `tsk-${t.id}`, size: 'quarter', layout: 'landscape',
       html: plate(plateIdFor(deck, t), { format: 'landscape', deck, alt: t.name })
         + `<div class="text">${head({
-          pre: `${code(t.cardCode)} · task · ${t.deeds} deed${t.deeds === 1 ? '' : 's'}${t.renown ? ` · ${t.renown} renown` : ''}`,
+          pre: `${code(t.cardCode)} · task · ${t.deeds} deed${t.deeds === 1 ? '' : 's'}`,
           name: esc(t.name),
         })}<p class="hook">${inline(t.hook)}</p>${facts([inline(t.task), t.test ? `<em>Test</em> d6 + ${esc(letter ?? t.test.stat)}, ${t.test.at} or more` : null])}</div>`,
     };

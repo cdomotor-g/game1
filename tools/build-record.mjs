@@ -2,8 +2,7 @@
 /**
  * The CHARACTER RECORD SHEET: the paper a hero is carried on from one game to
  * the next (rules.json career). Content is data/recordsheet.json, shapes are
- * components.json recordSheet, and the rules it records are rules.json level
- * and renown - this file holds no coordinate and no rule.
+ * components.json recordSheet, and the rules it records are rules.json level - this file holds no coordinate and no rule.
  *
  * The page is a stack: title, the three fields, the lasting boxes, the rises,
  * the deeds ladder, what each level costs, and the log of games. Every section

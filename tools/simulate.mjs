@@ -298,7 +298,7 @@ const claim = (ok, what) => checks.push({ ok, what });
    (rules.json level). This plays careers out against the real decks: a hero
    holds one task (data/tasks.json) and up to two quests (quests.json), meets
    the conditions on a task or a quest some rounds and not others, and earns the
-   deeds and renown the rules say. The play is a model, not a strategy - a round
+   deeds the rules say. The play is a model, not a strategy - a round
    either gives a hero the chance a card wants or it does not - so the numbers
    are a ruler for the CURVE, not a prediction of any one table. */
 {

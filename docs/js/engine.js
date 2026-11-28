@@ -1140,7 +1140,7 @@
 
 
   /* ------------------------------------------------------------- a career
-   * A hero's lasting numbers, played off rules.json level, renown, drink and
+   * A hero's lasting numbers, played off rules.json level, drink and
    * test - the same blocks the record sheet, the board's kit panel and the
    * rulebook print, so nothing here is a second copy of a rule. A `record` is
    * what the character record sheet holds: { level, deeds, rises: [stat...] }.
@@ -1170,26 +1170,6 @@
 
   /** May a hero at this level accept this quest? (rules.json level.questGate) */
   function canAccept(level, quest) { return level >= (quest.minLevel || 0); }
-
-  /** What a finished quest is worth in renown. */
-  function questRenown(quest) {
-    const stages = (quest.stages || []).length;
-    return stages ? stages * R.renown.gain.perCampaignStage : R.renown.gain.perQuest;
-  }
-
-  /** The renown step the marker has reached, or none. */
-  function renownStep(renown) {
-    let step = { at: 0, tollOff: 0, hireOff: 0 };
-    for (const st of R.renown.steps) if (renown >= st.at) step = st;
-    return step;
-  }
-
-  /** A toll or a fee after renown has had its say. Never below 0. */
-  const tollFor = (toll, renown) => Math.max(0, toll - renownStep(renown).tollOff);
-  const hireFor = (fee, renown) => Math.max(0, fee - renownStep(renown).hireOff);
-
-  /** Renown a hero starts a game with: one per milestone passed. */
-  const startingRenown = (level) => Math.floor(level / R.level.milestones.every);
 
   /** One draught of drink: Charisma up, Wisdom down, Thirst eased. `fig` holds
       the live markers { charisma, wisdom, thirst, drunkDraughts }. */
@@ -1223,11 +1203,15 @@
     return Math.min(R.upkeep.thirst.limit, thirst + R.upkeep.thirst.risePerRound + extra);
   }
 
-  /** Meals a round on a hex of this terrain. */
-  function mealsFor(terrainId) {
+  /** Hunger at the end of a round on a hex of this terrain, with nothing eaten. */
+  function hungerAfterRound(hunger, terrainId) {
     const t = D.byId.terrain ? D.byId.terrain.get(terrainId) : null;
-    return R.upkeep.food.perRound + ((t && t.upkeep && t.upkeep.meals) || 0);
+    const extra = (t && t.upkeep && t.upkeep.hunger) || 0;
+    return Math.min(R.upkeep.hunger.limit, hunger + R.upkeep.hunger.risePerRound + extra);
   }
+
+  /** One meal eaten: a rung off a provision card is Hunger eased. */
+  const eat = (hunger) => Math.max(0, hunger - R.upkeep.hunger.eased.perMeal);
 
   global.Engine = {
     newGame, startRound, endRound,
@@ -1236,7 +1220,7 @@
     battle, canFlee, manaFrom, depletionModifier,
     score, usedSlots, capacity, remainingEffort, findTool, ownedBuilding,
     toolMax,
-    deedsToReach, addDeeds, questDeeds, canAccept, questRenown, renownStep, tollFor, hireFor, startingRenown,
-    drink, sober, test, thirstAfterRound, mealsFor,
+    deedsToReach, addDeeds, questDeeds, canAccept,
+    drink, sober, test, thirstAfterRound, hungerAfterRound, eat,
   };
 })(window);

@@ -233,17 +233,16 @@ if (!carrying) errors.push('rules: no "carrying" block - items have mass and not
 for (const c of characters) {
   if (typeof c.start?.burden !== 'number') errors.push(`characters: "${c.id}" has no start.burden - the B box prints the kilograms a hero can take on`);
   if (typeof c.start?.charisma !== 'number') errors.push(`characters: "${c.id}" has no start.charisma`);
-  for (const k of ['thirst', 'pace', 'level', 'renown']) if (c.start?.[k] !== 0) errors.push(`characters: "${c.id}" start.${k} is not 0 - a card starts a hero watered, with no leg set, and on their first road (the record sheet carries a returning hero's level and renown)`);
+  for (const k of ['hunger', 'thirst', 'pace', 'level']) if (c.start?.[k] !== 0) errors.push(`characters: "${c.id}" start.${k} is not 0 - a card starts a hero fed and watered, with no leg set, and on their first road (the record sheet carries a returning hero's level)`);
   if (!(c.start?.wisdom >= 1)) errors.push(`characters: "${c.id}" has no start.wisdom of at least 1 - the I box is what a task card tests`);
-  if ('hunger' in (c.start ?? {})) errors.push(`characters: "${c.id}" still has start.hunger - there is no Hunger track; a figure eats a meal a round (rules.json upkeep.food)`);
 }
 for (const [set, list] of [['monsters', datasets.monsters?.monsters ?? []], ['vehicles', datasets.vehicles?.vehicles ?? []]]) {
   for (const m of list) {
-    for (const k of ['burden', 'charisma', 'thirst']) if (typeof m.start?.[k] !== 'number') errors.push(`${set}: "${m.id}" has no start.${k} - every card prints a starting value for every track it walks`);
-    for (const k of ['hunger', 'wisdom', 'level', 'renown']) if (k in (m.start ?? {})) errors.push(`${set}: "${m.id}" has start.${k} - ${k === 'hunger' ? 'there is no Hunger track' : 'wisdom, level and renown are a character\'s career, and a ' + set.slice(0, -1) + ' has none'}`);
+    for (const k of ['burden', 'charisma', 'hunger', 'thirst']) if (typeof m.start?.[k] !== 'number') errors.push(`${set}: "${m.id}" has no start.${k} - every card prints a starting value for every track it walks`);
+    for (const k of ['wisdom', 'level', 'renown']) if (k in (m.start ?? {})) errors.push(`${set}: "${m.id}" has start.${k} - wisdom and level are a character's career, and a ${set.slice(0, -1)} has none (and there is no renown)`);
   }
 }
-/* A CAREER is a closed set of rules that point at each other - level, renown,
+/* A CAREER is a closed set of rules that point at each other - level,
    drink, upkeep and the terrain that drives it - and every pointer is checked
    here, because each of them is a number a chapter prints. */
 {
@@ -258,17 +257,21 @@ for (const [set, list] of [['monsters', datasets.monsters?.monsters ?? []], ['ve
     for (const c of L.milestones?.choose ?? []) if (!tracks.has(c.stat)) errors.push(`rules: level.milestones.choose raises "${c.stat}", which is not a track on the player board`);
     if (L.to > (datasets.components?.board?.track?.to ?? 20)) errors.push(`rules: level.to ${L.to} is past the board's ceiling`);
   }
-  const steps = R.renown?.steps ?? [];
-  steps.forEach((st, i) => {
-    if (i && !(st.at > steps[i - 1].at && st.tollOff >= steps[i - 1].tollOff && st.hireOff >= steps[i - 1].hireOff)) errors.push(`rules: renown.steps[${i}] does not climb - a higher step may not pay less`);
-  });
+  if (R.renown) errors.push('rules: renown is back - there is no Renown track; tolls and fees are paid in full');
   if (!R.drink?.perDraught) errors.push('rules: no drink.perDraught - the wineskin and the inn cup have nothing to do');
   const drinks = (datasets.commodities?.commodities ?? []).filter((c) => c.category === 'drink');
   if (!drinks.length) errors.push('rules: drink is "anything in the drink category" and commodities.json has nothing in it');
   if (!R.upkeep?.food?.perRound) errors.push('rules: no upkeep.food.perRound - a figure on the road has nothing to eat');
-  if (R.upkeep?.hunger) errors.push('rules: upkeep.hunger is back - there is no Hunger track; a figure eats a meal a round (upkeep.food)');
+  const H = R.upkeep?.hunger;
+  if (!H) errors.push('rules: no upkeep.hunger - the F track has nothing to say what moves it');
+  else {
+    if (!(H.risePerRound > 0 && H.eased?.perMeal > 0 && H.limit > 0)) errors.push('rules: upkeep.hunger needs risePerRound, eased.perMeal and limit');
+    if (H.limit !== R.upkeep?.thirst?.limit) errors.push(`rules: hunger and thirst are twin clocks and must share a limit (${H.limit} against ${R.upkeep?.thirst?.limit})`);
+    const top = datasets.components?.board?.track?.to ?? 20;
+    if (H.limit > top) errors.push(`rules: upkeep.hunger.limit ${H.limit} is past the board's ceiling ${top}`);
+  }
   for (const t of datasets.terrain?.terrains ?? []) {
-    for (const k of Object.keys(t.upkeep ?? {})) if (!['thirst', 'meals'].includes(k)) errors.push(`terrain: "${t.id}" upkeep.${k} - a terrain may only cost more thirst or more meals`);
+    for (const k of Object.keys(t.upkeep ?? {})) if (!['thirst', 'hunger'].includes(k)) errors.push(`terrain: "${t.id}" upkeep.${k} - a terrain may only cost more thirst or more hunger`);
   }
   const provisions = itemList.filter((i) => i.class === 'provision');
   for (const pr of provisions) if (!(pr.uses > 0)) errors.push(`items: provision "${pr.id}" has no uses - its K ladder is the meals in it`);

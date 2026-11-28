@@ -13,13 +13,11 @@
   <path d="M 1114.67,268 H 1584" stroke="#1A1714" stroke-width="1.2"/>
   <text x="96" y="348" font-size="24" font-family="Helvetica, Arial, sans-serif" letter-spacing="6.4" fill="#5F564C">WHAT LASTS</text>
   <text x="1584" y="348" font-size="19.2" text-anchor="end" font-style="italic">Rewrite these at the end of every game.</text>
-  <rect x="96" y="364" width="469.33" height="128" rx="8" fill="none" stroke="#1A1714" stroke-width="1.2"/>
+  <rect x="96" y="364" width="724" height="128" rx="8" fill="none" stroke="#1A1714" stroke-width="1.2"/>
   <text x="108" y="391.2" font-size="18.4" font-family="Helvetica, Arial, sans-serif" letter-spacing="3.2" fill="#5F564C">LEVEL</text>
-  <text x="553.33" y="476" font-size="40" text-anchor="end" font-weight="bold" fill="#A0968A">L</text>
-  <rect x="605.33" y="364" width="469.33" height="128" rx="8" fill="none" stroke="#1A1714" stroke-width="1.2"/>
-  <text x="617.33" y="391.2" font-size="18.4" font-family="Helvetica, Arial, sans-serif" letter-spacing="3.2" fill="#5F564C">DEEDS TOWARD NEXT</text>
-  <rect x="1114.67" y="364" width="469.33" height="128" rx="8" fill="none" stroke="#1A1714" stroke-width="1.2"/>
-  <text x="1126.67" y="391.2" font-size="18.4" font-family="Helvetica, Arial, sans-serif" letter-spacing="3.2" fill="#5F564C">MILESTONES PASSED</text>
+  <text x="808" y="476" font-size="40" text-anchor="end" font-weight="bold" fill="#A0968A">L</text>
+  <rect x="860" y="364" width="724" height="128" rx="8" fill="none" stroke="#1A1714" stroke-width="1.2"/>
+  <text x="872" y="391.2" font-size="18.4" font-family="Helvetica, Arial, sans-serif" letter-spacing="3.2" fill="#5F564C">DEEDS TOWARD NEXT</text>
   <text x="96" y="564" font-size="24" font-family="Helvetica, Arial, sans-serif" letter-spacing="6.4" fill="#5F564C">RISES TAKEN</text>
   <text x="1584" y="564" font-size="19.2" text-anchor="end" font-style="italic">One rise at every milestone level. Add these to the card's boxes at setup, every game.</text>
   <rect x="96" y="580" width="342" height="104" rx="8" fill="none" stroke="#1A1714" stroke-width="1.2"/>

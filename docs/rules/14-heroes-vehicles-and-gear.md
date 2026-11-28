@@ -30,8 +30,8 @@ Commodities in transit are cargo and measured in bulk, not mass; mana weighs not
 {{fig:plate:item-dagger|margin|A dirk is never lost, whatever else a fallen character drops on the road}}
 
 - **At 0 health** a character falls. It is carried to the nearest settlement, stays there until healed to half its H under medical aid, and loses everything it was carrying on the way — except what a card keeps: a dirk is never lost, and one item named when a satchel was packed stays in it.
-- **At 0 strength** a figure does not fight. One night's sleep puts all of it back — once the figure has eaten.
-- **At the top of Thirst** a figure loses {{abs:rules.upkeep.thirst.atLimit.health}} health every round — see [The map and travel](08-the-map-and-travel.md).
+- **At 0 strength** a figure does not fight. One night's sleep puts all of it back.
+- **At the top of Hunger or Thirst** a figure loses {{abs:rules.upkeep.thirst.atLimit.health}} health every round — see [The map and travel](08-the-map-and-travel.md).
 
 What mends each is in [The map and travel](08-the-map-and-travel.md).
 

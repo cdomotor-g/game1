@@ -124,16 +124,17 @@ Cargo that starts or ends its journey in a settlement your own road or rail reac
 
 ## Food and sleep on the road
 
-{{fig:plate:item-rations-3-day|margin|Three-day rations: a meal a round off the K ladder, filled again at any inn or market.}}
+{{fig:plate:item-rations-3-day|margin|Three-day rations: a meal a rung off the K ladder, filled again at any inn or market.}}
 
-A party out of town keeps itself. Food and water are spent differently and cost you differently: food is a meal every round wherever you are, and going without it weakens you; water is only a worry where there is none, and going without it wounds you.
+A party out of town keeps itself. Food and water are spent differently and cost you differently: hunger and thirst are two clocks that climb a rung every round, and at the top of either you bleed. Food is never free away from your own town; water is free wherever there is water.
 
-- **Eat {{rules.upkeep.food.perRound}} meal every round.** In a town of your own your hero eats with the workers, from the town's stock. Anywhere else, knock a ration card's capacity ladder down a rung in the Feeding phase. On tundra or a mountain the cold costs {{terrain.terrains[id=tundra].upkeep.meals}} meal more.
+- **Hunger rises {{rules.upkeep.hunger.risePerRound}} rung every round**, and {{terrain.terrains[id=tundra].upkeep.hunger}} more on tundra or a mountain, where the cold is hungry work. In a town of your own your hero eats with the workers, from the town's stock, and Hunger goes back to 0.
+- **A meal takes {{rules.upkeep.hunger.eased.perMeal}} rungs off Hunger.** Away from home, eat by knocking a ration card's capacity ladder down a rung. Hunger never goes below 0.
 - **Thirst rises {{rules.upkeep.thirst.risePerRound}} rung every round** you end away from water, and {{terrain.terrains[id=desert].upkeep.thirst}} more on a desert hex. End a round in a settlement or on a river, lake or marsh hex and you drink for nothing: Thirst back to 0 and your waterskin filled. Sea water is not drink.
 - **A night without a camp costs 1 strength** from every figure — a night leg, or a round ended without stopping. It stacks night on night, and at 0 strength a figure does not fight.
 - **One night's sleep gives all the strength back**, wherever it is taken: a camp on open ground, a spent cave, or a bed. A camp costs nothing.
 - **Sleep mends no health at all.** Health comes back only under medical aid: {{rules.rest.medicalAid.healerPerRound}} a round from a healer or at an infirmary, {{rules.rest.medicalAid.physicianPerRound}} a round from a physician character standing there, or a potion, drunk. Care costs {{rules.rest.medicalAid.cost.coin}} coin a round, waived in your own town. A resting figure does nothing else that round.
-- **A round with no meal costs {{abs:rules.upkeep.food.missed.strength}} strength,** and sleep gives none of it back until you have eaten again.
+- **At the top of Hunger** (rung {{rules.upkeep.hunger.limit}}) the figure loses {{abs:rules.upkeep.hunger.atLimit.health}} health every round it is still there, and eating stops the losing without putting the health back.
 - **Fill a ration card** at any inn or market, {{rules.upkeep.food.refill.coinPerMeal}} coin a meal, up to its K box. In your own town a unit of food from stock fills one meal. Other food a party carries is a commodity, and a perishable one rolls the spoil die every round it is in the pack.
 - **A draught takes {{rules.upkeep.thirst.eased.perDraught}} rungs off Thirst** — from a waterskin, a wineskin, or a cup at an inn. Thirst never goes below 0.
 - **At the top of Thirst** (rung {{rules.upkeep.thirst.limit}}) the figure loses {{abs:rules.upkeep.thirst.atLimit.health}} health every round it is still there, and drinking again stops the losing without putting the health back.

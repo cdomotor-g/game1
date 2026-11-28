@@ -14,8 +14,7 @@
   ],
   "boxes": [
     { "id": "level", "name": "Level", "label": "LEVEL", "track": "level", "note": "Set the L marker here at setup." },
-    { "id": "deeds", "name": "Deeds toward the next level", "label": "DEEDS TOWARD NEXT", "track": null, "note": "What is left over after the last level was taken. Tick it on the ladder below too." },
-    { "id": "milestones", "name": "Milestones passed", "label": "MILESTONES PASSED", "track": null, "note": "Your starting Renown (rules.json renown.startsAt)." }
+    { "id": "deeds", "name": "Deeds toward the next level", "label": "DEEDS TOWARD NEXT", "track": null, "note": "What is left over after the last level was taken. Tick it on the ladder below too." }
   ],
   "rises": {
     "title": "RISES TAKEN",

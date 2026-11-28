@@ -602,7 +602,7 @@
         el('button.card', { type: 'button', onclick: () => open('task', t.id) }, [
           el('div.card-head', [el('span.card-title', t.name), el('span.card-code', t.cardCode)]),
           el('div.card-sub', t.task),
-          el('div.card-meta', [pill(`${t.deeds} deed${t.deeds === 1 ? '' : 's'}`, 'accent'), t.renown ? pill(`+${t.renown} renown`) : null, t.test ? pill(`test ${t.test.stat} ${t.test.at}`) : null].filter(Boolean)),
+          el('div.card-meta', [pill(`${t.deeds} deed${t.deeds === 1 ? '' : 's'}`, 'accent'), t.test ? pill(`test ${t.test.stat} ${t.test.at}`) : null].filter(Boolean)),
         ])
       )),
       ...section('Quests', 'Arrive through omens and inn rumours; accepted or declined on the spot.', q(D.quests).map((qc) =>
@@ -1384,9 +1384,9 @@
           el('dt', `${R.currency.symbol} — gold`), el('dd', `${c.startingGold} to start.`),
           el('dt', 'B — burden'), el('dd', `${c.start.burden} kg still to take on, counting down as things are picked up.`),
           el('dt', 'C — charisma'), el('dd', `${c.start.charisma}. Added to a roll to befriend a monster.`),
-          el('dt', 'T, P'), el('dd', 'Thirst starts at 0 and climbs where there is no water; pace is set when a leg starts. Food is a meal a round, off a ration card on the road.'),
+          el('dt', 'F, T, P'), el('dd', 'Hunger and thirst start at 0 and climb every round: eat to bring hunger down, drink to bring thirst down. Pace is set when a leg starts.'),
           el('dt', 'I — wisdom'), el('dd', `${c.start.wisdom}. What a task card tests; drink takes it down until the next sleep.`),
-          el('dt', 'L, R — level, renown'), el('dd', `0 on a first road. A returning hero starts where their character record sheet says: level ${R.level.from} to ${R.level.to}, ${R.level.toTop} deeds from bottom to top.`),
+          el('dt', 'L — level'), el('dd', `0 on a first road. A returning hero starts where their character record sheet says: level ${R.level.from} to ${R.level.to}, ${R.level.toTop} deeds from bottom to top.`),
           ...(c.manaNote ? [el('dt', 'Note'), el('dd', c.manaNote)] : []),
         ]),
       ]),
@@ -1436,7 +1436,7 @@
 
   detail.task = function (t) {
     return [
-      el('span.kicker', `task · ${t.deeds} deed${t.deeds === 1 ? '' : 's'}${t.renown ? ` · +${t.renown} renown` : ''}`),
+      el('span.kicker', `task · ${t.deeds} deed${t.deeds === 1 ? '' : 's'}`),
       el('h2', [t.name, ' ', el('span.card-code', t.cardCode)]),
       t.hook ? el('p.prose', t.hook) : null,
       el('section', [el('h4', 'Task'), el('p.prose', t.task)]),

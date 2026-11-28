@@ -17,10 +17,10 @@ There are {{count:quests.quests}} quests in the deck, from an errand with a wage
 2. **An accepted quest sits face up beside your board** until it is done or given up. It takes no kit slot. A party carrying a quest the road's owner accepted pays that owner no toll.
 3. **Do what the task says.** A delivery is done when the goods change hands at the place named; a fight is done when the thing named is resolved; a task with a limit is done inside the rounds it names, counted from the round you accepted it.
 4. **Take the reward** printed on the card: coin, victory points, mana, an item, or a standing favour — free beds at one inn, a cheaper survey, a discount — that lasts as the card says.
-5. **Take the deeds and the renown.** A quest done is worth its complexity in deeds toward your next level, and {{rules.renown.gain.perQuest}} renown — see [A hero's career](16-a-heros-career.md).
-6. **Giving up** costs {{abs:rules.renown.loss.perQuestAbandoned}} renown, and the card leaves the game unless it says otherwise.
+5. **Take the deeds.** A quest done is worth its complexity in deeds toward your next level — see [A hero's career](16-a-heros-career.md).
+6. **Giving up** costs nothing but the deeds, and the card leaves the game unless it says otherwise.
 
-A **campaign quest** has stages, taken in order, each with its own task and its own reward; the card prints the stage names and what the whole thing pays, and the tasks are in Annex I, *The campaigns, stage by stage*. Some stage rewards stand for the rest of the game — a route surveyed, a pass proved — and the card says so. Every stage done is worth the campaign quest's complexity in deeds and {{rules.renown.gain.perCampaignStage}} renown.
+A **campaign quest** has stages, taken in order, each with its own task and its own reward; the card prints the stage names and what the whole thing pays, and the tasks are in Annex I, *The campaigns, stage by stage*. Some stage rewards stand for the rest of the game — a route surveyed, a pass proved — and the card says so. Every stage done is worth the campaign quest's complexity in deeds.
 
 {{fig:map:korvane-reach|wide|The Korvane Reach, whose settlements the quest cards name}}
 

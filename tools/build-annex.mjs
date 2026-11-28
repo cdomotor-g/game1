@@ -916,7 +916,7 @@ say('## Character deck');
 say();
 say('The two rows of boxes across the top of every character card: a starting value for');
 say('every track on the player board, in the board\'s own order, then coin. Setting up is');
-say('reading along the strip and placing a marker for each. Thirst, Pace, Level and Renown');
+say('reading along the strip and placing a marker for each. Hunger, Thirst, Pace and Level');
 say('start at 0 on every card and are left out of the table; Burden is kilograms, and the');
 say('purse counts against it like everything else. I is Wisdom, which a task card tests.');
 say();
@@ -982,9 +982,9 @@ say(`Held ${taskDeck.hand} at a time, face down, and worth deeds toward a hero's
 say('a d6 plus the letter named, at the number or over.');
 say();
 table(
-  ['Code', 'Task', 'Deeds', 'Renown', 'Test', 'Task'],
+  ['Code', 'Task', 'Deeds', 'Test', 'Task'],
   taskDeck.tasks.map((t) => [
-    t.cardCode, t.name, t.deeds, t.renown ?? '—', t.test ? `${trackLetterOf.get(t.test.stat)} ${t.test.at}` : '—', t.task,
+    t.cardCode, t.name, t.deeds, t.test ? `${trackLetterOf.get(t.test.stat)} ${t.test.at}` : '—', t.task,
   ])
 );
 

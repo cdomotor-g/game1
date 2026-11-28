@@ -54,12 +54,12 @@ Across the top of a card is a row of lettered boxes, the letter first and the fi
 | S | Strength — what you swing with in a battle | the S track |
 | B | Burden — the kilograms a figure can still take on | the B track |
 | C | Charisma — added to a roll to befriend a monster | the C track; it does not walk |
+| F | Hunger — rises every round until a meal is eaten | the F track |
 | T | Thirst — rises where there is no water | the T track |
 | P | Pace, in hexes | the P track |
 | M | Mana | the M track |
 | I | Wisdom — what a task card tests | the I track; drink lowers it until you sleep |
 | L | Level — how far a hero has come | the L track; the record sheet keeps it between games |
-| R | Renown — what people say about you | the R track |
 | W | Wear — how worn a thing is | the wear ladder beside its kit slot |
 | K | Capacity — what a container still holds: arrows, draughts, meals | the capacity ladder beside its kit slot |
 | A | Armour — a monster's hide, added to its battle total | nowhere; it does not change |
@@ -84,7 +84,7 @@ Across the top of a card is a row of lettered boxes, the letter first and the fi
 
 {{fig:card:CHR-04,card:VEH-02,card:TAL-03,card:TOL-01,card:BLD-36|Five decks, five strips: a character, a vehicle, a talisman, a tool, a building.}}
 
-A figure's strip is two rows, and every box in it but M is a starting value: set the board's markers left to right along it. M is the most the mana track may ever hold, and the marker itself starts at 0. Some boxes print 0 — Thirst starts at nothing, a leg's Pace is not set until the leg starts, and Level and Renown are 0 on a hero's first road. A monster or a vehicle prints Charisma 0, and a vehicle prints Strength 0. Only a character prints I, L and R: they are a career's, and a monster or a vehicle has none. An element mark is one of four: ![fire](../art/icons/element-fire.svg) fire, ![earth](../art/icons/element-earth.svg) earth, ![water](../art/icons/element-water.svg) water, ![air](../art/icons/element-air.svg) air.
+A figure's strip is two rows, and every box in it but M is a starting value: set the board's markers left to right along it. M is the most the mana track may ever hold, and the marker itself starts at 0. Some boxes print 0 — Hunger and Thirst start at nothing, a leg's Pace is not set until the leg starts, and Level is 0 on a hero's first road. A monster or a vehicle prints Charisma 0, and a vehicle prints Strength 0. Only a character prints I and L: they are a career's, and a monster or a vehicle has none. An element mark is one of four: ![fire](../art/icons/element-fire.svg) fire, ![earth](../art/icons/element-earth.svg) earth, ![water](../art/icons/element-water.svg) water, ![air](../art/icons/element-air.svg) air.
 
 ### The decks and their backs
 
@@ -130,12 +130,12 @@ Every track and ladder runs from {{components.board.track.from}} to {{components
 | S Strength | the S box | Down a rung for every night without a camp; all of it back after one night's sleep. It is for battle only | No fighting |
 | B Burden | the B box: kilograms | Down by the mass of everything picked up, worn or wielded and by the purse; up as things are put down or spent | Full: nothing more can be taken up |
 | C Charisma | the C box | It does not walk; it is added to a roll to befriend a monster | Nobody takes your side: nothing is added |
+| F Hunger | the F box, 0 | Up {{rules.upkeep.hunger.risePerRound}} a round, more in cold country; back to 0 in a town of your own; down {{rules.upkeep.hunger.eased.perMeal}} for each meal eaten | At the top of the track, {{abs:rules.upkeep.hunger.atLimit.health}} health lost every round |
 | T Thirst | the T box, 0 | Up {{rules.upkeep.thirst.risePerRound}} a round where there is no water, more in a desert; back to 0 in a settlement or by fresh water; down as a draught is drunk | At the top of the track, {{abs:rules.upkeep.thirst.atLimit.health}} health lost every round |
 | P Pace | the speed table, at the start of each leg | Down a rung for every hex entered | The leg is over: roll for discovery where you stopped |
 | M Mana | 0, the bottom rung | Up as a slain monster yields mana, down as spells are cast. The most it may hold is the M on the character plus the M of every talisman in a slot | Empty |
 | I Wisdom | the I box, plus any rise on your record sheet | It does not walk, except that each draught of drink takes a rung off until you next sleep | Drunk: you do nothing more that round |
 | L Level | 0, or the level on your record sheet | Up a rung when your deeds pay for the next level; never down | A first road |
-| R Renown | 0, or one for each milestone your record sheet shows | Up for every quest and campaign stage done; down for a quest given up | You pay every toll and fee in full |
 | W Wear, one per slot | the W box of the card in that slot, when the card goes in | Down a rung every time the thing is used; up as it is mended | Worn out: discard the card and clear the ladder |
 | K Capacity, one per slot | the K box of the card in that slot, when the card goes in | Down a rung every time something is taken out of it; up as it is filled again, never above the K box | Empty: it does nothing until it is filled |
 

@@ -1051,7 +1051,7 @@ living asset, and none of them pays any.
 
 The two rows of boxes across the top of every character card: a starting value for
 every track on the player board, in the board's own order, then coin. Setting up is
-reading along the strip and placing a marker for each. Thirst, Pace, Level and Renown
+reading along the strip and placing a marker for each. Hunger, Thirst, Pace and Level
 start at 0 on every card and are left out of the table; Burden is kilograms, and the
 purse counts against it like everything else. I is Wisdom, which a task card tests.
 
@@ -1118,20 +1118,20 @@ thing pays. The tasks are here. Stages are taken in order.
 Held 1 at a time, face down, and worth deeds toward a hero's next level. A test is
 a d6 plus the letter named, at the number or over.
 
-| Code | Task | Deeds | Renown | Test | Task |
-| --- | --- | --- | --- | --- | --- |
-| TSK-01 | Read the Old Stones | 1 | — | I 7 | End a leg on a hills or mountain hex and pass the test. |
-| TSK-02 | The Herbalist's Question | 2 | — | I 8 | In any settlement with a market, pass the test. |
-| TSK-03 | Three Countries | 1 | — | — | End legs on three different kinds of terrain, in three different rounds. |
-| TSK-04 | A Bed in Every Inn | 1 | 1 | — | Rest at three different inns. |
-| TSK-05 | Cross the Sand | 2 | — | — | End two legs in a row on desert hexes, and end the second with your Thirst below its limit. |
-| TSK-06 | Talk It Down | 2 | 1 | — | Befriend a monster (monsters.json encounterOptions.befriend). |
-| TSK-07 | Hold the Road | 3 | 1 | — | Win a battle against a monster whose strength is 5 or more. |
-| TSK-08 | Sober Counsel | 2 | — | I 8 | In any settlement, pass the test - with no drink since you last slept. |
-| TSK-09 | The Long Haul | 2 | — | — | Deliver a cargo to a settlement six or more hexes from where it was loaded, and sell it there. |
-| TSK-10 | A Round for the House | 1 | 2 | — | At any inn, buy a cup for every figure there - at least three - and drink one yourself. |
-| TSK-11 | The Hermit's Riddle | 3 | — | I 9 | End a leg on a forest hex and pass the test. Fail it, and your next leg starts a round late. |
-| TSK-12 | Keep Your Word | 2 | 1 | — | Complete a quest within three rounds of accepting it. |
+| Code | Task | Deeds | Test | Task |
+| --- | --- | --- | --- | --- |
+| TSK-01 | Read the Old Stones | 1 | I 7 | End a leg on a hills or mountain hex and pass the test. |
+| TSK-02 | The Herbalist's Question | 2 | I 8 | In any settlement with a market, pass the test. |
+| TSK-03 | Three Countries | 1 | — | End legs on three different kinds of terrain, in three different rounds. |
+| TSK-04 | A Bed in Every Inn | 1 | — | Rest at three different inns. |
+| TSK-05 | Cross the Sand | 2 | — | End two legs in a row on desert hexes, and end the second with your Thirst below its limit. |
+| TSK-06 | Talk It Down | 2 | — | Befriend a monster (monsters.json encounterOptions.befriend). |
+| TSK-07 | Hold the Road | 3 | — | Win a battle against a monster whose strength is 5 or more. |
+| TSK-08 | Sober Counsel | 2 | I 8 | In any settlement, pass the test - with no drink since you last slept. |
+| TSK-09 | The Long Haul | 2 | — | Deliver a cargo to a settlement six or more hexes from where it was loaded, and sell it there. |
+| TSK-10 | A Round for the House | 1 | — | At any inn, buy a cup for every figure there - at least three - and drink one yourself. |
+| TSK-11 | The Hermit's Riddle | 3 | I 9 | End a leg on a forest hex and pass the test. Fail it, and your next leg starts a round late. |
+| TSK-12 | Keep Your Word | 2 | — | Complete a quest within three rounds of accepting it. |
 
 ## Port deck
 
@@ -1171,7 +1171,6 @@ None of these is a rule yet. The card prints the fee as fixed.
 | Fixed | in use | The fee on the card never moves. This is how the card prints it today. |
 | Same dice as the market | proposed | Each round the port rolls the market's own dice: blue for ships queuing, red for free berths, green for the season. The fee steps along its row by what the swing ruler says. A player who knows the market already knows this. |
 | Events move it | proposed | A blockade, a plague or a festival shifts one port's fee a step or two for some rounds. The event card says which. |
-| Renown buys a discount | proposed | A hero with enough renown may step the fee down a place. rules.json already says a toll talked down is renown's job and not charisma's. |
 | Ship size adds to it | proposed | A bigger hull pays more places along the row. Needs a hull size on the vehicle cards, which they do not carry yet. |
 
 

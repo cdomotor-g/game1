@@ -76,12 +76,6 @@
       "says": "A blockade, a plague or a festival shifts one port's fee a step or two for some rounds. The event card says which."
     },
     {
-      "id": "renown",
-      "name": "Renown buys a discount",
-      "status": "proposed",
-      "says": "A hero with enough renown may step the fee down a place. rules.json already says a toll talked down is renown's job and not charisma's."
-    },
-    {
       "id": "size",
       "name": "Ship size adds to it",
       "status": "proposed",
