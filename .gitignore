@@ -32,3 +32,9 @@ node_modules/
 # heads and page numbers included - so a title page can be looked at before it is
 # shipped. A photograph of a generated page, and not for history either.
 docs/book/proofs/
+
+# And `python3 tools/minis/<figure>.py` photographs every miniature it builds
+# from six sides onto a proof sheet. The STL beside it is the piece; the sheet
+# is a picture of it.
+docs/minis/proof/
+__pycache__/
