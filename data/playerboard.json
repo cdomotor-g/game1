@@ -66,8 +66,8 @@
       "id": "hunger", "name": "Hunger", "letter": "F", "label": "HUNGER", "unit": null,
       "kind": "harm", "ink": "ochre", "step": 1,
       "covers": {"value": 20, "paths": [], "note": "The top of the track is the limit itself (limit.at), not a number any card prints: every figure starts at 0 and the card's F box says so."},
-      "limit": { "at": 20, "mark": "20: -1 H", "ink": "oxide", "note": "At the top of the track the figure loses 1 health every round until it eats." },
-      "walks": "Up 1 every round, and more in cold country (rules.json upkeep.hunger.terrain). Back to 0 in a town of its own. Each meal eaten takes rules.upkeep.hunger.eased.perMeal rungs off, and a meal is a rung off a provision card's K ladder. It cannot go below 0.",
+      "limit": { "at": 20, "mark": "20: -1 H", "ink": "oxide", "note": "At the top of the track the figure loses 1 health every round until it has eaten its way back down." },
+      "walks": "Up 2 every round, and more in cold country (rules.json upkeep.hunger.terrain). A figure must eat one meal every round, a rung off a provision card's K ladder, and the meal takes 2 rungs straight back off - so a fed figure stays where it is and a figure that goes without climbs. Back to 0 in a town of its own. It cannot go below 0.",
       "atZero": "Fed. Nothing happens, and nothing is owed.",
       "note": "Hunger is Thirst's twin and sits beside it for that reason: two clocks, one rule, two places to get the cure. Water is a question of the map and food is a question of the purse.",
       "rule": "rules.json upkeep.hunger, rules.json upkeep.food, characters.json start.hunger"
@@ -187,9 +187,9 @@
     "id": "on-the-road",
     "sections": [
       { "title": "ON THE ROAD", "lines": [
-        "Hunger +{rules.upkeep.hunger.risePerRound} a round, +{terrain.terrains[id=tundra].upkeep.hunger} more in cold country (tundra, mountain). A meal off a ration card, a rung off its K: -{rules.upkeep.hunger.eased.perMeal}. Back to 0 in your own town.",
+        "Eat a meal every round, a rung off a ration card's K. Hunger +{rules.upkeep.hunger.risePerRound} a round, a meal -{rules.upkeep.hunger.eased.perMeal}; +{terrain.terrains[id=tundra].upkeep.hunger} more in cold country (tundra, mountain). Back to 0 in your own town.",
         "Thirst +{rules.upkeep.thirst.risePerRound} a round, +{terrain.terrains[id=desert].upkeep.thirst} more in desert. Back to 0 in a town or by fresh water. A draught: -{rules.upkeep.thirst.eased.perDraught}.",
-        "At the top of Hunger or Thirst: {rules.upkeep.thirst.atLimit.health} H a round until you eat or drink.",
+        "At the top of Hunger or Thirst: {rules.upkeep.thirst.atLimit.health} H a round until you have eaten or drunk it back down.",
         "Drink: C +{rules.drink.perDraught.charisma} and I {rules.drink.perDraught.wisdom} a draught, until you next sleep."
       ] },
       { "title": "A CAREER", "lines": [

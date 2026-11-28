@@ -1203,11 +1203,14 @@
     return Math.min(R.upkeep.thirst.limit, thirst + R.upkeep.thirst.risePerRound + extra);
   }
 
-  /** Hunger at the end of a round on a hex of this terrain, with nothing eaten. */
-  function hungerAfterRound(hunger, terrainId) {
+  /** Hunger at the end of a round on a hex of this terrain, after `meals` meals
+      (one is owed every round). The rise comes first and each meal takes
+      eased.perMeal back off, so one meal a round holds it where it is. */
+  function hungerAfterRound(hunger, terrainId, meals = 0) {
     const t = D.byId.terrain ? D.byId.terrain.get(terrainId) : null;
     const extra = (t && t.upkeep && t.upkeep.hunger) || 0;
-    return Math.min(R.upkeep.hunger.limit, hunger + R.upkeep.hunger.risePerRound + extra);
+    const up = Math.min(R.upkeep.hunger.limit, hunger + R.upkeep.hunger.risePerRound + extra);
+    return Math.max(0, up - meals * R.upkeep.hunger.eased.perMeal);
   }
 
   /** One meal eaten: a rung off a provision card is Hunger eased. */

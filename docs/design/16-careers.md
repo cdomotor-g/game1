@@ -12,12 +12,12 @@ A level costs as many deeds as its number, so the twentieth costs twenty and the
 
 ## Why Hunger came back
 
-Hunger once went because a meal knocked four rungs off a clock that nobody watched, and because every figure ate a meal a round anyway. It is back because the meal is no longer owed every round. A figure eats when it chooses, off a ration card's capacity ladder, and the Hunger track shows the whole table how long it can leave it. That makes Hunger a bar to read, where a meal a round was a count nobody kept.
+Hunger once went because a meal knocked four rungs off a clock that nobody watched. It is back because a meal is owed every round and the board now shows what a missed one costs. Every figure's Hunger rises 2 each round and its one meal takes 2 straight back off, so a fed figure stays where it is and a starving one climbs a bar anybody at the table can read, where a missed meal used to cost a strength nobody tracked. A cold hex adds a rung to the rise, which one meal no longer covers: cold is hungry work.
 
 Food and water are twin clocks and sit side by side on the board, but they are got in different places:
 
 - **Where you get it.** Water is free wherever there is water (a settlement, a river, a lake, a marsh) and nowhere else, so it is a question of the map. Food is never free away from your own town, so it is a question of the purse.
-- **What going without costs.** The same at the top of either track: 1 health a round until the figure eats or drinks. Sleep has nothing to do with either, and strength is for battle and hard nights only.
+- **What going without costs.** The same at the top of either track: 1 health a round until the figure has eaten or drunk it back down. Sleep has nothing to do with either, and strength is for battle and hard nights only.
 - **What the country asks.** A desert costs more water (`terrain.json` desert `upkeep.thirst`), and cold country costs more food (tundra and mountain `upkeep.hunger`). Each terrain prints its own cost, the same way it prints its movement cost.
 - **What else slakes thirst.** Drink does, at a price in Wisdom. That price is what gives the wineskin a reason to exist.
 

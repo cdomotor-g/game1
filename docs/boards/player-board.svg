@@ -197,15 +197,15 @@
   <g fill="none" stroke="#1A1714"><rect x="1704" y="72" width="516.8" height="716.8" rx="36" stroke-width="2.6"/><rect x="1710" y="78" width="504.8" height="704.8" rx="30" stroke-width="0.9" stroke="#A0968A"/><g stroke-width="2.2" stroke-linecap="round"><path d="M 1712,144 V 80 H 1776"/><path d="M 2212.8,144 V 80 H 2148.8"/><path d="M 1712,716.8 V 780.8 H 1776"/><path d="M 2212.8,716.8 V 780.8 H 2148.8"/></g></g><text x="1962.4" y="434.4" font-size="24.8" text-anchor="middle" letter-spacing="7.2" font-family="Helvetica, Arial, sans-serif" fill="#A0968A">ITEM</text>
   <rect x="1704" y="820.8" width="516.8" height="835.2" rx="20" fill="none" stroke="#1A1714" stroke-width="1.6"/>
     <text x="1736" y="876.8" font-size="21.6" letter-spacing="5.6" font-family="Helvetica, Arial, sans-serif" fill="#5F564C">ON THE ROAD</text>
-    <text x="1736" y="912" font-size="20">· Hunger +1 a round, +1 more in cold country</text>
-    <text x="1752" y="937.2" font-size="20">(tundra, mountain). A meal off a ration</text>
-    <text x="1752" y="962.4" font-size="20">card, a rung off its K: -4. Back to 0 in</text>
-    <text x="1752" y="987.6" font-size="20">your own town.</text>
+    <text x="1736" y="912" font-size="20">· Eat a meal every round, a rung off a ration</text>
+    <text x="1752" y="937.2" font-size="20">card's K. Hunger +2 a round, a meal -2; +1</text>
+    <text x="1752" y="962.4" font-size="20">more in cold country (tundra, mountain).</text>
+    <text x="1752" y="987.6" font-size="20">Back to 0 in your own town.</text>
     <text x="1736" y="1020" font-size="20">· Thirst +1 a round, +2 more in desert. Back</text>
     <text x="1752" y="1045.2" font-size="20">to 0 in a town or by fresh water. A draught:</text>
     <text x="1752" y="1070.4" font-size="20">-4.</text>
     <text x="1736" y="1102.8" font-size="20">· At the top of Hunger or Thirst: -1 H a round</text>
-    <text x="1752" y="1128" font-size="20">until you eat or drink.</text>
+    <text x="1752" y="1128" font-size="20">until you have eaten or drunk it back down.</text>
     <text x="1736" y="1160.4" font-size="20">· Drink: C +1 and I -1 a draught, until you</text>
     <text x="1752" y="1185.6" font-size="20">next sleep.</text>
     <path d="M 1736,1214.8 H 2188.8" stroke="#1A1714" stroke-width="1.2"/>

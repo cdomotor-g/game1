@@ -980,11 +980,11 @@ window.GAME_DATA = {
       "notes": "Burden has had three lives: a bar up the right edge of every card, then nothing at all while strength swallowed it, and now a track again. It came back because a limit that is only a sum at the table is a sum nobody does, and a token that walks down as the pack fills is one everybody can see."
     },
     "upkeep": {
-      "$comment": "What a figure spends by being alive, and which of its numbers it spends. FOOD and WATER are the same kind of clock and are kept as twins: HUNGER and THIRST are two tracks, each one climbs a rung every round, a meal or a draught takes rungs off, and at the top of either a figure bleeds HEALTH. Sleep keeps strength up and has nothing to do with either. None of the three stands in for another: a party can be fed and parched, watered and starving, or fed, watered and exhausted.\n\nHunger went once, when every figure ate a meal a round and a clock a meal knocked four rungs off was one nobody watched. It is back because the meal is no longer owed every round: a figure eats when it chooses, off a provision card's K ladder, and the board shows how long it can leave it. That is a bar anybody at the table can read, where a meal a round was a count nobody kept.\n\nWhat makes the two different in play is WHERE they are got. Water is free wherever there is water - a town, a river, a lake, a marsh - and nowhere else, so it is a question of the map. Food is never free away from your own town, so it is a question of the purse. The desert asks the first question hard (terrain.json desert upkeep.thirst); the cold asks the second (terrain.json upkeep.hunger).",
+      "$comment": "What a figure spends by being alive, and which of its numbers it spends. FOOD and WATER are the same kind of clock and are kept as twins: HUNGER and THIRST are two tracks, each one climbs a rung every round, a meal or a draught takes rungs off, and at the top of either a figure bleeds HEALTH. Sleep keeps strength up and has nothing to do with either. None of the three stands in for another: a party can be fed and parched, watered and starving, or fed, watered and exhausted.\n\nHunger went once, when every figure ate a meal a round and a clock a meal knocked four rungs off was one nobody watched. It is back because a meal is owed every round and the board now shows what a missed one costs. Every figure's Hunger rises each round and its one meal takes the rise straight back off, so a fed figure stays where it is and a starving one climbs a visible bar toward the limit. That is a bar anybody at the table can read, where a missed meal used to cost a strength nobody tracked.\n\nWhat makes the two different in play is WHERE they are got. Water is free wherever there is water - a town, a river, a lake, a marsh - and nowhere else, so it is a question of the map. Food is never free away from your own town, so it is a question of the purse. The desert asks the first question hard (terrain.json desert upkeep.thirst); the cold asks the second (terrain.json upkeep.hunger).",
       "food": {
         "perRound": 1,
         "atHome": "In a town of your own, your hero is one more mouth in the Feeding phase: counted with the workers and fed from the town's stock at population.foodPerWorkerPerRound. A worker and a hero eat alike, and a hero fed in town has Hunger back at 0.",
-        "onRoad": "Anywhere else, a figure eats by taking a provision card from its kit (items.json, class provision) and knocking that card's K ladder down a rung for every meal. It may eat at any point in a round.",
+        "onRoad": "Anywhere else, the figure eats one meal a round off a provision card in its kit (items.json, class provision): knock that card's K ladder down a rung in the Feeding phase.",
         "refill": {
           "coinPerMeal": 3,
           "where": "At any inn or any market, buy meals back onto a provision card, up to its K box, at this price each. In your own town a unit of food from stock fills one meal instead.",
@@ -993,11 +993,12 @@ window.GAME_DATA = {
       },
       "hunger": {
         "track": "hunger",
-        "risePerRound": 1,
-        "terrain": "A round ended on a hex whose terrain prints upkeep.hunger (terrain.json) raises Hunger by that much more: cold is hungry work.",
+        "risePerRound": 2,
+        "terrain": "A round ended on a hex whose terrain prints upkeep.hunger (terrain.json) raises Hunger by that much more: cold is hungry work, and one meal no longer covers the rise.",
+        "owed": "One meal every round. It is eaten after the round's rise, so a figure that eats every round never climbs. A figure may eat more than one meal in a round to work Hunger back down.",
         "eased": {
-          "perMeal": 4,
-          "note": "One meal eaten takes this many rungs off Hunger, and costs one rung off a provision card's K ladder. Hunger cannot go below 0."
+          "perMeal": 2,
+          "note": "One meal eaten takes this many rungs off Hunger, and costs one rung off a provision card's K ladder. It equals risePerRound, so one meal a round holds Hunger where it is. Hunger cannot go below 0."
         },
         "atHome": "A figure that ends a round in a town of its own is fed from the town's stock (food.atHome): Hunger back to 0.",
         "limit": 20,
@@ -17605,9 +17606,9 @@ window.GAME_DATA = {
           "at": 20,
           "mark": "20: -1 H",
           "ink": "oxide",
-          "note": "At the top of the track the figure loses 1 health every round until it eats."
+          "note": "At the top of the track the figure loses 1 health every round until it has eaten its way back down."
         },
-        "walks": "Up 1 every round, and more in cold country (rules.json upkeep.hunger.terrain). Back to 0 in a town of its own. Each meal eaten takes rules.upkeep.hunger.eased.perMeal rungs off, and a meal is a rung off a provision card's K ladder. It cannot go below 0.",
+        "walks": "Up 2 every round, and more in cold country (rules.json upkeep.hunger.terrain). A figure must eat one meal every round, a rung off a provision card's K ladder, and the meal takes 2 rungs straight back off - so a fed figure stays where it is and a figure that goes without climbs. Back to 0 in a town of its own. It cannot go below 0.",
         "atZero": "Fed. Nothing happens, and nothing is owed.",
         "note": "Hunger is Thirst's twin and sits beside it for that reason: two clocks, one rule, two places to get the cure. Water is a question of the map and food is a question of the purse.",
         "rule": "rules.json upkeep.hunger, rules.json upkeep.food, characters.json start.hunger"
@@ -17836,9 +17837,9 @@ window.GAME_DATA = {
         {
           "title": "ON THE ROAD",
           "lines": [
-            "Hunger +{rules.upkeep.hunger.risePerRound} a round, +{terrain.terrains[id=tundra].upkeep.hunger} more in cold country (tundra, mountain). A meal off a ration card, a rung off its K: -{rules.upkeep.hunger.eased.perMeal}. Back to 0 in your own town.",
+            "Eat a meal every round, a rung off a ration card's K. Hunger +{rules.upkeep.hunger.risePerRound} a round, a meal -{rules.upkeep.hunger.eased.perMeal}; +{terrain.terrains[id=tundra].upkeep.hunger} more in cold country (tundra, mountain). Back to 0 in your own town.",
             "Thirst +{rules.upkeep.thirst.risePerRound} a round, +{terrain.terrains[id=desert].upkeep.thirst} more in desert. Back to 0 in a town or by fresh water. A draught: -{rules.upkeep.thirst.eased.perDraught}.",
-            "At the top of Hunger or Thirst: {rules.upkeep.thirst.atLimit.health} H a round until you eat or drink.",
+            "At the top of Hunger or Thirst: {rules.upkeep.thirst.atLimit.health} H a round until you have eaten or drunk it back down.",
             "Drink: C +{rules.drink.perDraught.charisma} and I {rules.drink.perDraught.wisdom} a draught, until you next sleep."
           ]
         },

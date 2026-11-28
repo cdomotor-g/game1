@@ -266,6 +266,7 @@ for (const [set, list] of [['monsters', datasets.monsters?.monsters ?? []], ['ve
   if (!H) errors.push('rules: no upkeep.hunger - the F track has nothing to say what moves it');
   else {
     if (!(H.risePerRound > 0 && H.eased?.perMeal > 0 && H.limit > 0)) errors.push('rules: upkeep.hunger needs risePerRound, eased.perMeal and limit');
+    if (H.eased?.perMeal < H.risePerRound) errors.push('rules: upkeep.hunger.eased.perMeal is less than risePerRound - a meal a round must at least hold Hunger where it is');
     if (H.limit !== R.upkeep?.thirst?.limit) errors.push(`rules: hunger and thirst are twin clocks and must share a limit (${H.limit} against ${R.upkeep?.thirst?.limit})`);
     const top = datasets.components?.board?.track?.to ?? 20;
     if (H.limit > top) errors.push(`rules: upkeep.hunger.limit ${H.limit} is past the board's ceiling ${top}`);

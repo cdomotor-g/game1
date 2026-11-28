@@ -54,7 +54,7 @@ Across the top of a card is a row of lettered boxes, the letter first and the fi
 | S | Strength — what you swing with in a battle | the S track |
 | B | Burden — the kilograms a figure can still take on | the B track |
 | C | Charisma — added to a roll to befriend a monster | the C track; it does not walk |
-| F | Hunger — rises every round until a meal is eaten | the F track |
+| F | Hunger — a meal is owed every round; a missed one raises it | the F track |
 | T | Thirst — rises where there is no water | the T track |
 | P | Pace, in hexes | the P track |
 | M | Mana | the M track |
@@ -130,7 +130,7 @@ Every track and ladder runs from {{components.board.track.from}} to {{components
 | S Strength | the S box | Down a rung for every night without a camp; all of it back after one night's sleep. It is for battle only | No fighting |
 | B Burden | the B box: kilograms | Down by the mass of everything picked up, worn or wielded and by the purse; up as things are put down or spent | Full: nothing more can be taken up |
 | C Charisma | the C box | It does not walk; it is added to a roll to befriend a monster | Nobody takes your side: nothing is added |
-| F Hunger | the F box, 0 | Up {{rules.upkeep.hunger.risePerRound}} a round, more in cold country; back to 0 in a town of your own; down {{rules.upkeep.hunger.eased.perMeal}} for each meal eaten | At the top of the track, {{abs:rules.upkeep.hunger.atLimit.health}} health lost every round |
+| F Hunger | the F box, 0 | Up {{rules.upkeep.hunger.risePerRound}} a round, more in cold country, and down {{rules.upkeep.hunger.eased.perMeal}} for each meal eaten, so one meal a round holds it; back to 0 in a town of your own | At the top of the track, {{abs:rules.upkeep.hunger.atLimit.health}} health lost every round |
 | T Thirst | the T box, 0 | Up {{rules.upkeep.thirst.risePerRound}} a round where there is no water, more in a desert; back to 0 in a settlement or by fresh water; down as a draught is drunk | At the top of the track, {{abs:rules.upkeep.thirst.atLimit.health}} health lost every round |
 | P Pace | the speed table, at the start of each leg | Down a rung for every hex entered | The leg is over: roll for discovery where you stopped |
 | M Mana | 0, the bottom rung | Up as a slain monster yields mana, down as spells are cast. The most it may hold is the M on the character plus the M of every talisman in a slot | Empty |
